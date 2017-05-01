@@ -38,8 +38,6 @@ export default class extends React.Component {
         <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
         <link href="/static/compiled/lib.css" rel="stylesheet" />
         <link href="/static/compiled/app.css" rel="stylesheet" />
-
-        <script async src="/dist/app.js"></script>
       </NextHead>
     )
   }

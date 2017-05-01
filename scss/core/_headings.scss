@@ -1,0 +1,34 @@
+h1, h2, h3, h4, h5, h6 {
+  flex-shrink: 0;
+  font-weight: bold;
+  line-height: 1.5;
+
+  small {
+    color: $grey-lightened;
+    font-size: 0.7em;
+  }
+}
+
+h1 {
+  font-size: 5em;
+}
+
+h2 {
+  font-size: 2.67em;
+}
+
+h3 {
+  font-size: 2.33em;
+}
+
+h4 {
+  font-size: 2em;
+}
+
+h5 {
+  font-size: 1.67em;
+}
+
+h6 {
+  font-size: 1.33em;
+}

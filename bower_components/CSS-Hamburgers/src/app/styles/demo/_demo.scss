@@ -1,0 +1,140 @@
+$o_base_color: #000;
+$o_text_color: lighten($o_base_color, 87%);
+$o_secondary_text_color: lighten($o_base_color, 54%);
+$o_disabled_text_color: lighten($o_base_color, 38%);
+$o_divider_color: lighten($o_base_color, 12%);
+$color_white: #fff;
+$o_primary_color: "";
+$o_accent_color: #50c0ce;
+$background_color: $o_base_color;
+
+html {
+
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+
+    background-image: radial-gradient(circle,
+        lighten($background_color, 30%) 0%,
+        $background_color 100%);
+}
+
+.demo-css-hamburgers {
+
+    background: rgba(255, 255, 255, 0.06);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 0 auto;
+    min-width: 380px;
+    width: 80%;
+}
+
+.demo-header {
+
+    color: $o_text_color;
+    font-size: 48px;
+    line-height: 1;
+    padding: 40px 20px;
+    text-align: center;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.5);
+
+    .demo-header-logo {
+
+        font-weight: 900;
+
+        &--thin {
+
+            color: $o_accent_color;
+            font-size: 30px;
+            font-weight: 100;
+        }
+
+        &--thick {
+
+            font-size: 30px;
+            font-weight: 400;
+        }
+
+        &--desc {
+
+            color: $o_accent_color;
+            font-size: 21px;
+            font-weight: 100;
+        }
+    }
+}
+
+.demo-footer {
+    text-align: center;
+    padding: 2em;
+    font-weight: 100;
+    font-size: 1em;
+    color: $o_text_color;
+
+    a {
+
+        color: $o_text_color;
+    }
+}
+
+.git-btn {
+
+    font-size: 18px;
+    font-weight: 100;
+    color: $o_text_color;
+    padding: 0.75rem 1.25rem;
+    border: 1px solid $o_text_color;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: transform 0.1s ease-out, border 0.1s ease-out, background-color 0.15s ease-out, color 0.1s ease-out;
+    margin: 2rem 0;
+
+    &::hover {
+
+        background: $o_text_color;
+    }
+}
+
+
+.demo-items {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.demo-item {
+
+    align-items: center;
+    display: flex;
+    height: 6em;
+    justify-content: center;
+    padding: 1em;
+    position: relative;
+
+    .demo-item-action-trigger {
+
+        flex: 1;
+    }
+
+    .demo-item-active-state {
+
+        .m-hamburger {
+
+            pointer-events: none;
+        }
+
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        flex: 1;
+    }
+
+    .demo-item-action-desc {
+
+        flex: 100%;
+    }
+}

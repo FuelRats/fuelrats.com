@@ -1,0 +1,29 @@
+menu {
+  display: flex;
+  flex-shrink: 0;
+  justify-content: space-between;
+  margin: 0;
+  padding: 2rem 4rem;
+
+  > {
+    .page,
+    .primary,
+    .secondary {
+      display: flex;
+      flex-shrink: 0;
+    }
+
+    .page {
+      align-items: center;
+      order: 2;
+    }
+
+    .primary {
+      order: 3;
+    }
+
+    .secondary {
+      order: 1;
+    }
+  }
+}

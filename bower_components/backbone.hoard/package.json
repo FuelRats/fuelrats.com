@@ -1,0 +1,48 @@
+{
+  "name": "backbone.hoard",
+  "repository": "https://github.com/Conductor/backbone.hoard",
+  "homepage": "http://cmaher.github.io/backbone.hoard/",
+  "version": "0.4.3",
+  "description": "XHR Consolidation and Caching for Backbone",
+  "main": "dist/backbone.hoard.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "keywords": [
+    "backbone",
+    "cache",
+    "localstorage",
+    "sync",
+    "de-dupe",
+    "indexeddb",
+    "localforage",
+    "consolidation"
+  ],
+  "author": "Christian Maher",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^1.9.1",
+    "chai-as-promised": "^4.1.1",
+    "del": "^0.1.3",
+    "es6-promise": "^1.0.0",
+    "gulp": "^3.8.8",
+    "gulp-json-editor": "^2.1.1",
+    "gulp-mocha": "^1.0.0",
+    "gulp-rename": "^1.2.0",
+    "gulp-webpack": "^0.4.1",
+    "jquery": "^2.1.1",
+    "karma": "^0.12.24",
+    "karma-chrome-launcher": "^0.1.5",
+    "karma-mocha": "^0.1.9",
+    "karma-mocha-reporter": "^0.3.2",
+    "localforage": "^1.2.2",
+    "mocha": "^1.21.4",
+    "sinon": "^1.10.3",
+    "sinon-chai": "^2.5.0",
+    "yargs": "^1.3.3"
+  },
+  "dependencies": {
+    "backbone": ">=1.0.0",
+    "underscore": ">=1.4.4"
+  }
+}

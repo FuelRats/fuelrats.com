@@ -1,0 +1,50 @@
+.error:empty {
+  position: relative;
+
+  &:after,
+  &:before {
+    align-content: center;
+    align-items: center;
+    border-radius: 100%;
+    border-style: solid;
+    border-width: 0.3rem;
+    color: $red;
+    display: flex;
+    height: $loader-size;
+    justify-content: center;
+    left: 50%;
+    margin-left: -($loader-size / 2);
+    margin-top: -($loader-size / 2);
+    position: absolute;
+    top: 50%;
+    width: $loader-size;
+  }
+
+  &:after {
+    animation-delay:
+      0s,
+      0.5s;
+    animation-duration:
+      0.5s,
+      4s;
+    animation-fill-mode: forwards;
+    animation-iteration-count:
+      1,
+      infinite;
+    animation-name:
+      error-start,
+      error;
+    animation-timing-function:
+      ease,
+      linear;
+    border-color: currentColor;
+    content: '';
+  }
+
+  &:before {
+    animation-duration: 0.5s;
+    animation-name: spin;
+    border-color: transparent;
+    content: 'Error';
+  }
+}

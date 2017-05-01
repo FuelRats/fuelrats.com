@@ -1,0 +1,9 @@
+@mixin dimmer-gradient ($background, $dimmer-color: $black) {
+  background-image:
+    linear-gradient(
+      to top,
+      rgba($dimmer-color, 0.3),
+      rgba($dimmer-color, 0.3)
+    ),
+    $background;
+}

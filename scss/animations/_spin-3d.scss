@@ -1,0 +1,21 @@
+@keyframes spin-3d {
+  0% {
+    transform: rotateY(0deg);
+  }
+
+  100% {
+    transform: rotateY(720deg);
+  }
+}
+
+.spin-3d {
+  animation-fill-mode: both;
+  animation-name: spin-3d;
+  transform-style: preserve-3d;
+  will-change: true;
+
+  &:focus,
+  &:active {
+    animation-duration: 2s;
+  }
+}

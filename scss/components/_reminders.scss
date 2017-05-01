@@ -1,0 +1,46 @@
+.reminders {
+  bottom: 2rem;
+  box-shadow: 0 0 1rem 0 rgba($grey, 0.4);
+  min-width: 30vw;
+  position: absolute;
+  right: 2rem;
+  transition-delay: 0s;
+  transition-duration: 0.5s;
+  transition-property: all;
+
+  &.minimize {
+    box-shadow: 0 0 1rem 0 rgba($grey, 0);
+    min-width: 0;
+    transition-delay: 0.5s;
+
+    .content {
+      max-height: 0;
+      transition-delay: 0s;
+    }
+  }
+
+  &.hide {
+    right: -100%;
+    transition-delay: 0s;
+  }
+
+  > ol {
+    margin-bottom: 0;
+
+    > li {
+      a {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        padding: 1rem;
+      }
+    }
+  }
+
+  .content {
+    max-height: 30vh;
+    transition-delay: 0.5s;
+    transition-duration: 0.5s;
+    transition-property: max-height;
+  }
+}

@@ -1,0 +1,29 @@
+.leaderboard {
+  td {
+    vertical-align: middle;
+  }
+
+  .achievements {
+    padding-left: 0;
+    padding-right: 0;
+
+    img {
+      display: block;
+      margin: 0 1rem;
+      min-width: 3rem;
+      vertical-align: middle;
+    }
+
+    &:last-child {
+      padding-right: 1rem;
+    }
+  }
+
+  .epic {}
+  .codeRed {}
+  .dispatch {}
+  .pip {}
+  .small-crown {}
+  .large-crown {}
+  .y3301 {}
+}

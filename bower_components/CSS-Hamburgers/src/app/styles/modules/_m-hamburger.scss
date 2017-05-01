@@ -1,0 +1,377 @@
+$burger_font_size: 10px !default;
+$burger_size: 6em !default;
+$burger_color: #000 !default;
+$buger_color_inverted: #ddd !default;
+$burger_background_color: transparent;
+$burger_transf_duration: 0.3s !default;
+$burger_stroke_width: round($burger_font_size / 3);
+$burger-module: "hamburger";
+
+.m-#{$burger-module} {
+
+  align-items: flex-end;
+  appearance: none;
+  background-color: $burger_background_color;
+  border-radius: none;
+  border: none;
+  box-shadow: none;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+  margin: 0;
+  overflow: hidden;
+  text-indent: -9999px;
+
+  *, *:before, *:after {
+      box-sizing: border-box;
+  }
+
+
+  span {
+    background-color: $burger_color;
+    border-radius: 999px;
+    height: $burger_stroke_width;
+    width: 100%;
+    position: relative;
+    overflow: visible;
+    transition: all $burger_transf_duration linear;
+
+    &::before,
+    &::after {
+
+      background-color: inherit;
+      border-radius: 999px;
+      content: "";
+      display: block;
+      height: inherit;
+      position: absolute;
+      width: 100%;
+      transition: all $burger_transf_duration linear;
+    }
+
+    &::before {
+
+      top: - $burger_font_size * 1.5;
+    }
+
+    &::after {
+
+      bottom: - $burger_font_size * 1.5;
+    }
+  }
+
+  &.mm-#{$burger-module}--r-stacked,
+  &.mm-#{$burger-module}--l-stacked {
+
+    span {
+      &::before,
+      &::after {
+
+        width: $burger_font_size * 4;
+      }
+    }
+  }
+
+  &.mm-#{$burger-module}--r-stacked {
+
+    span {
+
+      right: 0;
+
+      &::before,
+      &::after {
+
+        right: 0;
+      }
+    }
+  }
+
+  &.mm-#{$burger-module}--grid {
+
+    justify-content: center;
+
+    span {
+
+      transform-origin: 50% 50%;
+
+      &::before,
+      &::after {
+
+        transform-origin: 50% 50%;
+      }
+    }
+  }
+
+  &.is-active {
+
+    &.mm-#{$burger-module}--grid {
+
+      span {
+
+        @include burger-grid-background($burger_color);
+        border-radius: 0;
+        width: 80%;
+
+        &::before,
+        &::after {
+
+          @include burger-grid-background($burger_color);
+          border-radius: 0;
+          width: 100%;
+        }
+      }
+
+    }
+
+    &.mm-#{$burger-module}--l-stacked {
+
+      span {
+
+          width: 75%;
+
+        &::before {
+          width: 50%;
+        }
+      }
+    }
+
+    &.mm-#{$burger-module}--r-stacked {
+
+      span {
+
+        overflow: visible;
+        width: 75%;
+        transform: translateX(($burger_font_size * 4) * 0.3);
+
+        &::before,
+        &::after {
+
+          right: 0;
+        }
+
+        &::before {
+          width: 50%;
+        }
+      }
+    }
+
+    &.mm-#{$burger-module}--l-rotate {
+
+      span {
+
+        transform: rotate(-90deg);
+      }
+    }
+
+    &.mm-#{$burger-module}--r-rotate {
+
+      span {
+
+        transform: rotate(90deg);
+      }
+    }
+
+    &.mm-#{$burger-module}--l-cross {
+
+      span {
+
+        background-color: transparent;
+
+        &:after {
+
+          background-color: $burger_color;
+          bottom: 0;
+          transform: rotate(-45deg);
+        }
+
+        &:before {
+
+          background-color: $burger_color;
+          top: 0;
+          transform: rotate(45deg);
+        }
+      }
+    }
+
+    &.mm-#{$burger-module}--r-cross {
+
+      span {
+
+        background-color: transparent;
+
+        &:after {
+
+          background-color: $burger_color;
+          bottom: 0;
+          transform: rotate(45deg);
+        }
+
+        &:before {
+
+          background-color: $burger_color;
+          top: 0;
+          transform: rotate(-45deg);
+        }
+      }
+    }
+
+    &.mm-#{$burger-module}--l-arrow {
+
+      span {
+
+        &:after,
+        &:before {
+
+          left: 0.1em;
+          width: 60%;
+          transform-origin: left;
+        }
+
+        &:after {
+          bottom: 0;
+          transform: rotate(35deg);
+        }
+
+        &:before {
+
+          top: 0;
+          transform: rotate(-35deg);
+        }
+      }
+    }
+
+    &.mm-#{$burger-module}--r-arrow {
+
+      span {
+
+       &:after,
+        &:before {
+
+          right: 0.1em;
+          width: 60%;
+          transform-origin: right;
+        }
+
+        &:after {
+
+          bottom: 0;
+          transform: rotate(-35deg);
+        }
+
+        &:before {
+          top: 0;
+          transform: rotate(35deg);
+        }
+      }
+    }
+
+    &.mm-#{$burger-module}--l-rotating-arrow {
+
+      span {
+
+        transform:  translateY(-50%) rotate(180deg);
+
+        &:after,
+        &:before {
+
+          right: 0.1em;
+          width: 60%;
+          transform-origin: right;
+        }
+
+        &:after {
+
+          bottom: 0;
+          transform: rotate(-35deg);
+        }
+
+        &:before {
+
+          top: 0;
+          transform: rotate(35deg);
+        }
+      }
+    }
+
+    &.mm-#{$burger-module}--r-rotating-arrow {
+
+      span {
+
+        transform:  translateY(-50%) rotate(180deg);
+
+       &:after,
+        &:before {
+
+          left: 0.1em;
+          width: 60%;
+          transform-origin: left;
+        }
+
+        &:after {
+
+          bottom: 0;
+          transform: rotate(35deg);
+        }
+
+        &:before {
+
+          top: 0;
+          transform: rotate(-35deg);
+        }
+      }
+    }
+  }
+}
+
+// Burger Sizes
+.m-#{$burger-module} {
+
+  font-size: $burger_font_size;
+  height: $burger_size;
+  padding: 1em;
+  width: $burger_size;
+
+  &.mm-#{$burger-module}--small {
+
+    font-size: 6px;
+  }
+
+  &.mm-#{$burger-module}--medium {
+
+    font-size: 10px;
+  }
+
+  &.mm-#{$burger-module}--large {
+
+    font-size: 12px;
+  }
+
+}
+
+// Burger Variants
+.m-#{$burger-module} {
+
+  &.mm-#{$burger-module}--inverted {
+
+    @include burger-variant($buger_color_inverted);
+
+    &.is-active {
+
+      span::before,
+      span::after {
+
+        background-color: $buger_color_inverted;
+      }
+
+      &.mm-#{$burger-module}--grid {
+
+        span,
+        span::before,
+        span::after {
+
+          @include burger-grid-background($buger_color_inverted);
+        }
+      }
+    }
+  }
+}

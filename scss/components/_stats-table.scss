@@ -1,0 +1,24 @@
+table.stats {
+  col {
+    width: 25%;
+  }
+
+  th,
+  td {
+    text-align: center;
+  }
+
+  tbody {
+    th,
+    td {
+      border-right-color: $grey-lightened;
+      border-right-style: solid;
+      border-right-width: 1px;
+    }
+  }
+
+  .assists-count {}
+  .failures-count {}
+  .rescues-count {}
+  .success-rate {}
+}

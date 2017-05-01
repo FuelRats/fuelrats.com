@@ -1,0 +1,78 @@
+%text-input {
+  border-color: $grey-lightened;
+  border-style: solid;
+  border-width: 0.1rem;
+  box-shadow: 0 0 0.5rem 0 rgba($red, 0);
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  outline: none;
+  transition-duration: 0.5s;
+  transition-property: border-color, box-shadow;
+  padding: 1rem;
+  width: 100%;
+
+  &:focus, &[data-focus] {
+    border-color: $grey;
+    box-shadow: 0 0 0.5rem 0 rgba($red, 0.5);
+  }
+}
+
+input {
+  &:not([type]),
+  &[type=date],
+  &[type=datetime],
+  &[type=datetime-local],
+  &[type=email],
+  &[type=month],
+  &[type=number],
+  &[type=password],
+  &[type=search],
+  &[type=tel],
+  &[type=text],
+  &[type=time],
+  &[type=url],
+  &[type=week] {
+    @extend %text-input;
+  }
+}
+
+tags-input {
+  @extend %text-input;
+
+  padding: 0;
+
+  /deep/ {
+    button {
+      color: inherit;
+    }
+  }
+
+  &[data-multiple=false] /deep/ {
+    .tags:not(:empty) {
+      flex-grow: 1;
+
+      button {
+        flex-grow: 0;
+      }
+
+      li {
+        display: flex;
+        flex-grow: 1;
+        justify-content: space-between;
+        margin: 0;
+
+      }
+
+      + input {
+        display: none;
+      }
+    }
+  }
+}
+
+textarea {
+  @extend %text-input;
+
+  min-height: 10rem;
+}

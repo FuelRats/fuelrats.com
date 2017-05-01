@@ -1,0 +1,26 @@
+@mixin text-outline ($color, $blur: 0) {
+  text-shadow:
+    // Top
+    -1px 0 $blur $color,
+
+    // Top Right
+    -1px 1px $blur $color,
+
+    // Right
+    0 1px $blur $color,
+
+    // Bottom Right
+    1px 1px $blur $color,
+
+    // Bottom
+    1px 0 $blur $color,
+
+    // Bottom Left
+    1px -1px $blur $color,
+
+    // Left
+    0 -1px $blur $color,
+
+    // Top Left
+    -1px -1px $blur $color
+}

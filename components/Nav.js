@@ -5,11 +5,20 @@ import React from 'react'
 
 
 
+
 // Constants
 const links = [
   {
     name: 'Blog',
     path: '/blog'
+  },
+  {
+    name: 'Paperwork',
+    path: '/paperwork'
+  },
+  {
+    name: 'About',
+    path: '/about'
   },
 ]
 
@@ -21,7 +30,7 @@ export default class extends React.Component {
   render () {
     return (
       <nav>
-        <ul className="site">
+        <ul>
           {links.map((link, index) => {
             let classes = ''
 
@@ -33,16 +42,11 @@ export default class extends React.Component {
             return (
               <li key={index}>
                 <Link href={link.path}>
-                  <a className={classes}>{link.name}</a>
+                  <a className={classes}><span>{link.name}</span></a>
                 </Link>
               </li>
             )
           })}
-        </ul>
-
-        <ul className="social">
-          <li><a href="//github.com/fuelrats" title="Github"><i className="fa fa-fw fa-github-alt"></i></a></li>
-          <li><a href="//twitter.com/fuelrats" title="Codepen"><i className="fa fa-fw fa-twitter"></i></a></li>
         </ul>
       </nav>
     )

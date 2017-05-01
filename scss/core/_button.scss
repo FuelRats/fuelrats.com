@@ -1,0 +1,53 @@
+button,
+input[type=button],
+.button {
+  background-color: $red;
+  border-color: $red;
+  border-style: solid;
+  border-width: 0.2rem;
+  color: $white;
+  cursor: pointer;
+  display: inline-block;
+  flex-shrink: 0;
+  font-family: inherit;
+  margin: 0;
+  outline: none;
+  overflow: hidden;
+  padding: 1rem 2rem;
+  text-decoration: none;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: $transparent;
+    color: $red;
+  }
+
+  &.icon {
+    padding: 1rem;
+  }
+
+  &.link {
+    background: none;
+    border: none;
+
+    &:hover {
+      background-color: none;
+      border: none;
+    }
+  }
+
+  &.secondary {
+    background-color: $black-lightened;
+    border: none;
+    color: $grey;
+
+    &:hover {
+      background-color: $red;
+      color: $white;
+    }
+  }
+
+  &.tiny {
+    padding: 0;
+  }
+}

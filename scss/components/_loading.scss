@@ -1,0 +1,48 @@
+.loading {
+  &:empty,
+  &.force {
+    position: relative;
+
+    &:after,
+    &:before {
+      align-content: center;
+      align-items: center;
+      border-radius: 100%;
+      border-style: solid;
+      border-width: 0.3rem;
+      color: $black;
+      display: flex;
+      height: $loader-size;
+      justify-content: center;
+      left: 50%;
+      margin-left: -($loader-size / 2);
+      margin-top: -($loader-size / 2);
+      position: absolute;
+      top: 50%;
+      width: $loader-size;
+    }
+
+    &:after {
+      animation-delay:
+        0s,
+        1s;
+      animation-duration:
+        1s,
+        4s;
+      animation-fill-mode: forwards;
+      animation-iteration-count:
+        1,
+        infinite;
+      animation-name:
+        loading-start,
+        loading;
+      border-color: currentColor;
+      content: '';
+    }
+
+    &:before {
+      border-color: transparent;
+      content: 'Loading';
+    }
+  }
+}

@@ -1,0 +1,27 @@
+@mixin burger-variant($font-size: 10px, $background: #fff) {
+
+  font-size: $font-size;
+
+    span,
+    span::before,
+    span::after {
+        background-color: $background;
+    }
+}
+
+@mixin burger-grid-background($background: #fff) {
+
+            background: linear-gradient(
+              to right, 
+              $background 0%,
+              $background 20%,
+              transparent 20%,
+              transparent 40%, 
+              $background 40%, 
+              $background 60%, 
+              transparent 60%,
+              transparent 80%, 
+              $background 80%, 
+              $background 100% 
+            );
+}

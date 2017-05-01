@@ -1,0 +1,206 @@
+/**
+ *  Do not remove the comment below. It's the markers used by wiredep to inject
+ *  sass dependencies when defined in the bower.json of your dependencies
+ */
+/**
+ *  Do not remove the comment below. It's the markers used by gulp-inject to inject
+ *  all your sass files automatically
+ */
+.m-hamburger {
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background-color: transparent;
+  border-radius: none;
+  border: none;
+  box-shadow: none;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0;
+  overflow: hidden;
+  text-indent: -9999px; }
+  .m-hamburger *, .m-hamburger *:before, .m-hamburger *:after {
+    box-sizing: border-box; }
+  .m-hamburger span {
+    background-color: #000;
+    border-radius: 999px;
+    height: 3px;
+    width: 100%;
+    position: relative;
+    overflow: visible;
+    -webkit-transition: all 0.3s linear;
+    transition: all 0.3s linear; }
+    .m-hamburger span::before, .m-hamburger span::after {
+      background-color: inherit;
+      border-radius: 999px;
+      content: "";
+      display: block;
+      height: inherit;
+      position: absolute;
+      width: 100%;
+      -webkit-transition: all 0.3s linear;
+      transition: all 0.3s linear; }
+    .m-hamburger span::before {
+      top: -15px; }
+    .m-hamburger span::after {
+      bottom: -15px; }
+  .m-hamburger.mm-hamburger--r-stacked span::before, .m-hamburger.mm-hamburger--r-stacked span::after, .m-hamburger.mm-hamburger--l-stacked span::before, .m-hamburger.mm-hamburger--l-stacked span::after {
+    width: 40px; }
+  .m-hamburger.mm-hamburger--r-stacked span {
+    right: 0; }
+    .m-hamburger.mm-hamburger--r-stacked span::before, .m-hamburger.mm-hamburger--r-stacked span::after {
+      right: 0; }
+  .m-hamburger.mm-hamburger--grid {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center; }
+    .m-hamburger.mm-hamburger--grid span {
+      -webkit-transform-origin: 50% 50%;
+              transform-origin: 50% 50%; }
+      .m-hamburger.mm-hamburger--grid span::before, .m-hamburger.mm-hamburger--grid span::after {
+        -webkit-transform-origin: 50% 50%;
+                transform-origin: 50% 50%; }
+  .m-hamburger.is-active.mm-hamburger--grid span {
+    background: -webkit-linear-gradient(left, #000 0%, #000 20%, transparent 20%, transparent 40%, #000 40%, #000 60%, transparent 60%, transparent 80%, #000 80%, #000 100%);
+    background: linear-gradient(to right, #000 0%, #000 20%, transparent 20%, transparent 40%, #000 40%, #000 60%, transparent 60%, transparent 80%, #000 80%, #000 100%);
+    border-radius: 0;
+    width: 80%; }
+    .m-hamburger.is-active.mm-hamburger--grid span::before, .m-hamburger.is-active.mm-hamburger--grid span::after {
+      background: -webkit-linear-gradient(left, #000 0%, #000 20%, transparent 20%, transparent 40%, #000 40%, #000 60%, transparent 60%, transparent 80%, #000 80%, #000 100%);
+      background: linear-gradient(to right, #000 0%, #000 20%, transparent 20%, transparent 40%, #000 40%, #000 60%, transparent 60%, transparent 80%, #000 80%, #000 100%);
+      border-radius: 0;
+      width: 100%; }
+  .m-hamburger.is-active.mm-hamburger--l-stacked span {
+    width: 75%; }
+    .m-hamburger.is-active.mm-hamburger--l-stacked span::before {
+      width: 50%; }
+  .m-hamburger.is-active.mm-hamburger--r-stacked span {
+    overflow: visible;
+    width: 75%;
+    -webkit-transform: translateX(12px);
+            transform: translateX(12px); }
+    .m-hamburger.is-active.mm-hamburger--r-stacked span::before, .m-hamburger.is-active.mm-hamburger--r-stacked span::after {
+      right: 0; }
+    .m-hamburger.is-active.mm-hamburger--r-stacked span::before {
+      width: 50%; }
+  .m-hamburger.is-active.mm-hamburger--l-rotate span {
+    -webkit-transform: rotate(-90deg);
+            transform: rotate(-90deg); }
+  .m-hamburger.is-active.mm-hamburger--r-rotate span {
+    -webkit-transform: rotate(90deg);
+            transform: rotate(90deg); }
+  .m-hamburger.is-active.mm-hamburger--l-cross span {
+    background-color: transparent; }
+    .m-hamburger.is-active.mm-hamburger--l-cross span:after {
+      background-color: #000;
+      bottom: 0;
+      -webkit-transform: rotate(-45deg);
+              transform: rotate(-45deg); }
+    .m-hamburger.is-active.mm-hamburger--l-cross span:before {
+      background-color: #000;
+      top: 0;
+      -webkit-transform: rotate(45deg);
+              transform: rotate(45deg); }
+  .m-hamburger.is-active.mm-hamburger--r-cross span {
+    background-color: transparent; }
+    .m-hamburger.is-active.mm-hamburger--r-cross span:after {
+      background-color: #000;
+      bottom: 0;
+      -webkit-transform: rotate(45deg);
+              transform: rotate(45deg); }
+    .m-hamburger.is-active.mm-hamburger--r-cross span:before {
+      background-color: #000;
+      top: 0;
+      -webkit-transform: rotate(-45deg);
+              transform: rotate(-45deg); }
+  .m-hamburger.is-active.mm-hamburger--l-arrow span:after, .m-hamburger.is-active.mm-hamburger--l-arrow span:before {
+    left: 0.1em;
+    width: 60%;
+    -webkit-transform-origin: left;
+            transform-origin: left; }
+  .m-hamburger.is-active.mm-hamburger--l-arrow span:after {
+    bottom: 0;
+    -webkit-transform: rotate(35deg);
+            transform: rotate(35deg); }
+  .m-hamburger.is-active.mm-hamburger--l-arrow span:before {
+    top: 0;
+    -webkit-transform: rotate(-35deg);
+            transform: rotate(-35deg); }
+  .m-hamburger.is-active.mm-hamburger--r-arrow span:after, .m-hamburger.is-active.mm-hamburger--r-arrow span:before {
+    right: 0.1em;
+    width: 60%;
+    -webkit-transform-origin: right;
+            transform-origin: right; }
+  .m-hamburger.is-active.mm-hamburger--r-arrow span:after {
+    bottom: 0;
+    -webkit-transform: rotate(-35deg);
+            transform: rotate(-35deg); }
+  .m-hamburger.is-active.mm-hamburger--r-arrow span:before {
+    top: 0;
+    -webkit-transform: rotate(35deg);
+            transform: rotate(35deg); }
+  .m-hamburger.is-active.mm-hamburger--l-rotating-arrow span {
+    -webkit-transform: translateY(-50%) rotate(180deg);
+            transform: translateY(-50%) rotate(180deg); }
+    .m-hamburger.is-active.mm-hamburger--l-rotating-arrow span:after, .m-hamburger.is-active.mm-hamburger--l-rotating-arrow span:before {
+      right: 0.1em;
+      width: 60%;
+      -webkit-transform-origin: right;
+              transform-origin: right; }
+    .m-hamburger.is-active.mm-hamburger--l-rotating-arrow span:after {
+      bottom: 0;
+      -webkit-transform: rotate(-35deg);
+              transform: rotate(-35deg); }
+    .m-hamburger.is-active.mm-hamburger--l-rotating-arrow span:before {
+      top: 0;
+      -webkit-transform: rotate(35deg);
+              transform: rotate(35deg); }
+  .m-hamburger.is-active.mm-hamburger--r-rotating-arrow span {
+    -webkit-transform: translateY(-50%) rotate(180deg);
+            transform: translateY(-50%) rotate(180deg); }
+    .m-hamburger.is-active.mm-hamburger--r-rotating-arrow span:after, .m-hamburger.is-active.mm-hamburger--r-rotating-arrow span:before {
+      left: 0.1em;
+      width: 60%;
+      -webkit-transform-origin: left;
+              transform-origin: left; }
+    .m-hamburger.is-active.mm-hamburger--r-rotating-arrow span:after {
+      bottom: 0;
+      -webkit-transform: rotate(35deg);
+              transform: rotate(35deg); }
+    .m-hamburger.is-active.mm-hamburger--r-rotating-arrow span:before {
+      top: 0;
+      -webkit-transform: rotate(-35deg);
+              transform: rotate(-35deg); }
+
+.m-hamburger {
+  font-size: 10px;
+  height: 6em;
+  padding: 1em;
+  width: 6em; }
+  .m-hamburger.mm-hamburger--small {
+    font-size: 6px; }
+  .m-hamburger.mm-hamburger--medium {
+    font-size: 10px; }
+  .m-hamburger.mm-hamburger--large {
+    font-size: 12px; }
+
+.m-hamburger.mm-hamburger--inverted {
+  font-size: #ddd; }
+  .m-hamburger.mm-hamburger--inverted span,
+  .m-hamburger.mm-hamburger--inverted span::before,
+  .m-hamburger.mm-hamburger--inverted span::after {
+    background-color: #fff; }
+  .m-hamburger.mm-hamburger--inverted.is-active span::before,
+  .m-hamburger.mm-hamburger--inverted.is-active span::after {
+    background-color: #ddd; }
+  .m-hamburger.mm-hamburger--inverted.is-active.mm-hamburger--grid span,
+  .m-hamburger.mm-hamburger--inverted.is-active.mm-hamburger--grid span::before,
+  .m-hamburger.mm-hamburger--inverted.is-active.mm-hamburger--grid span::after {
+    background: -webkit-linear-gradient(left, #ddd 0%, #ddd 20%, transparent 20%, transparent 40%, #ddd 40%, #ddd 60%, transparent 60%, transparent 80%, #ddd 80%, #ddd 100%);
+    background: linear-gradient(to right, #ddd 0%, #ddd 20%, transparent 20%, transparent 40%, #ddd 40%, #ddd 60%, transparent 60%, transparent 80%, #ddd 80%, #ddd 100%); }

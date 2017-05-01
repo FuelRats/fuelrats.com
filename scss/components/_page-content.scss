@@ -1,0 +1,15 @@
+.page-content {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  margin: 2rem;
+
+  section {
+    flex-shrink: 0;
+    margin-bottom: 2rem;
+
+    + aside {
+      margin-left: 2rem;
+    }
+  }
+}

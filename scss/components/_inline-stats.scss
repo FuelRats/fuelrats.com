@@ -1,0 +1,26 @@
+.inline-stats {
+  display: flex;
+
+  .inline-stats-successful,
+  .inline-stats-assists,
+  .inline-stats-failures,
+  .inline-stats-success-rate {
+    &:after {
+      color: $grey-lightened;
+      content: '|';
+      margin: 0 1rem;
+    }
+
+    &:last-child:after {
+      display: none;
+    }
+  }
+
+  .inline-stats-assists {}
+
+  .inline-stats-failures {}
+
+  .inline-stats-success-rate {}
+
+  .inline-stats-successful {}
+}

@@ -1,0 +1,16 @@
+.article-list {
+  flex-grow: 1;
+
+  > li {
+    &:after {
+      border-top-color: $red;
+      border-top-style: solid;
+      border-top-width: 0.1rem;
+      content: '';
+      display: block;
+      height: 0;
+      margin: 2rem auto;
+      width: 10rem;
+    }
+  }
+}

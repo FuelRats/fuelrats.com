@@ -1,0 +1,37 @@
+ol, ul {
+  &.columns {
+    align-content: stretch;
+    display: flex;
+    flex-wrap: wrap;
+
+    > li {
+      display: block;
+      flex-grow: 1;
+      flex-shrink: 0;
+      min-width: 50%;
+    }
+  }
+
+  &.inline {
+    display: flex;
+    flex-wrap: wrap;
+
+    li {
+      white-space: nowrap;
+    }
+
+    &.comma-separated {
+      li {
+        &:after {
+          content: ', ';
+          margin-right: 0.2rem;
+        }
+
+        &:last-of-type:after {
+          content: '';
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}

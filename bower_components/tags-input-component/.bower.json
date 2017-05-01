@@ -1,0 +1,38 @@
+{
+  "authors": [
+    {
+      "email": "<tre@trezy.com>",
+      "homepage": "http://trezy.com",
+      "name": "Trezy"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/trezy/tags-input-component/issues"
+  },
+  "description": "Tags input written with vanilla Javascript",
+  "homepage": "https://github.com/trezy/tags-input-component#readme",
+  "ignore": [
+    "**/.*",
+    "examples/",
+    "test",
+    "package.json",
+    "README.md"
+  ],
+  "license": "MIT",
+  "main": "dist/tags-input.js",
+  "name": "tags-input-component",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trezy/tags-input-component.git"
+  },
+  "version": "1.1.2",
+  "_release": "1.1.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.1.2",
+    "commit": "18878d2cc2f2f9e495796dac53ce1ac9122abc28"
+  },
+  "_source": "https://github.com/trezy/tags-input-component.git",
+  "_target": "^1.1.2",
+  "_originalSource": "tags-input-component"
+}

@@ -22,9 +22,15 @@ export default class extends React.Component {
   render () {
     return (
       <Page title={this.title}>
-        <header className="page-header">
-          <h2>Page Header!</h2>
-        </header>
+        <section className="hero">
+          <header>
+            <h1>We Have Fuel. You Don't.</h1>
+            <h2>Any Questions?</h2>
+          </header>
+          <footer className="call-to-action">
+            <a className="button" href="/get-help">Get Help</a>
+          </footer>
+        </section>
       </Page>
     )
   }

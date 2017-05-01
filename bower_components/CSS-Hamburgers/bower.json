@@ -1,0 +1,27 @@
+{
+  "name": "CSS-Hamburgers",
+  "description": "CSS only Hamburgers, for Burger or CSS lovers.",
+  "version": "1.0.1",
+  "homepage": "https://github.com/osahan/CSS-Hamburgers",
+  "main": "dist/app/css-hamburgers.scss",
+  "authors": [
+    "Osahan <robi_osahan@yahoo.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "css",
+    "burger",
+    "hamburger",
+    "menu",
+    "navigation"
+  ],
+  "homepage": "https://github.com/osahan/CSS-Hamburgers",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

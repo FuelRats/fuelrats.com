@@ -1,0 +1,8 @@
+[data-placeholder]:empty:before {
+  content: attr(data-placeholder);
+}
+
+::-webkit-input-placeholder,
+[data-placeholder]:empty:before {
+  color: rgba(169, 169, 169, 1);
+}

@@ -1,0 +1,41 @@
+.panel {
+  background-color: $white;
+  box-shadow: 0 0 1rem rgba($black, 0.1);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  footer,
+  header,
+  .panel-header,
+  .panel-footer {
+    background-color: $black;
+    color: $white;
+    padding: 1rem;
+    position: relative;
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  header,
+  .panel-header {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+
+    menu {
+      padding: 0;
+    }
+  }
+
+  footer,
+  .panel-footer {}
+
+  .panel-content {
+    overflow: auto;
+    padding: 1rem;
+  }
+}

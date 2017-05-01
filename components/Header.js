@@ -17,8 +17,12 @@ export default class extends React.Component {
   render () {
     return (
       <header role="banner">
+        <input defaultChecked="true" data-hidden id="nav-control" type="checkbox" />
+
         <Link href="/">
-          <a className="brand" />
+          <a className="spin-3d">
+            <img className="brand" src="/static/images/logo2.png" />
+          </a>
         </Link>
 
         <Nav />

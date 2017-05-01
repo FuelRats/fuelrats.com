@@ -1,0 +1,36 @@
+.page-header {
+  align-self: flex-start;
+  background-color: $red;
+  color: $white;
+  flex-shrink: 0;
+  margin: 0;
+  margin-bottom: 2rem;
+  max-width: 75%;
+  padding: 1rem 4rem;
+  position: relative;
+
+  &:after {
+    background-image: linear-gradient(
+      to left,
+      $red 0rem,
+      $red 0.2rem,
+      transparent 0.2rem,
+      transparent 0.4rem,
+      $red 0.4rem,
+      $red 0.6rem,
+      transparent 0.6rem,
+      transparent 0.8rem,
+      $red 0.8rem
+    );
+    bottom: 0;
+    content: '';
+    display: block;
+    left: 0;
+    position: absolute;
+    right: 0;
+    transform: skewX(-45deg) translateX(1rem);
+    transform-origin: left bottom;
+    top: 0;
+    z-index: -1;
+  }
+}

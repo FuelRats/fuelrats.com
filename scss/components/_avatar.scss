@@ -1,0 +1,38 @@
+.avatar {
+  align-content: stretch;
+  align-items: stretch;
+  background-color: $white;
+  border-color: $red;
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 0.2rem;
+  display: flex;
+  flex-shrink: 0;
+  overflow: hidden;
+
+  &.small {
+    height: 4rem;
+    width: 4rem;
+  }
+
+  &.medium {
+    height: 6.5rem;
+    width: 6.5rem;
+  }
+
+  &.large {
+    height: 10rem;
+    width: 10rem;
+  }
+
+  &:empty:before {
+    align-items: center;
+    background: $white;
+    color: $red;
+    content: attr(data-letter);
+    display: flex;
+    font-size: 2em;
+    justify-content: center;
+    width: 100%;
+  }
+}
