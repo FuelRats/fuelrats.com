@@ -6,14 +6,12 @@ import React from 'react'
 
 
 
-// Component imports
-import Nav from './Nav'
-
-
-
-
-
 export default class extends React.Component {
+
+  /***************************************************************************\
+    Public Methods
+  \***************************************************************************/
+
   render () {
     return (
       <dialog></dialog>

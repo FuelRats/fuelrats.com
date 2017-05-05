@@ -1,7 +1,16 @@
 import NextHead from 'next/head'
 import React from 'react'
 
+
+
+
+
 export default class extends React.Component {
+
+  /***************************************************************************\
+    Public Methods
+  \***************************************************************************/
+
   render () {
     let adsenseSnippet = '(adsbygoogle = window.adsbygoogle || []).push({' +
       'google_ad_client: "ca-pub-9749247943500937",' +
