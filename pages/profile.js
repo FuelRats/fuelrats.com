@@ -11,13 +11,13 @@ import UserNicknamesPanel from '../components/UserNicknamesPanel'
 import UserRatsPanel from '../components/UserRatsPanel'
 import UserStatsPanel from '../components/UserStatsPanel'
 
-import i18next from '../components/i18next'
+import I18nextPage from '../components/I18nextPage'
 
 
 
 
 
-export default class extends React.Component {
+export default class extends I18nextPage {
 
   /***************************************************************************\
     Public Methods
@@ -29,12 +29,12 @@ export default class extends React.Component {
         <header className="page-header">
           <h1>{i18next.t('pages.profile')}</h1>
         </header>
-        
+
         <div className="page-content">
           <div className="row">
             <UserStatsPanel />
           </div>
-        
+
           <div className="row">
             <UserRatsPanel />
 

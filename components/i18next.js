@@ -9,26 +9,29 @@ import i18nextFetchBackend from 'i18next-fetch-backend'
 
 
 
-i18next
-//.use(i18nextCache)
-.use(i18nextLanguageDetector)
-.use(i18nextFetchBackend)
-.init({
-  backend: {
-    loadPath: 'https://raw.githubusercontent.com/FuelRats/translations/master/{{lng}}/{{ns}}.json'
-  },
-  debug: false,
-  defaultNS: 'translation',
-  lng: 'en-US',
-  load: 'currentOnly',
-  ns: [
-    'translation'
-  ],
-  wait: true
+export default new Promise((resolve, reject) => {
+  i18next
+  //.use(i18nextCache)
+  .use(i18nextLanguageDetector)
+  .use(i18nextFetchBackend)
+  .init({
+    backend: {
+      loadPath: 'https://raw.githubusercontent.com/FuelRats/translations/master/{{lng}}/{{ns}}.json'
+//      'http://localhost:3000/static/locales/{{lng}}/{{ns}}.json'
+    },
+    debug: false,
+    defaultNS: 'translation',
+    lng: 'en-US',
+    load: 'currentOnly',
+    ns: [
+      'translation'
+    ],
+    wait: true
+  }, error => {
+    if (error) {
+      return reject(error)
+    }
+
+    return resolve(i18next)
+  })
 })
-
-
-
-
-
-export default i18next
