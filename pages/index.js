@@ -9,13 +9,11 @@ import Link from 'next/link'
 // Component imports
 import Page from '../components/Page'
 
-import I18nextPage from '../components/I18nextPage'
 
 
 
 
-
-export default class extends I18nextPage {
+export default class extends React.Component {
 
   /***************************************************************************\
     Public Methods

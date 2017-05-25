@@ -22,7 +22,7 @@ export default class extends React.Component {
     return (
       <Page title={this.title}>
         <header className="page-header">
-          <h2>About</h2>
+          <h2>{this.title}</h2>
         </header>
       </Page>
     )

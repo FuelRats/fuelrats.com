@@ -17,7 +17,6 @@ export default new Promise((resolve, reject) => {
   .init({
     backend: {
       loadPath: 'https://raw.githubusercontent.com/FuelRats/translations/master/{{lng}}/{{ns}}.json'
-//      'http://localhost:3000/static/locales/{{lng}}/{{ns}}.json'
     },
     debug: false,
     defaultNS: 'translation',
@@ -25,8 +24,7 @@ export default new Promise((resolve, reject) => {
     load: 'currentOnly',
     ns: [
       'translation'
-    ],
-    wait: true
+    ]
   }, error => {
     if (error) {
       return reject(error)
