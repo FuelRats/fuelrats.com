@@ -5,7 +5,13 @@
 \******************************************************************************/
 
 const config = require('./config')
+const koa = new (require('koa'))
 const path = require('path')
+
+const next = require('next')({
+  dev: process.env.NODE_ENV !== 'production',
+  dir: path.resolve('.')
+})
 
 
 
@@ -15,30 +21,23 @@ const path = require('path')
   Initialize the app
 \******************************************************************************/
 
-// Start Koa
-const app = new (require('koa'))
-app.next = require('next')({
-  dev: process.env.NODE_ENV !== 'production',
-  dir: path.resolve('.')
-})
-
-app.next.prepare()
+next.prepare()
 .then(() => {
+  // Set up the logger
+  koa.use(require('koa-logger')())
+
   // Configure proxies
-//  require('./config/proxy')(app, config)
+  require('./config/proxy')(koa, config)
 
   // Configure middleware, et al
-  require('./config/koa')(app, config)
-
-  // Configure static file serving
-  require('./config/serve')(app, config)
+  require('./config/koa')(koa, config)
 
   // Configure the router
-  require('./config/router')(app, config)
+  require('./config/router')(next, koa, config)
 
   // Start the server
 //  console.log('Listening on port', process.env.PORT || 3000)
-  app.listen(process.env.PORT || 3001)
+  koa.listen(process.env.PORT || 3000)
 })
 
 

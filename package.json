@@ -4,11 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "next build",
-    "dev": "next",
     "postinstall": "$(npm bin)/bower install",
     "scss": "$(npm bin)/grunt",
-    "start": "next start"
+    "start": "node server/server.js"
   },
   "dependencies": {
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
@@ -34,7 +32,8 @@
     "koa-send": "^4.1.0",
     "koa-static": "^3.0.0",
     "load-grunt-config": "^0.19.2",
-    "next": "^2.2.0",
+    "lodash": "^4.17.4",
+    "next": "^2.4.3",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "tags-input-component": "^1.1.2",

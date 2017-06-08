@@ -13,18 +13,22 @@ const send = require('koa-send')
 
 
 
-module.exports = function (app, config) {
+module.exports = function (next, koa, config) {
 
   /******************************************************************************\
     GET routes
   \******************************************************************************/
 
-  let handle = app.next.getRequestHandler()
+  let handle = next.getRequestHandler()
 
   router.get('*', async ctx => {
     await handle(ctx.req, ctx.res)
     ctx.respond = false
-//    await send(ctx, 'index.html')
+  })
+
+  koa.use(async (ctx, next) => {
+    ctx.res.statusCode = 200
+    await next()
   })
 
 
@@ -35,6 +39,6 @@ module.exports = function (app, config) {
     Attach the router to the app
   \******************************************************************************/
 
-  app.use(router.routes())
-  app.use(router.allowedMethods())
+  koa.use(router.routes())
+  koa.use(router.allowedMethods())
 }
