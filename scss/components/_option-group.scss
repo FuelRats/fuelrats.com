@@ -1,6 +1,9 @@
 .option-group {
 
-  :nth-child(2) {
-    margin-right: 2rem;
+  [type=checkbox],
+  [type=radio] {
+    + label {
+      margin-right: 2rem;
+    }
   }
 }
