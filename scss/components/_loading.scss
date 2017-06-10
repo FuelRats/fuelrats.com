@@ -7,19 +7,10 @@
     &:before {
       align-content: center;
       align-items: center;
-      border-radius: 100%;
-      border-style: solid;
-      border-width: 0.3rem;
       color: $black;
       display: flex;
-      height: $loader-size;
       justify-content: center;
-      left: 50%;
-      margin-left: -($loader-size / 2);
-      margin-top: -($loader-size / 2);
       position: absolute;
-      top: 50%;
-      width: $loader-size;
     }
 
     &:after {
@@ -37,12 +28,28 @@
         loading-start,
         loading;
       border-color: currentColor;
+      border-radius: 100%;
+      border-style: solid;
+      border-width: $loader-border-width;
       content: '';
+      height: $loader-size;
+      left: 50%;
+      margin-left: -(($loader-size / 2) + $loader-border-width);
+      margin-top: -(($loader-size / 2) + $loader-border-width);
+      top: 50%;
+      width: $loader-size;
+      z-index: 100;
     }
 
     &:before {
+      background-color: rgba(white, 0.8);
       border-color: transparent;
       content: 'Loading';
+      bottom: 0;
+      left: 0;
+      right: 0;
+      top: 0;
+      z-index: 100;
     }
   }
 }
