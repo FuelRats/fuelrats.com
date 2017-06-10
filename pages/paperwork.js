@@ -90,6 +90,9 @@ export default class extends React.Component {
   }
 
   onSubmit () {
+    this.setState({
+      loading: true
+    })
     console.log('submitting!')
   }
 
@@ -207,8 +210,11 @@ export default class extends React.Component {
         <menu type="toolbar">
           <div className="primary">
             <button
+              disabled={this.state.loading}
               onClick={this.onSubmit}
-              type="submit">Submit</button>
+              type="submit">
+              {this.state.loading ? 'Submitting...' : 'Submit'}
+            </button>
           </div>
 
           <div className="secondary"></div>
