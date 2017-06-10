@@ -22,6 +22,18 @@ input[type=button],
     color: $red;
   }
 
+  &[disabled] {
+    background-color: $grey;
+    border-color: $grey;
+    color: $white;
+
+    &:hover {
+      background-color: $grey;
+      border-color: $grey;
+      color: $white;
+    }
+  }
+
   &.icon {
     padding: 1rem;
   }
