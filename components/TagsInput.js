@@ -14,7 +14,7 @@ export default class extends React.Component {
 
 
   addTag (tag) {
-    let tags = Object.assign([], this.state.tags)
+    let tags = this.state.tags
 
     if (!this.props.allowDuplicates) {
       let duplicateIndex = tags.findIndex(searchTag => {
@@ -28,9 +28,11 @@ export default class extends React.Component {
 
     tags.push(tag)
 
-    this.setState({ tags })
-
-    this.clearOptions()
+    this.setState({
+      options: [],
+      selectedOption: null,
+      tags,
+    })
 
     if (this.props.onAdd) {
       this.props.onAdd(tag)
@@ -41,13 +43,6 @@ export default class extends React.Component {
     this.log('groupCollapsed', 'adding tag')
     this.log(tag)
     this.log('groupEnd')
-  }
-
-  clearOptions () {
-    this.setState({
-      options: [],
-      selectedOption: null,
-    })
   }
 
   componentDidUpdate (prevProps, prevState) {
@@ -195,6 +190,10 @@ export default class extends React.Component {
   }
 
   handleReturn (event) {
+    if (event.target.value) {
+      event.preventDefault()
+    }
+
     let selectedOption = this.getSelectedOption()
     let successfullyAddedTag
 
@@ -426,10 +425,13 @@ export default class extends React.Component {
   }
 
   updateOptions (options, merge = false) {
-    let optionList = []
+    let newState = {
+      options: Object.assign([], this.state.options)
+    }
 
     if (!merge) {
-      this.clearOptions()
+      newState.options = []
+      newState.selectedOption = null
     }
 
     options.forEach(option => {
@@ -447,12 +449,10 @@ export default class extends React.Component {
         return
       }
 
-      optionList.push(option)
+      newState.options.push(option)
     })
 
-    this.setState({
-      options: optionList
-    })
+    this.setState(newState)
 
     this.log('groupCollapsed', 'updating options')
     this.log('options:', options)
