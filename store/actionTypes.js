@@ -1,0 +1,6 @@
+export default {
+  HIDE_DIALOG: 'HIDE_DIALOG',
+  LOGIN: 'LOGIN',
+  REGISTER: 'REGISTER',
+  SHOW_DIALOG: 'SHOW_DIALOG',
+}

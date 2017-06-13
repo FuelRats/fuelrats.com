@@ -1,6 +1,13 @@
 // Module imports
-import Link from 'next/link'
+import { bindActionCreators } from 'redux'
+import _ from 'lodash'
 import React from 'react'
+import withRedux from 'next-redux-wrapper'
+
+import {
+  actions,
+  initStore,
+} from '../store'
 
 
 
@@ -8,73 +15,62 @@ import React from 'react'
 
 // Component imports
 import AdminUserMenuNav from './AdminUserMenuNav'
+import Component from './Component'
+import LoginDialog from './LoginDialog'
 
 
 
 
 
-export default class extends React.Component {
-
-  /***************************************************************************\
-    Private Methods
-  \***************************************************************************/
-
-  _checkLoggedInStatus () {
-    return false
-  }
-
-
-
-
+class UserMenu extends Component {
 
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
 
-  static async getInitialProps () {
-    return {
-      loggedIn: true
-    }
+  constructor (props) {
+    super(props)
+
+    this._bindMethods(['showDialog'])
   }
 
   render () {
     let adminUserMenuNav = null
+    let avatar = ''
     let isAdmin = true
-    let loggedIn = true
-
-    if (isAdmin) {
-      adminUserMenuNav = <AdminUserMenuNav />
-    }
+    let user = this.props.user
 
     return (
       <div className="user-menu">
-        {loggedIn && ( 
-          <div className="avatar medium"><img src="{{avatar}}" /></div>
+        {this.props.loggedIn && (
+          <div className="avatar medium"><img src={`//api.adorable.io/avatars/${user.id}`} /></div>
         )}
 
-        {loggedIn && ( 
+        {this.props.loggedIn && (
           <menu>
             <nav className="user">
               <ul>
                 <li>
                   <a href="/profile">My Profile</a>
                 </li>
-  
+
                 <li>
                   <a href="/leaderboard">Leaderboard</a>
                 </li>
-  
+
                 <li>
                   <a href="/logout">Logout</a>
                 </li>
               </ul>
             </nav>
-  
-            {adminUserMenuNav}
-  
+
+            {user.isAdmin && (
+              <AdminUserMenuNav />
+            )}
+
             <div className="stats">
               <header>My Stats</header>
-  
+
               <table>
                 <tbody>
                   <tr>
@@ -94,11 +90,44 @@ export default class extends React.Component {
             </div>
           </menu>
         )}
-        
-        {!loggedIn && ( 
-          <button className="login">Login</button>
+
+        {!this.props.loggedIn && (
+          <button
+            className="login"
+            onClick={this.showDialog}>
+            Login
+          </button>
         )}
       </div>
     )
   }
+
+  showDialog () {
+    this.props.showDialog({
+      body: (<LoginDialog />),
+      closeIsVisible: true,
+      menuIsVisible: false,
+      title: 'Login',
+    })
+  }
 }
+
+
+
+
+
+const mapDispatchToProps = dispatch => {
+  return {
+    showDialog: bindActionCreators(actions.showDialog, dispatch),
+  }
+}
+
+const mapStateToProps = state => {
+  return state.authentication
+}
+
+
+
+
+
+export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(UserMenu)
