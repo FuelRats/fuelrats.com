@@ -26,6 +26,7 @@ input[type=button],
     background-color: $grey;
     border-color: $grey;
     color: $white;
+    cursor: default;
 
     &:hover {
       background-color: $grey;
