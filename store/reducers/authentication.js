@@ -18,31 +18,8 @@ export default function (state = initialState.authentication, action) {
           break
 
         case 'success':
-          let user = action.user
-          let group = user.group || user.groups
-          let isArray = Array.isArray(group)
-
-          let isAdmin = false
-          let isModerator = false
-          let isOverseer = false
-
-          if (isArray) {
-            isAdmin = group.indexOf('admin') !== -1
-            isModerator = group.indexOf('moderator') !== -1
-            isOverseer = group.indexOf('overseer') !== -1
-          } else {
-            isAdmin = group === 'admin'
-            isModerator = isAdmin || group === 'moderator'
-            isOverseer = isModerator || group === 'overseer'
-          }
-
           newState.loggedIn = true
           newState.loggingIn = false
-          newState.user = Object.assign(user, {
-            isAdmin,
-            isModerator,
-            isOverseer
-          })
 
           break
 

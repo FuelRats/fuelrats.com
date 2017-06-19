@@ -38,12 +38,11 @@ class UserMenu extends Component {
     let adminUserMenuNav = null
     let avatar = ''
     let isAdmin = true
-    let user = this.props.user
 
     return (
       <div className="user-menu">
         {this.props.loggedIn && (
-          <div className="avatar medium"><img src={`//api.adorable.io/avatars/${user.id}`} /></div>
+          <div className="avatar medium"><img src={`//api.adorable.io/avatars/${this.props.id}`} /></div>
         )}
 
         {this.props.loggedIn && (
@@ -64,7 +63,7 @@ class UserMenu extends Component {
               </ul>
             </nav>
 
-            {user.isAdmin && (
+            {this.props.isAdmin && (
               <AdminUserMenuNav />
             )}
 
@@ -123,7 +122,7 @@ const mapDispatchToProps = dispatch => {
 }
 
 const mapStateToProps = state => {
-  return state.authentication
+  return Object.assign({}, state.authentication, state.user)
 }
 
 

@@ -15,14 +15,13 @@ import actionTypes from '../actionTypes'
 export const login = (email, password) => dispatch => {
   dispatch({ type: actionTypes.LOGIN })
 
-  return fetch('https://dev.api.fuelrats.com/login', {
+  return fetch('/api/login', {
     body: JSON.stringify({
       email,
       password,
     }),
     headers: new Headers({
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      'content-type': 'application/json',
     }),
     method: 'post',
   })

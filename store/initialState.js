@@ -3,7 +3,6 @@ export default {
     loggingIn: false,
     loggingOut: false,
     registering: false,
-    user: null,
   },
 
   dialog: {
@@ -13,4 +12,10 @@ export default {
     menuIsVisible: true,
     title: null,
   },
+
+  paperwork: {
+    submitting: false,
+  },
+
+  user: null,
 }
