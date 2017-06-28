@@ -1,6 +1,7 @@
 // Module imports
 import { bindActionCreators } from 'redux'
 import _ from 'lodash'
+import Link from 'next/link'
 import React from 'react'
 import withRedux from 'next-redux-wrapper'
 
@@ -50,15 +51,21 @@ class UserMenu extends Component {
             <nav className="user">
               <ul>
                 <li>
-                  <a href="/profile">My Profile</a>
+                  <Link href="/profile">
+                    <a>My Profile</a>
+                  </Link>
                 </li>
 
                 <li>
-                  <a href="/leaderboard">Leaderboard</a>
+                  <Link href="/leaderboard">
+                    <a>Leaderboard</a>
+                  </Link>
                 </li>
 
                 <li>
-                  <a href="/logout">Logout</a>
+                  <Link href="/logout">
+                    <a>Logout</a>
+                  </Link>
                 </li>
               </ul>
             </nav>
