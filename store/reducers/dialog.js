@@ -8,7 +8,6 @@ import initialState from '../initialState'
 export default function (state = initialState.dialog, action) {
   switch (action.type) {
     case actionTypes.DIALOG:
-      console.log(action)
       if (action.visible) {
         return Object.assign({}, state, action.options, {
           isVisible: true,
