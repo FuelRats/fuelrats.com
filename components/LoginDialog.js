@@ -25,6 +25,10 @@ class LoginDialog extends Component {
     Public Methods
   \***************************************************************************/
 
+  componentDidMount () {
+    this.emailInput.focus()
+  }
+
   componentWillReceiveProps (nextProps) {
     if (nextProps.loggedIn) {
       this.props.hideDialog()
@@ -58,6 +62,7 @@ class LoginDialog extends Component {
           name="email"
           onInput={event => this.setState({ email: event.target.value })}
           placeholder="Email"
+          ref={emailInput => this.emailInput = emailInput}
           required
           type="email" />
         <input
