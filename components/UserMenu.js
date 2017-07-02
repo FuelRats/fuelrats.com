@@ -29,6 +29,12 @@ class UserMenu extends Component {
     Public Methods
   \***************************************************************************/
 
+  componentDidMount () {
+    if (localStorage.getItem('access_token')) {
+      this.props.login()
+    }
+  }
+
   constructor (props) {
     super(props)
 
@@ -124,7 +130,7 @@ class UserMenu extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    showDialog: bindActionCreators(actions.showDialog, dispatch),
+    login: bindActionCreators(actions.login, dispatch),
   }
 }
 

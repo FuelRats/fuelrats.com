@@ -18,7 +18,6 @@ module.exports = function (koa, config) {
     Set up middleware
   \******************************************************************************/
 
-//  koa.use(logger())
   koa.use(compress())
   koa.use(bodyParser())
 }

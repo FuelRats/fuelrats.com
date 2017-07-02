@@ -16,18 +16,22 @@ module.exports = function (koa, config) {
     Proxy Fuelrats API requests
   \******************************************************************************/
 
-//  koa.use(proxy('/api', {
-//    changeOrigin: true,
-////    cookieDomainRewrite: {
-////      '*': '.fuelrats.com',
-////    },
-//    logs: true,
-////    preserveReqSession: true,
-////    proxyTimeout: 500,
-//    rewrite: path => path.replace(/^\/api/, ''),
-//    secure: true,
-//    target: config.api.url,
-//  }))
+  let authHeader = `Basic ${new Buffer(`${config.api.clientId}:${config.api.clientSecret}`).toString('base64')}`
+
+  koa.use(proxy('/token', {
+    auth: `${config.api.clientId}:${config.api.clientSecret}`,
+    changeOrigin: true,
+    rewrite: path => path.replace(/^\/token/, '/oauth2/token'),
+    secure: true,
+    target: config.api.url,
+  }))
+
+  koa.use(proxy('/api', {
+    changeOrigin: true,
+    rewrite: path => path.replace(/^\/api/, ''),
+    secure: true,
+    target: config.api.url,
+  }))
 
 
 

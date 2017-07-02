@@ -17,5 +17,11 @@ export default {
     submitting: false,
   },
 
-  user: null,
+  rescues: {
+    rescues: [],
+    retrieving: false,
+    total: 0,
+  },
+
+  user: {},
 }

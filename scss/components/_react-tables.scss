@@ -1,0 +1,13 @@
+.ReactTable {
+
+  .rt-thead {
+    background-color: $black;
+    color: $white;
+  }
+
+  .rt-thead .rt-th,
+  .rt-tbody .rt-td {
+    line-height: 2;
+    padding: 1rem;
+  }
+}

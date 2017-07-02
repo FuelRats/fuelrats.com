@@ -1,1 +1,8 @@
-table.rescues {}
+.ReactTable.rescues {
+  .codeRed,
+  .date,
+  .state,
+  .system {
+    text-align: left;
+  }
+}
