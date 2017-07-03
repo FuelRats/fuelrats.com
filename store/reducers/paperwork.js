@@ -7,22 +7,48 @@ import initialState from '../initialState'
 
 export default function (state = initialState.paperwork, action) {
   switch (action.type) {
-    case actionTypes.PAPERWORK:
-      let newState = Object.assign({}, state)
-
+    case actionTypes.SUBMIT_PAPERWORK:
       switch (action.status) {
         case 'error':
-          newState.submitting = true
+          return Object.assign({}, state, {
+            submitting: false,
+          })
+
+        case 'success':
+          return Object.assign({}, state, {
+            rescue: null,
+            submitting: false,
+          })
+
+        default:
+          return Object.assign({}, state, {
+            submitting: true,
+          })
+      }
+
+      return newState
+
+    case actionTypes.RETRIEVE_PAPERWORK:
+      switch (action.status) {
+        case 'error':
+          return Object.assign({}, state, {
+            retrieving: false,
+          })
 
           break
 
         case 'success':
-          newState.submitting = false
+          return Object.assign({}, state, {
+            rescue: action.rescue,
+            retrieving: false,
+          })
 
           break
 
         default:
-          newState.submitting = false
+          return Object.assign({}, state, {
+            retrieving: true,
+          })
       }
 
       return newState

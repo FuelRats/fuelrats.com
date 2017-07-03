@@ -13,20 +13,25 @@ import actionTypes from '../actionTypes'
 
 
 export const retrievePaperwork = (rescueId) => dispatch => {
-  dispatch({ type: actionTypes.PAPERWORK })
+  dispatch({ type: actionTypes.RETRIEVE_PAPERWORK })
 
-  return fetch(`/api/rescues/${rescueId}`)
+  return fetch(`/api/rescues/${rescueId}`, {
+    headers: new Headers({
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    }),
+  })
   .then(response => response.json())
   .then(response => {
     dispatch({
+      rescue: response.data,
       status: 'success',
-      type: actionTypes.PAPERWORK,
+      type: actionTypes.RETRIEVE_PAPERWORK,
     })
   })
   .catch(error => {
     dispatch({
       status: 'error',
-      type: actionTypes.PAPERWORK,
+      type: actionTypes.RETRIEVE_PAPERWORK,
     })
 
     console.log(error)
@@ -38,12 +43,12 @@ export const retrievePaperwork = (rescueId) => dispatch => {
 
 
 export const submitPaperwork = (paperwork) => dispatch => {
-  dispatch({ type: actionTypes.PAPERWORK })
+  dispatch({ type: actionTypes.SUBMIT_PAPERWORK })
 
   return fetch('/api/rescues', {
     body: JSON.stringify(paperwork),
     headers: new Headers({
-      'Accept': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
       'Content-Type': 'application/json'
     }),
     method: 'post',
@@ -52,13 +57,13 @@ export const submitPaperwork = (paperwork) => dispatch => {
   .then(response => {
     dispatch({
       status: 'success',
-      type: actionTypes.PAPERWORK,
+      type: actionTypes.SUBMIT_PAPERWORK,
     })
   })
   .catch(error => {
     dispatch({
       status: 'error',
-      type: actionTypes.PAPERWORK,
+      type: actionTypes.SUBMIT_PAPERWORK,
     })
 
     console.log(error)

@@ -28,6 +28,28 @@ class Paperwork extends Component {
     Public Methods
   \***************************************************************************/
 
+  componentDidMount () {
+    let searchParams = {}
+
+    location.search.replace(/^\?/, '').split('&').forEach(searchParam => {
+      let splitSearchParam = searchParam.split('=')
+      let key = splitSearchParam[0]
+      let value = splitSearchParam[1]
+
+      searchParams[key] = value
+    })
+
+    if (searchParams['id']) {
+      this.props.retrievePaperwork(searchParams['id'])
+    }
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.rescue) {
+      this.setState(nextProps.rescue)
+    }
+  }
+
   constructor (props) {
     super(props)
 
@@ -36,7 +58,7 @@ class Paperwork extends Component {
     this.state = {
       codeRed: false,
       firstLimpet: null,
-      notes: '',
+      notes: null,
       platform: 'pc',
       rats: [],
       successful: true,
@@ -89,6 +111,21 @@ class Paperwork extends Component {
   }
 
   render () {
+    let {
+      retrieving,
+      submitting,
+    } = this.props
+
+    let {
+      codeRed,
+      firstLimpet,
+      notes,
+      platform,
+      rats,
+      successful,
+      system,
+    } = this.state
+
     return (
       <Page title={this.title}>
         <header className="page-header">
@@ -100,29 +137,32 @@ class Paperwork extends Component {
             <label htmlFor="rats">Who arrived for the rescue?</label>
 
             <RatTagsInput
-              disabled={this.props.submitting}
+              disabled={submitting || retrieving}
               name="rats"
-              onChange={this.handleRatsChange} />
+              onChange={this.handleRatsChange}
+              value={rats} />
           </fieldset>
 
           <fieldset>
             <label htmlFor="firstLimpet">Who fired the first limpet?</label>
 
             <RatTagsInput
-              disabled={this.props.submitting}
+              disabled={submitting || retrieving}
               name="firstLimpet"
               onChange={this.handleFirstLimpetChange}
-              data-single />
+              data-single
+              value={firstLimpet} />
           </fieldset>
 
           <fieldset>
             <label htmlFor="system">Where did it happen? <small>In what star system did the rescue took place? (put "n/a" if not applicable)</small></label>
 
             <SystemTagsInput
-              disabled={this.props.submitting}
+              disabled={submitting || retrieving}
               name="system"
               onChange={this.handleSystemChange}
-              data-single />
+              data-single
+              value={system} />
           </fieldset>
 
           <fieldset>
@@ -130,8 +170,8 @@ class Paperwork extends Component {
 
             <div className="option-group">
               <input
-                defaultChecked="true"
-                disabled={this.props.submitting}
+                defaultChecked={platform === 'pc'}
+                disabled={submitting || retrieving}
                 id="platform-pc"
                 name="platform"
                 onChange={this.handleChange}
@@ -139,7 +179,8 @@ class Paperwork extends Component {
                 value="pc" /> <label htmlFor="platform-pc">PC</label>
 
               <input
-                disabled={this.props.submitting}
+                defaultChecked={platform === 'xb'}
+                disabled={submitting || retrieving}
                 id="platform-xb"
                 name="platform"
                 onChange={this.handleChange}
@@ -147,7 +188,8 @@ class Paperwork extends Component {
                 value="xb" /> <label htmlFor="platform-xb">Xbox One</label>
 
               <input
-                disabled={this.props.submitting}
+                defaultChecked={platform === 'ps'}
+                disabled={submitting || retrieving}
                 id="platform-ps"
                 name="platform"
                 onChange={this.handleChange}
@@ -161,8 +203,8 @@ class Paperwork extends Component {
 
             <div className="option-group">
               <input
-                defaultChecked="true"
-                disabled={this.props.submitting}
+                defaultChecked={successful}
+                disabled={submitting || retrieving}
                 id="successful-yes"
                 name="successful"
                 onChange={this.handleChange}
@@ -170,7 +212,8 @@ class Paperwork extends Component {
                 value={true} /> <label htmlFor="successful-yes">Yes</label>
 
               <input
-                disabled={this.props.submitting}
+                defaultChecked={!successful}
+                disabled={submitting || retrieving}
                 id="successful-no"
                 name="successful"
                 onChange={this.handleChange}
@@ -184,8 +227,8 @@ class Paperwork extends Component {
 
             <div className="option-group">
               <input
-                defaultChecked="true"
-                disabled={this.props.submitting}
+                defaultChecked={codeRed}
+                disabled={submitting || retrieving}
                 id="codeRed-yes"
                 name="codeRed"
                 onChange={this.handleChange}
@@ -193,7 +236,8 @@ class Paperwork extends Component {
                 value={true} /> <label htmlFor="codeRed-yes">Yes</label>
 
               <input
-                disabled={this.props.submitting}
+                defaultChecked={!codeRed}
+                disabled={submitting || retrieving}
                 id="codeRed-no"
                 name="codeRed"
                 onChange={this.handleChange}
@@ -206,18 +250,20 @@ class Paperwork extends Component {
             <label htmlFor="notes">Notes</label>
 
             <textarea
-              disabled={this.props.submitting}
+              disabled={submitting || retrieving}
               id="notes"
               name="notes"
-              onChange={this.handleChange}></textarea>
+              onChange={this.handleChange}>
+              {notes}
+            </textarea>
           </fieldset>
 
           <menu type="toolbar">
             <div className="primary">
               <button
-                disabled={this.props.submitting}
+                disabled={submitting || retrieving}
                 type="submit">
-                {this.props.submitting ? 'Submitting...' : 'Submit'}
+                {submitting ? 'Submitting...' : 'Submit'}
               </button>
             </div>
 
@@ -248,6 +294,7 @@ class Paperwork extends Component {
 const mapDispatchToProps = dispatch => {
   return {
     submitPaperwork: bindActionCreators(actions.submitPaperwork, dispatch),
+    retrievePaperwork: bindActionCreators(actions.retrievePaperwork, dispatch),
   }
 }
 
