@@ -15,6 +15,7 @@ import {
 } from '../store'
 import Component from '../components/Component'
 import Page from '../components/Page'
+import FirstLimpetInput from '../components/FirstLimpetInput'
 import RatTagsInput from '../components/RatTagsInput'
 import SystemTagsInput from '../components/SystemTagsInput'
 
@@ -152,10 +153,11 @@ class Paperwork extends Component {
           <fieldset>
             <label htmlFor="firstLimpet">Who fired the first limpet?</label>
 
-            <RatTagsInput
+            <FirstLimpetInput
               disabled={submitting || retrieving}
               name="firstLimpet"
               onChange={this.handleFirstLimpetChange}
+              options={rats}
               data-single
               value={firstLimpet} />
           </fieldset>
