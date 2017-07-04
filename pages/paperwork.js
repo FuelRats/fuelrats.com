@@ -58,7 +58,7 @@ class Paperwork extends Component {
     this.state = {
       codeRed: false,
       firstLimpet: null,
-      notes: null,
+      notes: '',
       platform: 'pc',
       rats: [],
       successful: true,
@@ -100,6 +100,8 @@ class Paperwork extends Component {
     let newState = {}
 
     newState[prop] = value
+
+    console.log('handleTagInputChange')
 
     this.setState(newState)
   }
@@ -253,9 +255,8 @@ class Paperwork extends Component {
               disabled={submitting || retrieving}
               id="notes"
               name="notes"
-              onChange={this.handleChange}>
-              {notes}
-            </textarea>
+              onChange={this.handleChange}
+              value={notes} />
           </fieldset>
 
           <menu type="toolbar">
