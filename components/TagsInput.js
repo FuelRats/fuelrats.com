@@ -63,6 +63,16 @@ export default class extends React.Component {
 
       this.setState({ tags })
     }
+
+    if (this.props.options !== nextProps.options) {
+      let options = nextProps.options || []
+
+      if (!Array.isArray(options)) {
+        options = [options]
+      }
+
+      this.setState({ options })
+    }
   }
 
   componentWillUpdate (nextProps, nextState) {
@@ -99,7 +109,7 @@ export default class extends React.Component {
       currentValue: '',
       debug: props.debug,
       focused: false,
-      options: [],
+      options: props.options || [],
       selectedOption: null,
       selectedTag: null,
       tags,
@@ -380,6 +390,7 @@ export default class extends React.Component {
     delete divProps.onAdd
     delete divProps.onChange
     delete divProps.onRemove
+    delete divProps.options
 
     return (
       <div {...divProps} className={classes.join(' ')}>
