@@ -114,6 +114,8 @@ class Paperwork extends Component {
     paperwork.rats = paperwork.rats.map(rat => rat.id)
     paperwork.system = paperwork.system[0].value
 
+    this.validate()
+
     this.props.submitPaperwork(paperwork)
   }
 
@@ -268,7 +270,7 @@ class Paperwork extends Component {
           <menu type="toolbar">
             <div className="primary">
               <button
-                disabled={submitting || retrieving}
+                disabled={submitting || retrieving || !this.validate()}
                 type="submit">
                 {submitting ? 'Submitting...' : 'Submit'}
               </button>
@@ -279,6 +281,28 @@ class Paperwork extends Component {
         </form>
       </Page>
     )
+  }
+
+  validate () {
+    let {
+      firstLimpet,
+      rats,
+      system,
+    } = this.state
+
+    if (!firstLimpet) {
+      return false
+    }
+
+    if (!rats || !rats.length) {
+      return false
+    }
+
+    if (!system) {
+      return false
+    }
+
+    return true
   }
 
 
