@@ -101,15 +101,19 @@ class Paperwork extends Component {
 
     newState[prop] = value
 
-    console.log('handleTagInputChange')
-
     this.setState(newState)
   }
 
   onSubmit (event) {
     event.preventDefault()
 
-    this.props.submitPaperwork(this.state)
+    let paperwork = Object.assign({}, this.state)
+
+    paperwork.firstLimpet = paperwork.firstLimpet[0].id
+    paperwork.rats = paperwork.rats.map(rat => rat.id)
+    paperwork.system = paperwork.system[0].value
+
+    this.props.submitPaperwork(paperwork)
   }
 
   render () {
