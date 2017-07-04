@@ -14,7 +14,7 @@ export default class extends React.Component {
 
 
   addTag (tag) {
-    let tags = this.state.tags
+    let tags = Object.assign([], this.state.tags)
 
     if (!this.props.allowDuplicates) {
       let duplicateIndex = tags.findIndex(searchTag => {
@@ -38,11 +38,13 @@ export default class extends React.Component {
       this.props.onAdd(tag)
     }
 
-    return true
+    this.input.value = ''
 
     this.log('groupCollapsed', 'adding tag')
     this.log(tag)
     this.log('groupEnd')
+
+    return true
   }
 
   componentDidUpdate (prevProps, prevState) {
@@ -220,19 +222,14 @@ export default class extends React.Component {
     }
 
     let selectedOption = this.getSelectedOption()
-    let successfullyAddedTag
 
     if (selectedOption) {
-      successfullyAddedTag = this.addTag(selectedOption)
+      this.addTag(selectedOption)
 
     } else if (this.state.allowNew) {
-      successfullyAddedTag = this.addTag({
+      this.addTag({
         value: event.target.value
       })
-    }
-
-    if (successfullyAddedTag) {
-      event.target.value = ''
     }
   }
 
@@ -335,9 +332,11 @@ export default class extends React.Component {
         break
 
       default: // literally anything else
-        this.setState({
-          currentValue: event.target.value
-        })
+        if (event.target.value !== this.state.currentValue) {
+          this.setState({
+            currentValue: event.target.value
+          })
+        }
     }
   }
 
