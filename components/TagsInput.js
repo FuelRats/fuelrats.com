@@ -51,6 +51,24 @@ export default class extends React.Component {
     }
   }
 
+  componentWillReceiveProps (nextProps) {
+    if (this.props.value !== nextProps.value) {
+      let tags = nextProps.value || []
+
+      if (!Array.isArray(tags)) {
+        tags = [tags]
+      }
+
+      this.setState({ tags })
+    }
+  }
+
+  componentWillUpdate (nextProps, nextState) {
+    if (this.state.tags !== nextState.tags) {
+      nextState.tags = nextState.tags.map(tag => this.parseOption(tag))
+    }
+  }
+
   constructor (props) {
     super(props)
 
@@ -64,6 +82,14 @@ export default class extends React.Component {
       'shouldCaptureKeybind',
     ])
 
+    let tags = props.value || []
+
+    if (!Array.isArray(tags)) {
+      tags = [tags]
+    }
+
+    tags = tags.map(tag => this.parseOption(tag))
+
     this.state = {
       allowDuplicates: props.allowDuplicates,
       allowMultiple: props.allowMultiple,
@@ -74,8 +100,7 @@ export default class extends React.Component {
       options: [],
       selectedOption: null,
       selectedTag: null,
-      tags: [],
-      value: [],
+      tags,
     }
   }
 
@@ -316,6 +341,16 @@ export default class extends React.Component {
     }
   }
 
+  parseOption (option) {
+    if (typeof option === 'string') {
+      option = {
+        value: option
+      }
+    }
+
+    return option
+  }
+
   removeTag (tag) {
     let tags = Object.assign([], this.state.tags)
 
@@ -435,11 +470,7 @@ export default class extends React.Component {
     }
 
     options.forEach(option => {
-      if (typeof option === 'string') {
-        option = {
-          value: option
-        }
-      }
+      option = this.parseOption(option)
 
       if (merge && this.findOption(option)) {
         return
