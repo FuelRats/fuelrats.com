@@ -33,9 +33,7 @@ class Paperwork extends Component {
     let searchParams = {}
 
     location.search.replace(/^\?/, '').split('&').forEach(searchParam => {
-      let splitSearchParam = searchParam.split('=')
-      let key = splitSearchParam[0]
-      let value = splitSearchParam[1]
+      let [ key, value ] = searchParam.split('=')
 
       searchParams[key] = value
     })
