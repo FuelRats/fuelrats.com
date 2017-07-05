@@ -131,6 +131,7 @@ class UserMenu extends Component {
 const mapDispatchToProps = dispatch => {
   return {
     login: bindActionCreators(actions.login, dispatch),
+    showDialog: bindActionCreators(actions.showDialog, dispatch),
   }
 }
 
