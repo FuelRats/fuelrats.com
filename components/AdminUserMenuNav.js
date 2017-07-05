@@ -19,15 +19,21 @@ export default class extends React.Component {
 
         <ul className="">
           <li>
-            <a href="/rescues">Rescues</a>
+            <Link href="/admin/rescues">
+              <a>Rescues</a>
+            </Link>
           </li>
 
           <li>
-            <a href="/rats">Rats</a>
+            <Link href="/admin/rats">
+              <a>Rats</a>
+            </Link>
           </li>
 
           <li>
-            <a href="/users">Users</a>
+            <Link href="/admin/users">
+              <a>Users</a>
+            </Link>
           </li>
         </ul>
       </nav>
