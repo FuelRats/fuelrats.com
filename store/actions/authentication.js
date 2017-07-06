@@ -1,5 +1,6 @@
 // Module imports
 import fetch from 'isomorphic-fetch'
+import Router from 'next/router'
 
 
 
@@ -54,6 +55,18 @@ export const login = (email, password) => async dispatch => {
       type: actionTypes.LOGIN,
       user: userResponse.data,
     })
+
+    if (location && location.search) {
+      let searchParams = {}
+
+      location.search.replace(/^\?/, '').split('&').forEach(searchParam => {
+        let [ key, value ] = searchParam.split('=')
+
+        searchParams[key] = value
+      })
+
+      Router.push(searchParams['destination'] ? searchParams['destination'] : '/profile')
+    }
 
   } catch (error) {
     dispatch({

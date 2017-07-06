@@ -36,9 +36,7 @@ module.exports = function (nextjs, koa, config) {
       await next()
     }
 
-    await nextjs.render(ctx.request, ctx.res, '/', {
-      attemptedDestination: ctx.route
-    })
+    await ctx.redirect(`/?authenticate=true&destination=${ctx.request.url}`)
   })
 
   router.get('*', async ctx => {
