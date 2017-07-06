@@ -5,6 +5,7 @@
 \******************************************************************************/
 
 const { URL } = require('url')
+const cookie = require('koa-cookie')
 const next = require('next')
 const path = require('path')
 const request = require('request-promise-native')
@@ -15,13 +16,30 @@ const send = require('koa-send')
 
 
 
-module.exports = function (next, koa, config) {
+module.exports = function (nextjs, koa, config) {
 
   /******************************************************************************\
     GET routes
   \******************************************************************************/
 
-  let handle = next.getRequestHandler()
+  let handle = nextjs.getRequestHandler()
+
+  let authenticatedRoutes = [
+    '/profile',
+    '/admin/*',
+  ]
+
+//  router.use(cookie.default())
+
+  router.get(authenticatedRoutes, async (ctx, next) => {
+    if (ctx.cookie && ctx.cookie.access_token) {
+      await next()
+    }
+
+    await nextjs.render(ctx.request, ctx.res, '/', {
+      attemptedDestination: ctx.route
+    })
+  })
 
   router.get('*', async ctx => {
     await handle(ctx.req, ctx.res)

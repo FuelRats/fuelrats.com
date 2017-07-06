@@ -37,7 +37,7 @@ export const login = (email, password) => async dispatch => {
 
       token = tokenResponse.access_token
       localStorage.setItem('access_token', token)
-      localStorage.setItem('email', email)
+      document.cookie = `access_token=${token}`
     }
 
     let userResponse = await fetch(`/api/profile`, {
