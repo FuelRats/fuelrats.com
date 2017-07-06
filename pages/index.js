@@ -1,23 +1,40 @@
 // Module imports
+import { bindActionCreators } from 'redux'
+import _ from 'lodash'
 import React from 'react'
-import Link from 'next/link'
+import withRedux from 'next-redux-wrapper'
 
 
 
 
 
 // Component imports
+import {
+  actions,
+  initStore,
+} from '../store'
+import LoginDialog from '../components/LoginDialog'
 import Page from '../components/Page'
 
 
 
 
 
-export default class extends React.Component {
+class Home extends React.Component {
 
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
+
+  componentDidMount () {
+    if (this.props.authenticate) {
+      this.showLogin()
+    }
+  }
+
+  static async getInitialProps ({ query }) {
+    return query || {}
+  }
 
   render () {
     return (
@@ -46,4 +63,31 @@ export default class extends React.Component {
   get title () {
     return 'Home'
   }
+
+  showLogin () {
+    this.props.showDialog({
+      body: (<LoginDialog />),
+      closeIsVisible: true,
+      menuIsVisible: false,
+      title: 'Login',
+    })
+  }
 }
+
+
+
+
+
+
+const mapDispatchToProps = dispatch => {
+  return {
+    login: bindActionCreators(actions.login, dispatch),
+    showDialog: bindActionCreators(actions.showDialog, dispatch),
+  }
+}
+
+
+
+
+
+export default withRedux(initStore, null, mapDispatchToProps)(Home)
