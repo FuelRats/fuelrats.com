@@ -38,7 +38,7 @@ class UserMenu extends Component {
   constructor (props) {
     super(props)
 
-    this._bindMethods(['showDialog'])
+    this._bindMethods(['showLogin'])
   }
 
   render () {
@@ -106,7 +106,7 @@ class UserMenu extends Component {
         {!this.props.loggedIn && (
           <button
             className="login"
-            onClick={this.showDialog}>
+            onClick={this.showLogin}>
             Login
           </button>
         )}
@@ -114,7 +114,7 @@ class UserMenu extends Component {
     )
   }
 
-  showDialog () {
+  showLogin () {
     this.props.showDialog({
       body: (<LoginDialog />),
       closeIsVisible: true,
