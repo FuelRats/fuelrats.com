@@ -24,6 +24,7 @@
     "i18next-fetch-backend": "^0.0.1",
     "i18next-localstorage-cache": "^1.1.0",
     "isomorphic-fetch": "^2.2.1",
+    "js-cookie": "^2.1.4",
     "koa": "^2.3.0",
     "koa-bodyparser": "^4.2.0",
     "koa-compress": "^2.0.0",

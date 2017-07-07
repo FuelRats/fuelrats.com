@@ -69,9 +69,11 @@ class UserMenu extends Component {
                 </li>
 
                 <li>
-                  <Link href="/logout">
-                    <a>Logout</a>
-                  </Link>
+                  <a
+                    href="#"
+                    onClick={this.props.logout}>
+                    Logout
+                  </a>
                 </li>
               </ul>
             </nav>
@@ -131,6 +133,7 @@ class UserMenu extends Component {
 const mapDispatchToProps = dispatch => {
   return {
     login: bindActionCreators(actions.login, dispatch),
+    logout: bindActionCreators(actions.logout, dispatch),
     showDialog: bindActionCreators(actions.showDialog, dispatch),
   }
 }

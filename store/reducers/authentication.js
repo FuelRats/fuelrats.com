@@ -8,27 +8,32 @@ import initialState from '../initialState'
 export default function (state = initialState.authentication, action) {
   switch (action.type) {
     case actionTypes.LOGIN:
-      let newState = Object.assign({}, state)
-
       switch (action.status) {
         case 'error':
-          newState.loggedIn = false
-          newState.loggingIn = false
-
-          break
+          return Object.assign({}, state, {
+            loggedIn: false,
+            loggingIn: false,
+          })
 
         case 'success':
-          newState.loggedIn = true
-          newState.loggingIn = false
-
-          break
+          return Object.assign({}, state, {
+            loggedIn: true,
+            loggingIn: false,
+          })
 
         default:
-          newState.loggedIn = false
-          newState.loggingIn = true
+          return Object.assign({}, state, {
+            loggedIn: false,
+            loggingIn: true,
+          })
       }
 
-      return newState
+    case actionTypes.LOGOUT:
+      if (action.status === 'success') {
+        return Object.assign({}, state, {
+          loggedIn: false,
+        })
+      }
 
     default:
       return state

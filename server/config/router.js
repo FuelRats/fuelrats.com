@@ -29,7 +29,7 @@ module.exports = function (nextjs, koa, config) {
     '/admin/*',
   ]
 
-//  router.use(cookie.default())
+  router.use(cookie.default())
 
   router.get(authenticatedRoutes, async (ctx, next) => {
     if (ctx.cookie && ctx.cookie.access_token) {

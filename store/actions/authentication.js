@@ -1,4 +1,5 @@
 // Module imports
+import Cookies from 'js-cookie'
 import fetch from 'isomorphic-fetch'
 import Router from 'next/router'
 
@@ -38,7 +39,7 @@ export const login = (email, password) => async dispatch => {
 
       token = tokenResponse.access_token
       localStorage.setItem('access_token', token)
-      document.cookie = `access_token=${token}`
+      Cookies.set('access_token', token)
     }
 
     let userResponse = await fetch(`/api/profile`, {
@@ -72,6 +73,33 @@ export const login = (email, password) => async dispatch => {
     dispatch({
       status: 'error',
       type: actionTypes.LOGIN,
+    })
+
+    console.log(error)
+  }
+}
+
+
+
+
+
+export const logout = (email, password) => async dispatch => {
+  dispatch({ type: actionTypes.LOGOUT })
+
+  try {
+    localStorage.removeItem('access_token')
+    Cookies.remove('access_token')
+    Router.push('/')
+
+    dispatch({
+      status: 'success',
+      type: actionTypes.LOGOUT,
+    })
+
+  } catch (error) {
+    dispatch({
+      status: 'error',
+      type: actionTypes.LOGOUT,
     })
 
     console.log(error)

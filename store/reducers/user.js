@@ -33,6 +33,15 @@ export default function (state = initialState.user, action) {
         return Object.assign({}, state, user)
       }
 
+    case actionTypes.LOGOUT:
+      switch (action.status) {
+        case 'success':
+          return Object.assign({}, state, {
+            loggedIn: false,
+            loggingIn: false,
+          })
+      }
+
     default:
       return state
   }

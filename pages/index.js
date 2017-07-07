@@ -81,7 +81,6 @@ class Home extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    login: bindActionCreators(actions.login, dispatch),
     showDialog: bindActionCreators(actions.showDialog, dispatch),
   }
 }
