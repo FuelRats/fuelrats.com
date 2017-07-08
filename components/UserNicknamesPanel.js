@@ -35,7 +35,7 @@ class UserNicknamesPanel extends Component {
         <div className="panel-content">
           <div className="row nicknames">
             <ul>
-              {nicknames.map((nickname, index) => <li key={index}>{nickname}</li>)}
+              {nicknames && nicknames.map((nickname, index) => <li key={index}>{nickname}</li>)}
             </ul>
           </div>
 

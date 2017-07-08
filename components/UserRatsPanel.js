@@ -23,6 +23,35 @@ import Component from './Component'
 class UserRatsPanel extends Component {
 
   /***************************************************************************\
+    Private Methods
+  \***************************************************************************/
+
+  _renderRats (rats) {
+    return rats.map((rat, index) => {
+      let {
+        CMDRname,
+        id,
+        platform,
+      } = rat
+      let badgeClasses = ['badge', 'platform', 'short', platform].join(' ')
+
+      return (
+        <li key={index}>
+          <div className={badgeClasses}></div>
+
+          <Link href={`/rats/${id}`}>
+            <a>{CMDRname}</a>
+          </Link>
+        </li>
+      )
+    })
+  }
+
+
+
+
+
+  /***************************************************************************\
     Public Methods
   \***************************************************************************/
 
@@ -48,20 +77,10 @@ class UserRatsPanel extends Component {
       <div className="panel">
         <header>Rats</header>
 
-        <div className="panel-content">
-          <div className="row rats">
+        <div className="panel-content user-rats-panel">
+          <div className="row">
             {rats && (
-              <ul>
-                {rats.map((rat, index) => {
-                  return (
-                    <li key={index}>
-                      <Link href={`/rats/${rat.id}`}>
-                        <a>{rat.CMDRname}</a>
-                      </Link>
-                    </li>
-                  )
-                })}
-              </ul>
+              <ul>{this._renderRats(rats)}</ul>
             )}
 
             {!rats && 'Loading rat info...'}

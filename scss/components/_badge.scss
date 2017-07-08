@@ -1,15 +1,116 @@
+// Create an empty list to generate our PC badge background
+$pc-background-gradients: ();
+
+// Add some sun spots for texture
+@for $i from 1 through random(100) {
+  $texture-colors: ($pc-sun-orange, $pc-sun-yellow);
+
+  // Generate a random percentage-based X and Y position for each spot
+  $texture-x: (random(30) + 70) + %;
+  $texture-y: (random(30) + 70) + %;
+
+  // The texture size is where we'll put our final color stop
+  $texture-size: (random(10)) + %;
+
+  // Generate our opacity, then multiply it by a fraction to ensure it's always significantly transparent
+  $texture-opacity: random();
+
+  // Randomly swap between our texture colors
+  $texture-core-color: nth($texture-colors, random(length($texture-colors)));
+
+  // Create the flare's gradient
+  $gradient: radial-gradient(
+    circle at $texture-x $texture-y,
+    rgba($texture-core-color, $texture-opacity),
+    rgba($pc-sun-orange, 0) $texture-size
+  );
+
+  // Add the star to the list
+  $pc-background-gradients: append($pc-background-gradients, $gradient, 'comma');
+};
+
+// Generate the sun's core
+$pc-background-gradients: append($pc-background-gradients, radial-gradient(
+  circle at bottom right,
+  rgba($pc-sun-yellow, 1),
+  rgba($pc-sun-yellow, 1) 20%,
+  rgba($pc-sun-orange, 1) 30%,
+  rgba($pc-sun-orange, 0) 50%
+), 'comma');
+
+// Generate the "stars"
+@for $i from 1 through 50 {
+  // Generate a random percentage-based X and Y position for each star
+  $star-x: random(100) + %;
+  $star-y: random(100) + %;
+  $star-size: (random(50) * 0.1) + %;
+
+  // Create the star's gradient
+  $gradient: radial-gradient(
+    circle at $star-x $star-y,
+    rgba($pc-star-white, random()),
+    rgba($pc-star-white, 0) $star-size
+  );
+
+  // Add the star to the list
+  $pc-background-gradients: append($pc-background-gradients, $gradient, 'comma');
+};
+
 .badge {
+  background-color: $red;
+  color: $white;
   display: inline-block;
+  font-size: 0.7em;
+  margin-right: 1rem;
   min-width: 1rem;
   padding: 0 0.5rem;
-  font-size: 0.7em;
-  color: $white;
+  text-align: center;
+  text-shadow: 0 0 1px black;
   vertical-align: middle;
   white-space: nowrap;
-  text-align: center;
-  background-color: $red;
 
   &:empty {
     display: none;
+  }
+
+  &.platform {
+    display: inline-block;
+
+    &.pc {
+      background-color: $pc-sky;
+      background-image: $pc-background-gradients;
+
+      &:after {
+        content: 'PC Master Race';
+      }
+
+      &.short:after {
+        content: 'PC';
+      }
+    }
+
+    &.ps {
+      background-color: $playstation-blue;
+
+      &:after {
+        content: 'Playstation 4';
+      }
+
+      &.short:after {
+        content: 'PS';
+      }
+    }
+
+    &.xb {
+      background-color: $xbox-green;
+
+      &:after {
+        content: 'Xbox One';
+      }
+
+      &.short:after {
+        content: 'XB';
+      }
+    }
   }
 }
