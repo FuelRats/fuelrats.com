@@ -29,11 +29,11 @@ class UserNicknamesPanel extends Component {
     let { nicknames } = this.props
 
     return (
-      <div className="panel">
+      <div className="panel user-nicknames">
         <header>IRC Nicknames</header>
 
         <div className="panel-content">
-          <div className="row nicknames">
+          <div className="row">
             <ul>
               {nicknames && nicknames.map((nickname, index) => <li key={index}>{nickname}</li>)}
             </ul>

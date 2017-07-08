@@ -74,10 +74,10 @@ class UserRatsPanel extends Component {
     } = this.props
 
     return (
-      <div className="panel">
+      <div className="panel user-rats">
         <header>Rats</header>
 
-        <div className="panel-content user-rats-panel">
+        <div className="panel-content">
           <div className="row">
             {rats && (
               <ul>{this._renderRats(rats)}</ul>
