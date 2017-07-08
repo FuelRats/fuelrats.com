@@ -23,9 +23,16 @@ export default class extends React.Component {
   \***************************************************************************/
 
   render () {
+    let {
+      children,
+      className,
+      title,
+    } = this.props
+    let mainClasses = ['fade-in', 'page'].concat(title.toLowerCase()).join(' ')
+
     return (
       <div role="application">
-        <Head title={this.props.title || this.props.title} />
+        <Head title={title} />
 
         <Header />
 
@@ -34,8 +41,8 @@ export default class extends React.Component {
         <Reminders />
 
         <main>
-          <div className="fade-in">
-            {this.props.children}
+          <div className={mainClasses}>
+            {children}
           </div>
         </main>
 
