@@ -1,0 +1,15 @@
+.user-details {
+  .panel-content {
+    display: grid;
+
+    grid-template-columns: 7.5rem 10rem 1fr;
+
+    .avatar {
+      grid-row-start: span 2;
+    }
+
+    :nth-child(2n) {
+      padding-right: 1rem;
+    }
+  }
+}
