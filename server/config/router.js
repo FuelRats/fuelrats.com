@@ -39,6 +39,10 @@ module.exports = function (nextjs, koa, config) {
     await ctx.redirect(`/?authenticate=true&destination=${ctx.request.url}`)
   })
 
+  router.get('/paperwork/:id', async (ctx, next) => {
+    await nextjs.render(ctx.request, ctx.res, '/paperwork', Object.assign({}, ctx.query, ctx.params))
+  })
+
   router.get('*', async ctx => {
     await handle(ctx.req, ctx.res)
     ctx.respond = false

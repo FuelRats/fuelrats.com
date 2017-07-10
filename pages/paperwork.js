@@ -30,16 +30,10 @@ class Paperwork extends Component {
   \***************************************************************************/
 
   componentDidMount () {
-    let searchParams = {}
+    let { id } = this.props
 
-    location.search.replace(/^\?/, '').split('&').forEach(searchParam => {
-      let [ key, value ] = searchParam.split('=')
-
-      searchParams[key] = value
-    })
-
-    if (searchParams['id']) {
-      this.props.retrievePaperwork(searchParams['id'])
+    if (id) {
+      this.props.retrievePaperwork(id)
     }
   }
 
@@ -63,6 +57,16 @@ class Paperwork extends Component {
       successful: true,
       system: null,
     }
+  }
+
+  static async getInitialProps ({ query }) {
+    let { id } = query
+
+    if (id) {
+      return { id }
+    }
+
+    return {}
   }
 
   handleChange (event) {
