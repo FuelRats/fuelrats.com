@@ -40,7 +40,7 @@ class UserNicknamesPanel extends Component {
           </div>
 
           <form className="row">
-            <input className="stretch-9" name="add-nickname" placeholder="Add a nickname..." />
+            <input className="stretch-9" name="add-nickname" placeholder="Add a nickname..." type="text" />
             <button data-action="add-nickname" type="submit">Add</button>
           </form>
         </div>

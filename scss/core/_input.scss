@@ -19,7 +19,6 @@
 }
 
 input {
-  &:not([type]),
   &[type=date],
   &[type=datetime],
   &[type=datetime-local],
@@ -34,6 +33,14 @@ input {
   &[type=url],
   &[type=week] {
     @extend %text-input;
+  }
+
+  &[type=checkbox],
+  &[type=radio] {
+    &[hidden]:checked + label.button {
+      background-color: transparent;
+      color: $red;
+    }
   }
 }
 

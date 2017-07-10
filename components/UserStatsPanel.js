@@ -32,7 +32,7 @@ class UserStatsPanel extends Component {
     let successRate = 50
 
     return (
-      <section className="panel user-stats">
+      <div className="panel user-stats">
         <table className="full-width padded stats">
           <colgroup>
             <col />
@@ -68,7 +68,7 @@ class UserStatsPanel extends Component {
             </tr>
           </tbody>
         </table>
-      </section>
+      </div>
     )
   }
 }
