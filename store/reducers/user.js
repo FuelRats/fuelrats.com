@@ -14,6 +14,7 @@ export default function (state = initialState.user, action) {
         })
       }
 
+    case actionTypes.GET_USER:
     case actionTypes.LOGIN:
       if (action.user) {
         let user = action.user
@@ -40,6 +41,13 @@ export default function (state = initialState.user, action) {
             loggedIn: false,
             loggingIn: false,
           })
+      }
+
+    case actionTypes.UPDATE_USER:
+      if (action.user) {
+        let user = action.user
+
+        return Object.assign({}, state, user)
       }
 
     default:

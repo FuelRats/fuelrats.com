@@ -67,11 +67,52 @@ class UserRatsPanel extends Component {
     }
   }
 
+  constructor (props) {
+    super(props)
+
+    this._bindMethods(['onSubmit'])
+
+    this.state = {
+      CMDRname: '',
+      platform: 'pc',
+      submitting: false,
+    }
+  }
+
+  async onSubmit (event) {
+    let {
+      createRat,
+    } = this.props
+    let {
+      CMDRname,
+      platform,
+    } = this.state
+
+    event.preventDefault()
+
+    this.setState({ submitting: true })
+
+    let rat = {
+      CMDRname,
+      platform
+    }
+
+    console.log('rat', rat)
+    let foo = await this.props.createRat(rat)
+
+    console.log(foo)
+  }
+
   render () {
     let {
       id,
       rats,
     } = this.props
+    let {
+      CMDRname,
+      platform,
+      submitting,
+    } = this.state
 
     return (
       <div className="panel user-rats">
@@ -86,9 +127,64 @@ class UserRatsPanel extends Component {
             {!rats && 'Loading rat info...'}
           </div>
 
-          <form className="row">
-            <input className="stretch-9" name="add-rat" placeholder="Add a rat..." />
-            <button data-action="add-rat" type="submit">Add</button>
+          <form
+            className="row"
+            onSubmit={this.onSubmit}>
+
+            <div className="input-group stretch-9">
+              <input
+                disabled={submitting}
+                name="add-rat"
+                onChange={event => this.setState({ CMDRname: event.target.value })}
+                placeholder="Add a rat..."
+                type="text" />
+
+              <input
+                defaultChecked={platform === 'pc'}
+                hidden
+                id="platform-pc"
+                name="platform"
+                onChange={event => this.setState({ platform: event.target.value })}
+                type="radio"
+                value="pc" />
+              <label
+                className="button"
+                htmlFor="platform-pc">
+                PC
+              </label>
+
+              <input
+                defaultChecked={platform === 'xb'}
+                hidden
+                id="platform-xb"
+                name="platform"
+                onChange={event => this.setState({ platform: event.target.value })}
+                type="radio"
+                value="xb" />
+              <label
+                className="button"
+                htmlFor="platform-xb">
+                XB
+              </label>
+
+              <input
+                defaultChecked={platform === 'ps'}
+                hidden
+                id="platform-ps"
+                name="platform"
+                onChange={event => this.setState({ platform: event.target.value })}
+                type="radio"
+                value="ps" />
+              <label
+                className="button"
+                htmlFor="platform-ps">
+                PS
+              </label>
+            </div>
+
+            <button
+              disabled={!CMDRname || submitting}
+              type="submit">Add</button>
           </form>
         </div>
       </div>
@@ -102,7 +198,7 @@ class UserRatsPanel extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getRats: bindActionCreators(actions.getRats, dispatch),
+    createRat: bindActionCreators(actions.createRat, dispatch),
   }
 }
 
