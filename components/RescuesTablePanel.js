@@ -4,6 +4,7 @@ import _ from 'lodash'
 import moment from 'moment'
 import React from 'react'
 import ReactTable from 'react-table'
+import Router from 'next/router'
 import withRedux from 'next-redux-wrapper'
 
 
@@ -27,61 +28,20 @@ class RescuesTablePanel extends Component {
     Private Methods
   \***************************************************************************/
 
-  _generateColumns () {
-    return [
-      {
-        accessor: 'date',
-        Cell: this._renderDateRow,
-        className: 'date',
-        Header: 'Date',
-        headerClassName: 'date',
-        id: 'date',
-        resizable: true,
-        sortable: true,
-        width: 100,
-      },
-      {
-        accessor: 'system',
-        className: 'system',
-        Header: 'System',
-        headerClassName: 'system',
-        id: 'system',
-        resizable: true,
-        sortable: true,
-      },
-      {
-        accessor: 'state',
-        Cell: this._renderStateRow,
-        className: 'state',
-        Header: 'State',
-        headerClassName: 'state',
-        id: 'state',
-        resizable: true,
-        sortable: true,
-        width: 100,
-      },
-      {
-        accessor: 'codeRed',
-        Cell: this._renderCodeRedRow,
-        className: 'codeRed',
-        Header: 'Code Red',
-        headerClassName: 'codeRed',
-        id: 'codeRed',
-        resizable: true,
-        sortable: true,
-        width: 80,
-      },
-      {
-        accessor: 'rats',
-        className: 'rats',
-        Cell: this._renderRatsRow,
-        headerClassName: 'rats',
-        Header: 'Rats',
-        id: 'rats',
-        resizable: true,
-        sortable: false,
-      },
-    ]
+  _handleRowClick (state, row) {
+
+    if (row) {
+      let rescue = row.original
+
+      return {
+        className: 'clickable',
+        onClick: event => {
+          Router.push(`/paperwork/${rescue.id}`)
+        },
+      }
+    }
+
+    return {}
   }
 
   _renderCodeRedRow (row) {
@@ -186,12 +146,80 @@ class RescuesTablePanel extends Component {
       <section className="panel">
         <ReactTable
           className="rescues"
-          columns={this._generateColumns()}
+          columns={this.columns}
           data={rescues}
+          getTrProps={this._handleRowClick}
           manual
           showPagination={false} />
       </section>
     )
+  }
+
+
+
+
+
+  /***************************************************************************\
+    Getters
+  \***************************************************************************/
+
+  get columns () {
+    let columns = [
+      {
+        accessor: 'date',
+        Cell: this._renderDateRow,
+        className: 'date',
+        Header: 'Date',
+        headerClassName: 'date',
+        id: 'date',
+        resizable: true,
+        sortable: true,
+        width: 100,
+      },
+      {
+        accessor: 'system',
+        className: 'system',
+        Header: 'System',
+        headerClassName: 'system',
+        id: 'system',
+        resizable: true,
+        sortable: true,
+      },
+      {
+        accessor: 'state',
+        Cell: this._renderStateRow,
+        className: 'state',
+        Header: 'State',
+        headerClassName: 'state',
+        id: 'state',
+        resizable: true,
+        sortable: true,
+        width: 100,
+      },
+      {
+        accessor: 'codeRed',
+        Cell: this._renderCodeRedRow,
+        className: 'codeRed',
+        Header: 'Code Red',
+        headerClassName: 'codeRed',
+        id: 'codeRed',
+        resizable: true,
+        sortable: true,
+        width: 80,
+      },
+      {
+        accessor: 'rats',
+        className: 'rats',
+        Cell: this._renderRatsRow,
+        headerClassName: 'rats',
+        Header: 'Rats',
+        id: 'rats',
+        resizable: true,
+        sortable: false,
+      },
+    ]
+
+    return columns
   }
 }
 
@@ -206,9 +234,7 @@ const mapDispatchToProps = dispatch => {
 }
 
 const mapStateToProps = state => {
-  return Object.assign({
-    showAdmin: state.user.isAdmin
-  }, state.rescues)
+  return Object.assign({}, state.rescues)
 }
 
 

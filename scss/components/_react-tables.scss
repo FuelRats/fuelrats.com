@@ -1,5 +1,4 @@
 .ReactTable {
-
   .rt-thead {
     background-color: $black;
     color: $white;
@@ -9,5 +8,16 @@
   .rt-tbody .rt-td {
     line-height: 2;
     padding: 1rem;
+  }
+
+  .rt-tr.clickable {
+    background-color: rgba($light-grey, 0);
+    cursor: pointer;
+    transition-duration: 50ms;
+    transition-property: background-color;
+
+    &:hover {
+      background-color: rgba($light-grey, 1);
+    }
   }
 }
