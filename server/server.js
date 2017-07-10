@@ -29,8 +29,11 @@ next.prepare()
   // Configure proxies
   require('./config/proxy')(koa, config)
 
-  // Configure middleware, et al
-  require('./config/koa')(koa, config)
+  // Compress responses
+  koa.use(require('koa-compress')())
+
+  // Parse request bodies
+  koa.use(require('koa-body')())
 
   // Configure the router
   require('./config/router')(next, koa, config)
