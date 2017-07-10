@@ -36,7 +36,7 @@ class RescuesTablePanel extends Component {
       return {
         className: 'clickable',
         onClick: event => {
-          Router.push(`/paperwork/${rescue.id}`)
+          Router.push(`/paperwork?id=${rescue.id}`, `/paperwork/${rescue.id}`)
         },
       }
     }
