@@ -27,12 +27,22 @@ class UserDetailsPanel extends Component {
     Public Methods
   \***************************************************************************/
 
+  componentWillReceiveProps (nextProps) {
+    console.log('UserDetailsPanel:componentWillReceiveProps', nextProps)
+  }
+
   render () {
     let {
-      email,
+      attributes,
       id,
-      rats,
     } = this.props
+
+    attributes || (attributes = {})
+
+    let {
+      createdAt,
+      email,
+    } = attributes
 
     return (
       <div className="panel user-details">
@@ -49,7 +59,7 @@ class UserDetailsPanel extends Component {
           </span>
 
           <label>Member Since:</label>
-          <span>[FILL ME IN]</span>
+          <span>{moment(createdAt).add(1286, 'years').format('DD MMMM, YYYY')}</span>
         </div>
       </div>
     )
