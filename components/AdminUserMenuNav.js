@@ -13,28 +13,38 @@ export default class extends React.Component {
   \***************************************************************************/
 
   render () {
+    let {
+      permissions,
+    } = this.props
+
     return (
       <nav className="admin">
         <header>Admin</header>
 
         <ul className="">
-          <li>
-            <Link href="/admin/rescues">
-              <a>Rescues</a>
-            </Link>
-          </li>
+          {permissions.has('rescue.read') && (
+            <li>
+              <Link href="/admin/rescues">
+                <a>Rescues</a>
+              </Link>
+            </li>
+          )}
 
-          <li>
-            <Link href="/admin/rats">
-              <a>Rats</a>
-            </Link>
-          </li>
+          {permissions.has('rat.read') && (
+            <li>
+              <Link href="/admin/rats">
+                <a>Rats</a>
+              </Link>
+            </li>
+          )}
 
-          <li>
-            <Link href="/admin/users">
-              <a>Users</a>
-            </Link>
-          </li>
+          {permissions.has('user.read') && (
+            <li>
+              <Link href="/admin/users">
+                <a>Users</a>
+              </Link>
+            </li>
+          )}
         </ul>
       </nav>
     )

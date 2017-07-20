@@ -27,10 +27,6 @@ class UserDetailsPanel extends Component {
     Public Methods
   \***************************************************************************/
 
-  componentWillReceiveProps (nextProps) {
-    console.log('UserDetailsPanel:componentWillReceiveProps', nextProps)
-  }
-
   render () {
     let {
       attributes,

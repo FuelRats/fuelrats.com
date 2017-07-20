@@ -18,9 +18,11 @@ export default function (state = initialState.user, action) {
       let { payload } = action
 
       if (payload) {
-        let user = Object.assign({
-          permissions: new Set,
-        }, state, payload.data)
+        let user = Object.assign({}, state, payload.data)
+
+        if (Array.isArray(user.permissions)) {
+          user.permissions = new Set(user.permissions)
+        }
 
         // Collect user's permissions
         user.relationships.groups.data.forEach(({ id, type }) => {

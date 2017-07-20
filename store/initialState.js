@@ -39,7 +39,7 @@ export default {
   user: {
     attributes: null,
     id: null,
-    permissions: null,
+    permissions: new Set,
     relationships: null,
     retrieving: false,
   },

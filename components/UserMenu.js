@@ -36,7 +36,7 @@ class UserMenu extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    if (nextProps.loggedIn && !nextProps.attributes) {
+    if (nextProps.loggedIn && !nextProps.user) {
       this.props.getUser()
     }
   }
@@ -48,31 +48,21 @@ class UserMenu extends Component {
   }
 
   render () {
-    let adminUserMenuNav = null
-    let avatar = ''
-    let isAdmin = true
-
     let {
-      attributes,
       loggedIn,
       logout,
+      user,
     } = this.props
 
-    attributes || (attributes = {})
-
-    console.log(this.props)
-
-    let {
-      image,
-    } = attributes
+    let showAdmin = ['rat.read', 'rescue.read', 'user.read'].some(permission => user.permissions.has(permission))
 
     return (
       <div className="user-menu">
-        {loggedIn && (
-          <div className="avatar medium"><img src={image} /></div>
+        {(loggedIn && user.attributes) && (
+          <div className="avatar medium"><img src={user.attributes.image} /></div>
         )}
 
-        {loggedIn && (
+        {(loggedIn && user.attributes) && (
           <menu>
             <nav className="user">
               <ul>
@@ -98,8 +88,9 @@ class UserMenu extends Component {
               </ul>
             </nav>
 
-            {this.props.isAdmin && (
-              <AdminUserMenuNav />
+            {showAdmin && (
+              <AdminUserMenuNav
+                permissions={user.permissions} />
             )}
 
             <div className="stats">
@@ -159,7 +150,14 @@ const mapDispatchToProps = dispatch => {
 }
 
 const mapStateToProps = state => {
-  return Object.assign({}, state.authentication, state.user)
+  let {
+    authentication,
+    user,
+  } = state
+
+  return Object.assign({
+    user,
+  }, authentication)
 }
 
 
