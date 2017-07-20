@@ -7,6 +7,7 @@ import initialState from '../initialState'
 
 export default function (state = initialState.authentication, action) {
   switch (action.type) {
+    case actionTypes.GET_USER:
     case actionTypes.LOGIN:
       switch (action.status) {
         case 'error':

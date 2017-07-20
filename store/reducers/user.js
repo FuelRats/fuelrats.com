@@ -15,23 +15,14 @@ export default function (state = initialState.user, action) {
       }
 
     case actionTypes.GET_USER:
-    case actionTypes.LOGIN:
-      if (action.user) {
-        let user = action.user
-        let group = user.group || user.groups
-        let isArray = Array.isArray(group)
+      let { payload } = action
 
-        if (isArray) {
-          user.isAdmin = group.indexOf('admin') !== -1
-          user.isModerator = group.indexOf('moderator') !== -1
-          user.isOverseer = group.indexOf('overseer') !== -1
-        } else {
-          user.isAdmin = group === 'admin'
-          user.isModerator = user.isAdmin || group === 'moderator'
-          user.isOverseer = user.isModerator || group === 'overseer'
-        }
+      if (payload) {
+        let user = Object.assign({}, state, payload.data)
 
-        return Object.assign({}, state, user)
+        user.attributes.image = payload.data.attributes.image || `//api.adorable.io/avatars/${payload.data.id}`
+
+        return user
       }
 
     case actionTypes.LOGOUT:

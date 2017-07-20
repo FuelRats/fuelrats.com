@@ -16,6 +16,8 @@ export const getUser = () => async dispatch => {
   dispatch({ type: actionTypes.GET_USER })
 
   try {
+    let token = localStorage.getItem('access_token')
+
     let response = await fetch(`/api/profile`, {
       headers: new Headers({
         Authorization: `Bearer ${token}`,
@@ -28,7 +30,7 @@ export const getUser = () => async dispatch => {
     dispatch({
       status: 'success',
       type: actionTypes.GET_USER,
-      user: response.data,
+      payload: response,
     })
 
   } catch (error) {
@@ -49,6 +51,8 @@ export const updateUser = (user) => async dispatch => {
   dispatch({ type: actionTypes.UPDATE_USER })
 
   try {
+    let token = localStorage.getItem('access_token')
+
     let response = await fetch(`/api/users/${user.id}`, {
       body: JSON.stringify(user),
       headers: new Headers({

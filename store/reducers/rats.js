@@ -7,7 +7,7 @@ import parseJSONAPIResponseForEntityType from '../../helpers/parse-json-api-resp
 
 
 
-export default function (state = initialState.rescues, action) {
+export default function (state = initialState.rats, action) {
   let {
     payload,
     status,
@@ -17,7 +17,7 @@ export default function (state = initialState.rescues, action) {
   switch (type) {
     case actionTypes.GET_USER:
       let {
-        rescues,
+        rats,
         retrieving,
         total,
       } = state
@@ -25,14 +25,14 @@ export default function (state = initialState.rescues, action) {
       switch (status) {
         case 'success':
           return Object.assign({}, state, {
-            rescues: parseJSONAPIResponseForEntityType(payload, 'rescues'),
+            rats: parseJSONAPIResponseForEntityType(payload, 'rats'),
             retrieving: false,
             total: action.total,
           })
 
         default:
           return Object.assign({}, state, {
-            rescues,
+            rats,
             retrieving,
             total,
           })

@@ -27,7 +27,7 @@ export const login = (email, password) => async dispatch => {
         username: email,
       })
 
-      let tokenResponse = await fetch('/token', {
+      let response = await fetch('/token', {
         body: data,
         headers: {
           'Content-Type': 'application/json',
@@ -35,26 +35,16 @@ export const login = (email, password) => async dispatch => {
         method: 'post',
       })
 
-      tokenResponse = await tokenResponse.json()
+      response = await response.json()
 
-      token = tokenResponse.access_token
+      token = response.access_token
       localStorage.setItem('access_token', token)
       Cookies.set('access_token', token)
     }
 
-    let userResponse = await fetch(`/api/profile`, {
-      headers: new Headers({
-        Authorization: `Bearer ${token}`,
-      }),
-      method: 'get',
-    })
-
-    userResponse = await userResponse.json()
-
     dispatch({
       status: 'success',
       type: actionTypes.LOGIN,
-      user: userResponse.data,
     })
 
     if (location && location.search) {

@@ -1,5 +1,6 @@
 export default {
   authentication: {
+    loggedIn: false,
     loggingIn: false,
     loggingOut: false,
     registering: false,
@@ -17,11 +18,25 @@ export default {
     submitting: false,
   },
 
+  rats: {
+    rats: [],
+    retrieving: false,
+    total: 0,
+  },
+
   rescues: {
     rescues: [],
     retrieving: false,
     total: 0,
   },
 
-  user: {},
+  ships: {
+    ships: [],
+    retrieving: false,
+    total: 0,
+  },
+
+  user: {
+    retrieving: false,
+  },
 }
