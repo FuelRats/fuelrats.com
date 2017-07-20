@@ -37,6 +37,10 @@ export default {
   },
 
   user: {
+    attributes: null,
+    id: null,
+    permissions: null,
+    relationships: null,
     retrieving: false,
   },
 }
