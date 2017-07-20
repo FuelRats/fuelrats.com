@@ -54,7 +54,11 @@ class UserMenu extends Component {
       user,
     } = this.props
 
-    let showAdmin = ['rat.read', 'rescue.read', 'user.read'].some(permission => user.permissions.has(permission))
+    let showAdmin = false
+
+    if (loggedIn && user.attributes) {
+      showAdmin = ['rat.read', 'rescue.read', 'user.read'].some(permission => user.permissions.has(permission))
+    }
 
     return (
       <div className="user-menu">
