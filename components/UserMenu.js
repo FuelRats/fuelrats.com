@@ -31,7 +31,13 @@ class UserMenu extends Component {
 
   componentDidMount () {
     if (localStorage.getItem('access_token')) {
-      this.props.login()
+      this.props.getUser()
+    }
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.loggedIn && !nextProps.attributes) {
+      this.props.getUser()
     }
   }
 
@@ -46,13 +52,27 @@ class UserMenu extends Component {
     let avatar = ''
     let isAdmin = true
 
+    let {
+      attributes,
+      loggedIn,
+      logout,
+    } = this.props
+
+    attributes || (attributes = {})
+
+    console.log(this.props)
+
+    let {
+      image,
+    } = attributes
+
     return (
       <div className="user-menu">
-        {this.props.loggedIn && (
-          <div className="avatar medium"><img src={`//api.adorable.io/avatars/${this.props.id}`} /></div>
+        {loggedIn && (
+          <div className="avatar medium"><img src={image} /></div>
         )}
 
-        {this.props.loggedIn && (
+        {loggedIn && (
           <menu>
             <nav className="user">
               <ul>
@@ -71,7 +91,7 @@ class UserMenu extends Component {
                 <li>
                   <a
                     href="#"
-                    onClick={this.props.logout}>
+                    onClick={logout}>
                     Logout
                   </a>
                 </li>
@@ -105,7 +125,7 @@ class UserMenu extends Component {
           </menu>
         )}
 
-        {!this.props.loggedIn && (
+        {!loggedIn && (
           <button
             className="login"
             onClick={this.showLogin}>
@@ -132,7 +152,7 @@ class UserMenu extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    login: bindActionCreators(actions.login, dispatch),
+    getUser: bindActionCreators(actions.getUser, dispatch),
     logout: bindActionCreators(actions.logout, dispatch),
     showDialog: bindActionCreators(actions.showDialog, dispatch),
   }
