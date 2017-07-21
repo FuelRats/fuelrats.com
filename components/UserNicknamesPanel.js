@@ -26,7 +26,7 @@ class UserNicknamesPanel extends Component {
   \***************************************************************************/
 
   render () {
-    let { nicknames } = this.props
+    let { user } = this.props
 
     return (
       <div className="panel user-nicknames">
@@ -35,7 +35,7 @@ class UserNicknamesPanel extends Component {
         <div className="panel-content">
           <div className="row">
             <ul>
-              {nicknames && nicknames.map((nickname, index) => <li key={index}>{nickname}</li>)}
+              {user.attributes && user.attributes.nicknames && user.attributes.nicknames.map((nickname, index) => <li key={index}>{nickname}</li>)}
             </ul>
           </div>
 
@@ -60,7 +60,13 @@ const mapDispatchToProps = dispatch => {
 }
 
 const mapStateToProps = state => {
-  return state.user || {}
+  let {
+    user,
+  } = state
+
+  return {
+    user
+  }
 }
 
 
