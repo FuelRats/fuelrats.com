@@ -29,10 +29,13 @@ class UserRatsPanel extends Component {
   _renderRats (rats) {
     return rats.map((rat, index) => {
       let {
-        CMDRname,
         id,
-        platform,
       } = rat
+      let {
+        name,
+        platform,
+      } = rat.attributes
+
       let badgeClasses = ['badge', 'platform', 'short', platform].join(' ')
 
       return (
@@ -40,7 +43,7 @@ class UserRatsPanel extends Component {
           <div className={badgeClasses}></div>
 
           <Link href={`/rats/${id}`}>
-            <a>{CMDRname}</a>
+            <a>{name}</a>
           </Link>
         </li>
       )
@@ -73,7 +76,7 @@ class UserRatsPanel extends Component {
     this._bindMethods(['onSubmit'])
 
     this.state = {
-      CMDRname: '',
+      name: '',
       platform: 'pc',
       submitting: false,
     }
@@ -84,7 +87,7 @@ class UserRatsPanel extends Component {
       createRat,
     } = this.props
     let {
-      CMDRname,
+      name,
       platform,
     } = this.state
 
@@ -93,14 +96,11 @@ class UserRatsPanel extends Component {
     this.setState({ submitting: true })
 
     let rat = {
-      CMDRname,
+      name,
       platform
     }
 
-    console.log('rat', rat)
-    let foo = await this.props.createRat(rat)
-
-    console.log(foo)
+    await this.props.createRat(rat)
   }
 
   render () {
@@ -109,7 +109,7 @@ class UserRatsPanel extends Component {
       rats,
     } = this.props
     let {
-      CMDRname,
+      name,
       platform,
       submitting,
     } = this.state
@@ -120,11 +120,11 @@ class UserRatsPanel extends Component {
 
         <div className="panel-content">
           <div className="row">
-            {rats && (
-              <ul>{this._renderRats(rats)}</ul>
+            {!rats.retrieving && (
+              <ul>{this._renderRats(rats.rats)}</ul>
             )}
 
-            {!rats && 'Loading rat info...'}
+            {rats.retrieving && 'Loading rat info...'}
           </div>
 
           <form
@@ -135,7 +135,7 @@ class UserRatsPanel extends Component {
               <input
                 disabled={submitting}
                 name="add-rat"
-                onChange={event => this.setState({ CMDRname: event.target.value })}
+                onChange={event => this.setState({ name: event.target.value })}
                 placeholder="Add a rat..."
                 type="text" />
 
@@ -183,7 +183,7 @@ class UserRatsPanel extends Component {
             </div>
 
             <button
-              disabled={!CMDRname || submitting}
+              disabled={!name || submitting}
               type="submit">Add</button>
           </form>
         </div>
@@ -203,7 +203,15 @@ const mapDispatchToProps = dispatch => {
 }
 
 const mapStateToProps = state => {
-  return state.user || {}
+  let {
+    rats,
+    user,
+  } = state
+
+  return {
+    rats,
+    user,
+  }
 }
 
 
