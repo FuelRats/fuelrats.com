@@ -10,7 +10,6 @@ import Page from '../components/Page'
 import UserNicknamesPanel from '../components/UserNicknamesPanel'
 import UserDetailsPanel from '../components/UserDetailsPanel'
 import UserRatsPanel from '../components/UserRatsPanel'
-import UserShipsPanel from '../components/UserShipsPanel'
 import UserStatsPanel from '../components/UserStatsPanel'
 
 
@@ -35,12 +34,12 @@ export default class extends React.Component {
             <UserDetailsPanel />
           </div>
 
-          <div className="user-entities-cell">
+          <div className="user-details-cell">
             <UserRatsPanel />
+          </div>
 
+          <div className="user-entities-cell">
             <UserNicknamesPanel />
-
-            <UserShipsPanel />
           </div>
 
           <div className="user-stats-cell">
@@ -50,23 +49,6 @@ export default class extends React.Component {
       </Page>
     )
   }
-//          <div className="row">
-//            <UserDetailsPanel />
-//          </div>
-//
-//          <div className="row">
-//            <div className="column">
-//              <div className="row">
-//                <UserRatsPanel />
-//              </div>
-//
-//              <div className="row">
-//                <UserNicknamesPanel />
-//              </div>
-//            </div>
-//
-//            <UserStatsPanel />
-//          </div>
 
 
 

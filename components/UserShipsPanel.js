@@ -1,6 +1,7 @@
 // Module imports
 import { bindActionCreators } from 'redux'
 import _ from 'lodash'
+import Link from 'next/link'
 import React from 'react'
 import withRedux from 'next-redux-wrapper'
 
@@ -25,6 +26,40 @@ class UserShipsPanel extends Component {
     Public Methods
   \***************************************************************************/
 
+  _renderShips (ships) {
+    return ships.map((ship, index) => {
+      let {
+        id,
+      } = ship
+      let {
+        name,
+        platform,
+      } = ship.attributes
+
+      console.log('ship', ship)
+
+      let badgeClasses = ['badge', 'platform', 'short', platform].join(' ')
+
+      return (
+        <li key={index}>
+          <div className={badgeClasses}></div>
+
+          <Link href={`/rats/${id}`}>
+            <a>{name}</a>
+          </Link>
+        </li>
+      )
+    })
+  }
+
+
+
+
+
+  /***************************************************************************\
+    Public Methods
+  \***************************************************************************/
+
   render () {
     let { ships } = this.props
 
@@ -35,7 +70,7 @@ class UserShipsPanel extends Component {
         <div className="panel-content">
           <div className="row">
             <ul>
-              {ships && ships.map((ship, index) => <li key={index}>{ship}</li>)}
+              {!ships.retrieving && this._renderShips(ships.ships)}
             </ul>
           </div>
 
@@ -60,7 +95,17 @@ const mapDispatchToProps = dispatch => {
 }
 
 const mapStateToProps = state => {
-  return state.user || {}
+  let {
+    ships,
+    user,
+  } = state
+
+  console.log('state', state)
+
+  return {
+    ships,
+    user,
+  }
 }
 
 

@@ -4,7 +4,8 @@
     grid-gap: 2rem;
     grid-template-columns: repeat(2, 1fr);
 
-    .user-details-cell {
+    .user-details-cell,
+    .user-rats-cell {
       grid-column: span 2;
     }
 

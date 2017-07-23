@@ -164,7 +164,7 @@ class RescuesTablePanel extends Component {
   \***************************************************************************/
 
   get columns () {
-    let columns = [
+    return [
       {
         accessor: 'date',
         Cell: this._renderDateRow,
@@ -218,8 +218,6 @@ class RescuesTablePanel extends Component {
         sortable: false,
       },
     ]
-
-    return columns
   }
 }
 
