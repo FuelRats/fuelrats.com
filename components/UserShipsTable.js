@@ -41,8 +41,7 @@ export default class UserShipsTable extends Component {
         className="user-ships"
         columns={this.columns}
         data={data}
-        defaultPageSize={data}
-        manual
+        defaultPageSize={data.length}
         showPagination={false} />
     )
   }
@@ -60,7 +59,7 @@ export default class UserShipsTable extends Component {
       {
         accessor: 'attributes.name',
         className: 'name',
-        Header: 'Ship Name',
+        Header: 'Ships',
         headerClassName: 'name',
         id: 'name',
         resizable: true,
