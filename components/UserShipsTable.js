@@ -88,6 +88,15 @@ export default class UserShipsTable extends Component {
         resizable: true,
         sortable: true,
       },
+      {
+        accessor: 'attributes.shipType',
+        className: 'type',
+        Header: 'Type',
+        headerClassName: 'type',
+        id: 'type',
+        resizable: true,
+        sortable: true,
+      },
     ]
   }
 }
