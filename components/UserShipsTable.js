@@ -23,6 +23,18 @@ export default class UserShipsTable extends Component {
 
   _handleRowClick () {}
 
+  _renderIDCell (row) {
+    let id = row.value.toString()
+
+    while (id.length < 4) {
+      id = `0${id}`
+    }
+
+    console.log(row.original)
+
+    return `FR${id}`
+  }
+
 
 
 
@@ -57,9 +69,20 @@ export default class UserShipsTable extends Component {
   get columns () {
     return [
       {
+        accessor: 'attributes.shipId',
+        Cell: this._renderIDCell,
+        className: 'shipId',
+        Header: 'ID',
+        headerClassName: 'shipId',
+        id: 'shipId',
+        resizable: true,
+        sortable: true,
+        width: 100,
+      },
+      {
         accessor: 'attributes.name',
         className: 'name',
-        Header: 'Ships',
+        Header: 'Name',
         headerClassName: 'name',
         id: 'name',
         resizable: true,
