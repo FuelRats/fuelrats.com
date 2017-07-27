@@ -16,6 +16,7 @@ import {
   actions,
   initStore,
 } from '../store'
+import AddRatForm from './AddRatForm'
 import Component from './Component'
 import UserShipsTable from './UserShipsTable'
 
@@ -137,69 +138,11 @@ class UserRatsPanel extends Component {
           defaultPageSize={rats.rats.length}
           manual
           showPagination={false}
-          SubComponent = {this._renderSubcomponent}/>
+          SubComponent={this._renderSubcomponent}/>
+        <AddRatForm />
       </div>
     )
   }
-//          <form
-//            className="row"
-//            onSubmit={this.onSubmit}>
-//
-//            <div className="input-group stretch-9">
-//              <input
-//                disabled={submitting}
-//                name="add-rat"
-//                onChange={event => this.setState({ name: event.target.value })}
-//                placeholder="Add a rat..."
-//                type="text" />
-//
-//              <input
-//                defaultChecked={platform === 'pc'}
-//                hidden
-//                id="platform-pc"
-//                name="platform"
-//                onChange={event => this.setState({ platform: event.target.value })}
-//                type="radio"
-//                value="pc" />
-//              <label
-//                className="button"
-//                htmlFor="platform-pc">
-//                PC
-//              </label>
-//
-//              <input
-//                defaultChecked={platform === 'xb'}
-//                hidden
-//                id="platform-xb"
-//                name="platform"
-//                onChange={event => this.setState({ platform: event.target.value })}
-//                type="radio"
-//                value="xb" />
-//              <label
-//                className="button"
-//                htmlFor="platform-xb">
-//                XB
-//              </label>
-//
-//              <input
-//                defaultChecked={platform === 'ps'}
-//                hidden
-//                id="platform-ps"
-//                name="platform"
-//                onChange={event => this.setState({ platform: event.target.value })}
-//                type="radio"
-//                value="ps" />
-//              <label
-//                className="button"
-//                htmlFor="platform-ps">
-//                PS
-//              </label>
-//            </div>
-//
-//            <button
-//              disabled={!name || submitting}
-//              type="submit">Add</button>
-//          </form>
 
 
 
