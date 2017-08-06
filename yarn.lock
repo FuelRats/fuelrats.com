@@ -2629,11 +2629,12 @@ koa-mount@^3.0.0:
     debug "^2.6.1"
     koa-compose "^3.2.1"
 
-koa-proxies@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/koa-proxies/-/koa-proxies-0.3.0.tgz#2a0c4a1a6d1d64513a635e679b19d258e4613490"
+koa-proxies@^0.5.2:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/koa-proxies/-/koa-proxies-0.5.2.tgz#440039d7aa71ba0c8f73bbe48f9e4963de37cc88"
   dependencies:
     http-proxy "^1.16.2"
+    path-match "^1.2.4"
 
 koa-router@^7.1.1:
   version "7.2.1"
@@ -3381,7 +3382,7 @@ path-is-inside@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/path-is-inside/-/path-is-inside-1.0.2.tgz#365417dede44430d1c11af61027facf074bdfc53"
 
-path-match@1.2.4:
+path-match@1.2.4, path-match@^1.2.4:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/path-match/-/path-match-1.2.4.tgz#a62747f3c7e0c2514762697f24443585b09100ea"
   dependencies:
