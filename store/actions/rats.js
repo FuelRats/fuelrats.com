@@ -12,16 +12,21 @@ import actionTypes from '../actionTypes'
 
 
 
-export const createRat = rat => async dispatch => {
+export const createRat = (name, platform, userId) => async dispatch => {
   try {
     dispatch({
       type: actionTypes.CREATE_RAT,
     })
 
     let response = await fetch(`/api/rats`, {
-      body: JSON.stringify(rat),
+      body: JSON.stringify({
+        name,
+        platform,
+        userId
+      }),
       headers: new Headers({
         Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        'Content-Type': 'application/json',
       }),
       method: 'post'
     })

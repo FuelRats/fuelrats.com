@@ -15,15 +15,32 @@ export default function (state = initialState.rats, action) {
   } = action
 
   switch (type) {
-    case actionTypes.GET_USER:
-      let {
-        rats,
-        retrieving,
-        total,
-      } = state
-
+    case actionTypes.CREATE_RAT:
       switch (status) {
         case 'success':
+          let {
+            rats,
+          } = state
+
+          rats.push(action.rat)
+
+          return Object.assign({}, state, {
+            rats,
+          })
+
+        default:
+          return state
+      }
+
+    case actionTypes.GET_USER:
+      switch (status) {
+        case 'success':
+          let {
+            rats,
+            retrieving,
+            total,
+          } = state
+
           return Object.assign({}, state, {
             rats: parseJSONAPIResponseForEntityType(payload, 'rats'),
             retrieving: false,
@@ -31,11 +48,7 @@ export default function (state = initialState.rats, action) {
           })
 
         default:
-          return Object.assign({}, state, {
-            rats,
-            retrieving,
-            total,
-          })
+          return state
       }
 
     default:

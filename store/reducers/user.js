@@ -7,10 +7,18 @@ import initialState from '../initialState'
 
 export default function (state = initialState.user, action) {
   switch (action.type) {
+    case actionTypes.CREATE_RAT:
     case actionTypes.GET_RAT:
       if (action.status === 'success') {
         return Object.assign({}, state, {
-          rats: (state.rats || []).concat(action.rat)
+          relationships: {
+            rats: {
+              data: (state.relationships.rats.data || []).concat({
+                id: action.rat.id,
+                type: 'rats',
+              })
+            }
+          }
         })
       }
 

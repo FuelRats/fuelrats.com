@@ -39,6 +39,7 @@ class AddRatForm extends Component {
   async onSubmit (event) {
     let {
       createRat,
+      userId,
     } = this.props
     let {
       name,
@@ -49,19 +50,12 @@ class AddRatForm extends Component {
 
     this.setState({ submitting: true })
 
-    let rat = {
-      name,
-      platform
-    }
+    await createRat(name, platform, userId)
 
-    await this.props.createRat(rat)
+    this.setState({ submitting: false })
   }
 
   render () {
-    let {
-      id,
-      rats,
-    } = this.props
     let {
       name,
       platform,
@@ -148,8 +142,18 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
+const mapStateToProps = state => {
+  let {
+    id,
+  } = state.user
+
+  return {
+    userId: id,
+  }
+}
 
 
 
 
-export default withRedux(initStore, null, mapDispatchToProps)(AddRatForm)
+
+export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(AddRatForm)
