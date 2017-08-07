@@ -121,6 +121,10 @@ class Blogs extends Component {
         <div className="page-content">
           <ol className="article-list loading">
             {!retrieving && blogs && blogs.map(blog => {
+              let {
+                author,
+              } = blog
+
               blog.postedAt = moment(blog.date_gmt)
 
               return (
@@ -136,17 +140,20 @@ class Blogs extends Component {
 
                     <small>
                       <span className="posted-date">
-                        <i className="fa fa-clock-o" />
+                        <i className="fa fa-clock-o fa-fw" />
                         Posted <time dateTime={0}>{blog.postedAt.format('DD MMMM, YYYY')}</time>
                       </span>
 
                       <span className="author">
-                        <i className="fa fa-user" />
-                        {blog.author}
+                        <i className="fa fa-fw fa-user" />
+
+                        <Link href={`/blogs/author/${author.id}`}>
+                          <a>{author.name}</a>
+                        </Link>
                       </span>
 
                       <span>
-                        <i className="fa fa-folder" />
+                        <i className="fa fa-folder fa-fw" />
                         Categories:
                         <ul className="category-list">
                           {blog.categories.map(category => {
@@ -158,7 +165,7 @@ class Blogs extends Component {
 
                             return (
                               <li key={id}>
-                                <Link href={`/blog/category/${id}`}>
+                                <Link href={`/blogs/category/${id}`}>
                                   <a title={description}>{name}</a>
                                 </Link>
                               </li>

@@ -38,7 +38,10 @@ export const retrieveBlogs = (page = 1) => async dispatch => {
         let authorResponse = await fetch(`/wp-api/users/${blog.author}`)
         authorResponse = await authorResponse.json()
 
-        cache.authors[blog.author] = blog.author = authorResponse.name
+        cache.authors[blog.author] = blog.author = {
+          id: authorResponse.id,
+          name: authorResponse.name,
+        }
       }
 
       for (let [ key, value ] of blog.categories.entries()) {
