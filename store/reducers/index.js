@@ -6,6 +6,7 @@ import user from './user'
 import rats from './rats'
 import rescues from './rescues'
 import ships from './ships'
+import statistics from './statistics'
 
 
 
@@ -19,4 +20,5 @@ export default combineReducers({
   rats,
   rescues,
   ships,
+  statistics,
 })

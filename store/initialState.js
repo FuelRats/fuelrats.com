@@ -36,6 +36,10 @@ export default {
     total: 0,
   },
 
+  statistics: {
+    rescuesOverTime: [],
+  },
+
   user: {
     attributes: null,
     id: null,

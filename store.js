@@ -21,6 +21,7 @@ import * as dialogActions from './store/actions/dialog'
 import * as paperworkActions from './store/actions/paperwork'
 import * as ratsActions from './store/actions/rats'
 import * as rescuesActions from './store/actions/rescues'
+import * as statisticsActions from './store/actions/statistics'
 import * as userActions from './store/actions/user'
 
 
@@ -34,6 +35,7 @@ export const actions = Object.assign(
   paperworkActions,
   ratsActions,
   rescuesActions,
+  statisticsActions,
   userActions,
 )
 
