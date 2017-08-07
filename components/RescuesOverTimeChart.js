@@ -53,6 +53,29 @@ class RescuesOverTimeChart extends Component {
     })
   }
 
+  _renderAxes () {
+    this._renderXAxis()
+    this._renderYAxis()
+  }
+
+  _renderXAxis () {
+    let height = this._svg.getBoundingClientRect().height
+    let xAxis = d3.select(this._xAxis)
+
+    xAxis.call(d3.axisBottom(this.xScale))
+    xAxis.attr('transform', `translate(0, ${height - this._xAxis.getBoundingClientRect().height})`)
+  }
+
+  _renderYAxis () {
+    let width = this._svg.getBoundingClientRect().width
+    let yAxis = d3.select(this._yAxis)
+
+    yAxis.call(d3.axisRight(this.yScale))
+    yAxis.attr('transform', `translate(${width - this._yAxis.getBoundingClientRect().width}, 0)`)
+    yAxis.selectAll('text')
+      .attr('text-anchor', 'end')
+  }
+
   _renderChart () {
     let {
       rescuesOverTime,
@@ -71,12 +94,15 @@ class RescuesOverTimeChart extends Component {
     })
 
     // Set sizing parameters
+    let xAxisMargin = 20
+    let yAxisMargin = 40
     let barGap = 2
     let barWidth = 10
+    let borderRadius = (barWidth / 2) - 2
     let width = data.length * (barWidth + barGap)
 
     // Define the X axis scaling metrics
-    let xScale = d3.scaleTime()
+    let xScale = this.xScale = d3.scaleTime()
     xScale.domain([
       d3.min(data, datum => datum.attributes.date),
       d3.max(data, datum => datum.attributes.date),
@@ -84,35 +110,51 @@ class RescuesOverTimeChart extends Component {
     xScale.range([0, width])
 
     // Define the Y axis scaling metrics
-    let yScale = d3.scaleLinear()
-    yScale.domain([0, d3.max(data, d => d.attributes.success + d.attributes.failure)])
+    let yScale = this.yScale = d3.scaleLinear()
+    yScale.domain([d3.max(data, d => d.attributes.success + d.attributes.failure), 0])
     yScale.range([0, height])
 
     return (
       <svg
-        height={height}
-        width={width}>
-        {data.map((rescue, index) => {
-          return (
-            <g
-              className="rescue"
-              key={index}
-              transform={`translate(${xScale(rescue.attributes.date)}, 0)`}>
-              <rect
-                className="success"
-                data-rescues={rescue.attributes.success}
-                height={yScale(rescue.attributes.success)}
-                width={barWidth}
-                y={height - yScale(rescue.attributes.success + rescue.attributes.failure)} />
-              <rect
-                className="failure"
-                data-rescues={rescue.attributes.failure}
-                height={yScale(rescue.attributes.failure)}
-                width={barWidth}
-                y={height - yScale(rescue.attributes.failure)} />
-            </g>
-          )
-        })}
+        ref={_svg => this._svg = _svg}
+        height={height + xAxisMargin}
+        width={width + yAxisMargin}>
+        <g className="data">
+          {data.map((rescue, index) => {
+            return (
+              <g
+                className="rescue"
+                key={index}
+                transform={`translate(${xScale(rescue.attributes.date)}, 0)`}>
+                <rect
+                  className="success"
+                  data-rescues={rescue.attributes.success}
+                  height={yScale(0) - yScale(rescue.attributes.success + rescue.attributes.failure)}
+                  rx={borderRadius}
+                  ry={borderRadius}
+                  width={barWidth}
+                  y={yScale(rescue.attributes.success + rescue.attributes.failure)} />
+
+                <rect
+                  className="failure"
+                  data-rescues={rescue.attributes.failure}
+                  height={yScale(0) - yScale(rescue.attributes.failure)}
+                  rx={borderRadius}
+                  ry={borderRadius}
+                  width={barWidth}
+                  y={yScale(rescue.attributes.failure)} />
+              </g>
+            )
+          })}
+        </g>
+
+        <g
+          className="axis x"
+          ref={_xAxis => this._xAxis = _xAxis} />
+
+        <g
+          className="axis y"
+          ref={_yAxis => this._yAxis = _yAxis} />
       </svg>
     )
   }
@@ -129,10 +171,14 @@ class RescuesOverTimeChart extends Component {
     this._getRescuesOverTimeStatistics()
   }
 
+  componentDidUpdate () {
+    this._renderAxes()
+  }
+
   constructor (props) {
     super(props)
 
-    this._bindMethods(['_getRescuesOverTimeStatistics', '_renderChart'])
+    this._bindMethods(['_getRescuesOverTimeStatistics', '_renderAxes', '_renderXAxis', '_renderYAxis', '_renderChart'])
 
     this.state = {
       height: props.height || 300

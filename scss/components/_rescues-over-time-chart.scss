@@ -8,4 +8,10 @@
   .success {
     fill: $green;
   }
+
+  .axis.y {
+    text {
+      text-anchor: end;
+    }
+  }
 }
