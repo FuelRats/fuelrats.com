@@ -1,12 +1,30 @@
 .rescues-over-time-chart {
   direction: rtl;
 
+  .datum {
+    &:hover {
+      .failure,
+      .success {
+        transition-duration: 0.2s;
+        transition-property: fill;
+      }
+
+      .failure {
+        fill: rgba($red, 0.5);
+      }
+
+      .success {
+        fill: rgba($green, 0.5);
+      }
+    }
+  }
+
   .failure {
-    fill: $red;
+    fill: rgba($red, 1);
   }
 
   .success {
-    fill: $green;
+    fill: rgba($green, 1);
   }
 
   .axis.y {

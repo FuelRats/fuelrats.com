@@ -53,6 +53,12 @@ class RescuesOverTimeChart extends Component {
     })
   }
 
+  _hideTooltip () {
+    this.setState({
+      showTooltip: false,
+    })
+  }
+
   _renderAxes () {
     this._renderXAxis()
     this._renderYAxis()
@@ -61,8 +67,10 @@ class RescuesOverTimeChart extends Component {
   _renderXAxis () {
     let height = this._svg.getBoundingClientRect().height
     let xAxis = d3.select(this._xAxis)
+    let axis = d3.axisBottom(this.xScale)
 
-    xAxis.call(d3.axisBottom(this.xScale))
+    axis.ticks(d3.timeMonth)
+    xAxis.call(axis)
     xAxis.attr('transform', `translate(0, ${height - this._xAxis.getBoundingClientRect().height})`)
   }
 
@@ -85,7 +93,7 @@ class RescuesOverTimeChart extends Component {
     } = this.state
 
     // Deserialize the data
-    let data = rescuesOverTime.slice(0, 366).map(datum => {
+    let data = rescuesOverTime.map(datum => {
       datum.attributes.date = moment(datum.attributes.date)
       datum.attributes.failure = parseInt(datum.attributes.failure)
       datum.attributes.success = parseInt(datum.attributes.success)
@@ -123,8 +131,10 @@ class RescuesOverTimeChart extends Component {
           {data.map((rescue, index) => {
             return (
               <g
-                className="rescue"
+                className="datum"
                 key={index}
+                onMouseOut={this._hideTooltip}
+                onMouseOver={(event) => this._showTooltip(event, rescue)}
                 transform={`translate(${xScale(rescue.attributes.date)}, 0)`}>
                 <rect
                   className="success"
@@ -159,6 +169,28 @@ class RescuesOverTimeChart extends Component {
     )
   }
 
+  _showTooltip (event, rescue) {
+    let element = event.target
+    let {
+      right,
+      top,
+    } = element.getBoundingClientRect()
+
+    this.setState({
+      showTooltip: true,
+      tooltipContent: (
+        <div>
+          <strong>{rescue.attributes.date.format('DD MMM, YYYY')}</strong><br />
+          Successful: {rescue.attributes.success}<br />
+          Failure: {rescue.attributes.failure}<br />
+          Total: {rescue.attributes.total}
+        </div>
+      ),
+      tooltipX: right,
+      tooltipY: top,
+    })
+  }
+
 
 
 
@@ -178,14 +210,33 @@ class RescuesOverTimeChart extends Component {
   constructor (props) {
     super(props)
 
-    this._bindMethods(['_getRescuesOverTimeStatistics', '_renderAxes', '_renderXAxis', '_renderYAxis', '_renderChart'])
+    this._bindMethods([
+      '_getRescuesOverTimeStatistics',
+      '_hideTooltip',
+      '_renderAxes',
+      '_renderXAxis',
+      '_renderYAxis',
+      '_renderChart',
+      '_showTooltip',
+    ])
 
     this.state = {
-      height: props.height || 300
+      height: props.height || 300,
+      showTooltip: false,
+      tooltipContent: null,
+      tooltipX: 0,
+      tooltipY: 0,
     }
   }
 
   render () {
+    let {
+      showTooltip,
+      tooltipContent,
+      tooltipX,
+      tooltipY,
+    } = this.state
+
     return (
       <section className="panel">
         <header>
@@ -194,6 +245,16 @@ class RescuesOverTimeChart extends Component {
 
         <div className="panel-content rescues-over-time-chart">
           {this._renderChart()}
+        </div>
+
+        <div
+          className="tooltip"
+          style={{
+            left: tooltipX,
+            opacity: showTooltip ? 1 : 0,
+            top: tooltipY,
+          }}>
+          {tooltipContent}
         </div>
       </section>
     )
