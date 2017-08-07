@@ -12,6 +12,16 @@ import actionTypes from '../actionTypes'
 
 
 
+// Cache
+const cache = {
+  authors: {},
+  categories: {}
+}
+
+
+
+
+
 export const retrieveBlogs = (page = 1) => async dispatch => {
   dispatch({ type: actionTypes.RETRIEVE_BLOGS })
 
@@ -21,18 +31,29 @@ export const retrieveBlogs = (page = 1) => async dispatch => {
     let headers = await response.headers
 
     for (let blog of blogs) {
-      let authorResponse = await fetch(`/wp-api/users/${blog.author}`)
-      authorResponse = await authorResponse.json()
+      if (cache.authors[blog.author]) {
+        blog.author = cache.authors[blog.author]
 
-      blog.author = authorResponse.name
+      } else {
+        let authorResponse = await fetch(`/wp-api/users/${blog.author}`)
+        authorResponse = await authorResponse.json()
+
+        cache.authors[blog.author] = blog.author = authorResponse.name
+      }
 
       for (let [ key, value ] of blog.categories.entries()) {
-        let categoryResponse = await fetch(`/wp-api/categories/${value}`)
-        categoryResponse = await categoryResponse.json()
+        if (cache.categories[value]) {
+          blog.categories[key] = cache.categories[value]
 
-        blog.categories[key] = {
-          description: categoryResponse.description,
-          name: categoryResponse.name,
+        } else {
+          let categoryResponse = await fetch(`/wp-api/categories/${value}`)
+          categoryResponse = await categoryResponse.json()
+
+          cache.categories[value] = blog.categories[key] = {
+            description: categoryResponse.description,
+            id: categoryResponse.id,
+            name: categoryResponse.name,
+          }
         }
       }
     }
