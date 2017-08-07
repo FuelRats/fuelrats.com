@@ -101,14 +101,12 @@ class RescuesOverTimeChart extends Component {
               <rect
                 className="success"
                 data-rescues={rescue.attributes.success}
-                fill="green"
                 height={yScale(rescue.attributes.success)}
                 width={barWidth}
-                y={height - yScale(rescue.attributes.success - rescue.attributes.failure)} />
+                y={height - yScale(rescue.attributes.success + rescue.attributes.failure)} />
               <rect
                 className="failure"
                 data-rescues={rescue.attributes.failure}
-                fill="red"
                 height={yScale(rescue.attributes.failure)}
                 width={barWidth}
                 y={height - yScale(rescue.attributes.failure)} />
@@ -148,9 +146,7 @@ class RescuesOverTimeChart extends Component {
           Rescues Over Time
         </header>
 
-        <div className="panel-content" style={{
-            direction: 'rtl',
-          }}>
+        <div className="panel-content rescues-over-time-chart">
           {this._renderChart()}
         </div>
       </section>

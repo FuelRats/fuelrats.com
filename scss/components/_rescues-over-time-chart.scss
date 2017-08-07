@@ -1,0 +1,11 @@
+.rescues-over-time-chart {
+  direction: rtl;
+
+  .failure {
+    fill: $red;
+  }
+
+  .success {
+    fill: $green;
+  }
+}
