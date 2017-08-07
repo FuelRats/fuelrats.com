@@ -6,6 +6,11 @@ export default {
     registering: false,
   },
 
+  blogs: {
+    blogs: [],
+    totalPages: 0,
+  },
+
   dialog: {
     body: null,
     closeIsVisible: true,

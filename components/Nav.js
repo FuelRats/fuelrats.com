@@ -10,15 +10,15 @@ import React from 'react'
 const links = [
   {
     name: 'Blog',
-    path: '/blog'
+    path: '/blogs',
   },
   {
     name: 'Paperwork',
-    path: '/paperwork'
+    path: '/paperwork',
   },
   {
     name: 'About',
-    path: '/about'
+    path: '/about',
   },
 ]
 
