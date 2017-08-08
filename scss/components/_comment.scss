@@ -1,6 +1,29 @@
 .comment {
+  img {
+    margin-right: 1rem;
+  }
+
+  small {
+    flex-grow: 1;
+    margin: 0;
+  }
+
   header {
     align-items: center;
     display: flex;
+    margin: 0;
+  }
+
+  header,
+  ol,
+  p,
+  small,
+  ul {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .content {
+    padding-left: calc(48px + 1rem);
   }
 }

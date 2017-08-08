@@ -26,14 +26,51 @@ import Page from '../components/Page'
 class Blog extends Component {
 
   /***************************************************************************\
+    Private Methods
+  \***************************************************************************/
+
+  async _getComments () {
+    let {
+      id,
+    } = this.state.blog
+
+    this.setState({
+      loadingComments: true,
+    })
+
+    try {
+      let response = await fetch(`/wp-api/comments?post=${id}`)
+      let comments = await response.json()
+
+      this.setState({
+        comments,
+        loadingComments: false,
+      })
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+
+
+
+
+  /***************************************************************************\
     Public Methods
   \***************************************************************************/
+
+  componentDidMount () {
+    this._getComments()
+  }
 
   constructor (props) {
     super(props)
 
     this.state = {
-      blog: props.blogs.find(blog => blog.id === props.id)
+      blog: props.blogs.find(blog => blog.id === props.id),
+      comments: [],
+      loadingComments: false,
     }
   }
 
@@ -54,6 +91,7 @@ class Blog extends Component {
   render () {
     let {
       blog,
+      comments,
     } = this.state
 
     let {
@@ -111,6 +149,34 @@ class Blog extends Component {
           </small>
 
           <div dangerouslySetInnerHTML={{ __html: blog.content.rendered }} />
+
+          <section className="comments">
+            <header>
+              <h3>Comments</h3>
+            </header>
+
+            <ol>
+              {comments.length ? comments.map(comment => {
+                return (
+                  <li key={comment.id}>
+                    <article className="comment">
+                      <header>
+                        <img src={comment.author_avatar_urls['48']} />
+
+                        <small>
+                           <span className="author-name">{comment.author_name}</span> &middot; {moment(comment.date_gmt).fromNow()}
+                        </small>
+                      </header>
+
+                      <div
+                        className="content"
+                        dangerouslySetInnerHTML={{ __html: comment.content.rendered }} />
+                    </article>
+                  </li>
+                )
+              }) : 'No comments... yet.'}
+            </ol>
+          </section>
         </article>
       </Page>
     )
