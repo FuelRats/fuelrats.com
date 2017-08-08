@@ -43,6 +43,10 @@ module.exports = function (nextjs, koa, config) {
     await nextjs.render(ctx.request, ctx.res, '/blogs', Object.assign({}, ctx.query, ctx.params))
   })
 
+  router.get('/blog/:id', async (ctx, next) => {
+    await nextjs.render(ctx.request, ctx.res, '/blogs', Object.assign({}, ctx.query, ctx.params))
+  })
+
   router.get('/paperwork/:id', async (ctx, next) => {
     await nextjs.render(ctx.request, ctx.res, '/paperwork', Object.assign({}, ctx.query, ctx.params))
   })

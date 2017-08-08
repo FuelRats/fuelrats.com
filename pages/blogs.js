@@ -132,7 +132,7 @@ class Blogs extends Component {
                   <article>
                     <header>
                       <h2 className="title">
-                        <Link href={`/blog/${blog.id}`}>
+                        <Link as={`/blog/${blog.id}`} href={`/blog?id=${blog.id}`}>
                           <a dangerouslySetInnerHTML={{ __html: blog.title.rendered }} />
                         </Link>
                       </h2>

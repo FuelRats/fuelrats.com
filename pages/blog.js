@@ -1,6 +1,9 @@
 // Module imports
 import { bindActionCreators } from 'redux'
 import _ from 'lodash'
+import Link from 'next/link'
+import moment from 'moment'
+import Router from 'next/router'
 import React from 'react'
 import withRedux from 'next-redux-wrapper'
 
@@ -20,56 +23,95 @@ import Page from '../components/Page'
 
 
 
-class Paperwork extends Component {
+class Blog extends Component {
 
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
 
-//  componentDidMount () {
-//    let { id } = this.props
-//
-//    if (id) {
-//      this.props.retrieveBlog(id)
-//    } else {
-//      this.props.retrieveBlogs()
-//    }
-//  }
-
-//  componentWillReceiveProps (nextProps) {
-//    if (nextProps.blog) {
-//      this.setState(nextProps.blog)
-//    }
-//  }
-
   constructor (props) {
     super(props)
 
-    this.state = {}
+    this.state = {
+      blog: props.blogs.find(blog => blog.id === props.id)
+    }
   }
 
   static async getInitialProps ({ query }) {
     let { id } = query
 
-    if (id) {
-      return { id }
+    if (!id || id < 1) {
+      id = 1
     }
 
-    return {}
+    id = parseInt(id)
+
+    return {
+      id
+    }
   }
 
   render () {
     let {
-      retrieving,
-    } = this.props
+      blog,
+    } = this.state
 
-    let {} = this.state
+    let {
+      author,
+    } = blog
 
     return (
       <Page title={this.title}>
         <header className="page-header">
           <h1>{this.title}</h1>
         </header>
+
+        <article className="page-content">
+          <header>
+            <h2
+              className="title"
+              dangerouslySetInnerHTML={{ __html: blog.title.rendered }} />
+          </header>
+
+          <small>
+            <span className="posted-date">
+              <i className="fa fa-clock-o fa-fw" />
+              Posted <time dateTime={0}>{blog.postedAt.format('DD MMMM, YYYY')}</time>
+            </span>
+
+            <span className="author">
+              <i className="fa fa-fw fa-user" />
+
+              <Link href={`/blogs/author/${author.id}`}>
+                <a>{author.name}</a>
+              </Link>
+            </span>
+
+            <span>
+              <i className="fa fa-folder fa-fw" />
+              Categories:
+              <ul className="category-list">
+                {blog.categories.map(category => {
+                  let {
+                    description,
+                    id,
+                    name,
+                  } = category
+
+                  return (
+                    <li key={id}>
+                      <Link href={`/blogs/category/${id}`}>
+                        <a title={description}>{name}</a>
+                      </Link>
+                    </li>
+                  )
+                })}
+              </ul>
+            </span>
+          </small>
+
+          <div dangerouslySetInnerHTML={{ __html: blog.content.rendered }} />
+        </article>
       </Page>
     )
   }
@@ -92,9 +134,7 @@ class Paperwork extends Component {
 
 
 const mapDispatchToProps = dispatch => {
-  return {
-//    retrieveBlog: bindActionCreators(actions.retrievePaperwork, dispatch),
-  }
+  return {}
 }
 
 const mapStateToProps = state => {
@@ -105,4 +145,4 @@ const mapStateToProps = state => {
 
 
 
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(Paperwork)
+export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(Blog)
