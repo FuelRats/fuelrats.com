@@ -13,6 +13,17 @@ export default function (state = initialState.blogs, action) {
   } = action
 
   switch (type) {
+    case actionTypes.RETRIEVE_BLOG:
+      switch (status) {
+        case 'success':
+          return Object.assign({}, state, {
+            blogs: [payload],
+          })
+
+        default:
+          return state
+      }
+
     case actionTypes.RETRIEVE_BLOGS:
       switch (status) {
         case 'error':

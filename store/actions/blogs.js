@@ -22,6 +22,56 @@ const cache = {
 
 
 
+export const retrieveBlog = id => async dispatch => {
+  dispatch({ type: actionTypes.RETRIEVE_BLOG })
+
+  try {
+    let response = await fetch(`/wp-api/posts/${id}`)
+    let blog = await response.json()
+
+    let authorResponse = await fetch(`/wp-api/users/${blog.author}`)
+    authorResponse = await authorResponse.json()
+
+    blog.author = {
+      id: authorResponse.id,
+      name: authorResponse.name,
+    }
+
+    for (let [ key, value ] of blog.categories.entries()) {
+      let categoryResponse = await fetch(`/wp-api/categories/${value}`)
+      categoryResponse = await categoryResponse.json()
+
+      blog.categories[key] = {
+        description: categoryResponse.description,
+        id: categoryResponse.id,
+        name: categoryResponse.name,
+      }
+    }
+
+    let commentsResponse = await fetch(`/wp-api/comments?post=${id}`)
+    blog.comments = await commentsResponse.json()
+    blog.comments || (blog.comments = [])
+
+    dispatch({
+      payload: blog,
+      status: 'success',
+      type: actionTypes.RETRIEVE_BLOG,
+    })
+
+  } catch (error) {
+    dispatch({
+      status: 'error',
+      type: actionTypes.RETRIEVE_BLOG,
+    })
+
+    console.log(error)
+  }
+}
+
+
+
+
+
 export const retrieveBlogs = (page = 1) => async dispatch => {
   dispatch({ type: actionTypes.RETRIEVE_BLOGS })
 

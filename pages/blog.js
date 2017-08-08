@@ -29,27 +29,17 @@ class Blog extends Component {
     Private Methods
   \***************************************************************************/
 
-  async _getComments () {
-    let {
-      id,
-    } = this.state.blog
-
+  async _retrieveBlog () {
     this.setState({
-      loadingComments: true,
+      retrieving: true,
     })
 
-    try {
-      let response = await fetch(`/wp-api/comments?post=${id}`)
-      let comments = await response.json()
+    await this.props.retrieveBlog(this.props.id)
 
-      this.setState({
-        comments,
-        loadingComments: false,
-      })
-
-    } catch (error) {
-      console.log(error)
-    }
+    this.setState({
+      blog: this.props.blogs.find(blog => blog.id === this.props.id),
+      retrieving: false,
+    })
   }
 
 
@@ -61,7 +51,7 @@ class Blog extends Component {
   \***************************************************************************/
 
   componentDidMount () {
-    this._getComments()
+    this._retrieveBlog()
   }
 
   constructor (props) {
@@ -69,8 +59,7 @@ class Blog extends Component {
 
     this.state = {
       blog: props.blogs.find(blog => blog.id === props.id),
-      comments: [],
-      loadingComments: false,
+      retrieving: true,
     }
   }
 
@@ -91,12 +80,8 @@ class Blog extends Component {
   render () {
     let {
       blog,
-      comments,
+      retrieving,
     } = this.state
-
-    let {
-      author,
-    } = blog
 
     return (
       <Page title={this.title}>
@@ -104,80 +89,86 @@ class Blog extends Component {
           <h1>{this.title}</h1>
         </header>
 
-        <article className="page-content">
-          <header>
-            <h2
-              className="title"
-              dangerouslySetInnerHTML={{ __html: blog.title.rendered }} />
-          </header>
+        {retrieving && (
+          <div className="loading" />
+        )}
 
-          <small>
-            <span className="posted-date">
-              <i className="fa fa-clock-o fa-fw" />
-              Posted <time dateTime={0}>{blog.postedAt.format('DD MMMM, YYYY')}</time>
-            </span>
-
-            <span className="author">
-              <i className="fa fa-fw fa-user" />
-
-              <Link href={`/blogs/author/${author.id}`}>
-                <a>{author.name}</a>
-              </Link>
-            </span>
-
-            <span>
-              <i className="fa fa-folder fa-fw" />
-              Categories:
-              <ul className="category-list">
-                {blog.categories.map(category => {
-                  let {
-                    description,
-                    id,
-                    name,
-                  } = category
-
-                  return (
-                    <li key={id}>
-                      <Link href={`/blogs/category/${id}`}>
-                        <a title={description}>{name}</a>
-                      </Link>
-                    </li>
-                  )
-                })}
-              </ul>
-            </span>
-          </small>
-
-          <div dangerouslySetInnerHTML={{ __html: blog.content.rendered }} />
-
-          <section className="comments">
+        {!retrieving && (
+          <article className="page-content">
             <header>
-              <h3>Comments</h3>
+              <h2
+                className="title"
+                dangerouslySetInnerHTML={{ __html: blog.title.rendered }} />
             </header>
 
-            <ol>
-              {comments.length ? comments.map(comment => {
-                return (
-                  <li key={comment.id}>
-                    <article className="comment">
-                      <header>
-                        <img src={comment.author_avatar_urls['48']} />
+            <small>
+              <span className="posted-date">
+                <i className="fa fa-clock-o fa-fw" />
+                Posted <time dateTime={0}>{moment(blog.date_gmt).format('DD MMMM, YYYY')}</time>
+              </span>
 
-                        <small>
-                           <span className="author-name">{comment.author_name}</span> &middot; {moment(comment.date_gmt).fromNow()}
-                        </small>
-                      </header>
+              <span className="author">
+                <i className="fa fa-fw fa-user" />
 
-                      <div
-                        className="content"
-                        dangerouslySetInnerHTML={{ __html: comment.content.rendered }} />
-                    </article>
-                  </li>
-                )
-              }) : 'No comments... yet.'}
-            </ol>
-          </section>
-        </article>
+                <Link href={`/blogs/author/${blog.author.id}`}>
+                  <a>{blog.author.name}</a>
+                </Link>
+              </span>
+
+              <span>
+                <i className="fa fa-folder fa-fw" />
+                Categories:
+                <ul className="category-list">
+                  {blog.categories.map(category => {
+                    let {
+                      description,
+                      id,
+                      name,
+                    } = category
+
+                    return (
+                      <li key={id}>
+                        <Link href={`/blogs/category/${id}`}>
+                          <a title={description}>{name}</a>
+                        </Link>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </span>
+            </small>
+
+            <div dangerouslySetInnerHTML={{ __html: blog.content.rendered }} />
+
+            <section className="comments">
+              <header>
+                <h3>Comments</h3>
+              </header>
+
+              <ol>
+                {(blog.comments && blog.comments.length) ? blog.comments.map(comment => {
+                  return (
+                    <li key={comment.id}>
+                      <article className="comment">
+                        <header>
+                          <img src={comment.author_avatar_urls['48']} />
+
+                          <small>
+                             <span className="author-name">{comment.author_name}</span> &middot; {moment(comment.date_gmt).fromNow()}
+                          </small>
+                        </header>
+
+                        <div
+                          className="content"
+                          dangerouslySetInnerHTML={{ __html: comment.content.rendered }} />
+                      </article>
+                    </li>
+                  )
+                }) : 'No comments... yet.'}
+              </ol>
+            </section>
+          </article>
+        )}
       </Page>
     )
   }
@@ -200,7 +191,9 @@ class Blog extends Component {
 
 
 const mapDispatchToProps = dispatch => {
-  return {}
+  return {
+    retrieveBlog: bindActionCreators(actions.retrieveBlog, dispatch),
+  }
 }
 
 const mapStateToProps = state => {
