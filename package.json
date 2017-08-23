@@ -5,7 +5,6 @@
   "license": "MIT",
   "scripts": {
     "postinstall": "$(npm bin)/bower install",
-    "scss": "$(npm bin)/grunt",
     "start": "node server/server.js"
   },
   "dependencies": {
@@ -18,13 +17,6 @@
     "d3": "^4.10.0",
     "fixed-data-table": "^0.6.4",
     "glob": "^7.1.2",
-    "grunt": "^1.0.1",
-    "grunt-contrib-clean": "^1.1.0",
-    "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-cssmin": "^2.1.0",
-    "grunt-contrib-watch": "^1.0.0",
-    "grunt-sass": "^2.0.0",
-    "grunt-sass-globbing": "^1.5.1",
     "i18next": "^8.0.0",
     "i18next-browser-languagedetector": "^1.0.1",
     "i18next-fetch-backend": "^0.0.1",
@@ -41,7 +33,6 @@
     "koa-router": "^7.1.1",
     "koa-send": "^4.1.0",
     "koa-static": "^3.0.0",
-    "load-grunt-config": "^0.19.2",
     "lodash": "^4.17.4",
     "next": "^2.4.3",
     "next-cookies": "^1.0.1",
@@ -60,7 +51,6 @@
     "request-promise-native": "^1.0.4",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
-    "tags-input-component": "^1.1.2",
-    "time-grunt": "^1.4.0"
+    "tags-input-component": "^1.1.2"
   }
 }

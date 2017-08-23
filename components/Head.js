@@ -5,6 +5,13 @@ import React from 'react'
 
 
 
+import appStylesheet from '../scss/app.scss'
+import libStylesheet from '../scss/lib.scss'
+
+
+
+
+
 export default class extends React.Component {
 
   /***************************************************************************\
@@ -12,10 +19,11 @@ export default class extends React.Component {
   \***************************************************************************/
 
   render () {
-    let adsenseSnippet = '(adsbygoogle = window.adsbygoogle || []).push({' +
-      'google_ad_client: "ca-pub-9749247943500937",' +
-      'enable_page_level_ads: true' +
-    '});'
+    let adsenseSnippet = `
+      (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-9749247943500937",
+      enable_page_level_ads: true
+    });`
 
     return (
       <NextHead>
@@ -45,9 +53,12 @@ export default class extends React.Component {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
 
         <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-        <link href="/static/compiled/lib.css" rel="stylesheet" />
-        <link href="/static/compiled/app.css" rel="stylesheet" />
+
+        <style dangerouslySetInnerHTML={{ __html: libStylesheet }} />
+        <style dangerouslySetInnerHTML={{ __html: appStylesheet }} />
       </NextHead>
     )
   }
 }
+//        <link href="/static/compiled/lib.css" rel="stylesheet" />
+//        <link href="/static/compiled/app.css" rel="stylesheet" />
