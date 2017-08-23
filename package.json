@@ -4,8 +4,13 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "analyze": "cross-env ANALYZE=1 next build",
     "postinstall": "$(npm bin)/bower install",
     "start": "node server/server.js"
+  },
+  "devDependencies": {
+    "cross-env": "^5.0.5",
+    "webpack-bundle-analyzer": "^2.9.0"
   },
   "dependencies": {
     "autoprefixer": "^7.1.2",
