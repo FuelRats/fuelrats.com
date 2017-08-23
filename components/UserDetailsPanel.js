@@ -43,7 +43,7 @@ class UserDetailsPanel extends Component {
     return (
       <div className="panel user-details">
         <header>
-          User Details
+          Details
         </header>
 
         <div className="panel-content">

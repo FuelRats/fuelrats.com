@@ -18,7 +18,7 @@ import {
 } from '../store'
 import AddRatForm from './AddRatForm'
 import Component from './Component'
-import UserShipsTable from './UserShipsTable'
+import RatDetails from './RatDetails'
 
 
 
@@ -61,7 +61,7 @@ class UserRatsPanel extends Component {
     let ships = row.original.relationships.ships.data.map(({ id }) => this.props.ships.ships.find(ship => ship.id === id))
 
     return (
-      <UserShipsTable data={ships} />
+      <RatDetails ships={ships} />
     )
   }
 

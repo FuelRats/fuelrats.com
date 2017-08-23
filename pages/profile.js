@@ -7,10 +7,10 @@ import React from 'react'
 
 // Component imports
 import Page from '../components/Page'
-import UserNicknamesPanel from '../components/UserNicknamesPanel'
-import UserDetailsPanel from '../components/UserDetailsPanel'
+import TabbedPanel from '../components/TabbedPanel'
+import UserOverview from '../components/UserOverview'
 import UserRatsPanel from '../components/UserRatsPanel'
-import UserStatsPanel from '../components/UserStatsPanel'
+import UserStatsOverview from '../components/UserStatsOverview'
 
 
 
@@ -23,6 +23,26 @@ export default class extends React.Component {
   \***************************************************************************/
 
   render () {
+    let tabs = [
+      {
+        default: true,
+        component: (<UserOverview />),
+        title: 'Overview',
+      },
+      {
+        component: (<UserRatsPanel />),
+        title: 'Rats',
+      },
+      {
+        component: (<UserStatsOverview />),
+        title: 'Stats',
+      },
+      {
+        component: (<div>Badge</div>),
+        title: 'Badge',
+      },
+    ]
+
     return (
       <Page title={this.title}>
         <header className="page-header">
@@ -30,21 +50,9 @@ export default class extends React.Component {
         </header>
 
         <div className="page-content">
-          <div className="user-details-cell">
-            <UserDetailsPanel />
-          </div>
-
-          <div className="user-details-cell">
-            <UserRatsPanel />
-          </div>
-
-          <div className="user-entities-cell">
-            <UserNicknamesPanel />
-          </div>
-
-          <div className="user-stats-cell">
-            <UserStatsPanel />
-          </div>
+          <TabbedPanel
+            name="User Tabs"
+            tabs={tabs} />
         </div>
       </Page>
     )

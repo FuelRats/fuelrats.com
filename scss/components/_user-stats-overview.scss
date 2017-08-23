@@ -1,0 +1,13 @@
+.user-stats-overview {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  .stat {
+    text-align: center;
+
+    data {
+      display: block;
+      font-size: 2em;
+    }
+  }
+}
