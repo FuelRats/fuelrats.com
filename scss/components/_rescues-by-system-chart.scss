@@ -1,6 +1,39 @@
 .rescues-by-system-chart {
-  .system-name {
+  text {
     fill: white;
-    text-align: center;
+  }
+
+  .system {
+    transition: fill 0.5s;
+
+    &.pc {
+      fill: rgba($xbox-green, 0.7);
+
+      &:hover {
+        fill: rgba($xbox-green, 1);
+      }
+    }
+
+    &.ps {
+      fill: rgba($playstation-blue, 0.7);
+
+      &:hover {
+        fill: rgba($playstation-blue, 1);
+      }
+    }
+
+    &.xb {
+      fill: rgba($red, 0.7);
+
+      &:hover {
+        fill: rgba($red, 1);
+      }
+    }
+  }
+
+  .platforms {
+    text {
+      font-weight: bold;
+    }
   }
 }

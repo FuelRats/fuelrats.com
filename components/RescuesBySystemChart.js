@@ -1,11 +1,8 @@
 // Module imports
 import { bindActionCreators } from 'redux'
 import * as d3 from 'd3'
-import * as d3ScaleChromatic from 'd3-scale-chromatic'
 import React from 'react'
 import withRedux from 'next-redux-wrapper'
-
-Object.assign(d3, d3ScaleChromatic)
 
 
 
@@ -54,31 +51,86 @@ class RescuesBySystemChart extends Component {
       height,
       width,
     } = this.state
+    let radius = Math.min(width, height) / 2
+
+    let rescuesByPlatform = [
+      {
+        color: '#d65050',
+        name: 'PC',
+        value: rescuesBySystem.reduce((accumulator, datum) => {
+          return accumulator + parseInt(datum.attributes.pc)
+        }, 0),
+      },
+      {
+        color: '#003791',
+        name: 'PS4',
+        value: rescuesBySystem.reduce((accumulator, datum) => {
+          return accumulator + parseInt(datum.attributes.ps)
+        }, 0),
+      },
+      {
+        color: '#107c10',
+        name: 'XB',
+        value: rescuesBySystem.reduce((accumulator, datum) => {
+          return accumulator + parseInt(datum.attributes.xb)
+        }, 0),
+      }
+    ]
+
+    let haloWidth = 40
+    let packMargin = 20
+
+    let arc = d3.arc()
+    arc.outerRadius(radius - 10)
+    arc.innerRadius(radius - haloWidth)
+
+    let pie = d3.pie()
+    pie.sort(null)
+    pie.value(datum => datum.value)
+    pie.padAngle(.03)
 
     let pack = d3.pack()
-    pack.size([width, height])
+    pack.size([width - ((haloWidth + packMargin) * 2), height - ((haloWidth + packMargin) * 2)])
     pack.padding(1.5)
 
     let root = d3.hierarchy({ children: rescuesBySystem })
     root.sum(datum => datum.attributes ? datum.attributes.count : 0)
 
-    let data = pack(root).leaves()
+    let systems = pack(root).leaves()
 
     return (
       <svg
-        ref={_svg => this._svg = _svg}
         height={height}
         width={width}>
-        <g className="data">
-          {data.map((datum, index) => {
+        <g
+          className="systems"
+          transform={`translate(${haloWidth + packMargin}, ${haloWidth + packMargin})`}>
+          {systems.map((system, index) => {
+            let classes = ['system']
+            let highestPerformingPlatform = null
             let id = null
-            let system = null
+            let systemName = null
             let successRate = 0
 
-            if (datum.data.attributes) {
-              successRate = datum.data.attributes.success / datum.data.attributes.count
-              system = datum.data.attributes.system
-              id = system.toLowerCase().replace(/\s/g, '_')
+            if (system.data.attributes) {
+              successRate = system.data.attributes.success / system.data.attributes.count
+              systemName = system.data.attributes.system
+              id = systemName.toLowerCase().replace(/\s/g, '_')
+
+              classes.push([
+                {
+                  platform: 'pc',
+                  value: system.data.attributes.pc,
+                },
+                {
+                  platform: 'ps',
+                  value: system.data.attributes.ps,
+                },
+                {
+                  platform: 'xb',
+                  value: system.data.attributes.xb,
+                },
+              ].reduce((a, b) => a.value > b.value ? a : b).platform)
             }
 
             return (
@@ -86,13 +138,12 @@ class RescuesBySystemChart extends Component {
                 className="datum"
                 key={index}
                 onMouseOut={this._hideTooltip}
-                onMouseOver={(event) => this._showTooltip(event, datum)}
-                transform={`translate(${datum.x}, ${datum.y})`}>
+                onMouseOver={(event) => this._showTooltip(event, system)}
+                transform={`translate(${system.x}, ${system.y})`}>
                 <circle
-                  className="system"
+                  className={classes.join(' ')}
                   id={id}
-                  r={datum.r}
-                  fill={d3.interpolateRdYlGn(successRate)} />
+                  r={system.r} />
 
                 <clipPath
                   id={`clip-${id}`}>
@@ -104,7 +155,29 @@ class RescuesBySystemChart extends Component {
                   clipPath={`url(#clip-${id})`}
                   textAnchor="middle"
                   y={4}>
-                  {system}
+                  {systemName}
+                </text>
+              </g>
+            )
+          })}
+        </g>
+
+        <g
+          className="platforms"
+          transform={`translate(${width / 2},${height / 2})`}>
+          {pie(rescuesByPlatform).map((platform, index) => {
+            return (
+              <g>
+                <path
+                  d={arc(platform)}
+                  fill={platform.data.color}
+                  key={index} />
+
+                <text
+                  dy="0.4em"
+                  textAnchor="middle"
+                  transform={`translate(${arc.centroid(platform)})`}>
+                  {platform.data.name}
                 </text>
               </g>
             )
