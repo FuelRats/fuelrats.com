@@ -3,8 +3,6 @@ import { bindActionCreators } from 'redux'
 import * as d3 from 'd3'
 import moment from 'moment'
 import React from 'react'
-import ReactTable from 'react-table'
-import Router from 'next/router'
 import withRedux from 'next-redux-wrapper'
 
 
@@ -27,19 +25,6 @@ class RescuesOverTimeChart extends Component {
   /***************************************************************************\
     Private Methods
   \***************************************************************************/
-
-  _deserializedRescuesOverTime () {
-    let {
-      rescuesOverTime,
-    } = this.props
-
-    return rescuesOverTime.map(rescue => {
-      return {
-        failure: rescue.attributes.failure,
-        success: rescue.attributes.success,
-      }
-    })
-  }
 
   async _getRescuesOverTimeStatistics () {
     this.setState({
@@ -222,6 +207,7 @@ class RescuesOverTimeChart extends Component {
 
     this.state = {
       height: props.height || 300,
+      loadingRescuesOverTimeStatistics: false,
       showTooltip: false,
       tooltipContent: null,
       tooltipX: 0,
