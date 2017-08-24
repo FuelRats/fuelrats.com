@@ -26,6 +26,17 @@ export default function (state = initialState.statistics, action) {
           return state
       }
 
+    case actionTypes.GET_RESCUES_BY_SYSTEM:
+      switch (status) {
+        case 'success':
+          return Object.assign({}, state, {
+            rescuesBySystem: payload,
+          })
+
+        default:
+          return state
+      }
+
     default:
       return state
   }
