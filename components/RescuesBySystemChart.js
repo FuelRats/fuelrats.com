@@ -199,10 +199,63 @@ class RescuesBySystemChart extends Component {
       showTooltip: true,
       tooltipContent: (
         <div>
-          <strong>{datum.data.id}</strong><br />
-          Successful: {datum.data.attributes.success}<br />
-          Failure: {datum.data.attributes.failure}<br />
-          Total: {datum.data.attributes.count}
+          <header>{datum.data.id}</header>
+
+          <table>
+            <thead>
+              <tr>
+                <th></th>
+
+                <th>Successful</th>
+
+                <th>Failed</th>
+
+                <th>Total</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <th>PC</th>
+
+                <td>{datum.data.attributes.pc} <span className="codeRed">({datum.data.attributes.codeRed})</span></td>
+
+                <td>{datum.data.attributes.failure}</td>
+
+                <td>{datum.data.attributes.pc}</td>
+              </tr>
+
+              <tr>
+                <th>XB</th>
+
+                <td>{datum.data.attributes.xb} <span className="codeRed">({datum.data.attributes.codeRed})</span></td>
+
+                <td>{datum.data.attributes.failure}</td>
+
+                <td>{datum.data.attributes.xb}</td>
+              </tr>
+
+              <tr>
+                <th>PS</th>
+
+                <td>{datum.data.attributes.ps} <span className="codeRed">({datum.data.attributes.codeRed})</span></td>
+
+                <td>{datum.data.attributes.failure}</td>
+
+                <td>{datum.data.attributes.ps}</td>
+              </tr>
+
+              <tr>
+                <th>All</th>
+
+                <td>{datum.data.attributes.success} <span className="codeRed">({datum.data.attributes.codeRed})</span></td>
+
+                <td>{datum.data.attributes.failure}</td>
+
+                <td>{datum.data.attributes.count}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       ),
       tooltipX: right,

@@ -36,4 +36,20 @@
       font-weight: bold;
     }
   }
+
+  + .tooltip {
+    th,
+    td {
+      padding: 0 0.5rem;
+    }
+
+    thead th,
+    td {
+      text-align: right;
+    }
+
+    .codeRed {
+      color: $red;
+    }
+  }
 }
