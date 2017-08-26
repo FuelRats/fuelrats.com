@@ -5,8 +5,9 @@
   "license": "MIT",
   "scripts": {
     "analyze": "cross-env ANALYZE=1 next build",
-    "postinstall": "$(npm bin)/bower install",
-    "start": "node server/server.js"
+    "build": "next build",
+    "postinstall": "bower install",
+    "dev": "node server/server.js"
   },
   "devDependencies": {
     "cross-env": "^5.0.5",
