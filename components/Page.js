@@ -28,7 +28,7 @@ export default class extends React.Component {
       className,
       title,
     } = this.props
-    let mainClasses = ['fade-in', 'page'].concat(title.toLowerCase()).join(' ')
+    let mainClasses = ['fade-in', 'page'].concat(title.toLowerCase().replace(' ', '-')).join(' ')
 
     return (
       <div role="application">
