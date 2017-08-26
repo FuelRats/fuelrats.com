@@ -16,7 +16,7 @@ export const getRescuesBySystemStatistics = () => async dispatch => {
   dispatch({ type: actionTypes.GET_RESCUES_BY_SYSTEM })
 
   try {
-    let response = await fetch(`/api/statistics/systems?limit=100`, {
+    let response = await fetch(`/api/statistics/systems?count.gt=10`, {
       headers: new Headers({
         Authorization: `Bearer ${localStorage.getItem('access_token')}`,
       }),

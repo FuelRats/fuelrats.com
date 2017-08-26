@@ -57,6 +57,7 @@ class RescuesBySystemChart extends Component {
       {
         color: '#d65050',
         name: 'PC',
+        safeName: 'pc',
         value: rescuesBySystem.reduce((accumulator, datum) => {
           return accumulator + parseInt(datum.attributes.pc)
         }, 0),
@@ -64,6 +65,7 @@ class RescuesBySystemChart extends Component {
       {
         color: '#003791',
         name: 'PS4',
+        safeName: 'ps',
         value: rescuesBySystem.reduce((accumulator, datum) => {
           return accumulator + parseInt(datum.attributes.ps)
         }, 0),
@@ -71,6 +73,7 @@ class RescuesBySystemChart extends Component {
       {
         color: '#107c10',
         name: 'XB',
+        safeName: 'xb',
         value: rescuesBySystem.reduce((accumulator, datum) => {
           return accumulator + parseInt(datum.attributes.xb)
         }, 0),
@@ -91,7 +94,7 @@ class RescuesBySystemChart extends Component {
 
     let pack = d3.pack()
     pack.size([width - ((haloWidth + packMargin) * 2), height - ((haloWidth + packMargin) * 2)])
-    pack.padding(1.5)
+    pack.padding(10)
 
     let root = d3.hierarchy({ children: rescuesBySystem })
     root.sum(datum => datum.attributes ? datum.attributes.count : 0)
@@ -102,6 +105,27 @@ class RescuesBySystemChart extends Component {
       <svg
         height={height}
         width={width}>
+        <defs>
+          <filter
+            height="200%"
+            id="glow"
+            width="200%"
+            x="-50%"
+            y="-50%">
+            <feGaussianBlur
+              result="coloredBlur"
+              stdDeviation="2" />
+
+            <feMerge>
+              <feMergeNode
+                in="coloredBlur" />
+
+              <feMergeNode
+                in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
         <g
           className="systems"
           transform={`translate(${haloWidth + packMargin}, ${haloWidth + packMargin})`}>
@@ -136,6 +160,7 @@ class RescuesBySystemChart extends Component {
             return (
               <g
                 className="datum"
+                filter="url(#glow)"
                 key={index}
                 onMouseOut={this._hideTooltip}
                 onMouseOver={(event) => this._showTooltip(event, system)}
@@ -166,11 +191,14 @@ class RescuesBySystemChart extends Component {
           className="platforms"
           transform={`translate(${width / 2},${height / 2})`}>
           {pie(rescuesByPlatform).map((platform, index) => {
+            let classes = ['platform', platform.data.safeName]
+
             return (
               <g>
                 <path
+                  className={classes.join(' ')}
                   d={arc(platform)}
-                  fill={platform.data.color}
+                  filter="url(#glow)"
                   key={index} />
 
                 <text
@@ -218,41 +246,41 @@ class RescuesBySystemChart extends Component {
               <tr>
                 <th>PC</th>
 
-                <td>{datum.data.attributes.pc} <span className="codeRed">({datum.data.attributes.codeRed})</span></td>
+                <td>{datum.data.attributes.pcsuccess} <span className="codeRed">({datum.data.attributes.pccoderedsuccess})</span></td>
 
-                <td>{datum.data.attributes.failure}</td>
+                <td>{datum.data.attributes.pcfailure} <span className="codeRed">({datum.data.attributes.pccoderedfailure})</span></td>
 
-                <td>{datum.data.attributes.pc}</td>
+                <td>{datum.data.attributes.pc} <span className="codeRed">({datum.data.attributes.pccodered})</span></td>
               </tr>
 
               <tr>
                 <th>XB</th>
 
-                <td>{datum.data.attributes.xb} <span className="codeRed">({datum.data.attributes.codeRed})</span></td>
+                <td>{datum.data.attributes.xbsuccess} <span className="codeRed">({datum.data.attributes.xbcoderedsuccess})</span></td>
 
-                <td>{datum.data.attributes.failure}</td>
+                <td>{datum.data.attributes.xbfailure} <span className="codeRed">({datum.data.attributes.xbcoderedfailure})</span></td>
 
-                <td>{datum.data.attributes.xb}</td>
+                <td>{datum.data.attributes.xb} <span className="codeRed">({datum.data.attributes.xbcodered})</span></td>
               </tr>
 
               <tr>
                 <th>PS</th>
 
-                <td>{datum.data.attributes.ps} <span className="codeRed">({datum.data.attributes.codeRed})</span></td>
+                <td>{datum.data.attributes.pssuccess} <span className="codeRed">({datum.data.attributes.pscoderedsuccess})</span></td>
 
-                <td>{datum.data.attributes.failure}</td>
+                <td>{datum.data.attributes.psfailure} <span className="codeRed">({datum.data.attributes.pscoderedfailure})</span></td>
 
-                <td>{datum.data.attributes.ps}</td>
+                <td>{datum.data.attributes.ps} <span className="codeRed">({datum.data.attributes.pscodered})</span></td>
               </tr>
 
               <tr>
                 <th>All</th>
 
-                <td>{datum.data.attributes.success} <span className="codeRed">({datum.data.attributes.codeRed})</span></td>
+                <td>{datum.data.attributes.success} <span className="codeRed">({datum.data.attributes.coderedsuccess})</span></td>
 
-                <td>{datum.data.attributes.failure}</td>
+                <td>{datum.data.attributes.failure} <span className="codeRed">({datum.data.attributes.coderedfailure})</span></td>
 
-                <td>{datum.data.attributes.count}</td>
+                <td>{datum.data.attributes.count} <span className="codeRed">({datum.data.attributes.codered})</span></td>
               </tr>
             </tbody>
           </table>
