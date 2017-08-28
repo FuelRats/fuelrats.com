@@ -90,7 +90,7 @@ class Blog extends Component {
         </header>
 
         {retrieving && (
-          <div className="loading" />
+          <article className="loading page-content" />
         )}
 
         {!retrieving && (
