@@ -26,6 +26,20 @@ export default class extends React.Component {
         </Link>
 
         <Nav />
+
+        <div className="join-actions">
+          <Link href="/register">
+            <a className="button secondary">
+              Join Us
+            </a>
+          </Link>
+
+          <Link href="/get-help">
+            <a className="button">
+              Get Help
+            </a>
+          </Link>
+        </div>
       </header>
     )
   }
