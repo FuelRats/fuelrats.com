@@ -12,6 +12,16 @@ import libStylesheet from '../scss/lib.scss'
 
 
 
+const adsenseSnippet = `
+  (adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: "ca-pub-9749247943500937",
+  enable_page_level_ads: true
+});`
+
+
+
+
+
 export default class extends React.Component {
 
   /***************************************************************************\
@@ -19,12 +29,6 @@ export default class extends React.Component {
   \***************************************************************************/
 
   render () {
-    let adsenseSnippet = `
-      (adsbygoogle = window.adsbygoogle || []).push({
-      google_ad_client: "ca-pub-9749247943500937",
-      enable_page_level_ads: true
-    });`
-
     return (
       <NextHead>
         <title>{this.props.title} | Fuelrats.com</title>
