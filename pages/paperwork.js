@@ -123,6 +123,7 @@ class Paperwork extends Component {
 
   render () {
     let {
+      path,
       retrieving,
       submitting,
     } = this.props
@@ -138,7 +139,7 @@ class Paperwork extends Component {
     } = this.state
 
     return (
-      <Page title={this.title}>
+      <Page path={path} title={this.title}>
         <header className="page-header">
           <h1>{this.title}</h1>
         </header>

@@ -20,8 +20,11 @@ export default class extends React.Component {
   \***************************************************************************/
 
   render () {
+    let {
+      path,
+    } = this.props
     return (
-      <Page title={this.title}>
+      <Page path={path} title={this.title}>
         <header className="page-header">
           <h1>{this.title}</h1>
         </header>

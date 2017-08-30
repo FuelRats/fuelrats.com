@@ -124,10 +124,18 @@
   }
 
   .join-actions {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    animation-name: grow-height;
     display: flex;
     flex-direction: column;
     margin-top: auto;
+    overflow: hidden;
     width: 100%;
+
+    &.hide {
+      animation-direction: reverse;
+    }
 
     button,
     .button {

@@ -15,6 +15,20 @@ import Nav from './Nav'
 
 export default class extends React.Component {
   render () {
+    let {
+      path,
+    } = this.props
+
+    console.log('path', path)
+
+    let joinActionsClasses = [
+      'join-actions',
+    ]
+
+    if (path === '/') {
+      joinActionsClasses.push('hide')
+    }
+
     return (
       <header role="banner">
         <input defaultChecked="true" data-hidden id="nav-control" type="checkbox" />
@@ -27,7 +41,7 @@ export default class extends React.Component {
 
         <Nav />
 
-        <div className="join-actions">
+        <div className={joinActionsClasses.join(' ')}>
           <Link href="/register">
             <a className="button secondary">
               Join Us

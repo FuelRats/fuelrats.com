@@ -32,13 +32,21 @@ class Home extends React.Component {
     }
   }
 
-  static async getInitialProps ({ query }) {
-    return query || {}
+  static async getInitialProps ({ asPath, query }) {
+    return Object.assign({
+      path: asPath,
+    }, query)
   }
 
   render () {
+    let {
+      path,
+    } = this.props
+
     return (
-      <Page title={this.title}>
+      <Page
+        path={path}
+        title={this.title}>
         <section className="hero">
           <header>
             <h1>We Have Fuel. You Don't.</h1>

@@ -26,6 +26,7 @@ export default class extends React.Component {
     let {
       children,
       className,
+      path,
       title,
     } = this.props
     let mainClasses = ['fade-in', 'page'].concat(title.toLowerCase().replace(' ', '-')).join(' ')
@@ -34,7 +35,7 @@ export default class extends React.Component {
       <div role="application">
         <Head title={title} />
 
-        <Header />
+        <Header path={path} />
 
         <UserMenu />
 

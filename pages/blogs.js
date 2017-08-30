@@ -105,6 +105,7 @@ class Blogs extends Component {
   render () {
     let {
       blogs,
+      path,
       totalPages,
     } = this.props
     let {
@@ -113,7 +114,7 @@ class Blogs extends Component {
     } = this.state
 
     return (
-      <Page title={this.title}>
+      <Page path={path} title={this.title}>
         <header className="page-header">
           <h1>{this.title}</h1>
         </header>
