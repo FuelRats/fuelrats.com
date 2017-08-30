@@ -53,7 +53,9 @@ class Home extends React.Component {
             <h2>Any Questions?</h2>
           </header>
           <footer className="call-to-action">
-            <a className="button" href="/get-help">Get Help</a>
+            <Link href="/get-help">
+              <a className="button">Get Help</a>
+            </Link>
           </footer>
         </section>
       </Page>
