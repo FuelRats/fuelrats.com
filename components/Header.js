@@ -23,7 +23,7 @@ export default class extends React.Component {
       'get-help',
     ]
 
-    if (path === '/') {
+    if (/(^\/get-help|\/$)/.test(path)) {
       getHelpClasses.push('hide')
     }
 

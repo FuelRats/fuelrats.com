@@ -18,6 +18,12 @@ export default class extends React.Component {
     Public Methods
   \***************************************************************************/
 
+  static async getInitialProps ({ asPath, query }) {
+    return Object.assign({
+      path: asPath,
+    }, query)
+  }
+
   render () {
     let {
       path,
