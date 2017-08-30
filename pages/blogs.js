@@ -116,7 +116,7 @@ class Blogs extends Component {
     return (
       <Page path={path} title={this.title}>
         <header className="page-header">
-          <h1>{this.title}</h1>
+          <h2>{this.title}</h2>
         </header>
 
         <div className="page-content">
@@ -132,11 +132,11 @@ class Blogs extends Component {
                 <li key={blog.id}>
                   <article>
                     <header>
-                      <h2 className="title">
+                      <h3 className="title">
                         <Link as={`/blog/${blog.id}`} href={`/blog?id=${blog.id}`}>
                           <a dangerouslySetInnerHTML={{ __html: blog.title.rendered }} />
                         </Link>
-                      </h2>
+                      </h3>
                     </header>
 
                     <small>

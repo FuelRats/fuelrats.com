@@ -50,7 +50,7 @@ export default class extends React.Component {
     return (
       <Page path={path} title={this.title}>
         <header className="page-header">
-          <h1>{this.title}</h1>
+          <h2>{this.title}</h2>
         </header>
 
         <div className="page-content">

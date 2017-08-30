@@ -89,7 +89,7 @@ class Blog extends Component {
     return (
       <Page path={path} title={this.title}>
         <header className="page-header">
-          <h1>{this.title}</h1>
+          <h2>{this.title}</h2>
         </header>
 
         {retrieving && (
@@ -99,7 +99,7 @@ class Blog extends Component {
         {!retrieving && (
           <article className="page-content">
             <header>
-              <h2
+              <h3
                 className="title"
                 dangerouslySetInnerHTML={{ __html: blog.title.rendered }} />
             </header>
