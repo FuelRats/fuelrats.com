@@ -24,6 +24,12 @@ export default class extends React.Component {
         <header className="page-header">
           <h2>{this.title}</h2>
         </header>
+
+        <div className="page-content">
+          <iframe
+            className="page-content"
+            src="https://clients.fuelrats.com:7778/#testmode" />
+        </div>
       </Page>
     )
   }
