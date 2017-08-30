@@ -19,14 +19,12 @@ export default class extends React.Component {
       path,
     } = this.props
 
-    console.log('path', path)
-
-    let joinActionsClasses = [
-      'join-actions',
+    let getHelpClasses = [
+      'get-help',
     ]
 
     if (path === '/') {
-      joinActionsClasses.push('hide')
+      getHelpClasses.push('hide')
     }
 
     return (
@@ -41,18 +39,20 @@ export default class extends React.Component {
 
         <Nav />
 
-        <div className={joinActionsClasses.join(' ')}>
+        <div className="join-actions">
           <Link href="/register">
             <a className="button secondary">
               Join Us
             </a>
           </Link>
 
-          <Link href="/get-help">
-            <a className="button">
-              Get Help
-            </a>
-          </Link>
+          <div className={getHelpClasses.join(' ')}>
+            <Link href="/get-help">
+              <a className="button">
+                Get Help
+              </a>
+            </Link>
+          </div>
         </div>
       </header>
     )

@@ -124,26 +124,27 @@
   }
 
   .join-actions {
-    animation-duration: 1s;
-    animation-fill-mode: both;
-    animation-name: grow-height;
     display: flex;
     flex-direction: column;
     margin-top: auto;
     overflow: hidden;
     width: 100%;
 
-    &.hide {
-      animation-direction: reverse;
+    .get-help {
+      animation-duration: 1s;
+      animation-fill-mode: both;
+      animation-name: grow-height;
+      width: 100%;
+
+      &.hide {
+        animation-direction: reverse;
+      }
     }
 
     button,
     .button {
-      margin: 2rem 2rem 0;
-
-      &:last-child {
-        margin-bottom: 2rem;
-      }
+      margin: 0 2rem 2rem;
+      width: calc(100% - 4rem);
     }
   }
 
