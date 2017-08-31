@@ -1,6 +1,7 @@
 // Module imports
 import { bindActionCreators } from 'redux'
 import _ from 'lodash'
+import Link from 'next/link'
 import React from 'react'
 import withRedux from 'next-redux-wrapper'
 
