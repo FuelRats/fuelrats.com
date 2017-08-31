@@ -5,22 +5,25 @@ import TagsInput from '../components/TagsInput'
 
 
 export default class extends TagsInput {
-  search (query) {
+  async search (query) {
     if (query) {
-      fetch(`/api/autocomplete?limit=10&name=${query}`)
-      .then(response => response.json())
-      .then(response => {
-        if (!response) {
-          return this.updateOptions([])
-        }
+      let response = await fetch(`/api/rats?limit=10&name.ilike=${query}%`)
+      let {
+        data,
+      } = await response.json()
 
-        this.updateOptions(response.data.map(model => {
-          return {
-            id: model.id,
-            value: model.CMDRname
-          }
-        }))
-      })
+      if (!data.length) {
+        return this.updateOptions([])
+      }
+
+      return this.updateOptions(data.map(rat => {
+        return {
+          id: rat.id,
+          value: `${rat.attributes.name}`,
+        }
+      }))
     }
+
+    this.updateOptions([])
   }
 }
