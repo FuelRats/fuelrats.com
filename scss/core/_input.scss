@@ -44,40 +44,6 @@ input {
   }
 }
 
-tags-input {
-  @extend %text-input;
-
-  padding: 0;
-
-  /deep/ {
-    button {
-      color: inherit;
-    }
-  }
-
-  &[data-multiple=false] /deep/ {
-    .tags:not(:empty) {
-      flex-grow: 1;
-
-      button {
-        flex-grow: 0;
-      }
-
-      li {
-        display: flex;
-        flex-grow: 1;
-        justify-content: space-between;
-        margin: 0;
-
-      }
-
-      + input {
-        display: none;
-      }
-    }
-  }
-}
-
 textarea {
   @extend %text-input;
 
