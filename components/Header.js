@@ -32,8 +32,13 @@ export default class extends React.Component {
         <input defaultChecked="true" data-hidden id="nav-control" type="checkbox" />
 
         <Link href="/">
-          <a className="spin-3d">
-            <img className="brand" src="/static/images/logo2.png" />
+          <a
+            className="spin-3d"
+            title="Home">
+            <img
+              alt="Fuel Rats logo"
+              className="brand"
+              src="/static/images/logo2.png" />
           </a>
         </Link>
 
