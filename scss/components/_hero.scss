@@ -18,6 +18,9 @@
     margin-top: 5rem;
 
     .button {
+      animation-delay: 0.5s;
+      animation-duration: 0.5s;
+      animation-name: wiggle;
       box-shadow: 0 0 1rem 0 $black;
       font-weight: bold;
       font-size: 1.5em;
