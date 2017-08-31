@@ -378,8 +378,6 @@ export default class extends React.Component {
 
   render () {
     let classes = ['tags-input']
-    let options = this.renderOptions()
-    let tags = this.renderTags()
 
     if (this.props.className) {
       classes = classes.concat(this.props.className)
@@ -394,7 +392,7 @@ export default class extends React.Component {
 
     return (
       <div {...divProps} className={classes.join(' ')}>
-        <ul className="tags">{tags}</ul>
+        <ul className="tags">{this.renderTags()}</ul>
 
         <input
           name={this.props.name}
@@ -405,43 +403,53 @@ export default class extends React.Component {
           ref={input => this.input = input}
           type="search" />
 
-        <ol className="options">{options}</ol>
+        <ol className="options">{this.renderOptions()}</ol>
       </div>
     )
   }
 
   renderOptions () {
-    return this.state.options.map((option, index) => {
+    let {
+      options,
+      selectedOption,
+    } = this.state
+
+    return options.map((option, index) => {
       let classes = ['option']
 
-      if (this.state.selectedOption === index) {
+      if (selectedOption === index) {
         classes.push('focus')
       }
 
       return (
         <li
           className={classes.join(' ')}
+          dangerouslySetInnerHTML={{ __html: option.value }}
           key={index}
           onMouseDown={() => this.addTag(option)}
           onMouseOut={this.handleOptionMouseOut}
-          onMouseOver={event => this.handleOptionMouseOver(event, index)}>
-          {option.value}
-        </li>
+          onMouseOver={event => this.handleOptionMouseOver(event, index)} />
       )
     })
   }
 
   renderTags () {
-    return this.state.tags.map((tag, index) => {
+    let {
+      selectedTag,
+      tags,
+    } = this.state
+
+    return tags.map((tag, index) => {
       let classes = ['tag']
 
-      if (this.state.selectedTag === index) {
+      if (selectedTag === index) {
         classes.push('focus')
       }
 
       return (
         <li className={classes.join(' ')} key={index}>
-          <span>{tag.value}</span>
+          <span
+            dangerouslySetInnerHTML={{ __html: tag.value }} />
 
           <button onClick={() => this.removeTag(tag)}>
             &times;

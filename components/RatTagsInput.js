@@ -19,7 +19,7 @@ export default class extends TagsInput {
       return this.updateOptions(data.map(rat => {
         return {
           id: rat.id,
-          value: `${rat.attributes.name}`,
+          value: `<div class="badge platform short ${rat.attributes.platform}"></div> ${rat.attributes.name}`,
         }
       }))
     }
