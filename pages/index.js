@@ -33,19 +33,22 @@ class Home extends React.Component {
     }
   }
 
-  static async getInitialProps ({ asPath, query }) {
+  static async getInitialProps ({ asPath, isServer, query }) {
     return Object.assign({
+      isServer,
       path: asPath,
     }, query)
   }
 
   render () {
     let {
+      isServer,
       path,
     } = this.props
 
     return (
       <Page
+        isServer={isServer}
         path={path}
         title={this.title}>
         <section className="hero">

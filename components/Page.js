@@ -26,6 +26,7 @@ export default class extends React.Component {
     let {
       children,
       className,
+      isServer,
       path,
       title,
     } = this.props
@@ -35,7 +36,9 @@ export default class extends React.Component {
       <div role="application">
         <Head title={title} />
 
-        <Header path={path} />
+        <Header
+          isServer={isServer}
+          path={path} />
 
         <UserMenu />
 

@@ -131,13 +131,20 @@
     width: 100%;
 
     .get-help {
+      animation-direction: reverse;
       animation-duration: 1s;
       animation-fill-mode: both;
       animation-name: grow-height;
+      max-height: 0;
       width: 100%;
 
       &.hide {
-        animation-direction: reverse;
+        animation-duration: 0s;
+      }
+
+      &.show {
+        animation-direction: normal;
+        max-height: 100vh;
       }
     }
 

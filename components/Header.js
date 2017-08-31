@@ -17,14 +17,19 @@ export default class extends React.Component {
   render () {
     let {
       path,
+      isServer,
     } = this.props
 
     let getHelpClasses = [
       'get-help',
     ]
 
-    if (/(^\/get-help|\/$)/.test(path)) {
+    if (isServer) {
       getHelpClasses.push('hide')
+    }
+
+    if (!/(^\/get-help|\/$)/.test(path)) {
+      getHelpClasses.push('show')
     }
 
     return (
