@@ -15,6 +15,14 @@
   text-shadow: 0 0 0.2rem rgba($black, 0.5);
 
   .call-to-action {
-    margin: 2rem 0;
+    margin-top: 5rem;
+
+    .button {
+      box-shadow: 0 0 1rem 0 $black;
+      font-weight: bold;
+      font-size: 1.5em;
+      padding: 1rem 4rem;
+      text-transform: uppercase;
+    }
   }
 }
