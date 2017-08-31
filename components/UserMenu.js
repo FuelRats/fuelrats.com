@@ -36,7 +36,7 @@ class UserMenu extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    if (nextProps.loggedIn && !nextProps.user) {
+    if (nextProps.loggedIn && !nextProps.user.attributes) {
       this.props.getUser()
     }
   }
