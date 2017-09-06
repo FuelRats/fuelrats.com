@@ -214,39 +214,6 @@ class Paperwork extends Component {
 
         <form onSubmit={this.onSubmit}>
           <fieldset>
-            <label htmlFor="rats">Who arrived for the rescue?</label>
-
-            <RatTagsInput
-              disabled={submitting || retrieving}
-              name="rats"
-              onChange={this.handleRatsChange}
-              value={rats} />
-          </fieldset>
-
-          <fieldset>
-            <label htmlFor="firstLimpet">Who fired the first limpet?</label>
-
-            <FirstLimpetInput
-              data-single
-              disabled={submitting || retrieving}
-              name="firstLimpet"
-              onChange={this.handleFirstLimpetChange}
-              options={rats}
-              value={firstLimpet} />
-          </fieldset>
-
-          <fieldset>
-            <label htmlFor="system">Where did it happen? <small>In what star system did the rescue took place? (put "n/a" if not applicable)</small></label>
-
-            <SystemTagsInput
-              disabled={submitting || retrieving}
-              name="system"
-              onChange={this.handleSystemChange}
-              data-single
-              value={(rescue && rescue.attributes) ? rescue.attributes.system : null} />
-          </fieldset>
-
-          <fieldset>
             <label>What platform was the rescue on?</label>
 
             <div className="option-group">
@@ -325,6 +292,39 @@ class Paperwork extends Component {
                 type="radio"
                 value={false} /> <label htmlFor="codeRed-no">No</label>
             </div>
+          </fieldset>
+
+          <fieldset>
+            <label htmlFor="rats">Who arrived for the rescue?</label>
+
+            <RatTagsInput
+              disabled={submitting || retrieving}
+              name="rats"
+              onChange={this.handleRatsChange}
+              value={rats} />
+          </fieldset>
+
+          <fieldset>
+            <label htmlFor="firstLimpet">Who fired the first limpet?</label>
+
+            <FirstLimpetInput
+              data-single
+              disabled={submitting || retrieving}
+              name="firstLimpet"
+              onChange={this.handleFirstLimpetChange}
+              options={rats}
+              value={firstLimpet} />
+          </fieldset>
+
+          <fieldset>
+            <label htmlFor="system">Where did it happen? <small>In what star system did the rescue took place? (put "n/a" if not applicable)</small></label>
+
+            <SystemTagsInput
+              disabled={submitting || retrieving}
+              name="system"
+              onChange={this.handleSystemChange}
+              data-single
+              value={(rescue && rescue.attributes) ? rescue.attributes.system : null} />
           </fieldset>
 
           <fieldset>
