@@ -127,10 +127,18 @@ class Paperwork extends Component {
   }
 
   handleRatsChange (value) {
-    if (this.props.rats.map(rat => rat.id).join(',') !== value.map(rat => rat.id).join(',')) {
+    let newRatIds = value.map(rat => rat.id)
+    let oldRatIds = this.props.rats.map(rat => rat.id)
+
+    if (newRatIds.join(',') !== oldRatIds.join(',')) {
       let newState = Object.assign({}, this.state)
 
       newState.rats = value
+
+      if (!value.find(rat => newState.rescue.attributes.firstLimpetId === rat.id)) {
+        newState.firstLimpet = null
+        newState.rescue.attributes.firstLimpetId = null
+      }
 
       this.setState(newState)
       this.dirtyFields.add('rats')
