@@ -11,7 +11,7 @@ export default class extends TagsInput {
 
   async search (query) {
     if (query) {
-      let response = await fetch(`/api/rats?limit=10&name.ilike=${query}%`)
+      let response = await fetch(`/api/rats?limit=10&platform=${this.props['data-platform']}&name.ilike=${query}%`)
       let {
         data,
       } = await response.json()

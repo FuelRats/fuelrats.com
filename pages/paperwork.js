@@ -298,6 +298,7 @@ class Paperwork extends Component {
             <label htmlFor="rats">Who arrived for the rescue?</label>
 
             <RatTagsInput
+              data-platform={rescue.attributes.platform}
               disabled={submitting || retrieving}
               name="rats"
               onChange={this.handleRatsChange}
