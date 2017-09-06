@@ -12,7 +12,7 @@ import actionTypes from '../actionTypes'
 
 
 
-export const retrievePaperwork = (rescueId) => async dispatch => {
+export const retrievePaperwork = rescueId => async dispatch => {
   dispatch({ type: actionTypes.RETRIEVE_PAPERWORK })
 
   try {
@@ -44,18 +44,43 @@ export const retrievePaperwork = (rescueId) => async dispatch => {
 
 
 
-export const submitPaperwork = (rescueId, rescue) => async dispatch => {
+export const submitPaperwork = (rescueId, rescue, rats) => async dispatch => {
   dispatch({ type: actionTypes.SUBMIT_PAPERWORK })
 
   try {
-    let response = await fetch(`/api/rescues/${rescueId ? rescueId : null}`, {
+    let response = await fetch(`/api/rescues/${rescueId}`, {
       body: JSON.stringify(rescue),
       headers: new Headers({
         Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         'Content-Type': 'application/json'
       }),
-      method: rescueId ? 'put' : 'post',
+      method: 'put',
     })
+
+    if (rats) {
+      if (rats.added.length) {
+        response = await fetch(`/api/rescues/assign/${rescueId}`, {
+          body: JSON.stringify(rats.added.map(rat => rat.id)),
+          headers: new Headers({
+            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+            'Content-Type': 'application/json'
+          }),
+          method: 'put',
+        })
+      }
+
+      if (rats.removed.length) {
+        response = await fetch(`/api/rescues/unassign/${rescueId}`, {
+          body: JSON.stringify(rats.removed.map(rat => rat.id)),
+          headers: new Headers({
+            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+            'Content-Type': 'application/json'
+          }),
+          method: 'put',
+        })
+      }
+    }
+
     response = await response.json()
 
     dispatch({
