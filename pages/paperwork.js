@@ -152,7 +152,7 @@ class Paperwork extends Component {
     }
   }
 
-  onSubmit (event) {
+  async onSubmit (event) {
     event.preventDefault()
 
     let {
@@ -160,28 +160,27 @@ class Paperwork extends Component {
       rats,
       rescue,
     } = this.state
+    let ratUpdates = null
     let rescueUpdates = {}
 
-    if (this.dirtyFields.has('rats')) {
-      this.dirtyFields.delete('rats')
-
-      // assign rats to rescue
-      rats.map(rat => rat.id).join(',')
-    }
-
     for (let field of this.dirtyFields) {
-      rescueUpdates[field] = rescue.attributes[field]
+      if (field !== 'rats') {
+        rescueUpdates[field] = rescue.attributes[field]
+      }
     }
 
-//    let paperwork = Object.assign({}, this.state)
-//
-//    paperwork.firstLimpetId = paperwork.firstLimpet[0].id
-//    paperwork.rats = paperwork.rats.map(rat => rat.id)
-//    paperwork.system = paperwork.system[0].value
-//
+    if (this.dirtyFields.has('rats')) {
+      let oldRats = rescue.relationships.rats.data
+
+      ratUpdates = {
+        added: rats.filter(rat => !oldRats.find(oldRat => rat.id === oldRat.id)),
+        removed: oldRats.filter(oldRat => !rats.find(rat => oldRat.id === rat.id)),
+      }
+    }
+
 //    this.validate()
 
-    this.props.submitPaperwork(rescue.id, rescueUpdates)
+    await this.props.submitPaperwork(rescue.id, rescueUpdates, ratUpdates)
 
     this.dirtyFields.clear()
   }
