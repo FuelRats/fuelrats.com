@@ -6,9 +6,15 @@ import initialState from '../initialState'
 
 
 export default function (state = initialState.paperwork, action) {
-  switch (action.type) {
+  let {
+    payload,
+    status,
+    type,
+  } = action
+
+  switch (type) {
     case actionTypes.SUBMIT_PAPERWORK:
-      switch (action.status) {
+      switch (status) {
         case 'error':
           return Object.assign({}, state, {
             submitting: false,
@@ -16,7 +22,7 @@ export default function (state = initialState.paperwork, action) {
 
         case 'success':
           return Object.assign({}, state, {
-            rescue: null,
+            rescueId: payload.data[0].id,
             submitting: false,
           })
 
@@ -29,7 +35,7 @@ export default function (state = initialState.paperwork, action) {
       return newState
 
     case actionTypes.RETRIEVE_PAPERWORK:
-      switch (action.status) {
+      switch (status) {
         case 'error':
           return Object.assign({}, state, {
             retrieving: false,
@@ -39,7 +45,7 @@ export default function (state = initialState.paperwork, action) {
 
         case 'success':
           return Object.assign({}, state, {
-            rescue: action.rescue,
+            rescueId: payload.data[0].id,
             retrieving: false,
           })
 
