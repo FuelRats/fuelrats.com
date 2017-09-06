@@ -20,6 +20,8 @@ export default {
   },
 
   paperwork: {
+    rescueId: null,
+    retrieving: true,
     submitting: false,
   },
 

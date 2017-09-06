@@ -12,60 +12,64 @@ import actionTypes from '../actionTypes'
 
 
 
-export const retrievePaperwork = (rescueId) => dispatch => {
+export const retrievePaperwork = (rescueId) => async dispatch => {
   dispatch({ type: actionTypes.RETRIEVE_PAPERWORK })
 
-  return fetch(`/api/rescues/${rescueId}`, {
-    headers: new Headers({
-      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-    }),
-  })
-  .then(response => response.json())
-  .then(response => {
+  try {
+    let response = await fetch(`/api/rescues/${rescueId}`, {
+      headers: new Headers({
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+      }),
+    })
+    response = await response.json()
+
     dispatch({
-      rescue: response.data,
+      payload: response,
+      rescue: response.data[0],
       status: 'success',
       type: actionTypes.RETRIEVE_PAPERWORK,
     })
-  })
-  .catch(error => {
+
+  } catch (error) {
     dispatch({
       status: 'error',
       type: actionTypes.RETRIEVE_PAPERWORK,
     })
 
     console.log(error)
-  })
+  }
 }
 
 
 
 
 
-export const submitPaperwork = (paperwork) => dispatch => {
+export const submitPaperwork = (rescueId, rescue) => async dispatch => {
   dispatch({ type: actionTypes.SUBMIT_PAPERWORK })
 
-  return fetch('/api/rescues', {
-    body: JSON.stringify(paperwork),
-    headers: new Headers({
-      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-      'Content-Type': 'application/json'
-    }),
-    method: 'post',
-  })
-  .then(response => response.json())
-  .then(response => {
+  try {
+    let response = await fetch(`/api/rescues/${rescueId ? rescueId : null}`, {
+      body: JSON.stringify(rescue),
+      headers: new Headers({
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        'Content-Type': 'application/json'
+      }),
+      method: rescueId ? 'put' : 'post',
+    })
+    response = await response.json()
+
     dispatch({
+      payload: response,
       status: 'success',
       type: actionTypes.SUBMIT_PAPERWORK,
     })
-  })
-  .catch(error => {
+
+  } catch (error) {
     dispatch({
       status: 'error',
       type: actionTypes.SUBMIT_PAPERWORK,
     })
 
     console.log(error)
-  })
+  }
 }

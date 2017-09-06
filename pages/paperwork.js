@@ -38,24 +38,38 @@ class Paperwork extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    if (nextProps.rescue) {
-      this.setState(nextProps.rescue)
+    if (nextProps.rescue !== this.props.rescue) {
+      this.setState({
+        firstLimpet: nextProps.firstLimpet,
+        rats: nextProps.rats,
+        rescue: nextProps.rescue,
+      })
     }
   }
 
   constructor (props) {
     super(props)
 
-    this._bindMethods(['onSubmit', 'handleChange', 'handleFirstLimpetChange', 'handleRatsChange', 'handleSystemChange'])
+    this._bindMethods([
+      'onSubmit',
+      'handleChange',
+      'handleFirstLimpetChange',
+      'handleRatsChange',
+      'handleSystemChange',
+    ])
 
     this.state = {
-      codeRed: false,
-      firstLimpet: null,
-      notes: '',
-      platform: 'pc',
-      rats: [],
-      successful: true,
-      system: null,
+      firstLimpet: props.firstLimpet,
+      rats: props.rats,
+      rescue: props.rescue || {
+        attributes: {
+          codeRed: false,
+          notes: '',
+          outcome: 'success',
+          platform: 'pc',
+          system: null,
+        },
+      },
     }
   }
 
@@ -70,10 +84,16 @@ class Paperwork extends Component {
   }
 
   handleChange (event) {
-    let newState = {}
-    let target = event.target
-    let attribute = target.name
-    let value = target.type === 'checkbox' ? target.checked : target.value
+    let newState = Object.assign({}, this.state)
+    let {
+      checked,
+      name,
+      type,
+      value,
+    } = event.target
+    let attribute = name
+
+    value = type === 'checkbox' ? checked : value
 
     if (value === 'true') {
       value = true
@@ -82,43 +102,88 @@ class Paperwork extends Component {
       value = false
     }
 
-    newState[attribute] = value
+    newState.rescue.attributes[attribute] = value
+
+    this.dirtyFields.add(attribute)
 
     this.setState(newState)
   }
 
   handleFirstLimpetChange (value) {
-    this.handleTagInputChange('firstLimpet', value)
+    let originalFirstLimpetId = this.props.rescue.attributes.firstLimpetId
+
+    let isDifferent = value.length && (value[0].id !== originalFirstLimpetId)
+    let isRemoved = !value.length && (originalFirstLimpetId !== null)
+
+    if (isDifferent || isRemoved) {
+      let newState = Object.assign({}, this.state)
+
+      newState.firstLimpet = isRemoved ? null : value[0]
+      newState.rescue.attributes.firstLimpetId = isRemoved ? null : value[0].id
+
+      this.setState(newState)
+      this.dirtyFields.add('firstLimpet')
+    }
   }
 
   handleRatsChange (value) {
-    this.handleTagInputChange('rats', value)
+    if (this.props.rats.map(rat => rat.id).join(',') !== value.map(rat => rat.id).join(',')) {
+      let newState = Object.assign({}, this.state)
+
+      newState.rats = value
+
+      this.setState(newState)
+      this.dirtyFields.add('rats')
+    }
   }
 
   handleSystemChange (value) {
-    this.handleTagInputChange('system', value)
-  }
+    let {
+      rescue,
+    } = this.props
 
-  handleTagInputChange (prop, value) {
-    let newState = {}
+    if (value[0].value !== rescue.attributes.system) {
+      let newState = Object.assign({}, this.state)
 
-    newState[prop] = value
+      newState.rescue.attributes.system = value[0].value
 
-    this.setState(newState)
+      this.setState(newState)
+      this.dirtyFields.add('system')
+    }
   }
 
   onSubmit (event) {
     event.preventDefault()
 
-    let paperwork = Object.assign({}, this.state)
+    let {
+      firstLimpet,
+      rats,
+      rescue,
+    } = this.state
+    let rescueUpdates = {}
 
-    paperwork.firstLimpet = paperwork.firstLimpet[0].id
-    paperwork.rats = paperwork.rats.map(rat => rat.id)
-    paperwork.system = paperwork.system[0].value
+    if (this.dirtyFields.has('rats')) {
+      this.dirtyFields.delete('rats')
 
-    this.validate()
+      // assign rats to rescue
+      rats.map(rat => rat.id).join(',')
+    }
 
-    this.props.submitPaperwork(paperwork)
+    for (let field of this.dirtyFields) {
+      rescueUpdates[field] = rescue.attributes[field]
+    }
+
+//    let paperwork = Object.assign({}, this.state)
+//
+//    paperwork.firstLimpetId = paperwork.firstLimpet[0].id
+//    paperwork.rats = paperwork.rats.map(rat => rat.id)
+//    paperwork.system = paperwork.system[0].value
+//
+//    this.validate()
+
+    this.props.submitPaperwork(rescue.id, rescueUpdates)
+
+    this.dirtyFields.clear()
   }
 
   render () {
@@ -129,13 +194,9 @@ class Paperwork extends Component {
     } = this.props
 
     let {
-      codeRed,
       firstLimpet,
-      notes,
-      platform,
       rats,
-      successful,
-      system,
+      rescue,
     } = this.state
 
     return (
@@ -159,11 +220,11 @@ class Paperwork extends Component {
             <label htmlFor="firstLimpet">Who fired the first limpet?</label>
 
             <FirstLimpetInput
+              data-single
               disabled={submitting || retrieving}
               name="firstLimpet"
               onChange={this.handleFirstLimpetChange}
               options={rats}
-              data-single
               value={firstLimpet} />
           </fieldset>
 
@@ -175,7 +236,7 @@ class Paperwork extends Component {
               name="system"
               onChange={this.handleSystemChange}
               data-single
-              value={system} />
+              value={(rescue && rescue.attributes) ? rescue.attributes.system : null} />
           </fieldset>
 
           <fieldset>
@@ -183,7 +244,7 @@ class Paperwork extends Component {
 
             <div className="option-group">
               <input
-                defaultChecked={platform === 'pc'}
+                checked={rescue.attributes.platform === 'pc'}
                 disabled={submitting || retrieving}
                 id="platform-pc"
                 name="platform"
@@ -192,7 +253,7 @@ class Paperwork extends Component {
                 value="pc" /> <label htmlFor="platform-pc">PC</label>
 
               <input
-                defaultChecked={platform === 'xb'}
+                checked={rescue.attributes.platform === 'xb'}
                 disabled={submitting || retrieving}
                 id="platform-xb"
                 name="platform"
@@ -201,7 +262,7 @@ class Paperwork extends Component {
                 value="xb" /> <label htmlFor="platform-xb">Xbox One</label>
 
               <input
-                defaultChecked={platform === 'ps'}
+                checked={rescue.attributes.platform === 'ps'}
                 disabled={submitting || retrieving}
                 id="platform-ps"
                 name="platform"
@@ -216,22 +277,22 @@ class Paperwork extends Component {
 
             <div className="option-group">
               <input
-                defaultChecked={successful}
+                checked={rescue.attributes.outcome === 'success'}
                 disabled={submitting || retrieving}
-                id="successful-yes"
-                name="successful"
+                id="outcome-success"
+                name="outcome"
                 onChange={this.handleChange}
                 type="radio"
-                value={true} /> <label htmlFor="successful-yes">Yes</label>
+                value="success" /> <label htmlFor="outcome-success">Yes</label>
 
               <input
-                defaultChecked={!successful}
+                checked={rescue.attributes.outcome === 'failure'}
                 disabled={submitting || retrieving}
-                id="successful-no"
-                name="successful"
+                id="outcome-failure"
+                name="outcome"
                 onChange={this.handleChange}
                 type="radio"
-                value={false} /> <label htmlFor="successful-no">No</label>
+                value="failure" /> <label htmlFor="outcome-failure">No</label>
             </div>
           </fieldset>
 
@@ -240,7 +301,7 @@ class Paperwork extends Component {
 
             <div className="option-group">
               <input
-                defaultChecked={codeRed}
+                checked={rescue.attributes.codeRed}
                 disabled={submitting || retrieving}
                 id="codeRed-yes"
                 name="codeRed"
@@ -249,7 +310,7 @@ class Paperwork extends Component {
                 value={true} /> <label htmlFor="codeRed-yes">Yes</label>
 
               <input
-                defaultChecked={!codeRed}
+                checked={!rescue.attributes.codeRed}
                 disabled={submitting || retrieving}
                 id="codeRed-no"
                 name="codeRed"
@@ -267,7 +328,7 @@ class Paperwork extends Component {
               id="notes"
               name="notes"
               onChange={this.handleChange}
-              value={notes} />
+              value={rescue.attributes.notes} />
           </fieldset>
 
           <menu type="toolbar">
@@ -290,10 +351,10 @@ class Paperwork extends Component {
     let {
       firstLimpet,
       rats,
-      system,
+      rescue,
     } = this.state
 
-    if (!firstLimpet) {
+    if (!firstLimpet || !firstLimpet.length) {
       return false
     }
 
@@ -301,7 +362,7 @@ class Paperwork extends Component {
       return false
     }
 
-    if (!system) {
+    if (!rescue.attributes.system) {
       return false
     }
 
@@ -315,6 +376,10 @@ class Paperwork extends Component {
   /***************************************************************************\
     Getters
   \***************************************************************************/
+
+  get dirtyFields () {
+    return this._dirtyFields || (this._dirtyFields = new Set)
+  }
 
   get title () {
     return 'Paperwork'
@@ -333,7 +398,38 @@ const mapDispatchToProps = dispatch => {
 }
 
 const mapStateToProps = state => {
-  return state.paperwork
+  let {
+    paperwork,
+  } = state
+  let {
+    rescueId,
+  } = paperwork
+  let firstLimpet = []
+  let rats = []
+  let rescue = null
+
+  if (rescueId) {
+    rescue = state.rescues.rescues.find(rescue => rescue.id === rescueId)
+  }
+
+  if (rescue) {
+    firstLimpet = state.rats.rats.filter(rat => rescue.relationships.firstLimpet.data.id === rat.id)
+
+    rats = state.rats.rats
+      .filter(rat => rescue.relationships.rats.data.find(({ id }) => rat.id === id))
+      .map(rat => {
+        return Object.assign({
+          id: rat.id,
+          value: rat.attributes.name,
+        }, rat)
+      })
+  }
+
+  return Object.assign({
+    firstLimpet,
+    rats,
+    rescue,
+  }, paperwork)
 }
 
 

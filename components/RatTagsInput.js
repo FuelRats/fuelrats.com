@@ -5,6 +5,10 @@ import TagsInput from '../components/TagsInput'
 
 
 export default class extends TagsInput {
+  renderValue (rat) {
+    return `<div class="badge platform short ${rat.attributes.platform}"></div> ${rat.attributes.name}`
+  }
+
   async search (query) {
     if (query) {
       let response = await fetch(`/api/rats?limit=10&name.ilike=${query}%`)
@@ -16,14 +20,13 @@ export default class extends TagsInput {
         return this.updateOptions([])
       }
 
-      return this.updateOptions(data.map(rat => {
-        return {
-          id: rat.id,
-          value: `<div class="badge platform short ${rat.attributes.platform}"></div> ${rat.attributes.name}`,
-        }
-      }))
+      return this.updateOptions(data)
     }
 
     this.updateOptions([])
+  }
+
+  get valueProp () {
+    return 'attributes.name'
   }
 }
