@@ -16,6 +16,8 @@ export default function (state = initialState.rescues, action) {
 
   switch (type) {
     case actionTypes.GET_USER:
+    case actionTypes.RETRIEVE_PAPERWORK:
+    case actionTypes.SUBMIT_PAPERWORK:
       let {
         rescues,
         retrieving,
