@@ -472,7 +472,9 @@ export default class extends React.Component {
         <span
           dangerouslySetInnerHTML={{ __html: this.renderValue(tag) }} />
 
-        <button onClick={() => this.removeTag(tag)}>
+        <button
+          onClick={() => this.removeTag(tag)}
+          type="button">
           &times;
         </button>
       </li>
