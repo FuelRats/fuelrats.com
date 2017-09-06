@@ -33,6 +33,8 @@ export default function (state = initialState.rats, action) {
       }
 
     case actionTypes.GET_USER:
+    case actionTypes.RETRIEVE_PAPERWORK:
+    case actionTypes.SUBMIT_PAPERWORK:
       switch (status) {
         case 'success':
           let {
