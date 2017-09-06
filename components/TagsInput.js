@@ -14,11 +14,15 @@ export default class extends React.Component {
 
 
   addTag (tag) {
+    let {
+      allowDuplicates,
+      onAdd,
+    } = this.props
     let tags = Object.assign([], this.state.tags)
 
-    if (!this.props.allowDuplicates) {
+    if (!allowDuplicates) {
       let duplicateIndex = tags.findIndex(searchTag => {
-        return searchTag.value === tag.value
+        return this.getValue(searchTag) === this.getValue(tag)
       })
 
       if (duplicateIndex !== -1) {
@@ -34,8 +38,8 @@ export default class extends React.Component {
       tags,
     })
 
-    if (this.props.onAdd) {
-      this.props.onAdd(tag)
+    if (onAdd) {
+      onAdd(tag)
     }
 
     this.input.value = ''
@@ -91,8 +95,11 @@ export default class extends React.Component {
       'onFocus',
       'onInput',
       'onKeyDown',
+      'renderOption',
+      'renderTag',
       'shouldCaptureKeybind',
     ])
+
 
     let tags = props.value || []
 
@@ -123,7 +130,7 @@ export default class extends React.Component {
       }
     }
 
-    let optionIndex = this.state.options.findIndex(searchOption => option.value === searchOption.value)
+    let optionIndex = this.state.options.findIndex(searchOption => this.getValue(option) === this.getValue(searchOption))
 
     if (optionIndex === -1) {
       return false
@@ -139,7 +146,7 @@ export default class extends React.Component {
       }
     }
 
-    let tagIndex = this.state.tags.findIndex(searchTag => tag.value === searchTag.value)
+    let tagIndex = this.state.tags.findIndex(searchTag => this.getValue(tag) === this.getValue(searchTag))
 
     if (tagIndex === -1) {
       return false
@@ -154,6 +161,16 @@ export default class extends React.Component {
     }
 
     return false
+  }
+
+  getValue (option) {
+    let value = option
+
+    for (let key of this.valueProp.split('.')) {
+      value = value[key]
+    }
+
+    return value
   }
 
   handleDelete (event) {
@@ -395,6 +412,7 @@ export default class extends React.Component {
         <ul className="tags">{this.renderTags()}</ul>
 
         <input
+          autoComplete={false}
           name={this.props.name}
           onBlur={this.onBlur}
           onFocus={this.onFocus}
@@ -408,55 +426,69 @@ export default class extends React.Component {
     )
   }
 
-  renderOptions () {
+  renderOption (option, index) {
     let {
-      options,
       selectedOption,
     } = this.state
 
-    return options.map((option, index) => {
-      let classes = ['option']
+    let classes = ['option']
 
-      if (selectedOption === index) {
-        classes.push('focus')
-      }
+    if (selectedOption === index) {
+      classes.push('focus')
+    }
 
-      return (
-        <li
-          className={classes.join(' ')}
-          dangerouslySetInnerHTML={{ __html: option.value }}
-          key={index}
-          onMouseDown={() => this.addTag(option)}
-          onMouseOut={this.handleOptionMouseOut}
-          onMouseOver={event => this.handleOptionMouseOver(event, index)} />
-      )
-    })
+    return (
+      <li
+        className={classes.join(' ')}
+        dangerouslySetInnerHTML={{ __html: this.renderValue(option) }}
+        key={index}
+        onMouseDown={() => this.addTag(option)}
+        onMouseOut={this.handleOptionMouseOut}
+        onMouseOver={event => this.handleOptionMouseOver(event, index)} />
+    )
+  }
+
+  renderOptions () {
+    let {
+      options,
+    } = this.state
+
+    return options.map(this.renderOption)
+  }
+
+  renderTag (tag, index) {
+    let {
+      selectedTag,
+    } = this.state
+
+    let classes = ['tag']
+
+    if (selectedTag === index) {
+      classes.push('focus')
+    }
+
+    return (
+      <li className={classes.join(' ')} key={index}>
+        <span
+          dangerouslySetInnerHTML={{ __html: this.renderValue(tag) }} />
+
+        <button onClick={() => this.removeTag(tag)}>
+          &times;
+        </button>
+      </li>
+    )
   }
 
   renderTags () {
     let {
-      selectedTag,
       tags,
     } = this.state
 
-    return tags.map((tag, index) => {
-      let classes = ['tag']
+    return tags.map(this.renderTag)
+  }
 
-      if (selectedTag === index) {
-        classes.push('focus')
-      }
-
-      return (
-        <li className={classes.join(' ')} key={index}>
-          <span
-            dangerouslySetInnerHTML={{ __html: tag.value }} />
-
-          <button onClick={() => this.removeTag(tag)}>
-            &times;
-          </button>
-        </li>
-      )
-    })
+  renderValue (original) {
+    return this.getValue(original)
   }
 
   search (query) {
@@ -506,5 +538,17 @@ export default class extends React.Component {
     this.log('groupCollapsed', 'updating options')
     this.log('options:', options)
     this.log('groupEnd')
+  }
+
+
+
+
+
+  get idProp () {
+    return 'id'
+  }
+
+  get valueProp () {
+    return 'value'
   }
 }
