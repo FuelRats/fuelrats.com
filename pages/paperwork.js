@@ -122,7 +122,7 @@ class Paperwork extends Component {
       newState.rescue.attributes.firstLimpetId = isRemoved ? null : value[0].id
 
       this.setState(newState)
-      this.dirtyFields.add('firstLimpet')
+      this.dirtyFields.add('firstLimpetId')
     }
   }
 
@@ -348,16 +348,15 @@ class Paperwork extends Component {
 
   validate () {
     let {
-      firstLimpet,
       rats,
       rescue,
     } = this.state
 
-    if (!firstLimpet || !firstLimpet.length) {
+    if (!rats || !rats.length) {
       return false
     }
 
-    if (!rats || !rats.length) {
+    if (!rescue.attributes.firstLimpetId) {
       return false
     }
 
