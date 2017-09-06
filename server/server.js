@@ -42,14 +42,3 @@ next.prepare()
 //  console.log('Listening on port', process.env.PORT || 3000)
   koa.listen(process.env.PORT || 3000)
 })
-
-
-
-
-
-/******************************************************************************\
-  Start the server
-\******************************************************************************/
-
-//console.log('Listening on port', process.env.PORT || 3000)
-//app.listen(process.env.PORT || 3000)

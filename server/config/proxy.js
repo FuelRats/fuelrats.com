@@ -16,8 +16,6 @@ module.exports = function (koa, config) {
     Proxy Fuelrats API requests
   \******************************************************************************/
 
-  let authHeader = `Basic ${new Buffer(`${config.api.clientId}:${config.api.clientSecret}`).toString('base64')}`
-
   koa.use(proxy('/token', {
     auth: `${config.api.clientId}:${config.api.clientSecret}`,
     changeOrigin: true,
