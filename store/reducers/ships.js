@@ -24,8 +24,21 @@ export default function (state = initialState.ships, action) {
 
       switch (status) {
         case 'success':
+          let newShips = parseJSONAPIResponseForEntityType(payload, 'ships')
+
+          for (let newShip of newShips) {
+            let index = ships.findIndex(ship => newShip.id === ship.id)
+
+            if (index === -1) {
+              ships.push(newShip)
+
+            } else {
+              ships[index] = newShip
+            }
+          }
+
           return Object.assign({}, state, {
-            ships: parseJSONAPIResponseForEntityType(payload, 'ships'),
+            ships: ships,
             retrieving: false,
             total: action.total,
           })

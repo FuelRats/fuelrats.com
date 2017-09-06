@@ -26,18 +26,27 @@ export default function (state = initialState.rescues, action) {
 
       switch (status) {
         case 'success':
+          let newRescues = parseJSONAPIResponseForEntityType(payload, 'rescues')
+
+          for (let newRescue of newRescues) {
+            let index = rescues.findIndex(rescue => newRescue.id === rescue.id)
+
+            if (index === -1) {
+              rescues.push(newRescue)
+
+            } else {
+              rescues[index] = newRescue
+            }
+          }
+
           return Object.assign({}, state, {
-            rescues: parseJSONAPIResponseForEntityType(payload, 'rescues'),
+            rescues: rescues,
             retrieving: false,
             total: action.total,
           })
 
         default:
-          return Object.assign({}, state, {
-            rescues,
-            retrieving,
-            total,
-          })
+          return state
       }
 
     default:

@@ -43,8 +43,21 @@ export default function (state = initialState.rats, action) {
             total,
           } = state
 
+          let newRats = parseJSONAPIResponseForEntityType(payload, 'rats')
+
+          for (let newRat of newRats) {
+            let index = rats.findIndex(rat => newRat.id === rat.id)
+
+            if (index === -1) {
+              rats.push(newRat)
+
+            } else {
+              rats[index] = newRat
+            }
+          }
+
           return Object.assign({}, state, {
-            rats: parseJSONAPIResponseForEntityType(payload, 'rats'),
+            rats: rats,
             retrieving: false,
             total: action.total,
           })
