@@ -44,6 +44,9 @@ export default {
   },
 
   statistics: {
+    loadingRescuesByRat: false,
+    loadingRescuesBySystem: false,
+    loadingRescuesOverTime: false,
     rescuesByRat: [],
     rescuesBySystem: [],
     rescuesOverTime: [],
