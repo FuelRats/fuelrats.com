@@ -1,13 +1,11 @@
 import actionTypes from '../actionTypes'
 import initialState from '../initialState'
 
-import parseJSONAPIResponseForEntityType from '../../helpers/parse-json-api-response-for-entity-type'
 
 
 
 
-
-export default function (state = initialState.statistics, action) {
+export default function (state = initialState.rescuesBySystem, action) {
   let {
     payload,
     status,
@@ -15,23 +13,23 @@ export default function (state = initialState.statistics, action) {
   } = action
 
   switch (type) {
-    case actionTypes.GET_RESCUES_OVER_TIME:
+    case actionTypes.GET_RESCUES_BY_SYSTEM:
       switch (status) {
         case 'success':
           return Object.assign({}, state, {
-            loadingRescuesOverTime: false,
-            rescuesOverTime: payload,
+            loading: false,
+            statistics: payload,
           })
 
         case 'error':
           return Object.assign({}, state, {
-            loadingRescuesOverTime: false,
-            rescuesOverTime: [],
+            loading: false,
+            statistics: [],
           })
 
         default:
           return Object.assign({}, state, {
-            loadingRescuesOverTime: true,
+            loading: true,
           })
       }
 

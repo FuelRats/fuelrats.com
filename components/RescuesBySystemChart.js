@@ -26,15 +26,7 @@ class RescuesBySystemChart extends Component {
   \***************************************************************************/
 
   async _getRescuesBySystemStatistics () {
-    this.setState({
-      loadingRescuesBySystemStatistics: true,
-    })
-
     await this.props.getRescuesBySystemStatistics()
-
-    this.setState({
-      loadingRescuesBySystemStatistics: false,
-    })
   }
 
   _hideTooltip () {
@@ -45,7 +37,7 @@ class RescuesBySystemChart extends Component {
 
   _renderChart () {
     let {
-      rescuesBySystem,
+      statistics,
     } = this.props
     let {
       height,
@@ -58,7 +50,7 @@ class RescuesBySystemChart extends Component {
         color: '#d65050',
         name: 'PC',
         safeName: 'pc',
-        value: rescuesBySystem.reduce((accumulator, datum) => {
+        value: statistics.reduce((accumulator, datum) => {
           return accumulator + parseInt(datum.attributes.pc)
         }, 0),
       },
@@ -66,7 +58,7 @@ class RescuesBySystemChart extends Component {
         color: '#003791',
         name: 'PS4',
         safeName: 'ps',
-        value: rescuesBySystem.reduce((accumulator, datum) => {
+        value: statistics.reduce((accumulator, datum) => {
           return accumulator + parseInt(datum.attributes.ps)
         }, 0),
       },
@@ -74,7 +66,7 @@ class RescuesBySystemChart extends Component {
         color: '#107c10',
         name: 'XB',
         safeName: 'xb',
-        value: rescuesBySystem.reduce((accumulator, datum) => {
+        value: statistics.reduce((accumulator, datum) => {
           return accumulator + parseInt(datum.attributes.xb)
         }, 0),
       }
@@ -96,7 +88,7 @@ class RescuesBySystemChart extends Component {
     pack.size([width - ((haloWidth + packMargin) * 2), height - ((haloWidth + packMargin) * 2)])
     pack.padding(10)
 
-    let root = d3.hierarchy({ children: rescuesBySystem })
+    let root = d3.hierarchy({ children: statistics })
     root.sum(datum => datum.attributes ? datum.attributes.count : 0)
 
     let systems = pack(root).leaves()
@@ -322,7 +314,6 @@ class RescuesBySystemChart extends Component {
 
     this.state = {
       height: props.height || 500,
-      loadingRescuesBySystemStatistics: false,
       showTooltip: false,
       tooltipContent: null,
       tooltipX: 0,
@@ -375,11 +366,13 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   let {
-    rescuesBySystem,
-  } = state.statistics
+    loading,
+    statistics,
+  } = state.rescuesBySystem
 
   return Object.assign({}, {
-    rescuesBySystem
+    loading,
+    statistics,
   })
 }
 

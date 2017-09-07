@@ -12,11 +12,11 @@ import actionTypes from '../actionTypes'
 
 
 
-export const getRescuesOverTimeStatistics = () => async dispatch => {
-  dispatch({ type: actionTypes.GET_RESCUES_OVER_TIME })
+export const getRescuesBySystemStatistics = () => async dispatch => {
+  dispatch({ type: actionTypes.GET_RESCUES_BY_SYSTEM })
 
   try {
-    let response = await fetch(`/api/statistics/rescues`, {
+    let response = await fetch(`/api/statistics/systems?count.gt=10`, {
       headers: new Headers({
         Authorization: `Bearer ${localStorage.getItem('access_token')}`,
       }),
@@ -28,13 +28,13 @@ export const getRescuesOverTimeStatistics = () => async dispatch => {
     dispatch({
       payload: response.data,
       status: 'success',
-      type: actionTypes.GET_RESCUES_OVER_TIME,
+      type: actionTypes.GET_RESCUES_BY_SYSTEM,
     })
 
   } catch (error) {
     dispatch({
       status: 'error',
-      type: actionTypes.GET_RESCUES_OVER_TIME,
+      type: actionTypes.GET_RESCUES_BY_SYSTEM,
     })
 
     console.log(error)
