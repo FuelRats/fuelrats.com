@@ -104,6 +104,12 @@ class Paperwork extends Component {
 
     newState.rescue.attributes[attribute] = value
 
+    if (attribute === 'platform') {
+      newState.firstLimpet = null
+      newState.rats = []
+      newState.rescue.attributes.firstLimpetId = null
+    }
+
     this.dirtyFields.add(attribute)
 
     this.setState(newState)
