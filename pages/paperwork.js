@@ -186,8 +186,6 @@ class Paperwork extends Component {
       }
     }
 
-//    this.validate()
-
     await this.props.submitPaperwork(rescue.id, rescueUpdates, ratUpdates)
 
     this.dirtyFields.clear()
