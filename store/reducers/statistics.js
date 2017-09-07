@@ -15,11 +15,11 @@ export default function (state = initialState.statistics, action) {
   } = action
 
   switch (type) {
-    case actionTypes.GET_RESCUES_OVER_TIME:
+    case actionTypes.GET_RESCUES_BY_RAT:
       switch (status) {
         case 'success':
           return Object.assign({}, state, {
-            rescuesOverTime: payload,
+            rescuesByRat: payload.data,
           })
 
         default:
@@ -31,6 +31,17 @@ export default function (state = initialState.statistics, action) {
         case 'success':
           return Object.assign({}, state, {
             rescuesBySystem: payload,
+          })
+
+        default:
+          return state
+      }
+
+    case actionTypes.GET_RESCUES_OVER_TIME:
+      switch (status) {
+        case 'success':
+          return Object.assign({}, state, {
+            rescuesOverTime: payload,
           })
 
         default:

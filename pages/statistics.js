@@ -7,6 +7,7 @@ import React from 'react'
 
 // Component imports
 import Page from '../components/Page'
+import RescuesByRatTable from '../components/RescuesByRatTable'
 import RescuesBySystemChart from '../components/RescuesBySystemChart'
 import RescuesOverTimeChart from '../components/RescuesOverTimeChart'
 
@@ -34,6 +35,7 @@ export default class extends React.Component {
         <div className="page-content">
           <RescuesOverTimeChart />
           <RescuesBySystemChart />
+          <RescuesByRatTable />
         </div>
       </Page>
     )
