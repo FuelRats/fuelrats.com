@@ -24,7 +24,7 @@ import * as ratsActions from './store/actions/rats'
 import * as rescuesActions from './store/actions/rescues'
 import * as rescuesByRatActions from './store/actions/rescuesByRat'
 import * as rescuesBySystemActions from './store/actions/rescuesBySystem'
-import * as statisticsActions from './store/actions/statistics'
+import * as rescuesOverTimeActions from './store/actions/rescuesOverTime'
 import * as userActions from './store/actions/user'
 
 
@@ -41,7 +41,7 @@ export const actions = Object.assign(
   rescuesActions,
   rescuesByRatActions,
   rescuesBySystemActions,
-  statisticsActions,
+  rescuesOverTimeActions,
   userActions,
 )
 

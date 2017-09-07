@@ -27,15 +27,7 @@ class RescuesOverTimeChart extends Component {
   \***************************************************************************/
 
   async _getRescuesOverTimeStatistics () {
-    this.setState({
-      loadingRescuesOverTimeStatistics: true,
-    })
-
     await this.props.getRescuesOverTimeStatistics()
-
-    this.setState({
-      loadingRescuesOverTimeStatistics: false,
-    })
   }
 
   _hideTooltip () {
@@ -71,14 +63,14 @@ class RescuesOverTimeChart extends Component {
 
   _renderChart () {
     let {
-      rescuesOverTime,
+      statistics,
     } = this.props
     let {
       height,
     } = this.state
 
     // Deserialize the data
-    let data = rescuesOverTime.map(datum => {
+    let data = statistics.map(datum => {
       datum.attributes.date = moment(datum.attributes.date)
       datum.attributes.failure = parseInt(datum.attributes.failure)
       datum.attributes.success = parseInt(datum.attributes.success)
@@ -104,7 +96,7 @@ class RescuesOverTimeChart extends Component {
 
     // Define the Y axis scaling metrics
     let yScale = this.yScale = d3.scaleLinear()
-    yScale.domain([d3.max(data, d => d.attributes.success + d.attributes.failure), 0])
+    yScale.domain([d3.max(data, datum => datum.attributes.success + datum.attributes.failure), 0])
     yScale.range([0, height])
 
     return (
@@ -207,7 +199,6 @@ class RescuesOverTimeChart extends Component {
 
     this.state = {
       height: props.height || 300,
-      loadingRescuesOverTimeStatistics: false,
       showTooltip: false,
       tooltipContent: null,
       tooltipX: 0,
@@ -259,11 +250,13 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   let {
-    rescuesOverTime,
-  } = state.statistics
+    loading,
+    statistics,
+  } = state.rescuesOverTime
 
   return Object.assign({}, {
-    rescuesOverTime
+    loading,
+    statistics,
   })
 }
 

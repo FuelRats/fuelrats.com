@@ -7,7 +7,7 @@ import parseJSONAPIResponseForEntityType from '../../helpers/parse-json-api-resp
 
 
 
-export default function (state = initialState.statistics, action) {
+export default function (state = initialState.rescuesOverTime, action) {
   let {
     payload,
     status,
@@ -19,19 +19,19 @@ export default function (state = initialState.statistics, action) {
       switch (status) {
         case 'success':
           return Object.assign({}, state, {
-            loadingRescuesOverTime: false,
-            rescuesOverTime: payload,
+            loading: false,
+            statistics: payload,
           })
 
         case 'error':
           return Object.assign({}, state, {
-            loadingRescuesOverTime: false,
-            rescuesOverTime: [],
+            loading: false,
+            statistics: [],
           })
 
         default:
           return Object.assign({}, state, {
-            loadingRescuesOverTime: true,
+            loading: true,
           })
       }
 
