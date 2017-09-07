@@ -64,6 +64,7 @@ class RescuesByRatTable extends Component {
 
   render () {
     let {
+      loadingRescuesByRat,
       rescuesByRat,
     } = this.props
 
@@ -73,6 +74,7 @@ class RescuesByRatTable extends Component {
           className="rescues-by-rat"
           columns={this.columns}
           data={rescuesByRat}
+          loading={loadingRescuesByRat}
           manual
           showPagination={false} />
       </section>
@@ -124,10 +126,12 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   let {
+    loadingRescuesByRat,
     rescuesByRat,
   } = state.statistics
 
   return Object.assign({}, {
+    loadingRescuesByRat,
     rescuesByRat
   })
 }
