@@ -15,26 +15,6 @@ export default function (state = initialState.statistics, action) {
   } = action
 
   switch (type) {
-    case actionTypes.GET_RESCUES_BY_RAT:
-      switch (status) {
-        case 'success':
-          return Object.assign({}, state, {
-            loadingRescuesByRat: false,
-            rescuesByRat: payload.data,
-          })
-
-        case 'error':
-          return Object.assign({}, state, {
-            loadingRescuesByRat: false,
-            rescuesByRat: [],
-          })
-
-        default:
-          return Object.assign({}, state, {
-            loadingRescuesByRat: true,
-          })
-      }
-
     case actionTypes.GET_RESCUES_BY_SYSTEM:
       switch (status) {
         case 'success':

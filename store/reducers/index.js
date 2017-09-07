@@ -6,6 +6,7 @@ import paperwork from './paperwork'
 import user from './user'
 import rats from './rats'
 import rescues from './rescues'
+import rescuesByRat from './rescuesByRat'
 import ships from './ships'
 import statistics from './statistics'
 
@@ -21,6 +22,7 @@ export default combineReducers({
   user,
   rats,
   rescues,
+  rescuesByRat,
   ships,
   statistics,
 })

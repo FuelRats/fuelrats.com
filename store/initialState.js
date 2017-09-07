@@ -37,6 +37,21 @@ export default {
     total: 0,
   },
 
+  rescuesByRat: {
+    loading: false,
+    statistics: [],
+  },
+
+  rescuesBySystem: {
+    loading: false,
+    statistics: [],
+  },
+
+  rescuesOverTime: {
+    loading: false,
+    statistics: [],
+  },
+
   ships: {
     ships: [],
     retrieving: false,

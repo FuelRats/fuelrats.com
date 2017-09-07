@@ -27,15 +27,7 @@ class RescuesByRatTable extends Component {
   \***************************************************************************/
 
   async _getRescuesByRatStatistics () {
-    this.setState({
-      loadingRescuesByRatStatistics: true,
-    })
-
     await this.props.getRescuesByRatStatistics()
-
-    this.setState({
-      loadingRescuesByRatStatistics: false,
-    })
   }
 
 
@@ -56,16 +48,12 @@ class RescuesByRatTable extends Component {
     this._bindMethods([
       '_getRescuesByRatStatistics',
     ])
-
-    this.state = {
-      loadingRescuesByRatStatistics: false,
-    }
   }
 
   render () {
     let {
-      loadingRescuesByRat,
-      rescuesByRat,
+      loading,
+      statistics,
     } = this.props
 
     return (
@@ -73,8 +61,8 @@ class RescuesByRatTable extends Component {
         <ReactTable
           className="rescues-by-rat"
           columns={this.columns}
-          data={rescuesByRat}
-          loading={loadingRescuesByRat}
+          data={statistics}
+          loading={loading}
           manual
           showPagination={false} />
       </section>
@@ -126,13 +114,13 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   let {
-    loadingRescuesByRat,
-    rescuesByRat,
-  } = state.statistics
+    loading,
+    statistics,
+  } = state.rescuesByRat
 
   return Object.assign({}, {
-    loadingRescuesByRat,
-    rescuesByRat
+    loading,
+    statistics,
   })
 }
 
