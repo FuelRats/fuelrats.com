@@ -44,6 +44,7 @@ export default {
   },
 
   statistics: {
+    rescuesByRat: [],
     rescuesBySystem: [],
     rescuesOverTime: [],
   },
