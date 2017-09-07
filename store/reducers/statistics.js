@@ -19,33 +19,60 @@ export default function (state = initialState.statistics, action) {
       switch (status) {
         case 'success':
           return Object.assign({}, state, {
+            loadingRescuesByRat: false,
             rescuesByRat: payload.data,
           })
 
+        case 'error':
+          return Object.assign({}, state, {
+            loadingRescuesByRat: false,
+            rescuesByRat: [],
+          })
+
         default:
-          return state
+          return Object.assign({}, state, {
+            loadingRescuesByRat: true,
+          })
       }
 
     case actionTypes.GET_RESCUES_BY_SYSTEM:
       switch (status) {
         case 'success':
           return Object.assign({}, state, {
+            loadingRescuesBySystem: false,
             rescuesBySystem: payload,
           })
 
+        case 'error':
+          return Object.assign({}, state, {
+            loadingRescuesBySystem: false,
+            rescuesBySystem: [],
+          })
+
         default:
-          return state
+          return Object.assign({}, state, {
+            loadingRescuesBySystem: true,
+          })
       }
 
     case actionTypes.GET_RESCUES_OVER_TIME:
       switch (status) {
         case 'success':
           return Object.assign({}, state, {
+            loadingRescuesOverTime: false,
             rescuesOverTime: payload,
           })
 
+        case 'error':
+          return Object.assign({}, state, {
+            loadingRescuesOverTime: false,
+            rescuesOverTime: [],
+          })
+
         default:
-          return state
+          return Object.assign({}, state, {
+            loadingRescuesOverTime: true,
+          })
       }
 
     default:
