@@ -129,62 +129,7 @@ class RescuesBySystemChart extends Component {
         <g
           className="systems"
           transform={`translate(${haloWidth + packMargin}, ${haloWidth + packMargin})`}>
-          {systems.map((system, index) => {
-            let classes = ['system']
-            let highestPerformingPlatform = null
-            let id = null
-            let systemName = null
-            let successRate = 0
-
-            if (system.data.attributes) {
-              successRate = system.data.attributes.success / system.data.attributes.count
-              systemName = system.data.attributes.system
-              id = systemName.toLowerCase().replace(/\s/g, '_')
-
-              classes.push([
-                {
-                  platform: 'pc',
-                  value: system.data.attributes.pc,
-                },
-                {
-                  platform: 'ps',
-                  value: system.data.attributes.ps,
-                },
-                {
-                  platform: 'xb',
-                  value: system.data.attributes.xb,
-                },
-              ].reduce((a, b) => a.value > b.value ? a : b).platform)
-            }
-
-            return (
-              <g
-                className="datum"
-                filter="url(#glow)"
-                key={index}
-                onMouseOut={this._hideTooltip}
-                onMouseOver={(event) => this._showTooltip(event, system)}
-                transform={`translate(${system.x}, ${system.y})`}>
-                <circle
-                  className={classes.join(' ')}
-                  id={id}
-                  r={system.r} />
-
-                <clipPath
-                  id={`clip-${id}`}>
-                  <use xlinkHref={`#${id}`} />
-                </clipPath>
-
-                <text
-                  className="system-name"
-                  clipPath={`url(#clip-${id})`}
-                  textAnchor="middle"
-                  y={4}>
-                  {systemName}
-                </text>
-              </g>
-            )
-          })}
+          {systems.map(this._renderSystem)}
         </g>
 
         <g
@@ -194,7 +139,7 @@ class RescuesBySystemChart extends Component {
             let classes = ['platform', platform.data.safeName]
 
             return (
-              <g>
+              <g key={index}>
                 <path
                   className={classes.join(' ')}
                   d={arc(platform)}
@@ -213,6 +158,68 @@ class RescuesBySystemChart extends Component {
         </g>
       </svg>
     )
+  }
+
+  _renderSystem (system, index) {
+    let classes = ['system']
+    let highestPerformingPlatform = null
+    let id = null
+    let systemName = null
+    let successRate = 0
+
+    if (system.data.attributes) {
+      successRate = system.data.attributes.success / system.data.attributes.count
+      systemName = system.data.attributes.system
+      id = systemName.toLowerCase().replace(/\s/g, '_')
+
+      classes.push([
+        {
+          platform: 'pc',
+          value: system.data.attributes.pc,
+        },
+        {
+          platform: 'ps',
+          value: system.data.attributes.ps,
+        },
+        {
+          platform: 'xb',
+          value: system.data.attributes.xb,
+        },
+      ].reduce((a, b) => a.value > b.value ? a : b).platform)
+    }
+
+    if (system.r) {
+      return (
+        <g
+          className="datum"
+          filter="url(#glow)"
+          key={index}
+          onMouseOut={this._hideTooltip}
+          onMouseOver={(event) => this._showTooltip(event, system)}
+          transform={`translate(${system.x}, ${system.y})`}>
+          <circle
+            className={classes.join(' ')}
+            id={id}
+            r={system.r} />
+
+          <clipPath
+            id={`clip-${id}`}>
+            <use xlinkHref={`#${id}`} />
+          </clipPath>
+
+          <text
+            className="system-name"
+            clipPath={`url(#clip-${id})`}
+            textAnchor="middle"
+            y={4}>
+            {systemName}
+          </text>
+        </g>
+      )
+
+    } else {
+      return null
+    }
   }
 
   _showTooltip (event, datum) {
@@ -309,6 +316,7 @@ class RescuesBySystemChart extends Component {
     this._bindMethods([
       '_getRescuesBySystemStatistics',
       '_hideTooltip',
+      '_renderSystem',
       '_showTooltip',
     ])
 
