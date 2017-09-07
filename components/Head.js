@@ -64,5 +64,3 @@ export default class extends React.Component {
     )
   }
 }
-//        <link href="/static/compiled/lib.css" rel="stylesheet" />
-//        <link href="/static/compiled/app.css" rel="stylesheet" />
