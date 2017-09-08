@@ -10,6 +10,7 @@ import Page from '../components/Page'
 import TabbedPanel from '../components/TabbedPanel'
 import UserOverview from '../components/UserOverview'
 import UserRatsPanel from '../components/UserRatsPanel'
+import UserSettings from '../components/UserSettings'
 import UserStatsOverview from '../components/UserStatsOverview'
 
 
@@ -44,6 +45,10 @@ export default class extends React.Component {
       {
         component: (<div>Badge</div>),
         title: 'Badge',
+      },
+      {
+        component: (<UserSettings />),
+        title: 'Settings',
       },
     ]
 
