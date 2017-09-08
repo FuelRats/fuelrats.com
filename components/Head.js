@@ -60,6 +60,8 @@ export default class extends React.Component {
 
         <style dangerouslySetInnerHTML={{ __html: libStylesheet }} />
         <style dangerouslySetInnerHTML={{ __html: appStylesheet }} />
+
+        <script async defer src="//www.google.com/recaptcha/api.js?render=explicit"/>
       </NextHead>
     )
   }
