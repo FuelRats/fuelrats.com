@@ -57,6 +57,11 @@ export const getUser = () => async dispatch => {
   try {
     let token = localStorage.getItem('access_token')
 
+    if (token === 'undefined') {
+      localStorage.removeItem('access_token')
+      throw new Error('Bad access token')
+    }
+
     let response = await fetch(`/api/profile`, {
       headers: new Headers({
         Authorization: `Bearer ${token}`,
