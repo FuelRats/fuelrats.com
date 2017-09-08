@@ -128,7 +128,7 @@ class Register extends Component {
               onChange={password => this.setState({ password })}
               pattern="^[^\s]{5,42}$"
               placeholder="Use a strong password to keep your account secure"
-              ref={_passwordEl => this._passwordEl = _passwordEl}
+              ref={_password => this._password = _password}
               required={true}
               showStrength={true} />
           </fieldset>
@@ -232,11 +232,7 @@ class Register extends Component {
       return false
     }
 
-    if (!this._emailEl.validity.valid || !this._nicknameEl.validity.valid || !this._ratNameEl.validity.valid) {
-      return false
-    }
-
-    if (!this._password._el.validity.valid) {
+    if (!this._emailEl.validity.valid || !this._password.validity.valid || !this._nicknameEl.validity.valid || !this._ratNameEl.validity.valid) {
       return false
     }
 

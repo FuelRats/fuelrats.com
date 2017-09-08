@@ -51,10 +51,14 @@ export default class extends Component {
 
     newState.password = value
     newState.passwordStrength = passwordEvaluation.score
-    newState.passwordSuggestions = passwordEvaluation.feedback.suggestions.join('\A')
+    newState.passwordSuggestions = passwordEvaluation.feedback.suggestions
     newState.passwordWarning = passwordEvaluation.feedback.warning
 
     this.setState(newState)
+
+    if (this._el) {
+      this.validity = this._el.validity
+    }
 
     if (onChange) {
       onChange(event.target.value)
@@ -86,7 +90,7 @@ export default class extends Component {
             {...inputProps}
             name="password"
             onChange={this.handleChange}
-            ref={_el => this._el = this._el}
+            ref={_el => this._el = _el}
             type={showPassword ? 'text' : 'password'}
             value={password} />
 
@@ -118,5 +122,31 @@ export default class extends Component {
         )}
       </div>
     )
+  }
+
+
+
+
+
+  /***************************************************************************\
+    Getters
+  \***************************************************************************/
+
+  get validity () {
+    return this._validity || (this._validity = {
+      valid: false,
+    })
+  }
+
+
+
+
+
+  /***************************************************************************\
+    Setters
+  \***************************************************************************/
+
+  set validity (value) {
+    this._validity = value
   }
 }
