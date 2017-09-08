@@ -38,7 +38,7 @@ export default class extends React.Component {
         <div className="page-content">
           <iframe
             className="page-content"
-            src="https://clients.fuelrats.com:7778/#testmode" />
+            src="https://clients.fuelrats.com:7778/" />
         </div>
       </Page>
     )
