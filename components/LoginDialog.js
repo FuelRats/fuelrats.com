@@ -2,6 +2,7 @@
 import { bindActionCreators } from 'redux'
 import _ from 'lodash'
 import React from 'react'
+import Router from 'next/router'
 import withRedux from 'next-redux-wrapper'
 
 
@@ -65,6 +66,7 @@ class LoginDialog extends Component {
           ref={emailInput => this.emailInput = emailInput}
           required
           type="email" />
+
         <input
           className="password"
           disabled={this.props.loggingIn}
@@ -77,7 +79,15 @@ class LoginDialog extends Component {
 
         <menu type="toolbar">
           <div className="secondary">
-            <button className="secondary">Register</button>
+            <button
+              className="secondary"
+              onClick={() => {
+                this.props.hideDialog()
+                Router.push('/register')
+              }}
+              type="button">
+              Register
+            </button>
           </div>
 
           <div className="primary">

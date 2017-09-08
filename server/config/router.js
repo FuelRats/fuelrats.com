@@ -24,8 +24,10 @@ module.exports = function (nextjs, koa, config) {
   let handle = nextjs.getRequestHandler()
 
   let authenticatedRoutes = [
-    '/profile',
     '/admin/*',
+    '/paperwork',
+    '/paperwork/*',
+    '/profile',
   ]
 
   router.use(cookie.default())
