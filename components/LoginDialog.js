@@ -2,6 +2,7 @@
 import { bindActionCreators } from 'redux'
 import _ from 'lodash'
 import React from 'react'
+import Router from 'next/router'
 import withRedux from 'next-redux-wrapper'
 
 
@@ -77,7 +78,14 @@ class LoginDialog extends Component {
 
         <menu type="toolbar">
           <div className="secondary">
-            <button className="secondary">Register</button>
+            <button
+              className="secondary"
+              onClick={() => {
+                this.props.hideDialog()
+                Router.push('/register')
+              }}>
+              Register
+            </button>
           </div>
 
           <div className="primary">
