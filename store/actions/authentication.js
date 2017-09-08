@@ -73,7 +73,7 @@ export const login = (email, password) => async dispatch => {
 
 
 
-export const logout = (email, password) => async dispatch => {
+export const logout = () => async dispatch => {
   dispatch({ type: actionTypes.LOGOUT })
 
   try {
@@ -100,8 +100,60 @@ export const logout = (email, password) => async dispatch => {
 
 
 
-export const register = () => dispatch => {
-  return dispatch({
-    type: actionTypes.REGISTER
-  })
+export const register = (email, password, name, platform, nickname, recaptcha) => async dispatch => {
+  dispatch({ type: actionTypes.REGISTER })
+
+  try {
+    let token
+
+    let response = await fetch('/api/register', {
+      body: JSON.stringify({
+        email,
+        password,
+        name,
+        platform,
+        nickname,
+        'g-recaptcha-response': recaptcha,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'post',
+    })
+
+    response = await response.json()
+
+    response = await fetch('/token', {
+      body: JSON.stringify({
+        grant_type: 'password',
+        password,
+        username: email,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'post',
+    })
+
+    response = await response.json()
+
+    token = response.access_token
+    localStorage.setItem('access_token', token)
+    Cookies.set('access_token', token)
+
+    dispatch({
+      status: 'success',
+      type: actionTypes.REGISTER,
+    })
+
+    Router.push('/profile')
+
+  } catch (error) {
+    dispatch({
+      status: 'error',
+      type: actionTypes.REGISTER,
+    })
+
+    console.log(error)
+  }
 }

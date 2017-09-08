@@ -48,7 +48,7 @@ class Register extends Component {
       passwordWarning: null,
       ratName: '',
       ratPlatform: 'pc',
-      recaptchaCompleted: false,
+      recaptchaResponse: null,
       recaptchaLoaded: false,
       showPassword: false,
       submitting: false,
@@ -91,9 +91,10 @@ class Register extends Component {
       password,
       ratName,
       ratPlatform,
+      recaptchaResponse,
     } = this.state
 
-//    await this.props.submitPaperwork(rescue.id, rescueUpdates, ratUpdates)
+    await this.props.register(email, password, ratName, ratPlatform, nickname, recaptchaResponse)
   }
 
   render () {
@@ -141,6 +142,7 @@ class Register extends Component {
                 <input
                   name="password"
                   onChange={this.handleChange}
+                  pattern="^[^\s]{5,42}$"
                   placeholder="Use a strong password to keep your account secure"
                   ref={_passwordEl => this._passwordEl = _passwordEl}
                   required={true}
@@ -235,12 +237,6 @@ class Register extends Component {
             </div>
           </fieldset>
 
-          <fieldset data-name="CAPTCHA">
-            <ReCAPTCHA
-              onChange={() => this.setState({ recaptchaCompleted: true })}
-              sitekey="6LdUsBoUAAAAAN6I4Q34F1psdkShTlvH4OZXQJGg" />
-          </fieldset>
-
           <menu type="toolbar">
             <div className="primary">
               <button
@@ -256,6 +252,11 @@ class Register extends Component {
       </Page>
     )
   }
+//          <fieldset data-name="CAPTCHA">
+//            <ReCAPTCHA
+//              onChange={response => this.setState({ recaptchaResponse: response })}
+//              sitekey="6LdUsBoUAAAAAN6I4Q34F1psdkShTlvH4OZXQJGg" />
+//          </fieldset>
 
   validate () {
     let {
@@ -263,18 +264,22 @@ class Register extends Component {
       nickname,
       password,
       ratName,
-      recaptchaCompleted,
+//      recaptchaResponse,
     } = this.state
 
-    if (!recaptchaCompleted) {
-      return false
-    }
+//    if (!recaptchaResponse) {
+//      return false
+//    }
 
     if (!this._emailEl || !this._nicknameEl || !this._passwordEl || !this._ratNameEl) {
       return false
     }
 
     if (!this._emailEl.validity.valid || !this._nicknameEl.validity.valid || !this._passwordEl.validity.valid || !this._ratNameEl.validity.valid) {
+      return false
+    }
+
+    if (nickname === password) {
       return false
     }
 
@@ -300,6 +305,7 @@ class Register extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
+    register: bindActionCreators(actions.register, dispatch),
   }
 }
 
