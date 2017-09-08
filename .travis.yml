@@ -18,3 +18,10 @@ deploy:
   script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/ travis-deployment@beta.fuelrats.com:/var/www/beta.fuelrats.com/
   on:
     branch: develop
+
+deploy:
+- provider: script
+  skip_cleanup: true
+  script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/ travis-deployment@cheddar.fuelrats.com:/var/www/fuelrats.com/
+  on:
+    branch: master
