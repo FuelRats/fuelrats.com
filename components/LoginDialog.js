@@ -66,6 +66,7 @@ class LoginDialog extends Component {
           ref={emailInput => this.emailInput = emailInput}
           required
           type="email" />
+
         <input
           className="password"
           disabled={this.props.loggingIn}
@@ -83,7 +84,8 @@ class LoginDialog extends Component {
               onClick={() => {
                 this.props.hideDialog()
                 Router.push('/register')
-              }}>
+              }}
+              type="button">
               Register
             </button>
           </div>
