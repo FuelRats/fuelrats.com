@@ -1,7 +1,9 @@
 language: node_js
 
 addons:
-  ssh_known_hosts: beta.fuelrats.com
+  ssh_known_hosts:
+  - beta.fuelrats.com
+  - cheddar.fuelrats.com
 
 script:
 - yarn run build
