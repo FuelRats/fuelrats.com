@@ -4,7 +4,6 @@ import _ from 'lodash'
 import React from 'react'
 import ReCAPTCHA from 'react-google-recaptcha'
 import withRedux from 'next-redux-wrapper'
-import zxcvbn from 'zxcvbn'
 
 
 
@@ -17,6 +16,7 @@ import {
 } from '../store'
 import Component from '../components/Component'
 import Page from '../components/Page'
+import PasswordField from '../components/PasswordField'
 import FirstLimpetInput from '../components/FirstLimpetInput'
 import RatTagsInput from '../components/RatTagsInput'
 import SystemTagsInput from '../components/SystemTagsInput'
@@ -64,20 +64,6 @@ class Register extends Component {
     let attribute = name
 
     newState[attribute] = value
-
-    if (attribute === 'password') {
-      let {
-        email,
-        password,
-        ratName,
-      } = this.state
-
-      let passwordEvaluation = zxcvbn(value, [email, ratName])
-
-      newState.passwordStrength = passwordEvaluation.score
-      newState.passwordSuggestions = passwordEvaluation.feedback.suggestions.join('\A')
-      newState.passwordWarning = passwordEvaluation.feedback.warning
-    }
 
     this.setState(newState)
   }
@@ -137,43 +123,14 @@ class Register extends Component {
           <fieldset data-name="Password">
             <label>Password</label>
 
-            <div className="password-group">
-              <div className="input-group">
-                <input
-                  name="password"
-                  onChange={this.handleChange}
-                  pattern="^[^\s]{5,42}$"
-                  placeholder="Use a strong password to keep your account secure"
-                  ref={_passwordEl => this._passwordEl = _passwordEl}
-                  required={true}
-                  type={showPassword ? 'text' : 'password'}
-                  value={password} />
-
-                <button
-                  className={showPassword ? 'show' : 'hide'}
-                  onClick={() => this.setState({ showPassword: !showPassword })}
-                  tabIndex="-1"
-                  type="button">
-                  {!showPassword && (
-                    <i className="fa fa-eye" />
-                  )}
-                  {showPassword && (
-                    <i className="fa fa-eye-slash" />
-                  )}
-                </button>
-              </div>
-
-              <meter
-                className="password-strength-meter"
-                data-warning={passwordWarning}
-                data-suggestions={passwordSuggestions}
-                hidden={!password}
-                high="3"
-                low="2"
-                max="4"
-                optimum="4"
-                value={passwordStrength} />
-            </div>
+            <PasswordField
+              name="password"
+              onChange={password => this.setState({ password })}
+              pattern="^[^\s]{5,42}$"
+              placeholder="Use a strong password to keep your account secure"
+              ref={_passwordEl => this._passwordEl = _passwordEl}
+              required={true}
+              showStrength={true} />
           </fieldset>
 
           <fieldset data-name="IRC Nick">
@@ -264,7 +221,7 @@ class Register extends Component {
       nickname,
       password,
       ratName,
-//      recaptchaResponse,
+      recaptchaResponse,
     } = this.state
 
 //    if (!recaptchaResponse) {
@@ -275,7 +232,11 @@ class Register extends Component {
       return false
     }
 
-    if (!this._emailEl.validity.valid || !this._nicknameEl.validity.valid || !this._passwordEl.validity.valid || !this._ratNameEl.validity.valid) {
+    if (!this._emailEl.validity.valid || !this._nicknameEl.validity.valid || !this._ratNameEl.validity.valid) {
+      return false
+    }
+
+    if (!this._password._el.validity.valid) {
       return false
     }
 

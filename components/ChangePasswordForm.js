@@ -103,6 +103,7 @@ class ChangePasswordForm extends Component {
             id="newPassword"
             name="newPassword"
             onChange={this.handleChange}
+            showStrength={true}
             value={newPassword} />
         </fieldset>
 
