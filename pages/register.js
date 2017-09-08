@@ -2,6 +2,7 @@
 import { bindActionCreators } from 'redux'
 import _ from 'lodash'
 import React from 'react'
+import ReCAPTCHA from 'react-google-recaptcha'
 import withRedux from 'next-redux-wrapper'
 import zxcvbn from 'zxcvbn'
 
@@ -33,16 +34,22 @@ class Register extends Component {
   constructor (props) {
     super(props)
 
-    this._bindMethods(['handleChange'])
+    this._bindMethods([
+      'handleChange',
+      'onSubmit',
+    ])
 
     this.state = {
       email: '',
+      nickname: '',
       password: '',
       passwordStrength: 0,
       passwordSuggestions: null,
       passwordWarning: null,
       ratName: '',
       ratPlatform: 'pc',
+      recaptchaCompleted: false,
+      recaptchaLoaded: false,
       showPassword: false,
       submitting: false,
     }
@@ -80,12 +87,11 @@ class Register extends Component {
 
     let {
       email,
+      nickname,
       password,
       ratName,
       ratPlatform,
     } = this.state
-
-    console.log('onSubmit')
 
 //    await this.props.submitPaperwork(rescue.id, rescueUpdates, ratUpdates)
   }
@@ -93,6 +99,7 @@ class Register extends Component {
   render () {
     let {
       email,
+      nickname,
       password,
       passwordStrength,
       passwordSuggestions,
@@ -113,17 +120,20 @@ class Register extends Component {
         </header>
 
         <form onSubmit={this.onSubmit}>
-          <fieldset>
+          <fieldset data-name="Email">
             <label>Email</label>
 
             <input
               name="email"
               onChange={this.handleChange}
-              type="text"
+              placeholder="i.e. surly_badger@gmail.com"
+              ref={_emailEl => this._emailEl = _emailEl}
+              required={true}
+              type="email"
               value={email} />
           </fieldset>
 
-          <fieldset>
+          <fieldset data-name="Password">
             <label>Password</label>
 
             <div className="password-group">
@@ -131,12 +141,16 @@ class Register extends Component {
                 <input
                   name="password"
                   onChange={this.handleChange}
+                  placeholder="Use a strong password to keep your account secure"
+                  ref={_passwordEl => this._passwordEl = _passwordEl}
+                  required={true}
                   type={showPassword ? 'text' : 'password'}
                   value={password} />
 
                 <button
                   className={showPassword ? 'show' : 'hide'}
                   onClick={() => this.setState({ showPassword: !showPassword })}
+                  tabIndex="-1"
                   type="button">
                   {!showPassword && (
                     <i className="fa fa-eye" />
@@ -160,17 +174,35 @@ class Register extends Component {
             </div>
           </fieldset>
 
-          <fieldset>
+          <fieldset data-name="IRC Nick">
+            <label>What's your <strong>base</strong> IRC nickname? <small>Base means your nickname without any suffixes, i.e. Surly_Badger instead of Surly_Badger[PC].</small></label>
+
+            <input
+              name="nickname"
+              onChange={this.handleChange}
+              pattern="^[A-z_\-\[\]\\^{}|`][A-z0-9_\-\[\]\\^{}|`]+$"
+              placeholder="Surly_Badger"
+              ref={_nicknameEl => this._nicknameEl = _nicknameEl}
+              required={true}
+              type="text"
+              value={nickname} />
+          </fieldset>
+
+          <fieldset data-name="CMDR Name">
             <label>What's your CMDR name? <small>If you have more than one CMDR, you can add the rest later.</small></label>
 
             <input
               name="ratName"
               onChange={this.handleChange}
+              pattern="^[\x00-\x7F]+$"
+              placeholder="Surly Badger"
+              ref={_ratNameEl => this._ratNameEl = _ratNameEl}
+              required={true}
               type="text"
               value={ratName} />
           </fieldset>
 
-          <fieldset>
+          <fieldset data-name="Platform">
             <label>What platform is this CMDR on?</label>
 
             <div className="option-group">
@@ -203,6 +235,12 @@ class Register extends Component {
             </div>
           </fieldset>
 
+          <fieldset data-name="CAPTCHA">
+            <ReCAPTCHA
+              onChange={() => this.setState({ recaptchaCompleted: true })}
+              sitekey="6LdUsBoUAAAAAN6I4Q34F1psdkShTlvH4OZXQJGg" />
+          </fieldset>
+
           <menu type="toolbar">
             <div className="primary">
               <button
@@ -222,9 +260,23 @@ class Register extends Component {
   validate () {
     let {
       email,
+      nickname,
       password,
       ratName,
+      recaptchaCompleted,
     } = this.state
+
+    if (!recaptchaCompleted) {
+      return false
+    }
+
+    if (!this._emailEl || !this._nicknameEl || !this._passwordEl || !this._ratNameEl) {
+      return false
+    }
+
+    if (!this._emailEl.validity.valid || !this._nicknameEl.validity.valid || !this._passwordEl.validity.valid || !this._ratNameEl.validity.valid) {
+      return false
+    }
 
     return true
   }
