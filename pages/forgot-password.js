@@ -101,7 +101,11 @@ class PasswordReset extends Component {
           )}
 
           {submitted && (
-            <p>Thanks!</p>
+            <div>
+              <h3>Thanks!</h3>
+
+              <p>If there's a Fuel Rats account associated with that address, you should receive an email shortly with the final steps for resetting your password. If you don't receive an email, please contact <a href="mailto:support@fuelrats.com">support@fuelrats.com</a>.</p>
+            </div>
           )}
         </div>
       </Page>
