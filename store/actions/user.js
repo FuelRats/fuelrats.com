@@ -18,7 +18,7 @@ export const changePassword = (currentPassword, newPassword) => async dispatch =
   try {
     let token = localStorage.getItem('access_token')
 
-    let response = await fetch(`/users/setpassword`, {
+    let response = await fetch(`/api/users/setpassword`, {
       body: JSON.stringify({
         password: currentPassword,
         new: newPassword,
@@ -41,6 +41,45 @@ export const changePassword = (currentPassword, newPassword) => async dispatch =
     dispatch({
       status: 'error',
       type: actionTypes.CHANGE_PASSWORD,
+    })
+
+    console.log(error)
+  }
+}
+
+
+
+
+
+export const sendPasswordResetEmail = email => async dispatch => {
+  dispatch({ type: actionTypes.SEND_PASSWORD_RESET_EMAIL })
+
+  try {
+    let token = localStorage.getItem('access_token')
+
+    let response = await fetch(`/api/reset`, {
+      body: JSON.stringify({
+        email,
+      }),
+      headers: new Headers({
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }),
+      method: 'post',
+    })
+
+    response = await response.json()
+
+    dispatch({
+      status: 'success',
+      type: actionTypes.SEND_PASSWORD_RESET_EMAIL,
+      payload: response,
+    })
+
+  } catch (error) {
+    dispatch({
+      status: 'error',
+      type: actionTypes.SEND_PASSWORD_RESET_EMAIL,
     })
 
     console.log(error)
@@ -96,6 +135,7 @@ export const updateUser = (user) => async dispatch => {
       body: JSON.stringify(user),
       headers: new Headers({
         Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
       }),
       method: 'put',
     })
