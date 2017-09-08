@@ -121,8 +121,6 @@ export const register = (email, password, name, platform, nickname, recaptcha) =
       method: 'post',
     })
 
-    response = await response.json()
-
     response = await fetch('/token', {
       body: JSON.stringify({
         grant_type: 'password',
