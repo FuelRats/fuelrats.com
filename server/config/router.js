@@ -18,10 +18,20 @@ const router = require('koa-router')()
 module.exports = function (nextjs, koa, config) {
 
   /******************************************************************************\
-    GET routes
+    Router setup
   \******************************************************************************/
 
   let handle = nextjs.getRequestHandler()
+
+  router.use(cookie.default())
+
+
+
+
+
+  /******************************************************************************\
+    Authenticated routes
+  \******************************************************************************/
 
   let authenticatedRoutes = [
     '/admin/*',
@@ -29,8 +39,6 @@ module.exports = function (nextjs, koa, config) {
     '/paperwork/*',
     '/profile',
   ]
-
-  router.use(cookie.default())
 
   router.get(authenticatedRoutes, async (ctx, next) => {
     if (ctx.cookie && ctx.cookie.access_token) {
@@ -41,6 +49,14 @@ module.exports = function (nextjs, koa, config) {
     }
   })
 
+
+
+
+
+  /******************************************************************************\
+    Parameterized routes
+  \******************************************************************************/
+
   router.get('/blogs/page/:page', async (ctx, next) => {
     await nextjs.render(ctx.request, ctx.res, '/blogs', Object.assign({}, ctx.query, ctx.params))
   })
@@ -49,9 +65,21 @@ module.exports = function (nextjs, koa, config) {
     await nextjs.render(ctx.request, ctx.res, '/blog', Object.assign({}, ctx.query, ctx.params))
   })
 
-  router.get('/paperwork/:id', async (ctx, next) => {
-    await nextjs.render(ctx.request, ctx.res, '/paperwork', Object.assign({}, ctx.query, ctx.params))
+  router.get('/paperwork/:id/edit', async (ctx, next) => {
+    await nextjs.render(ctx.request, ctx.res, '/paperwork/edit', Object.assign({}, ctx.query, ctx.params))
   })
+
+  router.get(['/paperwork/:id', '/paperwork/:id/view'], async (ctx, next) => {
+    await nextjs.render(ctx.request, ctx.res, '/paperwork/view', Object.assign({}, ctx.query, ctx.params))
+  })
+
+
+
+
+
+  /******************************************************************************\
+    Fallthrough routes
+  \******************************************************************************/
 
   router.get('*', async ctx => {
     if (ctx.cookie && ctx.cookie.access_token && ctx.query.authenticate) {
