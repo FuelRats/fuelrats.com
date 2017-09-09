@@ -10,6 +10,6 @@ module.exports = {
   wordpress: {
     username: process.env.FRDC_WORDPRESS_USERNAME,
     password: process.env.FRDC_WORDPRESS_PASSWORD,
-    url: process.env.FRDC_WORDPRESS_URL || 'https://fuelrats.com'
+    url: process.env.FRDC_WORDPRESS_URL || 'https://wordpress.fuelrats.com'
   }
 }
