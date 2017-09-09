@@ -1,6 +1,7 @@
 // Module imports
 import { bindActionCreators } from 'redux'
 import _ from 'lodash'
+import moment from 'moment'
 import React from 'react'
 import withRedux from 'next-redux-wrapper'
 
@@ -51,11 +52,7 @@ class Paperwork extends Component {
     super(props)
 
     this._bindMethods([
-      'onSubmit',
-      'handleChange',
-      'handleFirstLimpetChange',
-      'handleRatsChange',
-      'handleSystemChange',
+      'renderRat',
     ])
 
     this.state = {
@@ -83,129 +80,66 @@ class Paperwork extends Component {
     return {}
   }
 
-  handleChange (event) {
-    let newState = Object.assign({}, this.state)
-    let {
-      checked,
-      name,
-      type,
-      value,
-    } = event.target
-    let attribute = name
-
-    value = type === 'checkbox' ? checked : value
-
-    if (value === 'true') {
-      value = true
-
-    } else if (value === 'false') {
-      value = false
-    }
-
-    newState.rescue.attributes[attribute] = value
-
-    if (attribute === 'platform') {
-      newState.firstLimpet = null
-      newState.rats = []
-      newState.rescue.attributes.firstLimpetId = null
-    }
-
-    this.dirtyFields.add(attribute)
-
-    this.setState(newState)
+  renderQuote (quote, index) {
+    return (
+      <li key={index}>
+        {quote.message}
+        {!!quote.author && (
+          <span>
+            - <em>${quote.author}</em>
+          </span>
+        )}
+      </li>
+    )
   }
 
-  handleFirstLimpetChange (value) {
-    let originalFirstLimpetId = this.props.rescue.attributes.firstLimpetId
-
-    let isDifferent = value.length && (value[0].id !== originalFirstLimpetId)
-    let isRemoved = !value.length && (originalFirstLimpetId !== null)
-
-    if (isDifferent || isRemoved) {
-      let newState = Object.assign({}, this.state)
-
-      newState.firstLimpet = isRemoved ? null : value[0]
-      newState.rescue.attributes.firstLimpetId = isRemoved ? null : value[0].id
-
-      this.setState(newState)
-      this.dirtyFields.add('firstLimpetId')
-    }
-  }
-
-  handleRatsChange (value) {
-    let newRatIds = value.map(rat => rat.id)
-    let oldRatIds = this.props.rats.map(rat => rat.id)
-
-    if (newRatIds.join(',') !== oldRatIds.join(',')) {
-      let newState = Object.assign({}, this.state)
-
-      newState.rats = value
-
-      if (!value.find(rat => newState.rescue.attributes.firstLimpetId === rat.id)) {
-        newState.firstLimpet = null
-        newState.rescue.attributes.firstLimpetId = null
-      }
-
-      this.setState(newState)
-      this.dirtyFields.add('rats')
-    }
-  }
-
-  handleSystemChange (value) {
+  renderQuotes () {
     let {
       rescue,
-    } = this.props
+    } = this.state
 
-    if (value[0].value !== rescue.attributes.system) {
-      let newState = Object.assign({}, this.state)
-
-      newState.rescue.attributes.system = value[0].value
-
-      this.setState(newState)
-      this.dirtyFields.add('system')
-    }
+    return (
+      <ol>
+        {rescue.attributes.quotes.map(this.renderQuote)}
+      </ol>
+    )
   }
 
-  async onSubmit (event) {
-    event.preventDefault()
-
+  renderRat (rat, index) {
     let {
-      firstLimpet,
       rats,
       rescue,
     } = this.state
-    let ratUpdates = null
-    let rescueUpdates = {}
 
-    for (let field of this.dirtyFields) {
-      if (field !== 'rats') {
-        rescueUpdates[field] = rescue.attributes[field]
-      }
-    }
+    return (
+      <li key={index}>
+        {rat.attributes.name}
+        {(rat.id === rescue.attributes.firstLimpetId) && (
+          <span className="badge">First Limpet</span>
+        )}
+      </li>
+    )
+  }
 
-    if (this.dirtyFields.has('rats')) {
-      let oldRats = rescue.relationships.rats.data
+  renderRats () {
+    let {
+      rats
+    } = this.state
 
-      ratUpdates = {
-        added: rats.filter(rat => !oldRats.find(oldRat => rat.id === oldRat.id)),
-        removed: oldRats.filter(oldRat => !rats.find(rat => oldRat.id === rat.id)),
-      }
-    }
-
-    await this.props.submitPaperwork(rescue.id, rescueUpdates, ratUpdates)
-
-    this.dirtyFields.clear()
+    return (
+      <ul>
+        {rats.map(this.renderRat)}
+      </ul>
+    )
   }
 
   render () {
     let {
       path,
       retrieving,
-      submitting,
     } = this.props
 
     let {
-      firstLimpet,
       rats,
       rescue,
     } = this.state
@@ -216,168 +150,65 @@ class Paperwork extends Component {
           <h2>{this.title}</h2>
         </header>
 
-        <form onSubmit={this.onSubmit}>
-          <fieldset>
-            <label>What platform was the rescue on?</label>
+        <div className="page-content">
+          {!retrieving && (
+            <table>
+              <tbody>
+                <tr>
+                  <th>Created</th>
+                  <td>{moment(rescue.attributes.createdAt).format('DD MMM, YYYY HH:mm')}</td>
+                </tr>
 
-            <div className="option-group">
-              <input
-                checked={rescue.attributes.platform === 'pc'}
-                disabled={submitting || retrieving}
-                id="platform-pc"
-                name="platform"
-                onChange={this.handleChange}
-                type="radio"
-                value="pc" /> <label htmlFor="platform-pc">PC</label>
+                <tr>
+                  <th>Updated</th>
+                  <td>{moment(rescue.attributes.updatedAt).format('DD MMM, YYYY HH:mm')}</td>
+                </tr>
 
-              <input
-                checked={rescue.attributes.platform === 'xb'}
-                disabled={submitting || retrieving}
-                id="platform-xb"
-                name="platform"
-                onChange={this.handleChange}
-                type="radio"
-                value="xb" /> <label htmlFor="platform-xb">Xbox One</label>
+                <tr>
+                  <th>Platform</th>
+                  <td>{rescue.attributes.platform}</td>
+                </tr>
 
-              <input
-                checked={rescue.attributes.platform === 'ps'}
-                disabled={submitting || retrieving}
-                id="platform-ps"
-                name="platform"
-                onChange={this.handleChange}
-                type="radio"
-                value="ps" /> <label htmlFor="platform-ps">Playstation 4</label>
-            </div>
-          </fieldset>
+                <tr>
+                  <th>Status</th>
+                  <td>{rescue.attributes.status}</td>
+                </tr>
 
-          <fieldset>
-            <label>Was the rescue successful?</label>
+                <tr>
+                  <th>Outcome</th>
+                  <td>{rescue.attributes.outcome}</td>
+                </tr>
 
-            <div className="option-group">
-              <input
-                checked={rescue.attributes.outcome === 'success'}
-                disabled={submitting || retrieving}
-                id="outcome-success"
-                name="outcome"
-                onChange={this.handleChange}
-                type="radio"
-                value="success" /> <label htmlFor="outcome-success">Yes</label>
+                <tr>
+                  <th>Code Red</th>
+                  <td>{rescue.attributes.codeRed ? 'Yes' : 'No'}</td>
+                </tr>
 
-              <input
-                checked={rescue.attributes.outcome === 'failure'}
-                disabled={submitting || retrieving}
-                id="outcome-failure"
-                name="outcome"
-                onChange={this.handleChange}
-                type="radio"
-                value="failure" /> <label htmlFor="outcome-failure">No</label>
-            </div>
-          </fieldset>
+                <tr>
+                  <th>Rats</th>
+                  <td>{this.renderRats()}</td>
+                </tr>
 
-          <fieldset>
-            <label>Was it a code red?</label>
+                <tr>
+                  <th>System</th>
+                  <td>{rescue.attributes.system}</td>
+                </tr>
 
-            <div className="option-group">
-              <input
-                checked={rescue.attributes.codeRed}
-                disabled={submitting || retrieving}
-                id="codeRed-yes"
-                name="codeRed"
-                onChange={this.handleChange}
-                type="radio"
-                value={true} /> <label htmlFor="codeRed-yes">Yes</label>
+                <tr>
+                  <th>Quotes</th>
+                  <td>{this.renderQuotes()}</td>
+                </tr>
 
-              <input
-                checked={!rescue.attributes.codeRed}
-                disabled={submitting || retrieving}
-                id="codeRed-no"
-                name="codeRed"
-                onChange={this.handleChange}
-                type="radio"
-                value={false} /> <label htmlFor="codeRed-no">No</label>
-            </div>
-          </fieldset>
-
-          <fieldset>
-            <label htmlFor="rats">Who arrived for the rescue?</label>
-
-            <RatTagsInput
-              data-platform={rescue.attributes.platform}
-              disabled={submitting || retrieving}
-              name="rats"
-              onChange={this.handleRatsChange}
-              value={rats} />
-          </fieldset>
-
-          <fieldset>
-            <label htmlFor="firstLimpet">Who fired the first limpet?</label>
-
-            <FirstLimpetInput
-              data-single
-              disabled={submitting || retrieving}
-              name="firstLimpet"
-              onChange={this.handleFirstLimpetChange}
-              options={rats}
-              value={firstLimpet} />
-          </fieldset>
-
-          <fieldset>
-            <label htmlFor="system">Where did it happen? <small>In what star system did the rescue took place? (put "n/a" if not applicable)</small></label>
-
-            <SystemTagsInput
-              disabled={submitting || retrieving}
-              name="system"
-              onChange={this.handleSystemChange}
-              data-single
-              value={(rescue && rescue.attributes) ? rescue.attributes.system : null} />
-          </fieldset>
-
-          <fieldset>
-            <label htmlFor="notes">Notes</label>
-
-            <textarea
-              disabled={submitting || retrieving}
-              id="notes"
-              name="notes"
-              onChange={this.handleChange}
-              value={rescue.attributes.notes} />
-          </fieldset>
-
-          <menu type="toolbar">
-            <div className="primary">
-              <button
-                disabled={submitting || retrieving || !this.validate()}
-                type="submit">
-                {submitting ? 'Submitting...' : 'Submit'}
-              </button>
-            </div>
-
-            <div className="secondary"></div>
-          </menu>
-        </form>
+                <tr>
+                  <th>Notes</th>
+                  <td>{rescue.attributes.notes}</td>
+                </tr>
+              </tbody>
+            </table>
+          )}
+        </div>
       </Page>
     )
-  }
-
-  validate () {
-    let {
-      rats,
-      rescue,
-    } = this.state
-
-    if (!rats || !rats.length) {
-      return false
-    }
-
-    if (!rescue.attributes.firstLimpetId) {
-      return false
-    }
-
-    if (!rescue.attributes.system) {
-      return false
-    }
-
-    return true
   }
 
 

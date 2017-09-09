@@ -54,18 +54,6 @@ module.exports = function (nextjs, koa, config) {
 
 
   /******************************************************************************\
-    Redirects
-  \******************************************************************************/
-
-  router.get('/paperwork/:id', async (ctx, next) => {
-    await ctx.redirect(`/paperwork/edit/${ctx.params.id}`)
-  })
-
-
-
-
-
-  /******************************************************************************\
     Parameterized routes
   \******************************************************************************/
 
@@ -77,11 +65,11 @@ module.exports = function (nextjs, koa, config) {
     await nextjs.render(ctx.request, ctx.res, '/blog', Object.assign({}, ctx.query, ctx.params))
   })
 
-  router.get('/paperwork/edit/:id', async (ctx, next) => {
+  router.get('/paperwork/:id/edit', async (ctx, next) => {
     await nextjs.render(ctx.request, ctx.res, '/paperwork/edit', Object.assign({}, ctx.query, ctx.params))
   })
 
-  router.get('/paperwork/view/:id', async (ctx, next) => {
+  router.get(['/paperwork/:id', '/paperwork/:id/view'], async (ctx, next) => {
     await nextjs.render(ctx.request, ctx.res, '/paperwork/view', Object.assign({}, ctx.query, ctx.params))
   })
 
