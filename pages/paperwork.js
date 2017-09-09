@@ -424,7 +424,9 @@ const mapStateToProps = state => {
   }
 
   if (rescue) {
-    firstLimpet = state.rats.rats.filter(rat => rescue.relationships.firstLimpet.data.id === rat.id)
+    if (rescue.relationships.firstLimpet.data) {
+      firstLimpet = state.rats.rats.filter(rat => rescue.relationships.firstLimpet.data.id === rat.id)
+    }
 
     rats = state.rats.rats
       .filter(rat => rescue.relationships.rats.data.find(({ id }) => rat.id === id))
