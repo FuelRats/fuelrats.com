@@ -35,9 +35,10 @@ module.exports = function (nextjs, koa, config) {
   router.get(authenticatedRoutes, async (ctx, next) => {
     if (ctx.cookie && ctx.cookie.access_token) {
       await next()
-    }
 
-    await ctx.redirect(`/?authenticate=true&destination=${ctx.request.url}`)
+    } else {
+      await ctx.redirect(`/?authenticate=true&destination=${ctx.request.url}`)
+    }
   })
 
   router.get('/blogs/page/:page', async (ctx, next) => {
@@ -53,8 +54,19 @@ module.exports = function (nextjs, koa, config) {
   })
 
   router.get('*', async ctx => {
-    await handle(ctx.req, ctx.res)
-    ctx.respond = false
+    if (ctx.cookie && ctx.cookie.access_token && ctx.query.authenticate) {
+      let destination = '/profile'
+
+      if (ctx.query.destination) {
+        destination = ctx.query.destination
+      }
+
+      await ctx.redirect(destination)
+
+    } else {
+      await handle(ctx.req, ctx.res)
+      ctx.respond = false
+    }
   })
 
   koa.use(async (ctx, next) => {
