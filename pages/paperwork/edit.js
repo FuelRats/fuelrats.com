@@ -1,6 +1,7 @@
 // Module imports
 import { bindActionCreators } from 'redux'
 import _ from 'lodash'
+import Router from 'next/router'
 import React from 'react'
 import withRedux from 'next-redux-wrapper'
 
@@ -195,6 +196,8 @@ class Paperwork extends Component {
     await this.props.submitPaperwork(rescue.id, rescueUpdates, ratUpdates)
 
     this.dirtyFields.clear()
+
+    location = `/paperwork/${rescue.id}`
   }
 
   render () {
@@ -210,151 +213,165 @@ class Paperwork extends Component {
       rescue,
     } = this.state
 
+    let classes = ['page-content']
+
+    if (submitting) {
+      classes.push('loading', 'force')
+    }
+
     return (
       <Page path={path} title={this.title}>
         <header className="page-header">
           <h2>{this.title}</h2>
         </header>
 
-        <form onSubmit={this.onSubmit}>
-          <fieldset>
-            <label>What platform was the rescue on?</label>
+        {retrieving && (
+          <form className="loading page-content" />
+        )}
 
-            <div className="option-group">
-              <input
-                checked={rescue.attributes.platform === 'pc'}
+        {!retrieving && (
+          <form
+            className={classes.join(' ')}
+            onSubmit={this.onSubmit}>
+            <fieldset>
+              <label>What platform was the rescue on?</label>
+
+              <div className="option-group">
+                <input
+                  checked={rescue.attributes.platform === 'pc'}
+                  disabled={submitting || retrieving}
+                  id="platform-pc"
+                  name="platform"
+                  onChange={this.handleChange}
+                  type="radio"
+                  value="pc" /> <label htmlFor="platform-pc">PC</label>
+
+                <input
+                  checked={rescue.attributes.platform === 'xb'}
+                  disabled={submitting || retrieving}
+                  id="platform-xb"
+                  name="platform"
+                  onChange={this.handleChange}
+                  type="radio"
+                  value="xb" /> <label htmlFor="platform-xb">Xbox One</label>
+
+                <input
+                  checked={rescue.attributes.platform === 'ps'}
+                  disabled={submitting || retrieving}
+                  id="platform-ps"
+                  name="platform"
+                  onChange={this.handleChange}
+                  type="radio"
+                  value="ps" /> <label htmlFor="platform-ps">Playstation 4</label>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <label>Was the rescue successful?</label>
+
+              <div className="option-group">
+                <input
+                  checked={rescue.attributes.outcome === 'success'}
+                  disabled={submitting || retrieving}
+                  id="outcome-success"
+                  name="outcome"
+                  onChange={this.handleChange}
+                  type="radio"
+                  value="success" /> <label htmlFor="outcome-success">Yes</label>
+
+                <input
+                  checked={rescue.attributes.outcome === 'failure'}
+                  disabled={submitting || retrieving}
+                  id="outcome-failure"
+                  name="outcome"
+                  onChange={this.handleChange}
+                  type="radio"
+                  value="failure" /> <label htmlFor="outcome-failure">No</label>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <label>Was it a code red?</label>
+
+              <div className="option-group">
+                <input
+                  checked={rescue.attributes.codeRed}
+                  disabled={submitting || retrieving}
+                  id="codeRed-yes"
+                  name="codeRed"
+                  onChange={this.handleChange}
+                  type="radio"
+                  value={true} /> <label htmlFor="codeRed-yes">Yes</label>
+
+                <input
+                  checked={!rescue.attributes.codeRed}
+                  disabled={submitting || retrieving}
+                  id="codeRed-no"
+                  name="codeRed"
+                  onChange={this.handleChange}
+                  type="radio"
+                  value={false} /> <label htmlFor="codeRed-no">No</label>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <label htmlFor="rats">Who arrived for the rescue?</label>
+
+              <RatTagsInput
+                data-platform={rescue.attributes.platform}
                 disabled={submitting || retrieving}
-                id="platform-pc"
-                name="platform"
-                onChange={this.handleChange}
-                type="radio"
-                value="pc" /> <label htmlFor="platform-pc">PC</label>
+                name="rats"
+                onChange={this.handleRatsChange}
+                value={rats} />
+            </fieldset>
 
-              <input
-                checked={rescue.attributes.platform === 'xb'}
+            <fieldset>
+              <label htmlFor="firstLimpet">Who fired the first limpet?</label>
+
+              <FirstLimpetInput
+                data-single
                 disabled={submitting || retrieving}
-                id="platform-xb"
-                name="platform"
-                onChange={this.handleChange}
-                type="radio"
-                value="xb" /> <label htmlFor="platform-xb">Xbox One</label>
+                name="firstLimpet"
+                onChange={this.handleFirstLimpetChange}
+                options={rats}
+                value={firstLimpet} />
+            </fieldset>
 
-              <input
-                checked={rescue.attributes.platform === 'ps'}
+            <fieldset>
+              <label htmlFor="system">Where did it happen? <small>In what star system did the rescue took place? (put "n/a" if not applicable)</small></label>
+
+              <SystemTagsInput
                 disabled={submitting || retrieving}
-                id="platform-ps"
-                name="platform"
-                onChange={this.handleChange}
-                type="radio"
-                value="ps" /> <label htmlFor="platform-ps">Playstation 4</label>
-            </div>
-          </fieldset>
+                name="system"
+                onChange={this.handleSystemChange}
+                data-single
+                value={(rescue && rescue.attributes) ? rescue.attributes.system : null} />
+            </fieldset>
 
-          <fieldset>
-            <label>Was the rescue successful?</label>
+            <fieldset>
+              <label htmlFor="notes">Notes</label>
 
-            <div className="option-group">
-              <input
-                checked={rescue.attributes.outcome === 'success'}
+              <textarea
                 disabled={submitting || retrieving}
-                id="outcome-success"
-                name="outcome"
+                id="notes"
+                name="notes"
                 onChange={this.handleChange}
-                type="radio"
-                value="success" /> <label htmlFor="outcome-success">Yes</label>
+                value={rescue.attributes.notes} />
+            </fieldset>
 
-              <input
-                checked={rescue.attributes.outcome === 'failure'}
-                disabled={submitting || retrieving}
-                id="outcome-failure"
-                name="outcome"
-                onChange={this.handleChange}
-                type="radio"
-                value="failure" /> <label htmlFor="outcome-failure">No</label>
-            </div>
-          </fieldset>
+            <menu type="toolbar">
+              <div className="primary">
+                <button
+                  disabled={submitting || retrieving || !this.validate()}
+                  type="submit">
+                  {submitting ? 'Submitting...' : 'Submit'}
+                </button>
+              </div>
 
-          <fieldset>
-            <label>Was it a code red?</label>
-
-            <div className="option-group">
-              <input
-                checked={rescue.attributes.codeRed}
-                disabled={submitting || retrieving}
-                id="codeRed-yes"
-                name="codeRed"
-                onChange={this.handleChange}
-                type="radio"
-                value={true} /> <label htmlFor="codeRed-yes">Yes</label>
-
-              <input
-                checked={!rescue.attributes.codeRed}
-                disabled={submitting || retrieving}
-                id="codeRed-no"
-                name="codeRed"
-                onChange={this.handleChange}
-                type="radio"
-                value={false} /> <label htmlFor="codeRed-no">No</label>
-            </div>
-          </fieldset>
-
-          <fieldset>
-            <label htmlFor="rats">Who arrived for the rescue?</label>
-
-            <RatTagsInput
-              data-platform={rescue.attributes.platform}
-              disabled={submitting || retrieving}
-              name="rats"
-              onChange={this.handleRatsChange}
-              value={rats} />
-          </fieldset>
-
-          <fieldset>
-            <label htmlFor="firstLimpet">Who fired the first limpet?</label>
-
-            <FirstLimpetInput
-              data-single
-              disabled={submitting || retrieving}
-              name="firstLimpet"
-              onChange={this.handleFirstLimpetChange}
-              options={rats}
-              value={firstLimpet} />
-          </fieldset>
-
-          <fieldset>
-            <label htmlFor="system">Where did it happen? <small>In what star system did the rescue took place? (put "n/a" if not applicable)</small></label>
-
-            <SystemTagsInput
-              disabled={submitting || retrieving}
-              name="system"
-              onChange={this.handleSystemChange}
-              data-single
-              value={(rescue && rescue.attributes) ? rescue.attributes.system : null} />
-          </fieldset>
-
-          <fieldset>
-            <label htmlFor="notes">Notes</label>
-
-            <textarea
-              disabled={submitting || retrieving}
-              id="notes"
-              name="notes"
-              onChange={this.handleChange}
-              value={rescue.attributes.notes} />
-          </fieldset>
-
-          <menu type="toolbar">
-            <div className="primary">
-              <button
-                disabled={submitting || retrieving || !this.validate()}
-                type="submit">
-                {submitting ? 'Submitting...' : 'Submit'}
-              </button>
-            </div>
-
-            <div className="secondary"></div>
-          </menu>
-        </form>
+              <div className="secondary"></div>
+            </menu>
+          </form>
+        )}
       </Page>
     )
   }

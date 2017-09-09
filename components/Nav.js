@@ -13,13 +13,17 @@ const links = [
     path: '/blogs',
   },
   {
-    name: 'Paperwork',
-    path: '/paperwork',
+    name: 'Statistics',
+    path: '/statistics',
   },
   {
-    name: 'About',
-    path: '/about',
+    name: 'Leaderboard',
+    path: '/leaderboard',
   },
+//  {
+//    name: 'About',
+//    path: '/about',
+//  },
 ]
 
 
