@@ -7,7 +7,7 @@ import withRedux from 'next-redux-wrapper'
 
 
 
-// Module imports
+// Component imports
 import {
   actions,
   initStore,

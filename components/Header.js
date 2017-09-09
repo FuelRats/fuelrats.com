@@ -1,23 +1,31 @@
 // Module imports
+import { bindActionCreators } from 'redux'
 import Link from 'next/link'
 import React from 'react'
+import withRedux from 'next-redux-wrapper'
 
 
 
 
 
 // Component imports
+import {
+  actions,
+  initStore,
+} from '../store'
+import Component from './Component'
 import Nav from './Nav'
 
 
 
 
 
-export default class extends React.Component {
+class Header extends React.Component {
   render () {
     let {
-      path,
+      loggedIn,
       isServer,
+      path,
     } = this.props
 
     let getHelpClasses = [
@@ -50,11 +58,13 @@ export default class extends React.Component {
         <Nav />
 
         <div className="join-actions">
-          <Link href="/register">
-            <a className="button secondary">
-              Join Us
-            </a>
-          </Link>
+          {!loggedIn && (
+            <Link href="/register">
+              <a className="button secondary">
+                Join Us
+              </a>
+            </Link>
+          )}
 
           <div className={getHelpClasses.join(' ')}>
             <Link href="/get-help">
@@ -68,3 +78,23 @@ export default class extends React.Component {
     )
   }
 }
+
+
+
+
+
+const mapStateToProps = state => {
+  let {
+    loggedIn,
+  } = state.authentication
+
+  return {
+    loggedIn,
+  }
+}
+
+
+
+
+
+export default withRedux(initStore, mapStateToProps, null)(Header)
