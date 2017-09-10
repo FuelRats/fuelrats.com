@@ -5,9 +5,7 @@ addons:
   - beta.fuelrats.com
   - cheddar.fuelrats.com
 
-cache:
-  directories:
-  - node_modules
+cache: yarn
 
 script:
 - yarn run build

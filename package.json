@@ -6,7 +6,8 @@
   "scripts": {
     "analyze": "cross-env ANALYZE=1 next build",
     "build": "next build",
-    "dev": "node server/server.js"
+    "dev": "node server/server.js",
+    "postinstall": "npm rebuild node-sass"
   },
   "dependencies": {
     "autoprefixer": "^7.1.2",
