@@ -124,6 +124,8 @@ class Register extends Component {
             <label>Password</label>
 
             <PasswordField
+              maxLength="42"
+              minLength="5"
               name="password"
               onChange={password => this.setState({ password })}
               pattern="^[^\s]{5,42}$"
@@ -228,7 +230,7 @@ class Register extends Component {
 //      return false
 //    }
 
-    if (!this._emailEl || !this._nicknameEl || !this._passwordEl || !this._ratNameEl) {
+    if (!this._emailEl || !this._nicknameEl || !this._password || !this._ratNameEl) {
       return false
     }
 
