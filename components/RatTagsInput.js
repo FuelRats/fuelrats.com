@@ -6,7 +6,9 @@ import TagsInput from '../components/TagsInput'
 
 export default class extends TagsInput {
   renderValue (rat) {
-    return `<div class="badge platform short ${rat.attributes.platform}"></div> ${rat.attributes.name}`
+    return (
+      <span><span className="badge platform short ${rat.attributes.platform}" /> ${rat.attributes.name}</span>
+    )
   }
 
   async search (query) {

@@ -43,7 +43,11 @@ class Header extends React.Component {
     return (
       <div id="header-container">
         <input id="nav-control" type="checkbox" />
-        <label title="Expand/Collapse Menu" htmlFor="nav-control" class="burger" id="burger"><i className="fa fa-bars fa-3x" aria-hidden="true"></i></label>
+
+        <label title="Expand/Collapse Menu" htmlFor="nav-control" className="burger" id="burger">
+          <i className="fa fa-bars fa-3x" aria-hidden="true"></i>
+        </label>
+
         <header role="banner">
 
           <Link href="/">
