@@ -132,7 +132,8 @@ class Register extends Component {
               placeholder="Use a strong password to keep your account secure"
               ref={_password => this._password = _password}
               required={true}
-              showStrength={true} />
+              showStrength={true}
+              showSuggestions={true} />
           </fieldset>
 
           <fieldset data-name="IRC Nick">
