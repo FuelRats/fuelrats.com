@@ -49,6 +49,7 @@
     "react-redux": "^5.0.5",
     "react-table": "^6.4.0",
     "redux": "^3.7.1",
+    "redux-devtools-extension": "^2.13.2",
     "redux-thunk": "^2.2.0",
     "request": "^2.81.0",
     "request-promise-native": "^1.0.4",
