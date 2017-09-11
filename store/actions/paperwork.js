@@ -25,7 +25,6 @@ export const retrievePaperwork = rescueId => async dispatch => {
 
     dispatch({
       payload: response,
-      rescue: response.data[0],
       status: 'success',
       type: actionTypes.RETRIEVE_PAPERWORK,
     })

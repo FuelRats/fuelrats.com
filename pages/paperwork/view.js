@@ -43,7 +43,6 @@ class Paperwork extends Component {
       this.setState({
         firstLimpet: nextProps.firstLimpet,
         rats: nextProps.rats,
-        rescue: nextProps.rescue,
       })
     }
   }
@@ -89,10 +88,16 @@ class Paperwork extends Component {
       rescue,
     } = this.state
 
+    if (rescue.attributes.quotes) {
+      return (
+        <ol>
+          {rescue.attributes.quotes.map(this.renderQuote)}
+        </ol>
+      )
+    }
+
     return (
-      <ol>
-        {rescue.attributes.quotes.map(this.renderQuote)}
-      </ol>
+      <span>N/A</span>
     )
   }
 
@@ -135,8 +140,6 @@ class Paperwork extends Component {
       rats,
     } = this.state
 
-    console.log('rescue', rescue)
-
     return (
       <Page path={path} title={this.title}>
         <header className="page-header">
@@ -155,7 +158,6 @@ class Paperwork extends Component {
 
         {(!retrieving && rescue) && (
           <div className="page-content">
-          {console.log('!retrieving && rescue', rescue)}
             <table>
               <tbody>
                 <tr>
@@ -238,7 +240,6 @@ class Paperwork extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    submitPaperwork: bindActionCreators(actions.submitPaperwork, dispatch),
     retrievePaperwork: bindActionCreators(actions.retrievePaperwork, dispatch),
   }
 }
