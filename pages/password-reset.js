@@ -114,6 +114,7 @@ class PasswordReset extends Component {
                   ref={_password => this._password = _password}
                   required={true}
                   showStrength={true}
+                  showSuggestions={true}
                   value={newPassword} />
               </fieldset>
 

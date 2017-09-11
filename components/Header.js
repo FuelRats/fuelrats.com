@@ -41,40 +41,43 @@ class Header extends React.Component {
     }
 
     return (
-      <header role="banner">
-        <input defaultChecked="true" data-hidden id="nav-control" type="checkbox" />
+      <div id="header-container">
+        <input id="nav-control" type="checkbox" />
+        <label title="Expand/Collapse Menu" htmlFor="nav-control" class="burger" id="burger"><i className="fa fa-bars fa-3x" aria-hidden="true"></i></label>
+        <header role="banner">
 
-        <Link href="/">
-          <a
-            className="spin-3d"
-            title="Home">
-            <img
-              alt="Fuel Rats logo"
-              className="brand"
-              src="/static/images/logo2.png" />
-          </a>
-        </Link>
+          <Link href="/">
+            <a
+              className="spin-3d"
+              title="Home">
+              <img
+                alt="Fuel Rats logo"
+                className="brand"
+                src="/static/images/logo2.png" />
+            </a>
+          </Link>
 
-        <Nav />
+          <Nav />
 
-        <div className="join-actions">
-          {!loggedIn && (
-            <Link href="/register">
-              <a className="button secondary">
-                Join Us
-              </a>
-            </Link>
-          )}
+          <div className="join-actions">
+            {!loggedIn && (
+              <Link href="/register">
+                <a className="button secondary">
+                  Join Us
+                </a>
+              </Link>
+            )}
 
-          <div className={getHelpClasses.join(' ')}>
-            <Link href="/get-help">
-              <a className="button">
-                Get Help
-              </a>
-            </Link>
+            <div className={getHelpClasses.join(' ')}>
+              <Link href="/get-help">
+                <a className="button">
+                  Get Help
+                </a>
+              </Link>
+            </div>
           </div>
-        </div>
-      </header>
+        </header>
+      </div>
     )
   }
 }
