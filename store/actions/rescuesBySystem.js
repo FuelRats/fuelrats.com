@@ -17,9 +17,6 @@ export const getRescuesBySystemStatistics = () => async dispatch => {
 
   try {
     let response = await fetch(`/api/statistics/systems?count.gt=10`, {
-      headers: new Headers({
-        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-      }),
       method: 'get',
     })
 
