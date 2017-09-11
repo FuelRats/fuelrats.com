@@ -17,9 +17,6 @@ export const getRescuesByRatStatistics = () => async dispatch => {
 
   try {
     let response = await fetch(`/api/statistics/rats`, {
-      headers: new Headers({
-        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-      }),
       method: 'get',
     })
 
