@@ -62,15 +62,6 @@ class Paperwork extends Component {
     this.state = {
       firstLimpet: props.firstLimpet,
       rats: props.rats,
-      rescue: props.rescue || {
-        attributes: {
-          codeRed: false,
-          notes: '',
-          outcome: 'success',
-          platform: 'pc',
-          system: null,
-        },
-      },
     }
   }
 
@@ -203,6 +194,7 @@ class Paperwork extends Component {
   render () {
     let {
       path,
+      rescue,
       retrieving,
       submitting,
     } = this.props
@@ -210,7 +202,6 @@ class Paperwork extends Component {
     let {
       firstLimpet,
       rats,
-      rescue,
     } = this.state
 
     let classes = ['page-content']
@@ -226,10 +217,16 @@ class Paperwork extends Component {
         </header>
 
         {retrieving && (
-          <form className="loading page-content" />
+          <div className="loading page-content" />
         )}
 
-        {!retrieving && (
+        {(!retrieving && !rescue) && (
+          <div className="loading page-content">
+            <p>Sorry, we couldn't find the paperwork you requested.</p>
+          </div>
+        )}
+
+        {(!retrieving && rescue) && (
           <form
             className={classes.join(' ')}
             onSubmit={this.onSubmit}>

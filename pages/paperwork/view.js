@@ -43,7 +43,6 @@ class Paperwork extends Component {
       this.setState({
         firstLimpet: nextProps.firstLimpet,
         rats: nextProps.rats,
-        rescue: nextProps.rescue,
       })
     }
   }
@@ -58,15 +57,6 @@ class Paperwork extends Component {
     this.state = {
       firstLimpet: props.firstLimpet,
       rats: props.rats,
-      rescue: props.rescue || {
-        attributes: {
-          codeRed: false,
-          notes: '',
-          outcome: 'success',
-          platform: 'pc',
-          system: null,
-        },
-      },
     }
   }
 
@@ -98,10 +88,16 @@ class Paperwork extends Component {
       rescue,
     } = this.state
 
+    if (rescue.attributes.quotes) {
+      return (
+        <ol>
+          {rescue.attributes.quotes.map(this.renderQuote)}
+        </ol>
+      )
+    }
+
     return (
-      <ol>
-        {rescue.attributes.quotes.map(this.renderQuote)}
-      </ol>
+      <span>N/A</span>
     )
   }
 
@@ -136,12 +132,12 @@ class Paperwork extends Component {
   render () {
     let {
       path,
+      rescue,
       retrieving,
     } = this.props
 
     let {
       rats,
-      rescue,
     } = this.state
 
     return (
@@ -150,8 +146,18 @@ class Paperwork extends Component {
           <h2>{this.title}</h2>
         </header>
 
-        <div className="page-content">
-          {!retrieving && (
+        {retrieving && (
+          <div className="loading page-content" />
+        )}
+
+        {(!retrieving && !rescue) && (
+          <div className="loading page-content">
+            <p>Sorry, we couldn't find the paperwork you requested.</p>
+          </div>
+        )}
+
+        {(!retrieving && rescue) && (
+          <div className="page-content">
             <table>
               <tbody>
                 <tr>
@@ -205,8 +211,8 @@ class Paperwork extends Component {
                 </tr>
               </tbody>
             </table>
-          )}
-        </div>
+          </div>
+        )}
       </Page>
     )
   }
@@ -234,7 +240,6 @@ class Paperwork extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    submitPaperwork: bindActionCreators(actions.submitPaperwork, dispatch),
     retrievePaperwork: bindActionCreators(actions.retrievePaperwork, dispatch),
   }
 }

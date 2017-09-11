@@ -23,9 +23,12 @@ export const retrievePaperwork = rescueId => async dispatch => {
     })
     response = await response.json()
 
+    if (!response.length) {
+      throw Error('Rescue not found')
+    }
+
     dispatch({
       payload: response,
-      rescue: response.data[0],
       status: 'success',
       type: actionTypes.RETRIEVE_PAPERWORK,
     })

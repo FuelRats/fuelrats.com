@@ -41,40 +41,47 @@ class Header extends React.Component {
     }
 
     return (
-      <header role="banner">
-        <input defaultChecked="true" data-hidden id="nav-control" type="checkbox" />
+      <div id="header-container">
+        <input id="nav-control" type="checkbox" />
 
-        <Link href="/">
-          <a
-            className="spin-3d"
-            title="Home">
-            <img
-              alt="Fuel Rats logo"
-              className="brand"
-              src="/static/images/logo2.png" />
-          </a>
-        </Link>
+        <label title="Expand/Collapse Menu" htmlFor="nav-control" className="burger" id="burger">
+          <i className="fa fa-bars fa-3x" aria-hidden="true"></i>
+        </label>
 
-        <Nav />
+        <header role="banner">
 
-        <div className="join-actions">
-          {!loggedIn && (
-            <Link href="/register">
-              <a className="button secondary">
-                Join Us
-              </a>
-            </Link>
-          )}
+          <Link href="/">
+            <a
+              className="spin-3d"
+              title="Home">
+              <img
+                alt="Fuel Rats logo"
+                className="brand"
+                src="/static/images/logo2.png" />
+            </a>
+          </Link>
 
-          <div className={getHelpClasses.join(' ')}>
-            <Link href="/get-help">
-              <a className="button">
-                Get Help
-              </a>
-            </Link>
+          <Nav />
+
+          <div className="join-actions">
+            {!loggedIn && (
+              <Link href="/register">
+                <a className="button secondary">
+                  Join Us
+                </a>
+              </Link>
+            )}
+
+            <div className={getHelpClasses.join(' ')}>
+              <Link href="/get-help">
+                <a className="button">
+                  Get Help
+                </a>
+              </Link>
+            </div>
           </div>
-        </div>
-      </header>
+        </header>
+      </div>
     )
   }
 }
