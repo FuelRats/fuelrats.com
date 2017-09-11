@@ -58,15 +58,6 @@ class Paperwork extends Component {
     this.state = {
       firstLimpet: props.firstLimpet,
       rats: props.rats,
-      rescue: props.rescue || {
-        attributes: {
-          codeRed: false,
-          notes: '',
-          outcome: 'success',
-          platform: 'pc',
-          system: null,
-        },
-      },
     }
   }
 
@@ -136,13 +127,15 @@ class Paperwork extends Component {
   render () {
     let {
       path,
+      rescue,
       retrieving,
     } = this.props
 
     let {
       rats,
-      rescue,
     } = this.state
+
+    console.log('rescue', rescue)
 
     return (
       <Page path={path} title={this.title}>
@@ -150,8 +143,19 @@ class Paperwork extends Component {
           <h2>{this.title}</h2>
         </header>
 
-        <div className="page-content">
-          {!retrieving && (
+        {retrieving && (
+          <div className="loading page-content" />
+        )}
+
+        {(!retrieving && !rescue) && (
+          <div className="loading page-content">
+            <p>Sorry, we couldn't find the paperwork you requested.</p>
+          </div>
+        )}
+
+        {(!retrieving && rescue) && (
+          <div className="page-content">
+          {console.log('!retrieving && rescue', rescue)}
             <table>
               <tbody>
                 <tr>
@@ -205,8 +209,8 @@ class Paperwork extends Component {
                 </tr>
               </tbody>
             </table>
-          )}
-        </div>
+          </div>
+        )}
       </Page>
     )
   }

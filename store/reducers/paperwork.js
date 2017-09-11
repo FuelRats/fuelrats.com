@@ -38,6 +38,7 @@ export default function (state = initialState.paperwork, action) {
       switch (status) {
         case 'error':
           return Object.assign({}, state, {
+            rescueId: null,
             retrieving: false,
           })
 
