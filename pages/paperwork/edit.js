@@ -287,6 +287,24 @@ class Paperwork extends Component {
                   onChange={this.handleChange}
                   type="radio"
                   value="failure" /> <label htmlFor="outcome-failure">No</label>
+
+                <input
+                  checked={rescue.attributes.outcome === 'other'}
+                  disabled={submitting || retrieving}
+                  id="outcome-other"
+                  name="outcome"
+                  onChange={this.handleChange}
+                  type="radio"
+                  value="other" /> <label htmlFor="outcome-other">Other</label>
+
+                <input
+                  checked={rescue.attributes.outcome === 'invalid'}
+                  disabled={submitting || retrieving}
+                  id="outcome-invalid"
+                  name="outcome"
+                  onChange={this.handleChange}
+                  type="radio"
+                  value="invalid" /> <label htmlFor="outcome-invalid">Invalid</label>
               </div>
             </fieldset>
 
