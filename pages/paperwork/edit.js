@@ -38,16 +38,6 @@ class Paperwork extends Component {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.rescue !== this.props.rescue) {
-      this.setState({
-        firstLimpet: nextProps.firstLimpet,
-        rats: nextProps.rats,
-        rescue: nextProps.rescue,
-      })
-    }
-  }
-
   constructor (props) {
     super(props)
 
@@ -58,11 +48,6 @@ class Paperwork extends Component {
       'handleRatsChange',
       'handleSystemChange',
     ])
-
-    this.state = {
-      firstLimpet: props.firstLimpet,
-      rats: props.rats,
-    }
   }
 
   static async getInitialProps ({ query }) {
@@ -165,7 +150,7 @@ class Paperwork extends Component {
       firstLimpet,
       rats,
       rescue,
-    } = this.state
+    } = this.props
     let ratUpdates = null
     let rescueUpdates = {}
 
@@ -193,16 +178,13 @@ class Paperwork extends Component {
 
   render () {
     let {
+      firstLimpet,
       path,
       rescue,
+      rats,
       retrieving,
       submitting,
     } = this.props
-
-    let {
-      firstLimpet,
-      rats,
-    } = this.state
 
     let classes = ['page-content']
 
@@ -395,7 +377,7 @@ class Paperwork extends Component {
     let {
       rats,
       rescue,
-    } = this.state
+    } = this.props
 
     if (!rats || !rats.length) {
       return false

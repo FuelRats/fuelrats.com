@@ -38,26 +38,12 @@ class Paperwork extends Component {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.rescue !== this.props.rescue) {
-      this.setState({
-        firstLimpet: nextProps.firstLimpet,
-        rats: nextProps.rats,
-      })
-    }
-  }
-
   constructor (props) {
     super(props)
 
     this._bindMethods([
       'renderRat',
     ])
-
-    this.state = {
-      firstLimpet: props.firstLimpet,
-      rats: props.rats,
-    }
   }
 
   static async getInitialProps ({ query }) {
@@ -86,7 +72,7 @@ class Paperwork extends Component {
   renderQuotes () {
     let {
       rescue,
-    } = this.state
+    } = this.props
 
     if (rescue.attributes.quotes) {
       return (
@@ -105,7 +91,7 @@ class Paperwork extends Component {
     let {
       rats,
       rescue,
-    } = this.state
+    } = this.props
 
     return (
       <li key={index}>
@@ -119,8 +105,8 @@ class Paperwork extends Component {
 
   renderRats () {
     let {
-      rats
-    } = this.state
+      rats,
+    } = this.props
 
     return (
       <ul>
@@ -132,13 +118,10 @@ class Paperwork extends Component {
   render () {
     let {
       path,
+      rats,
       rescue,
       retrieving,
     } = this.props
-
-    let {
-      rats,
-    } = this.state
 
     return (
       <Page path={path} title={this.title}>
