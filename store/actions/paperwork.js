@@ -23,7 +23,7 @@ export const retrievePaperwork = rescueId => async dispatch => {
     })
     response = await response.json()
 
-    if (!response.length) {
+    if (!response.data.length) {
       throw Error('Rescue not found')
     }
 
