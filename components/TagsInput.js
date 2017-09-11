@@ -440,11 +440,12 @@ export default class extends React.Component {
     return (
       <li
         className={classes.join(' ')}
-        dangerouslySetInnerHTML={{ __html: this.renderValue(option) }}
         key={index}
         onMouseDown={() => this.addTag(option)}
         onMouseOut={this.handleOptionMouseOut}
-        onMouseOver={event => this.handleOptionMouseOver(event, index)} />
+        onMouseOver={event => this.handleOptionMouseOver(event, index)}>
+        {this.renderValue(option)}
+      </li>
     )
   }
 
@@ -469,8 +470,7 @@ export default class extends React.Component {
 
     return (
       <li className={classes.join(' ')} key={index}>
-        <span
-          dangerouslySetInnerHTML={{ __html: this.renderValue(tag) }} />
+        {this.renderValue(tag)}
 
         <button
           onClick={() => this.removeTag(tag)}

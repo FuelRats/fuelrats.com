@@ -6,8 +6,10 @@ import TagsInput from '../components/TagsInput'
 
 export default class extends TagsInput {
   renderValue (rat) {
+    let badgeClasses = ['badge', 'platform', 'short', rat.attributes.platform]
+
     return (
-      <span><span className="badge platform short ${rat.attributes.platform}" /> ${rat.attributes.name}</span>
+      <span><span className={badgeClasses.join(' ')} /> {rat.attributes.name}</span>
     )
   }
 

@@ -38,6 +38,16 @@ class Paperwork extends Component {
     }
   }
 
+  componentWillReceiveProps (nextProps) {
+    if (this.props.rescue !== nextProps.rescue) {
+      this.setState({
+        firstLimpet: nextProps.firstLimpet,
+        rats: nextProps.rats,
+        rescue: nextProps.rescue,
+      })
+    }
+  }
+
   constructor (props) {
     super(props)
 
@@ -48,6 +58,12 @@ class Paperwork extends Component {
       'handleRatsChange',
       'handleSystemChange',
     ])
+
+    this.state = {
+      firstLimpet: null,
+      rats: null,
+      rescue: null,
+    }
   }
 
   static async getInitialProps ({ query }) {
@@ -131,7 +147,7 @@ class Paperwork extends Component {
   handleSystemChange (value) {
     let {
       rescue,
-    } = this.props
+    } = this.state
 
     if (value[0].value !== rescue.attributes.system) {
       let newState = Object.assign({}, this.state)
@@ -150,7 +166,7 @@ class Paperwork extends Component {
       firstLimpet,
       rats,
       rescue,
-    } = this.props
+    } = this.state
     let ratUpdates = null
     let rescueUpdates = {}
 
@@ -158,6 +174,10 @@ class Paperwork extends Component {
       if (field !== 'rats') {
         rescueUpdates[field] = rescue.attributes[field]
       }
+    }
+
+    if (!rescue.attributes.outcome) {
+      rescueUpdates.outcome = 'success'
     }
 
     if (this.dirtyFields.has('rats')) {
@@ -178,13 +198,15 @@ class Paperwork extends Component {
 
   render () {
     let {
-      firstLimpet,
       path,
-      rescue,
-      rats,
       retrieving,
       submitting,
     } = this.props
+    let {
+      firstLimpet,
+      rats,
+      rescue,
+    } = this.state
 
     let classes = ['page-content']
 
@@ -377,13 +399,13 @@ class Paperwork extends Component {
     let {
       rats,
       rescue,
-    } = this.props
+    } = this.state
 
     if (!rats || !rats.length) {
       return false
     }
 
-    if (!rescue.attributes.firstLimpetId) {
+    if ((rescue.attributes.outcome === 'success') && !rescue.attributes.firstLimpetId) {
       return false
     }
 
@@ -450,6 +472,10 @@ const mapStateToProps = state => {
           value: rat.attributes.name,
         }, rat)
       })
+
+    if (!rescue.attributes.outcome) {
+      rescue.attributes.outcome = 'success'
+    }
   }
 
   return Object.assign({
