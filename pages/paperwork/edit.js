@@ -272,7 +272,7 @@ class Paperwork extends Component {
 
               <div className="option-group">
                 <input
-                  checked={rescue.attributes.outcome === 'success'}
+                  checked={!rescue.attributes.outcome || (rescue.attributes.outcome === 'success')}
                   disabled={submitting || retrieving}
                   id="outcome-success"
                   name="outcome"
@@ -405,7 +405,7 @@ class Paperwork extends Component {
       return false
     }
 
-    if ((rescue.attributes.outcome === 'success') && !rescue.attributes.firstLimpetId) {
+    if ((!rescue.attributes.outcome || (rescue.attributes.outcome === 'success')) && !rescue.attributes.firstLimpetId) {
       return false
     }
 
@@ -472,10 +472,6 @@ const mapStateToProps = state => {
           value: rat.attributes.name,
         }, rat)
       })
-
-    if (!rescue.attributes.outcome) {
-      rescue.attributes.outcome = 'success'
-    }
   }
 
   return Object.assign({
