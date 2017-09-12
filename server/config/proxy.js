@@ -59,4 +59,8 @@ module.exports = function (koa, config) {
     rewrite: path => path.replace(/^\/wp\-api/, '/wp-json/wp/v2'),
     target: config.wordpress.url,
   }))
+
+  koa.use(proxy('/wp-content', {
+    target: config.wordpress.url,
+  }))
 }
