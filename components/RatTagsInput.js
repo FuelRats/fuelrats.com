@@ -5,6 +5,15 @@ import TagsInput from '../components/TagsInput'
 
 
 export default class extends TagsInput {
+  renderLoader () {
+    return (
+      <span>
+        <i className="fa fa-fw fa-pulse fa-spinner" />
+        Loading...
+      </span>
+    )
+  }
+
   renderValue (rat) {
     let badgeClasses = ['badge', 'platform', 'short', rat.attributes.platform]
 
@@ -14,6 +23,8 @@ export default class extends TagsInput {
   }
 
   async search (query) {
+    this.setState({ loading: true })
+
     if (query) {
       let response = await fetch(`/api/rats?limit=10&platform=${this.props['data-platform']}&name.ilike=${query}%`)
       let {

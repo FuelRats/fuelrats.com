@@ -1,3 +1,6 @@
+import {
+  debounce,
+} from 'lodash'
 import React from 'react'
 
 
@@ -7,6 +10,14 @@ import React from 'react'
 export default class extends React.Component {
   _bindMethods (methods) {
     methods.forEach(method => this[method] = this[method].bind(this))
+  }
+
+  _renderLoader () {
+    return (
+      <div className="loader">
+        {this.renderLoader()}
+      </div>
+    )
   }
 
 
@@ -58,25 +69,37 @@ export default class extends React.Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    if (this.props.value !== nextProps.value) {
+    let {
+      options,
+      value,
+    } = this.props
+    let newState = {}
+
+    if (value !== nextProps.value) {
       let tags = nextProps.value || []
 
       if (!Array.isArray(tags)) {
         tags = [tags]
       }
 
-      this.setState({ tags })
+      newState.tags = tags
     }
 
-    if (this.props.options !== nextProps.options) {
+    if (options !== nextProps.options) {
       let options = nextProps.options || []
 
       if (!Array.isArray(options)) {
         options = [options]
       }
 
-      this.setState({ options })
+      newState.options = options
     }
+
+    if (loading !== nextProps.loading) {
+      newState.loading = nextProps.loading
+    }
+
+    this.setState(newState)
   }
 
   componentWillUpdate (nextProps, nextState) {
@@ -97,9 +120,11 @@ export default class extends React.Component {
       'onKeyDown',
       'renderOption',
       'renderTag',
+      'search',
       'shouldCaptureKeybind',
     ])
 
+    this.search = debounce(this.search, props.searchDebounce || 500)
 
     let tags = props.value || []
 
@@ -116,6 +141,7 @@ export default class extends React.Component {
       currentValue: '',
       debug: props.debug,
       focused: false,
+      loading: false,
       options: props.options || [],
       selectedOption: null,
       selectedTag: null,
@@ -394,10 +420,17 @@ export default class extends React.Component {
   }
 
   render () {
+    let {
+      className,
+      name,
+    } = this.props
+    let {
+      loading,
+    } = this.state
     let classes = ['tags-input']
 
-    if (this.props.className) {
-      classes = classes.concat(this.props.className)
+    if (className) {
+      classes = classes.concat(className)
     }
 
     let divProps = Object.assign({}, this.props)
@@ -413,7 +446,7 @@ export default class extends React.Component {
 
         <input
           autoComplete={false}
-          name={this.props.name}
+          name={name}
           onBlur={this.onBlur}
           onFocus={this.onFocus}
           onInput={this.onInput}
@@ -421,8 +454,20 @@ export default class extends React.Component {
           ref={input => this.input = input}
           type="search" />
 
-        <ol className="options">{this.renderOptions()}</ol>
+        {loading && this._renderLoader()}
+
+        {!loading && (
+          <ol className="options">
+            {this.renderOptions()}
+          </ol>
+        )}
       </div>
+    )
+  }
+
+  renderLoader () {
+    return (
+      <span className="loading">Loading...</span>
     )
   }
 
@@ -513,7 +558,8 @@ export default class extends React.Component {
 
   updateOptions (options, merge = false) {
     let newState = {
-      options: Object.assign([], this.state.options)
+      loading: false,
+      options: Object.assign([], this.state.options),
     }
 
     if (!merge) {

@@ -36,6 +36,13 @@
     }
   }
 
+  .loader {
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 100%;
+  }
+
   &[data-single] {
     .tags {
       align-content: stretch;
@@ -122,6 +129,10 @@
     &.focus {
       background-color: lightgrey;
     }
+  }
+
+  .loader {
+    padding: 1rem;
   }
 
   &[data-single] {
