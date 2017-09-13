@@ -18,15 +18,8 @@
     flex-wrap: wrap;
   }
 
-  .options {
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 100%;
-
-    &:empty {
-      display: none;
-    }
+  .options:empty {
+    display: none;
   }
 
   .option,
@@ -36,7 +29,9 @@
     }
   }
 
-  .loader {
+  .loader,
+  .no-results,
+  .options {
     left: 0;
     position: absolute;
     right: 0;
@@ -113,6 +108,8 @@
     padding-left: 0.5rem;
   }
 
+  .loader,
+  .no-results,
   .options {
     background-color: white;
     border-color: black;
@@ -131,7 +128,8 @@
     }
   }
 
-  .loader {
+  .loader,
+  .no-results {
     padding: 1rem;
   }
 

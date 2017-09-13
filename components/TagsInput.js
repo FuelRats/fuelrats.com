@@ -20,6 +20,14 @@ export default class extends React.Component {
     )
   }
 
+  _renderNoResults () {
+    return (
+      <div className="no-results">
+        {this.renderNoResults()}
+      </div>
+    )
+  }
+
 
 
 
@@ -142,6 +150,7 @@ export default class extends React.Component {
       debug: props.debug,
       focused: false,
       loading: false,
+      newFocus: true,
       options: props.options || [],
       selectedOption: null,
       selectedTag: null,
@@ -340,6 +349,7 @@ export default class extends React.Component {
   }
 
   onBlur (event) {
+    this.setState({ newFocus: true })
     event.target.parentNode.classList.remove('focus')
   }
 
@@ -425,7 +435,10 @@ export default class extends React.Component {
       name,
     } = this.props
     let {
+      currentValue,
       loading,
+      newFocus,
+      options,
     } = this.state
     let classes = ['tags-input']
 
@@ -456,7 +469,9 @@ export default class extends React.Component {
 
         {loading && this._renderLoader()}
 
-        {!loading && (
+        {(!loading && !newFocus && !!currentValue && !options.length) && this._renderNoResults()}
+
+        {(!loading && !!options.length) && (
           <ol className="options">
             {this.renderOptions()}
           </ol>
@@ -467,7 +482,13 @@ export default class extends React.Component {
 
   renderLoader () {
     return (
-      <span className="loading">Loading...</span>
+      <span>Loading...</span>
+    )
+  }
+
+  renderNoResults () {
+    return (
+      <span>No results</span>
     )
   }
 
@@ -559,6 +580,7 @@ export default class extends React.Component {
   updateOptions (options, merge = false) {
     let newState = {
       loading: false,
+      newFocus: false,
       options: Object.assign([], this.state.options),
     }
 
