@@ -5,17 +5,14 @@ import moment from 'moment'
 import React from 'react'
 import ReactTable from 'react-table'
 import Router from 'next/router'
-import withRedux from 'next-redux-wrapper'
+import { connect } from 'react-redux'
 
 
 
 
 
 // Module imports
-import {
-  actions,
-  initStore,
-} from '../store'
+import { actions } from '../store'
 import Component from './Component'
 
 
@@ -239,4 +236,4 @@ const mapStateToProps = state => {
 
 
 
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(RescuesTablePanel)
+export default connect(mapStateToProps, mapDispatchToProps)(RescuesTablePanel)

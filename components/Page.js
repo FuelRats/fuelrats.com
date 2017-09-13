@@ -1,16 +1,29 @@
 // Module imports
 import React from 'react'
+import {
+  connect,
+  Provider,
+} from 'react-redux'
 
 
 
 
 
 // Component imports
+import {
+  initStore,
+} from '../store'
 import Dialog from './Dialog'
 import Head from './Head'
 import Header from './Header'
 import Reminders from './Reminders'
 import UserMenu from './UserMenu'
+
+
+
+
+
+const store = initStore()
 
 
 
@@ -33,25 +46,27 @@ export default class extends React.Component {
     let mainClasses = ['fade-in', 'page'].concat(title.toLowerCase().replace(' ', '-')).join(' ')
 
     return (
-      <div role="application">
-        <Head title={title} />
+      <Provider store={store}>
+        <div role="application">
+          <Head title={title || this.title} />
 
-        <Header
-          isServer={isServer}
-          path={path} />
+          <Header
+            isServer={isServer}
+            path={path} />
 
-        <UserMenu />
+          <UserMenu />
 
-        <Reminders />
+          <Reminders />
 
-        <main>
-          <div className={mainClasses}>
-            {children}
-          </div>
-        </main>
+          <main>
+            <div className={mainClasses}>
+              {children}
+            </div>
+          </main>
 
-        <Dialog />
-      </div>
+          <Dialog />
+        </div>
+      </Provider>
     )
   }
 

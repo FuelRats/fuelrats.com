@@ -5,17 +5,14 @@ import Link from 'next/link'
 import moment from 'moment'
 import React from 'react'
 import ReactTable from 'react-table'
-import withRedux from 'next-redux-wrapper'
+import { connect } from 'react-redux'
 
 
 
 
 
 // Module imports
-import {
-  actions,
-  initStore,
-} from '../store'
+import { actions } from '../store'
 import AddRatForm from './AddRatForm'
 import Component from './Component'
 import RatDetails from './RatDetails'
@@ -218,4 +215,4 @@ const mapStateToProps = state => {
 
 
 
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(UserRatsPanel)
+export default connect(mapStateToProps, mapDispatchToProps)(UserRatsPanel)

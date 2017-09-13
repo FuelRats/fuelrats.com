@@ -2,17 +2,14 @@
 import { bindActionCreators } from 'redux'
 import _ from 'lodash'
 import React from 'react'
-import withRedux from 'next-redux-wrapper'
+import { connect } from 'react-redux'
 
 
 
 
 
-// Module imports
-import {
-  actions,
-  initStore,
-} from '../store'
+// Component imports
+import { actions } from '../store'
 import Component from './Component'
 import PasswordField from './PasswordField'
 
@@ -91,6 +88,7 @@ class ChangePasswordForm extends Component {
             id="currentPassword"
             name="currentPassword"
             onChange={this.handleChange}
+            ref={_currentPasswordEl => this._currentPasswordEl = _currentPasswordEl}
             value={currentPassword} />
         </fieldset>
 
@@ -103,14 +101,16 @@ class ChangePasswordForm extends Component {
             id="newPassword"
             name="newPassword"
             onChange={this.handleChange}
+            ref={_newPasswordEl => this._newPasswordEl = _newPasswordEl}
             showStrength={true}
+            showSuggestions={true}
             value={newPassword} />
         </fieldset>
 
         <menu type="toolbar">
           <div className="primary">
             <button
-              disabled={!currentPassword || !newPassword || submitting}
+              disabled={!this.validate() || submitting}
               type="submit">
               {submitting ? 'Submitting...' : 'Change Password'}
             </button>
@@ -120,6 +120,27 @@ class ChangePasswordForm extends Component {
         </menu>
       </form>
     )
+  }
+
+  validate () {
+    let {
+      currentPassword,
+      newPassword,
+    } = this.state
+
+    if (!this._currentPasswordEl || !this._newPasswordEl) {
+      return false
+    }
+
+    if (!this._currentPasswordEl.validity.valid) {
+      return false
+    }
+
+    if (!this._newPasswordEl.validity.valid) {
+      return false
+    }
+
+    return true
   }
 }
 
@@ -137,4 +158,4 @@ const mapDispatchToProps = dispatch => {
 
 
 
-export default withRedux(initStore, null, mapDispatchToProps)(ChangePasswordForm)
+export default connect(null, mapDispatchToProps)(ChangePasswordForm)

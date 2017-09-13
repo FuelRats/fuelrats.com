@@ -127,7 +127,7 @@ class Register extends Component {
               maxLength="42"
               minLength="5"
               name="password"
-              onChange={password => this.setState({ password })}
+              onChange={this.handleChange}
               pattern="^[^\s]{5,42}$"
               placeholder="Use a strong password to keep your account secure"
               ref={_password => this._password = _password}

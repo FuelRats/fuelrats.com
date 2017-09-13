@@ -82,7 +82,7 @@ export default class extends Component {
     }
 
     if (onChange) {
-      onChange(event.target.value)
+      onChange(event)
     }
   }
 
@@ -103,17 +103,18 @@ export default class extends Component {
       passwordSuggestions,
       passwordWarnings,
       showPassword,
-      showSuggestions,
     } = this.state
     let {
       onChange,
       showStrength,
+      showSuggestions,
     } = this.props
 
     let inputProps = Object.assign({}, this.props)
 
     delete inputProps.onChange
     delete inputProps.showStrength
+    delete inputProps.showSuggestions
 
     return(
       <div
@@ -122,7 +123,6 @@ export default class extends Component {
         <div className="input-group">
           <input
             {...inputProps}
-            name="password"
             onBlur={() => this.setState({ focused: false })}
             onChange={this.handleChange}
             onFocus={() => this.setState({ focused: true })}
@@ -147,8 +147,6 @@ export default class extends Component {
         {showStrength && (
           <meter
             className="password-strength-meter"
-            data-warning={passwordWarnings}
-            data-suggestions={passwordSuggestions}
             hidden={!password}
             high="3"
             low="2"

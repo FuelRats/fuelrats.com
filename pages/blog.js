@@ -206,5 +206,5 @@ const mapStateToProps = state => {
 
 
 
-
+console.log('initStore', initStore)
 export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(Blog)

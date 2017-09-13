@@ -2,17 +2,14 @@
 import { bindActionCreators } from 'redux'
 import _ from 'lodash'
 import React from 'react'
-import withRedux from 'next-redux-wrapper'
+import { connect } from 'react-redux'
 
 
 
 
 
 // Module imports
-import {
-  actions,
-  initStore,
-} from '../store'
+import { actions } from '../store'
 import Component from './Component'
 import ChangePasswordForm from './ChangePasswordForm'
 
@@ -44,12 +41,6 @@ class UserSettings extends Component {
 
 
 
-const mapDispatchToProps = dispatch => {
-  return {
-//    getRescuesForCMDRs: bindActionCreators(actions.getRescuesForCMDRs, dispatch),
-  }
-}
-
 const mapStateToProps = state => {
   return state.user || {}
 }
@@ -58,4 +49,4 @@ const mapStateToProps = state => {
 
 
 
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(UserSettings)
+export default connect(mapStateToProps, null)(UserSettings)

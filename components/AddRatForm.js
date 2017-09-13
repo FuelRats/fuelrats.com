@@ -1,17 +1,14 @@
 // Module imports
 import { bindActionCreators } from 'redux'
 import React from 'react'
-import withRedux from 'next-redux-wrapper'
+import { connect } from 'react-redux'
 
 
 
 
 
 // Component imports
-import {
-  actions,
-  initStore,
-} from '../store'
+import { actions } from '../store'
 import Component from './Component'
 
 
@@ -156,4 +153,4 @@ const mapStateToProps = state => {
 
 
 
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(AddRatForm)
+export default connect(mapStateToProps, mapDispatchToProps)(AddRatForm)

@@ -66,6 +66,15 @@ class Home extends React.Component {
     )
   }
 
+  showLogin () {
+    this.props.showDialog({
+      body: (<LoginDialog />),
+      closeIsVisible: true,
+      menuIsVisible: false,
+      title: 'Login',
+    })
+  }
+
 
 
 
@@ -76,15 +85,6 @@ class Home extends React.Component {
 
   get title () {
     return 'Home'
-  }
-
-  showLogin () {
-    this.props.showDialog({
-      body: (<LoginDialog />),
-      closeIsVisible: true,
-      menuIsVisible: false,
-      title: 'Login',
-    })
   }
 }
 

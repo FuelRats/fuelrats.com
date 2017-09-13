@@ -2,17 +2,14 @@
 import { bindActionCreators } from 'redux'
 import _ from 'lodash'
 import React from 'react'
-import withRedux from 'next-redux-wrapper'
+import { connect } from 'react-redux'
 
 
 
 
 
 // Module imports
-import {
-  actions,
-  initStore,
-} from '../store'
+import { actions } from '../store'
 import Component from './Component'
 
 
@@ -53,12 +50,6 @@ class UserNicknamesPanel extends Component {
 
 
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getRats: bindActionCreators(actions.getRats, dispatch),
-  }
-}
-
 const mapStateToProps = state => {
   let {
     user,
@@ -73,4 +64,4 @@ const mapStateToProps = state => {
 
 
 
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(UserNicknamesPanel)
+export default connect(mapStateToProps, mapDispatchToProps)(UserNicknamesPanel)

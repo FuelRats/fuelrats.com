@@ -3,17 +3,14 @@ import { bindActionCreators } from 'redux'
 import _ from 'lodash'
 import React from 'react'
 import Router from 'next/router'
-import withRedux from 'next-redux-wrapper'
+import { connect } from 'react-redux'
 
 
 
 
 
 // Module imports
-import {
-  actions,
-  initStore,
-} from '../store'
+import { actions } from '../store'
 import Component from './Component'
 
 
@@ -123,4 +120,4 @@ const mapStateToProps = state => {
 
 
 
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(LoginDialog)
+export default connect(mapStateToProps, mapDispatchToProps)(LoginDialog)

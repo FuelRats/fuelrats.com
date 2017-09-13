@@ -3,18 +3,14 @@ import { bindActionCreators } from 'redux'
 import _ from 'lodash'
 import Link from 'next/link'
 import React from 'react'
-import withRedux from 'next-redux-wrapper'
-
-import {
-  actions,
-  initStore,
-} from '../store'
+import { connect } from 'react-redux'
 
 
 
 
 
 // Component imports
+import { actions } from '../store'
 import AdminUserMenuNav from './AdminUserMenuNav'
 import Component from './Component'
 import LoginDialog from './LoginDialog'
@@ -168,4 +164,4 @@ const mapStateToProps = state => {
 
 
 
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(UserMenu)
+export default connect(mapStateToProps, mapDispatchToProps)(UserMenu)
