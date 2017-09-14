@@ -17,6 +17,7 @@ import initialState from './store/initialState'
 import reducer from './store/reducers/index'
 
 /* actions */
+import * as clientActions from './store/actions/client'
 import * as authenticationActions from './store/actions/authentication'
 import * as blogsActions from './store/actions/blogs'
 import * as dialogActions from './store/actions/dialog'
@@ -34,6 +35,7 @@ import * as userActions from './store/actions/user'
 
 export const actions = Object.assign(
   {},
+  clientActions,
   authenticationActions,
   blogsActions,
   dialogActions,

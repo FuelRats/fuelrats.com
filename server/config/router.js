@@ -38,6 +38,7 @@ module.exports = function (nextjs, koa, config) {
     '/paperwork',
     '/paperwork/*',
     '/profile',
+    '/authorize'
   ]
 
   router.get(authenticatedRoutes, async (ctx, next) => {
@@ -45,7 +46,7 @@ module.exports = function (nextjs, koa, config) {
       await next()
 
     } else {
-      await ctx.redirect(`/?authenticate=true&destination=${ctx.request.url}`)
+      await ctx.redirect(`/?authenticate=true&destination=${encodeURIComponent(ctx.request.url)}`)
     }
   })
 
