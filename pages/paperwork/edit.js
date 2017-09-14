@@ -66,21 +66,6 @@ class Paperwork extends Component {
     }
   }
 
-  static async getInitialProps ({ query }) {
-    let { id } = query
-
-    if (id) {
-      return {
-        id,
-        query,
-      }
-    }
-
-    return {
-      query,
-    }
-  }
-
   handleChange (event) {
     let newState = Object.assign({}, this.state)
     let {
@@ -203,8 +188,6 @@ class Paperwork extends Component {
 
   render () {
     let {
-      path,
-      query,
       retrieving,
       submitting,
     } = this.props
@@ -221,12 +204,9 @@ class Paperwork extends Component {
     }
 
     return (
-      <Page
-        path={path}
-        query={query}
-        title={this.title}>
+      <div>
         <header className="page-header">
-          <h2>{this.title}</h2>
+          <h2>{title}</h2>
         </header>
 
         {retrieving && (
@@ -400,7 +380,7 @@ class Paperwork extends Component {
             </menu>
           </form>
         )}
-      </Page>
+      </div>
     )
   }
 
@@ -435,10 +415,6 @@ class Paperwork extends Component {
 
   get dirtyFields () {
     return this._dirtyFields || (this._dirtyFields = new Set)
-  }
-
-  get title () {
-    return 'Paperwork'
   }
 }
 
@@ -494,4 +470,7 @@ const mapStateToProps = state => {
 
 
 
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(Paperwork)
+export default Page(Paperwork, title, {
+  mapStateToProps,
+  mapDispatchToProps,
+})

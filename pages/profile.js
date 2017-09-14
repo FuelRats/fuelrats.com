@@ -17,26 +17,45 @@ import UserStatsOverview from '../components/UserStatsOverview'
 
 
 
-export default class extends React.Component {
+// Component imports
+const title = 'Profile'
+
+
+
+
+
+class Profile extends React.Component {
 
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
 
-  static async getInitialProps ({ asPath, query }) {
-    return Object.assign({
-      path: asPath,
-      query,
-    }, query)
+  render () {
+    return (
+      <div>
+        <header className="page-header">
+          <h2>{title}</h2>
+        </header>
+
+        <div className="page-content">
+          <TabbedPanel
+            name="User Tabs"
+            tabs={this.tabs} />
+        </div>
+      </div>
+    )
   }
 
-  render () {
-    let {
-      path,
-      query,
-    } = this.props
 
-    let tabs = [
+
+
+
+  /***************************************************************************\
+    Getters
+  \***************************************************************************/
+
+  get tabs () {
+    return [
       {
         default: true,
         component: (<UserOverview />),
@@ -59,34 +78,11 @@ export default class extends React.Component {
         title: 'Settings',
       },
     ]
-
-    return (
-      <Page
-        path={path}
-        query={query}
-        title={this.title}>
-        <header className="page-header">
-          <h2>{this.title}</h2>
-        </header>
-
-        <div className="page-content">
-          <TabbedPanel
-            name="User Tabs"
-            tabs={tabs} />
-        </div>
-      </Page>
-    )
-  }
-
-
-
-
-
-  /***************************************************************************\
-    Getters
-  \***************************************************************************/
-
-  get title () {
-    return 'Profile'
   }
 }
+
+
+
+
+
+export default Page(Profile, title)

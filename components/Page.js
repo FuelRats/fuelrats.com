@@ -1,14 +1,20 @@
 // Module imports
-import { Provider } from 'react-redux'
 import React from 'react'
+import { bindActionCreators } from 'redux'
+import { Provider } from 'react-redux'
+import withRedux from 'next-redux-wrapper'
 
 
 
 
 
 // Component imports
-import { initStore } from '../store'
+import {
+  actions,
+  initStore,
+} from '../store'
 import Dialog from './Dialog'
+import LoginDialog from './LoginDialog'
 import Head from './Head'
 import Header from './Header'
 import Reminders from './Reminders'
@@ -18,63 +24,69 @@ import UserMenu from './UserMenu'
 
 
 
+// Component constants
 const store = initStore()
 
 
 
 
 
-export default class extends React.Component {
+export default (Component, title = 'Untitled', reduxOptions = {}) => {
+  class Page extends React.Component {
+    static async getInitialProps(ctx) {
+      let {
+        asPath,
+        isServer,
+        query,
+      } = ctx
+      let props = {}
 
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
+      if (typeof Component.getInitialProps === 'function') {
+        props = await Component.getInitialProps(ctx)
+      }
 
-  render () {
-    let {
-      children,
-      className,
-      isServer,
-      path,
-      query,
-      title,
-    } = this.props
-    let mainClasses = ['fade-in', 'page'].concat(title.toLowerCase().replace(' ', '-')).join(' ')
+      return {
+        asPath,
+        isServer,
+        query,
+        ...props
+      }
+    }
 
-    return (
-      <Provider store={store}>
-        <div role="application">
-          <Head title={title || this.title} />
+    render() {
+      let {
+        isServer,
+        path,
+      } = this.props
+      let mainClasses = ['fade-in', 'page', title.toLowerCase().replace(' ', '-')].join(' ')
 
-          <Header
-            isServer={isServer}
-            path={path} />
+      return (
+        <Provider store={store}>
+          <div role="application">
+            <Head title={title} />
 
-          <UserMenu />
+            <Header
+              isServer={isServer}
+              path={path} />
 
-          <Reminders />
+            <UserMenu />
 
-          <main>
-            <div className={mainClasses}>
-              {children}
-            </div>
-          </main>
+            <Reminders />
 
-          <Dialog />
-        </div>
-      </Provider>
-    )
+            <main className={mainClasses}>
+              <Component {...this.props} />
+            </main>
+
+            <Dialog />
+          </div>
+        </Provider>
+      )
+    }
   }
 
-
-
-
-
-  /***************************************************************************\
-    Getters
-  \***************************************************************************/
-
-  get title () {
-    return 'Untitled'
+  if (reduxOptions.mapStateToProps || reduxOptions.mapDispatchToProps) {
+    return withRedux(initStore, reduxOptions.mapStateToProps, reduxOptions.mapDispatchToProps)(Page)
   }
+
+  return Page
 }

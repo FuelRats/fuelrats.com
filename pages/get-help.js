@@ -12,30 +12,22 @@ import Page from '../components/Page'
 
 
 
-export default class extends React.Component {
+// Component imports
+const title = 'Get Help'
+
+
+
+
+
+class GetHelp extends React.Component {
 
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
 
-  static async getInitialProps ({ asPath, query }) {
-    return Object.assign({
-      path: asPath,
-      query,
-    }, query)
-  }
-
   render () {
-    let {
-      path,
-      query,
-    } = this.props
-
     return (
-      <Page
-        path={path}
-        query={query}
-        title={this.title}>
+      <div>
         <header className="page-header">
           <h2>{this.title}</h2>
         </header>
@@ -45,19 +37,13 @@ export default class extends React.Component {
             className="page-content"
             src="https://clients.fuelrats.com:7778/" />
         </div>
-      </Page>
+      </div>
     )
   }
-
-
-
-
-
-  /***************************************************************************\
-    Getters
-  \***************************************************************************/
-
-  get title () {
-    return 'Get Help'
-  }
 }
+
+
+
+
+
+export default Page(GetHelp, title)

@@ -5,7 +5,6 @@ import Link from 'next/link'
 import moment from 'moment'
 import Router from 'next/router'
 import React from 'react'
-import withRedux from 'next-redux-wrapper'
 
 
 
@@ -18,6 +17,13 @@ import {
 } from '../store'
 import Component from '../components/Component'
 import Page from '../components/Page'
+
+
+
+
+
+// Component constants
+const title = 'Blog'
 
 
 
@@ -80,21 +86,14 @@ class Blog extends Component {
 
   render () {
     let {
-      path,
-      query,
-    } = this.props
-    let {
       blog,
       retrieving,
     } = this.state
 
     return (
-      <Page
-        path={path}
-        query={query}
-        title={this.title}>
+      <div>
         <header className="page-header">
-          <h2>{this.title}</h2>
+          <h2>{title}</h2>
         </header>
 
         {retrieving && (
@@ -177,20 +176,8 @@ class Blog extends Component {
             </section>
           </article>
         )}
-      </Page>
+      </div>
     )
-  }
-
-
-
-
-
-  /***************************************************************************\
-    Getters
-  \***************************************************************************/
-
-  get title () {
-    return 'Blog'
   }
 }
 
@@ -211,5 +198,8 @@ const mapStateToProps = state => {
 
 
 
-console.log('initStore', initStore)
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(Blog)
+
+export default Page(Blog, title, {
+  mapStateToProps,
+  mapDispatchToProps,
+})

@@ -25,6 +25,13 @@ import SystemTagsInput from '../components/SystemTagsInput'
 
 
 
+// Component imports
+const title = 'Register'
+
+
+
+
+
 class Register extends Component {
 
   /***************************************************************************\
@@ -53,13 +60,6 @@ class Register extends Component {
       showPassword: false,
       submitting: false,
     }
-  }
-
-  static async getInitialProps ({ asPath, query }) {
-    return Object.assign({
-      path: asPath,
-      query,
-    }, query)
   }
 
   handleChange (event) {
@@ -103,18 +103,11 @@ class Register extends Component {
       showPassword,
       submitting,
     } = this.state
-    let {
-      path,
-      query,
-    } = this.props
 
     return (
-      <Page
-        path={path}
-        query={query}
-        title={this.title}>
+      <div>
         <header className="page-header">
-          <h2>{this.title}</h2>
+          <h2>{title}</h2>
         </header>
 
         <form onSubmit={this.onSubmit}>
@@ -220,7 +213,7 @@ class Register extends Component {
             <div className="secondary"></div>
           </menu>
         </form>
-      </Page>
+      </div>
     )
   }
 //          <fieldset data-name="CAPTCHA">
@@ -256,18 +249,6 @@ class Register extends Component {
 
     return true
   }
-
-
-
-
-
-  /***************************************************************************\
-    Getters
-  \***************************************************************************/
-
-  get title () {
-    return 'Register'
-  }
 }
 
 
@@ -284,4 +265,6 @@ const mapDispatchToProps = dispatch => {
 
 
 
-export default withRedux(initStore, null, mapDispatchToProps)(Register)
+export default Page(Register, title, {
+  mapDispatchToProps,
+})
