@@ -41,6 +41,13 @@ class PasswordReset extends Component {
     }
   }
 
+  static async getInitialProps ({ asPath, isServer, query }) {
+    return Object.assign({
+      path: asPath,
+      query,
+    }, query)
+  }
+
   async onSubmit (event) {
     event.preventDefault()
 
@@ -60,13 +67,20 @@ class PasswordReset extends Component {
 
   render () {
     let {
+      path,
+      query,
+    } = this.state
+    let {
       email,
       submitted,
       submitting,
     } = this.state
 
     return (
-      <Page title={this.title}>
+      <Page
+        path={path}
+        query={query}
+        title={this.title}>
         <header className="page-header">
           <h2>{this.title}</h2>
         </header>

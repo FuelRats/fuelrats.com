@@ -70,10 +70,15 @@ class Paperwork extends Component {
     let { id } = query
 
     if (id) {
-      return { id }
+      return {
+        id,
+        query,
+      }
     }
 
-    return {}
+    return {
+      query,
+    }
   }
 
   handleChange (event) {
@@ -199,6 +204,7 @@ class Paperwork extends Component {
   render () {
     let {
       path,
+      query,
       retrieving,
       submitting,
     } = this.props
@@ -215,7 +221,10 @@ class Paperwork extends Component {
     }
 
     return (
-      <Page path={path} title={this.title}>
+      <Page
+        path={path}
+        query={query}
+        title={this.title}>
         <header className="page-header">
           <h2>{this.title}</h2>
         </header>

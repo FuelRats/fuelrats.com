@@ -98,7 +98,8 @@ class Blogs extends Component {
     page = parseInt(page)
 
     return {
-      page
+      page,
+      query,
     }
   }
 
@@ -106,6 +107,7 @@ class Blogs extends Component {
     let {
       blogs,
       path,
+      query,
       totalPages,
     } = this.props
     let {
@@ -114,7 +116,10 @@ class Blogs extends Component {
     } = this.state
 
     return (
-      <Page path={path} title={this.title}>
+      <Page
+        path={path}
+        query={query}
+        title={this.title}>
         <header className="page-header">
           <h2>{this.title}</h2>
         </header>

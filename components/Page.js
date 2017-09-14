@@ -1,18 +1,13 @@
 // Module imports
+import { Provider } from 'react-redux'
 import React from 'react'
-import {
-  connect,
-  Provider,
-} from 'react-redux'
 
 
 
 
 
 // Component imports
-import {
-  initStore,
-} from '../store'
+import { initStore } from '../store'
 import Dialog from './Dialog'
 import Head from './Head'
 import Header from './Header'
@@ -41,6 +36,7 @@ export default class extends React.Component {
       className,
       isServer,
       path,
+      query,
       title,
     } = this.props
     let mainClasses = ['fade-in', 'page'].concat(title.toLowerCase().replace(' ', '-')).join(' ')

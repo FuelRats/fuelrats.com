@@ -73,13 +73,15 @@ class Blog extends Component {
     id = parseInt(id)
 
     return {
-      id
+      id,
+      query,
     }
   }
 
   render () {
     let {
       path,
+      query,
     } = this.props
     let {
       blog,
@@ -87,7 +89,10 @@ class Blog extends Component {
     } = this.state
 
     return (
-      <Page path={path} title={this.title}>
+      <Page
+        path={path}
+        query={query}
+        title={this.title}>
         <header className="page-header">
           <h2>{this.title}</h2>
         </header>

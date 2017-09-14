@@ -19,13 +19,24 @@ export default class extends React.Component {
     Public Methods
   \***************************************************************************/
 
+  static async getInitialProps ({ asPath, query }) {
+    return Object.assign({
+      path: asPath,
+      query,
+    }, query)
+  }
+
   render () {
     let {
       path,
+      query,
     } = this.props
 
     return (
-      <Page path={path} title={this.title}>
+      <Page
+        path={path}
+        query={query}
+        title={this.title}>
         <header className="page-header">
           <h2>{this.title}</h2>
         </header>
