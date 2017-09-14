@@ -8,23 +8,28 @@ import actionTypes from '../actionTypes'
 
 
 
-export const authorize = (transactionId, scope, allow, redirectUri) => async dispatch => {
+export const authorize = (transaction_id, scope, allow, redirectUri) => async dispatch => {
   dispatch({ type: actionTypes.AUTHORIZE_CLIENT })
 
   try {
-    let data = {
-      transactionId,
-      scope
+    let formData = {
+      transaction_id,
+      scope,
+      redirectUri
     }
-    data[allow === true ? 'allow' : 'deny'] = '1'
+    if (allow === true) {
+      formData.append('allow', '1')
+    } else {
+      formData.append('deny', '1')
+    }
 
     let response = await fetch(`/api/oauth2/authorize`, {
-      body: JSON.stringify(data),
+      body: formData,
       headers: new Headers({
         Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         'Content-Type': 'application/json'
       }),
-      method: 'put',
+      method: 'post',
     })
 
     response = await response.json()

@@ -128,7 +128,7 @@ class Authorize extends Component {
                   id="transaction_id"
                   name="transaction_id"
                   type="hidden"
-                  value="{this.state.transactionId}" />
+                  value={this.state.transactionId} />
               </fieldset>
 
               <div className="primary">
