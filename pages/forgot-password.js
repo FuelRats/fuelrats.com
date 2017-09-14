@@ -21,7 +21,14 @@ import Page from '../components/Page'
 
 
 
-class PasswordReset extends Component {
+// Component imports
+const title = 'Forgot Password'
+
+
+
+
+
+class ForgotPassword extends Component {
 
   /***************************************************************************\
     Public Methods
@@ -66,9 +73,9 @@ class PasswordReset extends Component {
     } = this.state
 
     return (
-      <Page title={this.title}>
+      <div>
         <header className="page-header">
-          <h2>{this.title}</h2>
+          <h2>{title}</h2>
         </header>
 
         <div className="page-content">
@@ -108,7 +115,7 @@ class PasswordReset extends Component {
             </div>
           )}
         </div>
-      </Page>
+      </div>
     )
   }
 
@@ -122,18 +129,6 @@ class PasswordReset extends Component {
     }
 
     return true
-  }
-
-
-
-
-
-  /***************************************************************************\
-    Getters
-  \***************************************************************************/
-
-  get title () {
-    return 'Forgot Password'
   }
 }
 
@@ -152,4 +147,6 @@ const mapDispatchToProps = dispatch => {
 
 
 
-export default withRedux(initStore, null, mapDispatchToProps)(PasswordReset)
+export default Page(ForgotPassword, title, {
+  mapDispatchToProps,
+})

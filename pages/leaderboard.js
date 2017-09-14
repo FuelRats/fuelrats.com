@@ -13,19 +13,22 @@ import RescuesByRatTable from '../components/RescuesByRatTable'
 
 
 
-export default class extends React.Component {
+// Component imports
+const title = 'Leaderboard'
+
+
+
+
+
+class Leaderboard extends React.Component {
 
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
 
   render () {
-    let {
-      path,
-    } = this.props
-
     return (
-      <Page path={path} title={this.title}>
+      <div>
         <header className="page-header">
           <h2>{this.title}</h2>
         </header>
@@ -33,19 +36,13 @@ export default class extends React.Component {
         <div className="page-content">
           <RescuesByRatTable />
         </div>
-      </Page>
+      </div>
     )
   }
-
-
-
-
-
-  /***************************************************************************\
-    Getters
-  \***************************************************************************/
-
-  get title () {
-    return 'Leaderboard'
-  }
 }
+
+
+
+
+
+export default Page(Leaderboard, title)

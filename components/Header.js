@@ -1,18 +1,13 @@
 // Module imports
-import { bindActionCreators } from 'redux'
 import Link from 'next/link'
 import React from 'react'
-import withRedux from 'next-redux-wrapper'
+import { connect } from 'react-redux'
 
 
 
 
 
 // Component imports
-import {
-  actions,
-  initStore,
-} from '../store'
 import Component from './Component'
 import Nav from './Nav'
 
@@ -104,4 +99,4 @@ const mapStateToProps = state => {
 
 
 
-export default withRedux(initStore, mapStateToProps, null)(Header)
+export default connect(mapStateToProps, null)(Header)

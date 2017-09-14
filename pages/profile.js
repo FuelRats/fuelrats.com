@@ -17,18 +17,45 @@ import UserStatsOverview from '../components/UserStatsOverview'
 
 
 
-export default class extends React.Component {
+// Component imports
+const title = 'Profile'
+
+
+
+
+
+class Profile extends React.Component {
 
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
 
   render () {
-    let {
-      path,
-    } = this.props
+    return (
+      <div>
+        <header className="page-header">
+          <h2>{title}</h2>
+        </header>
 
-    let tabs = [
+        <div className="page-content">
+          <TabbedPanel
+            name="User Tabs"
+            tabs={this.tabs} />
+        </div>
+      </div>
+    )
+  }
+
+
+
+
+
+  /***************************************************************************\
+    Getters
+  \***************************************************************************/
+
+  get tabs () {
+    return [
       {
         default: true,
         component: (<UserOverview />),
@@ -51,31 +78,11 @@ export default class extends React.Component {
         title: 'Settings',
       },
     ]
-
-    return (
-      <Page path={path} title={this.title}>
-        <header className="page-header">
-          <h2>{this.title}</h2>
-        </header>
-
-        <div className="page-content">
-          <TabbedPanel
-            name="User Tabs"
-            tabs={tabs} />
-        </div>
-      </Page>
-    )
-  }
-
-
-
-
-
-  /***************************************************************************\
-    Getters
-  \***************************************************************************/
-
-  get title () {
-    return 'Profile'
   }
 }
+
+
+
+
+
+export default Page(Profile, title)

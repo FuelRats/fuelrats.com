@@ -22,6 +22,13 @@ import PasswordField from '../components/PasswordField'
 
 
 
+// Component imports
+const title = 'Password Reset'
+
+
+
+
+
 class PasswordReset extends Component {
 
   /***************************************************************************\
@@ -38,7 +45,7 @@ class PasswordReset extends Component {
     this.state = {
       newPassword: '',
       submitting: false,
-      token: 'foobarbazgiggitygoo',
+      token: null,
     }
   }
 
@@ -90,9 +97,9 @@ class PasswordReset extends Component {
     } = this.state
 
     return (
-      <Page title={this.title}>
+      <div>
         <header className="page-header">
-          <h2>{this.title}</h2>
+          <h2>{title}</h2>
         </header>
 
         {!!token && (
@@ -142,7 +149,7 @@ class PasswordReset extends Component {
             <p>Your token is invalid, which probably just means it expired. <Link href="/forgot-password"><a>Click here</a></Link> to try resetting your password again.</p>
           </div>
         )}
-      </Page>
+      </div>
     )
   }
 
@@ -156,18 +163,6 @@ class PasswordReset extends Component {
     }
 
     return true
-  }
-
-
-
-
-
-  /***************************************************************************\
-    Getters
-  \***************************************************************************/
-
-  get title () {
-    return 'Password Reset'
   }
 }
 
@@ -186,4 +181,6 @@ const mapDispatchToProps = dispatch => {
 
 
 
-export default withRedux(initStore, null, mapDispatchToProps)(PasswordReset)
+export default Page(PasswordReset, title, {
+  mapDispatchToProps,
+})

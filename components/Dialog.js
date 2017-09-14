@@ -2,12 +2,14 @@
 import { bindActionCreators } from 'redux'
 import _ from 'lodash'
 import React from 'react'
-import withRedux from 'next-redux-wrapper'
+import { connect } from 'react-redux'
 
-import {
-  actions,
-  initStore,
-} from '../store'
+
+
+
+
+// Component imports
+import { actions } from '../store'
 
 
 
@@ -20,27 +22,36 @@ class Dialog extends React.Component {
   \***************************************************************************/
 
   render () {
+    let {
+      body,
+      closeIsVisible,
+      hideDialog,
+      isVisible,
+      menuIsVisible,
+      title,
+    } = this.props
+
     return (
-      <dialog className="loading fade-in" open={this.props.isVisible}>
-        {this.props.closeIsVisible && (
+      <dialog className="loading fade-in" open={isVisible}>
+        {closeIsVisible && (
           <button
             className="close icon secondary"
-            onClick={this.props.hideDialog}>
+            onClick={hideDialog}>
             <i className="fa fa-fw fa-times"></i>
           </button>
         )}
 
-        {this.props.title && (
+        {title && (
           <header>
-            <h2>{this.props.title}</h2>
+            <h2>{title}</h2>
           </header>
         )}
 
         <div className="content">
-          {this.props.body}
+          {body}
         </div>
 
-        {this.props.menuIsVisible && (
+        {menuIsVisible && (
           <footer>
             <menu type="toolbar">
               <div className="secondary">
@@ -69,11 +80,11 @@ const mapDispatchToProps = dispatch => {
 }
 
 const mapStateToProps = state => {
-  return state.dialog
+  return Object.assign({}, state.dialog)
 }
 
 
 
 
 
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(Dialog)
+export default connect(mapStateToProps, mapDispatchToProps)(Dialog)

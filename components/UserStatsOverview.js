@@ -2,17 +2,14 @@
 import { bindActionCreators } from 'redux'
 import _ from 'lodash'
 import React from 'react'
-import withRedux from 'next-redux-wrapper'
+import { connect } from 'react-redux'
 
 
 
 
 
 // Module imports
-import {
-  actions,
-  initStore,
-} from '../store'
+import { actions } from '../store'
 import Component from './Component'
 
 
@@ -63,7 +60,7 @@ class UserStatsOverview extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-//    getRescuesForCMDRs: bindActionCreators(actions.getRescuesForCMDRs, dispatch),
+//    getStatsForUser: bindActionCreators(actions.getStatsForUser, dispatch),
   }
 }
 
@@ -75,4 +72,4 @@ const mapStateToProps = state => {
 
 
 
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(UserStatsOverview)
+export default connect(mapStateToProps, mapDispatchToProps)(UserStatsOverview)

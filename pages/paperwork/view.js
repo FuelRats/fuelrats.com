@@ -24,6 +24,13 @@ import SystemTagsInput from '../../components/SystemTagsInput'
 
 
 
+// Component imports
+const title = 'Paperwork'
+
+
+
+
+
 class Paperwork extends Component {
 
   /***************************************************************************\
@@ -44,16 +51,6 @@ class Paperwork extends Component {
     this._bindMethods([
       'renderRat',
     ])
-  }
-
-  static async getInitialProps ({ query }) {
-    let { id } = query
-
-    if (id) {
-      return { id }
-    }
-
-    return {}
   }
 
   renderQuote (quote, index) {
@@ -117,16 +114,15 @@ class Paperwork extends Component {
 
   render () {
     let {
-      path,
       rats,
       rescue,
       retrieving,
     } = this.props
 
     return (
-      <Page path={path} title={this.title}>
+      <div>
         <header className="page-header">
-          <h2>{this.title}</h2>
+          <h2>{title}</h2>
         </header>
 
         {retrieving && (
@@ -196,7 +192,7 @@ class Paperwork extends Component {
             </table>
           </div>
         )}
-      </Page>
+      </div>
     )
   }
 
@@ -268,4 +264,7 @@ const mapStateToProps = state => {
 
 
 
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(Paperwork)
+export default Page(Paperwork, title, {
+  mapStateToProps,
+  mapDispatchToProps,
+})

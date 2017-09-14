@@ -14,11 +14,7 @@ export default function (state = initialState.dialog, action) {
         })
       }
 
-      return Object.assign({}, state, {
-        body: null,
-        isVisible: false,
-        title: null,
-      })
+      return Object.assign({}, initialState.dialog)
 
     default:
       return state

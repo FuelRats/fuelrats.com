@@ -12,35 +12,26 @@ import Page from '../components/Page'
 
 
 
-export default class extends React.Component {
+// Component constants
+const title = 'About'
+
+
+
+
+
+class About extends React.Component {
 
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
 
   render () {
-    let {
-      path,
-    } = this.props
-
     return (
-      <Page path={path} title={this.title}>
-        <header className="page-header">
-          <h2>{this.title}</h2>
-        </header>
-      </Page>
+      <header className="page-header">
+        <h2>{title}</h2>
+      </header>
     )
   }
-
-
-
-
-
-  /***************************************************************************\
-    Getters
-  \***************************************************************************/
-
-  get title () {
-    return 'About'
-  }
 }
+
+export default Page(About, title)

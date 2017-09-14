@@ -4,17 +4,14 @@ import _ from 'lodash'
 import Link from 'next/link'
 import moment from 'moment'
 import React from 'react'
-import withRedux from 'next-redux-wrapper'
+import { connect } from 'react-redux'
 
 
 
 
 
 // Module imports
-import {
-  actions,
-  initStore,
-} from '../store'
+import { actions } from '../store'
 import Component from './Component'
 
 
@@ -80,4 +77,4 @@ const mapStateToProps = state => {
 
 
 
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(UserDetailsPanel)
+export default connect(mapStateToProps, mapDispatchToProps)(UserDetailsPanel)

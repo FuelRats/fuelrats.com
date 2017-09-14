@@ -14,40 +14,37 @@ import RescuesOverTimeChart from '../components/RescuesOverTimeChart'
 
 
 
-export default class extends React.Component {
+// Component imports
+const title = 'Statistics'
+
+
+
+
+
+class Statistics extends React.Component {
 
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
 
   render () {
-    let {
-      path,
-    } = this.props
-
     return (
-      <Page path={path} title={this.title}>
+      <div>
         <header className="page-header">
-          <h2>{this.title}</h2>
+          <h2>{title}</h2>
         </header>
 
         <div className="page-content">
           <RescuesOverTimeChart />
           <RescuesBySystemChart />
         </div>
-      </Page>
+      </div>
     )
   }
-
-
-
-
-
-  /***************************************************************************\
-    Getters
-  \***************************************************************************/
-
-  get title () {
-    return 'Statistics'
-  }
 }
+
+
+
+
+
+export default Page(Statistics, title)

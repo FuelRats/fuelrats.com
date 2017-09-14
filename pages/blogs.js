@@ -23,6 +23,13 @@ import Page from '../components/Page'
 
 
 
+// Component imports
+const title = 'Blog'
+
+
+
+
+
 class Blogs extends Component {
 
   /***************************************************************************\
@@ -98,7 +105,8 @@ class Blogs extends Component {
     page = parseInt(page)
 
     return {
-      page
+      page,
+      query,
     }
   }
 
@@ -106,6 +114,7 @@ class Blogs extends Component {
     let {
       blogs,
       path,
+      query,
       totalPages,
     } = this.props
     let {
@@ -114,9 +123,9 @@ class Blogs extends Component {
     } = this.state
 
     return (
-      <Page path={path} title={this.title}>
+      <div>
         <header className="page-header">
-          <h2>{this.title}</h2>
+          <h2>{title}</h2>
         </header>
 
         <div className="page-content">
@@ -204,20 +213,8 @@ class Blogs extends Component {
             </div>
           </menu>
         </div>
-      </Page>
+      </div>
     )
-  }
-
-
-
-
-
-  /***************************************************************************\
-    Getters
-  \***************************************************************************/
-
-  get title () {
-    return 'Blog'
   }
 }
 
@@ -239,4 +236,7 @@ const mapStateToProps = state => {
 
 
 
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(Blogs)
+export default Page(Blogs, title, {
+  mapStateToProps,
+  mapDispatchToProps,
+})
