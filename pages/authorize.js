@@ -1,21 +1,25 @@
 // Module imports
 import { bindActionCreators } from 'redux'
-import _ from 'lodash'
-import Link from 'next/link'
 import React from 'react'
-import withRedux from 'next-redux-wrapper'
 
 
 
 
 
 // Component imports
-import {
-  actions,
-  initStore,
-} from '../store'
+import { actions } from '../store'
 import Component from '../components/Component'
 import Page from '../components/Page'
+
+
+
+
+
+// Component constants
+const title = 'Authorize Application'
+
+
+
 
 
 class Authorize extends Component {
@@ -51,8 +55,9 @@ class Authorize extends Component {
 
   async componentDidMount () {
     let { client_id, state, scope, response_type } = this.props
+
     if (client_id && state && scope && response_type) {
-      try{
+      try {
         let response = await fetch(`/api/oauth2/authorize?client_id=${client_id}&scope=${scope}&state=${state}&response_type=${response_type}`, {
           method: 'get',
         })
@@ -69,6 +74,7 @@ class Authorize extends Component {
 
         return {
         }
+
       } catch (error) {
         console.log(error)
         return {}
@@ -77,12 +83,11 @@ class Authorize extends Component {
   }
 
   async onSubmit (event) {
-    console.log('event', event)
     event.preventDefault()
 
     this.setState({ submitting: true })
 
-     await this.props.authorize(this.state.transactionId, this.state.scope, this.state.allow, this.state.redirectUri)
+    await this.props.authorize(this.state.transactionId, this.state.scope, this.state.allow, this.state.redirectUri)
 
     this.setState({ submitting: false })
   }
@@ -101,7 +106,7 @@ class Authorize extends Component {
     let hasRequiredParameters = client_id && state && scope && response_type
 
     return (
-      <Page title={this.title}>
+      <div>
         <header className="page-header">
           <h2>{this.title}</h2>
         </header>
@@ -110,7 +115,8 @@ class Authorize extends Component {
           <div className="page-content">
             <h3>{this.state.clientName} is requesting access to your FuelRats account</h3>
 
-            <p><b>This application will be able to:</b></p>
+            <p><strong>This application will be able to:</strong></p>
+
             <ul>
               {this.state.scopes.map((scope, index) => <li key={index}>{scope.permission}</li>)}
             </ul>
@@ -127,14 +133,15 @@ class Authorize extends Component {
 
               <div className="primary">
                 <button
-                  disabled={submitting || !this.validate()}
+                  disabled={submitting}
                   onClick={() => { this.setState({ allow: true }) }}
                   value="allow"
                   type="submit">
                   {submitting ? 'Submitting...' : 'Allow'}
                 </button>
+
                 <button
-                  disabled={submitting || !this.validate()}
+                  disabled={submitting}
                   onClick={() => { this.setState({ allow: false }) }}
                   value="deny"
                   type="submit">
@@ -154,25 +161,8 @@ class Authorize extends Component {
             <p>You loaded this page with missing parameters, please contact the developer of the application you are trying to use</p>
           </div>
         )}
-      </Page>
+      </div>
     )
-  }
-
-  validate () {
-
-    return true
-  }
-
-
-
-
-
-  /***************************************************************************\
-   Getters
-   \***************************************************************************/
-
-  get title () {
-    return 'Authorize Application'
   }
 }
 
@@ -191,4 +181,6 @@ const mapDispatchToProps = dispatch => {
 
 
 
-export default withRedux(initStore, null, mapDispatchToProps)(Authorize)
+export default Page(Authorize, title, {
+  mapDispatchToProps,
+})
