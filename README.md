@@ -1,12 +1,9 @@
 # Fuelrats.com
-[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors)
 
-[![Fuelrats.com dependencies on David DM](https://img.shields.io/david/Fuelrats/fuelrats.com.svg?style=flat-square)](https://david-dm.org/Fuelrats/fuelrats.com)
-[![Fuelrats.com climate on Code Climate](https://img.shields.io/codeclimate/github/FuelRats/fuelrats.com.svg?style=flat-square)](https://codeclimate.com/github/FuelRats/fuelrats.com)
-[![Fuelrats.com coverage on Coveralls](https://img.shields.io/coveralls/FuelRats/fuelrats.com.svg?style=flat-square)](https://coveralls.io/github/FuelRats/fuelrats.com)
-
-[![Fuelrats.com prod build status on Travis CI](https://img.shields.io/travis/FuelRats/fuelrats.com/master.svg?style=flat-square&label=prod)](https://travis-ci.org/FuelRats/fuelrats.com)
-[![Fuelrats.com dev build status on Travis CI](https://img.shields.io/travis/FuelRats/fuelrats.com/master.svg?style=flat-square&label=dev)](https://travis-ci.org/FuelRats/fuelrats.com)
+| | |
+|-|-|
+| Code Health | [![Fuelrats.com dependencies on David DM](https://img.shields.io/david/Fuelrats/fuelrats.com.svg?style=flat-square)](https://david-dm.org/Fuelrats/fuelrats.com) [![Fuelrats.com climate on Code Climate](https://img.shields.io/codeclimate/github/FuelRats/fuelrats.com.svg?style=flat-square)](https://codeclimate.com/github/FuelRats/fuelrats.com) [![Fuelrats.com coverage on Coveralls](https://img.shields.io/coveralls/FuelRats/fuelrats.com.svg?style=flat-square)](https://coveralls.io/github/FuelRats/fuelrats.com) [![Fuelrats.com contributors as listed by the all-contributors spec](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors) |
+| Build Status | [![Fuelrats.com prod build status on Travis CI](https://img.shields.io/travis/FuelRats/fuelrats.com/master.svg?style=flat-square&label=prod)](https://travis-ci.org/FuelRats/fuelrats.com) [![Fuelrats.com dev build status on Travis CI](https://img.shields.io/travis/FuelRats/fuelrats.com/master.svg?style=flat-square&label=dev)](https://travis-ci.org/FuelRats/fuelrats.com) |
 
 ## Setting up
 
