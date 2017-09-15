@@ -4,10 +4,14 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "add-contributor": "all-contributors add",
     "analyze": "cross-env ANALYZE=1 next build",
     "build": "next build",
     "dev": "node server/server.js",
     "postinstall": "npm rebuild node-sass"
+  },
+  "devDependencies": {
+    "all-contributors-cli": "^4.4.0"
   },
   "dependencies": {
     "autoprefixer": "^7.1.2",
