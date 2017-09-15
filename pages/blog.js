@@ -11,10 +11,7 @@ import React from 'react'
 
 
 // Component imports
-import {
-  actions,
-  initStore,
-} from '../store'
+import { actions } from '../store'
 import Component from '../components/Component'
 import Page from '../components/Page'
 

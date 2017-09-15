@@ -10,10 +10,7 @@ import withRedux from 'next-redux-wrapper'
 
 
 // Component imports
-import {
-  actions,
-  initStore,
-} from '../../store'
+import { actions } from '../../store'
 import Component from '../../components/Component'
 import Page from '../../components/Page'
 import FirstLimpetInput from '../../components/FirstLimpetInput'
