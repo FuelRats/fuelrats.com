@@ -81,6 +81,9 @@ export default class extends React.Component {
       options,
       value,
     } = this.props
+    let {
+      loading,
+    } = this.state
     let newState = {}
 
     if (value !== nextProps.value) {
