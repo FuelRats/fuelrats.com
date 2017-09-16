@@ -5,7 +5,6 @@ import Link from 'next/link'
 import moment from 'moment'
 import Router from 'next/router'
 import React from 'react'
-import withRedux from 'next-redux-wrapper'
 
 
 
@@ -20,7 +19,7 @@ import Page from '../components/Page'
 
 
 
-// Component imports
+// Component constants
 const title = 'Blog'
 
 
