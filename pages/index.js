@@ -7,6 +7,7 @@ import React from 'react'
 
 
 // Component imports
+import LoginDialog from '../components/LoginDialog'
 import Page from '../components/Page'
 
 
@@ -25,6 +26,17 @@ class Home extends React.Component {
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
+
+  componentDidMount () {
+    if (this.props.query.authenticate) {
+      this.props.showDialog({
+        body: (<LoginDialog />),
+        closeIsVisible: true,
+        menuIsVisible: false,
+        title: 'Login',
+      })
+    }
+  }
 
   render () {
     return (
@@ -49,4 +61,12 @@ class Home extends React.Component {
 
 
 
-export default Page(Home, title)
+const mapDispatchToProps = ['showDialog']
+
+
+
+
+
+export default Page(Home, title, {
+  mapDispatchToProps,
+})
