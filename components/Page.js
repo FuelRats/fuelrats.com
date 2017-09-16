@@ -61,32 +61,40 @@ export default (Component, title = 'Untitled', reduxOptions = {}) => {
       let mainClasses = ['fade-in', 'page', title.toLowerCase().replace(' ', '-')].join(' ')
 
       return (
-        <Provider store={store}>
-          <div role="application">
-            <Head title={title} />
+        <div role="application">
+          <Head title={title} />
 
-            <Header
-              isServer={isServer}
-              path={path} />
+          <Header
+            isServer={isServer}
+            path={path} />
 
-            <UserMenu />
+          <UserMenu />
 
-            <Reminders />
+          <Reminders />
 
-            <main className={mainClasses}>
-              <Component {...this.props} />
-            </main>
+          <main className={mainClasses}>
+            <Component {...this.props} />
+          </main>
 
-            <Dialog />
-          </div>
-        </Provider>
+          <Dialog />
+        </div>
       )
     }
   }
 
-  if (reduxOptions.mapStateToProps || reduxOptions.mapDispatchToProps) {
-    return withRedux(initStore, reduxOptions.mapStateToProps, reduxOptions.mapDispatchToProps)(Page)
+  let mapDispatchToProps = reduxOptions.mapDispatchToProps
+
+  if (Array.isArray(reduxOptions.mapDispatchToProps)) {
+    mapDispatchToProps = dispatch => {
+      let actionMap = {}
+
+      for (let actionName of reduxOptions.mapDispatchToProps) {
+        actionMap[actionName] = bindActionCreators(actions[actionName], dispatch)
+      }
+
+      return actionMap
+    }
   }
 
-  return Page
+  return withRedux(initStore, reduxOptions.mapStateToProps, mapDispatchToProps)(Page)
 }
