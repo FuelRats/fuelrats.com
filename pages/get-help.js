@@ -32,11 +32,9 @@ class GetHelp extends React.Component {
           <h2>{title}</h2>
         </header>
 
-        <div className="page-content">
-          <iframe
-            className="page-content"
-            src="https://clients.fuelrats.com:7778/" />
-        </div>
+        <iframe
+          className="page-content"
+          src="https://clients.fuelrats.com:7778/" />
       </div>
     )
   }
