@@ -35,7 +35,7 @@ class Paperwork extends Component {
   \***************************************************************************/
 
   componentDidMount () {
-    let { id } = this.props
+    let { id } = this.props.query
 
     if (id) {
       this.props.retrievePaperwork(id)

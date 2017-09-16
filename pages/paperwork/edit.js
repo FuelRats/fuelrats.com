@@ -21,6 +21,13 @@ import SystemTagsInput from '../../components/SystemTagsInput'
 
 
 
+// Component constants
+const title = 'Paperwork'
+
+
+
+
+
 class Paperwork extends Component {
 
   /***************************************************************************\
@@ -28,7 +35,7 @@ class Paperwork extends Component {
   \***************************************************************************/
 
   componentDidMount () {
-    let { id } = this.props
+    let { id } = this.props.query
 
     if (id) {
       this.props.retrievePaperwork(id)
