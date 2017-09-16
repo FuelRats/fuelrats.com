@@ -29,7 +29,7 @@ class Statistics extends React.Component {
 
   render () {
     return (
-      <div>
+      <div className="page-wrapper">
         <header className="page-header">
           <h2>{title}</h2>
         </header>

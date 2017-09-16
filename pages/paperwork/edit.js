@@ -208,7 +208,7 @@ class Paperwork extends Component {
     }
 
     return (
-      <div>
+      <div className="page-wrapper">
         <header className="page-header">
           <h2>{title}</h2>
         </header>

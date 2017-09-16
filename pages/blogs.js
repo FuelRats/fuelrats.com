@@ -119,7 +119,7 @@ class Blogs extends Component {
     } = this.state
 
     return (
-      <div>
+      <div className="page-wrapper">
         <header className="page-header">
           <h2>{title}</h2>
         </header>

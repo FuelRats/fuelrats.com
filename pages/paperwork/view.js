@@ -117,7 +117,7 @@ class Paperwork extends Component {
     } = this.props
 
     return (
-      <div>
+      <div className="page-wrapper">
         <header className="page-header">
           <h2>{title}</h2>
         </header>
