@@ -11,6 +11,10 @@
     &:not(:focus) + .options {
       display: none;
     }
+
+    &::-webkit-search-cancel-button {
+      -webkit-appearance: none;
+    }
   }
 
   .tags {
@@ -36,6 +40,23 @@
     position: absolute;
     right: 0;
     top: 100%;
+  }
+
+  .return-prompt {
+    bottom: 0;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition-duration: 0.2s;
+    transition-property: opacity;
+  }
+
+  &.focus {
+    .return-prompt.show {
+      opacity: 1;
+    }
   }
 
   &[data-single] {
@@ -131,6 +152,13 @@
   .loader,
   .no-results {
     padding: 1rem;
+  }
+
+  .return-prompt {
+    align-items: center;
+    color: grey;
+    display: flex;
+    padding-right: 1rem;
   }
 
   &[data-single] {
