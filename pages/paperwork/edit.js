@@ -143,7 +143,7 @@ class Paperwork extends Component {
       rescue,
     } = this.state
 
-    if (value[0].value !== rescue.attributes.system) {
+    if (value.length && (value[0].value !== rescue.attributes.system)) {
       let newState = Object.assign({}, this.state)
 
       newState.rescue.attributes.system = value[0].value
@@ -353,6 +353,7 @@ class Paperwork extends Component {
               <label htmlFor="system">Where did it happen? <small>In what star system did the rescue took place? (put "n/a" if not applicable)</small></label>
 
               <SystemTagsInput
+                allowNew={true}
                 disabled={submitting || retrieving}
                 name="system"
                 onChange={this.handleSystemChange}

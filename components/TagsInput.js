@@ -451,6 +451,7 @@ export default class extends React.Component {
 
     let divProps = Object.assign({}, this.props)
 
+    delete divProps.allowNew
     delete divProps.onAdd
     delete divProps.onChange
     delete divProps.onRemove
@@ -523,7 +524,11 @@ export default class extends React.Component {
       options,
     } = this.state
 
-    return options.map(this.renderOption)
+    return (
+      <ol className="options">
+        {options.map(this.renderOption)}
+      </ol>
+    )
   }
 
   renderTag (tag, index) {
