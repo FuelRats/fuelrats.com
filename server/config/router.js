@@ -57,6 +57,11 @@ module.exports = function (nextjs, koa, config) {
     Redirects
   \******************************************************************************/
 
+  router.get('/fuel-rats-lexicon', async (ctx, next) => {
+    ctx.status = 301
+    await ctx.redirect(`https://confluence.fuelrats.com/pages/viewpage.action?pageId=3637257`)
+  })
+
   router.get('/i-need-fuel', async (ctx, next) => {
     ctx.status = 301
     await ctx.redirect(`/get-help`)
