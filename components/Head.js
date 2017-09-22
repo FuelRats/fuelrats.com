@@ -30,7 +30,14 @@ Router.onRouteChangeError = () => {
 }
 
 Router.onRouteChangeComplete = () => {
+  let userId = localStorage.getItem('userId')
+
   ReactGA.initialize(gaTrackingId)
+
+  if (userId) {
+    ReactGA.set({ userId })
+  }
+
   ReactGA.pageview(window.location.pathname)
 
   NProgress.done()

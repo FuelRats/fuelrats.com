@@ -77,6 +77,7 @@ export const logout = () => async dispatch => {
   dispatch({ type: actionTypes.LOGOUT })
 
   try {
+    localStorage.removeItem('userId')
     localStorage.removeItem('access_token')
     Cookies.remove('access_token')
     Router.push('/')
