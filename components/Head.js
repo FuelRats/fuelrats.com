@@ -1,5 +1,8 @@
+import NProgress from 'nprogress'
 import NextHead from 'next/head'
 import React from 'react'
+import ReactGA from 'react-ga'
+import Router from 'next/router'
 
 
 
@@ -12,12 +15,26 @@ import libStylesheet from '../scss/lib.scss'
 
 
 
-const adsenseSnippet = `
-  (adsbygoogle = window.adsbygoogle || []).push({
-  google_ad_client: "ca-pub-9749247943500937",
-  enable_page_level_ads: true
-});`
-const gaId = 'UA-71668914-1'
+const gaTrackingId = 'UA-71668914-1'
+
+
+
+
+
+Router.onRouteChangeStart = (url) => {
+  NProgress.start()
+}
+
+Router.onRouteChangeError = () => {
+  NProgress.done()
+}
+
+Router.onRouteChangeComplete = () => {
+  ReactGA.initialize(gaTrackingId)
+  ReactGA.pageview(window.location.pathname)
+
+  NProgress.done()
+}
 
 
 
@@ -63,19 +80,14 @@ export default class extends React.Component {
         <style dangerouslySetInnerHTML={{ __html: appStylesheet }} />
 
         <script async defer src="//www.google.com/recaptcha/api.js?render=explicit"/>
-        <script async src={`//www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
-        <script dangerouslySetInnerHTML={{__html: `
-          if (!/localhost/gi.test(location.hostname)) {
-            window.dataLayer = window.dataLayer || []
-
-            function gtag () {
-              dataLayer.push(arguments)
-            }
-
-            gtag('js', new Date())
-
-            gtag('config', '${gaId}')
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaTrackingId}`} />
+        <script dangerouslySetInnerHTML={{ __html: `
+          window.dataLayer = window.dataLayer || []
+          function gtag(){
+            dataLayer.push(arguments)
           }
+          gtag('js', new Date())
+          gtag('config', '${gaTrackingId}')
         `}} />
       </NextHead>
     )

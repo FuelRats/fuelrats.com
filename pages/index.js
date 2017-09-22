@@ -21,7 +21,7 @@ const title = 'Home'
 
 
 
-class Home extends React.Component {
+class Index extends React.Component {
 
   /***************************************************************************\
     Public Methods
@@ -67,6 +67,6 @@ const mapDispatchToProps = ['showDialog']
 
 
 
-export default Page(Home, title, {
+export default Page(Index, title, {
   mapDispatchToProps,
 })
