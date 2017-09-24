@@ -1,6 +1,7 @@
 // Module imports
 import { bindActionCreators } from 'redux'
 import _ from 'lodash'
+import Link from 'next/link'
 import React from 'react'
 import ReCAPTCHA from 'react-google-recaptcha'
 import withRedux from 'next-redux-wrapper'
@@ -211,6 +212,10 @@ class Register extends Component {
                 value="ps" />
               <label htmlFor="platform-ps">Playstation 4</label>
             </div>
+          </fieldset>
+
+          <fieldset data-name="Agreements">
+            <p>By creating an account I agree that I have read and agree to the <Link href="/terms-of-service"><a>Terms of Service</a></Link> and the <Link href="/privacy-policy"><a>Privacy Policy</a></Link>, and that I am 13 years of age or older.</p>
           </fieldset>
 
           <menu type="toolbar">
