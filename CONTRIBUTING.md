@@ -1,27 +1,27 @@
 # Contributing
 
-Thanks for being willing to contribute!You want to contribute to the project? Awesome!
+You want to contribute to the project? Awesome!
 
 ## Things to know
 
-This project adheres to the Contributor Covenant code of conduct. By participating, you are expected to uphold this code. Please report unacceptable behavior to [ops@fuelrats.com](ops-email).
+This project adheres to the Contributor Covenant code of conduct. By participating, you are expected to uphold this code. Please report unacceptable behavior to [ops@fuelrats.com][ops-email]
 
-**Working on your first Pull Request?** You can learn how from this *free* series
+**Working on your first Pull Request?**
 [How to Contribute to an Open Source Project on GitHub][egghead]
 
 ## How do
 
 * Project setup?
-  [We've got you covered!](#project-setup)
+  [We've got you covered!][#project-setup]
 
 * Found a bug?
-  [Let us know!](bugs)
+  [Let us know!][bugs]
 
 * Patched a bug?
-  [Make a PR!](new-pr)
+  [Make a PR!][new-pr]
 
 * Adding a new feature?
-  Please, *please*, ***please*** get some feedback from the tech rats and/or the ops team before you write any code. I don't want you to waste your time building a feature that's already been struck down.
+  Please, *please*, ***please*** get some feedback from the tech rats and/or the ops team before you write any code. Don't waste your time building a feature that's already been struck down.
 
 ## Project setup
 
@@ -67,17 +67,13 @@ $ FRDC_API_URL="https://dev.api.fuelrats.com" PORT=8080 npm run dev
 
 ## Add yourself as a contributor
 
-This project follows the [all contributors][all-contributors] specification.
-To add yourself to the table of contributors on the README.md, please use the
-automated script as part of your PR:
+This project follows the [all contributors][all-contributors] specification. To add yourself to the table of contributors on the README.md, please use the automated script as part of your PR:
 
 ```console
 npm run add-contributor
 ```
 
-Follow the prompt. If you've already added yourself to the list and are making
-a new type of contribution, you can run it again and select the added
-contribution type.
+Follow the prompt. If you've already added yourself to the list and are making a new type of contribution, you can run it again and select the added contribution type.
 
 [all-contributors]: https://github.com/kentcdodds/all-contributors
 [bugs]: https://jira.fuelrats.com/servicedesk/customer/portal/2/create/4
