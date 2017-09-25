@@ -1,44 +1,43 @@
 # Fuelrats.com
 
-| | |
-|-|-|
-| Code Health | [![Fuelrats.com dependencies on David DM](https://img.shields.io/david/Fuelrats/fuelrats.com.svg?style=flat-square)](https://david-dm.org/Fuelrats/fuelrats.com) [![Fuelrats.com climate on Code Climate](https://img.shields.io/codeclimate/github/FuelRats/fuelrats.com.svg?style=flat-square)](https://codeclimate.com/github/FuelRats/fuelrats.com) [![Fuelrats.com coverage on Coveralls](https://img.shields.io/coveralls/FuelRats/fuelrats.com.svg?style=flat-square)](https://coveralls.io/github/FuelRats/fuelrats.com) [![Fuelrats.com contributors as listed by the all-contributors spec](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors) |
-| Build Status | [![Fuelrats.com prod build status on Travis CI](https://img.shields.io/travis/FuelRats/fuelrats.com/master.svg?style=flat-square&label=prod)](https://travis-ci.org/FuelRats/fuelrats.com) [![Fuelrats.com dev build status on Travis CI](https://img.shields.io/travis/FuelRats/fuelrats.com/master.svg?style=flat-square&label=dev)](https://travis-ci.org/FuelRats/fuelrats.com) |
+[![Fuelrats.com build status on Travis CI][travisci-badge]][travisci]
+[![Fuelrats.com dependencies on David DM][daviddm-badge]][daviddm]
+[![Fuelrats.com climate on Code Climate][codeclimate-badge]][codeclimate]
+[![Fuelrats.com coverage on Coveralls][coveralls-badge]][coveralls]
 
-## Setting up
+[![Fuelrats.com contributors as listed by the all-contributors spec][contributors-badge]][contributors]
+[![Code of Conduct][code-of-conduct-badge]][code-of-conduct]
+[![PRs Welcome][prs-badge]][prs]
 
-1. Grab the repo
-```bash
-git clone https://github.com/FuelRats/fuelrats.com.git
-```
+[![Watch on GitHub][github-watch-badge]][github-watch]
+[![Star on GitHub][github-star-badge]][github-star]
 
-2. Install dependencies
-```bash
-npm install
-# or
-yarn install
-```
+This is the repo for the Fuel Rats official website! You can see the project in action at https://fuelrats.com. or you can fiddle with the latest features at https://beta.fuelrats.com.
 
-3. Run the server
-```bash
-npm run dev
-# or
-yarn run dev
-```
+## Contributing
 
-### Some things you'll need
-
-By default, the website doesn't know much about connecting to the Fuel Rats API or to the Fuel Rats Wordpress. To remedy this, you'll need to set some environment variables:
-
-| Name                      | Purpose |
-|---------------------------|---------|
-| `FRDC_API_KEY`            | This is your OAuth application's client key or ID |
-| `FRDC_API_SECRET`         | This is your OAuth application's client secret |
-| `FRDC_API_URL`            | This is the URL at which you can reach the Fuel Rats API |
-| `FRDC_WORDPRESS_USERNAME` | This is your Wordpress username |
-| `FRDC_WORDPRESS_PASSWORD` | This is your Wordpress application password (this **is** different from your normal Wordpress account password |
-| `PORT`                    | This is the port to run the application at |
+If you want to contribute, make sure to check out our [contributing guide][contributing]!
 
 ## Contributors
 
-Check out our [list of contributors](CONTRIBUTORS.md)!
+Check out our [list of contributors][contributors]!
+
+[contributing]: CONTRIBUTING.md
+[contributors]: CONTRIBUTORS.md
+[contributors-badge]: https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square
+[code-of-conduct]: CODE_OF_CONDUCT.md
+[code-of-conduct-badge]: https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat-square
+[codeclimate]: https://codeclimate.com/github/FuelRats/fuelrats.com
+[codeclimate-badge]: https://img.shields.io/codeclimate/github/FuelRats/fuelrats.com.svg?style=flat-square
+[coveralls]: https://coveralls.io/github/FuelRats/fuelrats.com
+[coveralls-badge]: https://img.shields.io/coveralls/FuelRats/fuelrats.com.svg?style=flat-square
+[daviddm]: https://david-dm.org/Fuelrats/fuelrats.com
+[daviddm-badge]: https://img.shields.io/david/Fuelrats/fuelrats.com.svg?style=flat-square
+[github-watch]: https://github.com/FuelRats/fuelrats.com/watchers
+[github-watch-badge]: https://img.shields.io/github/watchers/FuelRats/fuelrats.com.svg?style=social
+[github-star]: https://github.com/FuelRats/fuelrats.com/stargazers
+[github-star-badge]: https://img.shields.io/github/stars/FuelRats/fuelrats.com.svg?style=social
+[prs]: CONTRIBUTING.md
+[prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
+[travisci]: https://travis-ci.org/FuelRats/fuelrats.com
+[travisci-badge]: https://img.shields.io/travis/FuelRats/fuelrats.com/develop.svg?style=flat-square
