@@ -65,6 +65,7 @@ export default function (state = initialState.user, action) {
 
         // Stick the user preferences in the local store so we can use them
         // outside of Redux connected components
+        localStorage.setItem('userId', user.id)
         localStorage.setItem('preferences', JSON.stringify(user.preferences))
 
         return user
