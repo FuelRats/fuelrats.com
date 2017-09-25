@@ -73,10 +73,7 @@ export default function (state = initialState.user, action) {
     case actionTypes.LOGOUT:
       switch (action.status) {
         case 'success':
-          return Object.assign({}, state, {
-            loggedIn: false,
-            loggingIn: false,
-          })
+          return Object.assign({}, initialState.user)
       }
 
     case actionTypes.UPDATE_USER:
