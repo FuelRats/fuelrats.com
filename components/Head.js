@@ -31,10 +31,13 @@ Router.onRouteChangeError = () => {
 
 Router.onRouteChangeComplete = () => {
   let userId = localStorage.getItem('userId')
+  let preferences = localStorage.getItem('preferences')
+
+  preferences = preferences ? JSON.parse(preferences) : {}
 
   ReactGA.initialize(gaTrackingId)
 
-  if (userId) {
+  if (preferences.allowPersonalizedTracking) {
     ReactGA.set({ userId })
   }
 
