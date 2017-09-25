@@ -71,8 +71,6 @@ export const getUser = () => async dispatch => {
 
     response = await response.json()
 
-    localStorage.setItem('userId', response.data.id)
-
     dispatch({
       status: 'success',
       type: actionTypes.GET_USER,
