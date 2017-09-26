@@ -57,13 +57,18 @@ module.exports = function (nextjs, koa, config) {
     Redirects
   \******************************************************************************/
 
+  router.get('/blogs', async (ctx, next) => {
+    ctx.status = 302
+    await ctx.redirect(`/blog`)
+  })
+
   router.get('/fuel-rats-lexicon', async (ctx, next) => {
     ctx.status = 301
     await ctx.redirect(`https://confluence.fuelrats.com/pages/viewpage.action?pageId=3637257`)
   })
 
   router.get('/i-need-fuel', async (ctx, next) => {
-    ctx.status = 301
+    ctx.status = 302
     await ctx.redirect(`/get-help`)
   })
 
@@ -75,12 +80,6 @@ module.exports = function (nextjs, koa, config) {
     Parameterized routes
   \******************************************************************************/
 
-  // Blog page
-  router.get('/blog/page/:page', async (ctx, next) => {
-    await nextjs.render(ctx.request, ctx.res, '/blog/all', Object.assign({}, ctx.query, ctx.params))
-    ctx.respond = false
-  })
-
   // Single blog
   router.get('/blog/:id', async (ctx, next) => {
     await nextjs.render(ctx.request, ctx.res, '/blog/single', Object.assign({}, ctx.query, ctx.params))
@@ -88,8 +87,14 @@ module.exports = function (nextjs, koa, config) {
   })
 
   // Blog catch all
-  router.get(['/blog', '/blogs'], async (ctx, next) => {
-    await nextjs.render(ctx.request, ctx.res, '/blog/all', Object.assign({}, ctx.query))
+  let blogListRoutes = [
+    '/blog/category/:category/page/:page',
+    '/blog/category/:category',
+    '/blog/page/:page',
+    '/blog',
+  ]
+  router.get(blogListRoutes, async (ctx, next) => {
+    await nextjs.render(ctx.request, ctx.res, '/blog/all', Object.assign({}, ctx.query, ctx.params))
     ctx.respond = false
   })
 

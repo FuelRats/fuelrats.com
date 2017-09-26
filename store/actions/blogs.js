@@ -72,11 +72,17 @@ export const retrieveBlog = id => async dispatch => {
 
 
 
-export const retrieveBlogs = (page = 1) => async dispatch => {
+export const retrieveBlogs = (options) => async dispatch => {
   dispatch({ type: actionTypes.RETRIEVE_BLOGS })
 
+  let queryParams = []
+
+  for (let option in options) {
+    queryParams.push(`${option}=${options[option]}`)
+  }
+
   try {
-    let response = await fetch(`/wp-api/posts?page=${page}`)
+    let response = await fetch(`/wp-api/posts?${queryParams.join('&')}`)
     let blogs = await response.json()
     let headers = await response.headers
 
