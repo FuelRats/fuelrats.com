@@ -10,7 +10,7 @@ import React from 'react'
 const links = [
   {
     name: 'Blog',
-    path: '/blogs',
+    path: '/blog',
   },
   {
     name: 'Statistics',
