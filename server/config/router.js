@@ -88,6 +88,8 @@ module.exports = function (nextjs, koa, config) {
 
   // Blog catch all
   let blogListRoutes = [
+    '/blog/author/:author/page/:page',
+    '/blog/author/:author',
     '/blog/category/:category/page/:page',
     '/blog/category/:category',
     '/blog/page/:page',

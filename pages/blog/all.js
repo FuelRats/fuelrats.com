@@ -34,6 +34,7 @@ class Blogs extends Component {
 
   _renderMenu () {
     let {
+      author,
       category,
       page,
       totalPages,
@@ -42,6 +43,11 @@ class Blogs extends Component {
     let hrefQueryParams = []
     let href = '/blog/all'
     let as = '/blog'
+
+    if (author) {
+      hrefQueryParams.push(`author=${author}`)
+      as += `/author/${author}`
+    }
 
     if (category) {
       hrefQueryParams.push(`category=${category}`)
@@ -76,6 +82,7 @@ class Blogs extends Component {
 
   async _retrieveBlogs (options = {}) {
     let {
+      author,
       category,
       page,
       retrieveBlogs,
@@ -83,8 +90,13 @@ class Blogs extends Component {
 
     let wpOptions = {}
 
+    author = options.author || author
     category = options.category || category
     wpOptions.page = options.page || page
+
+    if (author) {
+      wpOptions.author = author
+    }
 
     if (category) {
       wpOptions.categories = category
@@ -115,12 +127,18 @@ class Blogs extends Component {
 
   componentWillReceiveProps (nextProps) {
     let {
+      author,
       category,
       page,
     } = this.props
 
-    if ((page !== nextProps.page) || (category !== nextProps.category)) {
+    let authorMatches = author === nextProps.author
+    let categoryMatches = category === nextProps.category
+    let pageMatches = page === nextProps.page
+
+    if (!authorMatches || !categoryMatches || !pageMatches) {
       this._retrieveBlogs({
+        author: nextProps.author,
         category: nextProps.category,
         page: page,
       })
@@ -129,10 +147,6 @@ class Blogs extends Component {
 
   constructor (props) {
     super(props)
-
-    this._bindMethods([
-      '_retrieveBlogs',
-    ])
 
     this.state = {
       retrieving: false,
@@ -146,6 +160,10 @@ class Blogs extends Component {
 
     if (query.category) {
       props.category = query.category
+    }
+
+    if (query.author) {
+      props.author = query.author
     }
 
     return props
