@@ -65,10 +65,10 @@ class Profile extends React.Component {
         component: (<UserRatsPanel />),
         title: 'Rats',
       },
-      {
-        component: (<UserStatsOverview />),
-        title: 'Stats',
-      },
+//      {
+//        component: (<UserStatsOverview />),
+//        title: 'Stats',
+//      },
       {
         component: (<div>Badge</div>),
         title: 'Badge',

@@ -93,7 +93,9 @@ class UserMenu extends Component {
                 permissions={user.permissions} />
             )}
 
-            <div className="stats">
+            <div
+              className="stats"
+              hidden={true}>
               <header>My Stats</header>
 
               <table>
