@@ -15,7 +15,7 @@ import libStylesheet from '../scss/lib.scss'
 
 
 
-const gaTrackingId = 'UA-71668914-1'
+const gaTrackingId = preval`module.exports = process.env.GA_TRACKING_ID || 'UA-71668914-4'`
 
 
 
