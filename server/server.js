@@ -23,7 +23,9 @@ const next = require('next')({
 
 next.prepare()
 .then(() => {
-  // Set up the logger
+  // Set up the loggers
+  require('./config/file-logger')(koa)
+
   koa.use(require('koa-logger')())
 
   // Configure proxies
