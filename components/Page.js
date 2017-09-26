@@ -58,7 +58,7 @@ export default (Component, title = 'Untitled', reduxOptions = {}) => {
         isServer,
         path,
       } = this.props
-      let mainClasses = ['fade-in', 'page', title.toLowerCase().replace(' ', '-')].join(' ')
+      let mainClasses = ['fade-in', 'page', title.toLowerCase().replace(/\s/g, '-')].join(' ')
 
       return (
         <div role="application">
