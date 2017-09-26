@@ -1,7 +1,11 @@
 'use strict'
 
 // Module imports
-const { createWriteStream } = require('fs')
+const {
+  createWriteStream,
+  mkdirSync,
+} = require('fs')
+const { resolve } = require('path')
 const moment = require('moment')
 
 
@@ -15,6 +19,16 @@ module.exports = function (koa) {
   \******************************************************************************/
 
   koa.use(async (ctx, next) => {
+    // Make sure the log folder exists
+    try {
+      mkdirSync(resolve('logs'))
+    } catch (error) {
+      if (error.code !== 'EEXIST') {
+        throw error
+      }
+      // It already exists so blep.
+    }
+
     let writeStream = createWriteStream(`./logs/${moment().format('YYYY-MM-DD')}.log`, { flags: 'a' })
 
     let log = {
