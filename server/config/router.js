@@ -75,20 +75,32 @@ module.exports = function (nextjs, koa, config) {
     Parameterized routes
   \******************************************************************************/
 
-  router.get('/blogs/page/:page', async (ctx, next) => {
-    await nextjs.render(ctx.request, ctx.res, '/blogs', Object.assign({}, ctx.query, ctx.params))
+  // Blog page
+  router.get('/blog/page/:page', async (ctx, next) => {
+    await nextjs.render(ctx.request, ctx.res, '/blog/all', Object.assign({}, ctx.query, ctx.params))
+    ctx.respond = false
   })
 
+  // Single blog
   router.get('/blog/:id', async (ctx, next) => {
-    await nextjs.render(ctx.request, ctx.res, '/blog', Object.assign({}, ctx.query, ctx.params))
+    await nextjs.render(ctx.request, ctx.res, '/blog/single', Object.assign({}, ctx.query, ctx.params))
+    ctx.respond = false
+  })
+
+  // Blog catch all
+  router.get(['/blog', '/blogs'], async (ctx, next) => {
+    await nextjs.render(ctx.request, ctx.res, '/blog/all', Object.assign({}, ctx.query))
+    ctx.respond = false
   })
 
   router.get('/paperwork/:id/edit', async (ctx, next) => {
     await nextjs.render(ctx.request, ctx.res, '/paperwork/edit', Object.assign({}, ctx.query, ctx.params))
+    ctx.respond = false
   })
 
   router.get(['/paperwork/:id', '/paperwork/:id/view'], async (ctx, next) => {
     await nextjs.render(ctx.request, ctx.res, '/paperwork/view', Object.assign({}, ctx.query, ctx.params))
+    ctx.respond = false
   })
 
 
