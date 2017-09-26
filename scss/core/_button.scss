@@ -14,6 +14,7 @@ input[type=button],
   outline: none;
   overflow: hidden;
   padding: 1rem 2rem;
+  text-align: center;
   text-decoration: none;
   transition: all 0.2s;
 
@@ -51,12 +52,29 @@ input[type=button],
 
   &.secondary {
     background-color: $black-lightened;
-    border: none;
+    border-color: $black-lightened;
     color: $grey;
 
     &:hover {
-      background-color: $red;
+      @include text-outline($black-lightened);
+
+      background-color: $transparent;
+      border-color: $black-lightened;
       color: $white;
+      font-weight: bold;
+    }
+  }
+
+  &.green {
+    background-color: $green;
+    border-color: $green;
+    color: $white;
+
+    &:hover {
+//      @include text-outline($black-lightened);
+
+      background-color: $transparent;
+      color: $green;
     }
   }
 }

@@ -31,7 +31,7 @@ class Header extends React.Component {
       getHelpClasses.push('hide')
     }
 
-    if (!/(^\/get-help|\/$)/.test(path)) {
+    if (!/(^\/i-need-fuel|\/$)/.test(path)) {
       getHelpClasses.push('show')
     }
 
@@ -68,7 +68,7 @@ class Header extends React.Component {
             )}
 
             <div className={getHelpClasses.join(' ')}>
-              <Link href="/get-help">
+              <Link href="/i-need-fuel">
                 <a className="button">
                   Get Help
                 </a>
