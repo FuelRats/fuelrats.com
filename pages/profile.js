@@ -69,10 +69,10 @@ class Profile extends React.Component {
 //        component: (<UserStatsOverview />),
 //        title: 'Stats',
 //      },
-      {
-        component: (<div>Badge</div>),
-        title: 'Badge',
-      },
+//      {
+//        component: (<div>Badge</div>),
+//        title: 'Badge',
+//      },
       {
         component: (<UserSettings />),
         title: 'Settings',
