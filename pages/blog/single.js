@@ -87,6 +87,10 @@ class Blog extends Component {
       retrieving,
     } = this.state
 
+    let content = blog.content.rendered
+      .replace(/<ul>/gi, '<ul class="bulleted">')
+      .replace(/<ol>/gi, '<ol class="numbered">')
+
     return (
       <div className="page-wrapper">
         <header className="page-header">
@@ -144,7 +148,7 @@ class Blog extends Component {
 
             <div
               className="article-content"
-              dangerouslySetInnerHTML={{ __html: blog.content.rendered }} />
+              dangerouslySetInnerHTML={{ __html: content }} />
 
             <aside className="comments">
               <header>
