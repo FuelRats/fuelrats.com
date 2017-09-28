@@ -28,6 +28,9 @@ export default function (state = initialState.user, action) {
       if (payload) {
         let user = Object.assign({}, state, payload.data)
 
+        // Generate an Adorable avatar if the user doesn't already have one set
+        user.attributes.image = payload.data.attributes.image || `//api.adorable.io/avatars/${payload.data.id}`
+
         if (Array.isArray(user.permissions)) {
           user.permissions = new Set(user.permissions)
         }
@@ -39,8 +42,31 @@ export default function (state = initialState.user, action) {
           group.attributes.permissions.forEach(permission => user.permissions.add(permission))
         })
 
-        // Generate an Adorable avatar if the user doesn't already have one set
-        user.attributes.image = payload.data.attributes.image || `//api.adorable.io/avatars/${payload.data.id}`
+        // Create the user's data store if it doesn't already exist
+        if (!user.data) {
+          user.data = {}
+        }
+
+        // Parse the user's data store if it came in as a string
+        if (typeof user.data === 'string') {
+          user.data = JSON.parse(user.data)
+        }
+
+        // Create the website's walled garden in the data store
+        if (!user.data.website) {
+          user.data.website = {}
+        }
+
+        // Abstract the user's website preferences if they exist, otherwise the
+        // defaults should already be set in the initialState
+        if (user.data.website.preferences) {
+          user.preferences = user.data.website.preferences
+        }
+
+        // Stick the user preferences in the local store so we can use them
+        // outside of Redux connected components
+        localStorage.setItem('userId', user.id)
+        localStorage.setItem('preferences', JSON.stringify(user.preferences))
 
         return user
       }
@@ -48,10 +74,7 @@ export default function (state = initialState.user, action) {
     case actionTypes.LOGOUT:
       switch (action.status) {
         case 'success':
-          return Object.assign({}, state, {
-            loggedIn: false,
-            loggingIn: false,
-          })
+          return Object.assign({}, initialState.user)
       }
 
     case actionTypes.UPDATE_USER:

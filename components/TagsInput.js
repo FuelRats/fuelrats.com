@@ -7,6 +7,12 @@ import React from 'react'
 
 
 
+import Key from './Key'
+
+
+
+
+
 export default class extends React.Component {
   _bindMethods (methods) {
     methods.forEach(method => this[method] = this[method].bind(this))
@@ -34,9 +40,11 @@ export default class extends React.Component {
 
   addTag (tag) {
     let {
-      allowDuplicates,
       onAdd,
     } = this.props
+    let {
+      allowDuplicates,
+    } = this.state
     let tags = Object.assign([], this.state.tags)
 
     if (!allowDuplicates) {
@@ -81,6 +89,9 @@ export default class extends React.Component {
       options,
       value,
     } = this.props
+    let {
+      loading,
+    } = this.state
     let newState = {}
 
     if (value !== nextProps.value) {
@@ -143,9 +154,8 @@ export default class extends React.Component {
     tags = tags.map(tag => this.parseOption(tag))
 
     this.state = {
-      allowDuplicates: props.allowDuplicates,
-      allowMultiple: props.allowMultiple,
-      allowNew: props.allowNew,
+      allowDuplicates: props['data-allowDuplicates'],
+      allowNew: props['data-allowNew'],
       currentValue: '',
       debug: props.debug,
       focused: false,
@@ -435,6 +445,7 @@ export default class extends React.Component {
       name,
     } = this.props
     let {
+      allowNew,
       currentValue,
       loading,
       newFocus,
@@ -466,6 +477,8 @@ export default class extends React.Component {
           onKeyDown={this.onKeyDown}
           ref={input => this.input = input}
           type="search" />
+
+        {!!allowNew && this.renderReturnPrompt()}
 
         {loading && this._renderLoader()}
 
@@ -520,7 +533,25 @@ export default class extends React.Component {
       options,
     } = this.state
 
-    return options.map(this.renderOption)
+    return (
+      <ol className="options">
+        {options.map(this.renderOption)}
+      </ol>
+    )
+  }
+
+  renderReturnPrompt () {
+    let classes = ['return-prompt']
+
+    if (this.input && this.input.value) {
+      classes.push('show')
+    }
+
+    return (
+      <div className={classes.join(' ')}>
+        <span>Press <Key>Return</Key> to add</span>
+      </div>
+    )
   }
 
   renderTag (tag, index) {

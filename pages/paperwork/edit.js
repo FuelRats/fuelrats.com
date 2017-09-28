@@ -10,15 +10,19 @@ import withRedux from 'next-redux-wrapper'
 
 
 // Component imports
-import {
-  actions,
-  initStore,
-} from '../../store'
+import { actions } from '../../store'
 import Component from '../../components/Component'
 import Page from '../../components/Page'
 import FirstLimpetInput from '../../components/FirstLimpetInput'
 import RatTagsInput from '../../components/RatTagsInput'
 import SystemTagsInput from '../../components/SystemTagsInput'
+
+
+
+
+
+// Component constants
+const title = 'Paperwork'
 
 
 
@@ -31,7 +35,7 @@ class Paperwork extends Component {
   \***************************************************************************/
 
   componentDidMount () {
-    let { id } = this.props
+    let { id } = this.props.query
 
     if (id) {
       this.props.retrievePaperwork(id)
@@ -139,7 +143,7 @@ class Paperwork extends Component {
       rescue,
     } = this.state
 
-    if (value[0].value !== rescue.attributes.system) {
+    if (value.length && (value[0].value !== rescue.attributes.system)) {
       let newState = Object.assign({}, this.state)
 
       newState.rescue.attributes.system = value[0].value
@@ -204,9 +208,9 @@ class Paperwork extends Component {
     }
 
     return (
-      <div>
+      <div className="page-wrapper">
         <header className="page-header">
-          <h2>{title}</h2>
+          <h1>{title}</h1>
         </header>
 
         {retrieving && (
@@ -349,6 +353,7 @@ class Paperwork extends Component {
               <label htmlFor="system">Where did it happen? <small>In what star system did the rescue took place? (put "n/a" if not applicable)</small></label>
 
               <SystemTagsInput
+                data-allowNew={true}
                 disabled={submitting || retrieving}
                 name="system"
                 onChange={this.handleSystemChange}

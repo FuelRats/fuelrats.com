@@ -32,9 +32,9 @@ class Profile extends React.Component {
 
   render () {
     return (
-      <div>
+      <div className="page-wrapper">
         <header className="page-header">
-          <h2>{title}</h2>
+          <h1>{title}</h1>
         </header>
 
         <div className="page-content">
@@ -65,14 +65,14 @@ class Profile extends React.Component {
         component: (<UserRatsPanel />),
         title: 'Rats',
       },
-      {
-        component: (<UserStatsOverview />),
-        title: 'Stats',
-      },
-      {
-        component: (<div>Badge</div>),
-        title: 'Badge',
-      },
+//      {
+//        component: (<UserStatsOverview />),
+//        title: 'Stats',
+//      },
+//      {
+//        component: (<div>Badge</div>),
+//        title: 'Badge',
+//      },
       {
         component: (<UserSettings />),
         title: 'Settings',

@@ -71,6 +71,9 @@ export default {
     attributes: null,
     id: null,
     permissions: new Set,
+    preferences: {
+      allowPersonalizedTracking: false,
+    },
     relationships: null,
     retrieving: false,
   },

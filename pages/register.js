@@ -1,6 +1,7 @@
 // Module imports
 import { bindActionCreators } from 'redux'
 import _ from 'lodash'
+import Link from 'next/link'
 import React from 'react'
 import ReCAPTCHA from 'react-google-recaptcha'
 import withRedux from 'next-redux-wrapper'
@@ -10,10 +11,7 @@ import withRedux from 'next-redux-wrapper'
 
 
 // Component imports
-import {
-  actions,
-  initStore,
-} from '../store'
+import { actions } from '../store'
 import Component from '../components/Component'
 import Page from '../components/Page'
 import PasswordField from '../components/PasswordField'
@@ -105,16 +103,19 @@ class Register extends Component {
     } = this.state
 
     return (
-      <div>
+      <div className="page-wrapper">
         <header className="page-header">
-          <h2>{title}</h2>
+          <h1>{title}</h1>
         </header>
 
         <form onSubmit={this.onSubmit}>
           <fieldset data-name="Email">
-            <label>Email</label>
+            <label htmlFor="email">
+              Email
+            </label>
 
             <input
+              id="email"
               name="email"
               onChange={this.handleChange}
               placeholder="i.e. surly_badger@gmail.com"
@@ -125,9 +126,12 @@ class Register extends Component {
           </fieldset>
 
           <fieldset data-name="Password">
-            <label>Password</label>
+            <label htmlFor="password">
+              Password
+            </label>
 
             <PasswordField
+              id="password"
               maxLength="42"
               minLength="5"
               name="password"
@@ -141,9 +145,12 @@ class Register extends Component {
           </fieldset>
 
           <fieldset data-name="IRC Nick">
-            <label>What's your <strong>base</strong> IRC nickname? <small>Base means your nickname without any suffixes, i.e. Surly_Badger instead of Surly_Badger[PC].</small></label>
+            <label htmlFor="nickname">
+              What's your <strong>base</strong> IRC nickname? <small>Base means your nickname without any suffixes, i.e. Surly_Badger instead of Surly_Badger[PC].</small>
+            </label>
 
             <input
+              id="nickname"
               name="nickname"
               onChange={this.handleChange}
               pattern="^[A-z_\-\[\]\\^{}|`][A-z0-9_\-\[\]\\^{}|`]+$"
@@ -155,9 +162,12 @@ class Register extends Component {
           </fieldset>
 
           <fieldset data-name="CMDR Name">
-            <label>What's your CMDR name? <small>If you have more than one CMDR, you can add the rest later.</small></label>
+            <label htmlFor="ratName">
+              What's your CMDR name? <small>If you have more than one CMDR, you can add the rest later.</small>
+            </label>
 
             <input
+              id="ratName"
               name="ratName"
               onChange={this.handleChange}
               pattern="^[\x00-\x7F]+$"
@@ -179,7 +189,8 @@ class Register extends Component {
                 name="ratPlatform"
                 onChange={this.handleChange}
                 type="radio"
-                value="pc" /> <label htmlFor="platform-pc">PC</label>
+                value="pc" />
+              <label htmlFor="platform-pc">PC</label>
 
               <input
                 checked={ratPlatform === 'xb'}
@@ -188,7 +199,8 @@ class Register extends Component {
                 name="ratPlatform"
                 onChange={this.handleChange}
                 type="radio"
-                value="xb" /> <label htmlFor="platform-xb">Xbox One</label>
+                value="xb" />
+              <label htmlFor="platform-xb">Xbox One</label>
 
               <input
                 checked={ratPlatform === 'ps'}
@@ -197,8 +209,13 @@ class Register extends Component {
                 name="ratPlatform"
                 onChange={this.handleChange}
                 type="radio"
-                value="ps" /> <label htmlFor="platform-ps">Playstation 4</label>
+                value="ps" />
+              <label htmlFor="platform-ps">Playstation 4</label>
             </div>
+          </fieldset>
+
+          <fieldset data-name="Agreements">
+            <p>By creating an account I agree that I have read and agree to the <Link href="/terms-of-service"><a>Terms of Service</a></Link> and the <Link href="/privacy-policy"><a>Privacy Policy</a></Link>, and that I am 13 years of age or older.</p>
           </fieldset>
 
           <menu type="toolbar">

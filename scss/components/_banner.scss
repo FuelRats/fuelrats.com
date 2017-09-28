@@ -32,7 +32,7 @@
   }
 
   #nav-control:checked ~ #burger {
-    left: 20vw;
+    left: 21rem;
   }
 
   #nav-control:not(:checked) ~ #burger {
@@ -41,7 +41,7 @@
 
   #nav-control:checked ~ header {
     display: flex;
-    width: 20vw;
+    width: 21rem;
   }
 
   #nav-control:not(:checked) ~ header {
@@ -57,7 +57,7 @@
   border-right-style: solid;
   border-right-width: 0.5rem;
   display: flex;
-  width: 20vw;
+  width: 21rem;
   flex-direction: column;
   flex-shrink: 0;
   overflow: auto;

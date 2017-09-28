@@ -10,10 +10,7 @@ import withRedux from 'next-redux-wrapper'
 
 
 // Component imports
-import {
-  actions,
-  initStore,
-} from '../../store'
+import { actions } from '../../store'
 import Component from '../../components/Component'
 import Page from '../../components/Page'
 import FirstLimpetInput from '../../components/FirstLimpetInput'
@@ -38,7 +35,7 @@ class Paperwork extends Component {
   \***************************************************************************/
 
   componentDidMount () {
-    let { id } = this.props
+    let { id } = this.props.query
 
     if (id) {
       this.props.retrievePaperwork(id)
@@ -120,9 +117,9 @@ class Paperwork extends Component {
     } = this.props
 
     return (
-      <div>
+      <div className="page-wrapper">
         <header className="page-header">
-          <h2>{title}</h2>
+          <h1>{title}</h1>
         </header>
 
         {retrieving && (

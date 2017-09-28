@@ -10,10 +10,7 @@ import withRedux from 'next-redux-wrapper'
 
 
 // Component imports
-import {
-  actions,
-  initStore,
-} from '../store'
+import { actions } from '../store'
 import Component from '../components/Component'
 import Page from '../components/Page'
 import PasswordField from '../components/PasswordField'
@@ -97,9 +94,9 @@ class PasswordReset extends Component {
     } = this.state
 
     return (
-      <div>
+      <div className="page-wrapper">
         <header className="page-header">
-          <h2>{title}</h2>
+          <h1>{title}</h1>
         </header>
 
         {!!token && (

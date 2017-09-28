@@ -1,5 +1,7 @@
 'use strict'
 
+let isDev = process.env.NODE_ENV !== 'production'
+
 /******************************************************************************\
   Module imports
 \******************************************************************************/
@@ -9,7 +11,7 @@ const koa = new (require('koa'))
 const path = require('path')
 
 const next = require('next')({
-  dev: process.env.NODE_ENV !== 'production',
+  dev: isDev,
   dir: path.resolve('.')
 })
 
@@ -23,7 +25,11 @@ const next = require('next')({
 
 next.prepare()
 .then(() => {
-  // Set up the logger
+  // Set up the loggers
+  if (isDev) {
+    require('./config/file-logger')(koa)
+  }
+
   koa.use(require('koa-logger')())
 
   // Configure proxies
