@@ -90,7 +90,7 @@ class Blog extends Component {
     return (
       <div className="page-wrapper">
         <header className="page-header">
-          <h2>{title}</h2>
+          <h1>{title}</h1>
         </header>
 
         {retrieving && (
@@ -100,7 +100,7 @@ class Blog extends Component {
         {!retrieving && (
           <article className="page-content">
             <header>
-              <h3
+              <h2
                 className="title"
                 dangerouslySetInnerHTML={{ __html: blog.title.rendered }} />
             </header>
@@ -142,9 +142,11 @@ class Blog extends Component {
               </span>
             </small>
 
-            <div dangerouslySetInnerHTML={{ __html: blog.content.rendered }} />
+            <div
+              className="article-content"
+              dangerouslySetInnerHTML={{ __html: blog.content.rendered }} />
 
-            <section className="comments">
+            <aside className="comments">
               <header>
                 <h3>Comments</h3>
               </header>
@@ -170,7 +172,7 @@ class Blog extends Component {
                   )
                 }) : 'No comments... yet.'}
               </ol>
-            </section>
+            </aside>
           </article>
         )}
       </div>

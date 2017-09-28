@@ -184,7 +184,7 @@ class Blogs extends Component {
     return (
       <div className="page-wrapper">
         <header className="page-header">
-          <h2>{title}</h2>
+          <h1>{title}</h1>
         </header>
 
         <div className="page-content">
@@ -248,7 +248,9 @@ class Blogs extends Component {
                       </span>
                     </small>
 
-                    <div dangerouslySetInnerHTML={{ __html: blog.excerpt.rendered }} />
+                    <div
+                      className="article-content"
+                      dangerouslySetInnerHTML={{ __html: blog.excerpt.rendered }} />
                   </article>
                 </li>
               )
