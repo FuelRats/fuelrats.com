@@ -29,7 +29,7 @@ class About extends React.Component {
     return (
       <div className="page-wrapper">
         <header className="page-header">
-          <h2>{title}</h2>
+          <h1>{title}</h1>
         </header>
       </div>
     )
