@@ -225,7 +225,7 @@ class Blogs extends Component {
 
                       <span>
                         <i className="fa fa-folder fa-fw" />
-                        Categories:
+
                         <ul className="category-list">
                           {blog.categories.map(category => {
                             let {
