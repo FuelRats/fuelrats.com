@@ -87,9 +87,13 @@ class Blog extends Component {
       retrieving,
     } = this.state
 
-    let content = blog.content.rendered
-      .replace(/<ul>/gi, '<ul class="bulleted">')
-      .replace(/<ol>/gi, '<ol class="numbered">')
+    let content
+
+    if (blog) {
+      content = blog.content.rendered
+        .replace(/<ul>/gi, '<ul class="bulleted">')
+        .replace(/<ol>/gi, '<ol class="numbered">')
+    }
 
     return (
       <div className="page-wrapper">
