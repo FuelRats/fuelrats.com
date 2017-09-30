@@ -72,6 +72,16 @@ module.exports = function (nextjs, koa, config) {
     await ctx.redirect(`/i-need-fuel`)
   })
 
+  router.get('/privacy-policy', async (ctx, next) => {
+    ctx.status = 302
+    await ctx.redirect(`https://confluence.fuelrats.com/display/FRKB/Privacy+Policy`)
+  })
+
+  router.get('/terms-of-service', async (ctx, next) => {
+    ctx.status = 302
+    await ctx.redirect(`https://confluence.fuelrats.com/display/FRKB/Terms+of+Service`)
+  })
+
 
 
 
