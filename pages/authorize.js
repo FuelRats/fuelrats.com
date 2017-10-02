@@ -32,7 +32,7 @@ class Authorize extends Component {
     super(props)
 
     this.state = {
-      clientName: 'Application',
+      clientName: null,
       scopes: [],
       scope: '',
       transactionId: '',
@@ -58,8 +58,12 @@ class Authorize extends Component {
 
     if (client_id && state && scope && response_type) {
       try {
+        let token = localStorage.getItem('access_token')
         let response = await fetch(`/api/oauth2/authorize?client_id=${client_id}&scope=${scope}&state=${state}&response_type=${response_type}`, {
           method: 'get',
+          headers: new Headers({
+            Authorization: `Bearer ${token}`,
+          }),
         })
         response = await response.json()
 
@@ -87,6 +91,8 @@ class Authorize extends Component {
 
     this.setState({ submitting: true })
 
+    console.log('Submit pressed')
+
     await this.props.authorize(this.state.transactionId, this.state.scope, this.state.allow, this.state.redirectUri)
 
     this.setState({ submitting: false })
@@ -111,7 +117,7 @@ class Authorize extends Component {
           <h2>{this.title}</h2>
         </header>
 
-        {hasRequiredParameters && (
+        {this.state.clientName && hasRequiredParameters && (
           <div className="page-content">
             <h3>{this.state.clientName} is requesting access to your FuelRats account</h3>
 
@@ -151,6 +157,16 @@ class Authorize extends Component {
             </form>
           </div>
         )}
+        {hasRequiredParameters && !this.state.clientName && (
+          <div className="page-content">
+            <header>
+              <h3>Loading Authorization Data</h3>
+            </header>
+
+            <p>Information needed to display the authorize page is being loaded.</p>
+          </div>
+        )}
+
 
         {!hasRequiredParameters && (
           <div className="page-content">

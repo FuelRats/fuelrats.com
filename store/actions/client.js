@@ -17,16 +17,19 @@ export const authorize = (transaction_id, scope, allow, redirectUri) => async di
       scope,
       redirectUri
     }
+
     if (allow === true) {
-      formData.append('allow', '1')
+      formData['allow'] = '1'
     } else {
-      formData.append('deny', '1')
+      formData['deny'] = '1'
     }
 
+
+    let token = localStorage.getItem('access_token')
     let response = await fetch(`/api/oauth2/authorize`, {
-      body: formData,
+      body: JSON.stringify(formData),
       headers: new Headers({
-        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json'
       }),
       method: 'post',
