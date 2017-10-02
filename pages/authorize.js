@@ -74,25 +74,14 @@ class Authorize extends Component {
           scopes: response.scopes,
           scope: response.scope,
           transactionId: response.transactionId,
-          allow: false
+          allow: false,
+          token: localStorage.getItem('access_token')
         })
 
       } catch (error) {
         console.log(error)
       }
     }
-  }
-
-  async onSubmit (event) {
-    event.preventDefault()
-
-    this.setState({ submitting: true })
-
-    console.log('Submit pressed')
-
-    await this.props.authorize(this.state.transactionId, this.state.scope, this.state.allow, this.state.redirectUri)
-
-    this.setState({ submitting: false })
   }
 
   render () {
@@ -107,6 +96,7 @@ class Authorize extends Component {
     } = this.state
 
     let hasRequiredParameters = client_id && state && scope && response_type
+    let submitUrl = `/api/oauth2/authorize?bearer=${this.state.token}`
 
     return (
       <div>
@@ -124,20 +114,28 @@ class Authorize extends Component {
               {this.state.scopes.map((scope, index) => <li key={index}>{scope.permission}</li>)}
             </ul>
 
-            <form onSubmit={this.onSubmit}>
+            <form action={submitUrl} method="post">
               <fieldset>
                 <input
-                  disabled={submitting}
                   id="transaction_id"
                   name="transaction_id"
                   type="hidden"
                   value={this.state.transactionId} />
+                <input
+                  id="scope"
+                  name="scope"
+                  type="hidden"
+                  value={this.state.scope} />
+                <input
+                  id="redirectUri"
+                  name="redirectUri"
+                  type="hidden"
+                  value={this.state.redirectUri} />
               </fieldset>
 
               <div className="primary">
                 <button
                   disabled={submitting}
-                  onClick={() => { this.setState({ allow: true }) }}
                   value="allow"
                   type="submit">
                   {submitting ? 'Submitting...' : 'Allow'}
@@ -145,7 +143,6 @@ class Authorize extends Component {
 
                 <button
                   disabled={submitting}
-                  onClick={() => { this.setState({ allow: false }) }}
                   value="deny"
                   type="submit">
                   {submitting ? 'Submitting...' : 'Deny'}
@@ -186,7 +183,6 @@ class Authorize extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    authorize: bindActionCreators(actions.authorize, dispatch),
   }
 }
 
