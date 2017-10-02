@@ -27,6 +27,7 @@ export const authorize = (transaction_id, scope, allow, redirectUri) => async di
     let token = localStorage.getItem('access_token')
     let response = await fetch(`/api/oauth2/authorize`, {
       body: JSON.stringify(formData),
+      credentials: 'same-origin',
       headers: new Headers({
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',

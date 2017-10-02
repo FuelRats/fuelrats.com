@@ -77,12 +77,8 @@ class Authorize extends Component {
           allow: false
         })
 
-        return {
-        }
-
       } catch (error) {
         console.log(error)
-        return {}
       }
     }
   }
