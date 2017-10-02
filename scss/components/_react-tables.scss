@@ -1,4 +1,10 @@
 .ReactTable {
+  border: none;
+
+  .rt-noData:empty {
+    display: none;
+  }
+
   .rt-thead {
     background-color: $black;
     color: $white;

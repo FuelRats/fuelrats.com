@@ -40,3 +40,37 @@ export const checkDecalEligibility = () => async dispatch => {
     console.log(error)
   }
 }
+
+
+
+
+
+export const redeemDecal = () => async dispatch => {
+  try {
+    dispatch({
+      type: actionTypes.REDEEM_DECAL,
+    })
+    console.log('Redeeming Decal')
+
+    let response = await fetch(`/api/decals/redeem`, {
+      headers: new Headers({
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+      }),
+    })
+    response = await response.json()
+
+    dispatch({
+      payload: response,
+      status: 'success',
+      type: actionTypes.REDEEM_DECAL,
+    })
+
+  } catch (error) {
+    dispatch({
+      status: 'error',
+      type: actionTypes.REDEEM_DECAL,
+    })
+
+    console.log(error)
+  }
+}

@@ -22,6 +22,19 @@ export default function (state = initialState.decals, action) {
           return state
       }
 
+    case actionTypes.REDEEM_DECAL:
+      switch (status) {
+        case 'success':
+          let newState = Object.assign({}, state)
+
+          newState.decals = newState.decals.concat(payload.data)
+
+          return newState
+
+        default:
+          return state
+      }
+
     default:
       return state
   }
