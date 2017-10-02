@@ -21,6 +21,8 @@ const gaTrackingId = preval`module.exports = process.env.GA_TRACKING_ID || 'UA-7
 
 
 
+NProgress.configure({ showSpinner: false })
+
 Router.onRouteChangeStart = (url) => {
   NProgress.start()
 }

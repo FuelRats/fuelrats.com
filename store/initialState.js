@@ -11,6 +11,11 @@ export default {
     totalPages: 0,
   },
 
+  decals: {
+    decals: [],
+    eligible: false,
+  },
+
   dialog: {
     body: null,
     closeIsVisible: true,

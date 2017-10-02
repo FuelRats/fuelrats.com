@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import authentication from './authentication'
 import blogs from './blogs'
+import decals from './decals'
 import dialog from './dialog'
 import paperwork from './paperwork'
 import user from './user'
@@ -18,6 +19,7 @@ import ships from './ships'
 export default combineReducers({
   authentication,
   blogs,
+  decals,
   dialog,
   paperwork,
   user,
