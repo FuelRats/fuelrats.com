@@ -60,10 +60,11 @@ class Authorize extends Component {
       try {
         let token = localStorage.getItem('access_token')
         let response = await fetch(`/api/oauth2/authorize?client_id=${client_id}&scope=${scope}&state=${state}&response_type=${response_type}`, {
-          method: 'get',
+          credentials: 'same-origin',
           headers: new Headers({
             Authorization: `Bearer ${token}`,
           }),
+          method: 'get',
         })
         response = await response.json()
 
