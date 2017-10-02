@@ -38,10 +38,6 @@ class Authorize extends Component {
       transactionId: '',
       submitting: false
     }
-
-    this._bindMethods([
-      'onSubmit',
-    ])
   }
 
   static async getInitialProps ({ query }) {
@@ -111,7 +107,13 @@ class Authorize extends Component {
             <p><strong>This application will be able to:</strong></p>
 
             <ul>
-              {this.state.scopes.map((scope, index) => <li key={index}>{scope.permission}</li>)}
+              {this.state.scopes.map((scope, index) => {
+                if (scope.accessible) {
+                  return <li key={index}>{scope.permission}</li>
+                } else {
+                  return <li key={index} className="inaccessible">{scope.permission}</li>
+                }
+              })}
             </ul>
 
             <form action={submitUrl} method="post">
@@ -135,6 +137,7 @@ class Authorize extends Component {
 
               <div className="primary">
                 <button
+                  className="green"
                   disabled={submitting}
                   value="allow"
                   type="submit">
