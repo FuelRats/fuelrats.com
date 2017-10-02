@@ -19,6 +19,7 @@ import reducer from './store/reducers/index'
 /* actions */
 import * as authenticationActions from './store/actions/authentication'
 import * as blogsActions from './store/actions/blogs'
+import * as decalsActions from './store/actions/decals'
 import * as dialogActions from './store/actions/dialog'
 import * as paperworkActions from './store/actions/paperwork'
 import * as ratsActions from './store/actions/rats'
@@ -36,6 +37,7 @@ export const actions = Object.assign(
   {},
   authenticationActions,
   blogsActions,
+  decalsActions,
   dialogActions,
   paperworkActions,
   ratsActions,

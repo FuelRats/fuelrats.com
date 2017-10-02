@@ -24,26 +24,46 @@ class UserDetailsPanel extends Component {
     Public Methods
   \***************************************************************************/
 
+  async componentDidMount () {
+    await this.props.checkDecalEligibility()
+
+    this.setState({ eligibilityChecked: true })
+  }
+
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      eligibilityChecked: false,
+    }
+  }
+
   render () {
     let {
-      attributes,
-      id,
+      decals,
+      eligible,
     } = this.props
 
-    attributes || (attributes = {})
-
-    let {
-      createdAt,
-      email,
-    } = attributes
+    let { eligibilityChecked } = this.state
 
     return (
-      <div className="panel user-details">
+      <div className="panel user-decals">
         <header>
           Decal
         </header>
 
         <div className="panel-content">
+          {(eligibilityChecked && !eligible) && (
+            `Sorry, you're not eligible for a decal at this time.`
+          )}
+
+          {(eligibilityChecked && eligible) && (
+            `Woot! You're eligible for a decal!`
+          )}
+
+          {!eligibilityChecked && (
+            `Checking eligibility...`
+          )}
         </div>
       </div>
     )
@@ -56,12 +76,12 @@ class UserDetailsPanel extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getRats: bindActionCreators(actions.getRats, dispatch),
+    checkDecalEligibility: bindActionCreators(actions.checkDecalEligibility, dispatch),
   }
 }
 
 const mapStateToProps = state => {
-  return state.user || {}
+  return state.decals
 }
 
 
