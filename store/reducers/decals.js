@@ -16,7 +16,17 @@ export default function (state = initialState.decals, action) {
     case actionTypes.CHECK_DECAL_ELIGIBILITY:
       switch (status) {
         case 'success':
-          return Object.assign({}, initialState.decals, payload)
+          let newState = Object.assign({}, state)
+
+          if (payload.data) {
+            newState.eligible = true
+            newState.decals = newState.decals.concat(payload.data)
+
+          } else {
+            newState.eligible = payload.eligible
+          }
+
+          return newState
 
         default:
           return state

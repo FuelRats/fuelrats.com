@@ -50,7 +50,6 @@ export const redeemDecal = () => async dispatch => {
     dispatch({
       type: actionTypes.REDEEM_DECAL,
     })
-    console.log('Redeeming Decal')
 
     let response = await fetch(`/api/decals/redeem`, {
       headers: new Headers({

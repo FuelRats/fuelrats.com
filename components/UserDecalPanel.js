@@ -31,15 +31,48 @@ class UserDetailsPanel extends Component {
       redeemDecal,
     } = this.props
 
+    this.setState({ redeeming: true })
+
     await redeemDecal()
 
-    this.setState({ loading: false })
+    this.setState({
+      loading: false,
+      redeeming: false,
+    })
   }
 
   _renderClaimedAtRow (row) {
     let rescue = row.original
 
     return moment(rescue.claimedAt).add(1286, 'years').format('DD MMM, YYYY')
+  }
+
+  _renderNoDataText () {
+    let {
+      decals,
+      eligible,
+    } = this.props
+
+    let { checkingEligibility } = this.state
+
+    if (!checkingEligibility) {
+      if (!eligible) {
+        return `Sorry, you're not eligible for a decal.`
+
+      } else {
+        return (
+          <div>
+            <p>You're eligible for a decal but you haven't redeemed it yet.</p>
+            <button
+              onClick={() => this._redeemDecal()}>
+              Redeem
+            </button>
+          </div>
+        )
+      }
+    }
+
+    return null
   }
 
 
@@ -60,35 +93,25 @@ class UserDetailsPanel extends Component {
       await checkDecalEligibility()
     }
 
-    this.setState({ eligibilityChecked: true })
-  }
-
-  componentWillReceiveProps (nextProps) {
-    let { eligible } = this.props
-
-    if ((eligible !== nextProps.eligible) && nextProps.eligible) {
-      this._redeemDecal()
-    }
+    this.setState({ checkingEligibility: false })
   }
 
   constructor (props) {
     super(props)
 
     this.state = {
-      eligibilityChecked: false,
-      loading: true,
+      checkingEligibility: true,
+      redeeming: false,
     }
   }
 
   render () {
-    let {
-      decals,
-      eligible,
-    } = this.props
+    let { decals } = this.props
 
     let {
-      eligibilityChecked,
+      checkingEligibility,
       loading,
+      redeeming,
     } = this.state
 
     return (
@@ -97,11 +120,11 @@ class UserDetailsPanel extends Component {
         columns={this.columns}
         data={decals}
         defaultPageSize={10}
-        loading={loading}
-        loadingText={!eligibilityChecked ? `Checking decal eligibility...` : `Retrieving decal codes...`}
+        loading={checkingEligibility || redeeming}
+        loadingText={checkingEligibility ? `Checking decal eligibility...` : `Redeeming decal codes...`}
         manual
-        minRows={1}
-        noDataText={(eligibilityChecked && !eligible) ? `Sorry, you're not eligible for a decal.` : null}
+        minRows={5}
+        noDataText={this._renderNoDataText()}
         showPagination={false} />
     )
   }
