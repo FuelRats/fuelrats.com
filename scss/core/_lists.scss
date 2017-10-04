@@ -12,6 +12,12 @@ ol, ul {
     }
   }
 
+  > li {
+    &.inaccessible {
+      text-decoration: line-through;
+    }
+  }
+
   &.inline {
     display: flex;
     flex-wrap: wrap;
