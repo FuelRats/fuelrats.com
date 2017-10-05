@@ -10,6 +10,7 @@ import { connect } from 'react-redux'
 
 // Module imports
 import { actions } from '../store'
+import AddNicknameForm from './AddNicknameForm'
 import Component from './Component'
 
 
@@ -30,20 +31,25 @@ class UserNicknamesPanel extends Component {
         <header>IRC Nicknames</header>
 
         <div className="panel-content">
-          <div className="row">
-            <ul>
-              {user.attributes && user.attributes.nicknames && user.attributes.nicknames.map((nickname, index) => <li key={index}>{nickname}</li>)}
-            </ul>
-          </div>
-
-          <form className="row">
-            <input className="stretch-9" name="add-nickname" placeholder="Add a nickname..." type="text" />
-            <button data-action="add-nickname" type="submit">Add</button>
-          </form>
+          <ul>
+            {user.attributes && user.attributes.nicknames && user.attributes.nicknames.map((nickname, index) => <li key={index}>{nickname}</li>)}
+          </ul>
         </div>
+
+        <footer>
+          <AddNicknameForm />
+        </footer>
       </div>
     )
   }
+}
+
+
+
+
+
+const mapDispatchToProps = dispatch => {
+  return {}
 }
 
 
