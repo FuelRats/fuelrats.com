@@ -43,7 +43,7 @@ class AddNicknameForm extends Component {
 
     this.setState({ submitting: true })
 
-    await addNickname(nickname, prompt('Please enter your password:'))
+    await addNickname(nickname, prompt(`Please enter your IRC password (this may be different from your website password):`))
 
     this.setState({
       nickname: '',
