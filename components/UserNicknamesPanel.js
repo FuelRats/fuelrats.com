@@ -36,7 +36,7 @@ class UserNicknamesPanel extends Component {
           </ul>
         </div>
 
-        <footer hidden={true}>
+        <footer>
           <AddNicknameForm />
         </footer>
       </div>
