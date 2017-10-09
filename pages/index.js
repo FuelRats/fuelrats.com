@@ -21,7 +21,7 @@ const title = 'Home'
 
 
 
-class Home extends React.Component {
+class Index extends React.Component {
 
   /***************************************************************************\
     Public Methods
@@ -48,7 +48,7 @@ class Home extends React.Component {
         </header>
 
         <footer className="call-to-action">
-          <Link href="/get-help">
+          <Link href="/i-need-fuel">
             <a className="button">Get Help</a>
           </Link>
         </footer>
@@ -67,6 +67,6 @@ const mapDispatchToProps = ['showDialog']
 
 
 
-export default Page(Home, title, {
+export default Page(Index, title, {
   mapDispatchToProps,
 })

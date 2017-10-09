@@ -2,6 +2,7 @@
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   text-overflow: ellipsis;
+  text-rendering: optimizeLegibility;
 }
 
 html,
@@ -24,6 +25,6 @@ html {
   align-items: stretch;
   display: flex;
   font-family: Raleway, sans-serif;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 2;
 }

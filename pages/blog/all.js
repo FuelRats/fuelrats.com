@@ -11,9 +11,9 @@ import React from 'react'
 
 
 // Component imports
-import { actions } from '../store'
-import Component from '../components/Component'
-import Page from '../components/Page'
+import { actions } from '../../store'
+import Component from '../../components/Component'
+import Page from '../../components/Page'
 
 
 
@@ -32,22 +32,81 @@ class Blogs extends Component {
     Private Methods
   \***************************************************************************/
 
-  _newerPage () {
-    let newPage = this.state.page - 1
-    Router.push(`/blogs?page=${newPage}`, `/blogs/page/${newPage}`)
+  _renderMenu () {
+    let {
+      author,
+      category,
+      page,
+      totalPages,
+    } = this.props
+
+    let hrefQueryParams = []
+    let href = '/blog/all'
+    let as = '/blog'
+
+    if (author) {
+      hrefQueryParams.push(`author=${author}`)
+      as += `/author/${author}`
+    }
+
+    if (category) {
+      hrefQueryParams.push(`category=${category}`)
+      as += `/category/${category}`
+    }
+
+    return (
+      <menu
+        type="toolbar">
+        <div className="secondary">
+          {(page > 1) && (
+            <Link
+              as={`${as}/page/${page - 1}`}
+              href={`${href}?${hrefQueryParams.concat(`page=${page - 1}`).join('&')}`}>
+              <a className="button">Previous Page</a>
+            </Link>
+          )}
+        </div>
+
+        <div className="primary">
+          {(page < totalPages) && (
+            <Link
+              as={`${as}/page/${page + 1}`}
+              href={`${href}?${hrefQueryParams.concat(`page=${page + 1}`).join('&')}`}>
+              <a className="button">Next Page</a>
+            </Link>
+          )}
+        </div>
+      </menu>
+    )
   }
 
-  _olderPage () {
-    let newPage = this.state.page + 1
-    Router.push(`/blogs?page=${newPage}`, `/blogs/page/${newPage}`)
-  }
+  async _retrieveBlogs (options = {}) {
+    let {
+      author,
+      category,
+      page,
+      retrieveBlogs,
+    } = this.props
 
-  async _retrieveBlogs () {
+    let wpOptions = {}
+
+    author = options.author || author
+    category = options.category || category
+    wpOptions.page = options.page || page
+
+    if (author) {
+      wpOptions.author = author
+    }
+
+    if (category) {
+      wpOptions.categories = category
+    }
+
     this.setState({
       retrieving: true,
     })
 
-    await this.props.retrieveBlogs(this.state.page)
+    await retrieveBlogs(wpOptions)
 
     this.setState({
       retrieving: false,
@@ -67,61 +126,65 @@ class Blogs extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    let nextPage = parseInt(nextProps.url.query.page || 1)
+    let {
+      author,
+      category,
+      page,
+    } = this.props
 
-    if (nextPage !== this.state.page) {
-      this.setState({
-        page: nextPage
-      }, this._retrieveBlogs)
+    let authorMatches = author === nextProps.author
+    let categoryMatches = category === nextProps.category
+    let pageMatches = page === nextProps.page
+
+    if (!authorMatches || !categoryMatches || !pageMatches) {
+      this._retrieveBlogs({
+        author: nextProps.author,
+        category: nextProps.category,
+        page: page,
+      })
     }
   }
 
   constructor (props) {
     super(props)
 
-    this._bindMethods([
-      '_newerPage',
-      '_olderPage',
-      '_retrieveBlogs',
-    ])
-
     this.state = {
       retrieving: false,
-      page: props.page || 1,
     }
   }
 
   static async getInitialProps ({ query }) {
-    let { page } = query
+    let props = {}
 
-    if (!page || page < 1) {
-      page = 1
+    props.page = parseInt(query.page || 1)
+
+    if (query.category) {
+      props.category = query.category
     }
 
-    page = parseInt(page)
-
-    return {
-      page,
-      query,
+    if (query.author) {
+      props.author = query.author
     }
+
+    return props
   }
 
   render () {
     let {
       blogs,
-      path,
       query,
       totalPages,
     } = this.props
     let {
-      page,
       retrieving,
     } = this.state
+
+    let page = parseInt(query.page || 1)
 
     return (
       <div className="page-wrapper">
         <header className="page-header">
-          <h2>{title}</h2>
+          <h1>{title}</h1>
         </header>
 
         <div className="page-content">
@@ -138,7 +201,7 @@ class Blogs extends Component {
                   <article>
                     <header>
                       <h3 className="title">
-                        <Link as={`/blog/${blog.id}`} href={`/blog?id=${blog.id}`}>
+                        <Link as={`/blog/${blog.id}`} href={`/blog/single?id=${blog.id}`}>
                           <a dangerouslySetInnerHTML={{ __html: blog.title.rendered }} />
                         </Link>
                       </h3>
@@ -153,14 +216,16 @@ class Blogs extends Component {
                       <span className="author">
                         <i className="fa fa-fw fa-user" />
 
-                        <Link href={`/blogs/author/${author.id}`}>
+                        <Link
+                          as={`/blog/author/${author.id}`}
+                          href={`/blog/all?author=${author.id}`}>
                           <a>{author.name}</a>
                         </Link>
                       </span>
 
                       <span>
                         <i className="fa fa-folder fa-fw" />
-                        Categories:
+
                         <ul className="category-list">
                           {blog.categories.map(category => {
                             let {
@@ -171,7 +236,9 @@ class Blogs extends Component {
 
                             return (
                               <li key={id}>
-                                <Link href={`/blogs/category/${id}`}>
+                                <Link
+                                  as={`/blog/category/${id}`}
+                                  href={`/blog/all?category=${id}`}>
                                   <a title={description}>{name}</a>
                                 </Link>
                               </li>
@@ -181,33 +248,16 @@ class Blogs extends Component {
                       </span>
                     </small>
 
-                    <div dangerouslySetInnerHTML={{ __html: blog.excerpt.rendered }} />
+                    <div
+                      className="article-content"
+                      dangerouslySetInnerHTML={{ __html: blog.excerpt.rendered }} />
                   </article>
                 </li>
               )
             })}
           </ol>
 
-          <menu
-            type="toolbar">
-            <div className="secondary">
-              {(page > 1) && (
-                <button
-                  onClick={this._newerPage}>
-                  Newer
-                </button>
-              )}
-            </div>
-
-            <div className="primary">
-              {(page < totalPages) && (
-                <button
-                  onClick={this._olderPage}>
-                  Older
-                </button>
-              )}
-            </div>
-          </menu>
+          {this._renderMenu()}
         </div>
       </div>
     )

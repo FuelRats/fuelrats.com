@@ -56,7 +56,7 @@ export const login = (email, password) => async dispatch => {
         searchParams[key] = value
       })
 
-      location = searchParams['destination'] ? searchParams['destination'] : '/profile'
+      location = searchParams['destination'] ? decodeURIComponent(searchParams['destination']) : '/profile'
     }
 
   } catch (error) {
@@ -77,6 +77,8 @@ export const logout = () => async dispatch => {
   dispatch({ type: actionTypes.LOGOUT })
 
   try {
+    localStorage.removeItem('userId')
+    localStorage.removeItem('preferences')
     localStorage.removeItem('access_token')
     Cookies.remove('access_token')
     Router.push('/')

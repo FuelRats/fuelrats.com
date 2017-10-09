@@ -38,6 +38,7 @@ module.exports = function (nextjs, koa, config) {
     '/paperwork',
     '/paperwork/*',
     '/profile',
+    '/authorize'
   ]
 
   router.get(authenticatedRoutes, async (ctx, next) => {
@@ -45,7 +46,7 @@ module.exports = function (nextjs, koa, config) {
       await next()
 
     } else {
-      await ctx.redirect(`/?authenticate=true&destination=${ctx.request.url}`)
+      await ctx.redirect(`/?authenticate=true&destination=${encodeURIComponent(ctx.request.url)}`)
     }
   })
 
@@ -57,9 +58,29 @@ module.exports = function (nextjs, koa, config) {
     Redirects
   \******************************************************************************/
 
-  router.get('/i-need-fuel', async (ctx, next) => {
+  router.get('/blogs', async (ctx, next) => {
+    ctx.status = 302
+    await ctx.redirect(`/blog`)
+  })
+
+  router.get('/fuel-rats-lexicon', async (ctx, next) => {
     ctx.status = 301
-    await ctx.redirect(`/get-help`)
+    await ctx.redirect(`https://confluence.fuelrats.com/pages/viewpage.action?pageId=3637257`)
+  })
+
+  router.get('/get-help', async (ctx, next) => {
+    ctx.status = 302
+    await ctx.redirect(`/i-need-fuel`)
+  })
+
+  router.get('/privacy-policy', async (ctx, next) => {
+    ctx.status = 302
+    await ctx.redirect(`https://confluence.fuelrats.com/display/FRKB/Privacy+Policy`)
+  })
+
+  router.get('/terms-of-service', async (ctx, next) => {
+    ctx.status = 302
+    await ctx.redirect(`https://confluence.fuelrats.com/display/FRKB/Terms+of+Service`)
   })
 
 
@@ -70,20 +91,34 @@ module.exports = function (nextjs, koa, config) {
     Parameterized routes
   \******************************************************************************/
 
-  router.get('/blogs/page/:page', async (ctx, next) => {
-    await nextjs.render(ctx.request, ctx.res, '/blogs', Object.assign({}, ctx.query, ctx.params))
+  // Single blog
+  router.get('/blog/:id', async (ctx, next) => {
+    await nextjs.render(ctx.request, ctx.res, '/blog/single', Object.assign({}, ctx.query, ctx.params))
+    ctx.respond = false
   })
 
-  router.get('/blog/:id', async (ctx, next) => {
-    await nextjs.render(ctx.request, ctx.res, '/blog', Object.assign({}, ctx.query, ctx.params))
+  // Blog catch all
+  let blogListRoutes = [
+    '/blog/author/:author/page/:page',
+    '/blog/author/:author',
+    '/blog/category/:category/page/:page',
+    '/blog/category/:category',
+    '/blog/page/:page',
+    '/blog',
+  ]
+  router.get(blogListRoutes, async (ctx, next) => {
+    await nextjs.render(ctx.request, ctx.res, '/blog/all', Object.assign({}, ctx.query, ctx.params))
+    ctx.respond = false
   })
 
   router.get('/paperwork/:id/edit', async (ctx, next) => {
     await nextjs.render(ctx.request, ctx.res, '/paperwork/edit', Object.assign({}, ctx.query, ctx.params))
+    ctx.respond = false
   })
 
   router.get(['/paperwork/:id', '/paperwork/:id/view'], async (ctx, next) => {
     await nextjs.render(ctx.request, ctx.res, '/paperwork/view', Object.assign({}, ctx.query, ctx.params))
+    ctx.respond = false
   })
 
 

@@ -1,0 +1,17 @@
+.page.i-need-fuel {
+  .buttons {
+    align-items: flex-end;
+    display: flex;
+    justify-content: space-between;
+
+    .call-to-action {
+      font-size: 2em;
+      padding: 1rem 4rem;
+    }
+
+    div {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}

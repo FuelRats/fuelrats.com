@@ -70,18 +70,6 @@ class UserRatsPanel extends Component {
     Public Methods
   \***************************************************************************/
 
-  componentWillMount () {
-    let {
-      CMDRs,
-      getRats,
-      rats,
-    } = this.props
-
-    if (CMDRs && !rats) {
-      getRats(CMDRs)
-    }
-  }
-
   constructor (props) {
     super(props)
 
@@ -204,10 +192,13 @@ const mapStateToProps = state => {
     user,
   } = state
 
+  rats = Object.assign(rats, {
+    rats: rats.rats.filter(rat => user.id === rat.attributes.userId),
+  })
+
   return {
     rats,
     ships,
-    user,
   }
 }
 

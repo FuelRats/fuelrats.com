@@ -11,6 +11,11 @@ export default {
     totalPages: 0,
   },
 
+  decals: {
+    decals: [],
+    eligible: false,
+  },
+
   dialog: {
     body: null,
     closeIsVisible: true,
@@ -71,6 +76,9 @@ export default {
     attributes: null,
     id: null,
     permissions: new Set,
+    preferences: {
+      allowPersonalizedTracking: false,
+    },
     relationships: null,
     retrieving: false,
   },

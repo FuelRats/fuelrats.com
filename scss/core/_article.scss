@@ -1,7 +1,13 @@
 article {
   line-height: 2.5;
 
-  small {
+  > aside,
+  > header {
+    margin-left: 4rem;
+    margin-right: 4rem;
+  }
+
+  > small {
     border-color: $grey;
     border-style: solid;
     border-width: 0.1rem;
@@ -9,8 +15,7 @@ article {
     border-left: none;
     border-right: none;
     display: block;
-    margin-bottom: 2rem;
-    margin-top: 2rem;
+    margin: 2rem 4rem;
     padding: 0 1rem;
 
     > * {
@@ -22,12 +27,32 @@ article {
     }
   }
 
-  header,
-  ol,
-  p,
-  small,
-  ul {
-    margin-left: 4rem;
-    margin-right: 4rem;
+  .article-content {
+    h1, h2, h3,
+    h4, h5, h6,
+    header,
+    ol,
+    p,
+    ul {
+      margin-bottom: 2rem;
+      margin-left: 4rem;
+      margin-right: 4rem;
+    }
+
+    h1, h2, h3,
+    h4, h5, h6 {
+      margin-top: 4rem;
+    }
+
+    ol,
+    ul {
+      li:not(:last-child) {
+        margin-bottom: 2rem;
+      }
+    }
+  }
+
+  .link-more {
+    display: none;
   }
 }

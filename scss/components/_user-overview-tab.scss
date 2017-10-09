@@ -1,5 +1,28 @@
 .user-overview-tab {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+
   .panel {
     margin-bottom: 2rem;
+    width: calc(50% - 1rem);
+
+    &:nth-of-type(even) {
+      margin-left: 1rem;
+    }
+
+    &:nth-of-type(odd) {
+      margin-right: 1rem;
+    }
+  }
+
+  @media only screen and (max-width: 768px) {
+    flex-direction: column;
+
+    .panel:nth-of-type(n) {
+      margin-left: 0;
+      margin-right: 0;
+      width: 100%;
+    }
   }
 }

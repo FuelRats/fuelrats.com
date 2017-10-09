@@ -54,7 +54,6 @@ module.exports = function (koa, config) {
   \******************************************************************************/
 
   koa.use(proxy('/wp-api', {
-    auth: `${config.wordpress.username}:${config.wordpress.password}`,
     changeOrigin: true,
     rewrite: path => path.replace(/^\/wp\-api/, '/wp-json/wp/v2'),
     target: config.wordpress.url,

@@ -35,6 +35,7 @@ class UserDetailsPanel extends Component {
     let {
       createdAt,
       email,
+      image,
     } = attributes
 
     return (
@@ -44,7 +45,7 @@ class UserDetailsPanel extends Component {
         </header>
 
         <div className="panel-content">
-          <div className="avatar medium"><img src={`//api.adorable.io/avatars/${id}`} /></div>
+          <div className="avatar medium"><img src={image} /></div>
 
           <label>Email:</label>
           <span>
