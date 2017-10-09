@@ -4,3 +4,6 @@ bower_components
 node_modules
 static/compiled
 static/fonts/font-awesome
+
+.idea/
+/package-lock.json
