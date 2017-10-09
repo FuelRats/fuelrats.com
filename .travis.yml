@@ -19,6 +19,17 @@ before_deploy:
 - chmod 600 /tmp/deploy_rsa
 - ssh-add /tmp/deploy_rsa
 
+notifications:
+  irc:
+    on_success: always
+    on_failure: always
+    channels:
+    - irc.us.fuelrats.com#rattech
+    nick: TravisCI
+    template:
+    - '%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{result}'
+    - 'Change view : %{compare_url}  Build details : %{build_url}'
+
 deploy:
 - provider: script
   skip_cleanup: true
