@@ -32,4 +32,18 @@
       text-transform: uppercase;
     }
   }
+
+  @media only screen and (max-width: 768px) {
+    h1 {
+      font-size: 3em;
+    }
+
+    h2 {
+      font-size: 1.6em;
+    }
+
+    .call-to-action .button {
+      font-size: 1em
+    }
+  }
 }
