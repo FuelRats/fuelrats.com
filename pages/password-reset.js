@@ -56,7 +56,7 @@ class PasswordReset extends Component {
     this.state = {
       password: '',
       submitted: false,
-      submitting: true,
+      submitting: false,
       token: props.query.t,
       tokenIsValid: false,
       validating: true,
