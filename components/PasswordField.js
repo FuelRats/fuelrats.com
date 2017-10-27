@@ -105,6 +105,7 @@ export default class extends Component {
       showPassword,
     } = this.state
     let {
+      disabled,
       onChange,
       showStrength,
       showSuggestions,
@@ -132,6 +133,7 @@ export default class extends Component {
 
           <button
             className={showPassword ? 'show' : 'hide'}
+            disabled={disabled}
             onClick={this.handleShowPasswordClick}
             tabIndex="-1"
             type="button">

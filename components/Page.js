@@ -49,7 +49,7 @@ export default (Component, title = 'Untitled', reduxOptions = {}) => {
         asPath,
         isServer,
         query,
-        ...props
+        ...props,
       }
     }
 

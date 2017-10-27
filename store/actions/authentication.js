@@ -215,13 +215,15 @@ export const resetPassword = (password, token) => async dispatch => {
       method: 'post',
     })
 
-    response = await response.json()
+    if (response.ok) {
+      return dispatch({
+        status: 'success',
+        type: actionTypes.RESET_PASSWORD,
+        payload: response,
+      })
+    }
 
-    dispatch({
-      status: 'success',
-      type: actionTypes.RESET_PASSWORD,
-      payload: response,
-    })
+    throw new Error('Failed to reset password')
 
   } catch (error) {
     dispatch({
@@ -241,14 +243,11 @@ export const sendPasswordResetEmail = email => async dispatch => {
   dispatch({ type: actionTypes.SEND_PASSWORD_RESET_EMAIL })
 
   try {
-    let token = localStorage.getItem('access_token')
-
     let response = await fetch(`/api/reset`, {
       body: JSON.stringify({
         email,
       }),
       headers: new Headers({
-        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       }),
       method: 'post',
@@ -270,4 +269,23 @@ export const sendPasswordResetEmail = email => async dispatch => {
 
     console.log(error)
   }
+}
+
+
+
+
+
+export const validatePasswordResetToken = (token) => async dispatch => {
+  let response
+
+  dispatch({ type: actionTypes.VALIDATE_PASSWORD_RESET_TOKEN })
+
+  try {
+    response = await fetch(`/api/reset/${token}`)
+
+  } catch (error) {
+    console.log(error)
+  }
+
+  return response.ok
 }
