@@ -14,6 +14,45 @@ import actionTypes from '../actionTypes'
 
 
 
+export const changePassword = (currentPassword, newPassword) => async dispatch => {
+  dispatch({ type: actionTypes.CHANGE_PASSWORD })
+
+  try {
+    let token = localStorage.getItem('access_token')
+
+    let response = await fetch(`/api/users/setpassword`, {
+      body: JSON.stringify({
+        password: currentPassword,
+        new: newPassword,
+      }),
+      headers: new Headers({
+        Authorization: `Bearer ${token}`,
+      }),
+      method: 'put',
+    })
+
+    response = await response.json()
+
+    dispatch({
+      status: 'success',
+      type: actionTypes.CHANGE_PASSWORD,
+      payload: response,
+    })
+
+  } catch (error) {
+    dispatch({
+      status: 'error',
+      type: actionTypes.CHANGE_PASSWORD,
+    })
+
+    console.log(error)
+  }
+}
+
+
+
+
+
 export const login = (email, password) => async dispatch => {
   dispatch({ type: actionTypes.LOGIN })
 
@@ -156,4 +195,97 @@ export const register = (email, password, name, platform, nickname, recaptcha) =
 
     console.log(error)
   }
+}
+
+
+
+
+
+export const resetPassword = (password, token) => async dispatch => {
+  dispatch({ type: actionTypes.RESET_PASSWORD })
+
+  try {
+    let response = await fetch(`/api/reset/${token}`, {
+      body: JSON.stringify({
+        password,
+      }),
+      headers: new Headers({
+        'Content-Type': 'application/json',
+      }),
+      method: 'post',
+    })
+
+    if (response.ok) {
+      return dispatch({
+        status: 'success',
+        type: actionTypes.RESET_PASSWORD,
+        payload: response,
+      })
+    }
+
+    throw new Error('Failed to reset password')
+
+  } catch (error) {
+    dispatch({
+      status: 'error',
+      type: actionTypes.RESET_PASSWORD,
+    })
+
+    console.log(error)
+  }
+}
+
+
+
+
+
+export const sendPasswordResetEmail = email => async dispatch => {
+  dispatch({ type: actionTypes.SEND_PASSWORD_RESET_EMAIL })
+
+  try {
+    let response = await fetch(`/api/reset`, {
+      body: JSON.stringify({
+        email,
+      }),
+      headers: new Headers({
+        'Content-Type': 'application/json',
+      }),
+      method: 'post',
+    })
+
+    response = await response.json()
+
+    dispatch({
+      status: 'success',
+      type: actionTypes.SEND_PASSWORD_RESET_EMAIL,
+      payload: response,
+    })
+
+  } catch (error) {
+    dispatch({
+      status: 'error',
+      type: actionTypes.SEND_PASSWORD_RESET_EMAIL,
+    })
+
+    console.log(error)
+  }
+}
+
+
+
+
+
+export const validatePasswordResetToken = (token) => async dispatch => {
+  let response
+
+  dispatch({ type: actionTypes.VALIDATE_PASSWORD_RESET_TOKEN })
+
+  try {
+    response = await fetch(`/api/reset/${token}`)
+
+  } catch (error) {
+    console.log(error)
+  }
+
+  return response.ok
 }

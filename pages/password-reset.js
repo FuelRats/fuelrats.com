@@ -32,6 +32,20 @@ class PasswordReset extends Component {
     Public Methods
   \***************************************************************************/
 
+  async componentDidMount () {
+    let token = this.props.query.t
+    let tokenIsValid
+
+    if (token) {
+      tokenIsValid = await this.props.validatePasswordResetToken(token)
+    }
+
+    this.setState({
+      tokenIsValid,
+      validating: false,
+    })
+  }
+
   constructor (props) {
     super(props)
 
@@ -40,38 +54,18 @@ class PasswordReset extends Component {
     ])
 
     this.state = {
-      newPassword: '',
-      submitting: false,
-      token: null,
+      password: '',
+      submitted: false,
+      submitting: true,
+      token: props.query.t,
+      tokenIsValid: false,
+      validating: true,
     }
-  }
-
-  static async getInitialProps ({ query }) {
-    let token = query.t
-
-    if (token) {
-      try{
-        let response = await fetch(`/api/reset/${token}`, {
-          method: 'get',
-        })
-        response = await response.json()
-
-        console.log(response)
-
-        return {
-          token,
-        }
-      } catch (error) {
-        return {}
-      }
-    }
-
-    return {}
   }
 
   async onSubmit (event) {
     let {
-      newPassword,
+      password,
       token,
     } = this.state
 
@@ -79,18 +73,21 @@ class PasswordReset extends Component {
 
     this.setState({ submitting: true })
 
-    await this.props.resetPassword(newPassword, token)
+    await this.props.resetPassword(password, token)
 
-    this.setState({ submitting: false })
+    this.setState({
+      submitted: true,
+      submitting: false,
+    })
   }
 
   render () {
     let {
-      token,
-    } = this.props
-    let {
-      newPassword,
+      password,
+      submitted,
       submitting,
+      tokenIsValid,
+      validating,
     } = this.state
 
     return (
@@ -99,8 +96,16 @@ class PasswordReset extends Component {
           <h1>{title}</h1>
         </header>
 
-        {!!token && (
-          <div className="page-content">
+        <div className="page-content">
+          {validating && (
+            <span>Validating token...</span>
+          )}
+
+          {submitted && (
+            <span>Your password has been changed! You may now login with your new credentials.</span>
+          )}
+
+          {(!submitted && !validating && tokenIsValid) && (
             <form onSubmit={this.onSubmit}>
               <fieldset>
                 <label
@@ -112,14 +117,14 @@ class PasswordReset extends Component {
                   disabled={submitting}
                   id="password"
                   name="password"
-                  onChange={newPassword => this.setState({ newPassword })}
+                  onChange={event => this.setState({ password: event.target.value })}
                   pattern="^[^\s]{5,42}$"
                   placeholder="Use a strong password to keep your account secure"
                   ref={_password => this._password = _password}
                   required={true}
                   showStrength={true}
                   showSuggestions={true}
-                  value={newPassword} />
+                  value={password} />
               </fieldset>
 
               <menu type="toolbar">
@@ -134,18 +139,18 @@ class PasswordReset extends Component {
                 <div className="secondary"></div>
               </menu>
             </form>
-          </div>
-        )}
+          )}
 
-        {!token && (
-          <div className="page-content">
-            <header>
-              <h3>Invalid Token</h3>
-            </header>
+          {(!submitted && !validating && !tokenIsValid) && (
+            <div>
+              <header>
+                <h3>Invalid Token</h3>
+              </header>
 
-            <p>Your token is invalid, which probably just means it expired. <Link href="/forgot-password"><a>Click here</a></Link> to try resetting your password again.</p>
-          </div>
-        )}
+              <p>Your token is invalid, which probably just means it expired. <Link href="/forgot-password"><a>Click here</a></Link> to try resetting your password again.</p>
+            </div>
+          )}
+        </div>
       </div>
     )
   }
@@ -171,6 +176,7 @@ class PasswordReset extends Component {
 const mapDispatchToProps = dispatch => {
   return {
     resetPassword: bindActionCreators(actions.resetPassword, dispatch),
+    validatePasswordResetToken: bindActionCreators(actions.validatePasswordResetToken, dispatch),
   }
 }
 
