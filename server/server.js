@@ -30,6 +30,8 @@ next.prepare()
     require('./config/file-logger')(koa)
   }
 
+  koa.use(require('koa-no-trailing-slash')())
+
   koa.use(require('koa-logger')())
 
   // Configure proxies
