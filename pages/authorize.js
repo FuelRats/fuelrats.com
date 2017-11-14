@@ -139,14 +139,16 @@ class Authorize extends Component {
                 <button
                   className="green"
                   disabled={submitting}
-                  value="allow"
+                  name="allow"
+                  value="true"
                   type="submit">
                   {submitting ? 'Submitting...' : 'Allow'}
                 </button>
 
                 <button
                   disabled={submitting}
-                  value="deny"
+                  name="cancel"
+                  value="true"
                   type="submit">
                   {submitting ? 'Submitting...' : 'Deny'}
                 </button>
