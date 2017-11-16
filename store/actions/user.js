@@ -1,5 +1,6 @@
 // Module imports
 import fetch from 'isomorphic-fetch'
+import Cookies from 'js-cookie'
 
 
 
@@ -58,6 +59,7 @@ export const getUser = () => async dispatch => {
 
     if (token === 'undefined') {
       localStorage.removeItem('access_token')
+      Cookies.remove('access_token')
       throw new Error('Bad access token')
     }
 
@@ -77,6 +79,8 @@ export const getUser = () => async dispatch => {
     })
 
   } catch (error) {
+    Cookies.remove('access_token')
+
     dispatch({
       status: 'error',
       type: actionTypes.GET_USER,
