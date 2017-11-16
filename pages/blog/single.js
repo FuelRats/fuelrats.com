@@ -33,14 +33,20 @@ class Blog extends Component {
   \***************************************************************************/
 
   async _retrieveBlog () {
+    let {
+      blogs,
+      query,
+      retrieveBlog,
+    } = this.props
+
     this.setState({
       retrieving: true,
     })
 
-    await this.props.retrieveBlog(this.props.id)
+    await retrieveBlog(query.id)
 
     this.setState({
-      blog: this.props.blogs.find(blog => blog.id === this.props.id),
+      blog: this.props.blogs.find(blog => (blog.id === query.id) || (blog.slug === query.id)),
       retrieving: false,
     })
   }
@@ -63,21 +69,6 @@ class Blog extends Component {
     this.state = {
       blog: props.blogs.find(blog => blog.id === props.id),
       retrieving: true,
-    }
-  }
-
-  static async getInitialProps ({ query }) {
-    let { id } = query
-
-    if (!id || id < 1) {
-      id = 1
-    }
-
-    id = parseInt(id)
-
-    return {
-      id,
-      query,
     }
   }
 

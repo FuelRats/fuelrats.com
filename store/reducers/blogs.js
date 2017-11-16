@@ -17,7 +17,7 @@ export default function (state = initialState.blogs, action) {
       switch (status) {
         case 'success':
           return Object.assign({}, state, {
-            blogs: [payload],
+            blogs: state.blogs.concat(payload),
           })
 
         default:
