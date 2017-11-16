@@ -1,6 +1,6 @@
 import actionTypes from '../actionTypes'
 import initialState from '../initialState'
-
+import Router from 'next/router'
 
 
 
@@ -35,6 +35,7 @@ export default function (state = initialState.user, action) {
         switch (action.status) {
           case 'error':
             localStorage.removeItem('access_token')
+            Router.push(`/?authenticate=true&destination=${encodeURIComponent(location.pathname+location.search)}`)
             break;
 
           default:
