@@ -26,8 +26,23 @@ export const retrieveBlog = id => async dispatch => {
   dispatch({ type: actionTypes.RETRIEVE_BLOG })
 
   try {
-    let response = await fetch(`/wp-api/posts/${id}`)
+    let blogUrl = `/wp-api/posts/`
+
+    if (parseInt(id)) {
+      blogUrl += id
+
+    } else {
+      blogUrl += `?slug=${id}`
+    }
+
+    let response = await fetch(blogUrl)
     let blog = await response.json()
+
+    if (Array.isArray(blog)) {
+      [blog] = blog
+    }
+
+    blog.id = blog.id.toString()
 
     let authorResponse = await fetch(`/wp-api/users/${blog.author}`)
     authorResponse = await authorResponse.json()

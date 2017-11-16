@@ -55,9 +55,54 @@ module.exports = function (nextjs, koa, config) {
 
 
   /******************************************************************************\
+    Parameterized routes
+  \******************************************************************************/
+
+  router.get('/blog/:id', async (ctx, next) => {
+    await nextjs.render(ctx.request, ctx.res, '/blog/single', Object.assign({}, ctx.query, ctx.params))
+    ctx.respond = false
+  })
+
+  // Blog catch all
+  let blogListRoutes = [
+    '/blog/author/:author/page/:page',
+    '/blog/author/:author',
+    '/blog/category/:category/page/:page',
+    '/blog/category/:category',
+    '/blog/page/:page',
+    '/blog',
+  ]
+
+  router.get(blogListRoutes, async (ctx, next) => {
+    await nextjs.render(ctx.request, ctx.res, '/blog/all', Object.assign({}, ctx.query, ctx.params))
+    ctx.respond = false
+  })
+
+  router.get('/paperwork/:id/edit', async (ctx, next) => {
+    await nextjs.render(ctx.request, ctx.res, '/paperwork/edit', Object.assign({}, ctx.query, ctx.params))
+    ctx.respond = false
+  })
+
+  router.get(['/paperwork/:id', '/paperwork/:id/view'], async (ctx, next) => {
+    await nextjs.render(ctx.request, ctx.res, '/paperwork/view', Object.assign({}, ctx.query, ctx.params))
+    ctx.respond = false
+  })
+  
+  
+  
+  
+  
+  /******************************************************************************\
     Redirects
   \******************************************************************************/
 
+  // Legacy Wordpress permalinks
+  router.get('/:year/:month/:day/:slug', async (ctx, next) => {
+    ctx.status = 302
+    await ctx.redirect(`/blog/${ctx.params.slug}`)
+  })
+
+  // Legacy blog list route
   router.get('/blogs', async (ctx, next) => {
     ctx.status = 302
     await ctx.redirect(`/blog`)
@@ -81,44 +126,6 @@ module.exports = function (nextjs, koa, config) {
   router.get('/terms-of-service', async (ctx, next) => {
     ctx.status = 302
     await ctx.redirect(`https://confluence.fuelrats.com/display/FRKB/Terms+of+Service`)
-  })
-
-
-
-
-
-  /******************************************************************************\
-    Parameterized routes
-  \******************************************************************************/
-
-  // Single blog
-  router.get('/blog/:id', async (ctx, next) => {
-    await nextjs.render(ctx.request, ctx.res, '/blog/single', Object.assign({}, ctx.query, ctx.params))
-    ctx.respond = false
-  })
-
-  // Blog catch all
-  let blogListRoutes = [
-    '/blog/author/:author/page/:page',
-    '/blog/author/:author',
-    '/blog/category/:category/page/:page',
-    '/blog/category/:category',
-    '/blog/page/:page',
-    '/blog',
-  ]
-  router.get(blogListRoutes, async (ctx, next) => {
-    await nextjs.render(ctx.request, ctx.res, '/blog/all', Object.assign({}, ctx.query, ctx.params))
-    ctx.respond = false
-  })
-
-  router.get('/paperwork/:id/edit', async (ctx, next) => {
-    await nextjs.render(ctx.request, ctx.res, '/paperwork/edit', Object.assign({}, ctx.query, ctx.params))
-    ctx.respond = false
-  })
-
-  router.get(['/paperwork/:id', '/paperwork/:id/view'], async (ctx, next) => {
-    await nextjs.render(ctx.request, ctx.res, '/paperwork/view', Object.assign({}, ctx.query, ctx.params))
-    ctx.respond = false
   })
 
 
