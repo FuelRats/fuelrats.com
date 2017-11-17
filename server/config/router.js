@@ -55,6 +55,56 @@ module.exports = function (nextjs, koa, config) {
 
 
   /******************************************************************************\
+    Redirects
+  \******************************************************************************/
+
+  // Legacy blog list route
+  router.get('/blogs', async (ctx, next) => {
+    ctx.status = 301
+    await ctx.redirect(`/blog`)
+  })
+
+  router.get('/fuel-rats-lexicon', async (ctx, next) => {
+    ctx.status = 301
+    await ctx.redirect(`https://confluence.fuelrats.com/pages/viewpage.action?pageId=3637257`)
+  })
+
+  router.get('/get-help', async (ctx, next) => {
+    ctx.status = 301
+    await ctx.redirect(`/i-need-fuel`)
+  })
+
+  router.get('/privacy-policy', async (ctx, next) => {
+    ctx.status = 307
+    await ctx.redirect(`https://confluence.fuelrats.com/display/FRKB/Privacy+Policy`)
+  })
+
+  router.get('/terms-of-service', async (ctx, next) => {
+    ctx.status = 307
+    await ctx.redirect(`https://confluence.fuelrats.com/display/FRKB/Terms+of+Service`)
+  })
+
+  // Legacy Wordpress permalinks
+  // router.get('/:year/:month/:day/:slug', async (ctx, next) => {
+  //   let {
+  //     day,
+  //     month,
+  //     slug,
+  //     year,
+  //   } = ctx.params
+
+  //   if (parseInt(day) && parseInt(month) && parseInt(year)) {
+  //     console.log('FUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU')
+  //     ctx.status = 301
+  //     return await ctx.redirect(`/blog/${slug}`)
+  //   }
+  // })
+
+
+
+
+
+  /******************************************************************************\
     Parameterized routes
   \******************************************************************************/
 
@@ -86,46 +136,6 @@ module.exports = function (nextjs, koa, config) {
   router.get(['/paperwork/:id', '/paperwork/:id/view'], async (ctx, next) => {
     await nextjs.render(ctx.request, ctx.res, '/paperwork/view', Object.assign({}, ctx.query, ctx.params))
     ctx.respond = false
-  })
-  
-  
-  
-  
-  
-  /******************************************************************************\
-    Redirects
-  \******************************************************************************/
-
-  // Legacy Wordpress permalinks
-  router.get('/:year/:month/:day/:slug', async (ctx, next) => {
-    ctx.status = 302
-    await ctx.redirect(`/blog/${ctx.params.slug}`)
-  })
-
-  // Legacy blog list route
-  router.get('/blogs', async (ctx, next) => {
-    ctx.status = 302
-    await ctx.redirect(`/blog`)
-  })
-
-  router.get('/fuel-rats-lexicon', async (ctx, next) => {
-    ctx.status = 301
-    await ctx.redirect(`https://confluence.fuelrats.com/pages/viewpage.action?pageId=3637257`)
-  })
-
-  router.get('/get-help', async (ctx, next) => {
-    ctx.status = 302
-    await ctx.redirect(`/i-need-fuel`)
-  })
-
-  router.get('/privacy-policy', async (ctx, next) => {
-    ctx.status = 302
-    await ctx.redirect(`https://confluence.fuelrats.com/display/FRKB/Privacy+Policy`)
-  })
-
-  router.get('/terms-of-service', async (ctx, next) => {
-    ctx.status = 302
-    await ctx.redirect(`https://confluence.fuelrats.com/display/FRKB/Terms+of+Service`)
   })
 
 
