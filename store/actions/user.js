@@ -1,6 +1,7 @@
 // Module imports
 import fetch from 'isomorphic-fetch'
 import Cookies from 'js-cookie'
+import Router from 'next/router'
 
 
 
@@ -79,6 +80,7 @@ export const getUser = () => async dispatch => {
     })
 
   } catch (error) {
+    localStorage.removeItem('access_token')
     Cookies.remove('access_token')
 
     dispatch({
@@ -87,6 +89,8 @@ export const getUser = () => async dispatch => {
     })
 
     console.log(error)
+
+    Router.push(`/?authenticate=true&destination=${encodeURIComponent(location.pathname.concat(location.search))}`)
   }
 }
 
