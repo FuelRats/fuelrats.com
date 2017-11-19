@@ -187,7 +187,7 @@ class Paperwork extends Component {
 
     this.dirtyFields.clear()
 
-    location = `/paperwork/${rescue.id}`
+    Router.push(`/paperwork/${rescue.id}`)
   }
 
   render () {
