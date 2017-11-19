@@ -86,21 +86,20 @@ module.exports = function (nextjs, koa, config) {
 
   // Legacy Wordpress permalinks
   // 2017/09/07/universal-service-a-fuel-rats-thargoid-cartoon
-  router.get('/\/\d{4}\/\d{2}\/\d{2}\/\w+/', async (ctx, next) => {
-  // router.get('/:year/:month/:day/:slug', async (ctx, next) => {
-    let {
-      day,
-      month,
-      slug,
-      year,
-    } = ctx.params
-
-    if (parseInt(day) && parseInt(month) && parseInt(year)) {
-      console.log('FUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU')
-      ctx.status = 301
-      return await ctx.redirect(`/blog/${slug}`)
-    }
-  })
+  // router.get('/\/\d{4}\/\d{2}\/\d{2}\/\w+/', async (ctx, next) => {
+  // // router.get('/:year/:month/:day/:slug', async (ctx, next) => {
+  //   let {
+  //     day,
+  //     month,
+  //     slug,
+  //     year,
+  //   } = ctx.params
+  //   if (parseInt(day) && parseInt(month) && parseInt(year)) {
+  //     console.log('FUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU')
+  //     ctx.status = 301
+  //     return await ctx.redirect(`/blog/${slug}`)
+  //   }
+  // })
 
 
 
@@ -149,10 +148,10 @@ module.exports = function (nextjs, koa, config) {
   \******************************************************************************/
 
   // Legacy Wordpress permalinks
-  router.get('/:year/:month/:day/:slug', async (ctx, next) => {
-    ctx.status = 302
-    await ctx.redirect(`/blog/${ctx.params.slug}`)
-  })
+  //router.get('/:year/:month/:day/:slug', async (ctx, next) => {
+  //  ctx.status = 302
+  //  await ctx.redirect(`/blog/${ctx.params.slug}`)
+  //})
 
   // Legacy blog list route
   router.get('/blogs', async (ctx, next) => {
