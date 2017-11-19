@@ -57,10 +57,9 @@ export const getUser = () => async dispatch => {
 
   try {
     let token = localStorage.getItem('access_token')
+    let cookieToken = Cookies.get('access_token')
 
-    if (token === 'undefined') {
-      localStorage.removeItem('access_token')
-      Cookies.remove('access_token')
+    if (!token || !cookieToken || token !== cookieToken) {
       throw new Error('Bad access token')
     }
 
