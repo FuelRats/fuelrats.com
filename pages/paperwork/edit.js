@@ -353,7 +353,7 @@ class Paperwork extends Component {
               <label htmlFor="system">Where did it happen? <small>In what star system did the rescue took place? (put "n/a" if not applicable)</small></label>
 
               <SystemTagsInput
-                data-allowNew={true}
+                data-allownew={true}
                 disabled={submitting || retrieving}
                 name="system"
                 onChange={this.handleSystemChange}
