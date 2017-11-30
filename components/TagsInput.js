@@ -469,7 +469,7 @@ export default class extends React.Component {
         <ul className="tags">{this.renderTags()}</ul>
 
         <input
-          autoComplete={false}
+          autoComplete="off"
           name={name}
           onBlur={this.onBlur}
           onFocus={this.onFocus}
