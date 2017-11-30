@@ -84,24 +84,6 @@ module.exports = function (nextjs, koa, config) {
     await ctx.redirect(`https://confluence.fuelrats.com/display/FRKB/Terms+of+Service`)
   })
 
-  // Legacy Wordpress permalinks
-  // 2017/09/07/universal-service-a-fuel-rats-thargoid-cartoon
-  router.get('/\/\d{4}\/\d{2}\/\d{2}\/\w+/', async (ctx, next) => {
-  // router.get('/:year/:month/:day/:slug', async (ctx, next) => {
-    let {
-      day,
-      month,
-      slug,
-      year,
-    } = ctx.params
-
-    if (parseInt(day) && parseInt(month) && parseInt(year)) {
-      console.log('FUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU')
-      ctx.status = 301
-      return await ctx.redirect(`/blog/${slug}`)
-    }
-  })
-
 
 
 
@@ -149,14 +131,30 @@ module.exports = function (nextjs, koa, config) {
   \******************************************************************************/
 
   // Legacy Wordpress permalinks
+  // e.g. /2017/09/07/universal-service-a-fuel-rats-thargoid-cartoon
   router.get('/:year/:month/:day/:slug', async (ctx, next) => {
-    ctx.status = 302
-    await ctx.redirect(`/blog/${ctx.params.slug}`)
+    let {
+      day,
+      month,
+      slug,
+      year,
+    } = ctx.params
+
+    let dayIsValid = parseInt(day) && (day.length === 2)
+    let monthIsValid = parseInt(month) && (month.length === 2)
+    let yearIsValid = parseInt(year) && (year.length === 4)
+
+    if (dayIsValid && monthIsValid && yearIsValid) {
+      ctx.status = 301
+      return await ctx.redirect(`/blog/${slug}`)
+    }
+
+    await next()
   })
 
   // Legacy blog list route
   router.get('/blogs', async (ctx, next) => {
-    ctx.status = 302
+    ctx.status = 301
     await ctx.redirect(`/blog`)
   })
 
@@ -166,17 +164,17 @@ module.exports = function (nextjs, koa, config) {
   })
 
   router.get('/get-help', async (ctx, next) => {
-    ctx.status = 302
+    ctx.status = 301
     await ctx.redirect(`/i-need-fuel`)
   })
 
   router.get('/privacy-policy', async (ctx, next) => {
-    ctx.status = 302
+    ctx.status = 307
     await ctx.redirect(`https://confluence.fuelrats.com/display/FRKB/Privacy+Policy`)
   })
 
   router.get('/terms-of-service', async (ctx, next) => {
-    ctx.status = 302
+    ctx.status = 307
     await ctx.redirect(`https://confluence.fuelrats.com/display/FRKB/Terms+of+Service`)
   })
 
