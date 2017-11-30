@@ -395,18 +395,28 @@ class Paperwork extends Component {
       rescue,
     } = this.state
 
-    if (!rats || !rats.length) {
+    if (rescue.attributes.outcome === 'invalid' || rescue.attributes.outcome === 'other') {
+
+      if (!rescue.attributes.notes || !rescue.attributes.notes.replace(/\s/g,'')) {
+        return false
+      }
+
+    } else if (rescue.attributes.outcome === 'success' || rescue.attributes.outcome === 'failure') {
+
+      if (rescue.attributes.outcome === 'success' && !rescue.attributes.firstLimpetId) {
+        return false
+      }
+
+      if ((!rats || !rats.length)
+        || !rescue.attributes.system
+        || !rescue.attributes.platform) {
+        return false
+      }
+
+    } else {
       return false
     }
-
-    if ((!rescue.attributes.outcome || (rescue.attributes.outcome === 'success')) && !rescue.attributes.firstLimpetId) {
-      return false
-    }
-
-    if (!rescue.attributes.system) {
-      return false
-    }
-
+    
     return true
   }
 
