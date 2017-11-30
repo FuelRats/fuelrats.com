@@ -395,37 +395,29 @@ class Paperwork extends Component {
       rescue,
     } = this.state
 
-    let isValidPaperwork = true
+    switch (rescue.attributes.outcome) {
 
-    if ((rescue.attributes.outcome === 'invalid' || rescue.attributes.outcome === 'other')) {
+      case 'success':
+      case 'failure':
+        if ((!rescue.attributes.firstLimpetId && rescue.attributes.outcome === 'success')
+          || (!rats || !rats.length)
+          || !rescue.attributes.system
+          || !rescue.attributes.platform) {
+          return false
+        }
+        break
 
-      if (!rescue.attributes.notes || !rescue.attributes.notes.replace(/\s/g,'')) {
-        isValidPaperwork = false
-      }
+      case 'other':
+      case 'invalid': 
+        if (!rescue.attributes.notes || !rescue.attributes.notes.replace(/\s/g,'')) {
+          return false
+        }
+        break
 
-    } else if (rescue.attributes.outcome === 'success' || rescue.attributes.outcome === 'failure') {
-
-      if (rescue.attributes.outcome === 'success' && !rescue.attributes.firstLimpetId) {
-        isValidPaperwork = false
-      }
-
-      if (!rats || !rats.length) {
-        isValidPaperwork = false
-      }
-
-      if (!rescue.attributes.system) {
-        isValidPaperwork = false
-      }
-      
-      if (!rescue.attributes.platform) {
-        isValidPaperwork = false
-      }
-
-    } else {
-      isValidPaperwork = false
+      default:
+        break
     }
-    
-    return isValidPaperwork
+    return true
   }
 
 
