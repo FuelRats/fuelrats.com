@@ -396,28 +396,43 @@ class Paperwork extends Component {
     } = this.state
 
     switch (rescue.attributes.outcome) {
-
       case 'success':
       case 'failure':
-        if ((!rescue.attributes.firstLimpetId && rescue.attributes.outcome === 'success')
-          || (!rats || !rats.length)
-          || !rescue.attributes.system
-          || !rescue.attributes.platform) {
-          return false
-        }
-        break
-
+        return this.validateValidCase()
       case 'other':
-      case 'invalid': 
-        if (!rescue.attributes.notes || !rescue.attributes.notes.replace(/\s/g,'')) {
-          return false
-        }
-        break
-
+      case 'invalid':
+        return this.validateInvalidCase()
       default:
-        break
+        return false
     }
+  }
+
+  validateValidCase() {
+    let {
+      rats,
+      rescue,
+    } = this.state
+
+    if (rescue.attributes.outcome === 'success' && !rescue.attributes.firstLimpetId) {
+      return false
+    }
+
+    if (!rats || !rats.length) {
+      return false
+    }
+
+    if (!rescue.attributes.system || !rescue.attributes.platform) {
+      return false
+    }
+
     return true
+  }
+
+  validateInvalidCase() {
+    let {
+      rescue,
+    } = this.state
+    return Boolean(rescue.attributes.notes && rescue.attributes.notes.replace(/\s/g,''))
   }
 
 
