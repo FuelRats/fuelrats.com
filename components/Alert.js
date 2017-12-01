@@ -6,6 +6,13 @@ import ReactDOM from 'react-dom'
 
 
 
+// Component imports
+import Component from './Component'
+
+
+
+
+
 // Component constants
 const canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement)
 
@@ -13,18 +20,25 @@ const canUseDOM = !!(typeof window !== 'undefined' && window.document && window.
 
 
 
-export default class extends React.Component {
+export default class extends Component {
   constructor (props) {
     super(props)
 
-    if (canUseDOM) {
+    this.canUseDOM = canUseDOM
+
+    if (this.canUseDOM) {
       this.el = document.querySelector('#alert-container')
     }
   }
 
   render () {
-    if (canUseDOM && this.props.open) {
-      return ReactDOM.createPortal(this.props.children, this.el)
+    let {
+      children,
+      open,
+    } = this.props
+
+    if (this.canUseDOM && open) {
+      return ReactDOM.createPortal(children, this.el)
     }
 
     return null
