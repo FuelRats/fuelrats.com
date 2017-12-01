@@ -95,7 +95,7 @@ export const login = (email, password) => async dispatch => {
         searchParams[key] = value
       })
 
-      Router.push(searchParams['destination'] ? decodeURIComponent(searchParams['destination']) : '/profile')
+      location = searchParams['destination'] ? decodeURIComponent(searchParams['destination']) : '/profile'
     }
 
   } catch (error) {
