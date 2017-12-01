@@ -9,6 +9,8 @@ export default class extends Document {
         <body>
           <div id="alert-container" />
 
+          <div id="dialog-container" />
+
           <Main className="next-wrapper" />
 
           <NextScript />

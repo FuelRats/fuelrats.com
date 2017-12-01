@@ -10,6 +10,7 @@ import { connect } from 'react-redux'
 // Component imports
 import Component from './Component'
 import Nav from './Nav'
+import SqueakmasAlert from './SqueakmasAlert'
 
 
 
@@ -76,6 +77,8 @@ class Header extends React.Component {
             </div>
           </div>
         </header>
+
+        <SqueakmasAlert />
       </div>
     )
   }
