@@ -403,14 +403,13 @@ class Paperwork extends Component {
     } = this.state
 
     switch (rescue.attributes.outcome) {
-      case 'success':
-      case 'failure':
-        return this.validateCaseWithValidOutcome()
       case 'other':
       case 'invalid':
         return this.validateCaseWithInvalidOutcome()
+      case 'success':
+      case 'failure':
       default:
-        return false
+        return this.validateCaseWithValidOutcome()
     }
   }
 
@@ -420,7 +419,7 @@ class Paperwork extends Component {
       rescue,
     } = this.state
 
-    if (rescue.attributes.outcome === 'success' && !rescue.attributes.firstLimpetId) {
+    if ((!rescue.attributes.outcome || rescue.attributes.outcome === 'success') && !rescue.attributes.firstLimpetId) {
       return false
     }
 
