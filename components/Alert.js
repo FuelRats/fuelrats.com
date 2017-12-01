@@ -23,7 +23,7 @@ export default class extends React.Component {
   }
 
   render () {
-    if (canUseDOM) {
+    if (canUseDOM && this.props.open) {
       return ReactDOM.createPortal(this.props.children, this.el)
     }
 
