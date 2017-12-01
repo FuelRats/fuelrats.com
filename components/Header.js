@@ -16,6 +16,21 @@ import SqueakmasAlert from './SqueakmasAlert'
 
 
 
+let showSqueakmas = false
+let now = new Date
+let date = now.getUTCDate()
+let dateIsInRange = date >= 1 && date <= 12
+let monthIsCorrect = now.getUTCMonth() === 11
+let yearIsCorrect = now.getUTCFullYear() === 2017
+
+if (dateIsInRange && monthIsCorrect && yearIsCorrect) {
+  showSqueakmas = true
+}
+
+
+
+
+
 class Header extends React.Component {
   render () {
     let {
@@ -78,7 +93,7 @@ class Header extends React.Component {
           </div>
         </header>
 
-        <SqueakmasAlert />
+        {showSqueakmas && <SqueakmasAlert />}
       </div>
     )
   }
