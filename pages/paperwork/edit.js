@@ -142,15 +142,22 @@ class Paperwork extends Component {
     let {
       rescue,
     } = this.state
+    let newState = { ...this.state }
+
+    let systemHasChanged = value.length && (value[0].value !== rescue.attributes.system)
 
     if (value.length && (value[0].value !== rescue.attributes.system)) {
-      let newState = Object.assign({}, this.state)
-
       newState.rescue.attributes.system = value[0].value
 
-      this.setState(newState)
-      this.dirtyFields.add('system')
+    } else if (!value.length && rescue.attributes.system) {
+      newState.rescue.attributes.system = null
+
+    } else {
+      return
     }
+
+    this.setState(newState)
+    this.dirtyFields.add('system')
   }
 
   async onSubmit (event) {
