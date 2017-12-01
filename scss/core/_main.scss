@@ -5,11 +5,7 @@ main {
   flex-grow: 1;
   overflow: auto;
 
-//  section {
-//    background-position: center;
-//    background-repeat: no-repeat;
-//    background-size: cover;
-//    flex-shrink: 0;
-//    height: 100vh;
-//  }
+  @media only screen and (max-width: 768px) {
+    width: 100vw;
+  }
 }
