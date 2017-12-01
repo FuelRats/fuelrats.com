@@ -1,25 +1,30 @@
 dialog {
   background-color: $black;
   border: none;
-  bottom: 0;
   color: $white;
+  flex-basis: 0;
   flex-direction: column;
   flex-grow: 1;
-  left: 0;
+  left: 50%;
   margin: auto;
+  max-width: 80vw;
   min-width: 50vw;
+  opacity: 0;
   padding: 4rem;
+  pointer-events: none;
   position: absolute;
-  right: 0;
-  top: 0;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
 
   &[open] {
-    display: flex;
+    opacity: 1;
+    pointer-events: auto;
   }
 
   & + .backdrop,
   &::backdrop {
-    background-color: rgba($black, 0.8);
+    background-color: rgba($grey, 0.8);
     bottom: 0;
     left: 0;
     position: absolute;
@@ -27,13 +32,12 @@ dialog {
     top: 0;
   }
 
-  header {
+  > *:not(:last-child) {
     margin-bottom: 2rem;
   }
 
   input[type] {
     background-color: rgba($white, 0.2);
-    border: none;
     margin-bottom: 2rem;
   }
 
@@ -48,10 +52,39 @@ dialog {
   }
 
   .content {
+    background-color: $white;
+    box-shadow: 0 0 1rem 0 black;
+    color: $black;
     flex-grow: 1;
+    flex-shrink: 1;
+    line-height: 2.5;
+    margin-left: -6rem;
+    margin-right: -6rem;
+    padding: 4rem;
+    position: relative;
 
-    &:last-child {
-      margin-bottom: 0;
+    &:before,
+    &:after {
+      content: '';
+      border-color: $transparent;
+      border-style: solid;
+      border-width: 1rem;
+      border-top-color: $white;
+      display: block;
+      height: 0;
+      position: absolute;
+      top: 100%;
+      width: 0;
+    }
+
+    &:before {
+      border-right-color: $white;
+      left: 0;
+    }
+
+    &:after {
+      border-left-color: $white;
+      right: 0;
     }
   }
 

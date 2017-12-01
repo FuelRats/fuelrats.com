@@ -142,15 +142,22 @@ class Paperwork extends Component {
     let {
       rescue,
     } = this.state
+    let newState = { ...this.state }
+
+    let systemHasChanged = value.length && (value[0].value !== rescue.attributes.system)
 
     if (value.length && (value[0].value !== rescue.attributes.system)) {
-      let newState = Object.assign({}, this.state)
-
       newState.rescue.attributes.system = value[0].value
 
-      this.setState(newState)
-      this.dirtyFields.add('system')
+    } else if (!value.length && rescue.attributes.system) {
+      newState.rescue.attributes.system = null
+
+    } else {
+      return
     }
+
+    this.setState(newState)
+    this.dirtyFields.add('system')
   }
 
   async onSubmit (event) {
@@ -395,19 +402,44 @@ class Paperwork extends Component {
       rescue,
     } = this.state
 
+    switch (rescue.attributes.outcome) {
+      case 'success':
+      case 'failure':
+        return this.validateCaseWithValidOutcome()
+      case 'other':
+      case 'invalid':
+        return this.validateCaseWithInvalidOutcome()
+      default:
+        return false
+    }
+  }
+
+  validateCaseWithValidOutcome() {
+    let {
+      rats,
+      rescue,
+    } = this.state
+
+    if (rescue.attributes.outcome === 'success' && !rescue.attributes.firstLimpetId) {
+      return false
+    }
+
     if (!rats || !rats.length) {
       return false
     }
 
-    if ((!rescue.attributes.outcome || (rescue.attributes.outcome === 'success')) && !rescue.attributes.firstLimpetId) {
-      return false
-    }
-
-    if (!rescue.attributes.system) {
+    if (!rescue.attributes.system || !rescue.attributes.platform) {
       return false
     }
 
     return true
+  }
+
+  validateCaseWithInvalidOutcome() {
+    let {
+      rescue,
+    } = this.state
+    return Boolean(rescue.attributes.notes.replace(/\s/g,''))
   }
 
 
