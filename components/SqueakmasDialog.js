@@ -74,7 +74,7 @@ export default class extends Component {
                 className='button'
                 href="https://www.justgiving.com/fundraising/frontier-developments"
                 target="_blank">
-                Check it out!
+                Donate
               </a>
             </div>
           </menu>
