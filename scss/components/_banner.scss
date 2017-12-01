@@ -46,7 +46,7 @@
 
   #nav-control:not(:checked) ~ header {
     display: none;
-    width: 0px;
+    width: 0;
   }
 }
 

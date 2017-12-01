@@ -9,7 +9,7 @@ html,
 body,
 [data-reactroot],
 [role=application] {
-  height: 100vh;
+  height: 100%;
   margin: 0;
   overflow: hidden;
   padding: 0;
@@ -20,11 +20,24 @@ html {
   font-size: 10px;
 }
 
-[role=application] {
+body {
   align-content: stretch;
   align-items: stretch;
   display: flex;
+  flex-direction: column;
   font-family: Raleway, sans-serif;
   font-size: 14px;
-  line-height: 2;
+
+  .next-wrapper,
+  #__next {
+    height: 100%;
+  }
+
+  > div {
+    flex-grow: 1;
+
+    &:not([id]):not([class]) {
+      display: none;
+    }
+  }
 }

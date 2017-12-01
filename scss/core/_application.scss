@@ -1,0 +1,13 @@
+[role=application] {
+  display: grid;
+  grid-template-columns: 21rem auto;
+  grid-template-rows: auto;
+  grid-template-areas:
+    'banner main';
+  line-height: 2;
+  position: relative;
+
+  @media only screen and (max-width: 768px) {
+    grid-template-columns: auto auto;
+  }
+}
