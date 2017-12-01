@@ -9,7 +9,7 @@ export default class extends Document {
         <body>
           <div id="alert-container" />
 
-          <Main />
+          <Main className="next-wrapper" />
 
           <NextScript />
         </body>
