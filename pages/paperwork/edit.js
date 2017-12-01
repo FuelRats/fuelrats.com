@@ -405,16 +405,16 @@ class Paperwork extends Component {
     switch (rescue.attributes.outcome) {
       case 'success':
       case 'failure':
-        return this.validateValidCase()
+        return this.validateCaseWithValidOutcome()
       case 'other':
       case 'invalid':
-        return this.validateInvalidCase()
+        return this.validateCaseWithInvalidOutcome()
       default:
         return false
     }
   }
 
-  validateValidCase() {
+  validateCaseWithValidOutcome() {
     let {
       rats,
       rescue,
@@ -435,7 +435,7 @@ class Paperwork extends Component {
     return true
   }
 
-  validateInvalidCase() {
+  validateCaseWithInvalidOutcome() {
     let {
       rescue,
     } = this.state
