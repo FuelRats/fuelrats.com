@@ -439,7 +439,7 @@ class Paperwork extends Component {
     let {
       rescue,
     } = this.state
-    return Boolean(rescue.attributes.notes && rescue.attributes.notes.replace(/\s/g,''))
+    return Boolean(rescue.attributes.notes.replace(/\s/g,''))
   }
 
 
