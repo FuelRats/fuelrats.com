@@ -154,8 +154,8 @@ export default class extends React.Component {
     tags = tags.map(tag => this.parseOption(tag))
 
     this.state = {
-      allowDuplicates: props['data-allowDuplicates'],
-      allowNew: props['data-allowNew'],
+      allowDuplicates: props['data-allowduplicates'],
+      allowNew: props['data-allownew'],
       currentValue: '',
       debug: props.debug,
       focused: false,
@@ -469,7 +469,7 @@ export default class extends React.Component {
         <ul className="tags">{this.renderTags()}</ul>
 
         <input
-          autoComplete={false}
+          autoComplete="off"
           name={name}
           onBlur={this.onBlur}
           onFocus={this.onFocus}

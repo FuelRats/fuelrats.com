@@ -360,7 +360,7 @@ class Paperwork extends Component {
               <label htmlFor="system">Where did it happen? <small>In what star system did the rescue took place? (put "n/a" if not applicable)</small></label>
 
               <SystemTagsInput
-                data-allowNew={true}
+                data-allownew={true}
                 disabled={submitting || retrieving}
                 name="system"
                 onChange={this.handleSystemChange}
@@ -403,14 +403,13 @@ class Paperwork extends Component {
     } = this.state
 
     switch (rescue.attributes.outcome) {
-      case 'success':
-      case 'failure':
-        return this.validateCaseWithValidOutcome()
       case 'other':
       case 'invalid':
         return this.validateCaseWithInvalidOutcome()
+      case 'success':
+      case 'failure':
       default:
-        return false
+        return this.validateCaseWithValidOutcome()
     }
   }
 
@@ -420,7 +419,7 @@ class Paperwork extends Component {
       rescue,
     } = this.state
 
-    if (rescue.attributes.outcome === 'success' && !rescue.attributes.firstLimpetId) {
+    if ((!rescue.attributes.outcome || rescue.attributes.outcome === 'success') && !rescue.attributes.firstLimpetId) {
       return false
     }
 
