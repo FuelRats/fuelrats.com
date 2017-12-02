@@ -5,6 +5,7 @@
   "plugins": [
     "preval",
     "transform-decorators-legacy",
+    "transform-object-rest-spread",
     "inline-react-svg"
   ]
 }
