@@ -85,6 +85,15 @@
         "bug",
         "code"
       ]
+    },
+    {
+      "login": "itssimple",
+      "name": "Chris Gårdenberg",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/11502257?v=4",
+      "profile": "https://itssimple.se",
+      "contributions": [
+        "code"
+      ]
     }
   ]
 }
