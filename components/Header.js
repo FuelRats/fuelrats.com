@@ -65,10 +65,9 @@ class Header extends React.Component {
         <header role="banner">
 
           <Link href="/">
-            <a title="Home">
+            <a title="Home" className="brand">
               <img
                 alt="Fuel Rats logo"
-                className="brand"
                 src="/static/images/logo2.png" />
             </a>
           </Link>
