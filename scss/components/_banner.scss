@@ -162,6 +162,7 @@
   .join-actions {
     display: flex;
     flex-direction: column;
+    flex-shrink: 0;
     margin-top: auto;
     overflow: hidden;
     width: 100%;
