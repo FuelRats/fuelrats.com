@@ -24,7 +24,7 @@ Check out our [list of contributors][contributors]!
 
 [contributing]: CONTRIBUTING.md
 [contributors]: CONTRIBUTORS.md
-[contributors-badge]: https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square
+[contributors-badge]: https://img.shields.io/badge/all_contributors-8-orange.svg?style=flat-square
 [code-of-conduct]: CODE_OF_CONDUCT.md
 [code-of-conduct-badge]: https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat-square
 [codeclimate]: https://codeclimate.com/github/FuelRats/fuelrats.com
