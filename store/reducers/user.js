@@ -1,4 +1,5 @@
 import actionTypes from '../actionTypes'
+import Cookies from 'js-cookie'
 import initialState from '../initialState'
 
 
@@ -43,24 +44,24 @@ export default function (state = initialState.user, action) {
           if (Array.isArray(user.permissions)) {
             user.permissions = new Set(user.permissions)
           }
-  
+
           // Collect user's permissions
           user.relationships.groups.data.forEach(({ id, type }) => {
             let group = payload.included.find(entity => (entity.id === id) && (entity.type === type))
-  
+
             group.attributes.permissions.forEach(permission => user.permissions.add(permission))
           })
-  
+
           // Create the user's data store if it doesn't already exist
           if (!user.data) {
             user.data = {}
           }
-  
+
           // Parse the user's data store if it came in as a string
           if (typeof user.data === 'string') {
             user.data = JSON.parse(user.data)
           }
-  
+
           // Create the website's walled garden in the data store
           if (!user.data.website) {
             user.data.website = {}
@@ -74,8 +75,8 @@ export default function (state = initialState.user, action) {
 
           // Stick the user preferences in the local store so we can use them
           // outside of Redux connected components
-          localStorage.setItem('userId', user.id)
-          localStorage.setItem('preferences', JSON.stringify(user.preferences))
+          Cookies.set('userId', user.id)
+          Cookies.set('preferences', JSON.stringify(user.preferences))
 
           return user
         }

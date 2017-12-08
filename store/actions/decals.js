@@ -1,4 +1,5 @@
 // Module imports
+import Cookies from 'js-cookie'
 import fetch from 'isomorphic-fetch'
 
 
@@ -20,7 +21,7 @@ export const checkDecalEligibility = () => async dispatch => {
 
     let response = await fetch(`/api/decals/check`, {
       headers: new Headers({
-        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        Authorization: `Bearer ${Cookies.get('access_token')}`,
       }),
     })
     response = await response.json()
@@ -53,7 +54,7 @@ export const redeemDecal = () => async dispatch => {
 
     let response = await fetch(`/api/decals/redeem`, {
       headers: new Headers({
-        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        Authorization: `Bearer ${Cookies.get('access_token')}`,
       }),
     })
     response = await response.json()

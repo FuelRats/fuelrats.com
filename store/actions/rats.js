@@ -1,4 +1,5 @@
 // Module imports
+import Cookies from 'js-cookie'
 import fetch from 'isomorphic-fetch'
 
 
@@ -25,7 +26,7 @@ export const createRat = (name, platform, userId) => async dispatch => {
         userId
       }),
       headers: new Headers({
-        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        Authorization: `Bearer ${Cookies.get('access_token')}`,
         'Content-Type': 'application/json',
       }),
       method: 'post'

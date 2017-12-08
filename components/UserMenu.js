@@ -1,9 +1,10 @@
 // Module imports
 import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import _ from 'lodash'
+import Cookies from 'js-cookie'
 import Link from 'next/link'
 import React from 'react'
-import { connect } from 'react-redux'
 
 
 
@@ -26,7 +27,7 @@ class UserMenu extends Component {
   \***************************************************************************/
 
   componentDidMount () {
-    if (localStorage.getItem('access_token')) {
+    if (Cookies.get('access_token')) {
       this.props.getUser()
     }
   }
