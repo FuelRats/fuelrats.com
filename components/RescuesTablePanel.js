@@ -19,7 +19,6 @@ import Component from './Component'
 
 
 class RescuesTablePanel extends Component {
-
   /***************************************************************************\
     Private Methods
   \***************************************************************************/
@@ -69,7 +68,7 @@ class RescuesTablePanel extends Component {
     if (rats.length) {
       return (
         <ul className="comma-separated inline">
-          {rats.map((rat, index) => <li key={index}>{rat}</li>)}
+          {rats.map(rat => <li key={rat.id}>{rat}</li>)}
         </ul>
       )
     }

@@ -1,13 +1,4 @@
-// Module imports
-import { bindActionCreators } from 'redux'
-import React from 'react'
-
-
-
-
-
 // Component imports
-import { actions } from '../../store'
 import Component from '../../components/Component'
 import Page from '../../components/Page'
 import FirstLimpetInput from '../../components/FirstLimpetInput'
@@ -182,7 +173,9 @@ class Paperwork extends Component {
 
     this.dirtyFields.clear()
 
+    /* eslint-disable no-global-assign, no-restricted-globals */
     location = `/paperwork/${rescue.id}`
+    /* eslint-enable */
   }
 
   render () {
@@ -308,7 +301,7 @@ class Paperwork extends Component {
                   name="codeRed"
                   onChange={this.handleChange}
                   type="radio"
-                  value={true} /> <label htmlFor="codeRed-yes">Yes</label>
+                  value /> <label htmlFor="codeRed-yes">Yes</label>
 
                 <input
                   checked={!rescue.attributes.codeRed}
@@ -316,8 +309,7 @@ class Paperwork extends Component {
                   id="codeRed-no"
                   name="codeRed"
                   onChange={this.handleChange}
-                  type="radio"
-                  value={false} /> <label htmlFor="codeRed-no">No</label>
+                  type="radio" /> <label htmlFor="codeRed-no">No</label>
               </div>
             </fieldset>
 
@@ -348,7 +340,7 @@ class Paperwork extends Component {
               <label htmlFor="system">Where did it happen? <small>In what star system did the rescue took place? (put "n/a" if not applicable)</small></label>
 
               <SystemTagsInput
-                data-allownew={true}
+                data-allownew
                 disabled={submitting || retrieving}
                 name="system"
                 onChange={this.handleSystemChange}
@@ -452,7 +444,7 @@ const mapStateToProps = state => {
   let rescue = null
 
   if (rescueId) {
-    rescue = state.rescues.rescues.find(rescue => rescue.id === rescueId)
+    rescue = state.rescues.rescues.find(item => item.id === rescueId)
   }
 
   if (rescue) {
@@ -462,10 +454,11 @@ const mapStateToProps = state => {
 
     rats = state.rats.rats
       .filter(rat => rescue.relationships.rats.data.find(({ id }) => rat.id === id))
-      .map(rat => Object.assign({
+      .map(rat => ({
         id: rat.id,
         value: rat.attributes.name,
-      }, rat))
+        ...rat,
+      }))
   }
 
   return Object.assign({

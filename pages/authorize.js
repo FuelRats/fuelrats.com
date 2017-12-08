@@ -31,7 +31,6 @@ class Authorize extends Component {
     this.state = {
       clientName: null,
       scopes: [],
-      scope: '',
       transactionId: '',
       submitting: false,
     }
@@ -52,10 +51,15 @@ class Authorize extends Component {
       response_type,
     } = this.props
 
+    /* eslint-disable camelcase */
     if (client_id && state && scope && response_type) {
+    /* eslint-enable camelcase */
       try {
         const token = localStorage.getItem('access_token')
+
+        /* eslint-disable camelcase */
         let response = await fetch(`/api/oauth2/authorize?client_id=${client_id}&scope=${scope}&state=${state}&response_type=${response_type}`, {
+        /* eslint-enable camelcase */
           credentials: 'same-origin',
           headers: new Headers({
             Authorization: `Bearer ${token}`,
@@ -68,7 +72,6 @@ class Authorize extends Component {
           clientName: response.client.data.attributes.name,
           redirectUri: response.client.data.attributes.redirectUri,
           scopes: response.scopes,
-          scope: response.scope,
           transactionId: response.transactionId,
           token: localStorage.getItem('access_token'),
         })
@@ -83,11 +86,13 @@ class Authorize extends Component {
       client_id,
       state,
       scope,
-      response_type
+      response_type,
     } = this.props
     const { submitting } = this.state
 
+    /* eslint-disable camelcase */
     const hasRequiredParameters = client_id && state && scope && response_type
+    /* eslint-enable camelcase */
     const submitUrl = `/api/oauth2/authorize?bearer=${this.state.token}`
 
     return (
@@ -103,13 +108,9 @@ class Authorize extends Component {
             <p><strong>This application will be able to:</strong></p>
 
             <ul>
-              {this.state.scopes.map((scope, index) => {
-                if (scope.accessible) {
-                  return <li key={index}>{scope.permission}</li>
-                }
-
-                return <li key={index} className="inaccessible">{scope.permission}</li>
-              })}
+              {this.state.scopes.map(scopeData => (
+                <li key={scopeData} className={scopeData.accessible ? 'inaccessible' : null}>{scopeData.permission}</li>
+              ))}
             </ul>
 
             <form action={submitUrl} method="post">
@@ -123,7 +124,7 @@ class Authorize extends Component {
                   id="scope"
                   name="scope"
                   type="hidden"
-                  value={this.state.scope} />
+                  value={scope} />
                 <input
                   id="redirectUri"
                   name="redirectUri"

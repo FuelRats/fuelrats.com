@@ -158,13 +158,8 @@ export default class extends React.Component {
     }
   }
 
-  findOption (option) {
-    if (typeof option === 'string') {
-      option = {
-        value: option,
-      }
-    }
-
+  findOption (optionValue) {
+    const option = typeof optionValue !== 'string' ? optionValue : { value: optionValue }
     const optionIndex = this.state.options.findIndex(searchOption => this.getValue(option) === this.getValue(searchOption))
 
     if (optionIndex === -1) {
@@ -174,11 +169,8 @@ export default class extends React.Component {
     return this.state.options[optionIndex]
   }
 
-  findTag (tag) {
-    if (typeof tag === 'string') {
-      tag = { value: tag }
-    }
-
+  findTag (tagValue) {
+    const tag = typeof tagValue !== 'string' ? tagValue : { value: tagValue }
     const tagIndex = this.state.tags.findIndex(searchTag => this.getValue(tag) === this.getValue(searchTag))
 
     if (tagIndex === -1) {
@@ -390,12 +382,8 @@ export default class extends React.Component {
     }
   }
 
-  static parseOption (option) {
-    if (typeof option === 'string') {
-      option = { value: option }
-    }
-
-    return option
+  static parseOption (optionValue) {
+    return typeof optionValue !== 'string' ? optionValue : { value: optionValue }
   }
 
   removeTag (tag) {
@@ -589,8 +577,8 @@ export default class extends React.Component {
       newState.selectedOption = null
     }
 
-    options.forEach(option => {
-      option = this.parseOption(option)
+    options.forEach(optionValue => {
+      const option = this.parseOption(optionValue)
 
       if (merge && this.findOption(option)) {
         return

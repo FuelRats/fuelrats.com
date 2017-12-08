@@ -1,14 +1,11 @@
 // Module imports
-import { bindActionCreators } from 'redux'
 import moment from 'moment'
-import React from 'react'
 
 
 
 
 
 // Component imports
-import { actions } from '../../store'
 import Component from '../../components/Component'
 import Page from '../../components/Page'
 
@@ -210,7 +207,7 @@ const mapStateToProps = state => {
   let rescue = null
 
   if (rescueId) {
-    rescue = state.rescues.rescues.find(rescue => rescue.id === rescueId)
+    rescue = state.rescues.rescues.find(item => item.id === rescueId)
   }
 
   if (rescue) {
