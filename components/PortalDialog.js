@@ -52,7 +52,7 @@ export default class extends Component {
   }
 
   componentDidMount () {
-    if (this._el && dialogPolyfill) {
+    if (this._el) {
       dialogPolyfill.registerDialog(this._el)
 
       if (this.props.open) {
