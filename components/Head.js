@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie'
 import NProgress from 'nprogress'
 import NextHead from 'next/head'
 import React from 'react'
@@ -32,8 +33,8 @@ Router.onRouteChangeError = () => {
 }
 
 Router.onRouteChangeComplete = () => {
-  let userId = localStorage.getItem('userId')
-  let preferences = localStorage.getItem('preferences')
+  let userId = Cookies.get('userId')
+  let preferences = Cookies.get('preferences')
 
   preferences = preferences ? JSON.parse(preferences) : {}
 
