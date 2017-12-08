@@ -55,7 +55,7 @@ class Authorize extends Component {
 
     if (client_id && state && scope && response_type) {
       try {
-        let token = Cookies.getItem('access_token')
+        let token = Cookies.get('access_token')
         let response = await fetch(`/api/oauth2/authorize?client_id=${client_id}&scope=${scope}&state=${state}&response_type=${response_type}`, {
           credentials: 'same-origin',
           headers: new Headers({
@@ -72,7 +72,7 @@ class Authorize extends Component {
           scope: response.scope,
           transactionId: response.transactionId,
           allow: false,
-          token: Cookies.getItem('access_token')
+          token: Cookies.get('access_token')
         })
 
       } catch (error) {
