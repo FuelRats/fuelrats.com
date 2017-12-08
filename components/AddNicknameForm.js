@@ -1,7 +1,7 @@
 // Module imports
 import { bindActionCreators } from 'redux'
-import React from 'react'
 import { connect } from 'react-redux'
+import React from 'react'
 
 
 
@@ -16,7 +16,6 @@ import Component from './Component'
 
 
 class AddNicknameForm extends Component {
-
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
@@ -33,17 +32,16 @@ class AddNicknameForm extends Component {
   }
 
   async onSubmit (event) {
-    let { addNickname } = this.props
-    let {
-      nickname,
-      password,
-    } = this.state
+    const { addNickname } = this.props
+    const { nickname } = this.state
 
     event.preventDefault()
 
     this.setState({ submitting: true })
 
-    await addNickname(nickname, prompt(`Please enter your IRC password (this may be different from your website password):`))
+    /* eslint-disable no-alert */
+    await addNickname(nickname, prompt('Please enter your IRC password (this may be different from your website password):'))
+    /* eslint-enable */
 
     this.setState({
       nickname: '',
@@ -52,7 +50,7 @@ class AddNicknameForm extends Component {
   }
 
   render () {
-    let {
+    const {
       nickname,
       submitting,
     } = this.state
@@ -67,10 +65,12 @@ class AddNicknameForm extends Component {
           onChange={event => this.setState({ nickname: event.target.value })}
           placeholder="Add a nickname..."
           type="text"
-          value={nickname}/>
+          value={nickname} />
         <button
           disabled={!nickname || submitting}
-          type="submit">Add</button>
+          type="submit">
+          Add
+        </button>
       </form>
     )
   }
@@ -80,11 +80,7 @@ class AddNicknameForm extends Component {
 
 
 
-const mapDispatchToProps = dispatch => {
-  return {
-    addNickname: bindActionCreators(actions.addNickname, dispatch),
-  }
-}
+const mapDispatchToProps = dispatch => ({ addNickname: bindActionCreators(actions.addNickname, dispatch) })
 
 
 

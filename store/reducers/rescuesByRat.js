@@ -6,7 +6,7 @@ import initialState from '../initialState'
 
 
 export default function (state = initialState.rescuesByRat, action) {
-  let {
+  const {
     payload,
     status,
     type,

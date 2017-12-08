@@ -1,11 +1,10 @@
 // Module imports
 import { bindActionCreators } from 'redux'
-import _ from 'lodash'
+import { connect } from 'react-redux'
 import Link from 'next/link'
 import moment from 'moment'
 import React from 'react'
 import ReactTable from 'react-table'
-import { connect } from 'react-redux'
 
 
 
@@ -22,30 +21,23 @@ import RatDetails from './RatDetails'
 
 
 class UserRatsPanel extends Component {
-
   /***************************************************************************\
     Private Methods
   \***************************************************************************/
 
-  _handleRowClick () {}
-
-  _renderCreatedAtColumn (row) {
+  static _renderCreatedAtColumn (row) {
     return moment(row.original.attributes.createdAt).format('DD MMMM, YYYY')
   }
 
-  _renderPlatformColumn (row) {
+  static _renderPlatformColumn (row) {
     return (
       <div className={['badge', 'platform', 'short', row.original.attributes.platform].join(' ')} />
     )
   }
 
-  _renderNameColumn (row) {
-    let {
-      id,
-    } = row.original
-    let {
-      name,
-    } = row.original.attributes
+  static _renderNameColumn (row) {
+    const { id } = row.original
+    const { name } = row.original.attributes
 
     return (
       <Link href={`/rats/${id}`}>
@@ -55,7 +47,7 @@ class UserRatsPanel extends Component {
   }
 
   _renderSubcomponent (row) {
-    let ships = row.original.relationships.ships.data.map(({ id }) => this.props.ships.ships.find(ship => ship.id === id))
+    const ships = row.original.relationships.ships.data.map(({ id }) => this.props.ships.ships.find(ship => ship.id === id))
 
     return (
       <RatDetails ships={ships} />
@@ -78,41 +70,27 @@ class UserRatsPanel extends Component {
     this.state = {
       name: '',
       platform: 'pc',
-      submitting: false,
     }
   }
 
   async onSubmit (event) {
-    let {
-      createRat,
-    } = this.props
-    let {
+    const {
       name,
       platform,
     } = this.state
 
     event.preventDefault()
 
-    this.setState({ submitting: true })
-
-    let rat = {
+    const rat = {
       name,
-      platform
+      platform,
     }
 
     await this.props.createRat(rat)
   }
 
   render () {
-    let {
-      id,
-      rats,
-    } = this.props
-    let {
-      name,
-      platform,
-      submitting,
-    } = this.state
+    const { rats } = this.props
 
     return (
       <div className="panel">
@@ -123,7 +101,7 @@ class UserRatsPanel extends Component {
           defaultPageSize={rats.rats.length}
           manual
           showPagination={false}
-          SubComponent={this._renderSubcomponent}/>
+          SubComponent={this._renderSubcomponent} />
         <AddRatForm />
       </div>
     )
@@ -179,15 +157,11 @@ class UserRatsPanel extends Component {
 
 
 
-const mapDispatchToProps = dispatch => {
-  return {
-    createRat: bindActionCreators(actions.createRat, dispatch),
-  }
-}
+const mapDispatchToProps = dispatch => ({ createRat: bindActionCreators(actions.createRat, dispatch) })
 
 const mapStateToProps = state => {
-  let {
-    rats,
+  let { rats } = state
+  const {
     ships,
     user,
   } = state

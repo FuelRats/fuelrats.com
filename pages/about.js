@@ -19,21 +19,12 @@ const title = 'About'
 
 
 
-class About extends React.Component {
-
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
-
-  render () {
-    return (
-      <div className="page-wrapper">
-        <header className="page-header">
-          <h1>{title}</h1>
-        </header>
-      </div>
-    )
-  }
-}
+const About = () => (
+  <div className="page-wrapper">
+    <header className="page-header">
+      <h1>{title}</h1>
+    </header>
+  </div>
+)
 
 export default Page(About, title)

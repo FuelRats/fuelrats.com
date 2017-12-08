@@ -1,9 +1,6 @@
 // Module imports
-import { bindActionCreators } from 'redux'
-import _ from 'lodash'
 import Link from 'next/link'
 import moment from 'moment'
-import Router from 'next/router'
 import React from 'react'
 
 
@@ -11,7 +8,6 @@ import React from 'react'
 
 
 // Component imports
-import { actions } from '../../store'
 import Component from '../../components/Component'
 import Page from '../../components/Page'
 
@@ -27,21 +23,20 @@ const title = 'Blog'
 
 
 class Blogs extends Component {
-
   /***************************************************************************\
     Private Methods
   \***************************************************************************/
 
   _renderMenu () {
-    let {
+    const {
       author,
       category,
       page,
       totalPages,
     } = this.props
 
-    let hrefQueryParams = []
-    let href = '/blog/all'
+    const hrefQueryParams = []
+    const href = '/blog/all'
     let as = '/blog'
 
     if (author) {
@@ -84,11 +79,13 @@ class Blogs extends Component {
     let {
       author,
       category,
+    } = this.props
+    const {
       page,
       retrieveBlogs,
     } = this.props
 
-    let wpOptions = {}
+    const wpOptions = {}
 
     author = options.author || author
     category = options.category || category
@@ -126,21 +123,21 @@ class Blogs extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    let {
+    const {
       author,
       category,
       page,
     } = this.props
 
-    let authorMatches = author === nextProps.author
-    let categoryMatches = category === nextProps.category
-    let pageMatches = page === nextProps.page
+    const authorMatches = author === nextProps.author
+    const categoryMatches = category === nextProps.category
+    const pageMatches = page === nextProps.page
 
     if (!authorMatches || !categoryMatches || !pageMatches) {
       this._retrieveBlogs({
         author: nextProps.author,
         category: nextProps.category,
-        page: page,
+        page,
       })
     }
   }
@@ -154,9 +151,9 @@ class Blogs extends Component {
   }
 
   static async getInitialProps ({ query }) {
-    let props = {}
+    const props = {}
 
-    props.page = parseInt(query.page || 1)
+    props.page = parseInt(query.page || 1, 10)
 
     if (query.category) {
       props.category = query.category
@@ -170,16 +167,10 @@ class Blogs extends Component {
   }
 
   render () {
-    let {
-      blogs,
-      query,
-      totalPages,
-    } = this.props
-    let {
+    const { blogs } = this.props
+    const {
       retrieving,
     } = this.state
-
-    let page = parseInt(query.page || 1)
 
     return (
       <div className="page-wrapper">
@@ -190,18 +181,19 @@ class Blogs extends Component {
         <div className="page-content">
           <ol className="article-list loading">
             {!retrieving && blogs && blogs.map(blog => {
-              let {
+              const {
                 author,
+                id,
               } = blog
+              const postedAt = moment(blog.date_gmt)
 
-              blog.postedAt = moment(blog.date_gmt)
-
+              /* eslint-disable react/no-danger */
               return (
-                <li key={blog.id}>
+                <li key={id}>
                   <article>
                     <header>
                       <h3 className="title">
-                        <Link as={`/blog/${blog.id}`} href={`/blog/single?id=${blog.id}`}>
+                        <Link as={`/blog/${id}`} href={`/blog/single?id=${id}`}>
                           <a dangerouslySetInnerHTML={{ __html: blog.title.rendered }} />
                         </Link>
                       </h3>
@@ -210,15 +202,13 @@ class Blogs extends Component {
                     <small>
                       <span className="posted-date">
                         <i className="fa fa-clock-o fa-fw" />
-                        Posted <time dateTime={0}>{blog.postedAt.format('DD MMMM, YYYY')}</time>
+                        Posted <time dateTime={0}>{postedAt.format('DD MMMM, YYYY')}</time>
                       </span>
 
                       <span className="author">
                         <i className="fa fa-fw fa-user" />
 
-                        <Link
-                          as={`/blog/author/${author.id}`}
-                          href={`/blog/all?author=${author.id}`}>
+                        <Link as={`/blog/author/${author.id}`} href={`/blog/all?author=${author.id}`}>
                           <a>{author.name}</a>
                         </Link>
                       </span>
@@ -228,17 +218,14 @@ class Blogs extends Component {
 
                         <ul className="category-list">
                           {blog.categories.map(category => {
-                            let {
+                            const {
                               description,
-                              id,
                               name,
                             } = category
 
                             return (
-                              <li key={id}>
-                                <Link
-                                  as={`/blog/category/${id}`}
-                                  href={`/blog/all?category=${id}`}>
+                              <li key={category.id}>
+                                <Link as={`/blog/category/${category.id}`} href={`/blog/all?category=${category.id}`}>
                                   <a title={description}>{name}</a>
                                 </Link>
                               </li>
@@ -254,6 +241,7 @@ class Blogs extends Component {
                   </article>
                 </li>
               )
+              /* eslint-enable */
             })}
           </ol>
 
@@ -268,15 +256,9 @@ class Blogs extends Component {
 
 
 
-const mapDispatchToProps = dispatch => {
-  return {
-    retrieveBlogs: bindActionCreators(actions.retrieveBlogs, dispatch),
-  }
-}
+const mapDispatchToProps = ['retrieveBlogs']
 
-const mapStateToProps = state => {
-  return state.blogs
-}
+const mapStateToProps = state => state.blogs
 
 
 

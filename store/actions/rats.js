@@ -1,3 +1,4 @@
+/* eslint no-await-in-loop:off */
 // Module imports
 import fetch from 'isomorphic-fetch'
 
@@ -18,17 +19,17 @@ export const createRat = (name, platform, userId) => async dispatch => {
       type: actionTypes.CREATE_RAT,
     })
 
-    let response = await fetch(`/api/rats`, {
+    let response = await fetch('/api/rats', {
       body: JSON.stringify({
         name,
         platform,
-        userId
+        userId,
       }),
       headers: new Headers({
         Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         'Content-Type': 'application/json',
       }),
-      method: 'post'
+      method: 'post',
     })
 
     response = await response.json()
@@ -38,15 +39,13 @@ export const createRat = (name, platform, userId) => async dispatch => {
       status: 'success',
       type: actionTypes.CREATE_RAT,
     })
-
   } catch (error) {
     dispatch({
-      rat: ratId,
+      payload: error,
+      rat: userId,
       status: 'error',
       type: actionTypes.CREATE_RAT,
     })
-
-    console.log(error)
   }
 }
 
@@ -55,7 +54,7 @@ export const createRat = (name, platform, userId) => async dispatch => {
 
 
 export const getRats = ratIds => async dispatch => {
-  for (let ratId of ratIds) {
+  for (const ratId of ratIds) {
     try {
       dispatch({
         rat: ratId,
@@ -70,15 +69,13 @@ export const getRats = ratIds => async dispatch => {
         status: 'success',
         type: actionTypes.GET_RAT,
       })
-
     } catch (error) {
       dispatch({
+        payload: error,
         rat: ratId,
         status: 'error',
         type: actionTypes.GET_RAT,
       })
-
-      console.log(error)
     }
   }
 }

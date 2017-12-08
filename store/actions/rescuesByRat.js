@@ -16,7 +16,7 @@ export const getRescuesByRatStatistics = () => async dispatch => {
   dispatch({ type: actionTypes.GET_RESCUES_BY_RAT })
 
   try {
-    let response = await fetch(`/api/statistics/rats`)
+    let response = await fetch('/api/statistics/rats')
 
     response = await response.json()
 
@@ -25,13 +25,10 @@ export const getRescuesByRatStatistics = () => async dispatch => {
       status: 'success',
       type: actionTypes.GET_RESCUES_BY_RAT,
     })
-
   } catch (error) {
     dispatch({
       status: 'error',
       type: actionTypes.GET_RESCUES_BY_RAT,
     })
-
-    console.log(error)
   }
 }

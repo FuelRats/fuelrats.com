@@ -1,11 +1,10 @@
 // Module imports
 import { bindActionCreators } from 'redux'
-import _ from 'lodash'
+import { connect } from 'react-redux'
 import moment from 'moment'
 import React from 'react'
 import ReactTable from 'react-table'
 import Router from 'next/router'
-import { connect } from 'react-redux'
 
 
 
@@ -25,14 +24,13 @@ class RescuesTablePanel extends Component {
     Private Methods
   \***************************************************************************/
 
-  _handleRowClick (state, row) {
-
+  static _handleRowClick (state, row) {
     if (row) {
-      let rescue = row.original
+      const rescue = row.original
 
       return {
         className: 'clickable',
-        onClick: event => {
+        onClick: () => {
           Router.push(`/paperwork?id=${rescue.id}`, `/paperwork/${rescue.id}`)
         },
       }
@@ -41,32 +39,32 @@ class RescuesTablePanel extends Component {
     return {}
   }
 
-  _renderCodeRedRow (row) {
-    let rescue = row.original
+  static _renderCodeRedRow (row) {
+    const rescue = row.original
 
     if (rescue.codeRed) {
       return (
         <span className="text-danger">
-          <i className="fa fa-fw fa-check" title="Code Red"></i>
+          <i className="fa fa-fw fa-check" title="Code Red" />
         </span>
       )
     }
 
     return (
       <span className="text-muted">
-        <i className="fa fa-fw fa-minus"></i>
+        <i className="fa fa-fw fa-minus" />
       </span>
     )
   }
 
-  _renderDateRow (row) {
-    let rescue = row.original
+  static _renderDateRow (row) {
+    const rescue = row.original
 
     return moment(rescue.date).add(1286, 'years').format('DD MMM, YYYY')
   }
 
-  _renderRatsRow (row) {
-    let { rats } = row.original
+  static _renderRatsRow (row) {
+    const { rats } = row.original
 
     if (rats.length) {
       return (
@@ -79,8 +77,8 @@ class RescuesTablePanel extends Component {
     return 'There are no rats assigned to this rescue'
   }
 
-  _renderStateRow (row) {
-    let {
+  static _renderStateRow (row) {
+    const {
       active,
       open,
       successful,
@@ -90,7 +88,7 @@ class RescuesTablePanel extends Component {
       if (active) {
         return (
           <span className="text-info">
-            <i className="fa fa-fw fa-rocket" title="Active"></i>
+            <i className="fa fa-fw fa-rocket" title="Active" />
             Active
           </span>
         )
@@ -98,7 +96,7 @@ class RescuesTablePanel extends Component {
 
       return (
         <span className="text-muted">
-          <i className="fa fa-fw fa-pause" title="Inactive"></i>
+          <i className="fa fa-fw fa-pause" title="Inactive" />
           Inactive
         </span>
       )
@@ -107,7 +105,7 @@ class RescuesTablePanel extends Component {
     if (successful) {
       return (
         <span className="text-success">
-          <i className="fa fa-fw fa-check" title="Successful"></i>
+          <i className="fa fa-fw fa-check" title="Successful" />
           Successful
         </span>
       )
@@ -115,7 +113,7 @@ class RescuesTablePanel extends Component {
 
     return (
       <span className="text-success">
-        <i className="fa fa-fw fa-times" title="Failed"></i>
+        <i className="fa fa-fw fa-times" title="Failed" />
         Failed
       </span>
     )
@@ -134,10 +132,7 @@ class RescuesTablePanel extends Component {
   }
 
   render () {
-    let {
-      rescues,
-      retrieving,
-    } = this.props
+    const { rescues } = this.props
 
     return (
       <section className="panel">
@@ -222,15 +217,9 @@ class RescuesTablePanel extends Component {
 
 
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getRescues: bindActionCreators(actions.getRescues, dispatch),
-  }
-}
+const mapDispatchToProps = dispatch => ({ getRescues: bindActionCreators(actions.getRescues, dispatch) })
 
-const mapStateToProps = state => {
-  return Object.assign({}, state.rescues)
-}
+const mapStateToProps = state => Object.assign({}, state.rescues)
 
 
 

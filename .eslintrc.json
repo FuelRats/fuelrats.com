@@ -1,0 +1,39 @@
+{
+  "env": {
+    "browser": true
+  },
+  "extends": "airbnb",
+  "globals": {
+    "preval": false
+  },
+  "rules": {
+    "arrow-parens": ["off"],
+    "comma-dangle": ["error", "always-multiline"],
+    "import/prefer-default-export": ["off"],
+    "max-len": ["off"],
+    "new-parens": ["off"],
+    "no-fallthrough": ["off"],
+    "no-multi-assign": ["off"],
+    "no-multiple-empty-lines": ["error", { "max": 5 }],
+    "no-plusplus": ["off"],
+    "no-restricted-syntax": ["off"],
+    "no-return-assign": ["off"],
+    "no-underscore-dangle": ["off"],
+    "prefer-rest-params": ["off"],
+    "react/forbid-prop-types": ["off"],
+    "react/jsx-closing-bracket-location": ["off"],
+    "react/jsx-filename-extension": ["off"],
+    "react/react-in-jsx-scope": ["off"],
+    "react/sort-comp": ["off"],
+    "semi": ["error", "never"],
+    "space-before-function-paren": ["off"],
+    "spaced-comment": ["off"],
+
+    "jsx-a11y/anchor-is-valid": ["off"],
+    "jsx-a11y/label-has-for": ["off"],
+    "jsx-a11y/no-noninteractive-element-interactions": ["off"],
+    "react/no-unescaped-entities": ["off"],
+    "react/no-did-mount-set-state": ["off"],
+    "react/prop-types": ["off"]
+  }
+}

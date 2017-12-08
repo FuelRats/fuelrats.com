@@ -1,29 +1,20 @@
 // Module imports
-import { bindActionCreators } from 'redux'
-import _ from 'lodash'
 import Link from 'next/link'
-import React from 'react'
-import ReCAPTCHA from 'react-google-recaptcha'
-import withRedux from 'next-redux-wrapper'
 
 
 
 
 
 // Component imports
-import { actions } from '../store'
 import Component from '../components/Component'
 import Page from '../components/Page'
 import PasswordField from '../components/PasswordField'
-import FirstLimpetInput from '../components/FirstLimpetInput'
-import RatTagsInput from '../components/RatTagsInput'
-import SystemTagsInput from '../components/SystemTagsInput'
 
 
 
 
 
-// Component imports
+// Component constants
 const title = 'Register'
 
 
@@ -31,7 +22,6 @@ const title = 'Register'
 
 
 class Register extends Component {
-
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
@@ -54,19 +44,18 @@ class Register extends Component {
       ratName: '',
       ratPlatform: 'pc',
       recaptchaResponse: null,
-      recaptchaLoaded: false,
       showPassword: false,
       submitting: false,
     }
   }
 
   handleChange (event) {
-    let newState = Object.assign({}, this.state)
-    let {
+    const newState = { ...this.state }
+    const {
       name,
       value,
     } = event.target
-    let attribute = name
+    const attribute = name
 
     newState[attribute] = value
 
@@ -76,7 +65,7 @@ class Register extends Component {
   async onSubmit (event) {
     event.preventDefault()
 
-    let {
+    const {
       email,
       nickname,
       password,
@@ -89,16 +78,11 @@ class Register extends Component {
   }
 
   render () {
-    let {
+    const {
       email,
       nickname,
-      password,
-      passwordStrength,
-      passwordSuggestions,
-      passwordWarning,
       ratName,
       ratPlatform,
-      showPassword,
       submitting,
     } = this.state
 
@@ -120,7 +104,7 @@ class Register extends Component {
               onChange={this.handleChange}
               placeholder="i.e. surly_badger@gmail.com"
               ref={_emailEl => this._emailEl = _emailEl}
-              required={true}
+              required
               type="email"
               value={email} />
           </fieldset>
@@ -139,9 +123,9 @@ class Register extends Component {
               pattern="^[^\s]{5,42}$"
               placeholder="Use a strong password to keep your account secure"
               ref={_password => this._password = _password}
-              required={true}
-              showStrength={true}
-              showSuggestions={true} />
+              required
+              showStrength
+              showSuggestions />
           </fieldset>
 
           <fieldset data-name="IRC Nick">
@@ -156,7 +140,7 @@ class Register extends Component {
               pattern="^[A-z_\-\[\]\\^{}|`][A-z0-9_\-\[\]\\^{}|`]+$"
               placeholder="Surly_Badger"
               ref={_nicknameEl => this._nicknameEl = _nicknameEl}
-              required={true}
+              required
               type="text"
               value={nickname} />
           </fieldset>
@@ -173,7 +157,7 @@ class Register extends Component {
               pattern="^[\x00-\x7F]+$"
               placeholder="Surly Badger"
               ref={_ratNameEl => this._ratNameEl = _ratNameEl}
-              required={true}
+              required
               type="text"
               value={ratName} />
           </fieldset>
@@ -227,30 +211,18 @@ class Register extends Component {
               </button>
             </div>
 
-            <div className="secondary"></div>
+            <div className="secondary" />
           </menu>
         </form>
       </div>
     )
   }
-//          <fieldset data-name="CAPTCHA">
-//            <ReCAPTCHA
-//              onChange={response => this.setState({ recaptchaResponse: response })}
-//              sitekey="6LdUsBoUAAAAAN6I4Q34F1psdkShTlvH4OZXQJGg" />
-//          </fieldset>
 
   validate () {
-    let {
-      email,
+    const {
       nickname,
       password,
-      ratName,
-      recaptchaResponse,
     } = this.state
-
-//    if (!recaptchaResponse) {
-//      return false
-//    }
 
     if (!this._emailEl || !this._nicknameEl || !this._password || !this._ratNameEl) {
       return false
@@ -272,16 +244,10 @@ class Register extends Component {
 
 
 
-const mapDispatchToProps = dispatch => {
-  return {
-    register: bindActionCreators(actions.register, dispatch),
-  }
-}
+const mapDispatchToProps = ['register']
 
 
 
 
 
-export default Page(Register, title, {
-  mapDispatchToProps,
-})
+export default Page(Register, title, { mapDispatchToProps })

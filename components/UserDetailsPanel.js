@@ -1,78 +1,59 @@
 // Module imports
 import { bindActionCreators } from 'redux'
-import _ from 'lodash'
-import Link from 'next/link'
+import { connect } from 'react-redux'
 import moment from 'moment'
 import React from 'react'
-import { connect } from 'react-redux'
 
 
 
 
 
-// Module imports
+// Component imports
 import { actions } from '../store'
-import Component from './Component'
 
 
 
 
 
-class UserDetailsPanel extends Component {
+const UserDetailsPanel = (props) => {
+  let { attributes } = props
 
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
+  attributes = attributes || {}
 
-  render () {
-    let {
-      attributes,
-      id,
-    } = this.props
+  const {
+    createdAt,
+    email,
+    image,
+  } = attributes
 
-    attributes || (attributes = {})
+  return (
+    <div className="panel user-details">
+      <header>
+        Details
+      </header>
 
-    let {
-      createdAt,
-      email,
-      image,
-    } = attributes
+      <div className="panel-content">
+        <div className="avatar medium"><img alt="User's avatar" src={image} /></div>
 
-    return (
-      <div className="panel user-details">
-        <header>
-          Details
-        </header>
+        <label>Email:</label>
+        <span>
+          <a href={`mailto:${email}`}>{email}</a>
+        </span>
 
-        <div className="panel-content">
-          <div className="avatar medium"><img src={image} /></div>
-
-          <label>Email:</label>
-          <span>
-            <a href={`mailto:${email}`}>{email}</a>
-          </span>
-
-          <label>Member Since:</label>
-          <span>{moment(createdAt).add(1286, 'years').format('DD MMMM, YYYY')}</span>
-        </div>
+        <label>Member Since:</label>
+        <span>{moment(createdAt).add(1286, 'years').format('DD MMMM, YYYY')}</span>
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 
 
 
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getRats: bindActionCreators(actions.getRats, dispatch),
-  }
-}
+const mapDispatchToProps = dispatch => ({ getRats: bindActionCreators(actions.getRats, dispatch) })
 
-const mapStateToProps = state => {
-  return state.user || {}
-}
+const mapStateToProps = state => state.user || {}
 
 
 

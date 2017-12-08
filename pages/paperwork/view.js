@@ -1,9 +1,7 @@
 // Module imports
 import { bindActionCreators } from 'redux'
-import _ from 'lodash'
 import moment from 'moment'
 import React from 'react'
-import withRedux from 'next-redux-wrapper'
 
 
 
@@ -13,9 +11,6 @@ import withRedux from 'next-redux-wrapper'
 import { actions } from '../../store'
 import Component from '../../components/Component'
 import Page from '../../components/Page'
-import FirstLimpetInput from '../../components/FirstLimpetInput'
-import RatTagsInput from '../../components/RatTagsInput'
-import SystemTagsInput from '../../components/SystemTagsInput'
 
 
 
@@ -29,13 +24,12 @@ const title = 'Paperwork'
 
 
 class Paperwork extends Component {
-
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
 
   componentDidMount () {
-    let { id } = this.props.query
+    const { id } = this.props.query
 
     if (id) {
       this.props.retrievePaperwork(id)
@@ -50,7 +44,7 @@ class Paperwork extends Component {
     ])
   }
 
-  renderQuote (quote, index) {
+  static renderQuote (quote, index) {
     return (
       <li key={index}>
         {quote.message}
@@ -64,9 +58,7 @@ class Paperwork extends Component {
   }
 
   renderQuotes () {
-    let {
-      rescue,
-    } = this.props
+    const { rescue } = this.props
 
     if (rescue.attributes.quotes) {
       return (
@@ -82,10 +74,7 @@ class Paperwork extends Component {
   }
 
   renderRat (rat, index) {
-    let {
-      rats,
-      rescue,
-    } = this.props
+    const { rescue } = this.props
 
     return (
       <li key={index}>
@@ -98,9 +87,7 @@ class Paperwork extends Component {
   }
 
   renderRats () {
-    let {
-      rats,
-    } = this.props
+    const { rats } = this.props
 
     return (
       <ul>
@@ -110,8 +97,7 @@ class Paperwork extends Component {
   }
 
   render () {
-    let {
-      rats,
+    const {
       rescue,
       retrieving,
     } = this.props
@@ -205,7 +191,7 @@ class Paperwork extends Component {
     return this._dirtyFields || (this._dirtyFields = new Set)
   }
 
-  get title () {
+  static get title () {
     return 'Paperwork'
   }
 }
@@ -214,19 +200,11 @@ class Paperwork extends Component {
 
 
 
-const mapDispatchToProps = dispatch => {
-  return {
-    retrievePaperwork: bindActionCreators(actions.retrievePaperwork, dispatch),
-  }
-}
+const mapDispatchToProps = ['retrievePaperwork']
 
 const mapStateToProps = state => {
-  let {
-    paperwork,
-  } = state
-  let {
-    rescueId,
-  } = paperwork
+  const { paperwork } = state
+  const { rescueId } = paperwork
   let firstLimpet = []
   let rats = []
   let rescue = null
@@ -242,12 +220,10 @@ const mapStateToProps = state => {
 
     rats = state.rats.rats
       .filter(rat => rescue.relationships.rats.data.find(({ id }) => rat.id === id))
-      .map(rat => {
-        return Object.assign({
-          id: rat.id,
-          value: rat.attributes.name,
-        }, rat)
-      })
+      .map(rat => Object.assign({
+        id: rat.id,
+        value: rat.attributes.name,
+      }, rat))
   }
 
   return Object.assign({

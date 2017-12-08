@@ -3,7 +3,7 @@ import Document, { Head, Main, NextScript } from 'next/document'
 export default class extends Document {
   render() {
     return (
-      <html>
+      <html lang="en">
         <Head />
 
         <body>

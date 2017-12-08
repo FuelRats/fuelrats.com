@@ -1,5 +1,4 @@
 // Module imports
-import { bindActionCreators } from 'redux'
 import React from 'react'
 
 
@@ -7,7 +6,6 @@ import React from 'react'
 
 
 // Component imports
-import { actions } from '../store'
 import Component from '../components/Component'
 import Page from '../components/Page'
 
@@ -23,7 +21,6 @@ const title = 'Authorize Application'
 
 
 class Authorize extends Component {
-
   /***************************************************************************\
    Public Methods
    \***************************************************************************/
@@ -36,25 +33,28 @@ class Authorize extends Component {
       scopes: [],
       scope: '',
       transactionId: '',
-      submitting: false
+      submitting: false,
     }
   }
 
   static async getInitialProps ({ query }) {
     if (query.redirectUri) {
-      this.setState({
-        redirectUri: query.redirectUri
-      })
+      this.setState({ redirectUri: query.redirectUri })
     }
     return query
   }
 
   async componentDidMount () {
-    let { client_id, state, scope, response_type } = this.props
+    const {
+      client_id,
+      state,
+      scope,
+      response_type,
+    } = this.props
 
     if (client_id && state && scope && response_type) {
       try {
-        let token = localStorage.getItem('access_token')
+        const token = localStorage.getItem('access_token')
         let response = await fetch(`/api/oauth2/authorize?client_id=${client_id}&scope=${scope}&state=${state}&response_type=${response_type}`, {
           credentials: 'same-origin',
           headers: new Headers({
@@ -70,10 +70,8 @@ class Authorize extends Component {
           scopes: response.scopes,
           scope: response.scope,
           transactionId: response.transactionId,
-          allow: false,
-          token: localStorage.getItem('access_token')
+          token: localStorage.getItem('access_token'),
         })
-
       } catch (error) {
         console.log(error)
       }
@@ -81,18 +79,16 @@ class Authorize extends Component {
   }
 
   render () {
-    let {
+    const {
       client_id,
       state,
       scope,
       response_type
     } = this.props
-    let {
-      submitting,
-    } = this.state
+    const { submitting } = this.state
 
-    let hasRequiredParameters = client_id && state && scope && response_type
-    let submitUrl = `/api/oauth2/authorize?bearer=${this.state.token}`
+    const hasRequiredParameters = client_id && state && scope && response_type
+    const submitUrl = `/api/oauth2/authorize?bearer=${this.state.token}`
 
     return (
       <div>
@@ -110,9 +106,9 @@ class Authorize extends Component {
               {this.state.scopes.map((scope, index) => {
                 if (scope.accessible) {
                   return <li key={index}>{scope.permission}</li>
-                } else {
-                  return <li key={index} className="inaccessible">{scope.permission}</li>
                 }
+
+                return <li key={index} className="inaccessible">{scope.permission}</li>
               })}
             </ul>
 
@@ -185,16 +181,4 @@ class Authorize extends Component {
 
 
 
-
-const mapDispatchToProps = dispatch => {
-  return {
-  }
-}
-
-
-
-
-
-export default Page(Authorize, title, {
-  mapDispatchToProps,
-})
+export default Page(Authorize, title)

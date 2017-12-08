@@ -1,6 +1,5 @@
 // Module imports
 import { bindActionCreators } from 'redux'
-import * as d3 from 'd3'
 import React from 'react'
 import ReactTable from 'react-table'
 import { connect } from 'react-redux'
@@ -18,7 +17,6 @@ import Component from './Component'
 
 
 class RescuesByRatTable extends Component {
-
   /***************************************************************************\
     Private Methods
   \***************************************************************************/
@@ -42,13 +40,11 @@ class RescuesByRatTable extends Component {
   constructor (props) {
     super(props)
 
-    this._bindMethods([
-      '_getRescuesByRatStatistics',
-    ])
+    this._bindMethods(['_getRescuesByRatStatistics'])
   }
 
   render () {
-    let {
+    const {
       loading,
       statistics,
     } = this.props
@@ -75,7 +71,7 @@ class RescuesByRatTable extends Component {
   \***************************************************************************/
 
   get columns () {
-    return [
+    return this._columns || (this._columns = [
       {
         accessor: datum => datum.attributes['user.displayRat.name'] || datum.attributes.rats[0],
         className: 'name',
@@ -95,7 +91,7 @@ class RescuesByRatTable extends Component {
         sortable: false,
         width: 100,
       },
-    ]
+    ])
   }
 }
 
@@ -103,14 +99,12 @@ class RescuesByRatTable extends Component {
 
 
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getRescuesByRatStatistics: bindActionCreators(actions.getRescuesByRatStatistics, dispatch),
-  }
-}
+const mapDispatchToProps = dispatch => ({
+  getRescuesByRatStatistics: bindActionCreators(actions.getRescuesByRatStatistics, dispatch),
+})
 
 const mapStateToProps = state => {
-  let {
+  const {
     loading,
     statistics,
   } = state.rescuesByRat

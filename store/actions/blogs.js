@@ -1,3 +1,4 @@
+/* eslint no-await-in-loop:off */
 // Module imports
 import fetch from 'isomorphic-fetch'
 
@@ -15,7 +16,7 @@ import actionTypes from '../actionTypes'
 // Cache
 const cache = {
   authors: {},
-  categories: {}
+  categories: {},
 }
 
 
@@ -26,16 +27,15 @@ export const retrieveBlog = id => async dispatch => {
   dispatch({ type: actionTypes.RETRIEVE_BLOG })
 
   try {
-    let blogUrl = `/wp-api/posts/`
+    let blogUrl = '/wp-api/posts/'
 
-    if (parseInt(id)) {
+    if (parseInt(id, 10)) {
       blogUrl += id
-
     } else {
       blogUrl += `?slug=${id}`
     }
 
-    let response = await fetch(blogUrl)
+    const response = await fetch(blogUrl)
     let blog = await response.json()
 
     if (Array.isArray(blog)) {
@@ -52,7 +52,7 @@ export const retrieveBlog = id => async dispatch => {
       name: authorResponse.name,
     }
 
-    for (let [ key, value ] of blog.categories.entries()) {
+    for (const [key, value] of blog.categories.entries()) {
       let categoryResponse = await fetch(`/wp-api/categories/${value}`)
       categoryResponse = await categoryResponse.json()
 
@@ -63,23 +63,21 @@ export const retrieveBlog = id => async dispatch => {
       }
     }
 
-    let commentsResponse = await fetch(`/wp-api/comments?post=${id}`)
+    const commentsResponse = await fetch(`/wp-api/comments?post=${id}`)
     blog.comments = await commentsResponse.json()
-    blog.comments || (blog.comments = [])
+    blog.comments = blog.comments || []
 
     dispatch({
       payload: blog,
       status: 'success',
       type: actionTypes.RETRIEVE_BLOG,
     })
-
   } catch (error) {
     dispatch({
+      payload: error,
       status: 'error',
       type: actionTypes.RETRIEVE_BLOG,
     })
-
-    console.log(error)
   }
 }
 
@@ -90,21 +88,22 @@ export const retrieveBlog = id => async dispatch => {
 export const retrieveBlogs = (options) => async dispatch => {
   dispatch({ type: actionTypes.RETRIEVE_BLOGS })
 
-  let queryParams = []
+  const queryParams = []
 
-  for (let option in options) {
-    queryParams.push(`${option}=${options[option]}`)
+  for (const option in options) {
+    if ({}.hasOwnProperty.call(options, option)) {
+      queryParams.push(`${option}=${options[option]}`)
+    }
   }
 
   try {
-    let response = await fetch(`/wp-api/posts?${queryParams.join('&')}`)
-    let blogs = await response.json()
-    let headers = await response.headers
+    const response = await fetch(`/wp-api/posts?${queryParams.join('&')}`)
+    const blogs = await response.json()
+    const headers = await response.headers
 
-    for (let blog of blogs) {
+    for (const blog of blogs) {
       if (cache.authors[blog.author]) {
         blog.author = cache.authors[blog.author]
-
       } else {
         let authorResponse = await fetch(`/wp-api/users/${blog.author}`)
         authorResponse = await authorResponse.json()
@@ -115,10 +114,9 @@ export const retrieveBlogs = (options) => async dispatch => {
         }
       }
 
-      for (let [ key, value ] of blog.categories.entries()) {
+      for (const [key, value] of blog.categories.entries()) {
         if (cache.categories[value]) {
           blog.categories[key] = cache.categories[value]
-
         } else {
           let categoryResponse = await fetch(`/wp-api/categories/${value}`)
           categoryResponse = await categoryResponse.json()
@@ -134,19 +132,17 @@ export const retrieveBlogs = (options) => async dispatch => {
 
     dispatch({
       payload: {
-        blogs: blogs,
-        totalPages: parseInt(headers.get('x-wp-totalpages')),
+        blogs,
+        totalPages: parseInt(headers.get('x-wp-totalpages'), 10),
       },
       status: 'success',
       type: actionTypes.RETRIEVE_BLOGS,
     })
-
   } catch (error) {
     dispatch({
+      payload: error,
       status: 'error',
       type: actionTypes.RETRIEVE_BLOGS,
     })
-
-    console.log(error)
   }
 }

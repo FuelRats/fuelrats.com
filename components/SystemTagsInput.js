@@ -1,3 +1,4 @@
+// Module imports
 import TagsInput from '../components/TagsInput'
 
 

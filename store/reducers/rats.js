@@ -8,20 +8,18 @@ import parseJSONAPIResponseForEntityType from '../../helpers/parse-json-api-resp
 
 
 export default function (state = initialState.rats, action) {
-  let {
+  const {
     payload,
     status,
     type,
   } = action
+  const { rats } = state
+  let newRats
 
   switch (type) {
     case actionTypes.CREATE_RAT:
       switch (status) {
         case 'success':
-          let {
-            rats,
-          } = state
-
           rats.push(action.rat)
 
           return Object.assign({}, state, {
@@ -37,30 +35,24 @@ export default function (state = initialState.rats, action) {
     case actionTypes.SUBMIT_PAPERWORK:
       switch (status) {
         case 'success':
-          let {
-            rats,
-            retrieving,
-            total,
-          } = state
+          newRats = parseJSONAPIResponseForEntityType(payload, 'rats')
 
-          let newRats = parseJSONAPIResponseForEntityType(payload, 'rats')
-
-          for (let newRat of newRats) {
-            let index = rats.findIndex(rat => newRat.id === rat.id)
+          for (const newRat of newRats) {
+            const index = rats.findIndex(rat => newRat.id === rat.id)
 
             if (index === -1) {
               rats.push(newRat)
-
             } else {
               rats[index] = newRat
             }
           }
 
-          return Object.assign({}, state, {
-            rats: rats,
+          return {
+            ...state,
+            rats,
             retrieving: false,
             total: action.total,
-          })
+          }
 
         default:
           return state

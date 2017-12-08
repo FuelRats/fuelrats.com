@@ -6,22 +6,19 @@ import initialState from '../initialState'
 
 
 export default function (state = initialState.decals, action) {
-  let {
+  const {
     payload,
     status,
-    type,
   } = action
+  const newState = Object.assign({}, state)
 
   switch (action.type) {
     case actionTypes.CHECK_DECAL_ELIGIBILITY:
       switch (status) {
         case 'success':
-          let newState = Object.assign({}, state)
-
           if (payload.data) {
             newState.eligible = true
             newState.decals = newState.decals.concat(payload.data)
-
           } else {
             newState.eligible = payload.eligible
           }
@@ -35,8 +32,6 @@ export default function (state = initialState.decals, action) {
     case actionTypes.REDEEM_DECAL:
       switch (status) {
         case 'success':
-          let newState = Object.assign({}, state)
-
           newState.decals = newState.decals.concat(payload.data)
 
           return newState

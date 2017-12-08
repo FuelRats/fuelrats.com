@@ -5,7 +5,7 @@ import TagsInput from '../components/TagsInput'
 
 
 export default class extends TagsInput {
-  renderLoader () {
+  static renderLoader () {
     return (
       <span>
         <i className="fa fa-fw fa-pulse fa-spinner" />
@@ -14,8 +14,8 @@ export default class extends TagsInput {
     )
   }
 
-  renderValue (rat) {
-    let badgeClasses = ['badge', 'platform', 'short', rat.attributes.platform]
+  static renderValue (rat) {
+    const badgeClasses = ['badge', 'platform', 'short', rat.attributes.platform]
 
     return (
       <span><span className={badgeClasses.join(' ')} /> {rat.attributes.name}</span>
@@ -26,10 +26,8 @@ export default class extends TagsInput {
     this.setState({ loading: true })
 
     if (query) {
-      let response = await fetch(`/api/rats?limit=10&platform=${this.props['data-platform']}&name.ilike=${query}%`)
-      let {
-        data,
-      } = await response.json()
+      const response = await fetch(`/api/rats?limit=10&platform=${this.props['data-platform']}&name.ilike=${query}%`)
+      const { data } = await response.json()
 
       if (!data.length) {
         return this.updateOptions([])
@@ -38,10 +36,10 @@ export default class extends TagsInput {
       return this.updateOptions(data)
     }
 
-    this.updateOptions([])
+    return this.updateOptions([])
   }
 
-  get valueProp () {
+  static get valueProp () {
     return 'attributes.name'
   }
 }

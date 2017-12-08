@@ -17,7 +17,6 @@ import Component from './Component'
 
 
 class RescuesBySystemChart extends Component {
-
   /***************************************************************************\
     Private Methods
   \***************************************************************************/
@@ -33,62 +32,54 @@ class RescuesBySystemChart extends Component {
   }
 
   _renderChart () {
-    let {
-      statistics,
-    } = this.props
-    let {
+    const { statistics } = this.props
+    const {
       height,
       width,
     } = this.state
-    let radius = Math.min(width, height) / 2
+    const radius = Math.min(width, height) / 2
 
-    let rescuesByPlatform = [
+    const rescuesByPlatform = [
       {
         color: '#d65050',
         name: 'PC',
         safeName: 'pc',
-        value: statistics.reduce((accumulator, datum) => {
-          return accumulator + parseInt(datum.attributes.pc)
-        }, 0),
+        value: statistics.reduce((accumulator, datum) => accumulator + parseInt(datum.attributes.pc, 10), 0),
       },
       {
         color: '#003791',
         name: 'PS4',
         safeName: 'ps',
-        value: statistics.reduce((accumulator, datum) => {
-          return accumulator + parseInt(datum.attributes.ps)
-        }, 0),
+        value: statistics.reduce((accumulator, datum) => accumulator + parseInt(datum.attributes.ps, 10), 0),
       },
       {
         color: '#107c10',
         name: 'XB',
         safeName: 'xb',
-        value: statistics.reduce((accumulator, datum) => {
-          return accumulator + parseInt(datum.attributes.xb)
-        }, 0),
-      }
+        value: statistics.reduce((accumulator, datum) => accumulator + parseInt(datum.attributes.xb, 10), 0),
+      },
     ]
 
-    let haloWidth = 40
-    let packMargin = 20
+    const haloWidth = 40
+    const packMargin = 20
 
-    let arc = d3.arc()
+    const arc = d3.arc()
     arc.outerRadius(radius - 10)
     arc.innerRadius(radius - haloWidth)
 
-    let pie = d3.pie()
+    const pie = d3.pie()
     pie.sort(null)
     pie.value(datum => datum.value)
-    pie.padAngle(.03)
+    pie.padAngle(0.03)
 
-    let pack = d3.pack()
+    const pack = d3.pack()
     pack.size([width - ((haloWidth + packMargin) * 2), height - ((haloWidth + packMargin) * 2)])
     pack.padding(10)
 
-    let root = d3.hierarchy({ children: statistics })
-    root.sum(datum => datum.attributes ? datum.attributes.count : 0)
+    const root = d3.hierarchy({ children: statistics })
+    root.sum(datum => (datum.attributes ? datum.attributes.count : 0))
 
-    let systems = pack(root).leaves()
+    const systems = pack(root).leaves()
 
     return (
       <svg
@@ -124,42 +115,35 @@ class RescuesBySystemChart extends Component {
         <g
           className="platforms"
           transform={`translate(${width / 2},${height / 2})`}>
-          {pie(rescuesByPlatform).map((platform, index) => {
-            let classes = ['platform', platform.data.safeName]
+          {pie(rescuesByPlatform).map(platform => (
+            <g key={platform.data.safeName}>
+              <path
+                className={['platform', platform.data.safeName].join(' ')}
+                d={arc(platform)}
+                filter="url(#glow)" />
 
-            return (
-              <g key={index}>
-                <path
-                  className={classes.join(' ')}
-                  d={arc(platform)}
-                  filter="url(#glow)"
-                  key={index} />
-
-                <text
-                  dy="0.4em"
-                  textAnchor="middle"
-                  transform={`translate(${arc.centroid(platform)})`}>
-                  {platform.data.name}
-                </text>
-              </g>
-            )
-          })}
+              <text
+                dy="0.4em"
+                textAnchor="middle"
+                transform={`translate(${arc.centroid(platform)})`}>
+                {platform.data.name}
+              </text>
+            </g>
+          ))}
         </g>
       </svg>
     )
   }
 
   _renderSystem (system, index) {
-    let classes = ['system']
-    let highestPerformingPlatform = null
+    const classes = ['system']
     let id = null
     let systemName = null
-    let successRate = 0
 
     if (system.data.attributes) {
-      successRate = system.data.attributes.success / system.data.attributes.count
       systemName = system.data.attributes.system
-      id = systemName.toLowerCase().replace(/\s/g, '_')
+
+      id = systemName ? systemName.toLowerCase().replace(/\s/g, '_') : 'No system assigned'
 
       classes.push([
         {
@@ -174,7 +158,7 @@ class RescuesBySystemChart extends Component {
           platform: 'xb',
           value: system.data.attributes.xb,
         },
-      ].reduce((a, b) => a.value > b.value ? a : b).platform)
+      ].reduce((a, b) => (a.value > b.value ? a : b)).platform)
     }
 
     if (system.r) {
@@ -183,6 +167,8 @@ class RescuesBySystemChart extends Component {
           className="datum"
           filter="url(#glow)"
           key={index}
+          onBlur={this._hideTooltip}
+          onFocus={(event) => this._showTooltip(event, system)}
           onMouseOut={this._hideTooltip}
           onMouseOver={(event) => this._showTooltip(event, system)}
           transform={`translate(${system.x}, ${system.y})`}>
@@ -205,15 +191,14 @@ class RescuesBySystemChart extends Component {
           </text>
         </g>
       )
-
-    } else {
-      return null
     }
+
+    return null
   }
 
   _showTooltip (event, datum) {
-    let element = event.target
-    let {
+    const element = event.target
+    const {
       height,
       right,
       top,
@@ -228,7 +213,7 @@ class RescuesBySystemChart extends Component {
           <table>
             <thead>
               <tr>
-                <th></th>
+                <th />
 
                 <th>Successful</th>
 
@@ -320,7 +305,7 @@ class RescuesBySystemChart extends Component {
   }
 
   render () {
-    let {
+    const {
       showTooltip,
       tooltipContent,
       tooltipX,
@@ -355,14 +340,12 @@ class RescuesBySystemChart extends Component {
 
 
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getRescuesBySystemStatistics: bindActionCreators(actions.getRescuesBySystemStatistics, dispatch),
-  }
-}
+const mapDispatchToProps = dispatch => ({
+  getRescuesBySystemStatistics: bindActionCreators(actions.getRescuesBySystemStatistics, dispatch),
+})
 
 const mapStateToProps = state => {
-  let {
+  const {
     loading,
     statistics,
   } = state.rescuesBySystem

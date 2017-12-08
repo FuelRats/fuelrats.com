@@ -1,6 +1,5 @@
 // Module imports
 import { bindActionCreators } from 'redux'
-import _ from 'lodash'
 import React from 'react'
 import { connect } from 'react-redux'
 
@@ -18,7 +17,6 @@ import PasswordField from './PasswordField'
 
 
 class ChangePasswordForm extends Component {
-
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
@@ -39,12 +37,12 @@ class ChangePasswordForm extends Component {
   }
 
   handleChange (event) {
-    let newState = {}
-    let {
+    const newState = {}
+    const {
       name,
       value,
     } = event.target
-    let attribute = name
+    const attribute = name
 
     newState[attribute] = value
 
@@ -54,7 +52,7 @@ class ChangePasswordForm extends Component {
   async onSubmit (event) {
     event.preventDefault()
 
-    let {
+    const {
       currentPassword,
       newPassword,
     } = this.state
@@ -67,13 +65,13 @@ class ChangePasswordForm extends Component {
   }
 
   render () {
-    let {
+    const {
       currentPassword,
       newPassword,
       submitting,
     } = this.state
 
-    return(
+    return (
       <form onSubmit={this.onSubmit}>
         <header>
           <h3>Change Password</h3>
@@ -102,8 +100,8 @@ class ChangePasswordForm extends Component {
             name="newPassword"
             onChange={this.handleChange}
             ref={_newPasswordEl => this._newPasswordEl = _newPasswordEl}
-            showStrength={true}
-            showSuggestions={true}
+            showStrength
+            showSuggestions
             value={newPassword} />
         </fieldset>
 
@@ -116,18 +114,13 @@ class ChangePasswordForm extends Component {
             </button>
           </div>
 
-          <div className="secondary"></div>
+          <div className="secondary" />
         </menu>
       </form>
     )
   }
 
   validate () {
-    let {
-      currentPassword,
-      newPassword,
-    } = this.state
-
     if (!this._currentPasswordEl || !this._newPasswordEl) {
       return false
     }
@@ -148,11 +141,7 @@ class ChangePasswordForm extends Component {
 
 
 
-const mapDispatchToProps = dispatch => {
-  return {
-    changePassword: bindActionCreators(actions.changePassword, dispatch),
-  }
-}
+const mapDispatchToProps = dispatch => ({ changePassword: bindActionCreators(actions.changePassword, dispatch) })
 
 
 

@@ -16,7 +16,6 @@ import Component from './Component'
 
 
 class AddRatForm extends Component {
-
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
@@ -34,11 +33,11 @@ class AddRatForm extends Component {
   }
 
   async onSubmit (event) {
-    let {
+    const {
       createRat,
       userId,
     } = this.props
-    let {
+    const {
       name,
       platform,
     } = this.state
@@ -53,7 +52,7 @@ class AddRatForm extends Component {
   }
 
   render () {
-    let {
+    const {
       name,
       platform,
       submitting,
@@ -122,7 +121,9 @@ class AddRatForm extends Component {
 
           <button
             disabled={!name || submitting}
-            type="submit">Add</button>
+            type="submit">
+            Add
+          </button>
         </div>
       </form>
     )
@@ -133,14 +134,10 @@ class AddRatForm extends Component {
 
 
 
-const mapDispatchToProps = dispatch => {
-  return {
-    createRat: bindActionCreators(actions.createRat, dispatch),
-  }
-}
+const mapDispatchToProps = dispatch => ({ createRat: bindActionCreators(actions.createRat, dispatch) })
 
 const mapStateToProps = state => {
-  let {
+  const {
     id,
   } = state.user
 

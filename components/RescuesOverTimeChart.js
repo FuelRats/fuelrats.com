@@ -1,9 +1,8 @@
 // Module imports
 import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import * as d3 from 'd3'
 import moment from 'moment'
-import React from 'react'
-import { connect } from 'react-redux'
 
 
 
@@ -18,7 +17,6 @@ import Component from './Component'
 
 
 class RescuesOverTimeChart extends Component {
-
   /***************************************************************************\
     Private Methods
   \***************************************************************************/
@@ -39,9 +37,9 @@ class RescuesOverTimeChart extends Component {
   }
 
   _renderXAxis () {
-    let height = this._svg.getBoundingClientRect().height
-    let xAxis = d3.select(this._xAxis)
-    let axis = d3.axisBottom(this.xScale)
+    const { height } = this._svg.getBoundingClientRect()
+    const xAxis = d3.select(this._xAxis)
+    const axis = d3.axisBottom(this.xScale)
 
     axis.ticks(d3.timeMonth)
     xAxis.call(axis)
@@ -49,42 +47,39 @@ class RescuesOverTimeChart extends Component {
   }
 
   _renderYAxis () {
-    let width = this._svg.getBoundingClientRect().width
-    let yAxis = d3.select(this._yAxis)
+    const { width } = this._svg.getBoundingClientRect()
+    const yAxis = d3.select(this._yAxis)
 
     yAxis.call(d3.axisRight(this.yScale))
     yAxis.attr('transform', `translate(${width - this._yAxis.getBoundingClientRect().width}, 0)`)
-    yAxis.selectAll('text')
-      .attr('text-anchor', 'end')
+    yAxis.selectAll('text').attr('text-anchor', 'end')
   }
 
   _renderChart () {
-    let {
-      statistics,
-    } = this.props
-    let {
-      height,
-    } = this.state
+    const { statistics } = this.props
+    const { height } = this.state
 
     // Deserialize the data
-    let data = statistics.map(datum => {
-      datum.attributes.date = moment(datum.attributes.date)
-      datum.attributes.failure = parseInt(datum.attributes.failure)
-      datum.attributes.success = parseInt(datum.attributes.success)
+    const data = statistics.map(datum => {
+      const newDatum = { ...datum }
 
-      return datum
+      newDatum.attributes.date = moment(datum.attributes.date)
+      newDatum.attributes.failure = parseInt(datum.attributes.failure, 10)
+      newDatum.attributes.success = parseInt(datum.attributes.success, 10)
+
+      return newDatum
     })
 
     // Set sizing parameters
-    let xAxisMargin = 20
-    let yAxisMargin = 40
-    let barGap = 2
-    let barWidth = 10
-    let borderRadius = (barWidth / 2) - 2
-    let width = data.length * (barWidth + barGap)
+    const xAxisMargin = 20
+    const yAxisMargin = 40
+    const barGap = 2
+    const barWidth = 10
+    const borderRadius = (barWidth / 2) - 2
+    const width = data.length * (barWidth + barGap)
 
     // Define the X axis scaling metrics
-    let xScale = this.xScale = d3.scaleTime()
+    const xScale = this.xScale = d3.scaleTime()
     xScale.domain([
       d3.min(data, datum => datum.attributes.date),
       d3.max(data, datum => datum.attributes.date),
@@ -92,7 +87,7 @@ class RescuesOverTimeChart extends Component {
     xScale.range([0, width])
 
     // Define the Y axis scaling metrics
-    let yScale = this.yScale = d3.scaleLinear()
+    const yScale = this.yScale = d3.scaleLinear()
     yScale.domain([d3.max(data, datum => datum.attributes.success + datum.attributes.failure), 0])
     yScale.range([0, height])
 
@@ -102,34 +97,34 @@ class RescuesOverTimeChart extends Component {
         height={height + xAxisMargin}
         width={width + yAxisMargin}>
         <g className="data">
-          {data.map((rescue, index) => {
-            return (
-              <g
-                className="datum"
-                key={index}
-                onMouseOut={this._hideTooltip}
-                onMouseOver={(event) => this._showTooltip(event, rescue)}
-                transform={`translate(${xScale(rescue.attributes.date)}, 0)`}>
-                <rect
-                  className="success"
-                  data-rescues={rescue.attributes.success}
-                  height={yScale(0) - yScale(rescue.attributes.success + rescue.attributes.failure)}
-                  rx={borderRadius}
-                  ry={borderRadius}
-                  width={barWidth}
-                  y={yScale(rescue.attributes.success + rescue.attributes.failure)} />
+          {data.map(rescue => (
+            <g
+              className="datum"
+              key={rescue.id}
+              onBlur={this._hideTooltip}
+              onFocus={(event) => this._showTooltip(event, rescue)}
+              onMouseOut={this._hideTooltip}
+              onMouseOver={(event) => this._showTooltip(event, rescue)}
+              transform={`translate(${xScale(rescue.attributes.date)}, 0)`}>
+              <rect
+                className="success"
+                data-rescues={rescue.attributes.success}
+                height={yScale(0) - yScale(rescue.attributes.success + rescue.attributes.failure)}
+                rx={borderRadius}
+                ry={borderRadius}
+                width={barWidth}
+                y={yScale(rescue.attributes.success + rescue.attributes.failure)} />
 
-                <rect
-                  className="failure"
-                  data-rescues={rescue.attributes.failure}
-                  height={yScale(0) - yScale(rescue.attributes.failure)}
-                  rx={borderRadius}
-                  ry={borderRadius}
-                  width={barWidth}
-                  y={yScale(rescue.attributes.failure)} />
-              </g>
-            )
-          })}
+              <rect
+                className="failure"
+                data-rescues={rescue.attributes.failure}
+                height={yScale(0) - yScale(rescue.attributes.failure)}
+                rx={borderRadius}
+                ry={borderRadius}
+                width={barWidth}
+                y={yScale(rescue.attributes.failure)} />
+            </g>
+          ))}
         </g>
 
         <g
@@ -144,8 +139,8 @@ class RescuesOverTimeChart extends Component {
   }
 
   _showTooltip (event, rescue) {
-    let element = event.target
-    let {
+    const element = event.target
+    const {
       right,
       top,
     } = element.getBoundingClientRect()
@@ -204,7 +199,7 @@ class RescuesOverTimeChart extends Component {
   }
 
   render () {
-    let {
+    const {
       showTooltip,
       tooltipContent,
       tooltipX,
@@ -239,14 +234,12 @@ class RescuesOverTimeChart extends Component {
 
 
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getRescuesOverTimeStatistics: bindActionCreators(actions.getRescuesOverTimeStatistics, dispatch),
-  }
-}
+const mapDispatchToProps = dispatch => ({
+  getRescuesOverTimeStatistics: bindActionCreators(actions.getRescuesOverTimeStatistics, dispatch),
+})
 
 const mapStateToProps = state => {
-  let {
+  const {
     loading,
     statistics,
   } = state.rescuesOverTime

@@ -1,6 +1,5 @@
 // Module imports
 import { bindActionCreators } from 'redux'
-import { Provider } from 'react-redux'
 import React from 'react'
 import withRedux from 'next-redux-wrapper'
 
@@ -14,7 +13,6 @@ import {
   initStore,
 } from '../store'
 import Dialog from './Dialog'
-import LoginDialog from './LoginDialog'
 import Head from './Head'
 import Header from './Header'
 import Reminders from './Reminders'
@@ -24,8 +22,8 @@ import UserMenu from './UserMenu'
 
 
 
-// Component constants
-const store = initStore()
+// Initialize the Redux store
+initStore()
 
 
 
@@ -34,7 +32,7 @@ const store = initStore()
 export default (Component, title = 'Untitled', reduxOptions = {}) => {
   class Page extends React.Component {
     static async getInitialProps(ctx) {
-      let {
+      const {
         asPath,
         isServer,
         query,
@@ -54,11 +52,11 @@ export default (Component, title = 'Untitled', reduxOptions = {}) => {
     }
 
     render() {
-      let {
+      const {
         isServer,
         path,
       } = this.props
-      let mainClasses = ['fade-in', 'page', title.toLowerCase().replace(/\s/g, '-')].join(' ')
+      const mainClasses = ['fade-in', 'page', title.toLowerCase().replace(/\s/g, '-')].join(' ')
 
       return (
         <div role="application">
@@ -82,13 +80,14 @@ export default (Component, title = 'Untitled', reduxOptions = {}) => {
     }
   }
 
-  let mapDispatchToProps = reduxOptions.mapDispatchToProps
+  const { mapStateToProps } = reduxOptions
+  let { mapDispatchToProps } = reduxOptions
 
   if (Array.isArray(reduxOptions.mapDispatchToProps)) {
     mapDispatchToProps = dispatch => {
-      let actionMap = {}
+      const actionMap = {}
 
-      for (let actionName of reduxOptions.mapDispatchToProps) {
+      for (const actionName of reduxOptions.mapDispatchToProps) {
         actionMap[actionName] = bindActionCreators(actions[actionName], dispatch)
       }
 
@@ -96,5 +95,5 @@ export default (Component, title = 'Untitled', reduxOptions = {}) => {
     }
   }
 
-  return withRedux(initStore, reduxOptions.mapStateToProps, mapDispatchToProps)(Page)
+  return withRedux(initStore, mapStateToProps, mapDispatchToProps)(Page)
 }

@@ -1,3 +1,4 @@
+/* eslint-disable */
 'use strict'
 
 /******************************************************************************\
@@ -16,7 +17,6 @@ const router = require('koa-router')()
 
 
 module.exports = function (nextjs, koa, config) {
-
   /******************************************************************************\
     Router setup
   \******************************************************************************/
@@ -218,3 +218,4 @@ module.exports = function (nextjs, koa, config) {
   koa.use(router.routes())
   koa.use(router.allowedMethods())
 }
+/* eslint-enable */

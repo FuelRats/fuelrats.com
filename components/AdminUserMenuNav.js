@@ -6,47 +6,38 @@ import React from 'react'
 
 
 
-export default class extends React.Component {
+export default () => {
+  const { permissions } = this.props
 
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
+  return (
+    <nav className="admin">
+      <header>Admin</header>
 
-  render () {
-    let {
-      permissions,
-    } = this.props
+      <ul className="">
+        {permissions.has('rescue.read') && (
+          <li>
+            <Link href="/admin/rescues">
+              <a>Rescues</a>
+            </Link>
+          </li>
+        )}
 
-    return (
-      <nav className="admin">
-        <header>Admin</header>
+        {permissions.has('rat.read') && (
+          <li>
+            <Link href="/admin/rats">
+              <a>Rats</a>
+            </Link>
+          </li>
+        )}
 
-        <ul className="">
-          {permissions.has('rescue.read') && (
-            <li>
-              <Link href="/admin/rescues">
-                <a>Rescues</a>
-              </Link>
-            </li>
-          )}
-
-          {permissions.has('rat.read') && (
-            <li>
-              <Link href="/admin/rats">
-                <a>Rats</a>
-              </Link>
-            </li>
-          )}
-
-          {permissions.has('user.read') && (
-            <li>
-              <Link href="/admin/users">
-                <a>Users</a>
-              </Link>
-            </li>
-          )}
-        </ul>
-      </nav>
-    )
-  }
+        {permissions.has('user.read') && (
+          <li>
+            <Link href="/admin/users">
+              <a>Users</a>
+            </Link>
+          </li>
+        )}
+      </ul>
+    </nav>
+  )
 }

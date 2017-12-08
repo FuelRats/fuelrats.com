@@ -8,14 +8,14 @@ import React from 'react'
 
 // Constants
 const links = {
-  'Blog': {
+  Blog: {
     href: '/blog/all',
     as: '/blog',
   },
-  'Statistics': {
+  Statistics: {
     href: '/statistics',
   },
-  'Leaderboard': {
+  Leaderboard: {
     href: '/leaderboard',
   },
 }
@@ -24,11 +24,12 @@ const links = {
 
 
 
-export default class extends React.Component {
-  render () {
-    let renderedLinks = []
+export default () => {
+  const renderedLinks = []
 
-    for (let linkName in links) {
+  for (const linkName in links) {
+    if ({}.hasOwnProperty.call(links, linkName)) {
+      /* eslint-disable function-paren-newline */
       renderedLinks.push(
         <li key={linkName}>
           <Link {...links[linkName]}>
@@ -36,14 +37,15 @@ export default class extends React.Component {
           </Link>
         </li>
       )
+      /* eslint-enable */
     }
-
-    return (
-      <nav>
-        <ul>
-          {renderedLinks}
-        </ul>
-      </nav>
-    )
   }
+
+  return (
+    <nav>
+      <ul>
+        {renderedLinks}
+      </ul>
+    </nav>
+  )
 }

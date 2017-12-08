@@ -13,15 +13,12 @@ import Component from './Component'
 
 
 export default class extends Component {
-
   /***************************************************************************\
     Private Methods
   \***************************************************************************/
 
   _renderPane (activeTab) {
-    let {
-      tabs,
-    } = this.props
+    const { tabs } = this.props
 
     return (
       <div className="tab-pane">
@@ -31,10 +28,8 @@ export default class extends Component {
   }
 
   _renderTab (tab, index) {
-    let {
-      activeTab,
-    } = this.state
-    let classes = ['tab']
+    const { activeTab } = this.state
+    const classes = ['tab']
 
     if (tab.title === activeTab) {
       classes.push('active')
@@ -44,18 +39,15 @@ export default class extends Component {
       <li
         className={classes.join(' ')}
         key={index}
-        onClick={() => { this.setState({
-          activeTab: tab.title
-        })}}>
+        onClick={() => this.setState({ activeTab: tab.title })}
+        onKeyPress={() => this.setState({ activeTab: tab.title })}>
         {tab.title}
       </li>
     )
   }
 
   _renderTabs () {
-    let {
-      tabs,
-    } = this.props
+    const { tabs } = this.props
 
     return (
       <nav className="tabs">
@@ -80,18 +72,12 @@ export default class extends Component {
     this._bindMethods(['_renderTab'])
 
     this.state = {
-      activeTab: props.tabs.find(tab => tab.default).title
+      activeTab: props.tabs.find(tab => tab.default).title,
     }
   }
 
   render () {
-    let {
-      name,
-      tabs,
-    } = this.props
-    let {
-      activeTab,
-    } = this.state
+    const { activeTab } = this.state
 
     return (
       <div className="tabbed-panel">

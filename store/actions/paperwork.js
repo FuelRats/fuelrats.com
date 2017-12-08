@@ -32,14 +32,12 @@ export const retrievePaperwork = rescueId => async dispatch => {
       status: 'success',
       type: actionTypes.RETRIEVE_PAPERWORK,
     })
-
   } catch (error) {
     dispatch({
+      payload: error,
       status: 'error',
       type: actionTypes.RETRIEVE_PAPERWORK,
     })
-
-    console.log(error)
   }
 }
 
@@ -55,7 +53,7 @@ export const submitPaperwork = (rescueId, rescue, rats) => async dispatch => {
       body: JSON.stringify(rescue),
       headers: new Headers({
         Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       }),
       method: 'put',
     })
@@ -66,7 +64,7 @@ export const submitPaperwork = (rescueId, rescue, rats) => async dispatch => {
           body: JSON.stringify(rats.added.map(rat => rat.id)),
           headers: new Headers({
             Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
           }),
           method: 'put',
         })
@@ -77,7 +75,7 @@ export const submitPaperwork = (rescueId, rescue, rats) => async dispatch => {
           body: JSON.stringify(rats.removed.map(rat => rat.id)),
           headers: new Headers({
             Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
           }),
           method: 'put',
         })
@@ -91,13 +89,11 @@ export const submitPaperwork = (rescueId, rescue, rats) => async dispatch => {
       status: 'success',
       type: actionTypes.SUBMIT_PAPERWORK,
     })
-
   } catch (error) {
     dispatch({
+      payload: error,
       status: 'error',
       type: actionTypes.SUBMIT_PAPERWORK,
     })
-
-    console.log(error)
   }
 }

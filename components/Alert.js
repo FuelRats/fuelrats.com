@@ -1,5 +1,4 @@
 // Module imports
-import React from 'react'
 import ReactDOM from 'react-dom'
 
 
@@ -32,7 +31,7 @@ export default class extends Component {
   }
 
   render () {
-    let {
+    const {
       children,
       open,
     } = this.props

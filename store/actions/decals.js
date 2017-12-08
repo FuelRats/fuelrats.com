@@ -18,7 +18,7 @@ export const checkDecalEligibility = () => async dispatch => {
       type: actionTypes.CHECK_DECAL_ELIGIBILITY,
     })
 
-    let response = await fetch(`/api/decals/check`, {
+    let response = await fetch('/api/decals/check', {
       headers: new Headers({
         Authorization: `Bearer ${localStorage.getItem('access_token')}`,
       }),
@@ -30,14 +30,12 @@ export const checkDecalEligibility = () => async dispatch => {
       status: 'success',
       type: actionTypes.CHECK_DECAL_ELIGIBILITY,
     })
-
   } catch (error) {
     dispatch({
+      payload: error,
       status: 'error',
       type: actionTypes.CHECK_DECAL_ELIGIBILITY,
     })
-
-    console.log(error)
   }
 }
 
@@ -51,7 +49,7 @@ export const redeemDecal = () => async dispatch => {
       type: actionTypes.REDEEM_DECAL,
     })
 
-    let response = await fetch(`/api/decals/redeem`, {
+    let response = await fetch('/api/decals/redeem', {
       headers: new Headers({
         Authorization: `Bearer ${localStorage.getItem('access_token')}`,
       }),
@@ -63,13 +61,11 @@ export const redeemDecal = () => async dispatch => {
       status: 'success',
       type: actionTypes.REDEEM_DECAL,
     })
-
   } catch (error) {
     dispatch({
+      payload: error,
       status: 'error',
       type: actionTypes.REDEEM_DECAL,
     })
-
-    console.log(error)
   }
 }

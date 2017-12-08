@@ -15,21 +15,20 @@ import SqueakmasDialog from './SqueakmasDialog'
 
 
 // Component constants
-const localStorageIsAvailable = typeof localStorage !== undefined
+const localStorageIsAvailable = typeof localStorage !== 'undefined'
 
 
 
 
 
 export default class extends Component {
-
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
 
   componentDidMount () {
     if (localStorageIsAvailable) {
-      let squeakmasHasBeenDismissed = localStorage.getItem('squeakmas3303AlertDismissed')
+      const squeakmasHasBeenDismissed = localStorage.getItem('squeakmas3303AlertDismissed')
 
       if (squeakmasHasBeenDismissed !== null) {
         this.setState({ open: false })
@@ -54,7 +53,7 @@ export default class extends Component {
   }
 
   render () {
-    let {
+    const {
       dialogIsOpen,
       open,
     } = this.state

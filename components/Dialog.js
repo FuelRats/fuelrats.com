@@ -1,6 +1,5 @@
 // Module imports
 import { bindActionCreators } from 'redux'
-import _ from 'lodash'
 import React from 'react'
 import { connect } from 'react-redux'
 
@@ -15,73 +14,60 @@ import { actions } from '../store'
 
 
 
-class Dialog extends React.Component {
+const Dialog = (props) => {
+  const {
+    body,
+    closeIsVisible,
+    hideDialog,
+    isVisible,
+    menuIsVisible,
+    title,
+  } = props
 
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
+  return (
+    <dialog className="loading fade-in" open={isVisible}>
+      {closeIsVisible && (
+        <button
+          className="close icon secondary"
+          onClick={hideDialog}>
+          <i className="fa fa-fw fa-times" />
+        </button>
+      )}
 
-  render () {
-    let {
-      body,
-      closeIsVisible,
-      hideDialog,
-      isVisible,
-      menuIsVisible,
-      title,
-    } = this.props
+      {title && (
+        <header>
+          <h2>{title}</h2>
+        </header>
+      )}
 
-    return (
-      <dialog className="loading fade-in" open={isVisible}>
-        {closeIsVisible && (
-          <button
-            className="close icon secondary"
-            onClick={hideDialog}>
-            <i className="fa fa-fw fa-times"></i>
-          </button>
-        )}
+      <div className="content">
+        {body}
+      </div>
 
-        {title && (
-          <header>
-            <h2>{title}</h2>
-          </header>
-        )}
+      {menuIsVisible && (
+        <footer>
+          <menu type="toolbar">
+            <div className="secondary">
+              <button name="cancel" type="button">Close</button>
+            </div>
 
-        <div className="content">
-          {body}
-        </div>
-
-        {menuIsVisible && (
-          <footer>
-            <menu type="toolbar">
-              <div className="secondary">
-                <button name="cancel" type="button">Close</button>
-              </div>
-
-              <div className="primary">
-                <button name="confirm" type="button">Confirm</button>
-              </div>
-            </menu>
-          </footer>
-        )}
-      </dialog>
-    )
-  }
+            <div className="primary">
+              <button name="confirm" type="button">Confirm</button>
+            </div>
+          </menu>
+        </footer>
+      )}
+    </dialog>
+  )
 }
 
 
 
 
 
-const mapDispatchToProps = dispatch => {
-  return {
-    hideDialog: bindActionCreators(actions.hideDialog, dispatch),
-  }
-}
+const mapDispatchToProps = dispatch => ({ hideDialog: bindActionCreators(actions.hideDialog, dispatch) })
 
-const mapStateToProps = state => {
-  return Object.assign({}, state.dialog)
-}
+const mapStateToProps = state => Object.assign({}, state.dialog)
 
 
 

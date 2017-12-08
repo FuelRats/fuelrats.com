@@ -7,7 +7,6 @@ import PortalDialog from './PortalDialog'
 
 
 export default class extends Component {
-
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
@@ -31,19 +30,19 @@ export default class extends Component {
   }
 
   render () {
-    let { onVisibilityChange } = this.props
-    let { open } = this.state
+    const { onVisibilityChange } = this.props
+    const { open } = this.state
 
     return (
       <PortalDialog
         onVisibilityChange={onVisibilityChange}
-        modal={true}
+        modal
         open={open}>
         <button
           className="close icon secondary"
           onClick={this.close}
           type="button">
-          <i className="fa fa-fw fa-times"></i>
+          <i className="fa fa-fw fa-times" />
         </button>
 
         <header>
@@ -55,7 +54,7 @@ export default class extends Component {
 
           <p>By donating, not only do you get to feel all warm and fuzzy inside for doing something kind, but every £1 you donate gets you another entry in Frontier's prize draw!</p>
 
-          <p>On the 11th day of 🐀🎄Squeakmas, Frontier's community managers Edward Lewis and Bo de Vries will kick off a 24 hour Elite: Dangerous live stream! At the end of the stream they'll be announcing the winners of the prize draw, so don't miss it!</p>
+          <p>On the 11th day of <span aria-label="Rat emoji" role="img">🐀</span><span aria-label="Christmas tree emoji" role="img">🎄</span>Squeakmas, Frontier's community managers Edward Lewis and Bo de Vries will kick off a 24 hour Elite: Dangerous live stream! At the end of the stream they'll be announcing the winners of the prize draw, so don't miss it!</p>
         </div>
 
         <footer>
@@ -71,8 +70,9 @@ export default class extends Component {
 
             <div className="primary">
               <a
-                className='button'
+                className="button"
                 href="https://www.justgiving.com/fundraising/frontier-developments"
+                rel="noopener noreferrer"
                 target="_blank">
                 Donate
               </a>

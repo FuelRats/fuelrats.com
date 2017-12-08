@@ -1,14 +1,12 @@
 import actionTypes from '../actionTypes'
 import initialState from '../initialState'
 
-import parseJSONAPIResponseForEntityType from '../../helpers/parse-json-api-response-for-entity-type'
-
 
 
 
 
 export default function (state = initialState.rescuesOverTime, action) {
-  let {
+  const {
     payload,
     status,
     type,

@@ -1,16 +1,4 @@
-// Module imports
-import { bindActionCreators } from 'redux'
-import _ from 'lodash'
-import Link from 'next/link'
-import React from 'react'
-import withRedux from 'next-redux-wrapper'
-
-
-
-
-
 // Component imports
-import { actions } from '../store'
 import Component from '../components/Component'
 import Page from '../components/Page'
 
@@ -26,7 +14,6 @@ const title = 'Forgot Password'
 
 
 class ForgotPassword extends Component {
-
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
@@ -48,9 +35,7 @@ class ForgotPassword extends Component {
   async onSubmit (event) {
     event.preventDefault()
 
-    let {
-      email,
-    } = this.state
+    const { email } = this.state
 
     this.setState({ submitting: true })
 
@@ -63,7 +48,7 @@ class ForgotPassword extends Component {
   }
 
   render () {
-    let {
+    const {
       email,
       submitted,
       submitting,
@@ -99,7 +84,7 @@ class ForgotPassword extends Component {
                   </button>
                 </div>
 
-                <div className="secondary"></div>
+                <div className="secondary" />
               </menu>
             </form>
           )}
@@ -133,17 +118,10 @@ class ForgotPassword extends Component {
 
 
 
-
-const mapDispatchToProps = dispatch => {
-  return {
-    sendPasswordResetEmail: bindActionCreators(actions.sendPasswordResetEmail, dispatch),
-  }
-}
+const mapDispatchToProps = ['sendPasswordResetEmail']
 
 
 
 
 
-export default Page(ForgotPassword, title, {
-  mapDispatchToProps,
-})
+export default Page(ForgotPassword, title, { mapDispatchToProps })

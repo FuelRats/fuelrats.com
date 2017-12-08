@@ -20,25 +20,16 @@ const title = 'Rescues'
 
 
 
-class Rescues extends React.Component {
+const Rescues = () => (
+  <div className="page-wrapper">
+    <header className="page-header">
+      <h1>{title}</h1>
+    </header>
 
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
-
-  render () {
-    return (
-      <div className="page-wrapper">
-        <header className="page-header">
-          <h1>{title}</h1>
-        </header>
-
-        <div className="page-content">
-          <RescuesTablePanel />
-        </div>
-      </div>
-    )
-  }
-}
+    <div className="page-content">
+      <RescuesTablePanel />
+    </div>
+  </div>
+)
 
 export default Page(Rescues, title)

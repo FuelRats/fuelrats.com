@@ -13,8 +13,7 @@ import Component from './Component'
 
 
 
-export default class extends Component {
-
+export default class PasswordField extends Component {
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
@@ -38,20 +37,15 @@ export default class extends Component {
   }
 
   handleChange (event) {
-    let {
+    const {
       maxLength,
       minLength,
       onChange,
     } = this.props
-    let {
-      value,
-    } = event.target
-    let {
-      password,
-    } = this.state
-    let newState = Object.assign({}, this.state)
+    const { value } = event.target
+    const newState = Object.assign({}, this.state)
 
-    let passwordEvaluation = zxcvbn(value)
+    const passwordEvaluation = zxcvbn(value)
 
     newState.passwordWarnings.clear()
     newState.passwordSuggestions.clear()
@@ -71,7 +65,7 @@ export default class extends Component {
     newState.password = value
     newState.passwordStrength = passwordEvaluation.score
 
-    for (let suggestion of passwordEvaluation.feedback.suggestions) {
+    for (const suggestion of passwordEvaluation.feedback.suggestions) {
       newState.passwordSuggestions.add(suggestion)
     }
 
@@ -87,37 +81,32 @@ export default class extends Component {
   }
 
   handleShowPasswordClick () {
-    let {
-      showPassword,
-    } = this.state
+    const { showPassword } = this.state
 
     this.setState({ showPassword: !showPassword })
     this._el.focus()
   }
 
   render () {
-    let {
+    const {
       focused,
       password,
       passwordStrength,
-      passwordSuggestions,
-      passwordWarnings,
       showPassword,
     } = this.state
-    let {
+    const {
       disabled,
-      onChange,
       showStrength,
       showSuggestions,
     } = this.props
 
-    let inputProps = Object.assign({}, this.props)
+    const inputProps = Object.assign({}, this.props)
 
     delete inputProps.onChange
     delete inputProps.showStrength
     delete inputProps.showSuggestions
 
-    return(
+    return (
       <div
         className="password-group"
         data-focused={focused}>
@@ -162,7 +151,7 @@ export default class extends Component {
     )
   }
 
-  renderSuggestion (suggestion, index) {
+  static renderSuggestion (suggestion, index) {
     return (
       <li
         className="suggestion"
@@ -173,7 +162,7 @@ export default class extends Component {
     )
   }
 
-  renderWarning (warning, index) {
+  static renderWarning (warning, index) {
     return (
       <li
         className="warning"
@@ -185,7 +174,7 @@ export default class extends Component {
   }
 
   renderWarnings () {
-    let {
+    const {
       passwordSuggestions,
       passwordWarnings,
     } = this.state
@@ -193,8 +182,8 @@ export default class extends Component {
     if (passwordWarnings) {
       return (
         <ul className="info">
-          {[...passwordWarnings].map(this.renderWarning)}
-          {[...passwordSuggestions].map(this.renderSuggestion)}
+          {[...passwordWarnings].map(PasswordField.renderWarning)}
+          {[...passwordSuggestions].map(PasswordField.renderSuggestion)}
         </ul>
       )
     }

@@ -1,16 +1,11 @@
 // Module imports
-import { bindActionCreators } from 'redux'
-import _ from 'lodash'
 import Link from 'next/link'
-import React from 'react'
-import withRedux from 'next-redux-wrapper'
 
 
 
 
 
 // Component imports
-import { actions } from '../store'
 import Component from '../components/Component'
 import Page from '../components/Page'
 import PasswordField from '../components/PasswordField'
@@ -27,13 +22,12 @@ const title = 'Password Reset'
 
 
 class PasswordReset extends Component {
-
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
 
   async componentDidMount () {
-    let token = this.props.query.t
+    const token = this.props.query.t
     let tokenIsValid
 
     if (token) {
@@ -49,9 +43,7 @@ class PasswordReset extends Component {
   constructor (props) {
     super(props)
 
-    this._bindMethods([
-      'onSubmit',
-    ])
+    this._bindMethods(['onSubmit'])
 
     this.state = {
       password: '',
@@ -64,7 +56,7 @@ class PasswordReset extends Component {
   }
 
   async onSubmit (event) {
-    let {
+    const {
       password,
       token,
     } = this.state
@@ -82,7 +74,7 @@ class PasswordReset extends Component {
   }
 
   render () {
-    let {
+    const {
       password,
       submitted,
       submitting,
@@ -108,8 +100,7 @@ class PasswordReset extends Component {
           {(!submitted && !validating && tokenIsValid) && (
             <form onSubmit={this.onSubmit}>
               <fieldset>
-                <label
-                  htmlFor="password">
+                <label htmlFor="password">
                   New Password
                 </label>
 
@@ -121,9 +112,9 @@ class PasswordReset extends Component {
                   pattern="^[^\s]{5,42}$"
                   placeholder="Use a strong password to keep your account secure"
                   ref={_password => this._password = _password}
-                  required={true}
-                  showStrength={true}
-                  showSuggestions={true}
+                  required
+                  showStrength
+                  showSuggestions
                   value={password} />
               </fieldset>
 
@@ -136,7 +127,7 @@ class PasswordReset extends Component {
                   </button>
                 </div>
 
-                <div className="secondary"></div>
+                <div className="secondary" />
               </menu>
             </form>
           )}
@@ -172,18 +163,10 @@ class PasswordReset extends Component {
 
 
 
-
-const mapDispatchToProps = dispatch => {
-  return {
-    resetPassword: bindActionCreators(actions.resetPassword, dispatch),
-    validatePasswordResetToken: bindActionCreators(actions.validatePasswordResetToken, dispatch),
-  }
-}
+const mapDispatchToProps = ['resetPassword', 'validatePasswordResetToken']
 
 
 
 
 
-export default Page(PasswordReset, title, {
-  mapDispatchToProps,
-})
+export default Page(PasswordReset, title, { mapDispatchToProps })

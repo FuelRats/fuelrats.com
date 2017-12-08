@@ -8,7 +8,7 @@ export default function (state = initialState.user, action) {
   switch (action.type) {
     case actionTypes.ADD_NICKNAME:
       if (action.status === 'success') {
-        let newState = Object.assign({}, state)
+        const newState = Object.assign({}, state)
 
         newState.attributes.nicknames.push(action.payload)
 
@@ -24,18 +24,18 @@ export default function (state = initialState.user, action) {
               data: (state.relationships.rats.data || []).concat({
                 id: action.rat.id,
                 type: 'rats',
-              })
-            }
-          }
+              }),
+            },
+          },
         })
       }
 
     case actionTypes.GET_USER:
       if (action.status === 'success') {
-        let { payload } = action
+        const { payload } = action
 
         if (payload) {
-          let user = Object.assign({}, state, payload.data)
+          const user = Object.assign({}, state, payload.data)
 
           // Generate an Adorable avatar if the user doesn't already have one set
           user.attributes.image = payload.data.attributes.image || `//api.adorable.io/avatars/${payload.data.id}`
@@ -43,24 +43,24 @@ export default function (state = initialState.user, action) {
           if (Array.isArray(user.permissions)) {
             user.permissions = new Set(user.permissions)
           }
-  
+
           // Collect user's permissions
           user.relationships.groups.data.forEach(({ id, type }) => {
-            let group = payload.included.find(entity => (entity.id === id) && (entity.type === type))
-  
+            const group = payload.included.find(entity => (entity.id === id) && (entity.type === type))
+
             group.attributes.permissions.forEach(permission => user.permissions.add(permission))
           })
-  
+
           // Create the user's data store if it doesn't already exist
           if (!user.data) {
             user.data = {}
           }
-  
+
           // Parse the user's data store if it came in as a string
           if (typeof user.data === 'string') {
             user.data = JSON.parse(user.data)
           }
-  
+
           // Create the website's walled garden in the data store
           if (!user.data.website) {
             user.data.website = {}
@@ -83,13 +83,13 @@ export default function (state = initialState.user, action) {
 
     case actionTypes.LOGOUT:
       switch (action.status) {
-        case 'success':
+        default:
           return Object.assign({}, initialState.user)
       }
 
     case actionTypes.UPDATE_USER:
       if (action.user) {
-        let user = action.user
+        const { user } = action
 
         return Object.assign({}, state, user)
       }

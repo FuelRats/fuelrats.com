@@ -6,7 +6,7 @@ import initialState from '../initialState'
 
 
 export default function (state = initialState.paperwork, action) {
-  let {
+  const {
     payload,
     status,
     type,
@@ -32,8 +32,6 @@ export default function (state = initialState.paperwork, action) {
           })
       }
 
-      return newState
-
     case actionTypes.RETRIEVE_PAPERWORK:
       switch (status) {
         case 'error':
@@ -42,23 +40,17 @@ export default function (state = initialState.paperwork, action) {
             retrieving: false,
           })
 
-          break
-
         case 'success':
           return Object.assign({}, state, {
             rescueId: payload.data[0].id,
             retrieving: false,
           })
 
-          break
-
         default:
           return Object.assign({}, state, {
             retrieving: true,
           })
       }
-
-      return newState
 
     default:
       return state

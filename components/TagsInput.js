@@ -1,12 +1,12 @@
-import {
-  debounce,
-} from 'lodash'
+// Module imports
+import { debounce } from 'lodash'
 import React from 'react'
 
 
 
 
 
+// Component imports
 import Key from './Key'
 
 
@@ -39,18 +39,12 @@ export default class extends React.Component {
 
 
   addTag (tag) {
-    let {
-      onAdd,
-    } = this.props
-    let {
-      allowDuplicates,
-    } = this.state
-    let tags = Object.assign([], this.state.tags)
+    const { onAdd } = this.props
+    const { allowDuplicates } = this.state
+    const tags = Object.assign([], this.state.tags)
 
     if (!allowDuplicates) {
-      let duplicateIndex = tags.findIndex(searchTag => {
-        return this.getValue(searchTag) === this.getValue(tag)
-      })
+      const duplicateIndex = tags.findIndex(searchTag => this.getValue(searchTag) === this.getValue(tag))
 
       if (duplicateIndex !== -1) {
         return false
@@ -85,14 +79,12 @@ export default class extends React.Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    let {
+    const {
       options,
       value,
     } = this.props
-    let {
-      loading,
-    } = this.state
-    let newState = {}
+    const { loading } = this.state
+    const newState = {}
 
     if (value !== nextProps.value) {
       let tags = nextProps.value || []
@@ -105,13 +97,11 @@ export default class extends React.Component {
     }
 
     if (options !== nextProps.options) {
-      let options = nextProps.options || []
+      newState.options = nextProps.options || []
 
-      if (!Array.isArray(options)) {
-        options = [options]
+      if (!Array.isArray(newState.options)) {
+        newState.options = [newState.options]
       }
-
-      newState.options = options
     }
 
     if (loading !== nextProps.loading) {
@@ -122,8 +112,10 @@ export default class extends React.Component {
   }
 
   componentWillUpdate (nextProps, nextState) {
+    const newNextState = { ...nextState }
+
     if (this.state.tags !== nextState.tags) {
-      nextState.tags = nextState.tags.map(tag => this.parseOption(tag))
+      newNextState.tags = nextState.tags.map(tag => this.parseOption(tag))
     }
   }
 
@@ -157,8 +149,6 @@ export default class extends React.Component {
       allowDuplicates: props['data-allowduplicates'],
       allowNew: props['data-allownew'],
       currentValue: '',
-      debug: props.debug,
-      focused: false,
       loading: false,
       newFocus: true,
       options: props.options || [],
@@ -171,11 +161,11 @@ export default class extends React.Component {
   findOption (option) {
     if (typeof option === 'string') {
       option = {
-        value: option
+        value: option,
       }
     }
 
-    let optionIndex = this.state.options.findIndex(searchOption => this.getValue(option) === this.getValue(searchOption))
+    const optionIndex = this.state.options.findIndex(searchOption => this.getValue(option) === this.getValue(searchOption))
 
     if (optionIndex === -1) {
       return false
@@ -186,12 +176,10 @@ export default class extends React.Component {
 
   findTag (tag) {
     if (typeof tag === 'string') {
-      tag = {
-        value: tag
-      }
+      tag = { value: tag }
     }
 
-    let tagIndex = this.state.tags.findIndex(searchTag => this.getValue(tag) === this.getValue(searchTag))
+    const tagIndex = this.state.tags.findIndex(searchTag => this.getValue(tag) === this.getValue(searchTag))
 
     if (tagIndex === -1) {
       return false
@@ -211,7 +199,7 @@ export default class extends React.Component {
   getValue (option) {
     let value = option
 
-    for (let key of this.valueProp.split('.')) {
+    for (const key of this.valueProp.split('.')) {
       value = value[key]
     }
 
@@ -219,8 +207,8 @@ export default class extends React.Component {
   }
 
   handleDelete (event) {
-    let input = this.input
-    let selectedTag = this.state.selectedTag
+    const { input } = this
+    let { selectedTag } = this.state
 
     if ((selectedTag === null) && ((input.selectionStart + input.selectionEnd) === 0)) {
       selectedTag = this.state.tags.length - 1
@@ -232,7 +220,7 @@ export default class extends React.Component {
       this.removeTag(this.state.tags[selectedTag])
 
       if (this.state.tags.length && this.state.selectedTag) {
-        selectedTag = selectedTag - 1
+        selectedTag -= 1
 
         this.setState({ selectedTag })
       }
@@ -246,20 +234,19 @@ export default class extends React.Component {
 
     event.preventDefault()
 
-    let selectedOption = this.state.selectedOption
+    let { selectedOption } = this.state
 
     if ((selectedOption === null) || (selectedOption >= (this.state.options.length - 1))) {
       selectedOption = 0
-
     } else {
-      selectedOption = selectedOption + 1
+      selectedOption += 1
     }
 
     this.setState({ selectedOption })
   }
 
   handleLeftArrow (event) {
-    let input = this.input
+    const { input } = this
 
     if ((input.selectionStart + input.selectionEnd) !== 0) {
       return
@@ -267,19 +254,18 @@ export default class extends React.Component {
 
     event.preventDefault()
 
-    let selectedTag = this.state.selectedTag
+    let { selectedTag } = this.state
 
     if (selectedTag === null) {
       selectedTag = this.state.tags.length - 1
-
     } else if (selectedTag !== 0) {
-      selectedTag = selectedTag - 1
+      selectedTag -= 1
     }
 
     this.setState({ selectedTag })
   }
 
-  handleOptionMouseOut (event) {
+  static handleOptionMouseOut (event) {
     event.target.classList.remove('focus')
   }
 
@@ -293,20 +279,17 @@ export default class extends React.Component {
       event.preventDefault()
     }
 
-    let selectedOption = this.getSelectedOption()
+    const selectedOption = this.getSelectedOption()
 
     if (selectedOption) {
       this.addTag(selectedOption)
-
     } else if (this.state.allowNew) {
-      this.addTag({
-        value: event.target.value
-      })
+      this.addTag({ value: event.target.value })
     }
   }
 
   handleRightArrow (event) {
-    let selectedTag = this.state.selectedTag
+    let { selectedTag } = this.state
 
     if (selectedTag === null) {
       return
@@ -315,8 +298,7 @@ export default class extends React.Component {
     event.preventDefault()
 
     if (selectedTag < (this.state.tags.length - 1)) {
-      selectedTag = selectedTag + 1
-
+      selectedTag += 1
     } else {
       selectedTag = null
     }
@@ -331,13 +313,12 @@ export default class extends React.Component {
 
     event.preventDefault()
 
-    let selectedOption = this.state.selectedOption
+    let { selectedOption } = this.state
 
     if (!selectedOption) {
       selectedOption = this.state.options.length - 1
-
     } else {
-      selectedOption = selectedOption - 1
+      selectedOption -= 1
     }
 
     this.setState({ selectedOption })
@@ -363,14 +344,12 @@ export default class extends React.Component {
     event.target.parentNode.classList.remove('focus')
   }
 
-  onFocus (event) {
+  static onFocus (event) {
     event.target.parentNode.classList.add('focus')
   }
 
   onInput (event) {
-    this.setState({
-      selectedTag: null
-    })
+    this.setState({ selectedTag: null })
 
     this.search(event.target.value)
   }
@@ -406,25 +385,21 @@ export default class extends React.Component {
 
       default: // literally anything else
         if (event.target.value !== this.state.currentValue) {
-          this.setState({
-            currentValue: event.target.value
-          })
+          this.setState({ currentValue: event.target.value })
         }
     }
   }
 
-  parseOption (option) {
+  static parseOption (option) {
     if (typeof option === 'string') {
-      option = {
-        value: option
-      }
+      option = { value: option }
     }
 
     return option
   }
 
   removeTag (tag) {
-    let tags = Object.assign([], this.state.tags)
+    const tags = [...this.state.tags]
 
     tags.splice(tags.indexOf(tag), 1)
 
@@ -440,11 +415,11 @@ export default class extends React.Component {
   }
 
   render () {
-    let {
+    const {
       className,
       name,
     } = this.props
-    let {
+    const {
       allowNew,
       currentValue,
       loading,
@@ -457,7 +432,7 @@ export default class extends React.Component {
       classes = classes.concat(className)
     }
 
-    let divProps = Object.assign({}, this.props)
+    const divProps = Object.assign({}, this.props)
 
     delete divProps.onAdd
     delete divProps.onChange
@@ -493,24 +468,22 @@ export default class extends React.Component {
     )
   }
 
-  renderLoader () {
+  static renderLoader () {
     return (
       <span>Loading...</span>
     )
   }
 
-  renderNoResults () {
+  static renderNoResults () {
     return (
       <span>No results</span>
     )
   }
 
   renderOption (option, index) {
-    let {
-      selectedOption,
-    } = this.state
+    const { selectedOption } = this.state
 
-    let classes = ['option']
+    const classes = ['option']
 
     if (selectedOption === index) {
       classes.push('focus')
@@ -520,6 +493,8 @@ export default class extends React.Component {
       <li
         className={classes.join(' ')}
         key={index}
+        onBlur={this.handleOptionMouseOut}
+        onFocus={event => this.handleOptionMouseOver(event, index)}
         onMouseDown={() => this.addTag(option)}
         onMouseOut={this.handleOptionMouseOut}
         onMouseOver={event => this.handleOptionMouseOver(event, index)}>
@@ -529,9 +504,7 @@ export default class extends React.Component {
   }
 
   renderOptions () {
-    let {
-      options,
-    } = this.state
+    const { options } = this.state
 
     return (
       <ol className="options">
@@ -541,7 +514,7 @@ export default class extends React.Component {
   }
 
   renderReturnPrompt () {
-    let classes = ['return-prompt']
+    const classes = ['return-prompt']
 
     if (this.input && this.input.value) {
       classes.push('show')
@@ -555,11 +528,9 @@ export default class extends React.Component {
   }
 
   renderTag (tag, index) {
-    let {
-      selectedTag,
-    } = this.state
+    const { selectedTag } = this.state
 
-    let classes = ['tag']
+    const classes = ['tag']
 
     if (selectedTag === index) {
       classes.push('focus')
@@ -579,9 +550,7 @@ export default class extends React.Component {
   }
 
   renderTags () {
-    let {
-      tags,
-    } = this.state
+    const { tags } = this.state
 
     return tags.map(this.renderTag)
   }
@@ -593,13 +562,13 @@ export default class extends React.Component {
   search (query) {
     if (query) {
       this.log('groupCollapsed', 'search')
-      this.log(query ? ('query:' + query) : 'no query')
+      this.log(query ? `query:${query}` : 'no query')
       this.log('groupEnd')
     }
   }
 
   shouldCaptureKeybind () {
-    let input = this.input
+    const { input } = this
 
     if (!input.selectionStart && !input.selectionEnd) {
       return true
@@ -609,10 +578,10 @@ export default class extends React.Component {
   }
 
   updateOptions (options, merge = false) {
-    let newState = {
+    const newState = {
       loading: false,
       newFocus: false,
-      options: Object.assign([], this.state.options),
+      options: [...this.state.options],
     }
 
     if (!merge) {
@@ -645,11 +614,11 @@ export default class extends React.Component {
 
 
 
-  get idProp () {
+  static get idProp () {
     return 'id'
   }
 
-  get valueProp () {
+  static get valueProp () {
     return 'value'
   }
 }

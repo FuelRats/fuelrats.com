@@ -1,9 +1,8 @@
 // Module imports
 import { bindActionCreators } from 'redux'
-import _ from 'lodash'
+import { connect } from 'react-redux'
 import React from 'react'
 import Router from 'next/router'
-import { connect } from 'react-redux'
 
 
 
@@ -18,7 +17,6 @@ import Component from './Component'
 
 
 class LoginDialog extends Component {
-
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
@@ -105,16 +103,12 @@ class LoginDialog extends Component {
 
 
 
-const mapDispatchToProps = dispatch => {
-  return {
-    hideDialog: bindActionCreators(actions.hideDialog, dispatch),
-    login: bindActionCreators(actions.login, dispatch),
-  }
-}
+const mapDispatchToProps = dispatch => ({
+  hideDialog: bindActionCreators(actions.hideDialog, dispatch),
+  login: bindActionCreators(actions.login, dispatch),
+})
 
-const mapStateToProps = state => {
-  return state.authentication || {}
-}
+const mapStateToProps = state => state.authentication || {}
 
 
 

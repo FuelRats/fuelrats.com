@@ -24,13 +24,12 @@ const dialogPolyfill = !(typeof window === 'undefined') ? window.dialogPolyfill 
 
 
 export default class extends Component {
-
   /***************************************************************************\
     Private Methods
   \***************************************************************************/
 
   _onVisibilityChange (isOpen) {
-    let { onVisibilityChange } = this.props
+    const { onVisibilityChange } = this.props
 
     if (onVisibilityChange) {
       onVisibilityChange(isOpen)
@@ -62,16 +61,13 @@ export default class extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    let {
-      modal,
+    const {
       open,
     } = nextProps
-    console.log('Dialog::componentWillReceiveProps::this.props.open', open, this.props.open)
 
     if (open !== this.props.open) {
       if (open) {
         this.show()
-
       } else {
         this.close()
       }
@@ -91,19 +87,18 @@ export default class extends Component {
   }
 
   render () {
-    let {
-      children,
-      open,
-    } = this.props
+    const { children } = this.props
 
     if (this.canUseDOM) {
-      return ReactDOM.createPortal((
-        <dialog
-          className="loading fade-in"
-          ref={_el => this._el = _el}>
-          {children}
-        </dialog>
-      ), this.el)
+      return ReactDOM.createPortal(
+        (
+          <dialog
+            className="loading fade-in"
+            ref={_el => this._el = _el}>
+            {children}
+          </dialog>
+        ), this.el
+      )
     }
 
     return null
@@ -112,7 +107,6 @@ export default class extends Component {
   show () {
     if (this.props.modal) {
       this._el.showModal()
-
     } else {
       this._el.show()
     }

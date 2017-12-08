@@ -18,9 +18,9 @@ export const changePassword = (currentPassword, newPassword) => async dispatch =
   dispatch({ type: actionTypes.CHANGE_PASSWORD })
 
   try {
-    let token = localStorage.getItem('access_token')
+    const token = localStorage.getItem('access_token')
 
-    let response = await fetch(`/api/users/setpassword`, {
+    let response = await fetch('/api/users/setpassword', {
       body: JSON.stringify({
         password: currentPassword,
         new: newPassword,
@@ -38,14 +38,12 @@ export const changePassword = (currentPassword, newPassword) => async dispatch =
       type: actionTypes.CHANGE_PASSWORD,
       payload: response,
     })
-
   } catch (error) {
     dispatch({
+      payload: error,
       status: 'error',
       type: actionTypes.CHANGE_PASSWORD,
     })
-
-    console.log(error)
   }
 }
 
@@ -60,7 +58,7 @@ export const login = (email, password) => async dispatch => {
     let token = localStorage.getItem('access_token')
 
     if (!token) {
-      let data = JSON.stringify({
+      const data = JSON.stringify({
         grant_type: 'password',
         password,
         username: email,
@@ -86,25 +84,25 @@ export const login = (email, password) => async dispatch => {
       type: actionTypes.LOGIN,
     })
 
+    /* eslint-disable no-restricted-globals, no-global-assign */
     if (location && location.search) {
-      let searchParams = {}
+      const searchParams = {}
 
       location.search.replace(/^\?/, '').split('&').forEach(searchParam => {
-        let [ key, value ] = searchParam.split('=')
+        const [key, value] = searchParam.split('=')
 
         searchParams[key] = value
       })
 
-      location = searchParams['destination'] ? decodeURIComponent(searchParams['destination']) : '/profile'
+      location = searchParams.destination ? decodeURIComponent(searchParams.destination) : '/profile'
     }
-
+    /* eslint-enable */
   } catch (error) {
     dispatch({
+      payload: error,
       status: 'error',
       type: actionTypes.LOGIN,
     })
-
-    console.log(error)
   }
 }
 
@@ -126,14 +124,12 @@ export const logout = () => async dispatch => {
       status: 'success',
       type: actionTypes.LOGOUT,
     })
-
   } catch (error) {
     dispatch({
+      payload: error,
       status: 'error',
       type: actionTypes.LOGOUT,
     })
-
-    console.log(error)
   }
 }
 
@@ -145,7 +141,7 @@ export const register = (email, password, name, platform, nickname, recaptcha) =
   dispatch({ type: actionTypes.REGISTER })
 
   try {
-    let token
+    let token = null
 
     let response = await fetch('/api/register', {
       body: JSON.stringify({
@@ -186,14 +182,12 @@ export const register = (email, password, name, platform, nickname, recaptcha) =
     })
 
     Router.push('/profile')
-
   } catch (error) {
     dispatch({
+      payload: error,
       status: 'error',
       type: actionTypes.REGISTER,
     })
-
-    console.log(error)
   }
 }
 
@@ -205,7 +199,7 @@ export const resetPassword = (password, token) => async dispatch => {
   dispatch({ type: actionTypes.RESET_PASSWORD })
 
   try {
-    let response = await fetch(`/api/reset/${token}`, {
+    const response = await fetch(`/api/reset/${token}`, {
       body: JSON.stringify({
         password,
       }),
@@ -224,14 +218,12 @@ export const resetPassword = (password, token) => async dispatch => {
     }
 
     throw new Error('Failed to reset password')
-
   } catch (error) {
-    dispatch({
+    return dispatch({
+      payload: error,
       status: 'error',
       type: actionTypes.RESET_PASSWORD,
     })
-
-    console.log(error)
   }
 }
 
@@ -243,7 +235,7 @@ export const sendPasswordResetEmail = email => async dispatch => {
   dispatch({ type: actionTypes.SEND_PASSWORD_RESET_EMAIL })
 
   try {
-    let response = await fetch(`/api/reset`, {
+    let response = await fetch('/api/reset', {
       body: JSON.stringify({
         email,
       }),
@@ -260,14 +252,12 @@ export const sendPasswordResetEmail = email => async dispatch => {
       type: actionTypes.SEND_PASSWORD_RESET_EMAIL,
       payload: response,
     })
-
   } catch (error) {
     dispatch({
+      payload: error,
       status: 'error',
       type: actionTypes.SEND_PASSWORD_RESET_EMAIL,
     })
-
-    console.log(error)
   }
 }
 
@@ -282,10 +272,8 @@ export const validatePasswordResetToken = (token) => async dispatch => {
 
   try {
     response = await fetch(`/api/reset/${token}`)
-
+    return response.ok
   } catch (error) {
-    console.log(error)
+    return error
   }
-
-  return response.ok
 }

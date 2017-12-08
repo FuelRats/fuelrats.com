@@ -1,9 +1,6 @@
 // Module imports
-import { bindActionCreators } from 'redux'
-import _ from 'lodash'
 import Link from 'next/link'
 import moment from 'moment'
-import Router from 'next/router'
 import React from 'react'
 
 
@@ -11,7 +8,6 @@ import React from 'react'
 
 
 // Component imports
-import { actions } from '../../store'
 import Component from '../../components/Component'
 import Page from '../../components/Page'
 
@@ -27,21 +23,17 @@ const title = 'Blog'
 
 
 class Blog extends Component {
-
   /***************************************************************************\
     Private Methods
   \***************************************************************************/
 
   async _retrieveBlog () {
-    let {
-      blogs,
+    const {
       query,
       retrieveBlog,
     } = this.props
 
-    this.setState({
-      retrieving: true,
-    })
+    this.setState({ retrieving: true })
 
     await retrieveBlog(query.id)
 
@@ -66,14 +58,16 @@ class Blog extends Component {
   constructor (props) {
     super(props)
 
+    const blog = props.blogs.find(item => item.id === props.id)
+
     this.state = {
-      blog: props.blogs.find(blog => blog.id === props.id),
-      retrieving: true,
+      blog,
+      retrieving: !!blog,
     }
   }
 
   render () {
-    let {
+    const {
       blog,
       retrieving,
     } = this.state
@@ -81,11 +75,10 @@ class Blog extends Component {
     let content
 
     if (blog) {
-      content = blog.content.rendered
-        .replace(/<ul>/gi, '<ul class="bulleted">')
-        .replace(/<ol>/gi, '<ol class="numbered">')
+      content = blog.content.rendered.replace(/<ul>/gi, '<ul class="bulleted">').replace(/<ol>/gi, '<ol class="numbered">')
     }
 
+    /* eslint-disable react/no-danger */
     return (
       <div className="page-wrapper">
         <header className="page-header">
@@ -96,7 +89,7 @@ class Blog extends Component {
           <article className="loading page-content" />
         )}
 
-        {!retrieving && (
+        {(!retrieving && blog) && (
           <article className="page-content">
             <header>
               <h2
@@ -113,7 +106,7 @@ class Blog extends Component {
               <span className="author">
                 <i className="fa fa-fw fa-user" />
 
-                <Link href={`/blogs/author/${blog.author.id}`}>
+                <Link as={`/blog/author/${blog.author.id}`} href={`/blog/all?author=${blog.author.id}`}>
                   <a>{blog.author.name}</a>
                 </Link>
               </span>
@@ -122,21 +115,13 @@ class Blog extends Component {
                 <i className="fa fa-folder fa-fw" />
 
                 <ul className="category-list">
-                  {blog.categories.map(category => {
-                    let {
-                      description,
-                      id,
-                      name,
-                    } = category
-
-                    return (
-                      <li key={id}>
-                        <Link href={`/blogs/category/${id}`}>
-                          <a title={description}>{name}</a>
-                        </Link>
-                      </li>
-                    )
-                  })}
+                  {blog.categories.map(category => (
+                    <li key={category.id}>
+                      <Link as={`/blog/category/${category.id}`} href={`/blog/all?category=${category.id}`}>
+                        <a title={category.description}>{category.name}</a>
+                      </Link>
+                    </li>
+                  ))}
                 </ul>
               </span>
             </small>
@@ -151,31 +136,32 @@ class Blog extends Component {
               </header>
 
               <ol>
-                {(blog.comments && blog.comments.length) ? blog.comments.map(comment => {
-                  return (
-                    <li key={comment.id}>
-                      <article className="comment">
-                        <header>
-                          <img src={comment.author_avatar_urls['48']} />
+                {(blog.comments && blog.comments.length) ? blog.comments.map(comment => (
+                  <li key={comment.id}>
+                    <article className="comment">
+                      <header>
+                        <img alt="Author's avatar" src={comment.author_avatar_urls['48']} />
 
-                          <small>
-                             <span className="author-name">{comment.author_name}</span> &middot; {moment(comment.date_gmt).fromNow()}
-                          </small>
-                        </header>
+                        <small><span className="author-name">{comment.author_name}</span> &middot; {moment(comment.date_gmt).fromNow()}</small>
+                      </header>
 
-                        <div
-                          className="content"
-                          dangerouslySetInnerHTML={{ __html: comment.content.rendered }} />
-                      </article>
-                    </li>
-                  )
-                }) : 'No comments... yet.'}
+                      <div
+                        className="content"
+                        dangerouslySetInnerHTML={{ __html: comment.content.rendered }} />
+                    </article>
+                  </li>
+                )) : 'No comments... yet.'}
               </ol>
             </aside>
           </article>
         )}
+
+        {(!retrieving && !blog) && (
+          <article className="error page-content" />
+        )}
       </div>
     )
+    /* eslint-enable */
   }
 }
 
@@ -183,15 +169,9 @@ class Blog extends Component {
 
 
 
-const mapDispatchToProps = dispatch => {
-  return {
-    retrieveBlog: bindActionCreators(actions.retrieveBlog, dispatch),
-  }
-}
+const mapDispatchToProps = ['retrieveBlog']
 
-const mapStateToProps = state => {
-  return state.blogs
-}
+const mapStateToProps = state => state.blogs
 
 
 

@@ -1,6 +1,7 @@
 // Module imports
 import Link from 'next/link'
 import React from 'react'
+import PropTypes from 'prop-types'
 
 
 
@@ -22,7 +23,6 @@ const title = 'Home'
 
 
 class Index extends React.Component {
-
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
@@ -42,7 +42,7 @@ class Index extends React.Component {
     return (
       <section className="hero">
         <header>
-          <h1>We Have Fuel. You Don't.</h1>
+          <h1>We Have Fuel. You Don&apos;t.</h1>
 
           <h2>Any Questions?</h2>
         </header>
@@ -55,6 +55,15 @@ class Index extends React.Component {
       </section>
     )
   }
+}
+
+
+
+
+
+Index.propTypes = {
+  showDialog: PropTypes.func.isRequired,
+  query: PropTypes.object.isRequired,
 }
 
 

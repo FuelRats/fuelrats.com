@@ -1,7 +1,4 @@
 // Module imports
-import { bindActionCreators } from 'redux'
-import _ from 'lodash'
-import React from 'react'
 import { connect } from 'react-redux'
 
 
@@ -9,65 +6,36 @@ import { connect } from 'react-redux'
 
 
 // Module imports
-import { actions } from '../store'
 import AddNicknameForm from './AddNicknameForm'
-import Component from './Component'
 
 
 
 
 
-class UserNicknamesPanel extends Component {
+const UserNicknamesPanel = (props) => (
+  <div className="panel user-nicknames">
+    <header>IRC Nicknames</header>
 
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
+    <div className="panel-content">
+      <ul>
+        {(props.user.attributes && props.user.attributes.nicknames) && props.user.attributes.nicknames.map(nickname => <li key={nickname}>{nickname}</li>)}
+      </ul>
+    </div>
 
-  render () {
-    let { user } = this.props
-
-    return (
-      <div className="panel user-nicknames">
-        <header>IRC Nicknames</header>
-
-        <div className="panel-content">
-          <ul>
-            {user.attributes && user.attributes.nicknames && user.attributes.nicknames.map((nickname, index) => <li key={index}>{nickname}</li>)}
-          </ul>
-        </div>
-
-        <footer>
-          <AddNicknameForm />
-        </footer>
-      </div>
-    )
-  }
-}
+    <footer>
+      <AddNicknameForm />
+    </footer>
+  </div>
+)
 
 
 
 
 
-const mapDispatchToProps = dispatch => {
-  return {}
-}
+const mapStateToProps = state => ({ user: state.user })
 
 
 
 
 
-const mapStateToProps = state => {
-  let {
-    user,
-  } = state
-
-  return {
-    user
-  }
-}
-
-
-
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserNicknamesPanel)
+export default connect(mapStateToProps)(UserNicknamesPanel)

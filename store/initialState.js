@@ -63,15 +63,6 @@ export default {
     total: 0,
   },
 
-  statistics: {
-    loadingRescuesByRat: false,
-    loadingRescuesBySystem: false,
-    loadingRescuesOverTime: false,
-    rescuesByRat: [],
-    rescuesBySystem: [],
-    rescuesOverTime: [],
-  },
-
   user: {
     attributes: null,
     id: null,

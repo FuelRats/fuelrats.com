@@ -18,9 +18,9 @@ export const addNickname = (nickname, password) => async dispatch => {
   dispatch({ type: actionTypes.ADD_NICKNAME })
 
   try {
-    let token = localStorage.getItem('access_token')
+    const token = localStorage.getItem('access_token')
 
-    let response = await fetch(`/api/nicknames`, {
+    await fetch('/api/nicknames', {
       body: JSON.stringify({
         nickname,
         password,
@@ -37,14 +37,11 @@ export const addNickname = (nickname, password) => async dispatch => {
       type: actionTypes.ADD_NICKNAME,
       payload: nickname,
     })
-
   } catch (error) {
     dispatch({
       status: 'error',
       type: actionTypes.ADD_NICKNAME,
     })
-
-    console.log(error)
   }
 }
 
@@ -56,14 +53,14 @@ export const getUser = () => async dispatch => {
   dispatch({ type: actionTypes.GET_USER })
 
   try {
-    let token = localStorage.getItem('access_token')
-    let cookieToken = Cookies.get('access_token')
+    const token = localStorage.getItem('access_token')
+    const cookieToken = Cookies.get('access_token')
 
     if (!token || !cookieToken || token !== cookieToken) {
       throw new Error('Bad access token')
     }
 
-    let response = await fetch(`/api/profile`, {
+    let response = await fetch('/api/profile', {
       headers: new Headers({
         Authorization: `Bearer ${token}`,
       }),
@@ -77,7 +74,6 @@ export const getUser = () => async dispatch => {
       type: actionTypes.GET_USER,
       payload: response,
     })
-
   } catch (error) {
     localStorage.removeItem('access_token')
     Cookies.remove('access_token')
@@ -87,9 +83,9 @@ export const getUser = () => async dispatch => {
       type: actionTypes.GET_USER,
     })
 
-    console.log(error)
-
+    /* eslint-disable no-restricted-globals */
     Router.push(`/?authenticate=true&destination=${encodeURIComponent(location.pathname.concat(location.search))}`)
+    /* eslint-enable */
   }
 }
 
@@ -101,7 +97,7 @@ export const updateUser = (user) => async dispatch => {
   dispatch({ type: actionTypes.UPDATE_USER })
 
   try {
-    let token = localStorage.getItem('access_token')
+    const token = localStorage.getItem('access_token')
 
     let response = await fetch(`/api/users/${user.id}`, {
       body: JSON.stringify(user),
@@ -119,13 +115,10 @@ export const updateUser = (user) => async dispatch => {
       type: actionTypes.UPDATE_USER,
       user: response.data,
     })
-
   } catch (error) {
     dispatch({
       status: 'error',
       type: actionTypes.UPDATE_USER,
     })
-
-    console.log(error)
   }
 }

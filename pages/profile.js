@@ -11,7 +11,6 @@ import TabbedPanel from '../components/TabbedPanel'
 import UserOverview from '../components/UserOverview'
 import UserRatsPanel from '../components/UserRatsPanel'
 import UserSettings from '../components/UserSettings'
-import UserStatsOverview from '../components/UserStatsOverview'
 
 
 
@@ -25,7 +24,6 @@ const title = 'Profile'
 
 
 class Profile extends React.Component {
-
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
@@ -40,7 +38,7 @@ class Profile extends React.Component {
         <div className="page-content">
           <TabbedPanel
             name="User Tabs"
-            tabs={this.tabs} />
+            tabs={Profile.tabs} />
         </div>
       </div>
     )
@@ -54,7 +52,7 @@ class Profile extends React.Component {
     Getters
   \***************************************************************************/
 
-  get tabs () {
+  static get tabs () {
     return [
       {
         default: true,
@@ -65,14 +63,14 @@ class Profile extends React.Component {
         component: (<UserRatsPanel />),
         title: 'Rats',
       },
-//      {
-//        component: (<UserStatsOverview />),
-//        title: 'Stats',
-//      },
-//      {
-//        component: (<div>Badge</div>),
-//        title: 'Badge',
-//      },
+      // {
+      //   component: (<UserStatsOverview />),
+      //   title: 'Stats',
+      // },
+      // {
+      //   component: (<div>Badge</div>),
+      //   title: 'Badge',
+      // },
       {
         component: (<UserSettings />),
         title: 'Settings',

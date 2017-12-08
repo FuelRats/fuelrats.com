@@ -1,9 +1,8 @@
 // Module imports
 import { bindActionCreators } from 'redux'
-import _ from 'lodash'
+import { connect } from 'react-redux'
 import Link from 'next/link'
 import React from 'react'
-import { connect } from 'react-redux'
 
 
 
@@ -20,7 +19,6 @@ import LoginDialog from './LoginDialog'
 
 
 class UserMenu extends Component {
-
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
@@ -44,7 +42,7 @@ class UserMenu extends Component {
   }
 
   render () {
-    let {
+    const {
       loggedIn,
       logout,
       user,
@@ -59,7 +57,7 @@ class UserMenu extends Component {
     return (
       <div className="user-menu">
         {(loggedIn && user.attributes) && (
-          <div className="avatar medium"><img src={user.attributes.image} /></div>
+          <div className="avatar medium"><img alt="Your avatar" src={user.attributes.image} /></div>
         )}
 
         {(loggedIn && user.attributes) && (
@@ -95,7 +93,7 @@ class UserMenu extends Component {
 
             <div
               className="stats"
-              hidden={true}>
+              hidden>
               <header>My Stats</header>
 
               <table>
@@ -143,16 +141,14 @@ class UserMenu extends Component {
 
 
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getUser: bindActionCreators(actions.getUser, dispatch),
-    logout: bindActionCreators(actions.logout, dispatch),
-    showDialog: bindActionCreators(actions.showDialog, dispatch),
-  }
-}
+const mapDispatchToProps = dispatch => ({
+  getUser: bindActionCreators(actions.getUser, dispatch),
+  logout: bindActionCreators(actions.logout, dispatch),
+  showDialog: bindActionCreators(actions.showDialog, dispatch),
+})
 
 const mapStateToProps = state => {
-  let {
+  const {
     authentication,
     user,
   } = state

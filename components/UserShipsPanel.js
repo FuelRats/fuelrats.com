@@ -1,6 +1,5 @@
 // Module imports
 import { bindActionCreators } from 'redux'
-import _ from 'lodash'
 import Link from 'next/link'
 import React from 'react'
 import { connect } from 'react-redux'
@@ -18,28 +17,25 @@ import Component from './Component'
 
 
 class UserShipsPanel extends Component {
-
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
 
-  _renderShips (ships) {
+  static _renderShips (ships) {
     return ships.map((ship, index) => {
-      let {
-        id,
-      } = ship
-      let {
+      const { id } = ship
+      const {
         name,
         platform,
       } = ship.attributes
 
       console.log('ship', ship)
 
-      let badgeClasses = ['badge', 'platform', 'short', platform].join(' ')
+      const badgeClasses = ['badge', 'platform', 'short', platform].join(' ')
 
       return (
         <li key={index}>
-          <div className={badgeClasses}></div>
+          <div className={badgeClasses} />
 
           <Link href={`/rats/${id}`}>
             <a>{name}</a>
@@ -58,7 +54,7 @@ class UserShipsPanel extends Component {
   \***************************************************************************/
 
   render () {
-    let { ships } = this.props
+    const { ships } = this.props
 
     return (
       <div className="panel user-ships">
@@ -85,19 +81,13 @@ class UserShipsPanel extends Component {
 
 
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getRats: bindActionCreators(actions.getRats, dispatch),
-  }
-}
+const mapDispatchToProps = dispatch => ({ getRats: bindActionCreators(actions.getRats, dispatch) })
 
 const mapStateToProps = state => {
-  let {
+  const {
     ships,
     user,
   } = state
-
-  console.log('state', state)
 
   return {
     ships,

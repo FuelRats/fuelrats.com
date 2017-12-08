@@ -8,47 +8,48 @@ import parseJSONAPIResponseForEntityType from '../../helpers/parse-json-api-resp
 
 
 export default function (state = initialState.ships, action) {
-  let {
+  const {
     payload,
     status,
     type,
   } = action
+  const {
+    ships,
+    retrieving,
+    total,
+  } = state
+  let newShips
 
   switch (type) {
     case actionTypes.GET_USER:
-      let {
-        ships,
-        retrieving,
-        total,
-      } = state
-
       switch (status) {
         case 'success':
-          let newShips = parseJSONAPIResponseForEntityType(payload, 'ships')
+          newShips = parseJSONAPIResponseForEntityType(payload, 'ships')
 
-          for (let newShip of newShips) {
-            let index = ships.findIndex(ship => newShip.id === ship.id)
+          for (const newShip of newShips) {
+            const index = ships.findIndex(ship => newShip.id === ship.id)
 
             if (index === -1) {
               ships.push(newShip)
-
             } else {
               ships[index] = newShip
             }
           }
 
-          return Object.assign({}, state, {
-            ships: ships,
+          return {
+            ...state,
+            ships,
             retrieving: false,
             total: action.total,
-          })
+          }
 
         default:
-          return Object.assign({}, state, {
+          return {
+            ...state,
             ships,
             retrieving,
             total,
-          })
+          }
       }
 
     default:

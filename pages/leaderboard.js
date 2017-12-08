@@ -1,10 +1,3 @@
-// Module imports
-import React from 'react'
-
-
-
-
-
 // Component imports
 import Page from '../components/Page'
 import RescuesByRatTable from '../components/RescuesByRatTable'
@@ -20,26 +13,17 @@ const title = 'Leaderboard'
 
 
 
-class Leaderboard extends React.Component {
+const Leaderboard = () => (
+  <div className="page-wrapper">
+    <header className="page-header">
+      <h1>{title}</h1>
+    </header>
 
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
-
-  render () {
-    return (
-      <div className="page-wrapper">
-        <header className="page-header">
-          <h1>{title}</h1>
-        </header>
-
-        <div className="page-content">
-          <RescuesByRatTable />
-        </div>
-      </div>
-    )
-  }
-}
+    <div className="page-content">
+      <RescuesByRatTable />
+    </div>
+  </div>
+)
 
 
 

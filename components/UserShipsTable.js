@@ -1,7 +1,4 @@
 // Module imports
-import Link from 'next/link'
-import moment from 'moment'
-import React from 'react'
 import ReactTable from 'react-table'
 
 
@@ -16,21 +13,16 @@ import Component from './Component'
 
 
 export default class UserShipsTable extends Component {
-
   /***************************************************************************\
     Private Methods
   \***************************************************************************/
 
-  _handleRowClick () {}
-
-  _renderIDCell (row) {
+  static _renderIDCell (row) {
     let id = row.value.toString()
 
     while (id.length < 4) {
       id = `0${id}`
     }
-
-    console.log(row.original)
 
     return `FR${id}`
   }
@@ -44,9 +36,7 @@ export default class UserShipsTable extends Component {
   \***************************************************************************/
 
   render () {
-    let {
-      data
-    } = this.props
+    const { data } = this.props
 
     return (
       <ReactTable

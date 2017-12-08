@@ -1,9 +1,6 @@
 // Module imports
 import { bindActionCreators } from 'redux'
-import _ from 'lodash'
-import Router from 'next/router'
 import React from 'react'
-import withRedux from 'next-redux-wrapper'
 
 
 
@@ -29,13 +26,12 @@ const title = 'Paperwork'
 
 
 class Paperwork extends Component {
-
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
 
   componentDidMount () {
-    let { id } = this.props.query
+    const { id } = this.props.query
 
     if (id) {
       this.props.retrievePaperwork(id)
@@ -71,20 +67,19 @@ class Paperwork extends Component {
   }
 
   handleChange (event) {
-    let newState = Object.assign({}, this.state)
-    let {
+    const newState = Object.assign({}, this.state)
+    const {
       checked,
       name,
       type,
-      value,
     } = event.target
-    let attribute = name
+    const attribute = name
+    let { value } = event.target
 
     value = type === 'checkbox' ? checked : value
 
     if (value === 'true') {
       value = true
-
     } else if (value === 'false') {
       value = false
     }
@@ -103,13 +98,13 @@ class Paperwork extends Component {
   }
 
   handleFirstLimpetChange (value) {
-    let originalFirstLimpetId = this.props.rescue.attributes.firstLimpetId
+    const originalFirstLimpetId = this.props.rescue.attributes.firstLimpetId
 
-    let isDifferent = value.length && (value[0].id !== originalFirstLimpetId)
-    let isRemoved = !value.length && (originalFirstLimpetId !== null)
+    const isDifferent = value.length && (value[0].id !== originalFirstLimpetId)
+    const isRemoved = !value.length && (originalFirstLimpetId !== null)
 
     if (isDifferent || isRemoved) {
-      let newState = Object.assign({}, this.state)
+      const newState = Object.assign({}, this.state)
 
       newState.firstLimpet = isRemoved ? null : value[0]
       newState.rescue.attributes.firstLimpetId = isRemoved ? null : value[0].id
@@ -120,11 +115,11 @@ class Paperwork extends Component {
   }
 
   handleRatsChange (value) {
-    let newRatIds = value.map(rat => rat.id)
-    let oldRatIds = this.props.rats.map(rat => rat.id)
+    const newRatIds = value.map(rat => rat.id)
+    const oldRatIds = this.props.rats.map(rat => rat.id)
 
     if (newRatIds.join(',') !== oldRatIds.join(',')) {
-      let newState = Object.assign({}, this.state)
+      const newState = Object.assign({}, this.state)
 
       newState.rats = value
 
@@ -139,19 +134,13 @@ class Paperwork extends Component {
   }
 
   handleSystemChange (value) {
-    let {
-      rescue,
-    } = this.state
-    let newState = { ...this.state }
-
-    let systemHasChanged = value.length && (value[0].value !== rescue.attributes.system)
+    const { rescue } = this.state
+    const newState = { ...this.state }
 
     if (value.length && (value[0].value !== rescue.attributes.system)) {
       newState.rescue.attributes.system = value[0].value
-
     } else if (!value.length && rescue.attributes.system) {
       newState.rescue.attributes.system = null
-
     } else {
       return
     }
@@ -163,15 +152,14 @@ class Paperwork extends Component {
   async onSubmit (event) {
     event.preventDefault()
 
-    let {
-      firstLimpet,
+    const {
       rats,
       rescue,
     } = this.state
+    const rescueUpdates = {}
     let ratUpdates = null
-    let rescueUpdates = {}
 
-    for (let field of this.dirtyFields) {
+    for (const field of this.dirtyFields) {
       if (field !== 'rats') {
         rescueUpdates[field] = rescue.attributes[field]
       }
@@ -182,7 +170,7 @@ class Paperwork extends Component {
     }
 
     if (this.dirtyFields.has('rats')) {
-      let oldRats = rescue.relationships.rats.data
+      const oldRats = rescue.relationships.rats.data
 
       ratUpdates = {
         added: rats.filter(rat => !oldRats.find(oldRat => rat.id === oldRat.id)),
@@ -198,17 +186,17 @@ class Paperwork extends Component {
   }
 
   render () {
-    let {
+    const {
       retrieving,
       submitting,
     } = this.props
-    let {
+    const {
       firstLimpet,
       rats,
       rescue,
     } = this.state
 
-    let classes = ['page-content']
+    const classes = ['page-content']
 
     if (submitting) {
       classes.push('loading', 'force')
@@ -235,7 +223,7 @@ class Paperwork extends Component {
             className={classes.join(' ')}
             onSubmit={this.onSubmit}>
             <fieldset>
-              <label>What platform was the rescue on?</label>
+              <label htmlFor="platform-pc">What platform was the rescue on?</label>
 
               <div className="option-group">
                 <input
@@ -268,7 +256,7 @@ class Paperwork extends Component {
             </fieldset>
 
             <fieldset>
-              <label>Was the rescue successful?</label>
+              <label htmlFor="outcome-success">Was the rescue successful?</label>
 
               <div className="option-group">
                 <input
@@ -310,7 +298,7 @@ class Paperwork extends Component {
             </fieldset>
 
             <fieldset>
-              <label>Was it a code red?</label>
+              <label htmlFor="codeRed-yes">Was it a code red?</label>
 
               <div className="option-group">
                 <input
@@ -388,7 +376,7 @@ class Paperwork extends Component {
                 </button>
               </div>
 
-              <div className="secondary"></div>
+              <div className="secondary" />
             </menu>
           </form>
         )}
@@ -397,10 +385,7 @@ class Paperwork extends Component {
   }
 
   validate () {
-    let {
-      rats,
-      rescue,
-    } = this.state
+    const { rescue } = this.state
 
     switch (rescue.attributes.outcome) {
       case 'other':
@@ -414,7 +399,7 @@ class Paperwork extends Component {
   }
 
   validateCaseWithValidOutcome() {
-    let {
+    const {
       rats,
       rescue,
     } = this.state
@@ -435,10 +420,9 @@ class Paperwork extends Component {
   }
 
   validateCaseWithInvalidOutcome() {
-    let {
-      rescue,
-    } = this.state
-    return Boolean(rescue.attributes.notes.replace(/\s/g,''))
+    const { rescue } = this.state
+
+    return Boolean(rescue.attributes.notes.replace(/\s/g, ''))
   }
 
 
@@ -458,20 +442,11 @@ class Paperwork extends Component {
 
 
 
-const mapDispatchToProps = dispatch => {
-  return {
-    submitPaperwork: bindActionCreators(actions.submitPaperwork, dispatch),
-    retrievePaperwork: bindActionCreators(actions.retrievePaperwork, dispatch),
-  }
-}
+const mapDispatchToProps = ['submitPaperwork', 'retrievePaperwork']
 
 const mapStateToProps = state => {
-  let {
-    paperwork,
-  } = state
-  let {
-    rescueId,
-  } = paperwork
+  const { paperwork } = state
+  const { rescueId } = paperwork
   let firstLimpet = []
   let rats = []
   let rescue = null
@@ -487,12 +462,10 @@ const mapStateToProps = state => {
 
     rats = state.rats.rats
       .filter(rat => rescue.relationships.rats.data.find(({ id }) => rat.id === id))
-      .map(rat => {
-        return Object.assign({
-          id: rat.id,
-          value: rat.attributes.name,
-        }, rat)
-      })
+      .map(rat => Object.assign({
+        id: rat.id,
+        value: rat.attributes.name,
+      }, rat))
   }
 
   return Object.assign({
