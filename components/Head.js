@@ -85,15 +85,12 @@ export default class extends React.Component {
         <meta name="msapplication-wide310x150logo" content="/static/favicon/mstile-310x150.png" />
         <meta name="msapplication-square310x310logo" content="/static/favicon/mstile-310x310.png" />
 
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-
-        <link href="//cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.8/dialog-polyfill.min.css" rel="stylesheet" />
         <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+        
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
 
         <style dangerouslySetInnerHTML={{ __html: libStylesheet }} />
         <style dangerouslySetInnerHTML={{ __html: appStylesheet }} />
-
-        <script src="//cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.8/dialog-polyfill.min.js"></script>
         <script async defer src="//www.google.com/recaptcha/api.js?render=explicit"/>
         <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaTrackingId}`} />
         <script dangerouslySetInnerHTML={{ __html: `
