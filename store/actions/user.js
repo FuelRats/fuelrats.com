@@ -18,7 +18,7 @@ export const addNickname = (nickname, password) => async dispatch => {
   dispatch({ type: actionTypes.ADD_NICKNAME })
 
   try {
-    const token = localStorage.getItem('access_token')
+    const token = Cookies.get('access_token')
 
     await fetch('/api/nicknames', {
       body: JSON.stringify({
@@ -53,10 +53,9 @@ export const getUser = () => async dispatch => {
   dispatch({ type: actionTypes.GET_USER })
 
   try {
-    const token = localStorage.getItem('access_token')
-    const cookieToken = Cookies.get('access_token')
+    const token = Cookies.get('access_token')
 
-    if (!token || !cookieToken || token !== cookieToken) {
+    if (!token) {
       throw new Error('Bad access token')
     }
 
@@ -75,7 +74,6 @@ export const getUser = () => async dispatch => {
       payload: response,
     })
   } catch (error) {
-    localStorage.removeItem('access_token')
     Cookies.remove('access_token')
 
     dispatch({
@@ -97,7 +95,7 @@ export const updateUser = (user) => async dispatch => {
   dispatch({ type: actionTypes.UPDATE_USER })
 
   try {
-    const token = localStorage.getItem('access_token')
+    const token = Cookies.get('access_token')
 
     let response = await fetch(`/api/users/${user.id}`, {
       body: JSON.stringify(user),

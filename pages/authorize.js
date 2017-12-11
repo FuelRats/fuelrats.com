@@ -1,4 +1,5 @@
 // Module imports
+import Cookies from 'js-cookie'
 import React from 'react'
 
 
@@ -69,11 +70,12 @@ class Authorize extends Component {
         response = await response.json()
 
         this.setState({
+          allow: false,
           clientName: response.client.data.attributes.name,
           redirectUri: response.client.data.attributes.redirectUri,
           scopes: response.scopes,
+          token: Cookies.get('access_token'),
           transactionId: response.transactionId,
-          token: localStorage.getItem('access_token'),
         })
       } catch (error) {
         console.log(error)

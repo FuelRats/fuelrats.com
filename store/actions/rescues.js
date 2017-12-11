@@ -1,5 +1,6 @@
 /* eslint no-await-in-loop:off */
 // Module imports
+import Cookies from 'js-cookie'
 import fetch from 'isomorphic-fetch'
 
 
@@ -19,7 +20,7 @@ export const getRescues = () => async dispatch => {
   try {
     let response = await fetch('/api/rescues', {
       headers: new Headers({
-        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        Authorization: `Bearer ${Cookies.get('access_token')}`,
       }),
       method: 'get',
     })

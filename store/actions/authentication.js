@@ -18,7 +18,7 @@ export const changePassword = (currentPassword, newPassword) => async dispatch =
   dispatch({ type: actionTypes.CHANGE_PASSWORD })
 
   try {
-    const token = localStorage.getItem('access_token')
+    const token = Cookies.get('access_token')
 
     let response = await fetch('/api/users/setpassword', {
       body: JSON.stringify({
@@ -55,7 +55,7 @@ export const login = (email, password) => async dispatch => {
   dispatch({ type: actionTypes.LOGIN })
 
   try {
-    let token = localStorage.getItem('access_token')
+    let token = Cookies.get('access_token')
 
     if (!token) {
       const data = JSON.stringify({
@@ -75,7 +75,6 @@ export const login = (email, password) => async dispatch => {
       response = await response.json()
 
       token = response.access_token
-      localStorage.setItem('access_token', token)
       Cookies.set('access_token', token)
     }
 
@@ -114,9 +113,8 @@ export const logout = () => async dispatch => {
   dispatch({ type: actionTypes.LOGOUT })
 
   try {
-    localStorage.removeItem('userId')
-    localStorage.removeItem('preferences')
-    localStorage.removeItem('access_token')
+    Cookies.remove('userId')
+    Cookies.remove('preferences')
     Cookies.remove('access_token')
     Router.push('/')
 
@@ -172,9 +170,7 @@ export const register = (email, password, name, platform, nickname, recaptcha) =
 
     response = await response.json()
 
-    token = response.access_token
-    localStorage.setItem('access_token', token)
-    Cookies.set('access_token', token)
+    Cookies.set('access_token', token = response.access_token)
 
     dispatch({
       status: 'success',

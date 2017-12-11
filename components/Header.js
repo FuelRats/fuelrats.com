@@ -60,11 +60,8 @@ const Header = (props) => {
 
       <header role="banner">
         <Link href="/">
-          <a title="Home">
-            <img
-              alt="Fuel Rats logo"
-              className="brand"
-              src="/static/images/logo2.png" />
+          <a className="brand" title="Home">
+            <img alt="Fuel Rats logo" src="/static/images/logo2.png" />
           </a>
         </Link>
 
