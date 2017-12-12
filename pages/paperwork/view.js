@@ -60,7 +60,7 @@ class Paperwork extends Component {
     if (rescue.attributes.quotes) {
       return (
         <ol>
-          {rescue.attributes.quotes.map(this.renderQuote)}
+          {rescue.attributes.quotes.map(Paperwork.renderQuote)}
         </ol>
       )
     }
@@ -186,10 +186,6 @@ class Paperwork extends Component {
 
   get dirtyFields () {
     return this._dirtyFields || (this._dirtyFields = new Set)
-  }
-
-  static get title () {
-    return 'Paperwork'
   }
 }
 
