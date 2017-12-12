@@ -54,7 +54,7 @@ export const submitPaperwork = (rescueId, rescue, rats) => async dispatch => {
       body: JSON.stringify(rescue),
       headers: new Headers({
         Authorization: `Bearer ${Cookies.get('access_token')}`,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       }),
       method: 'put',
     })
@@ -65,7 +65,7 @@ export const submitPaperwork = (rescueId, rescue, rats) => async dispatch => {
           body: JSON.stringify(rats.added.map(rat => rat.id)),
           headers: new Headers({
             Authorization: `Bearer ${Cookies.get('access_token')}`,
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
           }),
           method: 'put',
         })
@@ -76,7 +76,7 @@ export const submitPaperwork = (rescueId, rescue, rats) => async dispatch => {
           body: JSON.stringify(rats.removed.map(rat => rat.id)),
           headers: new Headers({
             Authorization: `Bearer ${Cookies.get('access_token')}`,
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
           }),
           method: 'put',
         })

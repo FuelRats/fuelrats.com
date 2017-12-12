@@ -139,8 +139,6 @@ export const register = (email, password, name, platform, nickname, recaptcha) =
   dispatch({ type: actionTypes.REGISTER })
 
   try {
-    let token = null
-
     let response = await fetch('/api/register', {
       body: JSON.stringify({
         email,
@@ -170,7 +168,7 @@ export const register = (email, password, name, platform, nickname, recaptcha) =
 
     response = await response.json()
 
-    Cookies.set('access_token', token = response.access_token)
+    Cookies.set('access_token', response.access_token)
 
     dispatch({
       status: 'success',
