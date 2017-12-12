@@ -33,7 +33,7 @@ Router.onRouteChangeError = () => {
 }
 
 Router.onRouteChangeComplete = () => {
-  let userId = Cookies.get('userId')
+  const userId = Cookies.get('userId')
   let preferences = Cookies.get('preferences')
 
   preferences = preferences ? JSON.parse(preferences) : {}
