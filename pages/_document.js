@@ -17,6 +17,15 @@ export default class extends Document {
     return (
       <html lang="en">
         <Head>
+          <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+          <meta name="application-name" content="Fuelrats.com" />
+          <meta name="msapplication-TileColor" content="#FFFFFF" />
+          <meta name="msapplication-TileImage" content="/static/favicon/mstile-144x144.png" />
+          <meta name="msapplication-square70x70logo" content="/static/favicon/mstile-70x70.png" />
+          <meta name="msapplication-square150x150logo" content="/static/favicon/mstile-150x150.png" />
+          <meta name="msapplication-wide310x150logo" content="/static/favicon/mstile-310x150.png" />
+          <meta name="msapplication-square310x310logo" content="/static/favicon/mstile-310x310.png" />
+
           <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/static/favicon/apple-touch-icon-57x57.png" />
           <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/static/favicon/apple-touch-icon-114x114.png" />
           <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/static/favicon/apple-touch-icon-72x72.png" />
@@ -30,17 +39,8 @@ export default class extends Document {
           <link rel="icon" type="image/png" href="/static/favicon/favicon-32x32.png" sizes="32x32" />
           <link rel="icon" type="image/png" href="/static/favicon/favicon-16x16.png" sizes="16x16" />
           <link rel="icon" type="image/png" href="/static/favicon/favicon-128.png" sizes="128x128" />
-          <meta name="application-name" content="Fuelrats.com" />
-          <meta name="msapplication-TileColor" content="#FFFFFF" />
-          <meta name="msapplication-TileImage" content="/static/favicon/mstile-144x144.png" />
-          <meta name="msapplication-square70x70logo" content="/static/favicon/mstile-70x70.png" />
-          <meta name="msapplication-square150x150logo" content="/static/favicon/mstile-150x150.png" />
-          <meta name="msapplication-wide310x150logo" content="/static/favicon/mstile-310x150.png" />
-          <meta name="msapplication-square310x310logo" content="/static/favicon/mstile-310x310.png" />
 
-          <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-
-          <script src="//cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.8/dialog-polyfill.min.js" />
+          <script src="//cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.9/dialog-polyfill.min.js" />
           <script dangerouslySetInnerHTML={
             {
               __html: `
@@ -72,9 +72,6 @@ export default class extends Document {
           <Main className="next-wrapper" />
 
           <NextScript />
-
-          <link href="//cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.8/dialog-polyfill.min.css" rel="stylesheet" />
-          <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
           {fonts.map(font => (
             <link
