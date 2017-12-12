@@ -70,7 +70,6 @@ class Authorize extends Component {
         response = await response.json()
 
         this.setState({
-          allow: false,
           clientName: response.client.data.attributes.name,
           redirectUri: response.client.data.attributes.redirectUri,
           scopes: response.scopes,
