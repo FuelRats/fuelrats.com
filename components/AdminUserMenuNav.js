@@ -6,38 +6,34 @@ import React from 'react'
 
 
 
-export default () => {
-  const { permissions } = this.props
+export default (props) => (
+  <nav className="admin">
+    <header>Admin</header>
 
-  return (
-    <nav className="admin">
-      <header>Admin</header>
+    <ul className="">
+      {props.permissions.has('rescue.read') && (
+        <li>
+          <Link href="/admin/rescues">
+            <a>Rescues</a>
+          </Link>
+        </li>
+      )}
 
-      <ul className="">
-        {permissions.has('rescue.read') && (
-          <li>
-            <Link href="/admin/rescues">
-              <a>Rescues</a>
-            </Link>
-          </li>
-        )}
+      {props.permissions.has('rat.read') && (
+        <li>
+          <Link href="/admin/rats">
+            <a>Rats</a>
+          </Link>
+        </li>
+      )}
 
-        {permissions.has('rat.read') && (
-          <li>
-            <Link href="/admin/rats">
-              <a>Rats</a>
-            </Link>
-          </li>
-        )}
-
-        {permissions.has('user.read') && (
-          <li>
-            <Link href="/admin/users">
-              <a>Users</a>
-            </Link>
-          </li>
-        )}
-      </ul>
-    </nav>
-  )
-}
+      {props.permissions.has('user.read') && (
+        <li>
+          <Link href="/admin/users">
+            <a>Users</a>
+          </Link>
+        </li>
+      )}
+    </ul>
+  </nav>
+)
