@@ -4,9 +4,8 @@ import React from 'react'
 
 
 
-export default () => {
-  const { children } = this.props
-  let key = children
+export default (props) => {
+  let key = props.children
 
   switch (key.toLowerCase()) {
     case 'alt':

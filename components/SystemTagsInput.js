@@ -1,5 +1,5 @@
 // Module imports
-import TagsInput from '../components/TagsInput'
+import TagsInput from './TagsInput'
 
 
 

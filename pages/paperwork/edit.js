@@ -321,7 +321,8 @@ class Paperwork extends Component {
                 disabled={submitting || retrieving}
                 name="rats"
                 onChange={this.handleRatsChange}
-                value={rats} />
+                value={rats}
+                valueProp="attributes.name" />
             </fieldset>
 
             <fieldset>
@@ -333,7 +334,8 @@ class Paperwork extends Component {
                 name="firstLimpet"
                 onChange={this.handleFirstLimpetChange}
                 options={rats}
-                value={firstLimpet} />
+                value={firstLimpet}
+                valueProp="attributes.name" />
             </fieldset>
 
             <fieldset>

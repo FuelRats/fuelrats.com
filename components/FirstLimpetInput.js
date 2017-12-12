@@ -5,6 +5,11 @@ import RatTagsInput from '../components/RatTagsInput'
 
 
 export default class extends RatTagsInput {
+  /* eslint-disable class-methods-use-this */
   // no-op
-  static search () {}
+  search (query) {
+    const regex = new RegExp(`.*${query}.*`, 'gi')
+    this.updateOptions(this.props.options.filter(option => regex.test(this.getValue(option))))
+  }
+  /* eslint-enable */
 }

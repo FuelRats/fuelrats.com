@@ -13,23 +13,23 @@ import Key from './Key'
 
 
 
-export default class extends React.Component {
+export default class TagsInputComponent extends React.Component {
   _bindMethods (methods) {
     methods.forEach(method => this[method] = this[method].bind(this))
   }
 
-  _renderLoader () {
+  static _renderLoader () {
     return (
       <div className="loader">
-        {this.renderLoader()}
+        {TagsInputComponent.renderLoader()}
       </div>
     )
   }
 
-  _renderNoResults () {
+  static _renderNoResults () {
     return (
       <div className="no-results">
-        {this.renderNoResults()}
+        {TagsInputComponent.renderNoResults()}
       </div>
     )
   }
@@ -115,7 +115,7 @@ export default class extends React.Component {
     const newNextState = { ...nextState }
 
     if (this.state.tags !== nextState.tags) {
-      newNextState.tags = nextState.tags.map(tag => this.parseOption(tag))
+      newNextState.tags = nextState.tags.map(tag => TagsInputComponent.parseOption(tag))
     }
   }
 
@@ -123,10 +123,8 @@ export default class extends React.Component {
     super(props)
 
     this._bindMethods([
-      'handleOptionMouseOut',
       'handleOptionMouseOver',
       'onBlur',
-      'onFocus',
       'onInput',
       'onKeyDown',
       'renderOption',
@@ -135,6 +133,7 @@ export default class extends React.Component {
       'shouldCaptureKeybind',
     ])
 
+    this.valueProp = props.valueProp || 'value'
     this.search = debounce(this.search, props.searchDebounce || 500)
 
     let tags = props.value || []
@@ -143,7 +142,7 @@ export default class extends React.Component {
       tags = [tags]
     }
 
-    tags = tags.map(tag => this.parseOption(tag))
+    tags = tags.map(tag => TagsInputComponent.parseOption(tag))
 
     this.state = {
       allowDuplicates: props['data-allowduplicates'],
@@ -327,7 +326,9 @@ export default class extends React.Component {
         type = [].shift.call(arguments)
       }
 
+      /* eslint-disable no-console */
       console[type].apply(this, arguments)
+      /* eslint-disable */
     }
   }
 
@@ -426,6 +427,7 @@ export default class extends React.Component {
     delete divProps.onChange
     delete divProps.onRemove
     delete divProps.options
+    delete divProps.valueProp
 
     return (
       <div {...divProps} className={classes.join(' ')}>
@@ -435,7 +437,7 @@ export default class extends React.Component {
           autoComplete="off"
           name={name}
           onBlur={this.onBlur}
-          onFocus={this.onFocus}
+          onFocus={TagsInputComponent.onFocus}
           onInput={this.onInput}
           onKeyDown={this.onKeyDown}
           ref={input => this.input = input}
@@ -443,9 +445,9 @@ export default class extends React.Component {
 
         {!!allowNew && this.renderReturnPrompt()}
 
-        {loading && this._renderLoader()}
+        {loading && TagsInputComponent._renderLoader()}
 
-        {(!loading && !newFocus && !!currentValue && !options.length) && this._renderNoResults()}
+        {(!loading && !newFocus && !!currentValue && !options.length) && TagsInputComponent._renderNoResults()}
 
         {(!loading && !!options.length) && (
           <ol className="options">
@@ -481,10 +483,10 @@ export default class extends React.Component {
       <li
         className={classes.join(' ')}
         key={index}
-        onBlur={this.handleOptionMouseOut}
+        onBlur={TagsInputComponent.handleOptionMouseOut}
         onFocus={event => this.handleOptionMouseOver(event, index)}
         onMouseDown={() => this.addTag(option)}
-        onMouseOut={this.handleOptionMouseOut}
+        onMouseOut={TagsInputComponent.handleOptionMouseOut}
         onMouseOver={event => this.handleOptionMouseOver(event, index)}>
         {this.renderValue(option)}
       </li>
@@ -578,7 +580,7 @@ export default class extends React.Component {
     }
 
     options.forEach(optionValue => {
-      const option = this.parseOption(optionValue)
+      const option = TagsInputComponent.parseOption(optionValue)
 
       if (merge && this.findOption(option)) {
         return
@@ -604,9 +606,5 @@ export default class extends React.Component {
 
   static get idProp () {
     return 'id'
-  }
-
-  static get valueProp () {
-    return 'value'
   }
 }

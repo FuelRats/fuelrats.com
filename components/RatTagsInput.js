@@ -1,4 +1,4 @@
-import TagsInput from '../components/TagsInput'
+import TagsInput from './TagsInput'
 
 
 
@@ -37,9 +37,5 @@ export default class extends TagsInput {
     }
 
     return this.updateOptions([])
-  }
-
-  static get valueProp () {
-    return 'attributes.name'
   }
 }
