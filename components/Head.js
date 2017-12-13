@@ -1,8 +1,6 @@
-import Cookies from 'js-cookie'
 import NProgress from 'nprogress'
 import NextHead from 'next/head'
 import React from 'react'
-import ReactGA from 'react-ga'
 import Router from 'next/router'
 
 
@@ -18,28 +16,11 @@ import libStylesheet from '../scss/lib.scss'
 
 NProgress.configure({ showSpinner: false })
 
-Router.onRouteChangeStart = () => {
-  NProgress.start()
-}
+Router.onRouteChangeStart = () => NProgress.start()
 
-Router.onRouteChangeError = () => {
-  NProgress.done()
-}
+Router.onRouteChangeError = () => NProgress.done()
 
-Router.onRouteChangeComplete = () => {
-  const userId = Cookies.get('userId')
-  let preferences = Cookies.get('preferences')
-
-  preferences = preferences ? JSON.parse(preferences) : {}
-
-  if (preferences.allowPersonalizedTracking) {
-    ReactGA.set({ userId })
-  }
-
-  ReactGA.pageview(window.location.pathname)
-
-  NProgress.done()
-}
+Router.onRouteChangeComplete = () => NProgress.done()
 
 
 

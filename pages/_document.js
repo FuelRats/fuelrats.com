@@ -5,7 +5,7 @@ import Document, { Head, Main, NextScript } from 'next/document'
 
 
 const fonts = ['Raleway']
-const gatmId = process.env.GA_TAG_MANAGER_ID
+const gatmId = preval`module.exports = process.env.GA_TAG_MANAGER_ID`
 
 
 
