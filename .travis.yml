@@ -7,9 +7,6 @@ addons:
 
 cache: yarn
 
-before_script:
-- scripts/choose-ga-id.sh
-
 script:
 - yarn run build
 
