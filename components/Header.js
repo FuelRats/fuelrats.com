@@ -9,25 +9,6 @@ import { connect } from 'react-redux'
 
 // Component imports
 import Nav from './Nav'
-import SqueakmasAlert from './SqueakmasAlert'
-
-
-
-
-
-let showSqueakmas = false
-const now = new Date
-const hours = now.getUTCHours()
-const date = now.getUTCDate()
-const dateIsInRange = date >= 1 && date <= 12
-const monthIsCorrect = now.getUTCMonth() === 11
-const yearIsCorrect = now.getUTCFullYear() === 2017
-
-if (dateIsInRange && monthIsCorrect && yearIsCorrect) {
-  if ((date === 1 && hours > 12) || date > 1) {
-    showSqueakmas = true
-  }
-}
 
 
 
@@ -85,8 +66,6 @@ const Header = (props) => {
           </div>
         </div>
       </header>
-
-      {showSqueakmas && <SqueakmasAlert />}
     </div>
   )
 }
