@@ -84,6 +84,11 @@ module.exports = function (nextjs, koa, config) {
     await ctx.redirect(`https://confluence.fuelrats.com/display/FRKB/Terms+of+Service`)
   })
 
+  router.get('/code-of-conduct', async (ctx, next) => {
+    ctx.status = 307
+    await ctx.redirect(`https://confluence.fuelrats.com/display/FRKB/Code+of+Conduct`)
+  })
+
 
 
 
