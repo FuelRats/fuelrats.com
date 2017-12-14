@@ -4,7 +4,7 @@ import Document, { Head, Main, NextScript } from 'next/document'
 
 
 
-const fonts = ['Raleway']
+const fonts = ['Raleway', 'Open Sans']
 const gatmId = preval`module.exports = process.env.GA_TAG_MANAGER_ID`
 
 
@@ -73,12 +73,10 @@ export default class extends Document {
 
           <NextScript />
 
-          {fonts.map(font => (
-            <link
-              href={`//fonts.googleapis.com/css?family=${font.replace(/\s/g, '+')}`}
-              key={font}
-              rel="stylesheet" />
-          ))}
+          <link
+            href={`//fonts.googleapis.com/css?family=${fonts.join('|').replace(/\s/g, '+')}`}
+            rel="stylesheet" />
+
         </body>
       </html>
     )
