@@ -68,7 +68,7 @@ export default {
     id: null,
     permissions: new Set,
     preferences: {
-      allowPersonalizedTracking: false,
+      allowUniversalTracking: false,
     },
     relationships: null,
     retrieving: false,

@@ -114,8 +114,8 @@ export const logout = () => async dispatch => {
 
   try {
     Cookies.remove('userId')
-    Cookies.remove('preferences')
     Cookies.remove('access_token')
+    Cookies.remove('allowUniversalTracking')
     Router.push('/')
 
     dispatch({

@@ -78,10 +78,9 @@ export default function (state = initialState.user, action) {
             user.preferences = user.data.website.preferences
           }
 
-          // Stick the user preferences in the local store so we can use them
-          // outside of Redux connected components
+          // Set anything we need in cookies for external access
           Cookies.set('userId', user.id)
-          Cookies.set('preferences', JSON.stringify(user.preferences))
+          Cookies.set('allowUniversalTracking', user.preferences.allowUniversalTracking)
 
           return user
         }
