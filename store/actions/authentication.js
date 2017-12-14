@@ -14,6 +14,13 @@ import actionTypes from '../actionTypes'
 
 
 
+// Component constants
+const dev = preval`module.exports = process.env.NODE_ENV !== 'production'`
+
+
+
+
+
 export const changePassword = (currentPassword, newPassword) => async dispatch => {
   dispatch({ type: actionTypes.CHANGE_PASSWORD })
 
@@ -75,7 +82,7 @@ export const login = (email, password) => async dispatch => {
       response = await response.json()
 
       token = response.access_token
-      Cookies.set('access_token', token)
+      Cookies.set('access_token', token, dev ? { domain: '.fuelrats.com' } : {})
     }
 
     dispatch({
@@ -168,7 +175,7 @@ export const register = (email, password, name, platform, nickname, recaptcha) =
 
     response = await response.json()
 
-    Cookies.set('access_token', response.access_token)
+    Cookies.set('access_token', response.access_token, dev ? { domain: '.fuelrats.com' } : {})
 
     dispatch({
       status: 'success',

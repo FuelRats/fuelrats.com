@@ -10,6 +10,13 @@ import initialState from '../initialState'
 
 
 
+
+const dev = preval`module.exports = process.env.NODE_ENV !== 'production'`
+
+
+
+
+
 export default function (state = initialState.user, action) {
   switch (action.type) {
     case actionTypes.ADD_NICKNAME:
@@ -79,8 +86,8 @@ export default function (state = initialState.user, action) {
           }
 
           // Set anything we need in cookies for external access
-          Cookies.set('userId', user.id)
-          Cookies.set('allowUniversalTracking', user.preferences.allowUniversalTracking)
+          Cookies.set('userId', user.id, dev ? { domain: '.fuelrats.com' } : {})
+          Cookies.set('allowUniversalTracking', user.preferences.allowUniversalTracking, dev ? { domain: '.fuelrats.com' } : {})
 
           return user
         }
