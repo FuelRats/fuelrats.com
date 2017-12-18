@@ -31,7 +31,9 @@ class Authorize extends Component {
 
     this.state = {
       clientName: null,
+      redirectUri: null,
       scopes: [],
+      token: null,
       transactionId: '',
       submitting: false,
     }
@@ -77,7 +79,7 @@ class Authorize extends Component {
           transactionId: response.transactionId,
         })
       } catch (error) {
-        window.console.log(error)
+        console.log(error)
       }
     }
   }
