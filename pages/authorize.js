@@ -31,7 +31,9 @@ class Authorize extends Component {
 
     this.state = {
       clientName: null,
+      redirectUri: null,
       scopes: [],
+      token: null,
       transactionId: '',
       submitting: false,
     }
@@ -56,7 +58,7 @@ class Authorize extends Component {
     if (client_id && state && scope && response_type) {
     /* eslint-enable camelcase */
       try {
-        const token = localStorage.getItem('access_token')
+        const token = Cookies.get('access_token')
 
         /* eslint-disable camelcase */
         let response = await fetch(`/api/oauth2/authorize?client_id=${client_id}&scope=${scope}&state=${state}&response_type=${response_type}`, {
@@ -73,7 +75,7 @@ class Authorize extends Component {
           clientName: response.client.data.attributes.name,
           redirectUri: response.client.data.attributes.redirectUri,
           scopes: response.scopes,
-          token: Cookies.get('access_token'),
+          token,
           transactionId: response.transactionId,
         })
       } catch (error) {
