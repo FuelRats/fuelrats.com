@@ -1,5 +1,6 @@
 // Module imports
 import { bindActionCreators } from 'redux'
+import LocalForage from 'localforage'
 import React from 'react'
 import withRedux from 'next-redux-wrapper'
 
@@ -29,8 +30,22 @@ initStore()
 
 
 
+const dev = preval`module.exports = process.env.NODE_ENV !== 'production'`
+
+
+
+
+
 export default (Component, title = 'Untitled', reduxOptions = {}) => {
   class Page extends React.Component {
+    constructor(props) {
+      super(props)
+
+      LocalForage.config({
+        storeName: dev ? 'FRWebDev' : 'FRWeb',
+      })
+    }
+
     static async getInitialProps(ctx) {
       const {
         asPath,

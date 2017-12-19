@@ -1,8 +1,8 @@
 // Module imports
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import Cookies from 'js-cookie'
 import Link from 'next/link'
+import LocalForage from 'localforage'
 import React from 'react'
 
 
@@ -24,8 +24,8 @@ class UserMenu extends Component {
     Public Methods
   \***************************************************************************/
 
-  componentDidMount () {
-    if (Cookies.get('access_token')) {
+  async componentDidMount () {
+    if (await LocalForage.getItem('access_token')) {
       this.props.getUser()
     }
   }

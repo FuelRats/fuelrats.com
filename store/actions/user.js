@@ -1,6 +1,7 @@
-// Module imports
-import fetch from 'isomorphic-fetch'
+// Module imp
 import Cookies from 'js-cookie'
+import fetch from 'isomorphic-fetch'
+import LocalForage from 'localforage'
 import Router from 'next/router'
 
 
@@ -18,7 +19,7 @@ export const addNickname = (nickname, password) => async dispatch => {
   dispatch({ type: actionTypes.ADD_NICKNAME })
 
   try {
-    const token = Cookies.get('access_token')
+    const token = await LocalForage.getItem('access_token')
 
     await fetch('/api/nicknames', {
       body: JSON.stringify({
@@ -53,7 +54,7 @@ export const getUser = () => async dispatch => {
   dispatch({ type: actionTypes.GET_USER })
 
   try {
-    const token = Cookies.get('access_token')
+    const token = await LocalForage.getItem('access_token')
 
     if (!token) {
       throw new Error('Bad access token')
@@ -74,6 +75,9 @@ export const getUser = () => async dispatch => {
       payload: response,
     })
   } catch (error) {
+    await LocalForage.removeItem('userId')
+    await LocalForage.removeItem('access_token')
+    await LocalForage.removeItem('preferences')
     Cookies.remove('access_token')
 
     dispatch({
@@ -82,7 +86,7 @@ export const getUser = () => async dispatch => {
     })
 
     /* eslint-disable no-restricted-globals */
-    Router.push(`/?authenticate=true&destination=${encodeURIComponent(location.pathname.concat(location.search))}`)
+    Router.push(location.pathname === '/' ? '/' : `/?authenticate=true&destination=${encodeURIComponent(location.pathname.concat(location.search))}`)
     /* eslint-enable */
   }
 }
@@ -95,7 +99,7 @@ export const updateUser = (user) => async dispatch => {
   dispatch({ type: actionTypes.UPDATE_USER })
 
   try {
-    const token = Cookies.get('access_token')
+    const token = await LocalForage.getItem('access_token')
 
     let response = await fetch(`/api/users/${user.id}`, {
       body: JSON.stringify(user),
