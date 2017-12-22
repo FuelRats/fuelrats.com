@@ -63,7 +63,7 @@ export const getUser = () => async dispatch => {
     const token = await LocalForage.getItem('access_token')
     const cookieToken = Cookies.get('access_token')
 
-    if (!token || !cookieToken) {
+    if (!token || !cookieToken || token !== cookieToken) {
       throw new Error('Bad access token')
     }
 
@@ -76,19 +76,18 @@ export const getUser = () => async dispatch => {
 
     response = await response.json()
 
-    Cookies.set('access_token', token, { expires: 365 })
-
     const user = { ...response.data }
 
-    await Promise.all([
-      LocalForage.setItem('userId', user.id),
-      LocalForage.setItem('preferences', user.data.website.preferences),
-    ])
+    Cookies.set('access_token', token, { expires: 365 })
 
     if (user.data.website.preferences) {
       Cookies.set('trackableUserId', user.id, dev ? { domain: '.fuelrats.com' } : {})
     }
 
+    await Promise.all([
+      LocalForage.setItem('userId', user.id),
+      LocalForage.setItem('preferences', user.data.website.preferences),
+    ])
 
     dispatch({
       status: 'success',
