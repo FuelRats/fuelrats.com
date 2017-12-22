@@ -115,10 +115,12 @@ export const logout = () => async dispatch => {
   dispatch({ type: actionTypes.LOGOUT })
 
   try {
-    await LocalForage.removeItem('access_token')
-    await LocalForage.removeItem('userId')
-    await LocalForage.removeItem('preferences')
     Cookies.remove('access_token')
+    await Promise.all([
+      LocalForage.removeItem('access_token'),
+      LocalForage.removeItem('userId'),
+      LocalForage.removeItem('preferences'),
+    ])
 
     dispatch({
       status: 'success',

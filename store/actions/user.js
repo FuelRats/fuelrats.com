@@ -75,10 +75,13 @@ export const getUser = () => async dispatch => {
       payload: response,
     })
   } catch (error) {
-    await LocalForage.removeItem('userId')
-    await LocalForage.removeItem('access_token')
-    await LocalForage.removeItem('preferences')
     Cookies.remove('access_token')
+
+    await Promise.all([
+      LocalForage.removeItem('access_token'),
+      LocalForage.removeItem('userId'),
+      LocalForage.removeItem('preferences'),
+    ])
 
     dispatch({
       status: 'error',
