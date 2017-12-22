@@ -73,6 +73,8 @@ export const getUser = () => async dispatch => {
       LocalForage.setItem('userId', response.data.id),
       LocalForage.setItem('preferences', response.data.data.website.preferences),
     ])
+    
+    Cookies.set('access_token', token, { expires: 365 })
 
     dispatch({
       status: 'success',
