@@ -37,7 +37,7 @@ dialog {
   }
 
   input[type] {
-    background-color: rgba($white, 0.2);
+    background-color: rgba($black, 0.2);
     margin-bottom: 2rem;
   }
 
@@ -85,6 +85,16 @@ dialog {
     &:after {
       border-left-color: $white;
       right: 0;
+    }
+
+    menu[type=toolbar] {
+      button.secondary:hover {
+        color: $black;
+        text-shadow: none;
+      }
+      a.button.link:not(:hover) {
+        color: $black;
+      }
     }
   }
 
