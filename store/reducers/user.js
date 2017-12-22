@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie'
 import LocalForage from 'localforage'
 
 
@@ -6,6 +7,12 @@ import LocalForage from 'localforage'
 
 import actionTypes from '../actionTypes'
 import initialState from '../initialState'
+
+
+
+
+
+const dev = preval`module.exports = process.env.NODE_ENV !== 'production'`
 
 
 
@@ -81,7 +88,10 @@ export default function (state = initialState.user, action) {
 
           // Set anything we need in localforage for external access
           LocalForage.setItem('userId', user.id)
-          LocalForage.setItem('preferences', user.preferences)
+
+          if (user.preferences.allowUniversalTracking) {
+            Cookies.set('trackableUserId', user.id, dev ? { domain: '.fuelrats.com' } : {})
+          }
 
           return user
         }
