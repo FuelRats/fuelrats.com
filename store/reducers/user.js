@@ -87,7 +87,10 @@ export default function (state = initialState.user, action) {
 
           // Set anything we need in cookies for external access
           Cookies.set('userId', user.id, dev ? { domain: '.fuelrats.com' } : {})
-          Cookies.set('allowUniversalTracking', user.preferences.allowUniversalTracking, dev ? { domain: '.fuelrats.com' } : {})
+
+          if (user.preferences.allowUniversalTracking) {
+            Cookies.set('trackableUserId', user.id, dev ? { domain: '.fuelrats.com' } : {})
+          }
 
           return user
         }
