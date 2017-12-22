@@ -15,6 +15,12 @@ import actionTypes from '../actionTypes'
 
 
 
+const dev = preval`module.exports = process.env.NODE_ENV !== 'production'`
+
+
+
+
+
 export const addNickname = (nickname, password) => async dispatch => {
   dispatch({ type: actionTypes.ADD_NICKNAME })
 
@@ -69,12 +75,19 @@ export const getUser = () => async dispatch => {
 
     response = await response.json()
 
-    await Promise.all([
-      LocalForage.setItem('userId', response.data.id),
-      LocalForage.setItem('preferences', response.data.data.website.preferences),
-    ])
-    
     Cookies.set('access_token', token, { expires: 365 })
+
+    const user = { ...response.data }
+
+    await Promise.all([
+      LocalForage.setItem('userId', user.id),
+      LocalForage.setItem('preferences', user.data.website.preferences),
+    ])
+
+    if (user.data.website.preferences) {
+      Cookies.set('trackableUserId', user.id, dev ? { domain: '.fuelrats.com' } : {})
+    }
+
 
     dispatch({
       status: 'success',
