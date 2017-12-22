@@ -1,7 +1,7 @@
 /* eslint no-await-in-loop:off */
 // Module imports
-import Cookies from 'js-cookie'
 import fetch from 'isomorphic-fetch'
+import LocalForage from 'localforage'
 
 
 
@@ -20,6 +20,8 @@ export const createRat = (name, platform, userId) => async dispatch => {
       type: actionTypes.CREATE_RAT,
     })
 
+    const token = await LocalForage.getItem('access_token')
+
     let response = await fetch('/api/rats', {
       body: JSON.stringify({
         name,
@@ -27,7 +29,7 @@ export const createRat = (name, platform, userId) => async dispatch => {
         userId,
       }),
       headers: new Headers({
-        Authorization: `Bearer ${Cookies.get('access_token')}`,
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       }),
       method: 'post',

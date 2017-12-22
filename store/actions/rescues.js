@@ -1,7 +1,7 @@
 /* eslint no-await-in-loop:off */
 // Module imports
-import Cookies from 'js-cookie'
 import fetch from 'isomorphic-fetch'
+import LocalForage from 'localforage'
 
 
 
@@ -18,9 +18,11 @@ export const getRescues = () => async dispatch => {
   dispatch({ type: actionTypes.GET_RESCUES })
 
   try {
+    const token = await LocalForage.getItem('access_token')
+
     let response = await fetch('/api/rescues', {
       headers: new Headers({
-        Authorization: `Bearer ${Cookies.get('access_token')}`,
+        Authorization: `Bearer ${token}`,
       }),
       method: 'get',
     })

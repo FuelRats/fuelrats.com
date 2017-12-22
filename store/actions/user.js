@@ -1,6 +1,7 @@
-// Module imports
-import fetch from 'isomorphic-fetch'
+// Module imp
 import Cookies from 'js-cookie'
+import fetch from 'isomorphic-fetch'
+import LocalForage from 'localforage'
 import Router from 'next/router'
 
 
@@ -14,11 +15,17 @@ import actionTypes from '../actionTypes'
 
 
 
+const dev = preval`module.exports = process.env.NODE_ENV !== 'production'`
+
+
+
+
+
 export const addNickname = (nickname, password) => async dispatch => {
   dispatch({ type: actionTypes.ADD_NICKNAME })
 
   try {
-    const token = Cookies.get('access_token')
+    const token = await LocalForage.getItem('access_token')
 
     await fetch('/api/nicknames', {
       body: JSON.stringify({
@@ -53,9 +60,10 @@ export const getUser = () => async dispatch => {
   dispatch({ type: actionTypes.GET_USER })
 
   try {
-    const token = Cookies.get('access_token')
+    const token = await LocalForage.getItem('access_token')
+    const cookieToken = Cookies.get('access_token')
 
-    if (!token) {
+    if (!token || !cookieToken || token !== cookieToken) {
       throw new Error('Bad access token')
     }
 
@@ -68,6 +76,19 @@ export const getUser = () => async dispatch => {
 
     response = await response.json()
 
+    const user = { ...response.data }
+
+    Cookies.set('access_token', token, { expires: 365 })
+
+    if (user.data.website.preferences) {
+      Cookies.set('trackableUserId', user.id, dev ? { domain: '.fuelrats.com' } : {})
+    }
+
+    await Promise.all([
+      LocalForage.setItem('userId', user.id),
+      LocalForage.setItem('preferences', user.data.website.preferences),
+    ])
+
     dispatch({
       status: 'success',
       type: actionTypes.GET_USER,
@@ -76,13 +97,19 @@ export const getUser = () => async dispatch => {
   } catch (error) {
     Cookies.remove('access_token')
 
+    await Promise.all([
+      LocalForage.removeItem('access_token'),
+      LocalForage.removeItem('userId'),
+      LocalForage.removeItem('preferences'),
+    ])
+
     dispatch({
       status: 'error',
       type: actionTypes.GET_USER,
     })
 
     /* eslint-disable no-restricted-globals */
-    Router.push(`/?authenticate=true&destination=${encodeURIComponent(location.pathname.concat(location.search))}`)
+    Router.push(location.pathname === '/' ? '/' : `/?authenticate=true&destination=${encodeURIComponent(location.pathname.concat(location.search))}`)
     /* eslint-enable */
   }
 }
@@ -95,7 +122,7 @@ export const updateUser = (user) => async dispatch => {
   dispatch({ type: actionTypes.UPDATE_USER })
 
   try {
-    const token = Cookies.get('access_token')
+    const token = await LocalForage.getItem('access_token')
 
     let response = await fetch(`/api/users/${user.id}`, {
       body: JSON.stringify(user),

@@ -1,17 +1,5 @@
-import Cookies from 'js-cookie'
-
-
-
-
-
 import actionTypes from '../actionTypes'
 import initialState from '../initialState'
-
-
-
-
-
-const dev = preval`module.exports = process.env.NODE_ENV !== 'production'`
 
 
 
@@ -83,13 +71,6 @@ export default function (state = initialState.user, action) {
           // defaults should already be set in the initialState
           if (user.data.website.preferences) {
             user.preferences = user.data.website.preferences
-          }
-
-          // Set anything we need in cookies for external access
-          Cookies.set('userId', user.id, dev ? { domain: '.fuelrats.com' } : {})
-
-          if (user.preferences.allowUniversalTracking) {
-            Cookies.set('trackableUserId', user.id, dev ? { domain: '.fuelrats.com' } : {})
           }
 
           return user

@@ -1,6 +1,6 @@
 // Module imports
-import Cookies from 'js-cookie'
 import fetch from 'isomorphic-fetch'
+import LocalForage from 'localforage'
 
 
 
@@ -17,9 +17,11 @@ export const retrievePaperwork = rescueId => async dispatch => {
   dispatch({ type: actionTypes.RETRIEVE_PAPERWORK })
 
   try {
+    const token = await LocalForage.getItem('access_token')
+
     let response = await fetch(`/api/rescues/${rescueId}`, {
       headers: new Headers({
-        Authorization: `Bearer ${Cookies.get('access_token')}`,
+        Authorization: `Bearer ${token}`,
       }),
     })
     response = await response.json()
@@ -50,10 +52,12 @@ export const submitPaperwork = (rescueId, rescue, rats) => async dispatch => {
   dispatch({ type: actionTypes.SUBMIT_PAPERWORK })
 
   try {
+    const token = await LocalForage.getItem('access_token')
+
     let response = await fetch(`/api/rescues/${rescueId}`, {
       body: JSON.stringify(rescue),
       headers: new Headers({
-        Authorization: `Bearer ${Cookies.get('access_token')}`,
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       }),
       method: 'put',
@@ -64,7 +68,7 @@ export const submitPaperwork = (rescueId, rescue, rats) => async dispatch => {
         response = await fetch(`/api/rescues/assign/${rescueId}`, {
           body: JSON.stringify(rats.added.map(rat => rat.id)),
           headers: new Headers({
-            Authorization: `Bearer ${Cookies.get('access_token')}`,
+            Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
           }),
           method: 'put',
@@ -75,7 +79,7 @@ export const submitPaperwork = (rescueId, rescue, rats) => async dispatch => {
         response = await fetch(`/api/rescues/unassign/${rescueId}`, {
           body: JSON.stringify(rats.removed.map(rat => rat.id)),
           headers: new Headers({
-            Authorization: `Bearer ${Cookies.get('access_token')}`,
+            Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
           }),
           method: 'put',

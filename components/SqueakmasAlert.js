@@ -1,5 +1,6 @@
 // Module imports
 import React from 'react'
+import localforage from 'localforage'
 
 
 
@@ -14,25 +15,16 @@ import SqueakmasDialog from './SqueakmasDialog'
 
 
 
-// Component constants
-const localStorageIsAvailable = typeof localStorage !== 'undefined'
-
-
-
-
-
 export default class extends Component {
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
 
-  componentDidMount () {
-    if (localStorageIsAvailable) {
-      const squeakmasHasBeenDismissed = localStorage.getItem('squeakmas3303AlertDismissed')
+  async componentDidMount () {
+    const squeakmasHasBeenDismissed = await localforage.getItem('squeakmas3303AlertDismissed')
 
-      if (squeakmasHasBeenDismissed !== null) {
-        this.setState({ open: false })
-      }
+    if (squeakmasHasBeenDismissed !== null) {
+      this.setState({ open: false })
     }
   }
 
@@ -49,7 +41,7 @@ export default class extends Component {
 
   dismiss () {
     this.setState({ open: false })
-    localStorage.setItem('squeakmas3303AlertDismissed', (new Date).toISOString())
+    localforage.setItem('squeakmas3303AlertDismissed', (new Date).toISOString())
   }
 
   render () {
