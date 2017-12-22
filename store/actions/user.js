@@ -61,8 +61,9 @@ export const getUser = () => async dispatch => {
 
   try {
     const token = await LocalForage.getItem('access_token')
+    const cookieToken = Cookies.get('access_token')
 
-    if (!token) {
+    if (!token || !cookieToken) {
       throw new Error('Bad access token')
     }
 
