@@ -1,9 +1,3 @@
-import LocalForage from 'localforage'
-
-
-
-
-
 import actionTypes from '../actionTypes'
 import initialState from '../initialState'
 
