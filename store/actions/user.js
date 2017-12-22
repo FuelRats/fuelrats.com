@@ -69,6 +69,11 @@ export const getUser = () => async dispatch => {
 
     response = await response.json()
 
+    await Promise.all([
+      LocalForage.setItem('userId', response.data.id),
+      LocalForage.setItem('preferences', response.data.data.website.preferences),
+    ])
+
     dispatch({
       status: 'success',
       type: actionTypes.GET_USER,

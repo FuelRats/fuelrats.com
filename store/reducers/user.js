@@ -79,10 +79,6 @@ export default function (state = initialState.user, action) {
             user.preferences = user.data.website.preferences
           }
 
-          // Set anything we need in localforage for external access
-          LocalForage.setItem('userId', user.id)
-          LocalForage.setItem('preferences', user.preferences)
-
           return user
         }
       }
