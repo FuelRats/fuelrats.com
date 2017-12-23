@@ -77,7 +77,7 @@ export const getUser = () => async dispatch => {
     response = await response.json()
 
     const user = { ...response.data }
-    
+
     let userPreferences = null
 
     if (user.attributes.data && user.attributes.data.website && user.attributes.data.website.preferences) {
