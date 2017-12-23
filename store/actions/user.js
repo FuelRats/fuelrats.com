@@ -77,7 +77,8 @@ export const getUser = () => async dispatch => {
     response = await response.json()
 
     const user = { ...response.data }
-    const userPreferences = null
+    
+    let userPreferences = null
 
     if (user.attributes.data && user.attributes.data.website && user.attributes.data.website.preferences) {
       userPreferences = user.attributes.data.website.preferences
@@ -87,15 +88,13 @@ export const getUser = () => async dispatch => {
 
     Cookies.set('access_token', token, { expires: 365 })
 
-
-
-    if (user.attributes.data.website.preferences.allowUniversalTracking) {
+    if (userPreferences.allowUniversalTracking) {
       Cookies.set('trackableUserId', user.id, dev ? { domain: '.fuelrats.com' } : {})
     }
 
     await Promise.all([
       LocalForage.setItem('userId', user.id),
-      LocalForage.setItem('preferences', user.attributes.data.website.preferences),
+      LocalForage.setItem('preferences', userPreferences),
     ])
 
     dispatch({
