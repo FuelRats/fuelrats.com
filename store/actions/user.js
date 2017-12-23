@@ -10,7 +10,7 @@ import Router from 'next/router'
 
 // Component imports
 import actionTypes from '../actionTypes'
-
+import initialState from '../initialState'
 
 
 
@@ -77,16 +77,25 @@ export const getUser = () => async dispatch => {
     response = await response.json()
 
     const user = { ...response.data }
+    const userPreferences = null
+
+    if (user.attributes.data && user.attributes.data.website && user.attributes.data.website.preferences) {
+      userPreferences = user.attributes.data.website.preferences
+    } else {
+      userPreferences = { ...initialState.user.preferences }
+    }
 
     Cookies.set('access_token', token, { expires: 365 })
 
-    if (user.data.website.preferences) {
+
+
+    if (user.attributes.data.website.preferences.allowUniversalTracking) {
       Cookies.set('trackableUserId', user.id, dev ? { domain: '.fuelrats.com' } : {})
     }
 
     await Promise.all([
       LocalForage.setItem('userId', user.id),
-      LocalForage.setItem('preferences', user.data.website.preferences),
+      LocalForage.setItem('preferences', user.attributes.data.website.preferences),
     ])
 
     dispatch({
