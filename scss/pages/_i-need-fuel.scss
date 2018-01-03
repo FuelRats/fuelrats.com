@@ -1,6 +1,7 @@
 .page.i-need-fuel {
   .buttons {
-    align-items: flex-end;
+    align-items: flex-start;
+    flex-direction: column;
     display: flex;
     justify-content: space-between;
 

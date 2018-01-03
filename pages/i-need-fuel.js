@@ -1,3 +1,10 @@
+// Module imports
+import Link from 'next/link'
+
+
+
+
+
 // Component imports
 import Page from '../components/Page'
 
@@ -5,7 +12,7 @@ import Page from '../components/Page'
 
 
 
-// Component imports
+// Component constants
 const title = 'I Need Fuel'
 
 
@@ -25,41 +32,41 @@ const INeedFuel = () => (
           className="pull-right"
           src="https://i1.wp.com/www.fuelrats.com/wp-content/uploads/2016/07/vig_rescue_250-200x126.jpg?resize=200%2C126&ssl=1" />
 
-        <p>Click on the left button to activate a chat session. Put your CMDR name (or GamerTag if you play on XBox or PS4), current system and whether you’re on emergency o2 (Blue timer in the top right of your screen) and hit "Start". You’ll be able to see which Fuel Rats are logged in and instantly talk with everyone. If there is a "Dispatch" he/she’ll be the one assigning people to help you.</p>
+        <h5>
+          DO YOU SEE A BLUE COUNTDOWN TIMER?
+          <br />
+          If so, quit to the main menu of the game immediately!
+        </h5>
 
-        <p>If you find yourself stranded, log out to main menu and await further instructions.</p>
+        <br />
 
-        <p>If you’re just checking out the service to say "hello" that’s fine, you can press the green button to open the chat room.</p>
-
-        <p><strong>For a visual reference of these steps along with default controls, refer to these <a href="https://imgur.com/gallery/YuWa6">Emergency Fuel Procedures</a>.</strong></p>
-
-        <p>If you encounter difficulties logging into our IRC chat and need fuel, please make a post on <a href="https://www.reddit.com/r/FuelRats/">the subreddit</a> with the above mentioned information for us to assist you!</p>
-
-        <p>When you join the chat, do not send or accept friend requests in-game until instructed to do so by the dispatcher.</p>
-
-        <p>There are griefers/miscreants that occasionally try to learn the location of stranded clients. We will rescue you, but you need to protect yourself. Please note that everyone using our IRC servers are subject to the Fuel Rats’ <a href="http://t.fuelr.at/tos">Terms of Service</a> and <a href="http://t.fuelr.at/coc">Code of Conduct</a>.</p>
+        <p>Have you found yourself low on fuel and unable to make it to your nearest refuel point? Never fear! The Fuel Rats are here to help! </p>
 
         <div className="buttons">
           <a
-            className="button call-to-action"
+            className="button call-to-action green"
             href="https://clients.fuelrats.com:7778/"
             rel="noopener noreferrer"
             target="_blank">
-            Get Rescued
+            Click here to get refueled!
           </a>
 
-          <div>
-            <small>Don't need a rescue?</small>
+          <br />
 
-            <a
-              className="button green"
-              href="https://kiwi.fuelrats.com:7778/"
-              rel="noopener noreferrer"
-              target="_blank">
-              Chat with the Fuel Rats
-            </a>
-          </div>
+          <p>Don't need a fill up? Just looking to chat, or perhaps even help the cause?</p>
+
+          <a
+            className="button secondary"
+            href="https://kiwi.fuelrats.com:7778/"
+            rel="noopener noreferrer"
+            target="_blank">
+            Click here to chat with the rats!
+          </a>
         </div>
+
+        <br />
+
+        <small>By connecting to our IRC and using our services, you agree to our <Link href="/terms-of-service"><a>Terms of Service</a></Link> and <Link href="/privacy-policy"><a>Privacy Policy</a></Link>.</small>
       </div>
     </div>
   </div>
