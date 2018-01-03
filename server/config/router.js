@@ -80,7 +80,7 @@ module.exports = function (nextjs, koa, config) {
     await next()
   })
 
-  // Permanent Static Redirects
+  // Permanent Redirects
   router.all('/blogs', async (ctx, next) => {
     ctx.status = 301
     await ctx.redirect(`/blog`)
