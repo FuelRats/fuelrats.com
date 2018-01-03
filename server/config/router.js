@@ -58,33 +58,56 @@ module.exports = function (nextjs, koa, config) {
     Redirects
   \******************************************************************************/
 
-  // Legacy blog list route
-  router.get('/blogs', async (ctx, next) => {
+  // Legacy Wordpress permalinks
+  // e.g. /2017/09/07/universal-service-a-fuel-rats-thargoid-cartoon
+  router.get('/:year/:month/:day/:slug', async (ctx, next) => {
+    let {
+      day,
+      month,
+      slug,
+      year,
+    } = ctx.params
+
+    let dayIsValid = parseInt(day) && (day.length === 2)
+    let monthIsValid = parseInt(month) && (month.length === 2)
+    let yearIsValid = parseInt(year) && (year.length === 4)
+
+    if (dayIsValid && monthIsValid && yearIsValid) {
+      ctx.status = 301
+      return await ctx.redirect(`/blog/${slug}`)
+    }
+
+    await next()
+  })
+
+  // Permanent Static Redirects
+  router.all('/blogs', async (ctx, next) => {
     ctx.status = 301
     await ctx.redirect(`/blog`)
   })
 
-  router.get('/fuel-rats-lexicon', async (ctx, next) => {
-    ctx.status = 301
-    await ctx.redirect(`https://confluence.fuelrats.com/pages/viewpage.action?pageId=3637257`)
-  })
-
-  router.get('/get-help', async (ctx, next) => {
+  router.all('/get-help', async (ctx, next) => {
     ctx.status = 301
     await ctx.redirect(`/i-need-fuel`)
   })
 
-  router.get('/privacy-policy', async (ctx, next) => {
+  router.all('/fuel-rats-lexicon', async (ctx, next) => {
+    ctx.status = 301
+    await ctx.redirect(`https://confluence.fuelrats.com/pages/viewpage.action?pageId=3637257`)
+  })
+
+  // Temporary Redirects
+  router.all('/privacy-policy', async (ctx, next) => {
     ctx.status = 307
     await ctx.redirect(`https://confluence.fuelrats.com/display/FRKB/Privacy+Policy`)
   })
 
-  router.get('/terms-of-service', async (ctx, next) => {
+  router.all('/terms-of-service', async (ctx, next) => {
     ctx.status = 307
     await ctx.redirect(`https://confluence.fuelrats.com/display/FRKB/Terms+of+Service`)
   })
 
-  router.get('/code-of-conduct', async (ctx, next) => {
+  router.all('/code-of-conduct', async (ctx, next) => {
     ctx.status = 307
     await ctx.redirect(`https://confluence.fuelrats.com/display/FRKB/Code+of+Conduct`)
   })
@@ -125,62 +148,6 @@ module.exports = function (nextjs, koa, config) {
   router.get(['/paperwork/:id', '/paperwork/:id/view'], async (ctx, next) => {
     await nextjs.render(ctx.request, ctx.res, '/paperwork/view', Object.assign({}, ctx.query, ctx.params))
     ctx.respond = false
-  })
-
-
-
-
-
-  /******************************************************************************\
-    Redirects
-  \******************************************************************************/
-
-  // Legacy Wordpress permalinks
-  // e.g. /2017/09/07/universal-service-a-fuel-rats-thargoid-cartoon
-  router.get('/:year/:month/:day/:slug', async (ctx, next) => {
-    let {
-      day,
-      month,
-      slug,
-      year,
-    } = ctx.params
-
-    let dayIsValid = parseInt(day) && (day.length === 2)
-    let monthIsValid = parseInt(month) && (month.length === 2)
-    let yearIsValid = parseInt(year) && (year.length === 4)
-
-    if (dayIsValid && monthIsValid && yearIsValid) {
-      ctx.status = 301
-      return await ctx.redirect(`/blog/${slug}`)
-    }
-
-    await next()
-  })
-
-  // Legacy blog list route
-  router.get('/blogs', async (ctx, next) => {
-    ctx.status = 301
-    await ctx.redirect(`/blog`)
-  })
-
-  router.get('/fuel-rats-lexicon', async (ctx, next) => {
-    ctx.status = 301
-    await ctx.redirect(`https://confluence.fuelrats.com/pages/viewpage.action?pageId=3637257`)
-  })
-
-  router.get('/get-help', async (ctx, next) => {
-    ctx.status = 301
-    await ctx.redirect(`/i-need-fuel`)
-  })
-
-  router.get('/privacy-policy', async (ctx, next) => {
-    ctx.status = 307
-    await ctx.redirect(`https://confluence.fuelrats.com/display/FRKB/Privacy+Policy`)
-  })
-
-  router.get('/terms-of-service', async (ctx, next) => {
-    ctx.status = 307
-    await ctx.redirect(`https://confluence.fuelrats.com/display/FRKB/Terms+of+Service`)
   })
 
 
