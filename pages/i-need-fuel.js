@@ -66,7 +66,7 @@ const INeedFuel = () => (
 
         <br />
 
-        <small>By connecting to our IRC and using our services, you agree to our <Link href="/terms-of-service"><a>Terms of Service</a></Link> and <Link href="/privacy-policy"><a>Privacy Policy</a></Link>.</small>
+        <small>By connecting to our IRC and using our services, you agree to our <a href="http://t.fuelr.at/tos">Terms of Service</a> and <a href="http://t.fuelr.at/privacy">Privacy Policy</a>.</small>
       </div>
     </div>
   </div>
