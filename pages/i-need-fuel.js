@@ -1,10 +1,3 @@
-// Module imports
-import Link from 'next/link'
-
-
-
-
-
 // Component imports
 import Page from '../components/Page'
 
