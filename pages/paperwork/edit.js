@@ -309,7 +309,8 @@ class Paperwork extends Component {
                   id="codeRed-no"
                   name="codeRed"
                   onChange={this.handleChange}
-                  type="radio" /> <label htmlFor="codeRed-no">No</label>
+                  type="radio"
+                  value="false" /> <label htmlFor="codeRed-no">No</label>
               </div>
             </fieldset>
 
