@@ -45,9 +45,10 @@ class Paperwork extends Component {
 
     this._bindMethods([
       'onSubmit',
-      'handleAttributeFieldChange',
       'handleChange',
+      'handleFirstLimpetChange',
       'handleRatsChange',
+      'handleSystemChange',
     ])
 
     this.state = {
@@ -56,26 +57,6 @@ class Paperwork extends Component {
       rescue: null,
       system: null,
     }
-  }
-
-  handleAttributeFieldChange(value, name) {
-    const {
-      rescue,
-    } = this.state
-    const newState = { ...this.state }
-
-    if (value.length && (value[0].id !== rescue.attributes[name])) {
-      [newState[name]] = value
-      newState.rescue.attributes[name] = value[0].id
-    } else if (!value.length && rescue.attributes[name]) {
-      newState[name] = null
-      newState.rescue.attributes[name] = null
-    } else {
-      return
-    }
-
-    this.setState(newState)
-    this.dirtyFields.add(name)
   }
 
   handleChange (event) {
@@ -107,6 +88,43 @@ class Paperwork extends Component {
     this.dirtyFields.add(attribute)
 
     this.setState(newState)
+  }
+
+
+  handleFirstLimpetChange(value) {
+    const {
+      rescue,
+    } = this.state
+    const newState = { ...this.state }
+
+    if (value.length && (value[0].id !== rescue.attributes.firstLimpetId)) {
+      [newState.firstLimpetId] = value
+      newState.rescue.attributes.firstLimpetId = value[0].id
+    } else if (!value.length && rescue.attributes.firstLimpetId) {
+      newState.firstLimpetId = null
+      newState.rescue.attributes.firstLimpetId = null
+    }
+
+    this.setState(newState)
+    this.dirtyFields.add('firstLimpetId')
+  }
+
+  handleSystemChange(value) {
+    const {
+      rescue,
+    } = this.state
+    const newState = { ...this.state }
+
+    if (value.length && (value[0].value !== rescue.attributes.system)) {
+      [newState.system] = value
+      newState.rescue.attributes.system = value[0].value
+    } else if (!value.length && rescue.attributes.system) {
+      newState.system = null
+      newState.rescue.attributes.system = null
+    }
+
+    this.setState(newState)
+    this.dirtyFields.add('system')
   }
 
   handleRatsChange (value) {
@@ -183,6 +201,8 @@ class Paperwork extends Component {
     if (submitting) {
       classes.push('loading', 'force')
     }
+
+    const ratNameTemplate = rat => `${rat.attributes.name} [${rat.attributes.platform.toUpperCase()}]`
 
     return (
       <div className="page-wrapper">
@@ -310,9 +330,9 @@ class Paperwork extends Component {
                 data-platform={rescue.attributes.platform}
                 disabled={submitting || retrieving}
                 name="rats"
-                onChange={this.handleAttributeFieldChange}
+                onChange={this.handleRatsChange}
                 value={rats}
-                valueProp={rat => `${rat.attributes.name} [${rat.attributes.platform.toUpperCase()}]`} />
+                valueProp={ratNameTemplate} />
             </fieldset>
 
             <fieldset>
@@ -322,10 +342,10 @@ class Paperwork extends Component {
                 data-single
                 disabled={submitting || retrieving}
                 name="firstLimpetId"
-                onChange={this.handleAttributeFieldChange}
+                onChange={this.handleFirstLimpetChange}
                 options={rats}
                 value={firstLimpetId}
-                valueProp={rat => `${rat.attributes.name} [${rat.attributes.platform.toUpperCase()}]`} />
+                valueProp={ratNameTemplate} />
             </fieldset>
 
             <fieldset>
