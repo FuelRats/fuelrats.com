@@ -1,10 +1,3 @@
-// Module imports
-import Link from 'next/link'
-
-
-
-
-
 // Component imports
 import Component from '../components/Component'
 import Page from '../components/Page'
@@ -199,7 +192,7 @@ class Register extends Component {
           </fieldset>
 
           <fieldset data-name="Agreements">
-            <p>By creating an account I agree that I have read and agree to the <Link href="/terms-of-service"><a>Terms of Service</a></Link> and the <Link href="/privacy-policy"><a>Privacy Policy</a></Link>, and that I am 13 years of age or older.</p>
+            <p>By creating an account I agree that I have read and agree to the <a href="http://t.fuelr.at/tos">Terms of Service</a> and <a href="http://t.fuelr.at/privacy">Privacy Policy</a>, and that I am 13 years of age or older.</p>
           </fieldset>
 
           <menu type="toolbar">
