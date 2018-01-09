@@ -74,7 +74,7 @@ export default class TagsInputComponent extends React.Component {
 
   componentDidUpdate (prevProps, prevState) {
     if (this.props.onChange && (prevState.tags !== this.state.tags)) {
-      this.props.onChange(this.state.tags)
+      this.props.onChange(this.state.tags, this.props.name)
     }
   }
 
