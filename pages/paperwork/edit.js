@@ -32,8 +32,9 @@ class Paperwork extends Component {
   componentWillReceiveProps (nextProps) {
     if (this.props.rescue !== nextProps.rescue) {
       this.setState({
-        firstLimpet: nextProps.firstLimpet,
+        firstLimpetId: nextProps.firstLimpetId,
         rats: nextProps.rats,
+        system: { value: nextProps.rescue.attributes.system },
         rescue: nextProps.rescue,
       })
     }
@@ -51,9 +52,10 @@ class Paperwork extends Component {
     ])
 
     this.state = {
-      firstLimpet: null,
+      firstLimpetId: null,
       rats: null,
       rescue: null,
+      system: null,
     }
   }
 
@@ -78,7 +80,7 @@ class Paperwork extends Component {
     newState.rescue.attributes[attribute] = value
 
     if (attribute === 'platform') {
-      newState.firstLimpet = null
+      newState.firstLimpetId = null
       newState.rats = []
       newState.rescue.attributes.firstLimpetId = null
     }
@@ -88,21 +90,41 @@ class Paperwork extends Component {
     this.setState(newState)
   }
 
-  handleFirstLimpetChange (value) {
-    const originalFirstLimpetId = this.props.rescue.attributes.firstLimpetId
 
-    const isDifferent = value.length && (value[0].id !== originalFirstLimpetId)
-    const isRemoved = !value.length && (originalFirstLimpetId !== null)
+  handleFirstLimpetChange(value) {
+    const {
+      rescue,
+    } = this.state
+    const newState = { ...this.state }
 
-    if (isDifferent || isRemoved) {
-      const newState = Object.assign({}, this.state)
-
-      newState.firstLimpet = isRemoved ? null : value[0]
-      newState.rescue.attributes.firstLimpetId = isRemoved ? null : value[0].id
-
-      this.setState(newState)
-      this.dirtyFields.add('firstLimpetId')
+    if (value.length && (value[0].id !== rescue.attributes.firstLimpetId)) {
+      [newState.firstLimpetId] = value
+      newState.rescue.attributes.firstLimpetId = value[0].id
+    } else if (!value.length && rescue.attributes.firstLimpetId) {
+      newState.firstLimpetId = null
+      newState.rescue.attributes.firstLimpetId = null
     }
+
+    this.setState(newState)
+    this.dirtyFields.add('firstLimpetId')
+  }
+
+  handleSystemChange(value) {
+    const {
+      rescue,
+    } = this.state
+    const newState = { ...this.state }
+
+    if (value.length && (value[0].value !== rescue.attributes.system)) {
+      [newState.system] = value
+      newState.rescue.attributes.system = value[0].value
+    } else if (!value.length && rescue.attributes.system) {
+      newState.system = null
+      newState.rescue.attributes.system = null
+    }
+
+    this.setState(newState)
+    this.dirtyFields.add('system')
   }
 
   handleRatsChange (value) {
@@ -115,29 +137,13 @@ class Paperwork extends Component {
       newState.rats = value
 
       if (!value.find(rat => newState.rescue.attributes.firstLimpetId === rat.id)) {
-        newState.firstLimpet = null
+        newState.firstLimpetId = null
         newState.rescue.attributes.firstLimpetId = null
       }
 
       this.setState(newState)
       this.dirtyFields.add('rats')
     }
-  }
-
-  handleSystemChange (value) {
-    const { rescue } = this.state
-    const newState = { ...this.state }
-
-    if (value.length && (value[0].value !== rescue.attributes.system)) {
-      newState.rescue.attributes.system = value[0].value
-    } else if (!value.length && rescue.attributes.system) {
-      newState.rescue.attributes.system = null
-    } else {
-      return
-    }
-
-    this.setState(newState)
-    this.dirtyFields.add('system')
   }
 
   async onSubmit (event) {
@@ -184,7 +190,8 @@ class Paperwork extends Component {
       submitting,
     } = this.props
     const {
-      firstLimpet,
+      firstLimpetId,
+      system,
       rats,
       rescue,
     } = this.state
@@ -194,6 +201,8 @@ class Paperwork extends Component {
     if (submitting) {
       classes.push('loading', 'force')
     }
+
+    const ratNameTemplate = rat => `${rat.attributes.name} [${rat.attributes.platform.toUpperCase()}]`
 
     return (
       <div className="page-wrapper">
@@ -309,7 +318,8 @@ class Paperwork extends Component {
                   id="codeRed-no"
                   name="codeRed"
                   onChange={this.handleChange}
-                  type="radio" /> <label htmlFor="codeRed-no">No</label>
+                  type="radio"
+                  value="false" /> <label htmlFor="codeRed-no">No</label>
               </div>
             </fieldset>
 
@@ -322,20 +332,20 @@ class Paperwork extends Component {
                 name="rats"
                 onChange={this.handleRatsChange}
                 value={rats}
-                valueProp="attributes.name" />
+                valueProp={ratNameTemplate} />
             </fieldset>
 
             <fieldset>
-              <label htmlFor="firstLimpet">Who fired the first limpet?</label>
+              <label htmlFor="firstLimpetId">Who fired the first limpet?</label>
 
               <FirstLimpetInput
                 data-single
                 disabled={submitting || retrieving}
-                name="firstLimpet"
+                name="firstLimpetId"
                 onChange={this.handleFirstLimpetChange}
                 options={rats}
-                value={firstLimpet}
-                valueProp="attributes.name" />
+                value={firstLimpetId}
+                valueProp={ratNameTemplate} />
             </fieldset>
 
             <fieldset>
@@ -347,7 +357,7 @@ class Paperwork extends Component {
                 name="system"
                 onChange={this.handleSystemChange}
                 data-single
-                value={(rescue && rescue.attributes) ? rescue.attributes.system : null} />
+                value={system} />
             </fieldset>
 
             <fieldset>
@@ -441,7 +451,7 @@ const mapDispatchToProps = ['submitPaperwork', 'retrievePaperwork']
 const mapStateToProps = state => {
   const { paperwork } = state
   const { rescueId } = paperwork
-  let firstLimpet = []
+  let firstLimpetId = []
   let rats = []
   let rescue = null
 
@@ -451,7 +461,7 @@ const mapStateToProps = state => {
 
   if (rescue) {
     if (rescue.relationships.firstLimpet.data) {
-      firstLimpet = state.rats.rats.filter(rat => rescue.relationships.firstLimpet.data.id === rat.id)
+      firstLimpetId = state.rats.rats.filter(rat => rescue.relationships.firstLimpet.data.id === rat.id)
     }
 
     rats = state.rats.rats
@@ -464,7 +474,7 @@ const mapStateToProps = state => {
   }
 
   return Object.assign({
-    firstLimpet,
+    firstLimpetId,
     rats,
     rescue,
   }, paperwork)

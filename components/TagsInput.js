@@ -190,10 +190,18 @@ export default class TagsInputComponent extends React.Component {
   getValue (option) {
     let value = option
 
-    for (const key of this.valueProp.split('.')) {
-      value = value[key]
+    switch (typeof this.valueProp) {
+      case 'function':
+        value = this.valueProp(option)
+        break
+      case 'string':
+        for (const key of this.valueProp.split('.')) {
+          value = value[key]
+        }
+        break
+      default:
+        throw new TypeError('valueProp must be either a string pointer or function.')
     }
-
     return value
   }
 
