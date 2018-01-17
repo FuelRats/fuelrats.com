@@ -192,4 +192,19 @@
       width: calc(100% - 4rem);
     }
   }
+
+  .about-actions {
+    .button.link {
+      padding: 0 0 1rem 0;
+      width: calc(100% - 4rem);
+      
+      &:focus {
+        color: $white;
+      }
+      
+      &:hover {
+        color: $red;
+      }
+    }
+  }
 }
