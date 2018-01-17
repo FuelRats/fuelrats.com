@@ -1,0 +1,46 @@
+.page.acknowledgements {
+
+  .credit-section {
+    background: rgba(127,127,127, .1);
+    padding: 1rem;
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    p {
+      margin-left: 2em;
+    }
+
+    @media screen and (max-width: 1040px) {
+      flex-direction: column;
+    }
+  }
+
+  .brand-image {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    flex-shrink: 0;
+    height: 125px;
+    width: 400px;
+
+    &.atlassian-brand {
+      background-image: url(/static/images/brandlogos/atlassian.png);
+      
+    }
+
+    &.statuspage-brand {
+      background-image: url(/static/images/brandlogos/statuspage.png);
+    }
+
+    &.jetbrains-brand {
+      background-image: url(/static/images/brandlogos/jetbrains.png);
+      background-size: 55%;
+    }
+
+    &.slack-brand {
+      background-image: url(/static/images/brandlogos/slack.png);
+    }
+  }
+}
