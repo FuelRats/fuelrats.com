@@ -17,19 +17,19 @@ import Nav from './Nav'
 const Header = (props) => {
   const {
     loggedIn,
-    isServer,
-    path,
+    //isServer,
+    //path,
   } = props
 
-  const getHelpClasses = ['get-help']
+  /*const getHelpClasses = ['get-help']
 
   if (isServer) {
     getHelpClasses.push('hide')
   }
 
-  if (!/(^\/i-need-fuel|\/$)/.test(path)) {
+  if (!/(^\/i-need-fuel|$)/.test(path)) {
     getHelpClasses.push('show')
-  }
+  }*/
 
   return (
     <div id="header-container">
@@ -57,13 +57,18 @@ const Header = (props) => {
             </Link>
           )}
 
-          <div className={getHelpClasses.join(' ')}>
-            <Link href="/i-need-fuel">
-              <a className="button">
-                Get Help
-              </a>
-            </Link>
-          </div>
+          <Link href="/i-need-fuel">
+            <a className="button">
+              Get Help
+            </a>
+          </Link>
+        </div>
+        <div className="about-actions">
+          <Link href="/acknowledgements">
+            <a className="button link">
+              Acknowledgements
+            </a>
+          </Link>
         </div>
       </header>
     </div>
