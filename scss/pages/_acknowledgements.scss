@@ -15,6 +15,16 @@
     @media screen and (max-width: 1040px) {
       flex-direction: column;
     }
+
+    @media screen and (max-width: 500px) {
+      a {
+        width: calc(100% - 4rem);
+      }
+
+      .brand-image {
+        width: 100%;
+      }
+    }
   }
 
   .brand-image {
