@@ -8,7 +8,7 @@ import React from 'react'
 
 // Constants
 const links = {
-  Blog: {
+  News: {
     href: '/blog/all',
     as: '/blog',
   },
@@ -18,6 +18,11 @@ const links = {
   Leaderboard: {
     href: '/leaderboard',
   },
+  Stories, Art, Toons: {
+    href: '/blog/category/138',
+    as: '/blog/category/138',
+  },
+  
 }
 
 
