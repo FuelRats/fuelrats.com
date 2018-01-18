@@ -121,7 +121,7 @@ class UserMenu extends Component {
           <button
             className="login"
             onClick={this.showLogin}>
-            Login
+            Rat Login
           </button>
         )}
       </div>
@@ -133,7 +133,7 @@ class UserMenu extends Component {
       body: (<LoginDialog />),
       closeIsVisible: true,
       menuIsVisible: false,
-      title: 'Login',
+      title: 'Rat Login',
     })
   }
 }

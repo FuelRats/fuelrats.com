@@ -137,7 +137,7 @@ class Blogs extends Component {
       this._retrieveBlogs({
         author: nextProps.author,
         category: nextProps.category,
-        page,
+        page: nextProps.page,
       })
     }
   }
