@@ -121,7 +121,7 @@ class UserMenu extends Component {
           <button
             className="login"
             onClick={this.showLogin}>
-            Login
+            Rat Login
           </button>
         )}
       </div>
