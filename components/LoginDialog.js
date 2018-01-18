@@ -81,7 +81,7 @@ class LoginDialog extends Component {
                 Router.push('/register')
               }}
               type="button">
-              Register
+              Become a Rat
             </button>
           </div>
 
