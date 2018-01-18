@@ -33,7 +33,7 @@ class Index extends React.Component {
         body: (<LoginDialog />),
         closeIsVisible: true,
         menuIsVisible: false,
-        title: 'Login',
+        title: 'Rat Login',
       })
     }
   }
