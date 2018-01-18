@@ -4,28 +4,22 @@ import React from 'react'
 
 
 
-
-
 // Constants
 const links = {
-Blog: {
-href: '/blog/all',
-as: '/blog',
-},
-Statistics: {
-href: '/statistics',
-},
-Leaderboard: {
-href: '/leaderboard',
-},
-'Stories, Art, & Toons:' {
-href: '/blog/category/138',
-},
-
+  Blog: {
+    href: '/blog/all',
+    as: '/blog',
+  },
+  Statistics: {
+    href: '/statistics',
+  },
+  Leaderboard: {
+    href: '/leaderboard',
+  },
+  'Stories, Art, & Toons:' {
+    href: '/blog/category/138',
+  },
 }
-
-
-
 
 
 export default () => {
