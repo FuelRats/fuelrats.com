@@ -52,7 +52,7 @@ const Header = (props) => {
           {!loggedIn && (
             <Link href="/register">
               <a className="button secondary">
-                Join Us
+                Become a Rat
               </a>
             </Link>
           )}
