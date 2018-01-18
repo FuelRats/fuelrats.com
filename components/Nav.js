@@ -16,7 +16,7 @@ const links = {
   Leaderboard: {
     href: '/leaderboard',
   },
-  'Stories, Art, & Toons:' {
+  'Stories, Art, & Toons': {
     href: '/blog/category/138',
   },
 }
