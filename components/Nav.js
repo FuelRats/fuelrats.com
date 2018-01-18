@@ -4,8 +4,6 @@ import React from 'react'
 
 
 
-
-
 // Constants
 const links = {
   Blog: {
@@ -18,10 +16,10 @@ const links = {
   Leaderboard: {
     href: '/leaderboard',
   },
+  'Stories, Art, & Toons': {
+    href: '/blog/category/138',
+  },
 }
-
-
-
 
 
 export default () => {
