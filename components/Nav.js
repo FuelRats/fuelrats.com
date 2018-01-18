@@ -8,21 +8,20 @@ import React from 'react'
 
 // Constants
 const links = {
-  News: {
-    href: '/blog/all',
-    as: '/blog',
-  },
-  Statistics: {
-    href: '/statistics',
-  },
-  Leaderboard: {
-    href: '/leaderboard',
-  },
-  Stories, Art, Toons: {
-    href: '/blog/category/138',
-    as: '/blog/category/138',
-  },
-  
+Blog: {
+href: '/blog/all',
+as: '/blog',
+},
+Statistics: {
+href: '/statistics',
+},
+Leaderboard: {
+href: '/leaderboard',
+},
+'Stories, Art, & Toons:' {
+href: '/blog/category/138',
+},
+
 }
 
 
