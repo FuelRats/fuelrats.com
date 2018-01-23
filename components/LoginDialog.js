@@ -64,7 +64,7 @@ class LoginDialog extends Component {
 
     return (
       <form onSubmit={this.onSubmit}>
-        {error && (
+        {error && !this.props.loggingIn && (
           <ApiErrorDisplay
             error={error}
             messages={[
