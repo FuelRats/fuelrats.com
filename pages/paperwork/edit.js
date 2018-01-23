@@ -119,7 +119,7 @@ class Paperwork extends Component {
 
     if (value.length && (value[0].value !== rescue.attributes.system)) {
       [newState.system] = value
-      newState.rescue.attributes.system = value[0].value
+      newState.rescue.attributes.system = value[0].value.toUpperCase()
     } else if (!value.length && rescue.attributes.system) {
       newState.system = null
       newState.rescue.attributes.system = null
@@ -187,7 +187,7 @@ class Paperwork extends Component {
     this.dirtyFields.clear()
 
     /* eslint-disable no-global-assign, no-restricted-globals */
-    //location = `/paperwork/${rescue.id}`
+    location = `/paperwork/${rescue.id}`
     /* eslint-enable */
   }
 
