@@ -1,4 +1,5 @@
 // Component imports
+import ApiErrorDisplay from '../../components/ApiErrorDisplay'
 import Component from '../../components/Component'
 import Page from '../../components/Page'
 import FirstLimpetInput from '../../components/FirstLimpetInput'
@@ -52,6 +53,7 @@ class Paperwork extends Component {
     ])
 
     this.state = {
+      error: null,
       firstLimpetId: null,
       rats: null,
       rescue: null,
@@ -175,12 +177,17 @@ class Paperwork extends Component {
       }
     }
 
-    await this.props.submitPaperwork(rescue.id, rescueUpdates, ratUpdates)
+    const error = await this.props.submitPaperwork(rescue.id, rescueUpdates, ratUpdates)
+
+    if (error) {
+      this.setState({ error })
+      return
+    }
 
     this.dirtyFields.clear()
 
     /* eslint-disable no-global-assign, no-restricted-globals */
-    location = `/paperwork/${rescue.id}`
+    //location = `/paperwork/${rescue.id}`
     /* eslint-enable */
   }
 
@@ -190,6 +197,7 @@ class Paperwork extends Component {
       submitting,
     } = this.props
     const {
+      error,
       firstLimpetId,
       system,
       rats,
@@ -209,6 +217,18 @@ class Paperwork extends Component {
         <header className="page-header">
           <h1>{title}</h1>
         </header>
+
+        {(error && !submitting) && (
+          <ApiErrorDisplay
+            error={error}
+            messages={[
+              [422, 'Invalid values found for the following attributes:'],
+              ['/data/attributes/outcome', 'Outcome.'],
+              ['/data/attributes/platform', 'Platform.'],
+              ['/data/attributes/system', 'System.'],
+              ['/data/attributes/notes', 'Notes.'],
+            ]} />
+        )}
 
         {retrieving && (
           <div className="loading page-content" />
