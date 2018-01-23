@@ -1,4 +1,4 @@
-// Module imp
+// Module imports
 import Cookies from 'js-cookie'
 import fetch from 'isomorphic-fetch'
 import LocalForage from 'localforage'
@@ -11,6 +11,7 @@ import Router from 'next/router'
 // Component imports
 import actionTypes from '../actionTypes'
 import initialState from '../initialState'
+import { ApiError } from '../errors'
 
 
 
@@ -27,7 +28,7 @@ export const addNickname = (nickname, password) => async dispatch => {
   try {
     const token = await LocalForage.getItem('access_token')
 
-    await fetch('/api/nicknames', {
+    let response = await fetch('/api/nicknames', {
       body: JSON.stringify({
         nickname,
         password,
@@ -39,16 +40,24 @@ export const addNickname = (nickname, password) => async dispatch => {
       method: 'post',
     })
 
+    response = await response.json()
+
+    if (response.errors) {
+      throw new ApiError(response)
+    }
+
     dispatch({
       status: 'success',
       type: actionTypes.ADD_NICKNAME,
       payload: nickname,
     })
+    return null
   } catch (error) {
     dispatch({
       status: 'error',
       type: actionTypes.ADD_NICKNAME,
     })
+    return error
   }
 }
 
@@ -76,6 +85,10 @@ export const getUser = () => async dispatch => {
 
     response = await response.json()
 
+    if (response.errors) {
+      throw new ApiError(response)
+    }
+
     const user = { ...response.data }
 
     let userPreferences = null
@@ -102,6 +115,7 @@ export const getUser = () => async dispatch => {
       type: actionTypes.GET_USER,
       payload: response,
     })
+    return null
   } catch (error) {
     Cookies.remove('access_token')
 
@@ -119,6 +133,8 @@ export const getUser = () => async dispatch => {
     /* eslint-disable no-restricted-globals */
     Router.push(location.pathname === '/' ? '/' : `/?authenticate=true&destination=${encodeURIComponent(location.pathname.concat(location.search))}`)
     /* eslint-enable */
+
+    return error
   }
 }
 
@@ -143,15 +159,21 @@ export const updateUser = (user) => async dispatch => {
 
     response = await response.json()
 
+    if (response.errors) {
+      throw new ApiError(response)
+    }
+
     dispatch({
       status: 'success',
       type: actionTypes.UPDATE_USER,
       user: response.data,
     })
+    return null
   } catch (error) {
     dispatch({
       status: 'error',
       type: actionTypes.UPDATE_USER,
     })
+    return error
   }
 }

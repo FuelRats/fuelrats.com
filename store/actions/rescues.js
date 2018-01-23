@@ -9,6 +9,7 @@ import LocalForage from 'localforage'
 
 // Component imports
 import actionTypes from '../actionTypes'
+import { ApiError } from '../errors'
 
 
 
@@ -29,47 +30,62 @@ export const getRescues = () => async dispatch => {
 
     response = await response.json()
 
+    if (response.errors) {
+      throw new ApiError(response)
+    }
+
     dispatch({
       rescues: response.data,
       status: 'success',
       total: response.meta.total,
       type: actionTypes.GET_RESCUES,
     })
+    return null
   } catch (error) {
     dispatch({
       payload: error,
       status: 'error',
       type: actionTypes.GET_RESCUES,
     })
+    return error
   }
 }
 
-export const getRescuesByRat = ratId => dispatch => {
+export const getRescuesByRat = ratId => async dispatch => {
   dispatch({
     rat: ratId,
     type: actionTypes.GET_RESCUES,
   })
 
-  return fetch(`/api/rescues?rats=${ratId}`)
-    .then(response => response.json())
-    .then(response => {
-      dispatch({
-        rat: response.data,
-        status: 'success',
-        type: actionTypes.GET_RESCUES,
-      })
+  try {
+    let response = await fetch(`/api/rescues?rats=${ratId}`)
+    response = await response.json()
+
+    if (response.errors) {
+      throw new ApiError(response)
+    }
+
+    dispatch({
+      rat: response.data,
+      status: 'success',
+      type: actionTypes.GET_RESCUES,
     })
-    .catch(error => {
-      dispatch({
-        payload: error,
-        rat: ratId,
-        status: 'error',
-        type: actionTypes.GET_RESCUES,
-      })
+
+    return null
+  } catch (error) {
+    dispatch({
+      payload: error,
+      rat: ratId,
+      status: 'error',
+      type: actionTypes.GET_RESCUES,
     })
+
+    return error
+  }
 }
 
 export const getRescuesForCMDRs = CMDRs => async dispatch => {
+  // Note. Not fit for use.
   for (const CMDRId of CMDRs) {
     dispatch({
       CMDR: CMDRId,
@@ -79,16 +95,16 @@ export const getRescuesForCMDRs = CMDRs => async dispatch => {
     try {
       const responses = await Promise.all([
         // Assists
-        fetch(`/api/rescues?successful=true&rats=${CMDRId}`),
+        fetch(`/api/rescues?outcome=success&rats=${CMDRId}`).then(response => response.json()),
 
         // Failures
-        fetch(`/api/rescues?successful=false&rats=${CMDRId}`),
+        fetch(`/api/rescues?outcome=failure&rats=${CMDRId}`).then(response => response.json()),
 
         // First Limpets
-        fetch(`/api/rescues?successful=true&firstLimpet=${CMDRId}`),
+        fetch(`/api/rescues?outcome=success&firstLimpet=${CMDRId}`).then(response => response.json()),
 
         // Rescues
-        fetch(`/api/rescues?rats=${CMDRId}`),
+        fetch(`/api/rescues?rats=${CMDRId}`).then(response => response.json()),
       ])
 
       for (let index = 0, { length } = responses; index < length; index++) {

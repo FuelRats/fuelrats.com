@@ -8,7 +8,7 @@ import LocalForage from 'localforage'
 
 // Component imports
 import actionTypes from '../actionTypes'
-
+import { ApiError } from '../errors'
 
 
 
@@ -28,17 +28,23 @@ export const checkDecalEligibility = () => async dispatch => {
     })
     response = await response.json()
 
+    if (response.errors) {
+      throw new ApiError(response)
+    }
+
     dispatch({
       payload: response,
       status: 'success',
       type: actionTypes.CHECK_DECAL_ELIGIBILITY,
     })
+    return null
   } catch (error) {
     dispatch({
       payload: error,
       status: 'error',
       type: actionTypes.CHECK_DECAL_ELIGIBILITY,
     })
+    return error
   }
 }
 
@@ -61,16 +67,22 @@ export const redeemDecal = () => async dispatch => {
     })
     response = await response.json()
 
+    if (response.errors) {
+      throw new ApiError(response)
+    }
+
     dispatch({
       payload: response,
       status: 'success',
       type: actionTypes.REDEEM_DECAL,
     })
+    return null
   } catch (error) {
     dispatch({
       payload: error,
       status: 'error',
       type: actionTypes.REDEEM_DECAL,
     })
+    return error
   }
 }

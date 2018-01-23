@@ -8,6 +8,7 @@ import LocalForage from 'localforage'
 
 // Component imports
 import actionTypes from '../actionTypes'
+import { ApiError } from '../errors'
 
 
 
@@ -26,8 +27,12 @@ export const retrievePaperwork = rescueId => async dispatch => {
     })
     response = await response.json()
 
+    if (response.errors) {
+      throw new ApiError(response)
+    }
+
     if (!response.data.length) {
-      throw Error('Rescue not found')
+      throw new Error('Rescue not found')
     }
 
     dispatch({
@@ -35,12 +40,14 @@ export const retrievePaperwork = rescueId => async dispatch => {
       status: 'success',
       type: actionTypes.RETRIEVE_PAPERWORK,
     })
+    return null
   } catch (error) {
     dispatch({
       payload: error,
       status: 'error',
       type: actionTypes.RETRIEVE_PAPERWORK,
     })
+    return error
   }
 }
 
@@ -63,6 +70,12 @@ export const submitPaperwork = (rescueId, rescue, rats) => async dispatch => {
       method: 'put',
     })
 
+    response = await response.json()
+
+    if (response.errors) {
+      throw new ApiError(response)
+    }
+
     if (rats) {
       if (rats.added.length) {
         response = await fetch(`/api/rescues/assign/${rescueId}`, {
@@ -73,6 +86,12 @@ export const submitPaperwork = (rescueId, rescue, rats) => async dispatch => {
           }),
           method: 'put',
         })
+      }
+
+      response = await response.json()
+
+      if (response.errors) {
+        throw new ApiError(response)
       }
 
       if (rats.removed.length) {
@@ -89,16 +108,22 @@ export const submitPaperwork = (rescueId, rescue, rats) => async dispatch => {
 
     response = await response.json()
 
+    if (response.errors) {
+      throw new ApiError(response)
+    }
+
     dispatch({
       payload: response,
       status: 'success',
       type: actionTypes.SUBMIT_PAPERWORK,
     })
+    return null
   } catch (error) {
     dispatch({
       payload: error,
       status: 'error',
       type: actionTypes.SUBMIT_PAPERWORK,
     })
+    return error
   }
 }

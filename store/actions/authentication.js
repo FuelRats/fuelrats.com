@@ -10,6 +10,7 @@ import Router from 'next/router'
 
 // Component imports
 import actionTypes from '../actionTypes'
+import { ApiError } from '../errors'
 
 
 
@@ -34,17 +35,25 @@ export const changePassword = (currentPassword, newPassword) => async dispatch =
 
     response = await response.json()
 
+    if (response.errors) {
+      throw new ApiError(response)
+    }
+
     dispatch({
       status: 'success',
       type: actionTypes.CHANGE_PASSWORD,
       payload: response,
     })
+
+    return null
   } catch (error) {
     dispatch({
       payload: error,
       status: 'error',
       type: actionTypes.CHANGE_PASSWORD,
     })
+
+    return error
   }
 }
 
@@ -75,6 +84,10 @@ export const login = (email, password) => async dispatch => {
 
       response = await response.json()
 
+      if (response.errors) {
+        throw new ApiError(response)
+      }
+
       token = response.access_token
       await LocalForage.setItem('access_token', token)
       Cookies.set('access_token', token, { expires: 365 })
@@ -98,12 +111,14 @@ export const login = (email, password) => async dispatch => {
       location = searchParams.destination ? decodeURIComponent(searchParams.destination) : '/profile'
     }
     /* eslint-enable */
+    return null
   } catch (error) {
     dispatch({
       payload: error,
       status: 'error',
       type: actionTypes.LOGIN,
     })
+    return error
   }
 }
 
@@ -128,12 +143,14 @@ export const logout = () => async dispatch => {
     })
 
     Router.push('/')
+    return null
   } catch (error) {
     dispatch({
       payload: error,
       status: 'error',
       type: actionTypes.LOGOUT,
     })
+    return error
   }
 }
 
@@ -160,6 +177,13 @@ export const register = (email, password, name, platform, nickname, recaptcha) =
       method: 'post',
     })
 
+    if (!response.ok) {
+      const registerResponse = response.json()
+      if (registerResponse.errors) {
+        throw new ApiError(registerResponse)
+      }
+    }
+
     response = await fetch('/token', {
       body: JSON.stringify({
         grant_type: 'password',
@@ -174,6 +198,10 @@ export const register = (email, password, name, platform, nickname, recaptcha) =
 
     response = await response.json()
 
+    if (response.errors) {
+      throw new ApiError(response)
+    }
+
     await LocalForage.setItem('access_token', response.access_token)
     Cookies.set('access_token', response.access_token, { expires: 365 })
 
@@ -183,12 +211,14 @@ export const register = (email, password, name, platform, nickname, recaptcha) =
     })
 
     Router.push('/profile')
+    return null
   } catch (error) {
     dispatch({
       payload: error,
       status: 'error',
       type: actionTypes.REGISTER,
     })
+    return error
   }
 }
 
@@ -200,7 +230,7 @@ export const resetPassword = (password, token) => async dispatch => {
   dispatch({ type: actionTypes.RESET_PASSWORD })
 
   try {
-    const response = await fetch(`/api/reset/${token}`, {
+    let response = await fetch(`/api/reset/${token}`, {
       body: JSON.stringify({
         password,
       }),
@@ -210,21 +240,25 @@ export const resetPassword = (password, token) => async dispatch => {
       method: 'post',
     })
 
-    if (response.ok) {
-      return dispatch({
-        status: 'success',
-        type: actionTypes.RESET_PASSWORD,
-        payload: response,
-      })
+    response = response.json()
+
+    if (response.errors) {
+      throw new ApiError(response)
     }
 
-    throw new Error('Failed to reset password')
+    dispatch({
+      status: 'success',
+      type: actionTypes.RESET_PASSWORD,
+      payload: response,
+    })
+    return null
   } catch (error) {
-    return dispatch({
+    dispatch({
       payload: error,
       status: 'error',
       type: actionTypes.RESET_PASSWORD,
     })
+    return error
   }
 }
 
@@ -246,19 +280,28 @@ export const sendPasswordResetEmail = email => async dispatch => {
       method: 'post',
     })
 
+    window.console.log('HUH. ITSARESPONSE', response)
+
     response = await response.json()
+
+    if (response.errors) {
+      throw new ApiError(response)
+    }
 
     dispatch({
       status: 'success',
       type: actionTypes.SEND_PASSWORD_RESET_EMAIL,
       payload: response,
     })
+    return null
   } catch (error) {
     dispatch({
       payload: error,
       status: 'error',
       type: actionTypes.SEND_PASSWORD_RESET_EMAIL,
     })
+
+    return error
   }
 }
 
