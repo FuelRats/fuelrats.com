@@ -21,12 +21,12 @@ function getErrorMessages (error, messages) {
       switch (typeof condition) {
         case 'string':
           if (error.invalidFields.indexOf(condition) > -1) {
-            errorMessages.push(<span key={`message_${errorMessages.length}`}>{message}</span>)
+            errorMessages.push(<p key={`message_${errorMessages.length}`}>{message}</p>)
           }
           break
         case 'number':
           if (error.primaryError.status === condition) {
-            errorMessages.push(<span key={`message_${errorMessages.length}`}>{message}</span>)
+            errorMessages.push(<p key={`message_${errorMessages.length}`}>{message}</p>)
           }
           break
         default:
@@ -41,7 +41,7 @@ function getErrorMessages (error, messages) {
 
     return (
       <div>
-        <span>There was an error while processing your request. Please relay the information below to your closest techrat.</span>
+        <p>There was an error while processing your request. Please relay the information below to your closest Techrat.</p>
         <p>Error: {error.message} | ErrorIds: {errorIdString} | Sources: {invalidFieldString}.</p>
       </div>
     )
