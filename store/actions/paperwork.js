@@ -86,12 +86,11 @@ export const submitPaperwork = (rescueId, rescue, rats) => async dispatch => {
           }),
           method: 'put',
         })
-      }
+        response = await response.json()
 
-      response = await response.json()
-
-      if (response.errors) {
-        throw new ApiError(response)
+        if (response.errors) {
+          throw new ApiError(response)
+        }
       }
 
       if (rats.removed.length) {
@@ -103,13 +102,12 @@ export const submitPaperwork = (rescueId, rescue, rats) => async dispatch => {
           }),
           method: 'put',
         })
+        response = await response.json()
+
+        if (response.errors) {
+          throw new ApiError(response)
+        }
       }
-    }
-
-    response = await response.json()
-
-    if (response.errors) {
-      throw new ApiError(response)
     }
 
     dispatch({
