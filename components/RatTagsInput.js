@@ -25,8 +25,14 @@ export default class extends TagsInput {
   async search (query) {
     this.setState({ loading: true })
 
+    const queryParams = [
+      'limit=10',
+      this.props['data-platform'] ? `platform=${this.props['data-platform']}` : '',
+      `name.ilike=${query}%`,
+    ]
+
     if (query) {
-      const response = await fetch(`/api/rats?limit=10&platform=${this.props['data-platform']}&name.ilike=${query}%`)
+      const response = await fetch(`/api/rats?${queryParams.join('&')}`)
       const { data } = await response.json()
 
       if (!data.length) {
