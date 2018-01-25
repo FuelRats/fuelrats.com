@@ -3,6 +3,7 @@ import authentication from './authentication'
 import blogs from './blogs'
 import decals from './decals'
 import dialog from './dialog'
+import epics from './epics'
 import paperwork from './paperwork'
 import user from './user'
 import rats from './rats'
@@ -21,6 +22,7 @@ export default combineReducers({
   blogs,
   decals,
   dialog,
+  epics,
   paperwork,
   user,
   rats,
