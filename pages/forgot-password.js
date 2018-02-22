@@ -1,12 +1,12 @@
 // Component imports
 import Component from '../components/Component'
 import Page from '../components/Page'
+import ApiErrorDisplay from '../components/ApiErrorDisplay'
 
 
 
 
-
-// Component imports
+// Component constants
 const title = 'Forgot Password'
 
 
@@ -29,6 +29,7 @@ class ForgotPassword extends Component {
       email: '',
       submitted: false,
       submitting: false,
+      error: null,
     }
   }
 
@@ -39,12 +40,20 @@ class ForgotPassword extends Component {
 
     this.setState({ submitting: true })
 
-    await this.props.sendPasswordResetEmail(email)
-
-    this.setState({
-      submitted: true,
-      submitting: false,
-    })
+    const error = await this.props.sendPasswordResetEmail(email)
+    window.console.log(error)
+    if (error) {
+      this.setState({
+        submitting: false,
+        error,
+      })
+      this.props.clearErrors()
+    } else {
+      this.setState({
+        submitted: true,
+        submitting: false,
+      })
+    }
   }
 
   render () {
@@ -52,6 +61,7 @@ class ForgotPassword extends Component {
       email,
       submitted,
       submitting,
+      error,
     } = this.state
 
     return (
@@ -61,6 +71,11 @@ class ForgotPassword extends Component {
         </header>
 
         <div className="page-content">
+          {error && (
+            <ApiErrorDisplay
+              error={error} />
+          )}
+
           {!submitted && (
             <form onSubmit={this.onSubmit}>
               <fieldset>

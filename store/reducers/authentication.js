@@ -6,10 +6,15 @@ import initialState from '../initialState'
 
 
 export default function (state = initialState.authentication, action) {
-  switch (action.type) {
+  const {
+    status,
+    type,
+  } = action
+
+  switch (type) {
     case actionTypes.GET_USER:
     case actionTypes.LOGIN:
-      switch (action.status) {
+      switch (status) {
         case 'error':
           return Object.assign({}, state, {
             loggedIn: false,
@@ -28,15 +33,15 @@ export default function (state = initialState.authentication, action) {
             loggingIn: true,
           })
       }
-
     case actionTypes.LOGOUT:
-      if (action.status === 'success') {
+      if (status === 'success') {
         return Object.assign({}, state, {
           loggedIn: false,
         })
       }
-
+      break
     default:
-      return state
+      break
   }
+  return state
 }

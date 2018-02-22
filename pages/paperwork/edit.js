@@ -1,7 +1,9 @@
 // Component imports
+import ApiErrorDisplay from '../../components/ApiErrorDisplay'
 import Component from '../../components/Component'
-import Page from '../../components/Page'
 import FirstLimpetInput from '../../components/FirstLimpetInput'
+import Page from '../../components/Page'
+import RadioOptionsInput from '../../components/RadioOptionsInput'
 import RatTagsInput from '../../components/RatTagsInput'
 import SystemTagsInput from '../../components/SystemTagsInput'
 
@@ -45,13 +47,15 @@ class Paperwork extends Component {
 
     this._bindMethods([
       'onSubmit',
-      'handleChange',
+      'handleNotesChange',
+      'handleRadioOptionsChange',
       'handleFirstLimpetChange',
       'handleRatsChange',
       'handleSystemChange',
     ])
 
     this.state = {
+      error: null,
       firstLimpetId: null,
       rats: null,
       rescue: null,
@@ -59,17 +63,19 @@ class Paperwork extends Component {
     }
   }
 
-  handleChange (event) {
+  handleNotesChange (event) {
     const newState = Object.assign({}, this.state)
-    const {
-      checked,
-      name,
-      type,
-    } = event.target
-    const attribute = name
-    let { value } = event.target
 
-    value = type === 'checkbox' ? checked : value
+    newState.rescue.attributes.notes = event.target.value
+
+    this.dirtyFields.add('notes')
+    this.setState(newState)
+  }
+
+  handleRadioOptionsChange(option) {
+    const attribute = option.name
+    const newState = { ...this.state }
+    let { value } = option
 
     if (value === 'true') {
       value = true
@@ -86,10 +92,8 @@ class Paperwork extends Component {
     }
 
     this.dirtyFields.add(attribute)
-
     this.setState(newState)
   }
-
 
   handleFirstLimpetChange(value) {
     const {
@@ -105,8 +109,8 @@ class Paperwork extends Component {
       newState.rescue.attributes.firstLimpetId = null
     }
 
-    this.setState(newState)
     this.dirtyFields.add('firstLimpetId')
+    this.setState(newState)
   }
 
   handleSystemChange(value) {
@@ -117,14 +121,14 @@ class Paperwork extends Component {
 
     if (value.length && (value[0].value !== rescue.attributes.system)) {
       [newState.system] = value
-      newState.rescue.attributes.system = value[0].value
+      newState.rescue.attributes.system = value[0].value.toUpperCase()
     } else if (!value.length && rescue.attributes.system) {
       newState.system = null
       newState.rescue.attributes.system = null
     }
 
-    this.setState(newState)
     this.dirtyFields.add('system')
+    this.setState(newState)
   }
 
   handleRatsChange (value) {
@@ -175,7 +179,12 @@ class Paperwork extends Component {
       }
     }
 
-    await this.props.submitPaperwork(rescue.id, rescueUpdates, ratUpdates)
+    const error = await this.props.submitPaperwork(rescue.id, rescueUpdates, ratUpdates)
+
+    if (error) {
+      this.setState({ error })
+      return
+    }
 
     this.dirtyFields.clear()
 
@@ -190,6 +199,7 @@ class Paperwork extends Component {
       submitting,
     } = this.props
     const {
+      error,
       firstLimpetId,
       system,
       rats,
@@ -210,6 +220,18 @@ class Paperwork extends Component {
           <h1>{title}</h1>
         </header>
 
+        {(error && !submitting) && (
+          <ApiErrorDisplay
+            error={error}
+            messages={[
+              [422, 'Invalid values found for the following attributes:'],
+              ['/data/attributes/outcome', 'Outcome.'],
+              ['/data/attributes/platform', 'Platform.'],
+              ['/data/attributes/system', 'System.'],
+              ['/data/attributes/notes', 'Notes.'],
+            ]} />
+        )}
+
         {retrieving && (
           <div className="loading page-content" />
         )}
@@ -225,102 +247,80 @@ class Paperwork extends Component {
             className={classes.join(' ')}
             onSubmit={this.onSubmit}>
             <fieldset>
-              <label htmlFor="platform-pc">What platform was the rescue on?</label>
+              <label htmlFor="platform">What platform was the rescue on?</label>
 
-              <div className="option-group">
-                <input
-                  checked={rescue.attributes.platform === 'pc'}
-                  disabled={submitting || retrieving}
-                  id="platform-pc"
-                  name="platform"
-                  onChange={this.handleChange}
-                  type="radio"
-                  value="pc" /> <label htmlFor="platform-pc">PC</label>
-
-                <input
-                  checked={rescue.attributes.platform === 'xb'}
-                  disabled={submitting || retrieving}
-                  id="platform-xb"
-                  name="platform"
-                  onChange={this.handleChange}
-                  type="radio"
-                  value="xb" /> <label htmlFor="platform-xb">Xbox One</label>
-
-                <input
-                  checked={rescue.attributes.platform === 'ps'}
-                  disabled={submitting || retrieving}
-                  id="platform-ps"
-                  name="platform"
-                  onChange={this.handleChange}
-                  type="radio"
-                  value="ps" /> <label htmlFor="platform-ps">Playstation 4</label>
-              </div>
+              <RadioOptionsInput
+                disabled={submitting || retrieving}
+                className="platform"
+                name="platform"
+                id="platform"
+                value={rescue.attributes.platform}
+                onChange={this.handleRadioOptionsChange}
+                options={[
+                  {
+                    value: 'pc',
+                    displayValue: 'PC',
+                  },
+                  {
+                    value: 'xb',
+                    displayValue: 'Xbox',
+                  },
+                  {
+                    value: 'ps',
+                    displayValue: 'PS4',
+                  },
+                ]} />
             </fieldset>
 
             <fieldset>
               <label htmlFor="outcome-success">Was the rescue successful?</label>
 
-              <div className="option-group">
-                <input
-                  checked={!rescue.attributes.outcome || (rescue.attributes.outcome === 'success')}
-                  disabled={submitting || retrieving}
-                  id="outcome-success"
-                  name="outcome"
-                  onChange={this.handleChange}
-                  type="radio"
-                  value="success" /> <label htmlFor="outcome-success">Yes</label>
-
-                <input
-                  checked={rescue.attributes.outcome === 'failure'}
-                  disabled={submitting || retrieving}
-                  id="outcome-failure"
-                  name="outcome"
-                  onChange={this.handleChange}
-                  type="radio"
-                  value="failure" /> <label htmlFor="outcome-failure">No</label>
-
-                <input
-                  checked={rescue.attributes.outcome === 'other'}
-                  disabled={submitting || retrieving}
-                  id="outcome-other"
-                  name="outcome"
-                  onChange={this.handleChange}
-                  type="radio"
-                  value="other" /> <label htmlFor="outcome-other">Other</label>
-
-                <input
-                  checked={rescue.attributes.outcome === 'invalid'}
-                  disabled={submitting || retrieving}
-                  id="outcome-invalid"
-                  name="outcome"
-                  onChange={this.handleChange}
-                  type="radio"
-                  value="invalid" /> <label htmlFor="outcome-invalid">Invalid</label>
-              </div>
+              <RadioOptionsInput
+                disabled={submitting || retrieving}
+                className="outcome"
+                name="outcome"
+                id="outcome"
+                value={rescue.attributes.outcome}
+                onChange={this.handleRadioOptionsChange}
+                options={[
+                  {
+                    value: 'success',
+                    displayValue: 'Yes',
+                  },
+                  {
+                    value: 'failure',
+                    displayValue: 'No',
+                  },
+                  {
+                    value: 'invalid',
+                    displayValue: 'Invalid',
+                  },
+                  {
+                    value: 'other',
+                    displayValue: 'Other',
+                  },
+                ]} />
             </fieldset>
 
             <fieldset>
               <label htmlFor="codeRed-yes">Was it a code red?</label>
-
-              <div className="option-group">
-                <input
-                  checked={rescue.attributes.codeRed}
-                  disabled={submitting || retrieving}
-                  id="codeRed-yes"
-                  name="codeRed"
-                  onChange={this.handleChange}
-                  type="radio"
-                  value /> <label htmlFor="codeRed-yes">Yes</label>
-
-                <input
-                  checked={!rescue.attributes.codeRed}
-                  disabled={submitting || retrieving}
-                  id="codeRed-no"
-                  name="codeRed"
-                  onChange={this.handleChange}
-                  type="radio"
-                  value="false" /> <label htmlFor="codeRed-no">No</label>
-              </div>
+              <RadioOptionsInput
+                disabled={submitting || retrieving}
+                className="codeRed"
+                name="codeRed"
+                id="codeRed"
+                value={`${rescue.attributes.codeRed}`}
+                onChange={this.handleRadioOptionsChange}
+                options={[
+                  {
+                    value: 'true',
+                    displayValue: 'Yes',
+                  },
+                  {
+                    value: 'false',
+                    displayValue: 'No',
+                  },
+                ]} />
             </fieldset>
 
             <fieldset>
@@ -367,7 +367,7 @@ class Paperwork extends Component {
                 disabled={submitting || retrieving}
                 id="notes"
                 name="notes"
-                onChange={this.handleChange}
+                onChange={this.handleNotesChange}
                 value={rescue.attributes.notes} />
             </fieldset>
 

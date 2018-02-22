@@ -9,6 +9,7 @@ import LocalForage from 'localforage'
 
 // Component imports
 import actionTypes from '../actionTypes'
+import { ApiError } from '../errors'
 
 
 
@@ -37,11 +38,16 @@ export const createRat = (name, platform, userId) => async dispatch => {
 
     response = await response.json()
 
+    if (response.errors) {
+      throw new ApiError(response)
+    }
+
     dispatch({
       rat: response.data,
       status: 'success',
       type: actionTypes.CREATE_RAT,
     })
+    return null
   } catch (error) {
     dispatch({
       payload: error,
@@ -49,6 +55,7 @@ export const createRat = (name, platform, userId) => async dispatch => {
       status: 'error',
       type: actionTypes.CREATE_RAT,
     })
+    return error
   }
 }
 

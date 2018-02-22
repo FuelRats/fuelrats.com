@@ -19,6 +19,7 @@ import * as authenticationActions from './store/actions/authentication'
 import * as blogsActions from './store/actions/blogs'
 import * as decalsActions from './store/actions/decals'
 import * as dialogActions from './store/actions/dialog'
+import * as epicActions from './store/actions/epics'
 import * as paperworkActions from './store/actions/paperwork'
 import * as ratsActions from './store/actions/rats'
 import * as rescuesActions from './store/actions/rescues'
@@ -37,6 +38,7 @@ export const actions = Object.assign(
   blogsActions,
   decalsActions,
   dialogActions,
+  epicActions,
   paperworkActions,
   ratsActions,
   rescuesActions,

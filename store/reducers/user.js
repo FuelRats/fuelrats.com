@@ -17,7 +17,6 @@ export default function (state = initialState.user, action) {
       }
 
     case actionTypes.CREATE_RAT:
-    case actionTypes.GET_RAT:
       if (action.status === 'success') {
         return Object.assign({}, state, {
           relationships: {

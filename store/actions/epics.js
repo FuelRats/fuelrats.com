@@ -13,15 +13,14 @@ import { ApiError } from '../errors'
 
 
 
-export const checkDecalEligibility = () => async dispatch => {
-  try {
-    dispatch({
-      type: actionTypes.CHECK_DECAL_ELIGIBILITY,
-    })
 
+export const retrieveEpic = epicId => async dispatch => {
+  dispatch({ type: actionTypes.RETRIEVE_EPIC })
+
+  try {
     const token = await LocalForage.getItem('access_token')
 
-    let response = await fetch('/api/decals/check', {
+    let response = await fetch(`/api/epics/${epicId}`, {
       headers: new Headers({
         Authorization: `Bearer ${token}`,
       }),
@@ -32,17 +31,21 @@ export const checkDecalEligibility = () => async dispatch => {
       throw new ApiError(response)
     }
 
+    if (!response.data.length) {
+      throw new Error('Rescue not found')
+    }
+
     dispatch({
       payload: response,
       status: 'success',
-      type: actionTypes.CHECK_DECAL_ELIGIBILITY,
+      type: actionTypes.RETRIEVE_EPIC,
     })
     return null
   } catch (error) {
     dispatch({
       payload: error,
       status: 'error',
-      type: actionTypes.CHECK_DECAL_ELIGIBILITY,
+      type: actionTypes.RETRIEVE_EPIC,
     })
     return error
   }
@@ -52,19 +55,21 @@ export const checkDecalEligibility = () => async dispatch => {
 
 
 
-export const redeemDecal = () => async dispatch => {
-  try {
-    dispatch({
-      type: actionTypes.REDEEM_DECAL,
-    })
+export const createEpic = payload => async dispatch => {
+  dispatch({ type: actionTypes.CREATE_EPIC })
 
+  try {
     const token = await LocalForage.getItem('access_token')
 
-    let response = await fetch('/api/decals/redeem', {
+    let response = await fetch('/api/epics', {
+      body: JSON.stringify(payload),
       headers: new Headers({
         Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
       }),
+      method: 'post',
     })
+
     response = await response.json()
 
     if (response.errors) {
@@ -74,14 +79,14 @@ export const redeemDecal = () => async dispatch => {
     dispatch({
       payload: response,
       status: 'success',
-      type: actionTypes.REDEEM_DECAL,
+      type: actionTypes.CREATE_EPIC,
     })
     return null
   } catch (error) {
     dispatch({
       payload: error,
       status: 'error',
-      type: actionTypes.REDEEM_DECAL,
+      type: actionTypes.CREATE_EPIC,
     })
     return error
   }

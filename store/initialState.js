@@ -24,6 +24,12 @@ export default {
     title: null,
   },
 
+  epics: {
+    epics: [],
+    retrieving: false,
+    total: 0,
+  },
+
   paperwork: {
     rescueId: null,
     retrieving: true,

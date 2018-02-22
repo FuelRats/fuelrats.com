@@ -8,10 +8,10 @@ import Router from 'next/router'
 
 
 
-// Module imports
+// Component imports
 import { actions } from '../store'
+import ApiErrorDisplay from './ApiErrorDisplay'
 import Component from './Component'
-
 
 
 
@@ -39,18 +39,39 @@ class LoginDialog extends Component {
     this.state = {
       email: '',
       password: '',
+      error: null,
     }
   }
 
-  onSubmit (event) {
+  async onSubmit (event) {
     event.preventDefault()
 
-    this.props.login(this.state.email, this.state.password)
+    const error = await this.props.login(this.state.email, this.state.password)
+
+    if (error) {
+      this.setState({
+        error,
+      })
+    }
   }
 
   render () {
+    const {
+      email,
+      error,
+      password,
+    } = this.state
+
     return (
       <form onSubmit={this.onSubmit}>
+        {error && !this.props.loggingIn && (
+          <ApiErrorDisplay
+            error={error}
+            messages={[
+              [422, 'Invalid login. Please try again.'],
+            ]} />
+        )}
+
         <input
           className="email"
           disabled={this.props.loggingIn}
@@ -88,7 +109,7 @@ class LoginDialog extends Component {
           <div className="primary">
             <a className="button link" href="/forgot-password">Forgot password?</a>
             <button
-              disabled={!this.state.email || !this.state.password || this.props.loggingIn}
+              disabled={!email || !password || this.props.loggingIn}
               type="submit">
               {this.props.loggingIn ? 'Submitting...' : 'Login'}
             </button>
@@ -108,7 +129,7 @@ const mapDispatchToProps = dispatch => ({
   login: bindActionCreators(actions.login, dispatch),
 })
 
-const mapStateToProps = state => state.authentication || {}
+const mapStateToProps = state => ({ ...state.authentication })
 
 
 

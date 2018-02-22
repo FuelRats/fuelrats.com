@@ -7,6 +7,7 @@ import fetch from 'isomorphic-fetch'
 
 // Component imports
 import actionTypes from '../actionTypes'
+import { ApiError } from '../errors'
 
 
 
@@ -21,6 +22,10 @@ export const getRescuesBySystemStatistics = () => async dispatch => {
     })
 
     response = await response.json()
+
+    if (response.errors) {
+      throw new ApiError(response)
+    }
 
     dispatch({
       payload: response.data,
