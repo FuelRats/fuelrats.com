@@ -242,7 +242,8 @@ class EpicNominate extends Component {
         {submitted && (
           <div>
             <h3>Thanks!</h3>
-            <p>If there's a Fuel Rats account associated with that address, you should receive an email shortly with the final steps for resetting your password. If you don't receive an email, please contact <a href="mailto:support@fuelrats.com">support@fuelrats.com</a>.</p>
+            <p>Your epic nomination has been submitted. If approved, the rats nominated will be notified that they are now considered epic rats!</p>
+            <p>Note that while we track who nominates who, the nominees will never be notified of who made the original nomination for their epic deed.</p>
           </div>
         )}
       </div>
