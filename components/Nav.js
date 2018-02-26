@@ -16,6 +16,9 @@ const links = {
   Leaderboard: {
     href: '/leaderboard',
   },
+  'Rat links: Forum, Reddit etc.': {
+    href: 'https://confluence.fuelrats.com/pages/viewpage.action?pageId=20938932',
+  },
   'Stories, Art, & Toons': {
     href: '/blog/category/138',
   },
