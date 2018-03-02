@@ -29,8 +29,8 @@
     {
       "name": "FR Full",
       "configurations": [
-        "RFG: Server",
-        "RFG: Client"
+        "FR Server",
+        "FR Client"
       ]
     }
   ]
