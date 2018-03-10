@@ -10,14 +10,15 @@ const links = {
     href: '/blog/all',
     as: '/blog',
   },
+  'Stories, Art, & Toons': {
+    href: '/blog/all?category=138',
+    as: '/blog/category/138',
+  },
   Statistics: {
     href: '/statistics',
   },
   Leaderboard: {
     href: '/leaderboard',
-  },
-  'Stories, Art, & Toons': {
-    href: '/blog/category/138',
   },
 }
 
