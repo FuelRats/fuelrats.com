@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import moment from 'moment'
 import React from 'react'
 import ReactTable from 'react-table'
-import Router from 'next/router'
 
 
 
@@ -12,6 +11,7 @@ import Router from 'next/router'
 
 // Module imports
 import { actions } from '../store'
+import { Router } from '../routes'
 import Component from './Component'
 
 
@@ -30,7 +30,7 @@ class RescuesTablePanel extends Component {
       return {
         className: 'clickable',
         onClick: () => {
-          Router.push(`/paperwork?id=${rescue.id}`, `/paperwork/${rescue.id}`)
+          Router.pushRoute('paperwork view', { id: rescue.id })
         },
       }
     }

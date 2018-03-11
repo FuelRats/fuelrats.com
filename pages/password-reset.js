@@ -1,11 +1,5 @@
-// Module imports
-import Link from 'next/link'
-
-
-
-
-
 // Component imports
+import { Link } from '../routes'
 import Component from '../components/Component'
 import Page from '../components/Page'
 import PasswordField from '../components/PasswordField'

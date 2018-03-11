@@ -2,16 +2,16 @@
 import Cookies from 'js-cookie'
 import fetch from 'isomorphic-fetch'
 import LocalForage from 'localforage'
-import Router from 'next/router'
 
 
 
 
 
 // Component imports
+import { ApiError } from '../errors'
+import { Router } from '../../routes'
 import actionTypes from '../actionTypes'
 import initialState from '../initialState'
-import { ApiError } from '../errors'
 
 
 
@@ -100,6 +100,7 @@ export const getUser = () => async dispatch => {
     }
 
     Cookies.set('access_token', token, { expires: 365 })
+    Cookies.set('user_id', user.id, { expires: 365 })
 
     if (userPreferences.allowUniversalTracking) {
       Cookies.set('trackableUserId', user.id, dev ? { domain: '.fuelrats.com' } : {})
@@ -118,6 +119,7 @@ export const getUser = () => async dispatch => {
     return null
   } catch (error) {
     Cookies.remove('access_token')
+    Cookies.remove('user_id')
 
     await Promise.all([
       LocalForage.removeItem('access_token'),

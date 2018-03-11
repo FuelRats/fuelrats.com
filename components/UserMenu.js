@@ -1,7 +1,6 @@
 // Module imports
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import Link from 'next/link'
 import LocalForage from 'localforage'
 import React from 'react'
 
@@ -14,7 +13,7 @@ import { actions } from '../store'
 import AdminUserMenuNav from './AdminUserMenuNav'
 import Component from './Component'
 import LoginDialog from './LoginDialog'
-
+import { Link } from '../routes'
 
 
 

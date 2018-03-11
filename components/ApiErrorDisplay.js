@@ -36,7 +36,7 @@ function getErrorMessages (error, messages) {
   }
 
   if (errorMessages.length < 1) {
-    const errorIdString = error.errors.map(err => err.id).join(', ')
+    const errorIdString = error.errors.map(err => (err || {}).id).join(', ')
     const invalidFieldString = error.invalidFields.join(', ')
 
     return (
@@ -59,7 +59,7 @@ export default (props) => {
     messages,
   } = props
 
-  let errors = this.props.error
+  let errors = props.error
 
   if (!Array.isArray(errors)) {
     errors = [errors]
@@ -69,7 +69,7 @@ export default (props) => {
     <div className="store-errors">
       {
         errors.map(error => (
-          <div key={error.primaryError.id} className="store-error">
+          <div key={error.toString()} className="store-error">
             {getErrorMessages(error, messages)}
           </div>
         ))

@@ -1,4 +1,5 @@
 // Component imports
+import { Router } from '../../routes'
 import ApiErrorDisplay from '../../components/ApiErrorDisplay'
 import Component from '../../components/Component'
 import FirstLimpetInput from '../../components/FirstLimpetInput'
@@ -188,9 +189,7 @@ class Paperwork extends Component {
 
     this.dirtyFields.clear()
 
-    /* eslint-disable no-global-assign, no-restricted-globals */
-    location = `/paperwork/${rescue.id}`
-    /* eslint-enable */
+    Router.pushRoute('paperwork view', { id: rescue.id })
   }
 
   render () {
@@ -487,4 +486,4 @@ const mapStateToProps = state => {
 export default Page(Paperwork, title, {
   mapStateToProps,
   mapDispatchToProps,
-})
+}, true)

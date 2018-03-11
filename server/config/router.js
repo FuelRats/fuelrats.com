@@ -12,16 +12,18 @@ const path = require('path')
 const request = require('request-promise-native')
 const router = require('koa-router')()
 
+const routes = require('../../routes')
 
 
 
 
-module.exports = function (nextjs, koa, config) {
+
+module.exports = function (nextjs, koa) {
   /******************************************************************************\
     Router setup
   \******************************************************************************/
 
-  let handle = nextjs.getRequestHandler()
+  const handle = routes.getRequestHandler(nextjs)
 
   router.use(cookie.default())
 
@@ -33,22 +35,22 @@ module.exports = function (nextjs, koa, config) {
     Authenticated routes
   \******************************************************************************/
 
-  let authenticatedRoutes = [
-    '/admin/*',
-    '/paperwork',
-    '/paperwork/*',
-    '/profile',
-    '/authorize'
-  ]
+  // let authenticatedRoutes = [
+  //   '/admin/*',
+  //   '/paperwork',
+  //   '/paperwork/*',
+  //   '/profile',
+  //   '/authorize'
+  // ]
 
-  router.get(authenticatedRoutes, async (ctx, next) => {
-    if (ctx.cookie && ctx.cookie.access_token) {
-      await next()
-
-    } else {
-      await ctx.redirect(`/?authenticate=true&destination=${encodeURIComponent(ctx.request.url)}`)
-    }
-  })
+  // router.get(authenticatedRoutes, async (ctx, next) => {
+  //   if (ctx.cookie && ctx.cookie.access_token) {
+  //     await next()
+  //
+  //   } else {
+  //     await ctx.redirect(`/?authenticate=true&destination=${encodeURIComponent(ctx.request.url)}`)
+  //   }
+  // })
 
 
 
@@ -112,66 +114,13 @@ module.exports = function (nextjs, koa, config) {
     await ctx.redirect(`https://confluence.fuelrats.com/display/FRKB/Code+of+Conduct`)
   })
 
-
-
-
-
-  /******************************************************************************\
-    Parameterized routes
-  \******************************************************************************/
-
-  router.get('/blog/:id', async (ctx, next) => {
-    await nextjs.render(ctx.request, ctx.res, '/blog/single', Object.assign({}, ctx.query, ctx.params))
-    ctx.respond = false
-  })
-
-  // Blog catch all
-  let blogListRoutes = [
-    '/blog/author/:author/page/:page',
-    '/blog/author/:author',
-    '/blog/category/:category/page/:page',
-    '/blog/category/:category',
-    '/blog/page/:page',
-    '/blog',
-  ]
-
-  router.get(blogListRoutes, async (ctx, next) => {
-    await nextjs.render(ctx.request, ctx.res, '/blog/all', Object.assign({}, ctx.query, ctx.params))
-    ctx.respond = false
-  })
-
-  router.get('/paperwork/:id/edit', async (ctx, next) => {
-    await nextjs.render(ctx.request, ctx.res, '/paperwork/edit', Object.assign({}, ctx.query, ctx.params))
-    ctx.respond = false
-  })
-
-  router.get(['/paperwork/:id', '/paperwork/:id/view'], async (ctx, next) => {
-    await nextjs.render(ctx.request, ctx.res, '/paperwork/view', Object.assign({}, ctx.query, ctx.params))
-    ctx.respond = false
-  })
-
-
-
-
-
   /******************************************************************************\
     Fallthrough routes
   \******************************************************************************/
 
   router.get('*', async ctx => {
-    if (ctx.cookie && ctx.cookie.access_token && ctx.query.authenticate) {
-      let destination = '/profile'
-
-      if (ctx.query.destination) {
-        destination = ctx.query.destination
-      }
-
-      await ctx.redirect(destination)
-
-    } else {
-      await handle(ctx.req, ctx.res)
-      ctx.respond = false
-    }
+    await handle(ctx.req, ctx.res)
+    ctx.respond = false
   })
 
   koa.use(async (ctx, next) => {

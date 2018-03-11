@@ -2,15 +2,15 @@
 import Cookies from 'js-cookie'
 import fetch from 'isomorphic-fetch'
 import LocalForage from 'localforage'
-import Router from 'next/router'
 
 
 
 
 
 // Component imports
-import actionTypes from '../actionTypes'
 import { ApiError } from '../errors'
+import { Router } from '../../routes'
+import actionTypes from '../actionTypes'
 
 
 
@@ -107,8 +107,9 @@ export const login = (email, password) => async dispatch => {
 
         searchParams[key] = value
       })
+      const destination = searchParams.destination ? decodeURIComponent(searchParams.destination) : '/profile'
 
-      location = searchParams.destination ? decodeURIComponent(searchParams.destination) : '/profile'
+      Router.pushRoute(destination)
     }
     /* eslint-enable */
     return null

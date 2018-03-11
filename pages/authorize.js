@@ -185,4 +185,4 @@ class Authorize extends Component {
 
 
 
-export default Page(Authorize, title)
+export default Page(Authorize, title, null, true)

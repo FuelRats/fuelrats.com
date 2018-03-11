@@ -1,24 +1,25 @@
 // Module imports
-import Link from 'next/link'
 import React from 'react'
 
-
+// Component imports
+import { Link } from '../routes'
 
 // Constants
 const links = {
   Blog: {
-    href: '/blog/all',
-    as: '/blog',
+    route: 'blog list',
   },
   'Stories, Art, & Toons': {
-    href: '/blog/all?category=138',
-    as: '/blog/category/138',
+    route: 'blog list category',
+    params: {
+      category: '138',
+    },
   },
   Statistics: {
-    href: '/statistics',
+    route: '/statistics',
   },
   Leaderboard: {
-    href: '/leaderboard',
+    route: '/leaderboard',
   },
 }
 
@@ -26,18 +27,14 @@ const links = {
 export default () => {
   const renderedLinks = []
 
-  for (const linkName in links) {
-    if ({}.hasOwnProperty.call(links, linkName)) {
-      /* eslint-disable function-paren-newline */
-      renderedLinks.push(
-        <li key={linkName}>
-          <Link {...links[linkName]}>
-            <a><span>{linkName}</span></a>
-          </Link>
-        </li>
-      )
-      /* eslint-enable */
-    }
+  for (const [name, props] of Object.entries(links)) {
+    renderedLinks.push((
+      <li key={name}>
+        <Link {...props}>
+          <a><span>{name}</span></a>
+        </Link>
+      </li>
+    ))
   }
 
   return (

@@ -278,4 +278,4 @@ const mapDispatchToProps = ['createEpic']
 
 
 
-export default Page(EpicNominate, title, { mapDispatchToProps })
+export default Page(EpicNominate, title, { mapDispatchToProps }, true)
