@@ -1,7 +1,6 @@
-/* eslint no-await-in-loop:off */
 // Module imports
+import Cookies from 'js-cookie'
 import fetch from 'isomorphic-fetch'
-import LocalForage from 'localforage'
 
 
 
@@ -17,83 +16,81 @@ import actionTypes from '../actionTypes'
 export const getRescues = () => async dispatch => {
   dispatch({ type: actionTypes.GET_RESCUES })
 
-  try {
-    const token = await LocalForage.getItem('access_token')
+  let response = null
+  let success = false
 
-    let response = await fetch('/api/rescues', {
+  try {
+    const token = Cookies.get('access_token')
+
+    response = await fetch('/api/rescues', {
       headers: new Headers({
         Authorization: `Bearer ${token}`,
       }),
       method: 'get',
     })
 
+    success = response.ok
     response = await response.json()
-
-    dispatch({
-      rescues: response.data,
-      status: 'success',
-      total: response.meta.total,
-      type: actionTypes.GET_RESCUES,
-    })
   } catch (error) {
-    dispatch({
-      payload: error,
-      status: 'error',
-      type: actionTypes.GET_RESCUES,
-    })
+    success = false
+    response = error
   }
-}
 
-export const getRescuesByRat = ratId => dispatch => {
-  dispatch({
-    rat: ratId,
+  return dispatch({
+    payload: response,
+    status: success ? 'success' : 'error',
     type: actionTypes.GET_RESCUES,
   })
+}
 
-  return fetch(`/api/rescues?rats=${ratId}`)
-    .then(response => response.json())
-    .then(response => {
-      dispatch({
-        rat: response.data,
-        status: 'success',
-        type: actionTypes.GET_RESCUES,
-      })
-    })
-    .catch(error => {
-      dispatch({
-        payload: error,
-        rat: ratId,
-        status: 'error',
-        type: actionTypes.GET_RESCUES,
-      })
-    })
+export const getRescuesByRat = ratId => async dispatch => {
+  dispatch({ rat: ratId, type: actionTypes.GET_RESCUES })
+
+  let response = null
+  let success = false
+
+  try {
+    response = await fetch(`/api/rescues?rats=${ratId}`)
+
+    success = response.ok
+    response = await response.json()
+  } catch (error) {
+    success = false
+    response = error
+  }
+
+  return dispatch({
+    payload: response,
+    status: success ? 'success' : 'error',
+    type: actionTypes.GET_RESCUES,
+  })
 }
 
 export const getRescuesForCMDRs = CMDRs => async dispatch => {
+  // Note. Not fit for use.
   for (const CMDRId of CMDRs) {
-    dispatch({
-      CMDR: CMDRId,
-      type: actionTypes.GET_RESCUES,
-    })
+    dispatch({ CMDR: CMDRId, type: actionTypes.GET_RESCUES })
 
     try {
+      /* eslint-disable no-await-in-loop */
       const responses = await Promise.all([
         // Assists
-        fetch(`/api/rescues?successful=true&rats=${CMDRId}`),
+        fetch(`/api/rescues?outcome=success&rats=${CMDRId}`).then(response => response.json()),
 
         // Failures
-        fetch(`/api/rescues?successful=false&rats=${CMDRId}`),
+        fetch(`/api/rescues?outcome=failure&rats=${CMDRId}`).then(response => response.json()),
 
         // First Limpets
-        fetch(`/api/rescues?successful=true&firstLimpet=${CMDRId}`),
+        fetch(`/api/rescues?outcome=success&firstLimpet=${CMDRId}`).then(response => response.json()),
 
         // Rescues
-        fetch(`/api/rescues?rats=${CMDRId}`),
+        fetch(`/api/rescues?rats=${CMDRId}`).then(response => response.json()),
       ])
 
       for (let index = 0, { length } = responses; index < length; index++) {
         responses[index] = await responses[index].json()
       }
+      /* eslint-enable no-await-in-loop */
 
       const assistCount = responses[0].meta.total
       const failureCount = responses[1].meta.total

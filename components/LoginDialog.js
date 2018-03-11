@@ -2,16 +2,15 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import React from 'react'
-import Router from 'next/router'
 
 
 
 
 
-// Module imports
+// Component imports
 import { actions } from '../store'
+import { Router } from '../routes'
 import Component from './Component'
-
 
 
 
@@ -39,18 +38,37 @@ class LoginDialog extends Component {
     this.state = {
       email: '',
       password: '',
+      error: false,
     }
   }
 
-  onSubmit (event) {
+  async onSubmit (event) {
     event.preventDefault()
 
-    this.props.login(this.state.email, this.state.password)
+    const { status } = await this.props.login(this.state.email, this.state.password)
+
+    this.setState({
+      error: status !== 'success',
+    })
   }
 
   render () {
+    const {
+      email,
+      error,
+      password,
+    } = this.state
+
     return (
       <form onSubmit={this.onSubmit}>
+        {error && !this.props.loggingIn && (
+          <div className="store-errors">
+            <div className="store-error">
+              Invalid email or password.
+            </div>
+          </div>
+        )}
+
         <input
           className="email"
           disabled={this.props.loggingIn}
@@ -88,7 +106,7 @@ class LoginDialog extends Component {
           <div className="primary">
             <a className="button link" href="/forgot-password">Forgot password?</a>
             <button
-              disabled={!this.state.email || !this.state.password || this.props.loggingIn}
+              disabled={!email || !password || this.props.loggingIn}
               type="submit">
               {this.props.loggingIn ? 'Submitting...' : 'Login'}
             </button>
@@ -108,7 +126,7 @@ const mapDispatchToProps = dispatch => ({
   login: bindActionCreators(actions.login, dispatch),
 })
 
-const mapStateToProps = state => state.authentication || {}
+const mapStateToProps = state => ({ ...state.authentication })
 
 
 

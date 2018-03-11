@@ -1,8 +1,7 @@
 // Module imports
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import Link from 'next/link'
-import LocalForage from 'localforage'
+import Cookies from 'js-cookie'
 import React from 'react'
 
 
@@ -14,7 +13,7 @@ import { actions } from '../store'
 import AdminUserMenuNav from './AdminUserMenuNav'
 import Component from './Component'
 import LoginDialog from './LoginDialog'
-
+import { Link } from '../routes'
 
 
 
@@ -25,7 +24,7 @@ class UserMenu extends Component {
   \***************************************************************************/
 
   async componentDidMount () {
-    if (await LocalForage.getItem('access_token')) {
+    if (Cookies.get('access_token')) {
       this.props.getUser()
     }
   }

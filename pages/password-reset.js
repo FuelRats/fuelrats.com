@@ -1,11 +1,5 @@
-// Module imports
-import Link from 'next/link'
-
-
-
-
-
 // Component imports
+import { Link } from '../routes'
 import Component from '../components/Component'
 import Page from '../components/Page'
 import PasswordField from '../components/PasswordField'
@@ -31,7 +25,8 @@ class PasswordReset extends Component {
     let tokenIsValid
 
     if (token) {
-      tokenIsValid = await this.props.validatePasswordResetToken(token)
+      const { status } = await this.props.validatePasswordResetToken(token)
+      tokenIsValid = status === 'success'
     }
 
     this.setState({

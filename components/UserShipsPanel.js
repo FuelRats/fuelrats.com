@@ -1,6 +1,5 @@
 // Module imports
 import { bindActionCreators } from 'redux'
-import Link from 'next/link'
 import React from 'react'
 import { connect } from 'react-redux'
 
@@ -8,8 +7,9 @@ import { connect } from 'react-redux'
 
 
 
-// Module imports
+// Component imports
 import { actions } from '../store'
+import { Link } from '../routes'
 import Component from './Component'
 
 
@@ -29,15 +29,13 @@ class UserShipsPanel extends Component {
         platform,
       } = ship.attributes
 
-      console.log('ship', ship)
-
       const badgeClasses = ['badge', 'platform', 'short', platform].join(' ')
 
       return (
         <li key={index}>
           <div className={badgeClasses} />
 
-          <Link href={`/rats/${id}`}>
+          <Link route="rats view" params={{ id }}>
             <a>{name}</a>
           </Link>
         </li>

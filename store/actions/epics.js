@@ -11,8 +11,10 @@ import actionTypes from '../actionTypes'
 
 
 
-export const checkDecalEligibility = () => async dispatch => {
-  dispatch({ type: actionTypes.CHECK_DECAL_ELIGIBILITY })
+
+
+export const retrieveEpic = epicId => async dispatch => {
+  dispatch({ type: actionTypes.RETRIEVE_EPIC })
 
   let response = null
   let success = false
@@ -20,7 +22,7 @@ export const checkDecalEligibility = () => async dispatch => {
   try {
     const token = Cookies.get('access_token')
 
-    response = await fetch('/api/decals/check', {
+    response = await fetch(`/api/epics/${epicId}`, {
       headers: new Headers({
         Authorization: `Bearer ${token}`,
       }),
@@ -28,6 +30,10 @@ export const checkDecalEligibility = () => async dispatch => {
 
     success = response.ok
     response = await response.json()
+
+    if (!response.data.length) {
+      throw new Error('Rescue not found')
+    }
   } catch (error) {
     success = false
     response = error
@@ -36,7 +42,7 @@ export const checkDecalEligibility = () => async dispatch => {
   return dispatch({
     payload: response,
     status: success ? 'success' : 'error',
-    type: actionTypes.CHECK_DECAL_ELIGIBILITY,
+    type: actionTypes.RETRIEVE_EPIC,
   })
 }
 
@@ -44,23 +50,22 @@ export const checkDecalEligibility = () => async dispatch => {
 
 
 
-export const redeemDecal = () => async dispatch => {
-  dispatch({ type: actionTypes.REDEEM_DECAL })
+export const createEpic = payload => async dispatch => {
+  dispatch({ type: actionTypes.CREATE_EPIC })
 
   let response = null
   let success = false
 
   try {
-    dispatch({
-      type: actionTypes.REDEEM_DECAL,
-    })
-
     const token = Cookies.get('access_token')
 
-    response = await fetch('/api/decals/redeem', {
+    response = await fetch('/api/epics', {
+      body: JSON.stringify(payload),
       headers: new Headers({
         Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
       }),
+      method: 'post',
     })
 
     success = response.ok
@@ -73,6 +78,6 @@ export const redeemDecal = () => async dispatch => {
   return dispatch({
     payload: response,
     status: success ? 'success' : 'error',
-    type: actionTypes.REDEEM_DECAL,
+    type: actionTypes.CREATE_EPIC,
   })
 }

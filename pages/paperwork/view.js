@@ -233,4 +233,4 @@ const mapStateToProps = state => {
 export default Page(Paperwork, title, {
   mapStateToProps,
   mapDispatchToProps,
-})
+}, true)

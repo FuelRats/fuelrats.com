@@ -32,4 +32,4 @@ const Rescues = () => (
   </div>
 )
 
-export default Page(Rescues, title)
+export default Page(Rescues, title, null, true)

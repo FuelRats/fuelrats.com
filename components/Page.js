@@ -1,5 +1,6 @@
 // Module imports
 import { bindActionCreators } from 'redux'
+import Cookies from 'next-cookies'
 import LocalForage from 'localforage'
 import React from 'react'
 import withRedux from 'next-redux-wrapper'
@@ -13,6 +14,7 @@ import {
   actions,
   initStore,
 } from '../store'
+import { Router } from '../routes'
 import Dialog from './Dialog'
 import Head from './Head'
 import Header from './Header'
@@ -30,7 +32,7 @@ initStore()
 
 
 
-export default (Component, title = 'Untitled', reduxOptions = {}) => {
+export default (Component, title = 'Untitled', reduxOptions = {}, authenticationRequired = false) => {
   class Page extends React.Component {
     constructor(props) {
       super(props)
@@ -41,13 +43,35 @@ export default (Component, title = 'Untitled', reduxOptions = {}) => {
       })
     }
 
+    /* eslint-disable camelcase */
     static async getInitialProps(ctx) {
       const {
+        res,
         asPath,
         isServer,
         query,
       } = ctx
+
       let props = {}
+
+      const {
+        access_token,
+        user_id,
+      } = Cookies(ctx)
+
+      if (authenticationRequired && !access_token) {
+        if (res) {
+          res.writeHead(302, {
+            Location: `/?authenticate=true&destination=${encodeURIComponent(asPath)}`,
+          })
+          res.end()
+          res.finished = true
+        } else {
+          Router.replace(`/?authenticate=true&destination=${encodeURIComponent(asPath)}`)
+        }
+
+        return {}
+      }
 
       if (typeof Component.getInitialProps === 'function') {
         props = await Component.getInitialProps(ctx)
@@ -57,9 +81,11 @@ export default (Component, title = 'Untitled', reduxOptions = {}) => {
         asPath,
         isServer,
         query,
+        userId: user_id,
         ...props,
       }
     }
+    /* eslint-enable camelcase */
 
     render() {
       const {
@@ -90,14 +116,14 @@ export default (Component, title = 'Untitled', reduxOptions = {}) => {
     }
   }
 
-  const { mapStateToProps } = reduxOptions
-  let { mapDispatchToProps } = reduxOptions
+  const { mapStateToProps } = reduxOptions || {}
+  let { mapDispatchToProps } = reduxOptions || {}
 
-  if (Array.isArray(reduxOptions.mapDispatchToProps)) {
+  if (Array.isArray(mapDispatchToProps)) {
     mapDispatchToProps = dispatch => {
       const actionMap = {}
 
-      for (const actionName of reduxOptions.mapDispatchToProps) {
+      for (const actionName of (reduxOptions || {}).mapDispatchToProps) {
         actionMap[actionName] = bindActionCreators(actions[actionName], dispatch)
       }
 

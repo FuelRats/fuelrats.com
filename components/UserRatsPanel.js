@@ -1,7 +1,6 @@
 // Module imports
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import Link from 'next/link'
 import moment from 'moment'
 import React from 'react'
 import ReactTable from 'react-table'
@@ -10,8 +9,9 @@ import ReactTable from 'react-table'
 
 
 
-// Module imports
+// Component imports
 import { actions } from '../store'
+import { Link } from '../routes'
 import AddRatForm from './AddRatForm'
 import Component from './Component'
 import RatDetails from './RatDetails'
@@ -40,7 +40,7 @@ class UserRatsPanel extends Component {
     const { name } = row.original.attributes
 
     return (
-      <Link href={`/rats/${id}`}>
+      <Link route="rats view" params={{ id }}>
         <a>{name}</a>
       </Link>
     )

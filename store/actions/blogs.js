@@ -72,12 +72,14 @@ export const retrieveBlog = id => async dispatch => {
       status: 'success',
       type: actionTypes.RETRIEVE_BLOG,
     })
+    return null
   } catch (error) {
     dispatch({
       payload: error,
       status: 'error',
       type: actionTypes.RETRIEVE_BLOG,
     })
+    return error
   }
 }
 

@@ -1,7 +1,7 @@
 .DS_Store
 .idea/
 .next
-.vscode/
+.env
 bower_components
 node_modules
 static/compiled

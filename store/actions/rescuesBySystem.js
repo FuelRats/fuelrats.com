@@ -15,22 +15,22 @@ import actionTypes from '../actionTypes'
 export const getRescuesBySystemStatistics = () => async dispatch => {
   dispatch({ type: actionTypes.GET_RESCUES_BY_SYSTEM })
 
+  let response = null
+  let success = false
+
   try {
-    let response = await fetch('/api/statistics/systems?count.gt=10', {
-      method: 'get',
-    })
+    response = await fetch('/api/statistics/systems?count.gt=10')
 
+    success = response.ok
     response = await response.json()
-
-    dispatch({
-      payload: response.data,
-      status: 'success',
-      type: actionTypes.GET_RESCUES_BY_SYSTEM,
-    })
   } catch (error) {
-    dispatch({
-      status: 'error',
-      type: actionTypes.GET_RESCUES_BY_SYSTEM,
-    })
+    success = false
+    response = error
   }
+
+  return dispatch({
+    payload: response,
+    status: success ? 'success' : 'error',
+    type: actionTypes.GET_RESCUES_BY_SYSTEM,
+  })
 }

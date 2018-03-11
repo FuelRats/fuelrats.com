@@ -1,0 +1,33 @@
+div.radio-input {
+  ul.options {
+    display: flex;
+
+    li.option {
+      padding: 0rem 1.5rem;
+      text-align: center;
+      margin: 0 .2rem;
+      border: .2rem solid $red;
+      transform: skewX(-10deg);
+      display: inline-block;
+      transition: all .2s;
+      cursor: pointer;
+
+      &:hover,
+      &.selected {
+        background-color: $red;
+        color: $white;
+      }
+
+      &.disabled {
+        background-color: $grey;
+        border-color: $grey;
+        color: $white;
+      }
+
+      div.option-content {
+        transform: skewX(10deg);
+        display: inline-block;
+      }
+    }
+  }
+}

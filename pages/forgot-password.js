@@ -5,8 +5,7 @@ import Page from '../components/Page'
 
 
 
-
-// Component imports
+// Component constants
 const title = 'Forgot Password'
 
 
@@ -29,6 +28,7 @@ class ForgotPassword extends Component {
       email: '',
       submitted: false,
       submitting: false,
+      error: null,
     }
   }
 
@@ -37,14 +37,21 @@ class ForgotPassword extends Component {
 
     const { email } = this.state
 
-    this.setState({ submitting: true })
+    this.setState({ submitting: true, error: false })
 
-    await this.props.sendPasswordResetEmail(email)
+    const { status } = await this.props.sendPasswordResetEmail(email)
 
-    this.setState({
-      submitted: true,
-      submitting: false,
-    })
+    if (status === 'error') {
+      this.setState({
+        submitting: false,
+        error: true,
+      })
+    } else {
+      this.setState({
+        submitted: true,
+        submitting: false,
+      })
+    }
   }
 
   render () {
@@ -52,6 +59,7 @@ class ForgotPassword extends Component {
       email,
       submitted,
       submitting,
+      error,
     } = this.state
 
     return (
@@ -61,6 +69,14 @@ class ForgotPassword extends Component {
         </header>
 
         <div className="page-content">
+          {error && (
+            <div className="store-errors">
+              <div className="store-error">
+                Error submitting password reset request.
+              </div>
+            </div>
+          )}
+
           {!submitted && (
             <form onSubmit={this.onSubmit}>
               <fieldset>

@@ -2,13 +2,13 @@
 import Cookies from 'js-cookie'
 import fetch from 'isomorphic-fetch'
 import LocalForage from 'localforage'
-import Router from 'next/router'
 
 
 
 
 
 // Component imports
+import { Router } from '../../routes'
 import actionTypes from '../actionTypes'
 
 
@@ -18,10 +18,13 @@ import actionTypes from '../actionTypes'
 export const changePassword = (currentPassword, newPassword) => async dispatch => {
   dispatch({ type: actionTypes.CHANGE_PASSWORD })
 
-  try {
-    const token = await LocalForage.getItem('access_token')
+  let response = null
+  let success = false
 
-    let response = await fetch('/api/users/setpassword', {
+  try {
+    const token = Cookies.get('access_token')
+
+    response = await fetch('/api/users/setpassword', {
       body: JSON.stringify({
         password: currentPassword,
         new: newPassword,
@@ -32,20 +35,18 @@ export const changePassword = (currentPassword, newPassword) => async dispatch =
       method: 'put',
     })
 
+    success = response.ok
     response = await response.json()
-
-    dispatch({
-      status: 'success',
-      type: actionTypes.CHANGE_PASSWORD,
-      payload: response,
-    })
   } catch (error) {
-    dispatch({
-      payload: error,
-      status: 'error',
-      type: actionTypes.CHANGE_PASSWORD,
-    })
+    success = false
+    response = error
   }
+
+  return dispatch({
+    payload: response,
+    status: success ? 'success' : 'error',
+    type: actionTypes.CHANGE_PASSWORD,
+  })
 }
 
 
@@ -55,56 +56,62 @@ export const changePassword = (currentPassword, newPassword) => async dispatch =
 export const login = (email, password) => async dispatch => {
   dispatch({ type: actionTypes.LOGIN })
 
+  let response = null
+  let success = false
+
   try {
-    let token = await LocalForage.getItem('access_token')
+    let token = Cookies.get('access_token')
 
     if (!token) {
-      const data = JSON.stringify({
-        grant_type: 'password',
-        password,
-        username: email,
-      })
-
-      let response = await fetch('/token', {
-        body: data,
+      response = await fetch('/token', {
+        body: JSON.stringify({
+          grant_type: 'password',
+          password,
+          username: email,
+        }),
         headers: {
           'Content-Type': 'application/json',
         },
         method: 'post',
       })
 
+      success = response.ok
       response = await response.json()
 
       token = response.access_token
-      await LocalForage.setItem('access_token', token)
+
       Cookies.set('access_token', token, { expires: 365 })
+    } else {
+      response = null
+      success = true
     }
-
-    dispatch({
-      status: 'success',
-      type: actionTypes.LOGIN,
-    })
-
-    /* eslint-disable no-restricted-globals, no-global-assign */
-    if (location && location.search) {
-      const searchParams = {}
-
-      location.search.replace(/^\?/, '').split('&').forEach(searchParam => {
-        const [key, value] = searchParam.split('=')
-
-        searchParams[key] = value
-      })
-
-      location = searchParams.destination ? decodeURIComponent(searchParams.destination) : '/profile'
-    }
-    /* eslint-enable */
   } catch (error) {
-    dispatch({
-      payload: error,
-      status: 'error',
-      type: actionTypes.LOGIN,
-    })
+    response = error
+    success = false
   }
+
+  const result = dispatch({
+    payload: response,
+    status: success ? 'success' : 'error',
+    type: actionTypes.LOGIN,
+  })
+
+  /* eslint-disable no-restricted-globals*/
+  if (location && location.search) {
+    const searchParams = {}
+
+    location.search.replace(/^\?/, '').split('&').forEach(searchParam => {
+      const [key, value] = searchParam.split('=')
+
+      searchParams[key] = value
+    })
+    const destination = searchParams.destination ? decodeURIComponent(searchParams.destination) : '/profile'
+
+    Router.pushRoute(destination)
+  }
+  /* eslint-enable */
+
+  return result
 }
 
 
@@ -114,27 +121,29 @@ export const login = (email, password) => async dispatch => {
 export const logout = () => async dispatch => {
   dispatch({ type: actionTypes.LOGOUT })
 
+  let response = null
+  let success = false
+
   try {
     Cookies.remove('access_token')
-    await Promise.all([
-      LocalForage.removeItem('access_token'),
-      LocalForage.removeItem('userId'),
-      LocalForage.removeItem('preferences'),
-    ])
+    Cookies.remove('user_id')
+    await LocalForage.removeItem('preferences')
 
-    dispatch({
-      status: 'success',
-      type: actionTypes.LOGOUT,
-    })
-
-    Router.push('/')
+    success = true
   } catch (error) {
-    dispatch({
-      payload: error,
-      status: 'error',
-      type: actionTypes.LOGOUT,
-    })
+    response = error
+    success = false
   }
+
+  const result = dispatch({
+    payload: response,
+    status: success ? 'success' : 'error',
+    type: actionTypes.LOGOUT,
+  })
+
+  Router.push('/')
+
+  return result
 }
 
 
@@ -144,8 +153,11 @@ export const logout = () => async dispatch => {
 export const register = (email, password, name, platform, nickname, recaptcha) => async dispatch => {
   dispatch({ type: actionTypes.REGISTER })
 
+  let response = null
+  let success = false
+
   try {
-    let response = await fetch('/api/register', {
+    response = await fetch('/api/register', {
       body: JSON.stringify({
         email,
         password,
@@ -159,6 +171,10 @@ export const register = (email, password, name, platform, nickname, recaptcha) =
       },
       method: 'post',
     })
+
+    if (!response.ok) {
+      throw new Error('Error Registering!')
+    }
 
     response = await fetch('/token', {
       body: JSON.stringify({
@@ -174,22 +190,28 @@ export const register = (email, password, name, platform, nickname, recaptcha) =
 
     response = await response.json()
 
-    await LocalForage.setItem('access_token', response.access_token)
-    Cookies.set('access_token', response.access_token, { expires: 365 })
+    if (response.access_token) {
+      Cookies.set('access_token', response.access_token, { expires: 365 })
+    }
 
-    dispatch({
-      status: 'success',
-      type: actionTypes.REGISTER,
-    })
-
-    Router.push('/profile')
+    response = null
+    success = response.ok
   } catch (error) {
-    dispatch({
-      payload: error,
-      status: 'error',
-      type: actionTypes.REGISTER,
-    })
+    response = error
+    success = false
   }
+
+  const result = dispatch({
+    payload: response,
+    status: success ? 'success' : 'error',
+    type: actionTypes.REGISTER,
+  })
+
+  if (success) {
+    Router.push('/profile')
+  }
+
+  return result
 }
 
 
@@ -199,8 +221,11 @@ export const register = (email, password, name, platform, nickname, recaptcha) =
 export const resetPassword = (password, token) => async dispatch => {
   dispatch({ type: actionTypes.RESET_PASSWORD })
 
+  let response = null
+  let success = false
+
   try {
-    const response = await fetch(`/api/reset/${token}`, {
+    response = await fetch(`/api/reset/${token}`, {
       body: JSON.stringify({
         password,
       }),
@@ -210,22 +235,18 @@ export const resetPassword = (password, token) => async dispatch => {
       method: 'post',
     })
 
-    if (response.ok) {
-      return dispatch({
-        status: 'success',
-        type: actionTypes.RESET_PASSWORD,
-        payload: response,
-      })
-    }
-
-    throw new Error('Failed to reset password')
+    success = response.ok
+    response = await response.json()
   } catch (error) {
-    return dispatch({
-      payload: error,
-      status: 'error',
-      type: actionTypes.RESET_PASSWORD,
-    })
+    response = error
+    success = false
   }
+
+  return dispatch({
+    payload: response,
+    status: success ? 'success' : 'error',
+    type: actionTypes.RESET_PASSWORD,
+  })
 }
 
 
@@ -235,8 +256,11 @@ export const resetPassword = (password, token) => async dispatch => {
 export const sendPasswordResetEmail = email => async dispatch => {
   dispatch({ type: actionTypes.SEND_PASSWORD_RESET_EMAIL })
 
+  let response = null
+  let success = false
+
   try {
-    let response = await fetch('/api/reset', {
+    response = await fetch('/api/reset', {
       body: JSON.stringify({
         email,
       }),
@@ -246,20 +270,18 @@ export const sendPasswordResetEmail = email => async dispatch => {
       method: 'post',
     })
 
+    success = response.ok
     response = await response.json()
-
-    dispatch({
-      status: 'success',
-      type: actionTypes.SEND_PASSWORD_RESET_EMAIL,
-      payload: response,
-    })
   } catch (error) {
-    dispatch({
-      payload: error,
-      status: 'error',
-      type: actionTypes.SEND_PASSWORD_RESET_EMAIL,
-    })
+    response = error
+    success = false
   }
+
+  return dispatch({
+    payload: response,
+    status: success ? 'success' : 'error',
+    type: actionTypes.SEND_PASSWORD_RESET_EMAIL,
+  })
 }
 
 
@@ -267,14 +289,23 @@ export const sendPasswordResetEmail = email => async dispatch => {
 
 
 export const validatePasswordResetToken = (token) => async dispatch => {
-  let response
-
   dispatch({ type: actionTypes.VALIDATE_PASSWORD_RESET_TOKEN })
+
+
+  let response = null
+  let success = false
 
   try {
     response = await fetch(`/api/reset/${token}`)
-    return response.ok
+    success = response.ok
   } catch (error) {
-    return error
+    response = error
+    success = false
   }
+
+  return dispatch({
+    payload: response,
+    status: success ? 'success' : 'error',
+    type: actionTypes.VALIDATE_PASSWORD_RESET_TOKEN,
+  })
 }
