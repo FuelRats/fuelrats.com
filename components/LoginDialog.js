@@ -63,7 +63,7 @@ class LoginDialog extends Component {
       <form onSubmit={this.onSubmit}>
         {error && !this.props.loggingIn && (
           <div className="store-errors">
-            <div clasName="store-error">
+            <div className="store-error">
               Invalid email or password.
             </div>
           </div>
