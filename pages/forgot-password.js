@@ -71,7 +71,7 @@ class ForgotPassword extends Component {
         <div className="page-content">
           {error && (
             <div className="store-errors">
-              <div clasName="store-error">
+              <div className="store-error">
                 Error submitting password reset request.
               </div>
             </div>
