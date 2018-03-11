@@ -1,5 +1,4 @@
 // Component imports
-import ApiErrorDisplay from '../../components/ApiErrorDisplay'
 import RadioOptionsInput from '../../components/RadioOptionsInput'
 import RescuesTagsInput from '../../components/RescuesTagsInput'
 import RatTagsInput from '../../components/RatTagsInput'
@@ -113,7 +112,7 @@ class EpicNominate extends Component {
 
     if (responses.length) {
       this.setState({
-        error: responses.map(({ payload }) => payload),
+        error: true,
         submitting: false,
       })
       return
@@ -149,11 +148,11 @@ class EpicNominate extends Component {
         </header>
 
         {(error && !submitting) && (
-          <ApiErrorDisplay
-            error={error}
-            messages={[
-              [422, 'Invalid values found for the following attributes:'],
-            ]} />
+          <div className="store-errors">
+            <div clasName="store-error">
+              Error submitting nomination.
+            </div>
+          </div>
         )}
 
         {!submitted && (
