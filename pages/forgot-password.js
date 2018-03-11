@@ -1,7 +1,6 @@
 // Component imports
 import Component from '../components/Component'
 import Page from '../components/Page'
-import ApiErrorDisplay from '../components/ApiErrorDisplay'
 
 
 
@@ -38,16 +37,15 @@ class ForgotPassword extends Component {
 
     const { email } = this.state
 
-    this.setState({ submitting: true })
+    this.setState({ submitting: true, error: false })
 
-    const { payload, status } = await this.props.sendPasswordResetEmail(email)
+    const { status } = await this.props.sendPasswordResetEmail(email)
 
     if (status === 'error') {
       this.setState({
         submitting: false,
-        error: payload,
+        error: true,
       })
-      this.props.clearErrors()
     } else {
       this.setState({
         submitted: true,
@@ -72,8 +70,11 @@ class ForgotPassword extends Component {
 
         <div className="page-content">
           {error && (
-            <ApiErrorDisplay
-              error={error} />
+            <div className="store-errors">
+              <div clasName="store-error">
+                Error submitting password reset request.
+              </div>
+            </div>
           )}
 
           {!submitted && (

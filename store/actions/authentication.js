@@ -8,7 +8,6 @@ import LocalForage from 'localforage'
 
 
 // Component imports
-import { ApiError } from '../errors'
 import { Router } from '../../routes'
 import actionTypes from '../actionTypes'
 
@@ -36,13 +35,8 @@ export const changePassword = (currentPassword, newPassword) => async dispatch =
       method: 'put',
     })
 
+    success = response.ok
     response = await response.json()
-
-    if (response.errors) {
-      throw new ApiError(response)
-    }
-
-    success = true
   } catch (error) {
     success = false
     response = error
@@ -81,19 +75,16 @@ export const login = (email, password) => async dispatch => {
         method: 'post',
       })
 
+      success = response.ok
       response = await response.json()
-
-      if (response.errors) {
-        throw new ApiError(response)
-      }
 
       token = response.access_token
 
       Cookies.set('access_token', token, { expires: 365 })
+    } else {
+      response = null
+      success = true
     }
-
-    response = null
-    success = true
   } catch (error) {
     response = error
     success = false
@@ -181,11 +172,8 @@ export const register = (email, password, name, platform, nickname, recaptcha) =
       method: 'post',
     })
 
-
-    response = response.json()
-
-    if (response.errors) {
-      throw new ApiError(response)
+    if (!response.ok) {
+      throw new Error('Error Registering!')
     }
 
     response = await fetch('/token', {
@@ -202,14 +190,12 @@ export const register = (email, password, name, platform, nickname, recaptcha) =
 
     response = await response.json()
 
-    if (response.errors) {
-      throw new ApiError(response)
+    if (response.access_token) {
+      Cookies.set('access_token', response.access_token, { expires: 365 })
     }
 
-    Cookies.set('access_token', response.access_token, { expires: 365 })
-
     response = null
-    success = true
+    success = response.ok
   } catch (error) {
     response = error
     success = false
@@ -249,13 +235,8 @@ export const resetPassword = (password, token) => async dispatch => {
       method: 'post',
     })
 
-    response = response.json()
-
-    if (response.errors) {
-      throw new ApiError(response)
-    }
-
-    success = true
+    success = response.ok
+    response = await response.json()
   } catch (error) {
     response = error
     success = false
@@ -289,13 +270,8 @@ export const sendPasswordResetEmail = email => async dispatch => {
       method: 'post',
     })
 
+    success = response.ok
     response = await response.json()
-
-    if (response.errors) {
-      throw new ApiError(response)
-    }
-
-    success = true
   } catch (error) {
     response = error
     success = false

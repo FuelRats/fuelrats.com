@@ -1,6 +1,5 @@
 // Component imports
 import { Router } from '../../routes'
-import ApiErrorDisplay from '../../components/ApiErrorDisplay'
 import Component from '../../components/Component'
 import FirstLimpetInput from '../../components/FirstLimpetInput'
 import Page from '../../components/Page'
@@ -180,10 +179,10 @@ class Paperwork extends Component {
       }
     }
 
-    const { payload, status } = await this.props.submitPaperwork(rescue.id, rescueUpdates, ratUpdates)
+    const { status } = await this.props.submitPaperwork(rescue.id, rescueUpdates, ratUpdates)
 
-    if (status === 'error') {
-      this.setState({ error: payload })
+    if (status !== 'success') {
+      this.setState({ error: true })
       return
     }
 
@@ -220,15 +219,11 @@ class Paperwork extends Component {
         </header>
 
         {(error && !submitting) && (
-          <ApiErrorDisplay
-            error={error}
-            messages={[
-              [422, 'Invalid values found for the following attributes:'],
-              ['/data/attributes/outcome', 'Outcome.'],
-              ['/data/attributes/platform', 'Platform.'],
-              ['/data/attributes/system', 'System.'],
-              ['/data/attributes/notes', 'Notes.'],
-            ]} />
+          <div className="store-errors">
+            <div clasName="store-error">
+              Error while submitting paperwork.
+            </div>
+          </div>
         )}
 
         {retrieving && (

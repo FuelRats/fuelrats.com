@@ -9,21 +9,21 @@ import fetch from 'isomorphic-fetch'
 
 // Component imports
 import actionTypes from '../actionTypes'
-import { ApiError } from '../errors'
 
 
 
 
 
 export const createRat = (name, platform, userId) => async dispatch => {
-  try {
-    dispatch({
-      type: actionTypes.CREATE_RAT,
-    })
+  dispatch({ type: actionTypes.CREATE_RAT })
 
+  let response = null
+  let success = false
+
+  try {
     const token = Cookies.get('access_token')
 
-    let response = await fetch('/api/rats', {
+    response = await fetch('/api/rats', {
       body: JSON.stringify({
         name,
         platform,
@@ -36,27 +36,18 @@ export const createRat = (name, platform, userId) => async dispatch => {
       method: 'post',
     })
 
+    success = response.ok
     response = await response.json()
-
-    if (response.errors) {
-      throw new ApiError(response)
-    }
-
-    dispatch({
-      rat: response.data,
-      status: 'success',
-      type: actionTypes.CREATE_RAT,
-    })
-    return null
   } catch (error) {
-    dispatch({
-      payload: error,
-      rat: userId,
-      status: 'error',
-      type: actionTypes.CREATE_RAT,
-    })
-    return error
+    success = false
+    response = error
   }
+
+  return dispatch({
+    payload: response,
+    status: success ? 'success' : 'error',
+    type: actionTypes.CREATE_RAT,
+  })
 }
 
 
@@ -65,27 +56,25 @@ export const createRat = (name, platform, userId) => async dispatch => {
 
 export const getRats = ratIds => async dispatch => {
   for (const ratId of ratIds) {
+    dispatch({ rat: ratId, type: actionTypes.GET_RAT })
+
+    let response = null
+    let success = false
+
     try {
-      dispatch({
-        rat: ratId,
-        type: actionTypes.GET_RAT,
-      })
+      response = await fetch(`/api/rats/${ratId}`)
 
-      let response = await fetch(`/api/rats/${ratId}`)
+      success = response.ok
       response = await response.json()
-
-      dispatch({
-        rat: response.data,
-        status: 'success',
-        type: actionTypes.GET_RAT,
-      })
     } catch (error) {
-      dispatch({
-        payload: error,
-        rat: ratId,
-        status: 'error',
-        type: actionTypes.GET_RAT,
-      })
+      success = false
+      response = error
     }
+
+    dispatch({
+      payload: response,
+      status: success ? 'success' : 'error',
+      type: actionTypes.GET_RAT,
+    })
   }
 }

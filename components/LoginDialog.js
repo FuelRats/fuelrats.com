@@ -10,7 +10,6 @@ import React from 'react'
 // Component imports
 import { actions } from '../store'
 import { Router } from '../routes'
-import ApiErrorDisplay from './ApiErrorDisplay'
 import Component from './Component'
 
 
@@ -39,20 +38,18 @@ class LoginDialog extends Component {
     this.state = {
       email: '',
       password: '',
-      error: null,
+      error: false,
     }
   }
 
   async onSubmit (event) {
     event.preventDefault()
 
-    const { response, status } = await this.props.login(this.state.email, this.state.password)
+    const { status } = await this.props.login(this.state.email, this.state.password)
 
-    if (status === 'response') {
-      this.setState({
-        error: response,
-      })
-    }
+    this.setState({
+      error: status !== 'success',
+    })
   }
 
   render () {
@@ -65,11 +62,11 @@ class LoginDialog extends Component {
     return (
       <form onSubmit={this.onSubmit}>
         {error && !this.props.loggingIn && (
-          <ApiErrorDisplay
-            error={error}
-            messages={[
-              [422, 'Invalid login. Please try again.'],
-            ]} />
+          <div className="store-errors">
+            <div clasName="store-error">
+              Invalid email or password.
+            </div>
+          </div>
         )}
 
         <input

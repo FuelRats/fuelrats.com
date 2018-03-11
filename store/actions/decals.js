@@ -8,42 +8,36 @@ import fetch from 'isomorphic-fetch'
 
 // Component imports
 import actionTypes from '../actionTypes'
-import { ApiError } from '../errors'
-
 
 
 
 export const checkDecalEligibility = () => async dispatch => {
-  try {
-    dispatch({ type: actionTypes.CHECK_DECAL_ELIGIBILITY })
+  dispatch({ type: actionTypes.CHECK_DECAL_ELIGIBILITY })
 
+  let response = null
+  let success = false
+
+  try {
     const token = Cookies.get('access_token')
 
-    let response = await fetch('/api/decals/check', {
+    response = await fetch('/api/decals/check', {
       headers: new Headers({
         Authorization: `Bearer ${token}`,
       }),
     })
+
+    success = response.ok
     response = await response.json()
-
-    if (response.errors) {
-      throw new ApiError(response)
-    }
-
-    dispatch({
-      payload: response,
-      status: 'success',
-      type: actionTypes.CHECK_DECAL_ELIGIBILITY,
-    })
-    return null
   } catch (error) {
-    dispatch({
-      payload: error,
-      status: 'error',
-      type: actionTypes.CHECK_DECAL_ELIGIBILITY,
-    })
-    return error
+    success = false
+    response = error
   }
+
+  return dispatch({
+    payload: response,
+    status: success ? 'success' : 'error',
+    type: actionTypes.CHECK_DECAL_ELIGIBILITY,
+  })
 }
 
 
@@ -51,6 +45,11 @@ export const checkDecalEligibility = () => async dispatch => {
 
 
 export const redeemDecal = () => async dispatch => {
+  dispatch({ type: actionTypes.REDEEM_DECAL })
+
+  let response = null
+  let success = false
+
   try {
     dispatch({
       type: actionTypes.REDEEM_DECAL,
@@ -58,29 +57,22 @@ export const redeemDecal = () => async dispatch => {
 
     const token = Cookies.get('access_token')
 
-    let response = await fetch('/api/decals/redeem', {
+    response = await fetch('/api/decals/redeem', {
       headers: new Headers({
         Authorization: `Bearer ${token}`,
       }),
     })
+
+    success = response.ok
     response = await response.json()
-
-    if (response.errors) {
-      throw new ApiError(response)
-    }
-
-    dispatch({
-      payload: response,
-      status: 'success',
-      type: actionTypes.REDEEM_DECAL,
-    })
-    return null
   } catch (error) {
-    dispatch({
-      payload: error,
-      status: 'error',
-      type: actionTypes.REDEEM_DECAL,
-    })
-    return error
+    success = false
+    response = error
   }
+
+  return dispatch({
+    payload: response,
+    status: success ? 'success' : 'error',
+    type: actionTypes.REDEEM_DECAL,
+  })
 }

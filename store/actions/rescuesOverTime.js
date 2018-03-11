@@ -7,7 +7,6 @@ import fetch from 'isomorphic-fetch'
 
 // Component imports
 import actionTypes from '../actionTypes'
-import { ApiError } from '../errors'
 
 
 
@@ -16,26 +15,22 @@ import { ApiError } from '../errors'
 export const getRescuesOverTimeStatistics = () => async dispatch => {
   dispatch({ type: actionTypes.GET_RESCUES_OVER_TIME })
 
+  let response = null
+  let success = false
+
   try {
-    let response = await fetch('/api/statistics/rescues')
+    response = await fetch('/api/statistics/rescues')
 
+    success = response.ok
     response = await response.json()
-
-    if (response.errors) {
-      throw new ApiError(response)
-    }
-
-    dispatch({
-      payload: response.data,
-      status: 'success',
-      type: actionTypes.GET_RESCUES_OVER_TIME,
-    })
-    return null
   } catch (error) {
-    dispatch({
-      status: 'error',
-      type: actionTypes.GET_RESCUES_OVER_TIME,
-    })
-    return error
+    success = false
+    response = error
   }
+
+  return dispatch({
+    payload: response,
+    status: success ? 'success' : 'error',
+    type: actionTypes.GET_RESCUES_OVER_TIME,
+  })
 }

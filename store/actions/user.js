@@ -8,7 +8,6 @@ import LocalForage from 'localforage'
 
 
 // Component imports
-import { ApiError } from '../errors'
 import { Router } from '../../routes'
 import actionTypes from '../actionTypes'
 import initialState from '../initialState'
@@ -25,10 +24,13 @@ const dev = preval`module.exports = process.env.NODE_ENV !== 'production'`
 export const addNickname = (nickname, password) => async dispatch => {
   dispatch({ type: actionTypes.ADD_NICKNAME })
 
+  let response = null
+  let success = false
+
   try {
     const token = Cookies.get('access_token')
 
-    let response = await fetch('/api/nicknames', {
+    response = await fetch('/api/nicknames', {
       body: JSON.stringify({
         nickname,
         password,
@@ -40,25 +42,18 @@ export const addNickname = (nickname, password) => async dispatch => {
       method: 'post',
     })
 
+    success = response.ok
     response = await response.json()
-
-    if (response.errors) {
-      throw new ApiError(response)
-    }
-
-    dispatch({
-      status: 'success',
-      type: actionTypes.ADD_NICKNAME,
-      payload: nickname,
-    })
-    return null
   } catch (error) {
-    dispatch({
-      status: 'error',
-      type: actionTypes.ADD_NICKNAME,
-    })
-    return error
+    success = false
+    response = error
   }
+
+  return dispatch({
+    payload: response,
+    status: success ? 'success' : 'error',
+    type: actionTypes.ADD_NICKNAME,
+  })
 }
 
 
@@ -68,6 +63,9 @@ export const addNickname = (nickname, password) => async dispatch => {
 export const getUser = () => async dispatch => {
   dispatch({ type: actionTypes.GET_USER })
 
+  let response = null
+  let success = false
+
   try {
     const token = Cookies.get('access_token')
 
@@ -75,18 +73,15 @@ export const getUser = () => async dispatch => {
       throw new Error('Bad access token')
     }
 
-    let response = await fetch('/api/profile', {
+    response = await fetch('/api/profile', {
       headers: new Headers({
         Authorization: `Bearer ${token}`,
       }),
       method: 'get',
     })
 
+    success = response.ok
     response = await response.json()
-
-    if (response.errors) {
-      throw new ApiError(response)
-    }
 
     const user = { ...response.data }
 
@@ -104,32 +99,25 @@ export const getUser = () => async dispatch => {
     if (userPreferences.allowUniversalTracking) {
       Cookies.set('trackableUserId', user.id, dev ? { domain: '.fuelrats.com' } : {})
     }
-
     await LocalForage.setItem('preferences', userPreferences)
-
-    dispatch({
-      status: 'success',
-      type: actionTypes.GET_USER,
-      payload: response,
-    })
-
-    return null
   } catch (error) {
+    success = false
+    response = error
+
     Cookies.remove('access_token')
     Cookies.remove('user_id')
     await LocalForage.removeItem('preferences')
 
-    dispatch({
-      status: 'error',
-      type: actionTypes.GET_USER,
-    })
-
     /* eslint-disable no-restricted-globals */
     Router.push(location.pathname === '/' ? '/' : `/?authenticate=true&destination=${encodeURIComponent(location.pathname.concat(location.search))}`)
     /* eslint-enable */
-
-    return error
   }
+
+  return dispatch({
+    payload: response,
+    status: success ? 'success' : 'error',
+    type: actionTypes.GET_USER,
+  })
 }
 
 
@@ -139,10 +127,13 @@ export const getUser = () => async dispatch => {
 export const updateUser = (user) => async dispatch => {
   dispatch({ type: actionTypes.UPDATE_USER })
 
+  let response = null
+  let success = false
+
   try {
     const token = Cookies.get('access_token')
 
-    let response = await fetch(`/api/users/${user.id}`, {
+    response = await fetch(`/api/users/${user.id}`, {
       body: JSON.stringify(user),
       headers: new Headers({
         Authorization: `Bearer ${token}`,
@@ -151,23 +142,16 @@ export const updateUser = (user) => async dispatch => {
       method: 'put',
     })
 
+    success = response.ok
     response = await response.json()
-
-    if (response.errors) {
-      throw new ApiError(response)
-    }
-
-    dispatch({
-      status: 'success',
-      type: actionTypes.UPDATE_USER,
-      user: response.data,
-    })
-    return null
   } catch (error) {
-    dispatch({
-      status: 'error',
-      type: actionTypes.UPDATE_USER,
-    })
-    return error
+    success = false
+    response = error
   }
+
+  return dispatch({
+    payload: response,
+    status: success ? 'success' : 'error',
+    type: actionTypes.UPDATE_USER,
+  })
 }
