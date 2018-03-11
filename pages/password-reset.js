@@ -25,7 +25,8 @@ class PasswordReset extends Component {
     let tokenIsValid
 
     if (token) {
-      tokenIsValid = await this.props.validatePasswordResetToken(token)
+      const { status } = await this.props.validatePasswordResetToken(token)
+      tokenIsValid = status === 'success'
     }
 
     this.setState({

@@ -26,7 +26,7 @@ export const addNickname = (nickname, password) => async dispatch => {
   dispatch({ type: actionTypes.ADD_NICKNAME })
 
   try {
-    const token = await LocalForage.getItem('access_token')
+    const token = Cookies.get('access_token')
 
     let response = await fetch('/api/nicknames', {
       body: JSON.stringify({
@@ -69,10 +69,9 @@ export const getUser = () => async dispatch => {
   dispatch({ type: actionTypes.GET_USER })
 
   try {
-    const token = await LocalForage.getItem('access_token')
-    const cookieToken = Cookies.get('access_token')
+    const token = Cookies.get('access_token')
 
-    if (!token || !cookieToken || token !== cookieToken) {
+    if (!token) {
       throw new Error('Bad access token')
     }
 
@@ -106,26 +105,19 @@ export const getUser = () => async dispatch => {
       Cookies.set('trackableUserId', user.id, dev ? { domain: '.fuelrats.com' } : {})
     }
 
-    await Promise.all([
-      LocalForage.setItem('userId', user.id),
-      LocalForage.setItem('preferences', userPreferences),
-    ])
+    await LocalForage.setItem('preferences', userPreferences)
 
     dispatch({
       status: 'success',
       type: actionTypes.GET_USER,
       payload: response,
     })
+
     return null
   } catch (error) {
     Cookies.remove('access_token')
     Cookies.remove('user_id')
-
-    await Promise.all([
-      LocalForage.removeItem('access_token'),
-      LocalForage.removeItem('userId'),
-      LocalForage.removeItem('preferences'),
-    ])
+    await LocalForage.removeItem('preferences')
 
     dispatch({
       status: 'error',
@@ -148,7 +140,7 @@ export const updateUser = (user) => async dispatch => {
   dispatch({ type: actionTypes.UPDATE_USER })
 
   try {
-    const token = await LocalForage.getItem('access_token')
+    const token = Cookies.get('access_token')
 
     let response = await fetch(`/api/users/${user.id}`, {
       body: JSON.stringify(user),

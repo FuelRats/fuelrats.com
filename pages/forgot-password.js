@@ -40,12 +40,12 @@ class ForgotPassword extends Component {
 
     this.setState({ submitting: true })
 
-    const error = await this.props.sendPasswordResetEmail(email)
-    window.console.log(error)
-    if (error) {
+    const { payload, status } = await this.props.sendPasswordResetEmail(email)
+
+    if (status === 'error') {
       this.setState({
         submitting: false,
-        error,
+        error: payload,
       })
       this.props.clearErrors()
     } else {

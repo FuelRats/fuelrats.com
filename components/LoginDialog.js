@@ -46,11 +46,11 @@ class LoginDialog extends Component {
   async onSubmit (event) {
     event.preventDefault()
 
-    const error = await this.props.login(this.state.email, this.state.password)
+    const { response, status } = await this.props.login(this.state.email, this.state.password)
 
-    if (error) {
+    if (status === 'response') {
       this.setState({
-        error,
+        error: response,
       })
     }
   }

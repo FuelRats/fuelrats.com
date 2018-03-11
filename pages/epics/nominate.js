@@ -104,16 +104,16 @@ class EpicNominate extends Component {
     })
 
 
-    let errors = await Promise.all(rats.map(rat => this.props.createEpic({
+    let responses = await Promise.all(rats.map(rat => this.props.createEpic({
       ratId: rat.id,
       rescueId: rescue.length ? rescue[0].id : null,
       notes,
     })))
-    errors = errors.filter(error => error !== null)
+    responses = responses.filter(({ status }) => status === 'error')
 
-    if (errors.length) {
+    if (responses.length) {
       this.setState({
-        error: errors,
+        error: responses.map(({ payload }) => payload),
         submitting: false,
       })
       return

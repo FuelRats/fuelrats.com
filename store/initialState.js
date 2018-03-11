@@ -24,6 +24,11 @@ export default {
     title: null,
   },
 
+  error: {
+    errors: [],
+    hasError: false,
+  },
+
   epics: {
     epics: [],
     retrieving: false,

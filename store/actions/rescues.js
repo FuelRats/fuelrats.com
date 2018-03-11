@@ -1,7 +1,6 @@
-/* eslint no-await-in-loop:off */
 // Module imports
+import Cookies from 'js-cookie'
 import fetch from 'isomorphic-fetch'
-import LocalForage from 'localforage'
 
 
 
@@ -19,7 +18,7 @@ export const getRescues = () => async dispatch => {
   dispatch({ type: actionTypes.GET_RESCUES })
 
   try {
-    const token = await LocalForage.getItem('access_token')
+    const token = Cookies.get('access_token')
 
     let response = await fetch('/api/rescues', {
       headers: new Headers({
@@ -93,6 +92,7 @@ export const getRescuesForCMDRs = CMDRs => async dispatch => {
     })
 
     try {
+      /* eslint-disable no-await-in-loop */
       const responses = await Promise.all([
         // Assists
         fetch(`/api/rescues?outcome=success&rats=${CMDRId}`).then(response => response.json()),
@@ -110,6 +110,7 @@ export const getRescuesForCMDRs = CMDRs => async dispatch => {
       for (let index = 0, { length } = responses; index < length; index++) {
         responses[index] = await responses[index].json()
       }
+      /* eslint-enable no-await-in-loop */
 
       const assistCount = responses[0].meta.total
       const failureCount = responses[1].meta.total

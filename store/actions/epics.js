@@ -1,6 +1,6 @@
 // Module imports
+import Cookies from 'js-cookie'
 import fetch from 'isomorphic-fetch'
-import LocalForage from 'localforage'
 
 
 
@@ -17,10 +17,13 @@ import { ApiError } from '../errors'
 export const retrieveEpic = epicId => async dispatch => {
   dispatch({ type: actionTypes.RETRIEVE_EPIC })
 
-  try {
-    const token = await LocalForage.getItem('access_token')
+  let response = null
+  let success = false
 
-    let response = await fetch(`/api/epics/${epicId}`, {
+  try {
+    const token = Cookies.get('access_token')
+
+    response = await fetch(`/api/epics/${epicId}`, {
       headers: new Headers({
         Authorization: `Bearer ${token}`,
       }),
@@ -35,20 +38,17 @@ export const retrieveEpic = epicId => async dispatch => {
       throw new Error('Rescue not found')
     }
 
-    dispatch({
-      payload: response,
-      status: 'success',
-      type: actionTypes.RETRIEVE_EPIC,
-    })
-    return null
+    success = true
   } catch (error) {
-    dispatch({
-      payload: error,
-      status: 'error',
-      type: actionTypes.RETRIEVE_EPIC,
-    })
-    return error
+    response = error
+    success = false
   }
+
+  return dispatch({
+    payload: response,
+    status: success ? 'success' : 'error',
+    type: actionTypes.RETRIEVE_EPIC,
+  })
 }
 
 
@@ -58,10 +58,13 @@ export const retrieveEpic = epicId => async dispatch => {
 export const createEpic = payload => async dispatch => {
   dispatch({ type: actionTypes.CREATE_EPIC })
 
-  try {
-    const token = await LocalForage.getItem('access_token')
+  let response = null
+  let success = false
 
-    let response = await fetch('/api/epics', {
+  try {
+    const token = Cookies.get('access_token')
+
+    response = await fetch('/api/epics', {
       body: JSON.stringify(payload),
       headers: new Headers({
         Authorization: `Bearer ${token}`,
@@ -76,18 +79,15 @@ export const createEpic = payload => async dispatch => {
       throw new ApiError(response)
     }
 
-    dispatch({
-      payload: response,
-      status: 'success',
-      type: actionTypes.CREATE_EPIC,
-    })
-    return null
+    success = true
   } catch (error) {
-    dispatch({
-      payload: error,
-      status: 'error',
-      type: actionTypes.CREATE_EPIC,
-    })
-    return error
+    response = error
+    success = false
   }
+
+  return dispatch({
+    payload: response,
+    status: success ? 'success' : 'error',
+    type: actionTypes.CREATE_EPIC,
+  })
 }

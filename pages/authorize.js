@@ -1,5 +1,5 @@
 // Module imports
-import LocalForage from 'localforage'
+import Cookies from 'js-cookie'
 import React from 'react'
 
 
@@ -58,7 +58,7 @@ class Authorize extends Component {
     if (client_id && state && scope && response_type) {
     /* eslint-enable camelcase */
       try {
-        const token = await LocalForage.getItem('access_token')
+        const token = Cookies.get('access_token')
 
         /* eslint-disable camelcase */
         let response = await fetch(`/api/oauth2/authorize?client_id=${client_id}&scope=${scope}&state=${state}&response_type=${response_type}`, {

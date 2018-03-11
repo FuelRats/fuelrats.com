@@ -180,10 +180,10 @@ class Paperwork extends Component {
       }
     }
 
-    const error = await this.props.submitPaperwork(rescue.id, rescueUpdates, ratUpdates)
+    const { payload, status } = await this.props.submitPaperwork(rescue.id, rescueUpdates, ratUpdates)
 
-    if (error) {
-      this.setState({ error })
+    if (status === 'error') {
+      this.setState({ error: payload })
       return
     }
 
