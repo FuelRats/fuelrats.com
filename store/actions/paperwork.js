@@ -8,7 +8,6 @@ import fetch from 'isomorphic-fetch'
 
 // Component imports
 import actionTypes from '../actionTypes'
-import { ApiError } from '../errors'
 
 
 
@@ -28,20 +27,16 @@ export const retrievePaperwork = rescueId => async dispatch => {
         Authorization: `Bearer ${token}`,
       }),
     })
-    response = await response.json()
 
-    if (response.errors) {
-      throw new ApiError(response)
-    }
+    success = response.ok
+    response = await response.json()
 
     if (!response.data.length) {
       throw new Error('Rescue not found')
     }
-
-    success = true
   } catch (error) {
-    response = error
     success = false
+    response = error
   }
 
   return dispatch({
@@ -50,7 +45,6 @@ export const retrievePaperwork = rescueId => async dispatch => {
     type: actionTypes.RETRIEVE_PAPERWORK,
   })
 }
-
 
 
 
@@ -73,11 +67,12 @@ export const submitPaperwork = (rescueId, rescue, rats) => async dispatch => {
       method: 'put',
     })
 
-    response = await response.json()
-
-    if (response.errors) {
-      throw new ApiError(response)
+    success = response.ok
+    if (!success) {
+      throw new Error('Error Submitting Paperwork')
     }
+
+    response = await response.json()
 
     if (rats) {
       if (rats.added.length) {
@@ -89,11 +84,13 @@ export const submitPaperwork = (rescueId, rescue, rats) => async dispatch => {
           }),
           method: 'put',
         })
-        response = await response.json()
 
-        if (response.errors) {
-          throw new ApiError(response)
+        success = response.ok
+        if (!success) {
+          throw new Error('Error Submitting Paperwork')
         }
+
+        response = await response.json()
       }
 
       if (rats.removed.length) {
@@ -105,11 +102,12 @@ export const submitPaperwork = (rescueId, rescue, rats) => async dispatch => {
           }),
           method: 'put',
         })
-        response = await response.json()
-
-        if (response.errors) {
-          throw new ApiError(response)
+        success = response.ok
+        if (!success) {
+          throw new Error('Error Submitting Paperwork')
         }
+
+        response = await response.json()
       }
     }
 

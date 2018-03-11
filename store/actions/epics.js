@@ -8,7 +8,6 @@ import fetch from 'isomorphic-fetch'
 
 // Component imports
 import actionTypes from '../actionTypes'
-import { ApiError } from '../errors'
 
 
 
@@ -28,20 +27,16 @@ export const retrieveEpic = epicId => async dispatch => {
         Authorization: `Bearer ${token}`,
       }),
     })
-    response = await response.json()
 
-    if (response.errors) {
-      throw new ApiError(response)
-    }
+    success = response.ok
+    response = await response.json()
 
     if (!response.data.length) {
       throw new Error('Rescue not found')
     }
-
-    success = true
   } catch (error) {
-    response = error
     success = false
+    response = error
   }
 
   return dispatch({
@@ -73,16 +68,11 @@ export const createEpic = payload => async dispatch => {
       method: 'post',
     })
 
+    success = response.ok
     response = await response.json()
-
-    if (response.errors) {
-      throw new ApiError(response)
-    }
-
-    success = true
   } catch (error) {
-    response = error
     success = false
+    response = error
   }
 
   return dispatch({

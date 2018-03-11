@@ -8,7 +8,6 @@ import fetch from 'isomorphic-fetch'
 
 // Component imports
 import actionTypes from '../actionTypes'
-import { ApiError } from '../errors'
 
 
 
@@ -17,79 +16,60 @@ import { ApiError } from '../errors'
 export const getRescues = () => async dispatch => {
   dispatch({ type: actionTypes.GET_RESCUES })
 
+  let response = null
+  let success = false
+
   try {
     const token = Cookies.get('access_token')
 
-    let response = await fetch('/api/rescues', {
+    response = await fetch('/api/rescues', {
       headers: new Headers({
         Authorization: `Bearer ${token}`,
       }),
       method: 'get',
     })
 
+    success = response.ok
     response = await response.json()
-
-    if (response.errors) {
-      throw new ApiError(response)
-    }
-
-    dispatch({
-      rescues: response.data,
-      status: 'success',
-      total: response.meta.total,
-      type: actionTypes.GET_RESCUES,
-    })
-    return null
   } catch (error) {
-    dispatch({
-      payload: error,
-      status: 'error',
-      type: actionTypes.GET_RESCUES,
-    })
-    return error
+    success = false
+    response = error
   }
+
+  return dispatch({
+    payload: response,
+    status: success ? 'success' : 'error',
+    type: actionTypes.GET_RESCUES,
+  })
 }
 
 export const getRescuesByRat = ratId => async dispatch => {
-  dispatch({
-    rat: ratId,
-    type: actionTypes.GET_RESCUES,
-  })
+  dispatch({ rat: ratId, type: actionTypes.GET_RESCUES })
+
+  let response = null
+  let success = false
 
   try {
-    let response = await fetch(`/api/rescues?rats=${ratId}`)
+    response = await fetch(`/api/rescues?rats=${ratId}`)
+
+    success = response.ok
     response = await response.json()
-
-    if (response.errors) {
-      throw new ApiError(response)
-    }
-
-    dispatch({
-      rat: response.data,
-      status: 'success',
-      type: actionTypes.GET_RESCUES,
-    })
-
-    return null
   } catch (error) {
-    dispatch({
-      payload: error,
-      rat: ratId,
-      status: 'error',
-      type: actionTypes.GET_RESCUES,
-    })
-
-    return error
+    success = false
+    response = error
   }
+
+  return dispatch({
+    payload: response,
+    status: success ? 'success' : 'error',
+    type: actionTypes.GET_RESCUES,
+  })
 }
 
 export const getRescuesForCMDRs = CMDRs => async dispatch => {
   // Note. Not fit for use.
   for (const CMDRId of CMDRs) {
-    dispatch({
-      CMDR: CMDRId,
-      type: actionTypes.GET_RESCUES,
-    })
+    dispatch({ CMDR: CMDRId, type: actionTypes.GET_RESCUES })
 
     try {
       /* eslint-disable no-await-in-loop */
