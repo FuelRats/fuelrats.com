@@ -149,7 +149,7 @@ class EpicNominate extends Component {
 
         {(error && !submitting) && (
           <div className="store-errors">
-            <div clasName="store-error">
+            <div className="store-error">
               Error submitting nomination.
             </div>
           </div>
