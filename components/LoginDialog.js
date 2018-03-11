@@ -2,7 +2,6 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import React from 'react'
-import Router from 'next/router'
 
 
 
@@ -10,6 +9,7 @@ import Router from 'next/router'
 
 // Component imports
 import { actions } from '../store'
+import { Router } from '../routes'
 import ApiErrorDisplay from './ApiErrorDisplay'
 import Component from './Component'
 
@@ -46,11 +46,11 @@ class LoginDialog extends Component {
   async onSubmit (event) {
     event.preventDefault()
 
-    const error = await this.props.login(this.state.email, this.state.password)
+    const { response, status } = await this.props.login(this.state.email, this.state.password)
 
-    if (error) {
+    if (status === 'response') {
       this.setState({
-        error,
+        error: response,
       })
     }
   }

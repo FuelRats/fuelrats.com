@@ -1,6 +1,6 @@
 // Module imports
+import Cookies from 'js-cookie'
 import fetch from 'isomorphic-fetch'
-import LocalForage from 'localforage'
 
 
 
@@ -15,11 +15,9 @@ import { ApiError } from '../errors'
 
 export const checkDecalEligibility = () => async dispatch => {
   try {
-    dispatch({
-      type: actionTypes.CHECK_DECAL_ELIGIBILITY,
-    })
+    dispatch({ type: actionTypes.CHECK_DECAL_ELIGIBILITY })
 
-    const token = await LocalForage.getItem('access_token')
+    const token = Cookies.get('access_token')
 
     let response = await fetch('/api/decals/check', {
       headers: new Headers({
@@ -58,7 +56,7 @@ export const redeemDecal = () => async dispatch => {
       type: actionTypes.REDEEM_DECAL,
     })
 
-    const token = await LocalForage.getItem('access_token')
+    const token = Cookies.get('access_token')
 
     let response = await fetch('/api/decals/redeem', {
       headers: new Headers({

@@ -6,6 +6,9 @@ let isDev = process.env.NODE_ENV !== 'production'
   Module imports
 \******************************************************************************/
 
+// Import variables from .env file.
+require('dotenv').config()
+
 const config = require('./config')
 const koa = new (require('koa'))
 const path = require('path')

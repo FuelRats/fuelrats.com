@@ -83,4 +83,4 @@ class Profile extends React.Component {
 
 
 
-export default Page(Profile, title)
+export default Page(Profile, title, null, true)

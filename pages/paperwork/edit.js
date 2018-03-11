@@ -1,4 +1,5 @@
 // Component imports
+import { Router } from '../../routes'
 import ApiErrorDisplay from '../../components/ApiErrorDisplay'
 import Component from '../../components/Component'
 import FirstLimpetInput from '../../components/FirstLimpetInput'
@@ -179,18 +180,16 @@ class Paperwork extends Component {
       }
     }
 
-    const error = await this.props.submitPaperwork(rescue.id, rescueUpdates, ratUpdates)
+    const { payload, status } = await this.props.submitPaperwork(rescue.id, rescueUpdates, ratUpdates)
 
-    if (error) {
-      this.setState({ error })
+    if (status === 'error') {
+      this.setState({ error: payload })
       return
     }
 
     this.dirtyFields.clear()
 
-    /* eslint-disable no-global-assign, no-restricted-globals */
-    location = `/paperwork/${rescue.id}`
-    /* eslint-enable */
+    Router.pushRoute('paperwork view', { id: rescue.id })
   }
 
   render () {
@@ -487,4 +486,4 @@ const mapStateToProps = state => {
 export default Page(Paperwork, title, {
   mapStateToProps,
   mapDispatchToProps,
-})
+}, true)

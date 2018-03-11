@@ -15,6 +15,7 @@ export default function (state = initialState.user, action) {
 
         return newState
       }
+      break
 
     case actionTypes.CREATE_RAT:
       if (action.status === 'success') {
@@ -29,6 +30,7 @@ export default function (state = initialState.user, action) {
           },
         })
       }
+      break
 
     case actionTypes.GET_USER:
       if (action.status === 'success') {
@@ -75,12 +77,10 @@ export default function (state = initialState.user, action) {
           return user
         }
       }
+      break
 
     case actionTypes.LOGOUT:
-      switch (action.status) {
-        default:
-          return Object.assign({}, initialState.user)
-      }
+      return Object.assign({}, initialState.user)
 
     case actionTypes.UPDATE_USER:
       if (action.user) {
@@ -88,8 +88,10 @@ export default function (state = initialState.user, action) {
 
         return Object.assign({}, state, user)
       }
+      break
 
     default:
-      return state
+      break
   }
+  return state
 }

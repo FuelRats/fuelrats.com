@@ -1,5 +1,4 @@
 // Module imports
-import Link from 'next/link'
 import React from 'react'
 import PropTypes from 'prop-types'
 
@@ -8,6 +7,7 @@ import PropTypes from 'prop-types'
 
 
 // Component imports
+import { Link } from '../routes'
 import LoginDialog from '../components/LoginDialog'
 import Page from '../components/Page'
 

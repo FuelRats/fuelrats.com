@@ -1519,6 +1519,12 @@ compare-func@^1.3.1:
     array-ify "^1.0.0"
     dot-prop "^3.0.0"
 
+component-cookie@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/component-cookie/-/component-cookie-1.1.3.tgz#053e14a3bd7748154f55724fd39a60c01994ebed"
+  dependencies:
+    debug "*"
+
 compressible@^2.0.0:
   version "2.0.11"
   resolved "https://registry.yarnpkg.com/compressible/-/compressible-2.0.11.tgz#16718a75de283ed8e604041625a2064586797d8a"
@@ -1641,7 +1647,7 @@ cookie-signature@1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/cookie-signature/-/cookie-signature-1.0.6.tgz#e303a882b342cc3ee8ca513a79999734dab3ae2c"
 
-cookie@0.3.1:
+cookie@0.3.1, cookie@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.3.1.tgz#e7e0a1f9ef43b4c8ba925c5c5a96e806d16873bb"
 
@@ -2291,6 +2297,10 @@ dot-prop@^3.0.0:
   resolved "https://registry.yarnpkg.com/dot-prop/-/dot-prop-3.0.0.tgz#1b708af094a49c9a0e7dbcad790aba539dac1177"
   dependencies:
     is-obj "^1.0.0"
+
+dotenv@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-5.0.1.tgz#a5317459bd3d79ab88cff6e44057a6a3fbb1fcef"
 
 duplexer@^0.1.1:
   version "0.1.1"
@@ -4601,11 +4611,24 @@ netrc@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/netrc/-/netrc-0.1.4.tgz#6be94fcaca8d77ade0a9670dc460914c94472444"
 
+next-cookies@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/next-cookies/-/next-cookies-1.0.2.tgz#1a504781824a7a7c5d948f0bbb99a7caeba6151b"
+  dependencies:
+    component-cookie "^1.1.3"
+    cookie "^0.3.1"
+
 next-redux-wrapper@^1.3.5:
   version "1.3.5"
   resolved "https://registry.yarnpkg.com/next-redux-wrapper/-/next-redux-wrapper-1.3.5.tgz#cf24d4e4bdaca6cbf18e73300e7fb19428946f03"
   dependencies:
     object.assign "^4.0.4"
+
+next-routes@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/next-routes/-/next-routes-1.3.0.tgz#d3d58a7287321016e7eb6ee2f93b9680b670b2d4"
+  dependencies:
+    path-to-regexp "^2.1.0"
 
 next@^4.1.4:
   version "4.1.4"
@@ -5119,6 +5142,10 @@ path-to-regexp@^1.0.0, path-to-regexp@^1.1.1:
   resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-1.7.0.tgz#59fde0f435badacba103a84e9d3bc64e96b9937d"
   dependencies:
     isarray "0.0.1"
+
+path-to-regexp@^2.1.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-2.2.0.tgz#80f0ff45c1e0e641da74df313644eaf115050972"
 
 path-type@^1.0.0:
   version "1.1.0"
@@ -6180,6 +6207,10 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
   dependencies:
     hash-base "^2.0.0"
     inherits "^2.0.1"
+
+route-parser@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/route-parser/-/route-parser-0.0.5.tgz#7d1d09d335e49094031ea16991a4a79b01bbe1f4"
 
 run-async@^2.2.0:
   version "2.3.0"

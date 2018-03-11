@@ -1,12 +1,11 @@
 import NProgress from 'nprogress'
 import NextHead from 'next/head'
 import React from 'react'
-import Router from 'next/router'
 
 
 
 
-
+import { Router } from '../routes'
 import appStylesheet from '../scss/app.scss'
 import libStylesheet from '../scss/lib.scss'
 

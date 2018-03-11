@@ -1,5 +1,4 @@
 // Module imports
-import Link from 'next/link'
 import moment from 'moment'
 import React from 'react'
 
@@ -8,6 +7,7 @@ import React from 'react'
 
 
 // Component imports
+import { Link } from '../../routes'
 import Component from '../../components/Component'
 import Page from '../../components/Page'
 

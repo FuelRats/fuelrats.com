@@ -1,4 +1,4 @@
-import LocalForage from 'localforage'
+import Cookies from 'js-cookie'
 
 
 
@@ -36,7 +36,7 @@ export default class extends TagsInput {
 
     if (query) {
       try {
-        const token = await LocalForage.getItem('access_token')
+        const token = Cookies.get('access_token')
 
         let response = await fetch(`/api/rescues/${query}`, {
           headers: new Headers({

@@ -1,6 +1,6 @@
 // Module imports
+import Cookies from 'js-cookie'
 import fetch from 'isomorphic-fetch'
-import LocalForage from 'localforage'
 
 
 
@@ -17,10 +17,13 @@ import { ApiError } from '../errors'
 export const retrievePaperwork = rescueId => async dispatch => {
   dispatch({ type: actionTypes.RETRIEVE_PAPERWORK })
 
-  try {
-    const token = await LocalForage.getItem('access_token')
+  let response = null
+  let success = false
 
-    let response = await fetch(`/api/rescues/${rescueId}`, {
+  try {
+    const token = Cookies.get('access_token')
+
+    response = await fetch(`/api/rescues/${rescueId}`, {
       headers: new Headers({
         Authorization: `Bearer ${token}`,
       }),
@@ -35,20 +38,17 @@ export const retrievePaperwork = rescueId => async dispatch => {
       throw new Error('Rescue not found')
     }
 
-    dispatch({
-      payload: response,
-      status: 'success',
-      type: actionTypes.RETRIEVE_PAPERWORK,
-    })
-    return null
+    success = true
   } catch (error) {
-    dispatch({
-      payload: error,
-      status: 'error',
-      type: actionTypes.RETRIEVE_PAPERWORK,
-    })
-    return error
+    response = error
+    success = false
   }
+
+  return dispatch({
+    payload: response,
+    status: success ? 'success' : 'error',
+    type: actionTypes.RETRIEVE_PAPERWORK,
+  })
 }
 
 
@@ -58,10 +58,13 @@ export const retrievePaperwork = rescueId => async dispatch => {
 export const submitPaperwork = (rescueId, rescue, rats) => async dispatch => {
   dispatch({ type: actionTypes.SUBMIT_PAPERWORK })
 
-  try {
-    const token = await LocalForage.getItem('access_token')
+  let response = null
+  let success = false
 
-    let response = await fetch(`/api/rescues/${rescueId}`, {
+  try {
+    const token = Cookies.get('access_token')
+
+    response = await fetch(`/api/rescues/${rescueId}`, {
       body: JSON.stringify(rescue),
       headers: new Headers({
         Authorization: `Bearer ${token}`,
@@ -110,18 +113,15 @@ export const submitPaperwork = (rescueId, rescue, rats) => async dispatch => {
       }
     }
 
-    dispatch({
-      payload: response,
-      status: 'success',
-      type: actionTypes.SUBMIT_PAPERWORK,
-    })
-    return null
+    success = true
   } catch (error) {
-    dispatch({
-      payload: error,
-      status: 'error',
-      type: actionTypes.SUBMIT_PAPERWORK,
-    })
-    return error
+    response = error
+    success = false
   }
+
+  return dispatch({
+    payload: response,
+    status: success ? 'success' : 'error',
+    type: actionTypes.SUBMIT_PAPERWORK,
+  })
 }

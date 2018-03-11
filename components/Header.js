@@ -1,5 +1,4 @@
 // Module imports
-import Link from 'next/link'
 import React from 'react'
 import { connect } from 'react-redux'
 
@@ -9,7 +8,7 @@ import { connect } from 'react-redux'
 
 // Component imports
 import Nav from './Nav'
-
+import { Link } from '../routes'
 
 
 

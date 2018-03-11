@@ -1,5 +1,4 @@
 // Module imports
-import Link from 'next/link'
 import moment from 'moment'
 import React from 'react'
 
@@ -8,6 +7,7 @@ import React from 'react'
 
 
 // Component imports
+import { Link } from '../../routes'
 import Component from '../../components/Component'
 import Page from '../../components/Page'
 
@@ -35,28 +35,24 @@ class Blogs extends Component {
       totalPages,
     } = this.props
 
-    const hrefQueryParams = []
-    const href = '/blog/all'
-    let as = '/blog'
+    let route = [
+      '/blog',
+    ]
 
     if (author) {
-      hrefQueryParams.push(`author=${author}`)
-      as += `/author/${author}`
+      route.push(`/author/${category}`)
+    } else if (category) {
+      route.push(`/category/${category}`)
     }
 
-    if (category) {
-      hrefQueryParams.push(`category=${category}`)
-      as += `/category/${category}`
-    }
+    route = route.join('')
 
     return (
       <menu
         type="toolbar">
         <div className="secondary">
           {(page > 1) && (
-            <Link
-              as={`${as}/page/${page - 1}`}
-              href={`${href}?${hrefQueryParams.concat(`page=${page - 1}`).join('&')}`}>
+            <Link route={page - 1 > 1 ? `${route}/page/${page - 1}` : route} >
               <a className="button">Previous Page</a>
             </Link>
           )}
@@ -64,9 +60,7 @@ class Blogs extends Component {
 
         <div className="primary">
           {(page < totalPages) && (
-            <Link
-              as={`${as}/page/${page + 1}`}
-              href={`${href}?${hrefQueryParams.concat(`page=${page + 1}`).join('&')}`}>
+            <Link route={`${route}/page/${page + 1}`} >
               <a className="button">Next Page</a>
             </Link>
           )}
