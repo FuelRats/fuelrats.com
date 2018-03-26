@@ -1,20 +1,22 @@
 import initialState from '../initialState'
 
 
-const isDev = process.env.NODE_ENV !== 'production'
+const isDev = preval`module.exports = process.env.NODE_ENV !== 'production' || ['develop', 'beta'].includes(process.env.TRAVIS_BRANCH)`
 
 
 export default function (state = initialState.error, action) {
-  if (action.status === 'error' && isDev) {
-    console.log(action)
+  if (action.status && action.status !== 'success') {
+    console.error('ACTION ERR:', action)
 
-    return {
-      ...state,
-      errors: [
-        ...state.errors,
-        action,
-      ],
-      hasError: true,
+    if (isDev) {
+      return {
+        ...state,
+        errors: [
+          ...state.errors,
+          action,
+        ],
+        hasError: true,
+      }
     }
   }
   return state
