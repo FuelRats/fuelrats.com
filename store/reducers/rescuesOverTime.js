@@ -16,21 +16,24 @@ export default function (state = initialState.rescuesOverTime, action) {
     case actionTypes.GET_RESCUES_OVER_TIME:
       switch (status) {
         case 'success':
-          return Object.assign({}, state, {
+          return {
+            ...state,
             loading: false,
-            statistics: payload,
-          })
+            statistics: payload.data,
+          }
 
         case 'error':
-          return Object.assign({}, state, {
+          return {
+            ...state,
             loading: false,
             statistics: [],
-          })
+          }
 
         default:
-          return Object.assign({}, state, {
+          return {
+            ...state,
             loading: true,
-          })
+          }
       }
 
     default:
