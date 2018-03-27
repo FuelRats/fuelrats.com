@@ -24,7 +24,7 @@ const Donate = () => (
         <br />
         Since 3301, We've built up a plethora of custom tools and services to assist in meeting our ever-growing demand.
         <br />
-        With growth, has come expenses. The cost to keep our lights on has grown significantly, and now exceed €100 per month.
+        With growth has come expenses. The cost to keep our lights on has grown significantly, and now exceed €100 per month.
         <br />
         To assist the dedicated few who have been helping with these costs privately, we have now opened donations to the general public!
       </p>
