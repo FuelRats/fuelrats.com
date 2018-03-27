@@ -21,6 +21,9 @@ const links = {
   Leaderboard: {
     route: '/leaderboard',
   },
+  Donate: {
+    route: '/donate',
+  },
 }
 
 
