@@ -194,8 +194,8 @@ export const register = (email, password, name, platform, nickname, recaptcha) =
       Cookies.set('access_token', response.access_token, { expires: 365 })
     }
 
+    success = true
     response = null
-    success = response.ok
   } catch (error) {
     response = error
     success = false
@@ -236,7 +236,6 @@ export const resetPassword = (password, token) => async dispatch => {
     })
 
     success = response.ok
-    response = await response.json()
   } catch (error) {
     response = error
     success = false
@@ -271,7 +270,6 @@ export const sendPasswordResetEmail = email => async dispatch => {
     })
 
     success = response.ok
-    response = await response.json()
   } catch (error) {
     response = error
     success = false
