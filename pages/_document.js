@@ -5,7 +5,6 @@ import Document, { Head, Main, NextScript } from 'next/document'
 
 
 const fonts = ['Raleway', 'Open Sans']
-const gatmId = preval`module.exports = process.env.GA_TAG_MANAGER_ID`
 
 
 
@@ -13,7 +12,6 @@ const gatmId = preval`module.exports = process.env.GA_TAG_MANAGER_ID`
 
 export default class extends Document {
   render() {
-    /* eslint-disable react/no-danger */
     return (
       <html lang="en">
         <Head>
@@ -41,30 +39,9 @@ export default class extends Document {
           <link rel="icon" type="image/png" href="/static/favicon/favicon-128.png" sizes="128x128" />
 
           <script src="//cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.9/dialog-polyfill.min.js" />
-          <script dangerouslySetInnerHTML={
-            {
-              __html: `
-                (function (w, d, s, l, i) {
-                  w[l] = w[l] || []
-                  w[l].push({
-                    'gtm.start': new Date().getTime(),
-                    event: 'gtm.js'
-                  })
-                  var f = d.getElementsByTagName(s)[0]
-                  var j = d.createElement(s)
-                  var dl = l != 'dataLayer' ? '&l=' + l : ''
-                  j.async=true
-                  j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl
-                  f.parentNode.insertBefore(j,f)
-                })(window, document, 'script', 'dataLayer', '${gatmId}');
-                `,
-              }
-            } />
         </Head>
 
         <body>
-          <noscript dangerouslySetInnerHTML={{ __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=${gatmId}X" height="0" width="0" style="display:none; visibility:hidden;" />` }} />
-
           <div id="alert-container" />
 
           <div id="dialog-container" />
@@ -80,6 +57,5 @@ export default class extends Document {
         </body>
       </html>
     )
-    /* eslint-enable */
   }
 }
