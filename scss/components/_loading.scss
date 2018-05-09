@@ -51,5 +51,9 @@
       top: 0;
       z-index: 100;
     }
+
+    &[data-loader-text]:before {
+      content: attr(data-loader-text)
+    }
   }
 }

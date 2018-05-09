@@ -20,4 +20,8 @@ routes
   .add('blog view', '/blog/:id', '/blog/single')
 
   // Epics
-  .add('epic nominate', 'epic/nominate', 'epics/nominate')
+  .add('epic nominate', '/epic/nominate', '/epics/nominate')
+
+  // Legal
+  .add('legal terms', '/terms-of-service', '/terms-of-service')
+  .add('legal privacy', '/privacy-policy', '/privacy-policy')
