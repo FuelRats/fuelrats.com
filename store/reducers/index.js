@@ -2,7 +2,6 @@ import { combineReducers } from 'redux'
 import authentication from './authentication'
 import blogs from './blogs'
 import decals from './decals'
-import dialog from './dialog'
 import epics from './epics'
 import error from './error'
 import paperwork from './paperwork'
@@ -22,7 +21,6 @@ export default combineReducers({
   authentication,
   blogs,
   decals,
-  dialog,
   epics,
   error,
   paperwork,
