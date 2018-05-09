@@ -98,22 +98,6 @@ module.exports = function (nextjs, koa) {
     await ctx.redirect(`https://confluence.fuelrats.com/pages/viewpage.action?pageId=3637257`)
   })
 
-  // Temporary Redirects
-  router.all('/privacy-policy', async (ctx, next) => {
-    ctx.status = 307
-    await ctx.redirect(`https://confluence.fuelrats.com/display/FRKB/Privacy+Policy`)
-  })
-
-  router.all('/terms-of-service', async (ctx, next) => {
-    ctx.status = 307
-    await ctx.redirect(`https://confluence.fuelrats.com/display/FRKB/Terms+of+Service`)
-  })
-
-  router.all('/code-of-conduct', async (ctx, next) => {
-    ctx.status = 307
-    await ctx.redirect(`https://confluence.fuelrats.com/display/FRKB/Code+of+Conduct`)
-  })
-
   /******************************************************************************\
     Fallthrough routes
   \******************************************************************************/
