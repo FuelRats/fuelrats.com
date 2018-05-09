@@ -7,7 +7,6 @@ import React from 'react'
 
 import { Router } from '../routes'
 import appStylesheet from '../scss/app.scss'
-import libStylesheet from '../scss/lib.scss'
 
 
 
@@ -29,8 +28,6 @@ Router.onRouteChangeComplete = () => NProgress.done()
 export default props => (
   <NextHead>
     <title>{props.title} | Fuelrats.com</title>
-
-    <style dangerouslySetInnerHTML={{ __html: libStylesheet }} />
     <style dangerouslySetInnerHTML={{ __html: appStylesheet }} />
   </NextHead>
 )
