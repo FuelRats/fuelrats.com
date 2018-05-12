@@ -81,15 +81,19 @@ class TermsDialog extends Component {
       termsAgreed,
     } = this.state
 
+    const checkboxId = `termsDialog-${this.props.title.replace(/\s/g, '')}-checkbox`
+
     return {
       primary: [
         (
           <span>
             <input
               checked={termsAgreed}
+              className="large"
+              id={checkboxId}
               onChange={({ target }) => this.setState({ termsAgreed: target.checked })}
               type="checkbox" />
-            {this.props.checkboxLabel}
+            <label htmlFor={checkboxId}>{this.props.checkboxLabel}</label>
           </span>
         ),
         (
