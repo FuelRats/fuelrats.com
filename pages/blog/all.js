@@ -1,7 +1,7 @@
 // Module imports
 import moment from 'moment'
 import React from 'react'
-import FontAwesomeIcon from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 

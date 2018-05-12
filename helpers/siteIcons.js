@@ -1,0 +1,16 @@
+export {
+  faBars,
+  faBook,
+  faCheck,
+  faClock,
+  faExclamationTriangle,
+  faEye,
+  faEyeSlash,
+  faFolder,
+  faHandsHelping,
+  faInfoCircle,
+  faSpinner,
+  faTimes,
+  faUser,
+  faUserSecret,
+} from '@fortawesome/free-solid-svg-icons'
