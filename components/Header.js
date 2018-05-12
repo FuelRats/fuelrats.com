@@ -1,7 +1,7 @@
 // Module imports
 import React from 'react'
 import { connect } from 'react-redux'
-
+import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 
 
 
@@ -35,7 +35,7 @@ const Header = (props) => {
       <input id="nav-control" type="checkbox" />
 
       <label title="Expand/Collapse Menu" htmlFor="nav-control" className="burger" id="burger">
-        <i className="fa fa-bars fa-3x" aria-hidden="true" />
+        <FontAwesomeIcon icon="bars" size="3x" />
       </label>
 
       <header role="banner">

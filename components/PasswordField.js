@@ -1,5 +1,6 @@
 // Module imports
 import React from 'react'
+import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 import zxcvbn from 'zxcvbn'
 
 
@@ -126,12 +127,7 @@ export default class PasswordField extends Component {
             onClick={this.handleShowPasswordClick}
             tabIndex="-1"
             type="button">
-            {!showPassword && (
-              <i className="fa fa-eye" />
-            )}
-            {showPassword && (
-              <i className="fa fa-eye-slash" />
-            )}
+            <FontAwesomeIcon icon={showPassword ? 'eye-slash' : 'eye'} fixedWidth />
           </button>
         </div>
 
@@ -156,7 +152,7 @@ export default class PasswordField extends Component {
       <li
         className="suggestion"
         key={index}>
-        <i className="fa fa-fw fa-info-circle" />
+        <FontAwesomeIcon icon="info-circle" fixedWidth />
         {suggestion}
       </li>
     )
@@ -167,7 +163,7 @@ export default class PasswordField extends Component {
       <li
         className="warning"
         key={index}>
-        <i className="fa fa-fw fa-warning" />
+        <FontAwesomeIcon icon="exclamation-triangle" fixedWidth />
         {warning}
       </li>
     )

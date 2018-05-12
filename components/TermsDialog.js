@@ -1,0 +1,111 @@
+// Module imports
+import React from 'react'
+
+
+
+
+
+// Component imports
+import Component from '../components/Component'
+import Dialog from './Dialog'
+
+
+
+
+
+class TermsDialog extends Component {
+  /***************************************************************************\
+    Public Methods
+  \***************************************************************************/
+
+  async componentDidMount () {
+    const {
+      dialogContent,
+    } = this.props
+
+    let content = null
+
+    if (typeof dialogContent === 'function') {
+      content = await dialogContent()
+    }
+
+    this.setState({
+      content,
+      loading: false,
+    })
+  }
+
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      content: null,
+      termsAgreed: false,
+      loading: true,
+    }
+  }
+
+  render () {
+    const {
+      content,
+      loading,
+    } = this.state
+
+    return (
+      <Dialog
+        className="terms-dialog"
+        controls={this.controls}
+        title={this.props.title}
+        showClose={false}
+        onClose={this.props.onClose}>
+
+        {loading && (
+          <div className="loading content" />
+        )}
+
+        {(!loading && content) && (
+          <div className="content">
+            {content}
+          </div>
+        )}
+
+        {(!loading && !content) && (
+          <div className="error content" />
+        )}
+      </Dialog>
+    )
+  }
+
+  get controls () {
+    const {
+      termsAgreed,
+    } = this.state
+
+    return {
+      primary: [
+        (
+          <span>
+            <input
+              checked={termsAgreed}
+              onChange={({ target }) => this.setState({ termsAgreed: target.checked })}
+              type="checkbox" />
+            {this.props.checkboxLabel}
+          </span>
+        ),
+        (
+          <button
+            disabled={!termsAgreed}
+            onClick={() => this.props.onClose()}>
+            Next
+          </button>
+        ),
+      ],
+    }
+  }
+}
+
+
+
+
+
+export default TermsDialog

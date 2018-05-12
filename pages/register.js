@@ -1,13 +1,33 @@
+// Module imports
+import fetch from 'isomorphic-fetch'
+
 // Component imports
 import { Link } from '../routes'
 import Component from '../components/Component'
 import Page from '../components/Page'
 import PasswordField from '../components/PasswordField'
 import RadioOptionsInput from '../components/RadioOptionsInput'
+import TermsDialog from '../components/TermsDialog'
 
 
 // Component constants
 const title = 'Register'
+
+const getWordpressPageElement = async id => {
+  const response = await fetch(`/wp-api/pages/${id}`)
+  let page = null
+
+  if (response.ok) {
+    page = await response.json()
+    page = page.content.rendered.replace(/<ul>/gi, '<ul class="bulleted">').replace(/<ol>/gi, '<ol class="numbered">')
+  }
+
+  /* eslint-disable react/no-danger */
+  return (
+    <div dangerouslySetInnerHTML={{ __html: page }} />
+  )
+  /* eslint-enable react/no-danger */
+}
 
 
 
@@ -17,6 +37,15 @@ class Register extends Component {
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
+
+  async componentDidMount () {
+    const termsAlreadyAccepted = Boolean(sessionStorage.getItem('termsAccepted'))
+
+    this.setState({
+      acceptTerms: termsAlreadyAccepted,
+      acceptPrivacy: termsAlreadyAccepted,
+    })
+  }
 
   constructor (props) {
     super(props)
@@ -28,7 +57,8 @@ class Register extends Component {
     ])
 
     this.state = {
-      acceptTerms: false,
+      acceptTerms: true,
+      acceptPrivacy: true,
       email: '',
       nickname: '',
       password: '',
@@ -80,6 +110,7 @@ class Register extends Component {
   render () {
     const {
       acceptTerms,
+      acceptPrivacy,
       email,
       nickname,
       ratName,
@@ -206,7 +237,7 @@ class Register extends Component {
                 disabled={submitting}
                 name="acceptTerms"
                 type="checkbox"
-                checked={acceptTerms}
+                checked={acceptTerms && acceptPrivacy}
                 onChange={this.handleChange} />
               I agree that I have read and agree to the <Link route="legal terms"><a>Terms of Service</a></Link> and <Link route="legal privacy"><a>Privacy Policy</a></Link>, and that I am 13 years of age or older.
             </span>
@@ -224,6 +255,26 @@ class Register extends Component {
             <div className="secondary" />
           </menu>
         </form>
+
+        { !acceptTerms && !acceptPrivacy && (
+          <TermsDialog
+            dialogContent={() => getWordpressPageElement(3545)}
+            onClose={() => this.setState({ acceptTerms: true })}
+            title="Terms of Service"
+            checkboxLabel="I have read and agree to these Terms of Service" />
+        )}
+
+        { acceptTerms && !acceptPrivacy && (
+          <TermsDialog
+            dialogContent={() => getWordpressPageElement(3545)}
+            onClose={() => {
+              this.setState({ acceptPrivacy: true })
+              sessionStorage.setItem('termsAccepted', true)
+            }}
+            title="Privacy Policy"
+            checkboxLabel="I have read and agree to this Privacy Policy" />
+        )}
+
       </div>
     )
   }
@@ -231,6 +282,7 @@ class Register extends Component {
   validate () {
     const {
       acceptTerms,
+      acceptPrivacy,
       nickname,
       password,
     } = this.state
@@ -247,7 +299,7 @@ class Register extends Component {
       return false
     }
 
-    if (!acceptTerms) {
+    if (!acceptTerms || !acceptPrivacy) {
       return false
     }
 

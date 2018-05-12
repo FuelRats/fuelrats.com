@@ -66,7 +66,6 @@ class PrivacyPolicy extends Component {
     let content = null
 
     if (page) {
-      console.log(page)
       content = page.content.rendered.replace(/<ul>/gi, '<ul class="bulleted">').replace(/<ol>/gi, '<ol class="numbered">')
     }
 

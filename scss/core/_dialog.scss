@@ -1,114 +1,81 @@
-dialog {
-  background-color: $black;
+[role=dialog] {
+  background-color: rgba($black, .99);
+  margin-top: 4rem;
   border: none;
-  color: $white;
-  flex-basis: 0;
+  display: flex;
   flex-direction: column;
-  flex-grow: 1;
-  left: 50%;
-  margin: auto;
-  max-width: 80vw;
-  min-width: 50vw;
-  opacity: 0;
-  padding: 4rem;
-  pointer-events: none;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 100;
+  margin: 0 auto auto auto;
+  min-width: 75rem;
+  overflow: hidden;
+  pointer-events: initial;
+  z-index: 401;
+  padding: 2rem;
 
-  &[open] {
-    opacity: 1;
-    pointer-events: auto;
+  @media screen and (max-width: 768px) {
+    min-width: 100vw;
   }
 
-  & + .backdrop,
-  &::backdrop {
-    background-color: rgba($grey, 0.8);
-    bottom: 0;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
+  > header {
+    align-items: stretch;
+    display: flex;
+    flex-shrink: 0;
+    color: $white;
+
+    h2 {
+      padding: 1rem 2rem;
+    }
+
+    [name=close] {
+      border-radius: 0;
+      margin-left: auto;
+    }
   }
 
-  > *:not(:last-child) {
-    margin-bottom: 2rem;
-  }
-
-  input[type] {
-    background-color: rgba($black, 0.2);
-    margin-bottom: 2rem;
-  }
-
-  menu {
-    padding: 0;
-  }
-
-  .close {
-    position: absolute;
-    right: 1rem;
-    top: 1rem;
-  }
-
-  .content {
-    background-color: $white;
-    box-shadow: 0 0 1rem 0 black;
-    color: $black;
-    flex-grow: 1;
+  > .content {
     flex-shrink: 1;
-    line-height: 2.5;
-    margin-left: -6rem;
-    margin-right: -6rem;
-    padding: 4rem;
-    position: relative;
-
-    &:before,
-    &:after {
-      content: '';
-      border-color: $transparent;
-      border-style: solid;
-      border-width: 1rem;
-      border-top-color: $white;
-      display: block;
-      height: 0;
-      position: absolute;
-      top: 100%;
-      width: 0;
-    }
-
-    &:before {
-      border-right-color: $white;
-      left: 0;
-    }
-
-    &:after {
-      border-left-color: $white;
-      right: 0;
-    }
-
-    menu[type=toolbar] {
-      button.secondary:hover {
-        color: $black;
-        text-shadow: none;
-      }
-      a.button.link:not(:hover) {
-        color: $black;
-      }
-    }
+    padding-top: 2rem;
   }
 
-  .loading:empty {
-    background-color: rgba($black, 0.8);
-    bottom: 0;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
+  > footer {
+    color: white;
+  }
 
-    &:after,
-    &:before {
-      color: $white;
+  menu[type=toolbar] {
+    display: flex;
+    flex-shrink: 0;
+    padding: 2rem 0 0 0;
+
+    &.compact {
+      padding: 0;
+    }
+
+    > .primary,
+    > .secondary {
+      display: flex;
+      align-items: baseline;
+    }
+
+    > .primary {
+      margin-left: auto;
+      order: 2;
+
+      > *:not(:first-child) {
+        margin-left: 1rem;
+      }
+    }
+
+    > .secondary {
+      margin-right: auto;
+      order: 1;
+
+      > *:not(:last-child) {
+        margin-right: 1rem;
+      }
+    }
+
+    button,
+    .button {
+      border-radius: 0;
     }
   }
 }

@@ -318,7 +318,7 @@ class Paperwork extends Component {
             </fieldset>
 
             <fieldset>
-              <label htmlFor="rats">Who arrived for the rescue?</label>
+              <label htmlFor="rats">Who was assigned to this rescue?</label>
 
               <RatTagsInput
                 data-platform={rescue.attributes.platform}
