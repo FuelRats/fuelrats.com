@@ -1,5 +1,5 @@
 // Module Imports
-import FontAwesomeIcon from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'

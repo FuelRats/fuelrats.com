@@ -1,6 +1,6 @@
 // Module Imports
 import Cookies from 'js-cookie'
-import FontAwesomeIcon from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 
