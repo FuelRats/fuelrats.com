@@ -34,8 +34,8 @@ const Header = (props) => {
     <div id="header-container">
       <input id="nav-control" type="checkbox" />
 
-      <label title="Expand/Collapse Menu" htmlFor="nav-control" className="burger" id="burger">
-        <FontAwesomeIcon icon="bars" size="3x" />
+      <label title="Expand/Collapse Menu" htmlFor="nav-control" className="burger button secondary" id="burger">
+        <FontAwesomeIcon icon="bars" />
       </label>
 
       <header role="banner">

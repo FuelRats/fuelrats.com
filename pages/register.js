@@ -235,11 +235,14 @@ class Register extends Component {
               <input
                 className="large"
                 disabled={submitting}
+                id="acceptTerms"
                 name="acceptTerms"
                 type="checkbox"
                 checked={acceptTerms && acceptPrivacy}
                 onChange={this.handleChange} />
-              I agree that I have read and agree to the <Link route="legal terms"><a>Terms of Service</a></Link> and <Link route="legal privacy"><a>Privacy Policy</a></Link>, and that I am 13 years of age or older.
+              <label htmlFor="acceptTerms">
+                I agree that I have read and agree to the <Link route="legal terms"><a>Terms of Service</a></Link> and <Link route="legal privacy"><a>Privacy Policy</a></Link>, and that I am 13 years of age or older.
+              </label>
             </span>
           </fieldset>
 
@@ -266,7 +269,7 @@ class Register extends Component {
 
         { acceptTerms && !acceptPrivacy && (
           <TermsDialog
-            dialogContent={() => getWordpressPageElement(3545)}
+            dialogContent={() => getWordpressPageElement(3542)}
             onClose={() => {
               this.setState({ acceptPrivacy: true })
               sessionStorage.setItem('termsAccepted', true)
