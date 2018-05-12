@@ -4,12 +4,6 @@ import Document, { Head, Main, NextScript } from 'next/document'
 
 
 
-const fonts = ['Raleway', 'Open Sans']
-
-
-
-
-
 export default class extends Document {
   render() {
     return (
@@ -49,10 +43,6 @@ export default class extends Document {
           <div id="dialog-container" />
 
           <div id="alert-container" />
-
-          <link
-            href={`//fonts.googleapis.com/css?family=${fonts.join('|').replace(/\s/g, '+')}`}
-            rel="stylesheet" />
         </body>
       </html>
     )
