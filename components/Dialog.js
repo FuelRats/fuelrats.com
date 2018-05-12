@@ -9,7 +9,6 @@ import PropTypes from 'prop-types'
 
 
 // Component Imports
-import Button from './Button'
 import Component from './Component'
 
 
@@ -44,55 +43,52 @@ class Dialog extends Component {
       children,
       className,
       controls,
-      modal,
       onClose,
+      showClose,
       title,
     } = this.props
 
     return ReactDOM.createPortal(
       (
         <div
-          className={`${modal ? 'modal' : ''} ${className || ''}`}
-          data-t="dialog:dialog"
+          className={className || ''}
           role="dialog">
-          <header data-t="dialog:header">
-            <h2>{title}</h2>
+          <header>
+            <h3>{title}</h3>
 
-            <Button
-              action="close"
-              category="Dialog"
-              className="danger"
-              data-t="dialog:close"
-              name="close"
-              onClick={onClose}
-              label="">
-              <FontAwesomeIcon icon="times" fixedWidth />
-            </Button>
+            {showClose && (
+              <button
+                action="close"
+                category="Dialog"
+                className="danger"
+                name="close"
+                onClick={onClose}
+                label="">
+                <FontAwesomeIcon icon="times" fixedWidth />
+              </button>
+            )}
           </header>
 
           <div
-            className="content"
-            data-t="dialog:content">
+            className="content">
             {children}
           </div>
 
           {Boolean(controls) && (
-            <footer data-t="dialog:footer">
+            <footer>
               <menu
                 className="compact"
                 type="toolbar">
                 {Boolean(controls.primary) && (
                   <div
-                    className="primary"
-                    data-t="dialog:primary-controls">
+                    className="primary">
                     {Dialog._renderControls(controls.primary)}
                   </div>
                 )}
 
                 {Boolean(controls.secondary) && (
                   <div
-                    className="secondary"
-                    data-t="dialog:secondary-controls">
+                    className="secondary">
                     {Dialog._renderControls(controls.secondary)}
                   </div>
                 )}
@@ -111,11 +107,11 @@ class Dialog extends Component {
 
 
 Dialog.defaultProps = {
-  modal: true,
+  showClose: true,
 }
 
 Dialog.propTypes = {
-  modal: PropTypes.bool,
+  showClose: PropTypes.bool,
 }
 
 
