@@ -21,6 +21,16 @@
   display: none;
 }
 
+#nav-control ~ header {
+  bottom: 0;
+  position: fixed;
+  right: 100%;
+  top: 0;
+  transition: transform 0.2s;
+  z-index: 200;
+  transform: translateX(21rem);
+}
+
 @media only screen and (max-width: 768px) {
   #burger {
     display: inline-block;
@@ -28,12 +38,8 @@
   }
 
   #nav-control ~ header {
-    bottom: 0;
-    position: fixed;
     right: 100%;
-    top: 0;
-    transition: transform 0.2s;
-    z-index: 200;
+    transform: translateX(0rem);
   }
 
   #nav-control:checked {
@@ -184,9 +190,9 @@
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
-    margin-top: auto;
     overflow: hidden;
     width: 100%;
+    margin-bottom: 1rem;
 
     .get-help {
       animation-direction: reverse;
@@ -208,15 +214,20 @@
 
     button,
     .button {
-      margin: 0 2rem 2rem;
+      margin: 0 2rem 1rem 2rem;
       width: calc(100% - 4rem);
     }
   }
 
   .about-actions {
+    margin: auto 2rem 1rem 2rem;
+
     .button.link {
-      padding: 0 0 1rem 0;
-      width: calc(100% - 4rem);
+      text-align: left;
+      padding: 0;
+      line-height: 1.3rem;
+      margin: 0;
+      width: 100%;
 
       &:focus {
         color: $white;
@@ -224,6 +235,16 @@
 
       &:hover {
         color: $red;
+      }
+
+      .fa-li {
+        left: 0;
+        transition: opacity .2s;
+      }
+
+      span.link-text {
+        font-size: 1.3rem;
+        padding-left: 2.5rem;
       }
     }
   }

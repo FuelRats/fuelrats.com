@@ -1,7 +1,11 @@
-.page {
+main.page {
   align-content: stretch;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-//  overflow: hidden;
+  margin-left: 21rem;
+
+  @media only screen and (max-width: 769px) {
+    margin-left: 0;
+  }
 }
