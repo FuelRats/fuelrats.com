@@ -4,20 +4,7 @@ import Cookies from 'next-cookies'
 import LocalForage from 'localforage'
 import React from 'react'
 import withRedux from 'next-redux-wrapper'
-import fontawesome from '@fortawesome/fontawesome'
-import {
-  faBars,
-  faCheck,
-  faClock,
-  faExclamationTriangle,
-  faEye,
-  faEyeSlash,
-  faFolder,
-  faInfoCircle,
-  faSpinner,
-  faTimes,
-  faUser,
-} from '@fortawesome/fontawesome-free-solid'
+import { library } from '@fortawesome/fontawesome-svg-core'
 
 
 
@@ -28,10 +15,18 @@ import {
   initStore,
 } from '../store'
 import { Router } from '../routes'
+import * as faIcons from '../helpers/siteIcons'
 import Head from './Head'
 import Header from './Header'
 import UserMenu from './UserMenu'
 import LoginDialog from './LoginDialog'
+
+
+
+
+
+// Populate fontAweomse library
+library.add(...Object.values(faIcons))
 
 
 
@@ -48,21 +43,6 @@ export default (Component, title = 'Untitled', reduxOptions = {}, authentication
   class Page extends React.Component {
     constructor(props) {
       super(props)
-
-      fontawesome.library.add(
-        faBars,
-        faCheck,
-        faClock,
-        faExclamationTriangle,
-        faEye,
-        faEyeSlash,
-        faFolder,
-        faInfoCircle,
-        faSpinner,
-        faTimes,
-        faUser,
-      )
-
       LocalForage.config({
         name: 'TheFuelRats',
         storeName: 'webStore',

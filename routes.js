@@ -2,6 +2,9 @@ const routes = (module.exports = require('next-routes')())
 
 // 'NAME', 'ROUTE', 'PATH'
 routes
+  // About
+  .add('about acknowledgements', '/acknowledgements', '/acknowledgements')
+
   // Paperwork
   .add('paperwork', '/paperwork/:id', '/paperwork/view')
   .add('paperwork edit', '/paperwork/:id/edit', '/paperwork/edit')
