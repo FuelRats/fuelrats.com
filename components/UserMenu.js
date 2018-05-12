@@ -48,7 +48,7 @@ class UserMenu extends Component {
     }
 
     return (
-      <div className="user-menu">
+      <div className={`user-menu ${loggedIn ? 'logged-in' : ''}`}>
         {(loggedIn && user.attributes) && (
           <div className="avatar medium"><img alt="Your avatar" src={user.attributes.image} /></div>
         )}
