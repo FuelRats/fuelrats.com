@@ -11,7 +11,7 @@ import React from 'react'
 import { actions } from '../store'
 import { Router } from '../routes'
 import Component from './Component'
-
+import Dialog from './Dialog'
 
 
 
@@ -22,12 +22,6 @@ class LoginDialog extends Component {
 
   componentDidMount () {
     this.emailInput.focus()
-  }
-
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.loggedIn) {
-      this.props.hideDialog()
-    }
   }
 
   constructor (props) {
@@ -50,6 +44,14 @@ class LoginDialog extends Component {
     this.setState({
       error: status !== 'success',
     })
+
+    if (status === 'success') {
+      this.props.onClose()
+    } else {
+      this.setState({
+        error: true,
+      })
+    }
   }
 
   render () {
@@ -60,59 +62,63 @@ class LoginDialog extends Component {
     } = this.state
 
     return (
-      <form onSubmit={this.onSubmit}>
-        {error && !this.props.loggingIn && (
-          <div className="store-errors">
-            <div className="store-error">
-              Invalid email or password.
+      <Dialog
+        title="Login"
+        onClose={this.props.onClose}>
+        <form onSubmit={this.onSubmit}>
+          {error && !this.props.loggingIn && (
+            <div className="store-errors">
+              <div className="store-error">
+                Invalid email or password.
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
-        <input
-          className="email"
-          disabled={this.props.loggingIn}
-          id="email"
-          name="email"
-          onInput={event => this.setState({ email: event.target.value })}
-          placeholder="Email"
-          ref={emailInput => this.emailInput = emailInput}
-          required
-          type="email" />
+          <input
+            className="email"
+            disabled={this.props.loggingIn}
+            id="email"
+            name="email"
+            onInput={event => this.setState({ email: event.target.value })}
+            placeholder="Email"
+            ref={emailInput => this.emailInput = emailInput}
+            required
+            type="email" />
 
-        <input
-          className="password"
-          disabled={this.props.loggingIn}
-          id="password"
-          name="password"
-          onInput={event => this.setState({ password: event.target.value })}
-          placeholder="Password"
-          required
-          type="password" />
+          <input
+            className="password"
+            disabled={this.props.loggingIn}
+            id="password"
+            name="password"
+            onInput={event => this.setState({ password: event.target.value })}
+            placeholder="Password"
+            required
+            type="password" />
 
-        <menu type="toolbar">
-          <div className="secondary">
-            <button
-              className="secondary"
-              onClick={() => {
-                this.props.hideDialog()
-                Router.push('/register')
-              }}
-              type="button">
-              Become a Rat
-            </button>
-          </div>
+          <menu type="toolbar">
+            <div className="secondary">
+              <button
+                className="secondary"
+                onClick={() => {
+                  this.props.onClose()
+                  Router.push('/register')
+                }}
+                type="button">
+                Become a Rat
+              </button>
+            </div>
 
-          <div className="primary">
-            <a className="button link" href="/forgot-password">Forgot password?</a>
-            <button
-              disabled={!email || !password || this.props.loggingIn}
-              type="submit">
-              {this.props.loggingIn ? 'Submitting...' : 'Login'}
-            </button>
-          </div>
-        </menu>
-      </form>
+            <div className="primary">
+              <a className="button link" href="/forgot-password">Forgot password?</a>
+              <button
+                disabled={!email || !password || this.props.loggingIn}
+                type="submit">
+                {this.props.loggingIn ? 'Submitting...' : 'Login'}
+              </button>
+            </div>
+          </menu>
+        </form>
+      </Dialog>
     )
   }
 }
@@ -122,7 +128,6 @@ class LoginDialog extends Component {
 
 
 const mapDispatchToProps = dispatch => ({
-  hideDialog: bindActionCreators(actions.hideDialog, dispatch),
   login: bindActionCreators(actions.login, dispatch),
 })
 

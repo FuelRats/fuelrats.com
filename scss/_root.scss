@@ -41,4 +41,26 @@ body {
       display: none;
     }
   }
+
+  > #dialog-container {
+    justify-content: center;
+    border: none;
+    display: flex;
+    height: 100vh;
+    left: 0;
+    overflow: auto;
+    padding: 10vh 10vw;
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    z-index: 401;
+
+    &:empty {
+      pointer-events: none;
+    }
+
+    &:not(:empty) {
+      background: rgba($black-lightened, .8);
+    }
+  }
 }

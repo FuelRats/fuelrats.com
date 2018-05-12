@@ -16,7 +16,7 @@ export default class extends Document {
       <html lang="en">
         <Head>
           <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-          <meta name="application-name" content="Fuelrats.com" />
+          <meta name="application-name" content="Fuel Rats" />
           <meta name="msapplication-TileColor" content="#FFFFFF" />
           <meta name="msapplication-TileImage" content="/static/favicon/mstile-144x144.png" />
           <meta name="msapplication-square70x70logo" content="/static/favicon/mstile-70x70.png" />
@@ -37,23 +37,22 @@ export default class extends Document {
           <link rel="icon" type="image/png" href="/static/favicon/favicon-32x32.png" sizes="32x32" />
           <link rel="icon" type="image/png" href="/static/favicon/favicon-16x16.png" sizes="16x16" />
           <link rel="icon" type="image/png" href="/static/favicon/favicon-128.png" sizes="128x128" />
-
-          <script src="//cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.9/dialog-polyfill.min.js" />
         </Head>
 
         <body>
-          <div id="alert-container" />
-
-          <div id="dialog-container" />
+          <noscript>Javascript is required to view this site.</noscript>
 
           <Main className="next-wrapper" />
 
           <NextScript />
 
+          <div id="dialog-container" />
+
+          <div id="alert-container" />
+
           <link
             href={`//fonts.googleapis.com/css?family=${fonts.join('|').replace(/\s/g, '+')}`}
             rel="stylesheet" />
-
         </body>
       </html>
     )
