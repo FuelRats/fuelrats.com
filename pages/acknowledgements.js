@@ -11,22 +11,22 @@ const title = 'Acknowledgements'
 
 const brands = [
   {
-    className: 'atlassian',
+    key: 'atlassian',
     homepage: 'https://www.atlassian.com/',
     description: 'Atlassian graciously provides us with free JIRA and Confluence licenses, as well as a slew of Addons for the above. We\'re not quite sure how we would manage handling the Fuel Rats today without these great tools.',
   },
   {
-    className: 'jetbrains',
+    key: 'jetbrains',
     homepage: 'https://www.jetbrains.com/',
     description: 'JetBrains suite of IDEs are an invaluable tool to our Techrats. One by one, our techies have abandoned other, no doubt familiar IDEs for the JetBrains tools, simply because they are that much better.',
   },
   {
-    className: 'statuspage',
+    key: 'statuspage',
     homepage: 'https://www.statuspage.io/',
     description: 'Whenever something breaks (infrequent) or we need to intentionally break something to rebuild it better, Statuspage keeps the Mischief up to date on what is going on in a very clean and efficient manner.',
   },
   {
-    className: 'slack',
+    key: 'slack',
     homepage: 'https://slack.com/',
     description: 'Our Techrats extensively use Slack, both for keeping in touch and to streamline notifications from our various systems. Thank you for helping us out, Slack!',
   },
@@ -41,12 +41,12 @@ const acknowledgements = () => (
     <div className="page-content">
       {
         brands.map(brand => (
-          <div className={`credit-section credit-${brand.className}`}>
+          <div key={brand.key} className={`credit-section credit-${brand.key}`}>
             <a
               href={brand.homepage}
               rel="noopener noreferrer"
               target="_blank">
-              <div className={`brand-image ${brand.className}-brand`} />
+              <div className={`brand-image ${brand.key}-brand`} />
             </a>
             <p>{brand.description}</p>
           </div>
