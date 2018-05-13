@@ -12,7 +12,6 @@ import React from 'react'
 import { actions } from '../store'
 import AdminUserMenuNav from './AdminUserMenuNav'
 import Component from './Component'
-import LoginDialog from './LoginDialog'
 import { Link } from '../routes'
 
 
@@ -35,12 +34,6 @@ class UserMenu extends Component {
     }
   }
 
-  constructor (props) {
-    super(props)
-
-    this._bindMethods(['showLogin'])
-  }
-
   render () {
     const {
       loggedIn,
@@ -55,7 +48,7 @@ class UserMenu extends Component {
     }
 
     return (
-      <div className="user-menu">
+      <div className={`user-menu ${loggedIn ? 'logged-in' : ''}`}>
         {(loggedIn && user.attributes) && (
           <div className="avatar medium"><img alt="Your avatar" src={user.attributes.image} /></div>
         )}
@@ -119,21 +112,12 @@ class UserMenu extends Component {
         {!loggedIn && (
           <button
             className="login"
-            onClick={this.showLogin}>
+            onClick={() => this.props.setFlag('showLoginDialog', true)}>
             Rat Login
           </button>
         )}
       </div>
     )
-  }
-
-  showLogin () {
-    this.props.showDialog({
-      body: (<LoginDialog />),
-      closeIsVisible: true,
-      menuIsVisible: false,
-      title: 'Rat Login',
-    })
   }
 }
 
@@ -141,11 +125,11 @@ class UserMenu extends Component {
 
 
 
-const mapDispatchToProps = dispatch => ({
-  getUser: bindActionCreators(actions.getUser, dispatch),
-  logout: bindActionCreators(actions.logout, dispatch),
-  showDialog: bindActionCreators(actions.showDialog, dispatch),
-})
+const mapDispatchToProps = dispatch => bindActionCreators({
+  getUser: actions.getUser,
+  logout: actions.logout,
+  setFlag: actions.setFlag,
+}, dispatch)
 
 const mapStateToProps = state => {
   const {

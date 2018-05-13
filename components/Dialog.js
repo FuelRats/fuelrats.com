@@ -1,76 +1,121 @@
-// Module imports
-import { bindActionCreators } from 'redux'
+// Module Imports
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
-import { connect } from 'react-redux'
+import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
 
 
 
 
 
-// Component imports
-import { actions } from '../store'
+// Component Imports
+import Component from './Component'
 
 
 
 
 
-const Dialog = (props) => {
-  const {
-    body,
-    closeIsVisible,
-    hideDialog,
-    isVisible,
-    menuIsVisible,
-    title,
-  } = props
+/**
+ * Component for presenting dialogs and modals to the user.
+ */
 
-  return (
-    <dialog className="loading fade-in" open={isVisible}>
-      {closeIsVisible && (
-        <button
-          className="close icon secondary"
-          onClick={hideDialog}>
-          <i className="fa fa-fw fa-times" />
-        </button>
-      )}
+class Dialog extends Component {
+  /***************************************************************************\
+    Private Methods
+  \***************************************************************************/
 
-      {title && (
-        <header>
-          <h2>{title}</h2>
-        </header>
-      )}
+  static _renderControls (controls) {
+    /* eslint-disable react/no-array-index-key */
+    return controls.map((control, index) => React.cloneElement(control, { key: index }))
+    /* eslint-enable */
+  }
 
-      <div className="content">
-        {body}
-      </div>
 
-      {menuIsVisible && (
-        <footer>
-          <menu type="toolbar">
-            <div className="secondary">
-              <button name="cancel" type="button">Close</button>
-            </div>
 
-            <div className="primary">
-              <button name="confirm" type="button">Confirm</button>
-            </div>
-          </menu>
-        </footer>
-      )}
-    </dialog>
-  )
+
+
+  /***************************************************************************\
+    Public Methods
+  \***************************************************************************/
+
+  render () {
+    const {
+      children,
+      className,
+      controls,
+      onClose,
+      showClose,
+      title,
+    } = this.props
+
+    return ReactDOM.createPortal(
+      (
+        <div
+          className={className || ''}
+          role="dialog">
+          <header>
+            <h3>{title}</h3>
+
+            {showClose && (
+              <button
+                action="close"
+                category="Dialog"
+                className="danger"
+                name="close"
+                onClick={onClose}
+                label="">
+                <FontAwesomeIcon icon="times" fixedWidth />
+              </button>
+            )}
+          </header>
+
+          <div
+            className="content">
+            {children}
+          </div>
+
+          {Boolean(controls) && (
+            <footer>
+              <menu
+                className="compact"
+                type="toolbar">
+                {Boolean(controls.primary) && (
+                  <div
+                    className="primary">
+                    {Dialog._renderControls(controls.primary)}
+                  </div>
+                )}
+
+                {Boolean(controls.secondary) && (
+                  <div
+                    className="secondary">
+                    {Dialog._renderControls(controls.secondary)}
+                  </div>
+                )}
+              </menu>
+            </footer>
+          )}
+        </div>
+      ),
+      document.getElementById('dialog-container')
+    )
+  }
 }
 
 
 
 
 
-const mapDispatchToProps = dispatch => ({ hideDialog: bindActionCreators(actions.hideDialog, dispatch) })
+Dialog.defaultProps = {
+  showClose: true,
+}
 
-const mapStateToProps = state => Object.assign({}, state.dialog)
+Dialog.propTypes = {
+  showClose: PropTypes.bool,
+}
 
 
 
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dialog)
+export default Dialog

@@ -5,9 +5,11 @@
   flex-shrink: 0;
   margin: 0;
   margin-bottom: 2rem;
+  min-width: 0%;
   max-width: 75%;
   padding: 1rem 4rem;
   position: relative;
+  transition: min-width 0.2s;
 
   &:after {
     background-image: linear-gradient(
@@ -32,5 +34,11 @@
     transform-origin: left bottom;
     top: 0;
     z-index: -1;
+  }
+
+  @media only screen and (max-width: 768px) {
+    max-width: 100%;
+    min-width: 100%;
+    text-align: center;
   }
 }

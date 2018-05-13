@@ -8,7 +8,6 @@ import PropTypes from 'prop-types'
 
 // Component imports
 import { Link } from '../routes'
-import LoginDialog from '../components/LoginDialog'
 import Page from '../components/Page'
 
 
@@ -29,12 +28,7 @@ class Index extends React.Component {
 
   componentDidMount () {
     if (this.props.query.authenticate) {
-      this.props.showDialog({
-        body: (<LoginDialog />),
-        closeIsVisible: true,
-        menuIsVisible: false,
-        title: 'Rat Login',
-      })
+      this.props.setFlag('showLoginDialog', true)
     }
   }
 
@@ -62,7 +56,6 @@ class Index extends React.Component {
 
 
 Index.propTypes = {
-  showDialog: PropTypes.func.isRequired,
   query: PropTypes.object.isRequired,
 }
 
@@ -70,12 +63,4 @@ Index.propTypes = {
 
 
 
-const mapDispatchToProps = ['showDialog']
-
-
-
-
-
-export default Page(Index, title, {
-  mapDispatchToProps,
-})
+export default Page(Index, title, {})

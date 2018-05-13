@@ -1,7 +1,7 @@
 // Module imports
 import moment from 'moment'
 import React from 'react'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 
@@ -99,12 +99,12 @@ class Blog extends Component {
 
             <small>
               <span className="posted-date">
-                <i className="fa fa-clock-o fa-fw" />
+                <FontAwesomeIcon icon="clock" fixedWidth />
                 Posted <time dateTime={0}>{moment(blog.date_gmt).format('DD MMMM, YYYY')}</time>
               </span>
 
               <span className="author">
-                <i className="fa fa-fw fa-user" />
+                <FontAwesomeIcon icon="user" fixedWidth />
 
                 <Link as={`/blog/author/${blog.author.id}`} href={`/blog/all?author=${blog.author.id}`}>
                   <a>{blog.author.name}</a>
@@ -112,7 +112,7 @@ class Blog extends Component {
               </span>
 
               <span>
-                <i className="fa fa-folder fa-fw" />
+                <FontAwesomeIcon icon="folder" fixedWidth />
 
                 <ul className="category-list">
                   {blog.categories.map(category => (

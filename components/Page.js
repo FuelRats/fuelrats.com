@@ -4,7 +4,7 @@ import Cookies from 'next-cookies'
 import LocalForage from 'localforage'
 import React from 'react'
 import withRedux from 'next-redux-wrapper'
-
+import { library } from '@fortawesome/fontawesome-svg-core'
 
 
 
@@ -15,11 +15,18 @@ import {
   initStore,
 } from '../store'
 import { Router } from '../routes'
-import Dialog from './Dialog'
+import * as faIcons from '../helpers/siteIcons'
 import Head from './Head'
 import Header from './Header'
-import Reminders from './Reminders'
 import UserMenu from './UserMenu'
+import LoginDialog from './LoginDialog'
+
+
+
+
+
+// Populate fontAweomse library
+library.add(...Object.values(faIcons))
 
 
 
@@ -36,7 +43,6 @@ export default (Component, title = 'Untitled', reduxOptions = {}, authentication
   class Page extends React.Component {
     constructor(props) {
       super(props)
-
       LocalForage.config({
         name: 'TheFuelRats',
         storeName: 'webStore',
@@ -89,9 +95,12 @@ export default (Component, title = 'Untitled', reduxOptions = {}, authentication
 
     render() {
       const {
+        __showLoginDialog,
         isServer,
         path,
+        setFlag,
       } = this.props
+
       const mainClasses = ['fade-in', 'page', title.toLowerCase().replace(/\s/g, '-')].join(' ')
 
       return (
@@ -104,31 +113,52 @@ export default (Component, title = 'Untitled', reduxOptions = {}, authentication
 
           <UserMenu />
 
-          <Reminders />
-
           <main className={mainClasses}>
-            <Component {...this.props} />
+            <Component
+              {...this.props} />
           </main>
 
-          <Dialog />
+          {__showLoginDialog && (
+            <LoginDialog onClose={() => setFlag('showLoginDialog', false)} />
+          )}
         </div>
       )
     }
   }
 
-  const { mapStateToProps } = reduxOptions || {}
-  let { mapDispatchToProps } = reduxOptions || {}
+  const mapStateToProps = (state, ownProps) => {
+    let pageProps = {}
 
-  if (Array.isArray(mapDispatchToProps)) {
-    mapDispatchToProps = dispatch => {
-      const actionMap = {}
-
-      for (const actionName of (reduxOptions || {}).mapDispatchToProps) {
-        actionMap[actionName] = bindActionCreators(actions[actionName], dispatch)
-      }
-
-      return actionMap
+    if (reduxOptions && reduxOptions.mapStateToProps) {
+      pageProps = reduxOptions.mapStateToProps(state, ownProps)
     }
+
+    return {
+      ...pageProps,
+      __showLoginDialog: state.flags.showLoginDialog,
+    }
+  }
+
+  const mapDispatchToProps = (dispatch, ownProps) => {
+    let pageActions = {}
+
+    if (reduxOptions && reduxOptions.mapDispatchToProps) {
+      pageActions = reduxOptions.mapDispatchToProps
+
+      if (Array.isArray(pageActions)) {
+        pageActions = pageActions.reduce((accumulator, actionName) => ({
+          ...accumulator,
+          [actionName]: actions[actionName],
+        }), {})
+      } else if (typeof pageActions === 'function') {
+        pageActions = pageActions(dispatch, ownProps)
+      }
+    }
+
+    return bindActionCreators({
+      ...pageActions,
+      setFlag: actions.setFlag,
+    }, dispatch)
   }
 
   return withRedux(initStore, mapStateToProps, mapDispatchToProps)(Page)

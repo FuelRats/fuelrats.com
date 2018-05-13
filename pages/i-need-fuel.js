@@ -1,4 +1,5 @@
 // Component imports
+import { Link } from '../routes'
 import Page from '../components/Page'
 
 
@@ -59,7 +60,7 @@ const INeedFuel = () => (
 
         <br />
 
-        <small>By connecting to our IRC and using our services, you agree to our <a href="http://t.fuelr.at/tos">Terms of Service</a> and <a href="http://t.fuelr.at/privacy">Privacy Policy</a>.</small>
+        <small>By connecting to our IRC and using our services, you agree to our <Link route="legal terms"><a>Terms of Service</a></Link> and <Link route="legal privacy"><a>Privacy Policy</a></Link>.</small>
       </div>
     </div>
   </div>

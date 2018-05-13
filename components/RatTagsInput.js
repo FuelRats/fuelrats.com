@@ -1,3 +1,11 @@
+// Module Imports
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+
+
+
+
+// Component Imports
 import TagsInput from './TagsInput'
 
 
@@ -8,7 +16,7 @@ export default class extends TagsInput {
   static renderLoader () {
     return (
       <span>
-        <i className="fa fa-fw fa-pulse fa-spinner" />
+        <FontAwesomeIcon icon="spinner" pulse fixedWidth />
         Loading...
       </span>
     )

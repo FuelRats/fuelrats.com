@@ -16,14 +16,6 @@ export default {
     eligible: false,
   },
 
-  dialog: {
-    body: null,
-    closeIsVisible: true,
-    isVisible: false,
-    menuIsVisible: true,
-    title: null,
-  },
-
   error: {
     errors: [],
     hasError: false,
@@ -33,6 +25,11 @@ export default {
     epics: [],
     retrieving: false,
     total: 0,
+  },
+
+  flags: {
+    openSubNav: '',
+    showLoginDialog: false,
   },
 
   paperwork: {

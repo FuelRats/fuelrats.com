@@ -1,14 +1,33 @@
+// Module imports
+import fetch from 'isomorphic-fetch'
+
 // Component imports
+import { Link } from '../routes'
 import Component from '../components/Component'
 import Page from '../components/Page'
 import PasswordField from '../components/PasswordField'
-
-
-
+import RadioOptionsInput from '../components/RadioOptionsInput'
+import TermsDialog from '../components/TermsDialog'
 
 
 // Component constants
 const title = 'Register'
+
+const getWordpressPageElement = async id => {
+  const response = await fetch(`/wp-api/pages/${id}`)
+  let page = null
+
+  if (response.ok) {
+    page = await response.json()
+    page = page.content.rendered.replace(/<ul>/gi, '<ul class="bulleted">').replace(/<ol>/gi, '<ol class="numbered">')
+  }
+
+  /* eslint-disable react/no-danger */
+  return (
+    <div dangerouslySetInnerHTML={{ __html: page }} />
+  )
+  /* eslint-enable react/no-danger */
+}
 
 
 
@@ -19,40 +38,52 @@ class Register extends Component {
     Public Methods
   \***************************************************************************/
 
+  async componentDidMount () {
+    const termsAlreadyAccepted = Boolean(sessionStorage.getItem('termsAccepted'))
+
+    this.setState({
+      acceptTerms: termsAlreadyAccepted,
+      acceptPrivacy: termsAlreadyAccepted,
+    })
+  }
+
   constructor (props) {
     super(props)
 
     this._bindMethods([
       'handleChange',
+      'handleRadioOptionsChange',
       'onSubmit',
     ])
 
     this.state = {
+      acceptTerms: true,
+      acceptPrivacy: true,
       email: '',
       nickname: '',
       password: '',
-      passwordStrength: 0,
-      passwordSuggestions: null,
-      passwordWarning: null,
       ratName: '',
       ratPlatform: 'pc',
       recaptchaResponse: null,
-      showPassword: false,
       submitting: false,
     }
   }
 
-  handleChange (event) {
-    const newState = { ...this.state }
+  handleChange ({ target }) {
     const {
       name,
-      value,
-    } = event.target
-    const attribute = name
+      type,
+    } = target
 
-    newState[attribute] = value
+    const value = type === 'checkbox' ? target.checked : target.value
 
-    this.setState(newState)
+    this.setState({
+      [name]: value,
+    })
+  }
+
+  handleRadioOptionsChange ({ name, value }) {
+    this.setState({ [name]: value })
   }
 
   async onSubmit (event) {
@@ -67,11 +98,19 @@ class Register extends Component {
       recaptchaResponse,
     } = this.state
 
-    await this.props.register(email, password, ratName, ratPlatform, nickname, recaptchaResponse)
+    this.setState({ submitting: true })
+
+    const { status } = await this.props.register(email, password, ratName, ratPlatform, nickname, recaptchaResponse)
+
+    if (status !== 'success') {
+      this.setState({ submitting: false })
+    }
   }
 
   render () {
     const {
+      acceptTerms,
+      acceptPrivacy,
       email,
       nickname,
       ratName,
@@ -85,8 +124,14 @@ class Register extends Component {
           <h1>{title}</h1>
         </header>
 
-        <form onSubmit={this.onSubmit}>
+        <form
+          className={`${submitting ? 'loading force' : ''}`}
+          data-loader-text="Submitting"
+          onSubmit={this.onSubmit}>
+
           <fieldset data-name="Email">
+            <h5>NOTE: This registration page is to become a rat! Need fuel? Click "Get Help" in the bottom left!</h5><br />
+
             <label htmlFor="email">
               Email
             </label>
@@ -94,6 +139,7 @@ class Register extends Component {
             <input
               id="email"
               name="email"
+              disabled={submitting}
               onChange={this.handleChange}
               placeholder="i.e. surly_badger@gmail.com"
               ref={_emailEl => this._emailEl = _emailEl}
@@ -108,6 +154,7 @@ class Register extends Component {
             </label>
 
             <PasswordField
+              disabled={submitting}
               id="password"
               maxLength="42"
               minLength="5"
@@ -127,6 +174,7 @@ class Register extends Component {
             </label>
 
             <input
+              disabled={submitting}
               id="nickname"
               name="nickname"
               onChange={this.handleChange}
@@ -144,6 +192,7 @@ class Register extends Component {
             </label>
 
             <input
+              disabled={submitting}
               id="ratName"
               name="ratName"
               onChange={this.handleChange}
@@ -156,43 +205,45 @@ class Register extends Component {
           </fieldset>
 
           <fieldset data-name="Platform">
-            <label>What platform is this CMDR on?</label>
+            <label>What platform is your CMDR on?</label>
 
-            <div className="option-group">
-              <input
-                checked={ratPlatform === 'pc'}
-                disabled={submitting}
-                id="platform-pc"
-                name="ratPlatform"
-                onChange={this.handleChange}
-                type="radio"
-                value="pc" />
-              <label htmlFor="platform-pc">PC</label>
-
-              <input
-                checked={ratPlatform === 'xb'}
-                disabled={submitting}
-                id="platform-xb"
-                name="ratPlatform"
-                onChange={this.handleChange}
-                type="radio"
-                value="xb" />
-              <label htmlFor="platform-xb">Xbox One</label>
-
-              <input
-                checked={ratPlatform === 'ps'}
-                disabled={submitting}
-                id="platform-ps"
-                name="ratPlatform"
-                onChange={this.handleChange}
-                type="radio"
-                value="ps" />
-              <label htmlFor="platform-ps">Playstation 4</label>
-            </div>
+            <RadioOptionsInput
+              disabled={submitting}
+              className="ratPlatform"
+              name="ratPlatform"
+              id="ratPlatform"
+              value={ratPlatform}
+              onChange={this.handleRadioOptionsChange}
+              options={[
+                {
+                  value: 'pc',
+                  displayValue: 'PC',
+                },
+                {
+                  value: 'xb',
+                  displayValue: 'Xbox',
+                },
+                {
+                  value: 'ps',
+                  displayValue: 'PS4',
+                },
+              ]} />
           </fieldset>
 
           <fieldset data-name="Agreements">
-            <p>By creating an account I agree that I have read and agree to the <a href="http://t.fuelr.at/tos">Terms of Service</a> and <a href="http://t.fuelr.at/privacy">Privacy Policy</a>, and that I am 13 years of age or older.</p>
+            <span>
+              <input
+                className="large"
+                disabled={submitting}
+                id="acceptTerms"
+                name="acceptTerms"
+                type="checkbox"
+                checked={acceptTerms && acceptPrivacy}
+                onChange={this.handleChange} />
+              <label htmlFor="acceptTerms">
+                I agree that I have read and agree to the <Link route="legal terms"><a>Terms of Service</a></Link> and <Link route="legal privacy"><a>Privacy Policy</a></Link>, and that I am 13 years of age or older.
+              </label>
+            </span>
           </fieldset>
 
           <menu type="toolbar">
@@ -207,12 +258,34 @@ class Register extends Component {
             <div className="secondary" />
           </menu>
         </form>
+
+        { !acceptTerms && !acceptPrivacy && (
+          <TermsDialog
+            dialogContent={() => getWordpressPageElement(3545)}
+            onClose={() => this.setState({ acceptTerms: true })}
+            title="Terms of Service"
+            checkboxLabel="I have read and agree to these Terms of Service" />
+        )}
+
+        { acceptTerms && !acceptPrivacy && (
+          <TermsDialog
+            dialogContent={() => getWordpressPageElement(3542)}
+            onClose={() => {
+              this.setState({ acceptPrivacy: true })
+              sessionStorage.setItem('termsAccepted', true)
+            }}
+            title="Privacy Policy"
+            checkboxLabel="I have read and agree to this Privacy Policy" />
+        )}
+
       </div>
     )
   }
 
   validate () {
     const {
+      acceptTerms,
+      acceptPrivacy,
       nickname,
       password,
     } = this.state
@@ -226,6 +299,10 @@ class Register extends Component {
     }
 
     if (nickname === password) {
+      return false
+    }
+
+    if (!acceptTerms || !acceptPrivacy) {
       return false
     }
 

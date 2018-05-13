@@ -2,6 +2,9 @@ const routes = (module.exports = require('next-routes')())
 
 // 'NAME', 'ROUTE', 'PATH'
 routes
+  // About
+  .add('about acknowledgements', '/acknowledgements', '/acknowledgements')
+
   // Paperwork
   .add('paperwork', '/paperwork/:id', '/paperwork/view')
   .add('paperwork edit', '/paperwork/:id/edit', '/paperwork/edit')
@@ -20,4 +23,8 @@ routes
   .add('blog view', '/blog/:id', '/blog/single')
 
   // Epics
-  .add('epic nominate', 'epic/nominate', 'epics/nominate')
+  .add('epic nominate', '/epic/nominate', '/epics/nominate')
+
+  // Legal
+  .add('legal terms', '/terms-of-service', '/terms-of-service')
+  .add('legal privacy', '/privacy-policy', '/privacy-policy')

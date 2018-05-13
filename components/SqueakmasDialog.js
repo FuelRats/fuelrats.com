@@ -1,6 +1,13 @@
+// Module Imports
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+
+
+
+
 // Component imports
 import Component from './Component'
-import PortalDialog from './PortalDialog'
+import Dialog from './Dialog'
 
 
 
@@ -34,7 +41,7 @@ export default class extends Component {
     const { open } = this.state
 
     return (
-      <PortalDialog
+      <Dialog
         onVisibilityChange={onVisibilityChange}
         modal
         open={open}>
@@ -42,7 +49,7 @@ export default class extends Component {
           className="close icon secondary"
           onClick={this.close}
           type="button">
-          <i className="fa fa-fw fa-times" />
+          <FontAwesomeIcon icon="times" fixedWidth />
         </button>
 
         <header>
@@ -79,7 +86,7 @@ export default class extends Component {
             </div>
           </menu>
         </footer>
-      </PortalDialog>
+      </Dialog>
     )
   }
 }
