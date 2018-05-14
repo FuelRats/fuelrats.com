@@ -2,8 +2,17 @@
   -ms-flex-negative: 0;
   margin: 2rem 0;
 
-  img {
+  &:hover svg {
+    animation-duration: 3s;
+  }
+
+  svg {
     padding: 0 4rem;
     min-width: 5rem;
+    max-width: 20.5rem;
+    color: $white;
+    animation-name: bouncy-spin;
+    animation-timing-function: cubic-bezier(0.64, 0.57, 0, 1.11);
+    animation-iteration-count: infinite;
   }
 }

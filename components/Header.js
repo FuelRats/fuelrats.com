@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // Component imports
 import Nav from './Nav'
 import { Link } from '../routes'
+import BrandSvg from './svg/BrandSvg'
 import Component from './Component'
 
 
@@ -45,6 +46,7 @@ class Header extends Component {
 
     const {
       loggedIn,
+      loggingIn,
     } = this.props
 
     return (
@@ -58,7 +60,7 @@ class Header extends Component {
         <header role="banner">
           <Link href="/">
             <a className="brand" title="Home">
-              <img alt="Fuel Rats logo" src="/static/images/logo2.png" />
+              <BrandSvg />
             </a>
           </Link>
 
@@ -94,7 +96,7 @@ class Header extends Component {
           <div className="social-actions" />
 
           <div className="join-actions">
-            {!loggedIn && (
+            {!loggedIn && !loggingIn && (
               <Link href="/register">
                 <a className="button secondary">
                   Become a Rat
@@ -119,10 +121,11 @@ class Header extends Component {
 
 
 const mapStateToProps = state => {
-  const { loggedIn } = state.authentication
+  const { loggedIn, loggingIn } = state.authentication
 
   return {
     loggedIn,
+    loggingIn,
   }
 }
 
