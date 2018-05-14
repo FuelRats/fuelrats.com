@@ -6,9 +6,10 @@ import moment from 'moment'
 
 
 // Component imports
+import { Link } from '../../routes'
 import Component from '../../components/Component'
 import Page from '../../components/Page'
-
+import userHasPermission from '../../helpers/userHasPermission'
 
 
 
@@ -99,6 +100,8 @@ class Paperwork extends Component {
       retrieving,
     } = this.props
 
+    const userCanEdit = this.userCanEdit()
+
     return (
       <div className="page-wrapper">
         <header className="page-header">
@@ -117,6 +120,19 @@ class Paperwork extends Component {
 
         {(!retrieving && rescue) && (
           <div className="page-content">
+            <menu type="toolbar">
+              <div className="primary">
+                {userCanEdit && (
+                  <Link route="paperwork edit" params={{ id: rescue.id }} >
+                    <a className="button">
+                        Edit
+                    </a>
+                  </Link>
+                )}
+              </div>
+
+              <div className="secondary" />
+            </menu>
             <table>
               <tbody>
                 <tr>
@@ -184,8 +200,36 @@ class Paperwork extends Component {
     Getters
   \***************************************************************************/
 
-  get dirtyFields () {
-    return this._dirtyFields || (this._dirtyFields = new Set)
+  userCanEdit () {
+    const {
+      rescue,
+      currentUser,
+      currentUserGroups,
+    } = this.props
+
+    if (!rescue || !currentUser.relationships) {
+      return false
+    }
+
+    // Check if current user is assigned to case.
+    const assignedRatIds = rescue.relationships.rats.data.map(rat => rat.id)
+    const currentUserRatIds = currentUser.relationships.rats.data.map(rat => rat.id)
+
+    if (assignedRatIds.some(ratId => currentUserRatIds.includes(ratId))) {
+      return true
+    }
+
+    // Check if the paperwork is not yet time locked
+    if ((new Date()).getTime() - (new Date(rescue.attributes.createdAt)).getTime() <= 3600000) {
+      return true
+    }
+
+    // Check if user has the permission to edit the paperwork anyway
+    if (currentUserGroups.length && userHasPermission(currentUserGroups, 'rescue.write')) {
+      return true
+    }
+
+    return false
   }
 }
 
@@ -219,10 +263,16 @@ const mapStateToProps = state => {
       }, rat))
   }
 
+  const currentUser = state.user
+  const currentUserGroups = currentUser.relationships ? [...currentUser.relationships.groups.data].map(group => state.groups[group.id]) : []
+
+
   return Object.assign({
     firstLimpet,
     rats,
     rescue,
+    currentUser,
+    currentUserGroups,
   }, paperwork)
 }
 

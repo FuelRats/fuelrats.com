@@ -6,6 +6,7 @@ import Page from '../../components/Page'
 import RadioOptionsInput from '../../components/RadioOptionsInput'
 import RatTagsInput from '../../components/RatTagsInput'
 import SystemTagsInput from '../../components/SystemTagsInput'
+import userHasPermission from '../../helpers/userHasPermission'
 
 
 
@@ -212,6 +213,8 @@ class Paperwork extends Component {
 
     const ratNameTemplate = rat => `${rat.attributes.name} [${rat.attributes.platform.toUpperCase()}]`
 
+    const invalidPaperwork = this.validate()
+
     return (
       <div className="page-wrapper">
         <header className="page-header">
@@ -367,8 +370,9 @@ class Paperwork extends Component {
 
             <menu type="toolbar">
               <div className="primary">
+                {invalidPaperwork && (<span className="invalidity-explainer">{invalidPaperwork}</span>)}
                 <button
-                  disabled={submitting || retrieving || !this.validate()}
+                  disabled={submitting || retrieving || invalidPaperwork}
                   type="submit">
                   {submitting ? 'Submitting...' : 'Submit'}
                 </button>
@@ -385,15 +389,29 @@ class Paperwork extends Component {
   validate () {
     const { rescue } = this.state
 
+    let invalidReason = null
+
     switch (rescue.attributes.outcome) {
       case 'other':
       case 'invalid':
-        return this.validateCaseWithInvalidOutcome()
+        invalidReason = this.validateCaseWithInvalidOutcome()
+        break
+
       case 'success':
       case 'failure':
+        invalidReason = this.validateCaseWithValidOutcome()
+        break
+
       default:
-        return this.validateCaseWithValidOutcome()
+        invalidReason = 'Outcome is not set!'
+        break
     }
+
+    if (!this.userCanEdit) {
+      invalidReason = 'You cannot edit this rescue.'
+    }
+
+    return invalidReason
   }
 
   validateCaseWithValidOutcome() {
@@ -402,25 +420,33 @@ class Paperwork extends Component {
       rescue,
     } = this.state
 
-    if ((!rescue.attributes.outcome || rescue.attributes.outcome === 'success') && !rescue.attributes.firstLimpetId) {
-      return false
-    }
-
     if (!rats || !rats.length) {
-      return false
+      return 'Valid cases must have at least one rat assigned.'
     }
 
-    if (!rescue.attributes.system || !rescue.attributes.platform) {
-      return false
+    if (!rescue.attributes.system) {
+      return 'Valid cases must have a star system location.'
     }
 
-    return true
+    if (!rescue.attributes.platform) {
+      return 'Valid cases must have a platform.'
+    }
+
+    if (rescue.attributes.outcome === 'success' && !rescue.attributes.firstLimpetId) {
+      return 'Successful rescues must have a first limpet rat.'
+    }
+
+    return null
   }
 
   validateCaseWithInvalidOutcome() {
     const { rescue } = this.state
 
-    return Boolean(rescue.attributes.notes.replace(/\s/g, ''))
+    if (!rescue.attributes.notes.replace(/\s/g, '')) {
+      return 'Invalid cases must have notes explaining why the rescue is invalid.'
+    }
+
+    return null
   }
 
 
@@ -433,6 +459,38 @@ class Paperwork extends Component {
 
   get dirtyFields () {
     return this._dirtyFields || (this._dirtyFields = new Set)
+  }
+
+  get userCanEdit () {
+    const {
+      rescue,
+      currentUser,
+      currentUserGroups,
+    } = this.props
+
+    if (!rescue || !currentUser.relationships) {
+      return false
+    }
+
+    // Check if current user is assigned to case.
+    const assignedRatIds = rescue.relationships.rats.data.map(rat => rat.id)
+    const currentUserRatIds = currentUser.relationships.rats.data.map(rat => rat.id)
+
+    if (assignedRatIds.some(ratId => currentUserRatIds.includes(ratId))) {
+      return true
+    }
+
+    // Check if the paperwork is not yet time locked
+    if ((new Date()).getTime() - (new Date(rescue.attributes.createdAt)).getTime() <= 3600000) {
+      return true
+    }
+
+    // Check if user has the permission to edit the paperwork anyway
+    if (currentUserGroups.length && userHasPermission(currentUserGroups, 'rescue.write')) {
+      return true
+    }
+
+    return false
   }
 }
 
@@ -467,10 +525,15 @@ const mapStateToProps = state => {
       }))
   }
 
+  const currentUser = state.user
+  const currentUserGroups = currentUser.relationships ? [...currentUser.relationships.groups.data].map(group => state.groups[group.id]) : []
+
   return Object.assign({
     firstLimpetId,
     rats,
     rescue,
+    currentUser,
+    currentUserGroups,
   }, paperwork)
 }
 
