@@ -5,7 +5,7 @@ const isDev = preval`module.exports = process.env.NODE_ENV !== 'production' || [
 
 
 export default function (state = initialState.error, action) {
-  if (action.status && action.status !== 'success') {
+  if (action.status && action.status === 'error') {
     console.error('ACTION ERR:', action)
 
     if (isDev) {

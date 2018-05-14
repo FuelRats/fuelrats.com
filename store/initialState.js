@@ -1,7 +1,7 @@
 export default {
   authentication: {
     loggedIn: false,
-    loggingIn: false,
+    loggingIn: true,
     loggingOut: false,
     registering: false,
   },
@@ -31,6 +31,8 @@ export default {
     openSubNav: '',
     showLoginDialog: false,
   },
+
+  groups: {},
 
   paperwork: {
     rescueId: null,

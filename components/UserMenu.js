@@ -1,7 +1,6 @@
 // Module imports
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import Cookies from 'js-cookie'
 import React from 'react'
 
 
@@ -22,12 +21,6 @@ class UserMenu extends Component {
     Public Methods
   \***************************************************************************/
 
-  async componentDidMount () {
-    if (Cookies.get('access_token')) {
-      this.props.getUser()
-    }
-  }
-
   componentWillReceiveProps (nextProps) {
     if (nextProps.loggedIn && !nextProps.user.attributes) {
       this.props.getUser()
@@ -37,6 +30,7 @@ class UserMenu extends Component {
   render () {
     const {
       loggedIn,
+      loggingIn,
       logout,
       user,
     } = this.props
@@ -48,9 +42,13 @@ class UserMenu extends Component {
     }
 
     return (
-      <div className={`user-menu ${loggedIn ? 'logged-in' : ''}`}>
-        {(loggedIn && user.attributes) && (
-          <div className="avatar medium"><img alt="Your avatar" src={user.attributes.image} /></div>
+      <div className={`user-menu ${loggedIn ? 'logged-in' : ''} ${loggingIn ? 'logging-in' : ''}`}>
+        {Boolean(loggedIn || loggingIn) && (
+          <div className="avatar medium">
+            {Boolean(!loggingIn && user.attributes) && (
+              <img alt="Your avatar" src={user.attributes.image} />
+            )}
+          </div>
         )}
 
         {(loggedIn && user.attributes) && (
@@ -109,7 +107,7 @@ class UserMenu extends Component {
           </menu>
         )}
 
-        {!loggedIn && (
+        {!loggedIn && !loggingIn && (
           <button
             className="login"
             onClick={() => this.props.setFlag('showLoginDialog', true)}>
@@ -131,16 +129,10 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   setFlag: actions.setFlag,
 }, dispatch)
 
-const mapStateToProps = state => {
-  const {
-    authentication,
-    user,
-  } = state
-
-  return Object.assign({
-    user,
-  }, authentication)
-}
+const mapStateToProps = ({ authentication, user }) => ({
+  ...authentication,
+  user,
+})
 
 
 

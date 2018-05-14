@@ -17,6 +17,7 @@ export default function (state = initialState.authentication, action) {
     case actionTypes.LOGIN:
       switch (status) {
         case 'error':
+        case 'noToken':
           return {
             ...state,
             loggedIn: false,

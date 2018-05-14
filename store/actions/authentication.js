@@ -97,7 +97,7 @@ export const login = (email, password) => async dispatch => {
   })
 
   /* eslint-disable no-restricted-globals*/
-  if (location && location.search) {
+  if (location && location.search && success) {
     const searchParams = {}
 
     location.search.replace(/^\?/, '').split('&').forEach(searchParam => {
@@ -281,6 +281,13 @@ export const sendPasswordResetEmail = email => async dispatch => {
     type: actionTypes.SEND_PASSWORD_RESET_EMAIL,
   })
 }
+
+
+export const updateLoggingInState = (success) => async dispatch => dispatch({
+  payload: null,
+  status: success ? 'success' : 'noToken',
+  type: actionTypes.LOGIN,
+})
 
 
 

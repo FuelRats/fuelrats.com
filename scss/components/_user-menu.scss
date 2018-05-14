@@ -4,8 +4,10 @@
   right: 2rem;
   top: 1.5rem;
   z-index: 1;
+  transition: top .2s;
 
-  &.logged-in {
+  &.logged-in,
+  &.logging-in {
     top: 0.5rem;
   }
 
@@ -32,12 +34,15 @@
     overflow: hidden;
     padding: 0;
     transition-delay:
-      .5s,
+      0s,
+      0.5s,
       0.25s;
     transition-duration:
+      0.2s,
       0.25s,
       0.25s;
     transition-property:
+      border-color,
       max-height,
       max-width;
 
@@ -81,12 +86,27 @@
 
   .avatar {
     order: 2;
+    transition: border-color .2s;
+  }
+
+  &.logging-in .avatar {
+    animation-name: opacity-flutter;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    background-color: $grey-darkened;
+    border-color: $red-darkened;
+
+    &:empty:before {
+      color: $red-darkened;
+      background: $grey-darkened;
+    }
   }
 
   &:hover {
     menu {
       max-height: 100vh;
       transition-delay:
+        0s,
         0s,
         0.25s;
       max-width: 100vw;
@@ -104,6 +124,11 @@
         border-color: $black-lightened;
         color: $white;
       }
+    }
+
+    .avatar,
+    menu {
+      border-color: $black-lightened;
     }
   }
 }

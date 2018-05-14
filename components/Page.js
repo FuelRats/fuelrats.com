@@ -47,6 +47,12 @@ export default (Component, title = 'Untitled', reduxOptions = {}, authentication
         name: 'TheFuelRats',
         storeName: 'webStore',
       })
+
+      if (props.accessToken) {
+        props.__getUser()
+      } else {
+        props.__updateLoggingInState()
+      }
     }
 
     /* eslint-disable camelcase */
@@ -87,6 +93,7 @@ export default (Component, title = 'Untitled', reduxOptions = {}, authentication
         asPath,
         isServer,
         query,
+        accessToken: access_token,
         userId: user_id,
         ...props,
       }
@@ -115,7 +122,7 @@ export default (Component, title = 'Untitled', reduxOptions = {}, authentication
 
           <main className={mainClasses}>
             <Component
-              {...this.props} />
+              {...this.pageProps} />
           </main>
 
           {__showLoginDialog && (
@@ -123,6 +130,16 @@ export default (Component, title = 'Untitled', reduxOptions = {}, authentication
           )}
         </div>
       )
+    }
+
+    get pageProps () {
+      const pageProps = { ...this.props }
+
+      delete pageProps.__showLoginDialog
+      delete pageProps.__getUser
+      delete pageProps.__updateLoggingInState
+
+      return pageProps
     }
   }
 
@@ -158,6 +175,8 @@ export default (Component, title = 'Untitled', reduxOptions = {}, authentication
     return bindActionCreators({
       ...pageActions,
       setFlag: actions.setFlag,
+      __getUser: actions.getUser,
+      __updateLoggingInState: actions.updateLoggingInState,
     }, dispatch)
   }
 
