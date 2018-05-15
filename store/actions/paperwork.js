@@ -1,125 +1,51 @@
-// Module imports
-import Cookies from 'js-cookie'
-import fetch from 'isomorphic-fetch'
-
-
-
-
-
 // Component imports
+import { createApiAction } from '../actionCreators'
 import actionTypes from '../actionTypes'
 
 
 
 
 
-export const retrievePaperwork = rescueId => async dispatch => {
-  dispatch({ type: actionTypes.RETRIEVE_PAPERWORK })
+export const retrievePaperwork = rescueId => createApiAction({
+  actionType: actionTypes.RETRIEVE_PAPERWORK,
+  url: `/api/rescues/${rescueId}`,
+})
 
-  let response = null
-  let success = false
+export const submitPaperworkDetails = (rescueId, rescue) => createApiAction({
+  actionType: actionTypes.SUBMIT_PAPERWORK,
+  url: `/api/rescues/${rescueId}`,
+  method: 'put',
+  data: JSON.stringify(rescue),
+})
 
-  try {
-    const token = Cookies.get('access_token')
+export const submitPaperworkRatsAssigned = (rescueId, rats) => createApiAction({
+  actionType: actionTypes.SUBMIT_PAPERWORK_RATS_ASSIGNED,
+  url: `/api/rescues/assign/${rescueId}`,
+  method: 'put',
+  data: JSON.stringify(rats.map(rat => rat.id)),
+})
 
-    response = await fetch(`/api/rescues/${rescueId}`, {
-      headers: new Headers({
-        Authorization: `Bearer ${token}`,
-      }),
-    })
+export const submitPaperworkRatsRemoved = (rescueId, rats) => createApiAction({
+  actionType: actionTypes.SUBMIT_PAPERWORK_RATS_REMOVED,
+  url: `/api/rescues/unassign/${rescueId}`,
+  method: 'put',
+  data: JSON.stringify(rats.map(rat => rat.id)),
+})
 
-    success = response.ok
-    response = await response.json()
+export const submitPaperwork = (rescueId, rescue, rats) => {
+  const actions = []
 
-    if (!response.data.length) {
-      throw new Error('Rescue not found')
+  if (rats) {
+    if (rats.added.length) {
+      actions.push(submitPaperworkRatsAssigned(rescueId, rats.added))
     }
-  } catch (error) {
-    success = false
-    response = error
+
+    if (rats.removed.length) {
+      actions.push(submitPaperworkRatsAssigned(rescueId, rats.removed))
+    }
   }
 
-  return dispatch({
-    payload: response,
-    status: success ? 'success' : 'error',
-    type: actionTypes.RETRIEVE_PAPERWORK,
-  })
-}
-
-
-
-
-export const submitPaperwork = (rescueId, rescue, rats) => async dispatch => {
-  dispatch({ type: actionTypes.SUBMIT_PAPERWORK })
-
-  let response = null
-  let success = false
-
-  try {
-    const token = Cookies.get('access_token')
-
-    response = await fetch(`/api/rescues/${rescueId}`, {
-      body: JSON.stringify(rescue),
-      headers: new Headers({
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      }),
-      method: 'put',
-    })
-
-    success = response.ok
-    if (!success) {
-      throw new Error('Error Submitting Paperwork')
-    }
-
-    response = await response.json()
-
-    if (rats) {
-      if (rats.added.length) {
-        response = await fetch(`/api/rescues/assign/${rescueId}`, {
-          body: JSON.stringify(rats.added.map(rat => rat.id)),
-          headers: new Headers({
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          }),
-          method: 'put',
-        })
-
-        success = response.ok
-        if (!success) {
-          throw new Error('Error Submitting Paperwork')
-        }
-
-        response = await response.json()
-      }
-
-      if (rats.removed.length) {
-        response = await fetch(`/api/rescues/unassign/${rescueId}`, {
-          body: JSON.stringify(rats.removed.map(rat => rat.id)),
-          headers: new Headers({
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          }),
-          method: 'put',
-        })
-        success = response.ok
-        if (!success) {
-          throw new Error('Error Submitting Paperwork')
-        }
-
-        response = await response.json()
-      }
-    }
-
-    success = true
-  } catch (error) {
-    response = error
-    success = false
+  if (rescue) {
+    actions.push(submitPaperworkDetails(rescueId, rescue))
   }
-
-  return dispatch({
-    payload: response,
-    status: success ? 'success' : 'error',
-    type: actionTypes.SUBMIT_PAPERWORK,
-  })
 }
