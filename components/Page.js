@@ -1,10 +1,10 @@
 // Module imports
 import { bindActionCreators } from 'redux'
+import { library as faLibrary } from '@fortawesome/fontawesome-svg-core'
 import Cookies from 'next-cookies'
 import LocalForage from 'localforage'
 import React from 'react'
 import withRedux from 'next-redux-wrapper'
-import { library } from '@fortawesome/fontawesome-svg-core'
 import getConfig from 'next/config'
 
 
@@ -33,7 +33,7 @@ const serverApiUrl = publicRuntimeConfig.apis.fuelRats.server
 
 
 // Populate fontAweomse library
-library.add(...Object.values(faIcons))
+faLibrary.add(faIcons)
 
 
 
@@ -90,17 +90,11 @@ export default (Component, title = 'Untitled', reduxOptions = {}, authentication
         storeName: 'webStore',
       })
 
-      console.log('1')
       if (this.props.__verifyError) {
-        console.log('2')
         this.props.logout(true)
       } else if (this.props.accessToken && this.props.__loggedIn) {
-        console.log('3')
         apiService.defaults.headers.common.Authorization = `Bearer ${this.props.accessToken}`
       }
-      console.log(this.props.__verifyError)
-      console.log(this.props.accessToken)
-      console.log(this.props.loggedIn)
     }
 
     /* eslint-disable camelcase */
