@@ -38,9 +38,8 @@ By default, the website doesn't know much about connecting to the Fuel Rats API 
 |---------------------------|----------------------------------------------------------------------------------------------------------------|
 | `FRDC_API_KEY`            | This is your OAuth application's client key or ID                                                              |
 | `FRDC_API_SECRET`         | This is your OAuth application's client secret                                                                 |
-| `FRDC_API_URL`            | This is the URL at which you can reach the Fuel Rats API                                                       |
-| `FRDC_WORDPRESS_USERNAME` | This is your Wordpress username                                                                                |
-| `FRDC_WORDPRESS_PASSWORD` | This is your Wordpress application password (this **is** different from your normal Wordpress account password |
+| `FRDC_API_URL`            | This is the URL at which the **SERVER** can reach the Fuel Rats API                                            |
+| `FRDC_LOCAL_API_URL`      | This is the URL at which the **CLIENT** can reach the Fuel Rats API                                            |
 | `PORT`                    | This is the port to run the application at                                                                     |
 
 You can define any or all of these variables in the same command you use to start the server:

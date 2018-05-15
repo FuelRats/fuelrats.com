@@ -1,7 +1,6 @@
 // Module imports
 import Cookies from 'js-cookie'
 import fetch from 'isomorphic-fetch'
-import LocalForage from 'localforage'
 
 
 
@@ -10,6 +9,7 @@ import LocalForage from 'localforage'
 // Component imports
 import { Router } from '../../routes'
 import actionTypes from '../actionTypes'
+import apiService from '../../services/api'
 
 
 
@@ -81,6 +81,7 @@ export const login = (email, password) => async dispatch => {
       token = response.access_token
 
       Cookies.set('access_token', token, { expires: 365 })
+      apiService.defaults.headers.common.Authorization = `Bearer ${token}`
     } else {
       response = null
       success = true
@@ -116,32 +117,20 @@ export const login = (email, password) => async dispatch => {
 
 
 
-
-
-export const logout = () => async dispatch => {
-  dispatch({ type: actionTypes.LOGOUT })
-
-  let response = null
-  let success = false
-
-  try {
-    Cookies.remove('access_token')
-    Cookies.remove('user_id')
-    await LocalForage.removeItem('preferences')
-
-    success = true
-  } catch (error) {
-    response = error
-    success = false
-  }
+export const logout = fromVerification => async dispatch => {
+  Cookies.remove('access_token')
 
   const result = dispatch({
-    payload: response,
-    status: success ? 'success' : 'error',
+    payload: {
+      origin: fromVerification ? 'verify' : 'user',
+    },
+    status: 'success',
     type: actionTypes.LOGOUT,
   })
 
-  Router.push('/')
+  if (!fromVerification) {
+    Router.push('/')
+  }
 
   return result
 }

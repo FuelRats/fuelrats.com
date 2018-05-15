@@ -6,7 +6,9 @@ const isDev = preval`module.exports = process.env.NODE_ENV !== 'production' || [
 
 export default function (state = initialState.error, action) {
   if (action.status && action.status === 'error') {
+    /* eslint-disable no-console */
     console.error('ACTION ERR:', action)
+    /* eslint-enable no-console */
 
     if (isDev) {
       return {

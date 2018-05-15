@@ -7,7 +7,7 @@ import initialState from '../initialState'
 
 export default function (state = initialState.authentication, action) {
   const {
-    // payload,
+    payload,
     status,
     type,
   } = action
@@ -43,6 +43,7 @@ export default function (state = initialState.authentication, action) {
         return {
           ...state,
           loggedIn: false,
+          verifyError: payload && payload.origin && payload.origin === 'verify',
         }
       }
       break

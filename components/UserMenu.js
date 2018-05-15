@@ -12,6 +12,7 @@ import { actions } from '../store'
 import AdminUserMenuNav from './AdminUserMenuNav'
 import Component from './Component'
 import { Link } from '../routes'
+import { userHasPermission } from '../helpers'
 
 
 
@@ -21,8 +22,8 @@ class UserMenu extends Component {
     Public Methods
   \***************************************************************************/
 
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.loggedIn && !nextProps.user.attributes) {
+  componentDidUpdate () {
+    if (this.props.loggedIn && !this.props.user.attributes) {
       this.props.getUser()
     }
   }
@@ -33,13 +34,8 @@ class UserMenu extends Component {
       loggingIn,
       logout,
       user,
+      showAdmin,
     } = this.props
-
-    let showAdmin = false
-
-    if (loggedIn && user.attributes) {
-      showAdmin = ['rat.read', 'rescue.read', 'user.read'].some(permission => user.permissions.has(permission))
-    }
 
     return (
       <div className={`user-menu ${loggedIn ? 'logged-in' : ''} ${loggingIn ? 'logging-in' : ''}`}>
@@ -57,13 +53,13 @@ class UserMenu extends Component {
               <ul>
                 <li>
                   <Link href="/profile">
-                    <a>My Profile</a>
+                    <a><span>My Profile</span></a>
                   </Link>
                 </li>
 
                 <li>
                   <Link href="/leaderboard">
-                    <a>Leaderboard</a>
+                    <a><span>Leaderboard</span></a>
                   </Link>
                 </li>
 
@@ -71,18 +67,17 @@ class UserMenu extends Component {
                   <a
                     href="#"
                     onClick={logout}>
-                    Logout
+                    <span>Logout</span>
                   </a>
                 </li>
               </ul>
             </nav>
 
             {showAdmin && (
-              <AdminUserMenuNav
-                permissions={user.permissions} />
+              <AdminUserMenuNav />
             )}
 
-            <div
+            {/*<div
               className="stats"
               hidden>
               <header>My Stats</header>
@@ -103,7 +98,7 @@ class UserMenu extends Component {
                   </tr>
                 </tbody>
               </table>
-            </div>
+            </div>*/}
           </menu>
         )}
 
@@ -129,10 +124,15 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   setFlag: actions.setFlag,
 }, dispatch)
 
-const mapStateToProps = ({ authentication, user }) => ({
-  ...authentication,
-  user,
-})
+const mapStateToProps = ({ authentication, user, groups }) => {
+  const userGroups = user.relationships ? user.relationships.groups.data.map(group => groups[group.id]) : []
+
+  return {
+    ...authentication,
+    user,
+    showAdmin: user.relationships ? userHasPermission(userGroups, 'isAdministrator') : false,
+  }
+}
 
 
 

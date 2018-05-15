@@ -5,7 +5,7 @@ import LocalForage from 'localforage'
 import React from 'react'
 import withRedux from 'next-redux-wrapper'
 import { library } from '@fortawesome/fontawesome-svg-core'
-
+import getConfig from 'next/config'
 
 
 
@@ -16,10 +16,17 @@ import {
 } from '../store'
 import { Router } from '../routes'
 import * as faIcons from '../helpers/siteIcons'
+import apiService from '../services/api'
 import Head from './Head'
 import Header from './Header'
 import UserMenu from './UserMenu'
 import LoginDialog from './LoginDialog'
+
+
+
+// Component constants
+const { publicRuntimeConfig } = getConfig()
+const serverApiUrl = publicRuntimeConfig.apis.fuelRats.server
 
 
 
@@ -41,6 +48,41 @@ initStore()
 
 export default (Component, title = 'Untitled', reduxOptions = {}, authenticationRequired = false) => {
   class Page extends React.Component {
+    static async _verifyAuthenticatedUser (props) {
+      const {
+        loggedIn,
+        logout,
+        verifyError,
+        getUser,
+      } = props
+
+      if (verifyError) {
+        return false
+      }
+
+      if (loggedIn) {
+        return true
+      }
+
+      const { payload, status } = await getUser()
+
+      // If the API returned in error, double check the reasoning.
+      if (status !== 'success') {
+        if (payload && Array.isArray(payload.errors)) {
+          const errMsg = payload.errors[0] && payload.errors[0].status
+
+          if (errMsg === 'Unauthorized') {
+            await logout(true)
+            return false
+          }
+        }
+
+        // Something else went wrong, but we cannot determine if the session is invalid
+      }
+
+      return true
+    }
+
     constructor(props) {
       super(props)
       LocalForage.config({
@@ -48,11 +90,17 @@ export default (Component, title = 'Untitled', reduxOptions = {}, authentication
         storeName: 'webStore',
       })
 
-      if (props.accessToken) {
-        props.__getUser()
-      } else {
-        props.__updateLoggingInState()
+      console.log('1')
+      if (this.props.__verifyError) {
+        console.log('2')
+        this.props.logout(true)
+      } else if (this.props.accessToken && this.props.__loggedIn) {
+        console.log('3')
+        apiService.defaults.headers.common.Authorization = `Bearer ${this.props.accessToken}`
       }
+      console.log(this.props.__verifyError)
+      console.log(this.props.accessToken)
+      console.log(this.props.loggedIn)
     }
 
     /* eslint-disable camelcase */
@@ -62,16 +110,33 @@ export default (Component, title = 'Untitled', reduxOptions = {}, authentication
         asPath,
         isServer,
         query,
+        store,
       } = ctx
 
       let props = {}
 
       const {
-        access_token,
-        user_id,
+        access_token: accessToken,
       } = Cookies(ctx)
 
-      if (authenticationRequired && !access_token) {
+      let verified = false
+
+      if (isServer) {
+        apiService.defaults.baseURL = `${serverApiUrl}`
+      }
+
+      if (accessToken) {
+        apiService.defaults.headers.common.Authorization = `Bearer ${accessToken}`
+        verified = await Page._verifyAuthenticatedUser({
+          ...store.getState().authentication,
+          logout: (...args) => actions.logout(...args)(store.dispatch),
+          getUser: (...args) => actions.getUser(...args)(store.dispatch),
+        })
+      } else {
+        actions.updateLoggingInState()(store.dispatch)
+      }
+
+      if (!verified && authenticationRequired) {
         if (res) {
           res.writeHead(302, {
             Location: `/?authenticate=true&destination=${encodeURIComponent(asPath)}`,
@@ -93,8 +158,7 @@ export default (Component, title = 'Untitled', reduxOptions = {}, authentication
         asPath,
         isServer,
         query,
-        accessToken: access_token,
-        userId: user_id,
+        accessToken,
         ...props,
       }
     }
@@ -135,9 +199,12 @@ export default (Component, title = 'Untitled', reduxOptions = {}, authentication
     get pageProps () {
       const pageProps = { ...this.props }
 
-      delete pageProps.__showLoginDialog
       delete pageProps.__getUser
+      delete pageProps.__loggedIn
+      delete pageProps.__logout
+      delete pageProps.__showLoginDialog
       delete pageProps.__updateLoggingInState
+      delete pageProps.__verifyError
 
       return pageProps
     }
@@ -152,7 +219,9 @@ export default (Component, title = 'Untitled', reduxOptions = {}, authentication
 
     return {
       ...pageProps,
+      __loggedIn: state.authentication.loggedIn,
       __showLoginDialog: state.flags.showLoginDialog,
+      __verifyError: state.authentication.verifyError,
     }
   }
 
@@ -176,6 +245,7 @@ export default (Component, title = 'Untitled', reduxOptions = {}, authentication
       ...pageActions,
       setFlag: actions.setFlag,
       __getUser: actions.getUser,
+      __logout: actions.logout,
       __updateLoggingInState: actions.updateLoggingInState,
     }, dispatch)
   }

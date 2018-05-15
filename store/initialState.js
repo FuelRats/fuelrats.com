@@ -4,6 +4,7 @@ export default {
     loggingIn: true,
     loggingOut: false,
     registering: false,
+    verifyError: null,
   },
 
   blogs: {
@@ -76,7 +77,6 @@ export default {
   user: {
     attributes: null,
     id: null,
-    permissions: new Set,
     preferences: {
       allowUniversalTracking: false,
     },
