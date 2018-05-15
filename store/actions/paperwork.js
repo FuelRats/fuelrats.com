@@ -8,26 +8,26 @@ import actionTypes from '../actionTypes'
 
 export const retrievePaperwork = rescueId => createApiAction({
   actionType: actionTypes.RETRIEVE_PAPERWORK,
-  url: `/api/rescues/${rescueId}`,
+  url: `/rescues/${rescueId}`,
 })
 
 export const submitPaperworkDetails = (rescueId, rescue) => createApiAction({
   actionType: actionTypes.SUBMIT_PAPERWORK,
-  url: `/api/rescues/${rescueId}`,
+  url: `/rescues/${rescueId}`,
   method: 'put',
   data: JSON.stringify(rescue),
 })
 
 export const submitPaperworkRatsAssigned = (rescueId, rats) => createApiAction({
   actionType: actionTypes.SUBMIT_PAPERWORK_RATS_ASSIGNED,
-  url: `/api/rescues/assign/${rescueId}`,
+  url: `/rescues/assign/${rescueId}`,
   method: 'put',
   data: JSON.stringify(rats.map(rat => rat.id)),
 })
 
 export const submitPaperworkRatsRemoved = (rescueId, rats) => createApiAction({
   actionType: actionTypes.SUBMIT_PAPERWORK_RATS_REMOVED,
-  url: `/api/rescues/unassign/${rescueId}`,
+  url: `/rescues/unassign/${rescueId}`,
   method: 'put',
   data: JSON.stringify(rats.map(rat => rat.id)),
 })
