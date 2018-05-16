@@ -1,5 +1,5 @@
 // Component imports
-import { createApiAction } from '../actionCreators'
+import { createApiAction, actionSeries } from '../actionCreators'
 import actionTypes from '../actionTypes'
 
 
@@ -48,4 +48,6 @@ export const submitPaperwork = (rescueId, rescue, rats) => {
   if (rescue) {
     actions.push(submitPaperworkDetails(rescueId, rescue))
   }
+
+  return actionSeries(actions)
 }
