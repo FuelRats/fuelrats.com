@@ -34,13 +34,13 @@ This project adheres to the Contributor Covenant code of conduct. By participati
 
 By default, the website doesn't know much about connecting to the Fuel Rats API or to the Fuel Rats Wordpress. To remedy this, you'll need to set some environment variables:
 
-| Name                      | Purpose                                                                                                        |
-|---------------------------|----------------------------------------------------------------------------------------------------------------|
-| `FRDC_API_KEY`            | This is your OAuth application's client key or ID                                                              |
-| `FRDC_API_SECRET`         | This is your OAuth application's client secret                                                                 |
-| `FRDC_API_URL`            | This is the URL at which the **SERVER** can reach the Fuel Rats API                                            |
-| `FRDC_LOCAL_API_URL`      | This is the URL at which the **CLIENT** can reach the Fuel Rats API                                            |
-| `PORT`                    | This is the port to run the application at                                                                     |
+| Name                      | Default                 | Purpose                                                                                                        |
+|---------------------------|-------------------------|----------------------------------------------------------------------------------------------------------------|
+| `FRDC_API_KEY`            | REQUIRED                | This is your OAuth application's client key or ID                                                              |
+| `FRDC_API_SECRET`         | REQUIRED                | This is your OAuth application's client secret                                                                 |
+| `FRDC_API_URL`            | `http://localhost:8080` | This is the URL at which the **SERVER** can reach the Fuel Rats API                                            |
+| `FRDC_LOCAL_API_URL`      | `/api`                  | This is the URL at which the **CLIENT** can reach the Fuel Rats API. The default is the relative path to the webserver-managed proxy endpoint |
+| `PORT`                    | `3000`                  | This is the port to run the application at                                                                     |
 
 You can define any or all of these variables in the same command you use to start the server:
 
