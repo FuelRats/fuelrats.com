@@ -1,11 +1,13 @@
 // Module imports
 import { bindActionCreators } from 'redux'
-import { library as faLibrary } from '@fortawesome/fontawesome-svg-core'
+import { library as faLibrary, config as faConfig } from '@fortawesome/fontawesome-svg-core'
 import Cookies from 'next-cookies'
 import LocalForage from 'localforage'
 import React from 'react'
 import withRedux from 'next-redux-wrapper'
 import getConfig from 'next/config'
+
+
 
 
 
@@ -24,6 +26,15 @@ import LoginDialog from './LoginDialog'
 
 
 
+
+
+// Style imports
+import '../scss/app.scss'
+
+
+
+
+
 // Component constants
 const { publicRuntimeConfig } = getConfig()
 const serverApiUrl = publicRuntimeConfig.apis.fuelRats.server
@@ -32,7 +43,8 @@ const serverApiUrl = publicRuntimeConfig.apis.fuelRats.server
 
 
 
-// Populate fontAweomse library
+// Configure and populate FontAweomse library
+faConfig.autoAddCss = false
 faLibrary.add(faIcons)
 
 

@@ -2,13 +2,19 @@
   -ms-flex-negative: 0;
   margin: 2rem 0;
 
-  &:hover {
+  .brand-animation-wrapper {
     overflow: hidden;
-    svg {
-      animation-duration: 3s;
-      animation-name: bouncy-spin;
-      animation-timing-function: cubic-bezier(0.64, 0.57, 0, 1.11);
-      animation-iteration-count: infinite;
+  }
+
+  &:hover {
+    .brand-animation-wrapper {
+      > svg {
+        border-radius: 50%;
+        animation-duration: 3s;
+        animation-name: bouncy-spin;
+        animation-timing-function: cubic-bezier(0.64, 0.57, 0, 1.11);
+        animation-iteration-count: infinite;
+      }
     }
   }
 

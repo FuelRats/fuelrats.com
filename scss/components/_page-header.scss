@@ -27,11 +27,12 @@
     bottom: 0;
     content: '';
     display: block;
-    left: 0;
     position: absolute;
+    width: 9rem;
     right: 0;
     transform: skewX(-45deg) translateX(1rem);
     transform-origin: left bottom;
+    transition: transform .2s;
     top: 0;
     z-index: -1;
   }
@@ -40,5 +41,9 @@
     max-width: 100%;
     min-width: 100%;
     text-align: center;
+
+    &:after {
+      transform: skewX(0) translateX(0);
+    }
   }
 }

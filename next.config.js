@@ -1,5 +1,6 @@
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const withSass = require('@zeit/next-sass')
 
 const { ANALYZE } = process.env
 const path = require('path')
@@ -10,7 +11,7 @@ const {
   FRDC_LOCAL_API_URL,
 } = process.env
 
-module.exports = {
+module.exports = withSass({
   publicRuntimeConfig: {
     apis: {
       fuelRats: {
@@ -39,34 +40,12 @@ module.exports = {
       test: /\.js$/,
     })
 
-    config.module.rules.push(
-      {
-        test: /\.(css|scss)/,
-        loader: 'emit-file-loader',
-        options: {
-          name: 'dist/[path][name].[ext]',
-        },
-      },
-      {
-        test: /\.css$/,
-        use: ['babel-loader', 'raw-loader', 'postcss-loader'],
-      },
-      {
-        test: /\.s(a|c)ss$/,
-        use: ['babel-loader', 'raw-loader', 'postcss-loader',
-          {
-            loader: 'sass-loader',
-            options: {
-              includePaths: ['styles', 'node_modules']
-                .map((d) => path.join(__dirname, d))
-                .map((g) => glob.sync(g))
-                .reduce((a, c) => a.concat(c), []),
-            },
-          },
-        ],
-      },
-    )
-
     return config
   },
-}
+  sassLoaderOptions: {
+    includePaths: ['styles', 'node_modules']
+      .map((d) => path.join(__dirname, d))
+      .map((g) => glob.sync(g))
+      .reduce((a, c) => a.concat(c), []),
+  },
+})
