@@ -89,6 +89,7 @@ const getActionOptions = (options = isRequired('options')) => {
     actionFunction,
     actionPayload,
     actionType: options.actionType || isRequired('options.actionType'),
+    onComplete: options.onComplete,
     onError,
     onSuccess,
     onUnhandledError,
@@ -123,6 +124,7 @@ function createAction (options) {
     actionFunction,
     actionPayload,
     actionType,
+    onComplete,
     onError,
     onSuccess,
     onUnhandledError,
@@ -164,12 +166,17 @@ function createAction (options) {
       success = false
     }
 
-    return dispatch({
+    let postDispatchObj = dispatch({
       ...postDispatch,
       payload: response || null,
       status: success ? 'success' : 'error',
       type: actionType,
     })
+
+    if (onComplete) {
+      postDispatchObj = onComplete(postDispatchObj) || postDispatchObj
+    }
+    return postDispatchObj
   }
 }
 

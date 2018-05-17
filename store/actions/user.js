@@ -1,11 +1,3 @@
-// Module imports
-import Cookies from 'js-cookie'
-import fetch from 'isomorphic-fetch'
-
-
-
-
-
 // Component imports
 import { createApiAction } from '../actionCreators'
 import actionTypes from '../actionTypes'
@@ -14,40 +6,16 @@ import actionTypes from '../actionTypes'
 
 
 
-export const addNickname = (nickname, password) => async dispatch => {
-  dispatch({ type: actionTypes.ADD_NICKNAME })
+export const addNickname = (nickname, password) => createApiAction({
+  actionType: actionTypes.ADD_NICKNAME,
+  url: '/nicknames',
+  method: 'post',
+  data: {
+    nickname,
+    password,
+  },
+})
 
-  let response = null
-  let success = false
-
-  try {
-    const token = Cookies.get('access_token')
-
-    response = await fetch('/api/nicknames', {
-      body: JSON.stringify({
-        nickname,
-        password,
-      }),
-      headers: new Headers({
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      }),
-      method: 'post',
-    })
-
-    success = response.ok
-    response = await response.json()
-  } catch (error) {
-    success = false
-    response = error
-  }
-
-  return dispatch({
-    payload: response,
-    status: success ? 'success' : 'error',
-    type: actionTypes.ADD_NICKNAME,
-  })
-}
 
 
 
@@ -61,34 +29,9 @@ export const getUser = () => createApiAction({
 
 
 
-export const updateUser = (user) => async dispatch => {
-  dispatch({ type: actionTypes.UPDATE_USER })
-
-  let response = null
-  let success = false
-
-  try {
-    const token = Cookies.get('access_token')
-
-    response = await fetch(`/api/users/${user.id}`, {
-      body: JSON.stringify(user),
-      headers: new Headers({
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      }),
-      method: 'put',
-    })
-
-    success = response.ok
-    response = await response.json()
-  } catch (error) {
-    success = false
-    response = error
-  }
-
-  return dispatch({
-    payload: response,
-    status: success ? 'success' : 'error',
-    type: actionTypes.UPDATE_USER,
-  })
-}
+export const updateUser = (userId, data) => createApiAction({
+  actionType: actionTypes.UPDATE_USER,
+  url: `/users/${userId}`,
+  method: 'put',
+  data,
+})

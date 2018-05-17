@@ -15,21 +15,21 @@ export const submitPaperworkDetails = (rescueId, rescue) => createApiAction({
   actionType: actionTypes.SUBMIT_PAPERWORK,
   url: `/rescues/${rescueId}`,
   method: 'put',
-  data: JSON.stringify(rescue),
+  data: rescue,
 })
 
 export const submitPaperworkRatsAssigned = (rescueId, rats) => createApiAction({
   actionType: actionTypes.SUBMIT_PAPERWORK_RATS_ASSIGNED,
   url: `/rescues/assign/${rescueId}`,
   method: 'put',
-  data: JSON.stringify(rats.map(rat => rat.id)),
+  data: rats.map(rat => rat.id),
 })
 
 export const submitPaperworkRatsRemoved = (rescueId, rats) => createApiAction({
   actionType: actionTypes.SUBMIT_PAPERWORK_RATS_REMOVED,
   url: `/rescues/unassign/${rescueId}`,
   method: 'put',
-  data: JSON.stringify(rats.map(rat => rat.id)),
+  data: rats.map(rat => rat.id),
 })
 
 export const submitPaperwork = (rescueId, rescue, rats) => {
