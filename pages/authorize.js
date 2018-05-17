@@ -1,5 +1,6 @@
 // Module imports
-import Cookies from 'js-cookie'
+import { bindActionCreators } from 'redux'
+import Cookie from 'js-cookie'
 import React from 'react'
 
 
@@ -9,6 +10,7 @@ import React from 'react'
 // Component imports
 import Component from '../components/Component'
 import Page from '../components/Page'
+import { actions } from '../store'
 
 
 
@@ -33,7 +35,7 @@ class Authorize extends Component {
       clientName: null,
       redirectUri: null,
       scopes: [],
-      token: null,
+      token: Cookie.get('access_token'),
       transactionId: '',
       submitting: false,
     }
@@ -48,54 +50,37 @@ class Authorize extends Component {
 
   async componentDidMount () {
     const {
-      client_id,
+      client_id: clientId,
       state,
       scope,
-      response_type,
+      response_type: responseType,
+      getClientOAuthPage,
     } = this.props
 
-    /* eslint-disable camelcase */
-    if (client_id && state && scope && response_type) {
-    /* eslint-enable camelcase */
-      try {
-        const token = Cookies.get('access_token')
+    if (clientId && state && scope && responseType) {
+      const { payload, status } = await getClientOAuthPage(clientId, state, scope, responseType)
 
-        /* eslint-disable camelcase */
-        let response = await fetch(`/api/oauth2/authorize?client_id=${client_id}&scope=${scope}&state=${state}&response_type=${response_type}`, {
-        /* eslint-enable camelcase */
-          credentials: 'same-origin',
-          headers: new Headers({
-            Authorization: `Bearer ${token}`,
-          }),
-          method: 'get',
-        })
-        response = await response.json()
-
+      if (status === 'success') {
         this.setState({
-          clientName: response.client.data.attributes.name,
-          redirectUri: response.client.data.attributes.redirectUri,
-          scopes: response.scopes,
-          token,
-          transactionId: response.transactionId,
+          clientName: payload.client.data.attributes.name,
+          redirectUri: payload.client.data.attributes.redirectUri,
+          scopes: payload.scopes,
+          transactionId: payload.transactionId,
         })
-      } catch (error) {
-        console.log(error)
       }
     }
   }
 
   render () {
     const {
-      client_id,
+      client_id: clientId,
       state,
       scope,
-      response_type,
+      response_type: responseType,
     } = this.props
     const { submitting } = this.state
 
-    /* eslint-disable camelcase */
-    const hasRequiredParameters = client_id && state && scope && response_type
-    /* eslint-enable camelcase */
+    const hasRequiredParameters = clientId && state && scope && responseType
     const submitUrl = `/api/oauth2/authorize?bearer=${this.state.token}`
 
     return (
@@ -182,7 +167,9 @@ class Authorize extends Component {
 }
 
 
+const mapDispatchToProps = dispatch => bindActionCreators({
+  getClientOAuthPage: actions.getClientOAuthPage,
+}, dispatch)
 
 
-
-export default Page(Authorize, title, null, true)
+export default Page(Authorize, title, { mapDispatchToProps }, true)

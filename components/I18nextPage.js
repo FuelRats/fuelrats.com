@@ -13,13 +13,12 @@ import i18next from './i18next'
 
 
 export default class extends React.Component {
-
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
 
   static async getInitialProps () {
-    let i18n = await i18next
+    const i18n = await i18next
 
     if (!i18n.isInitialized) {
       await new Promise(resolve => i18n.on('initialized', resolve))
@@ -30,7 +29,7 @@ export default class extends React.Component {
     }
 
     return {
-      t: i18n.t.bind(i18n)
+      t: i18n.t.bind(i18n),
     }
   }
 }

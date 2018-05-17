@@ -1,3 +1,4 @@
+// Module imports
 import Document, { Head, Main, NextScript } from 'next/document'
 
 

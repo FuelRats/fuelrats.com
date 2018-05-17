@@ -100,9 +100,11 @@ class Register extends Component {
 
     this.setState({ submitting: true })
 
-    const { status } = await this.props.register(email, password, ratName, ratPlatform, nickname, recaptchaResponse)
+    const { status: regStatus } = await this.props.register(email, password, ratName, ratPlatform, nickname, recaptchaResponse)
 
-    if (status !== 'success') {
+    if (regStatus === 'success') {
+      await this.props.login(email, password, '/profile')
+    } else {
       this.setState({ submitting: false })
     }
   }
@@ -314,7 +316,7 @@ class Register extends Component {
 
 
 
-const mapDispatchToProps = ['register']
+const mapDispatchToProps = ['register', 'login']
 
 
 

@@ -2,7 +2,7 @@
 
 'use strict'
 
-let isDev = process.env.NODE_ENV !== 'production'
+const isDev = process.env.NODE_ENV !== 'production'
 
 /******************************************************************************\
   Module imports
@@ -17,7 +17,7 @@ const path = require('path')
 
 const next = require('next')({
   dev: isDev,
-  dir: path.resolve('.')
+  dir: path.resolve('.'),
 })
 
 

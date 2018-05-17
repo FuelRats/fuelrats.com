@@ -6,13 +6,6 @@ import { connect } from 'react-redux'
 
 
 
-// Module imports
-import Component from './Component'
-
-
-
-
-
 const UserStatsOverview = () => {
   const assistCount = 2
   const firstLimpetCount = 5
