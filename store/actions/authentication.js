@@ -151,5 +151,5 @@ export const updateLoggingInState = (success) => async dispatch => dispatch({
 
 export const validatePasswordResetToken = (token) => createApiAction({
   actionType: actionTypes.VALIDATE_PASSWORD_RESET_TOKEN,
-  url: `/api/reset/${token}`,
+  url: `/reset/${token}`,
 })
