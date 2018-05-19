@@ -1,5 +1,4 @@
 // Module imports
-import { bindActionCreators } from 'redux'
 import Cookie from 'js-cookie'
 import React from 'react'
 
@@ -10,7 +9,6 @@ import React from 'react'
 // Component imports
 import Component from '../components/Component'
 import Page from '../components/Page'
-import { actions } from '../store'
 
 
 
@@ -167,9 +165,6 @@ class Authorize extends Component {
 }
 
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  getClientOAuthPage: actions.getClientOAuthPage,
-}, dispatch)
+const mapDispatchToProps = ['getClientOAuthPage']
 
-
-export default Page(Authorize, title, { mapDispatchToProps }, true)
+export default Page(title, true, null, mapDispatchToProps)(Authorize)

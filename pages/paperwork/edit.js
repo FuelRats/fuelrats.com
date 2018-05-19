@@ -2,9 +2,9 @@
 import { Router } from '../../routes'
 import Component from '../../components/Component'
 import FirstLimpetInput from '../../components/FirstLimpetInput'
-import Page from '../../components/Page'
 import RadioOptionsInput from '../../components/RadioOptionsInput'
 import RatTagsInput from '../../components/RatTagsInput'
+import Page from '../../components/Page'
 import SystemTagsInput from '../../components/SystemTagsInput'
 import userHasPermission from '../../helpers/userHasPermission'
 
@@ -541,7 +541,4 @@ const mapStateToProps = state => {
 
 
 
-export default Page(Paperwork, title, {
-  mapStateToProps,
-  mapDispatchToProps,
-}, true)
+export default Page(title, true, mapStateToProps, mapDispatchToProps)(Paperwork)

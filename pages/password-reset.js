@@ -164,4 +164,4 @@ const mapDispatchToProps = ['resetPassword', 'validatePasswordResetToken']
 
 
 
-export default Page(PasswordReset, title, { mapDispatchToProps })
+export default Page(title, false, null, mapDispatchToProps)(PasswordReset)

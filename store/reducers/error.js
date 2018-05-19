@@ -1,7 +1,8 @@
+/* globals IS_DEVELOPMENT:false, IS_STAGING:false */
 import initialState from '../initialState'
 
 
-const isDev = preval`module.exports = process.env.NODE_ENV !== 'production' || ['develop', 'beta'].includes(process.env.TRAVIS_BRANCH)`
+const isDev = IS_DEVELOPMENT || IS_STAGING
 
 
 export default function (state = initialState.error, action) {

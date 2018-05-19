@@ -89,8 +89,6 @@ export const logout = fromVerification => async dispatch => {
     type: actionTypes.LOGOUT,
   })
 
-  Router.push('/')
-
   return result
 }
 

@@ -280,7 +280,4 @@ const mapStateToProps = state => {
 
 
 
-export default Page(Paperwork, title, {
-  mapStateToProps,
-  mapDispatchToProps,
-}, true)
+export default Page(title, true, mapStateToProps, mapDispatchToProps)(Paperwork)

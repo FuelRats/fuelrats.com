@@ -1,3 +1,5 @@
+/* globals IS_DEVELOPMENT:false, IS_STAGING:false, BUILD_COMMIT:false, BUILD_COMMIT_RANGE:false */
+
 // Module imports
 import React from 'react'
 import { connect } from 'react-redux'
@@ -14,9 +16,9 @@ import BrandSvg from './svg/BrandSvg'
 
 
 // Component constants
-const isDevOrStaging = preval`module.exports = process.env.NODE_ENV !== 'production' || ['develop', 'beta'].includes(process.env.TRAVIS_BRANCH)`
-const buildCommit = preval`module.exports = (process.env.TRAVIS_COMMIT && process.env.TRAVIS_COMMIT.slice(0, 10)) || process.env.TRAVIS_BRANCH || 'Development'`
-const buildCommitRange = preval`module.exports = process.env.TRAVIS_COMMIT_RANGE`
+const isDevOrStaging = IS_DEVELOPMENT || IS_STAGING
+const buildCommit = BUILD_COMMIT
+const buildCommitRange = BUILD_COMMIT_RANGE
 
 
 const Header = (props) => {

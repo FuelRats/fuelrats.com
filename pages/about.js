@@ -27,4 +27,4 @@ const About = () => (
   </div>
 )
 
-export default Page(About, title)
+export default Page(title, false)(About)

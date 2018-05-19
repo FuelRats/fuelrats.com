@@ -39,11 +39,13 @@ class Register extends Component {
   \***************************************************************************/
 
   async componentDidMount () {
-    const termsAlreadyAccepted = Boolean(sessionStorage.getItem('termsAccepted'))
-
     this.setState({
-      acceptTerms: termsAlreadyAccepted,
-      acceptPrivacy: termsAlreadyAccepted,
+      acceptTerms: sessionStorage.getItem('register.acceptTerms'),
+      acceptPrivacy: sessionStorage.getItem('register.acceptTerms'),
+      email: sessionStorage.getItem('register.email') || '',
+      nickname: sessionStorage.getItem('register.nickname') || '',
+      ratName: sessionStorage.getItem('register.ratName') || '',
+      ratPlatform: sessionStorage.getItem('register.ratPlatform') || 'pc',
     })
   }
 
@@ -77,8 +79,13 @@ class Register extends Component {
 
     const value = type === 'checkbox' ? target.checked : target.value
 
+    if (name !== 'password') {
+      sessionStorage.setItem(`register.${name}`, value)
+    }
+
     this.setState({
       [name]: value,
+      ...(name === 'acceptTerms' ? { acceptPrivacy: value } : {}),
     })
   }
 
@@ -322,4 +329,4 @@ const mapDispatchToProps = ['register', 'login']
 
 
 
-export default Page(Register, title, { mapDispatchToProps })
+export default Page(title, false, null, mapDispatchToProps)(Register)

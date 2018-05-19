@@ -1,5 +1,6 @@
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const webpack = require('webpack')
 const withSass = require('@zeit/next-sass')
 
 const { ANALYZE } = process.env
@@ -9,6 +10,9 @@ const glob = require('glob')
 const {
   FRDC_API_URL,
   FRDC_LOCAL_API_URL,
+  TRAVIS_BRANCH,
+  TRAVIS_COMMIT,
+  TRAVIS_COMMIT_RANGE,
 } = process.env
 
 module.exports = withSass({
@@ -32,6 +36,13 @@ module.exports = withSass({
     if (!dev) {
       config.plugins.push(new UglifyJsPlugin())
     }
+
+    config.plugins.push(new webpack.DefinePlugin({
+      IS_DEVELOPMENT: JSON.stringify(dev),
+      IS_STAGING: JSON.stringify(['develop', 'beta'].includes(TRAVIS_BRANCH)),
+      BUILD_COMMIT: JSON.stringify((TRAVIS_COMMIT && TRAVIS_COMMIT.slice(0, 10)) || TRAVIS_BRANCH || 'Development'),
+      BUILD_COMMIT_RANGE: JSON.stringify(TRAVIS_COMMIT_RANGE),
+    }))
 
     config.module.rules.unshift({
       enforce: 'pre',
