@@ -9,7 +9,7 @@ import { Link } from '../routes'
 import Component from './Component'
 
 // Constants
-const allowedLinkKeys = ['label', 'params', 'route']
+const allowedLinkKeys = ['href', 'params', 'route']
 const navItems = [
   {
     key: 'blog',
@@ -49,7 +49,7 @@ const navItems = [
   {
     key: 'donate',
     title: 'Donations',
-    route: '/donate',
+    href: 'https://donate.fuelrats.com/donate.php',
   },
 ]
 
