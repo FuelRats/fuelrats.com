@@ -5,7 +5,7 @@ import decals from './decals'
 import epics from './epics'
 import error from './error'
 import flags from './flags'
-import paperwork from './paperwork'
+import groups from './groups'
 import user from './user'
 import rats from './rats'
 import rescues from './rescues'
@@ -25,7 +25,7 @@ export default combineReducers({
   epics,
   error,
   flags,
-  paperwork,
+  groups,
   user,
   rats,
   rescues,

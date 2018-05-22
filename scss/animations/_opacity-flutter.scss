@@ -1,0 +1,11 @@
+@keyframes opacity-flutter {
+  0%, 100% { opacity: 0.70; }
+  50% { opacity: 0.30; }
+}
+
+
+.opacity-flutter {
+  animation-name: opacity-flutter;
+  animation-duration: 1s;
+  animation-iteration-count: infinite
+}

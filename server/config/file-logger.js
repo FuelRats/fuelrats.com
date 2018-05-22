@@ -1,4 +1,4 @@
-'use strict'
+
 
 // Module imports
 const {
@@ -12,8 +12,7 @@ const moment = require('moment')
 
 
 
-module.exports = function (koa) {
-
+module.exports = (koa) => {
   /******************************************************************************\
     Proxy Fuelrats API requests
   \******************************************************************************/
@@ -29,9 +28,9 @@ module.exports = function (koa) {
       // It already exists so blep.
     }
 
-    let writeStream = createWriteStream(`./logs/${moment().format('YYYY-MM-DD')}.log`, { flags: 'a' })
+    const writeStream = createWriteStream(`./logs/${moment().format('YYYY-MM-DD')}.log`, { flags: 'a' })
 
-    let log = {
+    const log = {
       req: {
         headers: ctx.request.headers,
         href: ctx.request.href,
@@ -44,7 +43,7 @@ module.exports = function (koa) {
 
     await next()
 
-    let finishedAt = Date.now()
+    const finishedAt = Date.now()
 
     Object.assign(log, {
       duration: finishedAt - log.startedAt,

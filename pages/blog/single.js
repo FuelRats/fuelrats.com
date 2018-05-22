@@ -177,7 +177,4 @@ const mapStateToProps = state => state.blogs
 
 
 
-export default Page(Blog, title, {
-  mapStateToProps,
-  mapDispatchToProps,
-})
+export default Page(title, false, mapStateToProps, mapDispatchToProps)(Blog)

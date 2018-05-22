@@ -101,4 +101,4 @@ class PrivacyPolicy extends Component {
 
 
 
-export default Page(PrivacyPolicy, title)
+export default Page(title, false)(PrivacyPolicy)

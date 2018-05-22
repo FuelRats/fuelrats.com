@@ -1,7 +1,6 @@
 // Module imports
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import Cookies from 'js-cookie'
 import React from 'react'
 
 
@@ -11,114 +10,95 @@ import React from 'react'
 // Component imports
 import { actions } from '../store'
 import AdminUserMenuNav from './AdminUserMenuNav'
-import Component from './Component'
 import { Link } from '../routes'
+import { userHasPermission } from '../helpers'
 
 
 
 
-class UserMenu extends Component {
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
+const UserMenu = (props) => {
+  const {
+    loggedIn,
+    loggingIn,
+    logout,
+    user,
+    showAdmin,
+  } = props
 
-  async componentDidMount () {
-    if (Cookies.get('access_token')) {
-      this.props.getUser()
-    }
-  }
+  return (
+    <div className={`user-menu ${loggedIn ? 'logged-in' : ''} ${loggingIn ? 'logging-in' : ''}`}>
+      {Boolean(loggedIn || loggingIn) && (
+        <div className="avatar medium">
+          {Boolean(!loggingIn && user.attributes) && (
+            <img alt="Your avatar" src={user.attributes.image} />
+          )}
+        </div>
+      )}
 
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.loggedIn && !nextProps.user.attributes) {
-      this.props.getUser()
-    }
-  }
+      {(loggedIn && user.attributes) && (
+        <menu>
+          <nav className="user">
+            <ul>
+              <li>
+                <Link href="/profile">
+                  <a><span>My Profile</span></a>
+                </Link>
+              </li>
 
-  render () {
-    const {
-      loggedIn,
-      logout,
-      user,
-    } = this.props
+              <li>
+                <Link href="/leaderboard">
+                  <a><span>Leaderboard</span></a>
+                </Link>
+              </li>
 
-    let showAdmin = false
+              <li>
+                <a
+                  href="#"
+                  onClick={logout}>
+                  <span>Logout</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
 
-    if (loggedIn && user.attributes) {
-      showAdmin = ['rat.read', 'rescue.read', 'user.read'].some(permission => user.permissions.has(permission))
-    }
+          {showAdmin && (
+            <AdminUserMenuNav />
+          )}
 
-    return (
-      <div className={`user-menu ${loggedIn ? 'logged-in' : ''}`}>
-        {(loggedIn && user.attributes) && (
-          <div className="avatar medium"><img alt="Your avatar" src={user.attributes.image} /></div>
-        )}
+          {/*<div
+            className="stats"
+            hidden>
+            <header>My Stats</header>
 
-        {(loggedIn && user.attributes) && (
-          <menu>
-            <nav className="user">
-              <ul>
-                <li>
-                  <Link href="/profile">
-                    <a>My Profile</a>
-                  </Link>
-                </li>
+            <table>
+              <tbody>
+                <tr>
+                  <th>Rescues</th>
+                  <td>648</td>
+                </tr>
+                <tr>
+                  <th>Assists</th>
+                  <td>537</td>
+                </tr>
+                <tr>
+                  <th>Favorite Ship</th>
+                  <td>Asp Explorer</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>*/}
+        </menu>
+      )}
 
-                <li>
-                  <Link href="/leaderboard">
-                    <a>Leaderboard</a>
-                  </Link>
-                </li>
-
-                <li>
-                  <a
-                    href="#"
-                    onClick={logout}>
-                    Logout
-                  </a>
-                </li>
-              </ul>
-            </nav>
-
-            {showAdmin && (
-              <AdminUserMenuNav
-                permissions={user.permissions} />
-            )}
-
-            <div
-              className="stats"
-              hidden>
-              <header>My Stats</header>
-
-              <table>
-                <tbody>
-                  <tr>
-                    <th>Rescues</th>
-                    <td>648</td>
-                  </tr>
-                  <tr>
-                    <th>Assists</th>
-                    <td>537</td>
-                  </tr>
-                  <tr>
-                    <th>Favorite Ship</th>
-                    <td>Asp Explorer</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </menu>
-        )}
-
-        {!loggedIn && (
-          <button
-            className="login"
-            onClick={() => this.props.setFlag('showLoginDialog', true)}>
-            Rat Login
-          </button>
-        )}
-      </div>
-    )
-  }
+      {!loggedIn && !loggingIn && (
+        <button
+          className="login"
+          onClick={() => props.setFlag('showLoginDialog', true)}>
+          Rat Login
+        </button>
+      )}
+    </div>
+  )
 }
 
 
@@ -126,20 +106,18 @@ class UserMenu extends Component {
 
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  getUser: actions.getUser,
   logout: actions.logout,
   setFlag: actions.setFlag,
 }, dispatch)
 
-const mapStateToProps = state => {
-  const {
-    authentication,
-    user,
-  } = state
+const mapStateToProps = ({ authentication, user, groups }) => {
+  const userGroups = user.relationships ? user.relationships.groups.data.map(group => groups[group.id]) : []
 
-  return Object.assign({
+  return {
+    ...authentication,
     user,
-  }, authentication)
+    showAdmin: user.relationships ? userHasPermission(userGroups, 'isAdministrator') : false,
+  }
 }
 
 

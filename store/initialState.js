@@ -1,9 +1,10 @@
 export default {
   authentication: {
     loggedIn: false,
-    loggingIn: false,
+    loggingIn: true,
     loggingOut: false,
     registering: false,
+    verifyError: null,
   },
 
   blogs: {
@@ -32,11 +33,7 @@ export default {
     showLoginDialog: false,
   },
 
-  paperwork: {
-    rescueId: null,
-    retrieving: true,
-    submitting: false,
-  },
+  groups: {},
 
   rats: {
     rats: [],
@@ -44,11 +41,7 @@ export default {
     total: 0,
   },
 
-  rescues: {
-    rescues: [],
-    retrieving: false,
-    total: 0,
-  },
+  rescues: {},
 
   rescuesByRat: {
     loading: false,
@@ -74,7 +67,6 @@ export default {
   user: {
     attributes: null,
     id: null,
-    permissions: new Set,
     preferences: {
       allowUniversalTracking: false,
     },

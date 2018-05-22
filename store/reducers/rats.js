@@ -31,8 +31,8 @@ export default function (state = initialState.rats, action) {
       }
 
     case actionTypes.GET_USER:
-    case actionTypes.RETRIEVE_PAPERWORK:
-    case actionTypes.SUBMIT_PAPERWORK:
+    case actionTypes.GET_RESCUE:
+    case actionTypes.UPDATE_RESCUE:
       switch (status) {
         case 'success':
           newRats = parseJSONAPIResponseForEntityType(payload, 'rats')

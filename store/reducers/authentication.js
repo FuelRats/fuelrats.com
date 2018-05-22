@@ -7,7 +7,7 @@ import initialState from '../initialState'
 
 export default function (state = initialState.authentication, action) {
   const {
-    // payload,
+    payload,
     status,
     type,
   } = action
@@ -17,6 +17,7 @@ export default function (state = initialState.authentication, action) {
     case actionTypes.LOGIN:
       switch (status) {
         case 'error':
+        case 'noToken':
           return {
             ...state,
             loggedIn: false,
@@ -42,6 +43,7 @@ export default function (state = initialState.authentication, action) {
         return {
           ...state,
           loggedIn: false,
+          verifyError: payload && payload.origin && payload.origin === 'verify',
         }
       }
       break

@@ -42,17 +42,6 @@ export default function (state = initialState.user, action) {
           // Generate an Adorable avatar if the user doesn't already have one set
           user.attributes.image = payload.data.attributes.image || `//api.adorable.io/avatars/${payload.data.id}`
 
-          if (Array.isArray(user.permissions)) {
-            user.permissions = new Set(user.permissions)
-          }
-
-          // Collect user's permissions
-          user.relationships.groups.data.forEach(({ id, type }) => {
-            const group = payload.included.find(entity => (entity.id === id) && (entity.type === type))
-
-            group.attributes.permissions.forEach(permission => user.permissions.add(permission))
-          })
-
           // Create the user's data store if it doesn't already exist
           if (!user.data) {
             user.data = {}

@@ -3,9 +3,7 @@
     "browser": true
   },
   "extends": "airbnb",
-  "globals": {
-    "preval": false
-  },
+  "parser": "babel-eslint",
   "rules": {
     "arrow-parens": ["off"],
     "comma-dangle": ["error", "always-multiline"],
@@ -28,7 +26,6 @@
     "semi": ["error", "never"],
     "space-before-function-paren": ["off"],
     "spaced-comment": ["off"],
-
     "jsx-a11y/anchor-is-valid": ["off"],
     "jsx-a11y/label-has-for": ["off"],
     "jsx-a11y/no-noninteractive-element-interactions": ["off"],
