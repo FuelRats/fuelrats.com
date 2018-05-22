@@ -6,7 +6,6 @@ import React from 'react'
 
 
 import { Router } from '../routes'
-import appStylesheet from '../scss/app.scss'
 
 
 
@@ -28,7 +27,7 @@ Router.onRouteChangeComplete = () => NProgress.done()
 export default props => (
   <NextHead>
     <title>{props.title} | Fuelrats.com</title>
-    <style dangerouslySetInnerHTML={{ __html: appStylesheet }} />
+    <link rel="stylesheet" href="/_next/static/style.css" />
   </NextHead>
 )
 /* eslint-enable */

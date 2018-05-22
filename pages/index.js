@@ -60,7 +60,4 @@ Index.propTypes = {
 }
 
 
-
-
-
-export default Page(Index, title, {})
+export default Page(title, false, null, ['setFlag'])(Index)

@@ -29,4 +29,4 @@ const Leaderboard = () => (
 
 
 
-export default Page(Leaderboard, title)
+export default Page(title, false)(Leaderboard)

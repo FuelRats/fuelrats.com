@@ -396,14 +396,15 @@ export default class TagsInputComponent extends React.Component {
   }
 
   removeTag (tag) {
+    const { onRemove } = this.props
     const tags = [...this.state.tags]
 
     tags.splice(tags.indexOf(tag), 1)
 
     this.setState({ tags })
 
-    if (this.onRemove) {
-      this.onRemove(tag)
+    if (onRemove) {
+      onRemove(tag)
     }
 
     this.log('groupCollapsed', 'removing tag')

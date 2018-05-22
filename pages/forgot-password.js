@@ -140,4 +140,4 @@ const mapDispatchToProps = ['sendPasswordResetEmail']
 
 
 
-export default Page(ForgotPassword, title, { mapDispatchToProps })
+export default Page(title, false, null, mapDispatchToProps)(ForgotPassword)

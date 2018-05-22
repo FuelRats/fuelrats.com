@@ -22,7 +22,7 @@ class UserShipsPanel extends Component {
   \***************************************************************************/
 
   static _renderShips (ships) {
-    return ships.map((ship, index) => {
+    return ships.map((ship) => {
       const { id } = ship
       const {
         name,
@@ -32,7 +32,7 @@ class UserShipsPanel extends Component {
       const badgeClasses = ['badge', 'platform', 'short', platform].join(' ')
 
       return (
-        <li key={index}>
+        <li key={ship.id}>
           <div className={badgeClasses} />
 
           <Link route="rats view" params={{ id }}>

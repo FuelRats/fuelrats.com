@@ -10,9 +10,9 @@ import i18nextFetchBackend from 'i18next-fetch-backend'
 
 
 i18next
-//.use(i18nextCache)
-.use(i18nextLanguageDetector)
-.use(i18nextFetchBackend)
+  //.use(i18nextCache)
+  .use(i18nextLanguageDetector)
+  .use(i18nextFetchBackend)
 
 
 

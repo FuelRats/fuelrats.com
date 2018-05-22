@@ -40,10 +40,7 @@ class LoginDialog extends Component {
     event.preventDefault()
 
     const { status } = await this.props.login(this.state.email, this.state.password)
-
-    this.setState({
-      error: status !== 'success',
-    })
+    this.props.getUser()
 
     if (status === 'success') {
       this.props.onClose()
@@ -127,9 +124,10 @@ class LoginDialog extends Component {
 
 
 
-const mapDispatchToProps = dispatch => ({
-  login: bindActionCreators(actions.login, dispatch),
-})
+const mapDispatchToProps = dispatch => bindActionCreators({
+  login: actions.login,
+  getUser: actions.getUser,
+}, dispatch)
 
 const mapStateToProps = state => ({ ...state.authentication })
 

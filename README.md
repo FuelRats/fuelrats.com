@@ -12,7 +12,15 @@
 [![Watch on GitHub][github-watch-badge]][github-watch]
 [![Star on GitHub][github-star-badge]][github-star]
 
-This is the repo for the Fuel Rats official website! You can see the project in action at https://fuelrats.com. or you can fiddle with the latest features at https://beta.fuelrats.com.
+This is the home of the Fuel Rats' main website. Check us out at https://fuelrats.com.
+
+
+## Staging Previews
+
+If you want to beta test our upcoming features, visit https://beta.fuelrats.com.
+If you you like living on the edge (you rebel), come see whats coming next at https://dev.fuelrats.com (may not always work as intended).
+
+**Disclaimer**: Our staging preview sites connect to separate APIs from our main website, and therefore have a separate account database. If you need a development account, please contact a TechRat on [IRC][irc] before registering.
 
 ## Contributing
 
@@ -37,6 +45,7 @@ Check out our [list of contributors][contributors]!
 [github-watch-badge]: https://img.shields.io/github/watchers/FuelRats/fuelrats.com.svg?style=social
 [github-star]: https://github.com/FuelRats/fuelrats.com/stargazers
 [github-star-badge]: https://img.shields.io/github/stars/FuelRats/fuelrats.com.svg?style=social
+[irc]: https://kiwi.fuelrats.com:7778/
 [prs]: CONTRIBUTING.md
 [prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
 [travisci]: https://travis-ci.org/FuelRats/fuelrats.com
