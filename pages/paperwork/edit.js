@@ -156,46 +156,29 @@ class Paperwork extends Component {
     event.preventDefault()
 
     const { rescue } = this.props
-    const { changes } = this.state
+    const changes = { ...this.state.changes }
 
     if (!rescue.attributes.outcome || !changes.outcome) {
       return
     }
 
-    const {
-      ratsAdded,
-      ratsRemoved,
-      ...attributeChanges
-    } = changes
-    let {
-      system,
-      firstLimpetId,
-    } = changes
-
-    let ratUpdates = null
-
-    if ((ratsAdded && Object.values(ratsAdded).length) || (ratsRemoved && Object.values(ratsRemoved).length)) {
-      ratUpdates = {
-        added: ratsAdded ? Object.values(ratsAdded).map(rat => rat.id) : [],
-        removed: ratsRemoved ? Object.values(ratsRemoved).map(rat => rat.id) : [],
-      }
+    if (changes.ratsAdded && Object.values(changes.ratsAdded).length) {
+      changes.ratsAdded = Object.values(changes.ratsAdded).map(rat => rat.id)
     }
 
-    if (firstLimpetId && firstLimpetId.length && firstLimpetId[0].id !== rescue.attributes.firstLimpetId) {
-      firstLimpetId = firstLimpetId[0].id
+    if (changes.ratsRemoved && Object.values(changes.ratsRemoved).length) {
+      changes.ratsRemoved = Object.values(changes.ratsRemoved).map(rat => rat.id)
     }
 
-    if (system && system.length && system[0].value !== rescue.attributes.system) {
-      system = system[0].value.toUpperCase()
+    if (changes.firstLimpetId && changes.firstLimpetId.length && changes.firstLimpetId[0].id !== rescue.attributes.firstLimpetId) {
+      changes.firstLimpetId = changes.firstLimpetId[0].id
     }
 
-    const { status } = await this.props.updateRescue(rescue.id, {
-      ...attributeChanges,
-      firstLimpetId,
-      system,
-    }, ratUpdates)
+    if (changes.system && changes.system.length && changes.system[0].value !== rescue.attributes.system) {
+      changes.system = changes.system[0].value.toUpperCase()
+    }
 
-    console.log('HEYO')
+    const { status } = await this.props.updateRescue(rescue.id, changes)
 
     if (status === 'error') {
       this.setState({ error: true })
