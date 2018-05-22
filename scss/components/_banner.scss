@@ -110,7 +110,13 @@
         z-index: 1;
       }
 
-      &:before {
+      &.disabled {
+        opacity: .4;
+        text-decoration: line-through;
+        cursor: not-allowed;
+      }
+
+      &:not(.disabled):before {
         background-color: $red;
         bottom: 0;
         content: '';
@@ -122,8 +128,8 @@
         right: 0%;
       }
 
-      &:focus,
-      &:hover {
+      &:not(.disabled):focus,
+      &:not(.disabled):hover {
         color: $white;
 
         &:before {

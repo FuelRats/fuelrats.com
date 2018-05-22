@@ -47,9 +47,22 @@ const navItems = [
     ],
   },
   {
-    key: 'donate',
-    title: 'Donations',
-    href: 'https://donate.fuelrats.com/donate.php',
+    key: 'support-us',
+    title: 'Support Us',
+    subnav: [
+      {
+        key: 'donate',
+        title: 'Donations',
+        href: 'https://donate.fuelrats.com/donate.php',
+      },
+      {
+        key: 'merch',
+        title: 'Merch (Coming Soon)',
+        href: '#',
+        /* href: 'https://donate.fuelrats.com/' */
+        disabled: true,
+      },
+    ],
   },
 ]
 
@@ -150,7 +163,7 @@ class Nav extends Component {
       renderedItemTitle = (
         <Link
           {...itemWithOnlyLinkProps}>
-          <a><span>{renderedItemTitle}</span></a>
+          <a className={item.disabled ? 'disabled' : ''}><span>{renderedItemTitle}</span></a>
         </Link>
       )
     }
