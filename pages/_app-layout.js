@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import React from 'react'
 import Cookies from 'next-cookies'
-import getConfig from 'next/config'
 
 
 
@@ -21,19 +20,10 @@ import LoginDialog from '../components/LoginDialog'
 
 
 
-// Component constants
-const { publicRuntimeConfig } = getConfig()
-const serverApiUrl = publicRuntimeConfig.apis.fuelRats.server
-
-
-
-
-
 class AppLayout extends React.Component {
   static async _getUserData (getUser, logout) {
     const { payload, status } = await getUser()
-
-    if (status !== 'success' && payload && Array.isArray(payload.errors)) {
+    if (status === 'error' && payload && Array.isArray(payload.errors)) {
       const errMsg = payload.errors[0] && payload.errors[0].status
       if (errMsg === 'Unauthorized') {
         logout(true)
@@ -46,7 +36,6 @@ class AppLayout extends React.Component {
 
   static async _initUserSessionData (ctx) {
     const {
-      isServer,
       store,
     } = ctx
 
@@ -69,12 +58,8 @@ class AppLayout extends React.Component {
 
     let verified = loggedIn && userAttributes && !verifyError
 
-    if (isServer) {
-      apiService.defaults.baseURL = `${serverApiUrl}`
-    }
-
     if (accessToken) {
-      apiService.defaults.headers.common.Authorization = `Bearer ${accessToken}`
+      apiService().defaults.headers.common.Authorization = `Bearer ${accessToken}`
 
       if (!verified) {
         verified = await AppLayout._getUserData(getUser, logout)
@@ -82,7 +67,6 @@ class AppLayout extends React.Component {
     } else {
       actions.updateLoggingInState()(store.dispatch)
     }
-
 
     if (!verified) {
       return null
@@ -121,11 +105,11 @@ class AppLayout extends React.Component {
     }
 
     return {
+      accessToken,
       pageProps: {
         asPath,
         isServer,
         query,
-        accessToken,
         ...pageProps,
       },
     }
@@ -136,8 +120,8 @@ class AppLayout extends React.Component {
 
     if (this.props.verifyError) {
       this.props.logout(true)
-    } else if (this.props.accessToken && this.props.loggedIn) {
-      apiService.defaults.headers.common.Authorization = `Bearer ${this.props.accessToken}`
+    } else if (this.props.accessToken) {
+      apiService().defaults.headers.common.Authorization = `Bearer ${this.props.accessToken}`
     }
   }
 

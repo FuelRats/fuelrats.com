@@ -4,11 +4,15 @@ import getConfig from 'next/config'
 
 
 const { publicRuntimeConfig } = getConfig()
-const clientApiUrl = publicRuntimeConfig.apis.fuelRats.client
+const localApiUrl = publicRuntimeConfig.apis.fuelRats.local
+
+let instance = null
 
 
-export default axios.create({
-  baseURL: clientApiUrl,
-  headers: { 'Content-Type': 'application/json' },
-  timeout: 10000,
-})
+export default function () {
+  return instance || (instance = axios.create({
+    baseURL: localApiUrl,
+    headers: { 'Content-Type': 'application/json' },
+    timeout: 10000,
+  }))
+}

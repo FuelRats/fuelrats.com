@@ -15,11 +15,13 @@ const {
   TRAVIS_COMMIT_RANGE,
 } = process.env
 
+console.log(process.env)
+
 module.exports = withSass({
   publicRuntimeConfig: {
     apis: {
       fuelRats: {
-        client: FRDC_LOCAL_API_URL || '/api',
+        local: FRDC_LOCAL_API_URL || 'http://localhost:3000/api',
         server: FRDC_API_URL || 'http://localhost:8080',
       },
     },

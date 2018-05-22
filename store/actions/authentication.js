@@ -42,10 +42,10 @@ export const login = (email, password, route) => createApiAction({
     const token = response.data.access_token
 
     Cookies.set('access_token', token, { expires: 365 })
-    apiService.defaults.headers.common.Authorization = `Bearer ${token}`
+    apiService().defaults.headers.common.Authorization = `Bearer ${token}`
   },
   onComplete: ({ status }) => {
-    if (status !== 'success') {
+    if (status === 'error') {
       return
     }
 
@@ -79,7 +79,7 @@ export const getClientOAuthPage = (clientId, scope, state, responseType) => crea
 
 export const logout = fromVerification => async dispatch => {
   Cookies.remove('access_token')
-  delete apiService.defaults.headers.common.Authorization
+  delete apiService().defaults.headers.common.Authorization
 
   const result = dispatch({
     payload: {

@@ -182,7 +182,7 @@ function createAction (options) {
 
 const createApiAction = options => createAction({
   ...options,
-  actionFunction: apiService.request,
+  actionFunction: apiService().request,
   onUnhandledSuccess: res => res.data,
   onUnhandledError: res => res && res.response && res.response.data,
 })
@@ -220,7 +220,7 @@ function actionSeries (actions = isRequired('actions'), silentFail, returnLast) 
 
           responses.push(response)
 
-          if (!silentFail && response && response.status && response.status !== 'success') {
+          if (!silentFail && response && response.status && response.status === 'error') {
             break
           }
         }
