@@ -46,11 +46,11 @@ export const updateRescue = (rescueId, changes) => {
 
   const actions = []
 
-  if (ratsAdded.length) {
+  if (ratsAdded && ratsAdded.length) {
     actions.push(updateRescueRatsAssigned(rescueId, ratsAdded))
   }
 
-  if (ratsRemoved.length) {
+  if (ratsRemoved && ratsRemoved.length) {
     actions.push(updateRescueRatsRemoved(rescueId, ratsRemoved))
   }
 
