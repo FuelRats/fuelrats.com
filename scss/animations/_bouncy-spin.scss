@@ -1,0 +1,13 @@
+@keyframes bouncy-spin {
+  0% { transform: rotateZ(0deg); }
+  20%, 25% { transform: rotateZ(-30deg); }
+  50%, 60%, 100% { transform: rotateZ(1440deg); }
+  55% { transform: rotateZ(1435deg); }
+}
+
+
+.bouncy-spin {
+  animation-name: bouncy-spin;
+  animation-timing-function: cubic-bezier(0.64, 0.57, 0, 1.11);
+  animation-duration: 3s;
+}

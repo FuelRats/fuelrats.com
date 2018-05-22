@@ -49,4 +49,4 @@ const Donate = () => (
 
 
 
-export default Page(Donate, title)
+export default Page(title, false)(Donate)

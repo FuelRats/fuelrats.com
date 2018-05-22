@@ -1,55 +1,62 @@
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const webpack = require('webpack')
+const withSass = require('@zeit/next-sass')
+
 const { ANALYZE } = process.env
 const path = require('path')
 const glob = require('glob')
 
-module.exports = {
+const {
+  FRDC_API_URL,
+  FRDC_LOCAL_API_URL,
+  TRAVIS_BRANCH,
+  TRAVIS_COMMIT,
+  TRAVIS_COMMIT_RANGE,
+} = process.env
+
+module.exports = withSass({
+  publicRuntimeConfig: {
+    apis: {
+      fuelRats: {
+        local: FRDC_LOCAL_API_URL || 'http://localhost:3000/api',
+        server: FRDC_API_URL || 'http://localhost:8080',
+      },
+    },
+  },
   webpack: (config, { dev }) => {
     if (ANALYZE) {
       config.plugins.push(new BundleAnalyzerPlugin({
         analyzerMode: 'server',
         analyzerPort: 8888,
-        openAnalyzer: true
+        openAnalyzer: true,
       }))
     }
 
-    config.module.rules.unshift(
-      {
-        enforce: 'pre',
-        exclude: /node_modules/,
-        loader: 'eslint-loader',
-        test: /\.js$/,
-      },
-    )
+    if (!dev) {
+      config.plugins.push(new UglifyJsPlugin())
+    }
 
-    config.module.rules.push(
-      {
-        test: /\.(css|scss)/,
-        loader: 'emit-file-loader',
-        options: {
-          name: 'dist/[path][name].[ext]'
-        }
-      },
-      {
-        test: /\.css$/,
-        use: ['babel-loader', 'raw-loader', 'postcss-loader']
-      },
-      {
-        test: /\.s(a|c)ss$/,
-        use: ['babel-loader', 'raw-loader', 'postcss-loader',
-          {
-            loader: 'sass-loader',
-            options: {
-              includePaths: ['styles', 'node_modules']
-                .map((d) => path.join(__dirname, d))
-                .map((g) => glob.sync(g))
-                .reduce((a, c) => a.concat(c), [])
-            }
-          }
-        ]
-      },
-    )
+    config.plugins.push(new webpack.DefinePlugin({
+      IS_DEVELOPMENT: JSON.stringify(dev),
+      IS_STAGING: JSON.stringify(['develop', 'beta'].includes(TRAVIS_BRANCH)),
+      BUILD_COMMIT: JSON.stringify((TRAVIS_COMMIT && TRAVIS_COMMIT.slice(0, 10)) || TRAVIS_BRANCH || 'Development'),
+      BUILD_COMMIT_RANGE: JSON.stringify(TRAVIS_COMMIT_RANGE),
+    }))
+
+    config.module.rules.unshift({
+      enforce: 'pre',
+      exclude: /node_modules/,
+      loader: 'eslint-loader',
+      test: /\.js$/,
+    })
 
     return config
-  }
-}
+  },
+  sassLoaderOptions: {
+    includePaths: ['styles', 'node_modules']
+      .map((d) => path.join(__dirname, d))
+      .map((g) => glob.sync(g))
+      .reduce((a, c) => a.concat(c), []),
+  },
+})

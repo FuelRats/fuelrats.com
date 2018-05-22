@@ -32,7 +32,7 @@ const brands = [
   },
 ]
 
-const acknowledgements = () => (
+const Acknowledgements = () => (
   <div className="page-wrapper">
     <header className="page-header">
       <h1>{title}</h1>
@@ -60,4 +60,4 @@ const acknowledgements = () => (
 
 
 
-export default Page(acknowledgements, title)
+export default Page(title, false)(Acknowledgements)

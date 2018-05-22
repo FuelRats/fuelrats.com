@@ -1,4 +1,4 @@
-'use strict'
+
 
 /******************************************************************************\
   Module imports
@@ -10,16 +10,15 @@ const proxy = require('koa-proxies')
 
 
 
-module.exports = function (koa, config) {
-
+module.exports = (koa, config) => {
   /******************************************************************************\
     Proxy Fuelrats API requests
   \******************************************************************************/
 
-  koa.use(proxy('/token', {
+  koa.use(proxy('/api/oauth2/token', {
     auth: `${config.api.clientId}:${config.api.clientSecret}`,
     changeOrigin: true,
-    rewrite: path => path.replace(/^\/token/, '/oauth2/token'),
+    rewrite: path => path.replace(/^\/api/, ''),
     secure: true,
     target: config.api.url,
   }))
@@ -55,7 +54,7 @@ module.exports = function (koa, config) {
 
   koa.use(proxy('/wp-api', {
     changeOrigin: true,
-    rewrite: path => path.replace(/^\/wp\-api/, '/wp-json/wp/v2'),
+    rewrite: path => path.replace(/^\/wp-api/, '/wp-json/wp/v2'),
     target: config.wordpress.url,
   }))
 

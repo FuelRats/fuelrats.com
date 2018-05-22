@@ -31,4 +31,4 @@ const Statistics = () => (
 
 
 
-export default Page(Statistics, title)
+export default Page(title, false)(Statistics)

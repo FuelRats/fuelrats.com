@@ -70,4 +70,4 @@ const INeedFuel = () => (
 
 
 
-export default Page(INeedFuel, title)
+export default Page(title, false)(INeedFuel)

@@ -3,8 +3,8 @@ import RadioOptionsInput from '../../components/RadioOptionsInput'
 import RescuesTagsInput from '../../components/RescuesTagsInput'
 import RatTagsInput from '../../components/RatTagsInput'
 import Component from '../../components/Component'
-import Page from '../../components/Page'
 import classNames from '../../helpers/classNames'
+import Page from '../../components/Page'
 
 
 
@@ -241,7 +241,7 @@ class EpicNominate extends Component {
         {submitted && (
           <div>
             <h3>Thanks!</h3>
-            <p>Your epic nomination has been submitted. If approved, the rats nominated will be notified that they are now considered epic rats!</p>
+            <p>Your epic nomination has been submitted. If approved, the rats nominated will be notified that they are now epic rats!</p>
             <p>Note that while we track who nominates who, the nominees will never be notified of who made the original nomination for their epic deed.</p>
           </div>
         )}
@@ -273,8 +273,14 @@ class EpicNominate extends Component {
   }
 }
 
+
+
+
+
 const mapDispatchToProps = ['createEpic']
 
 
 
-export default Page(EpicNominate, title, { mapDispatchToProps }, true)
+
+
+export default Page(title, true, null, mapDispatchToProps)(EpicNominate)

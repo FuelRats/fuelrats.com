@@ -39,11 +39,13 @@ class Register extends Component {
   \***************************************************************************/
 
   async componentDidMount () {
-    const termsAlreadyAccepted = Boolean(sessionStorage.getItem('termsAccepted'))
-
     this.setState({
-      acceptTerms: termsAlreadyAccepted,
-      acceptPrivacy: termsAlreadyAccepted,
+      acceptTerms: sessionStorage.getItem('register.acceptTerms'),
+      acceptPrivacy: sessionStorage.getItem('register.acceptTerms'),
+      email: sessionStorage.getItem('register.email') || '',
+      nickname: sessionStorage.getItem('register.nickname') || '',
+      ratName: sessionStorage.getItem('register.ratName') || '',
+      ratPlatform: sessionStorage.getItem('register.ratPlatform') || 'pc',
     })
   }
 
@@ -77,8 +79,13 @@ class Register extends Component {
 
     const value = type === 'checkbox' ? target.checked : target.value
 
+    if (name !== 'password') {
+      sessionStorage.setItem(`register.${name}`, value)
+    }
+
     this.setState({
       [name]: value,
+      ...(name === 'acceptTerms' ? { acceptPrivacy: value } : {}),
     })
   }
 
@@ -100,9 +107,11 @@ class Register extends Component {
 
     this.setState({ submitting: true })
 
-    const { status } = await this.props.register(email, password, ratName, ratPlatform, nickname, recaptchaResponse)
+    const { status: regStatus } = await this.props.register(email, password, ratName, ratPlatform, nickname, recaptchaResponse)
 
-    if (status !== 'success') {
+    if (regStatus === 'success') {
+      await this.props.login(email, password, '/profile')
+    } else {
       this.setState({ submitting: false })
     }
   }
@@ -314,10 +323,10 @@ class Register extends Component {
 
 
 
-const mapDispatchToProps = ['register']
+const mapDispatchToProps = ['register', 'login']
 
 
 
 
 
-export default Page(Register, title, { mapDispatchToProps })
+export default Page(title, false, null, mapDispatchToProps)(Register)

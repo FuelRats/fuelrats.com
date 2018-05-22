@@ -9,7 +9,7 @@ import { Link } from '../routes'
 import Component from './Component'
 
 // Constants
-const allowedLinkKeys = ['label', 'params', 'route']
+const allowedLinkKeys = ['href', 'params', 'route']
 const navItems = [
   {
     key: 'blog',
@@ -47,9 +47,22 @@ const navItems = [
     ],
   },
   {
-    key: 'donate',
-    title: 'Donations',
-    route: '/donate',
+    key: 'support-us',
+    title: 'Support Us',
+    subnav: [
+      {
+        key: 'donate',
+        title: 'Donations',
+        href: 'https://donate.fuelrats.com/donate.php',
+      },
+      {
+        key: 'merch',
+        title: 'Merch (Coming Soon)',
+        href: '#',
+        /* href: 'https://donate.fuelrats.com/' */
+        disabled: true,
+      },
+    ],
   },
 ]
 
@@ -150,7 +163,7 @@ class Nav extends Component {
       renderedItemTitle = (
         <Link
           {...itemWithOnlyLinkProps}>
-          <a><span>{renderedItemTitle}</span></a>
+          <a className={item.disabled ? 'disabled' : ''}><span>{renderedItemTitle}</span></a>
         </Link>
       )
     }
