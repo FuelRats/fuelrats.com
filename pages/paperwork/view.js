@@ -6,6 +6,7 @@ import moment from 'moment'
 
 
 // Component imports
+import { actions } from '../../store'
 import { Link } from '../../routes'
 import Component from '../../components/Component'
 import Page from '../../components/Page'
@@ -26,11 +27,15 @@ class Paperwork extends Component {
     Public Methods
   \***************************************************************************/
 
-  componentDidMount () {
-    const { id } = this.props.query
+  async componentDidMount () {
+    const { id, rescue } = this.props
 
-    if (id) {
-      this.props.retrievePaperwork(id)
+    if (id && !rescue) {
+      await this.props.getRescue(id)
+    }
+
+    if (this.state.loading) {
+      this.setState({ loading: false })
     }
   }
 
@@ -40,6 +45,10 @@ class Paperwork extends Component {
     this._bindMethods([
       'renderRat',
     ])
+
+    this.state = {
+      loading: !this.props.rescue,
+    }
   }
 
   static renderQuote (quote, index) {
@@ -53,6 +62,10 @@ class Paperwork extends Component {
         )}
       </li>
     )
+  }
+
+  static async getInitialProps ({ query, store }) {
+    await actions.getRescue(query.id)(store.dispatch)
   }
 
   renderQuotes () {
@@ -97,8 +110,11 @@ class Paperwork extends Component {
   render () {
     const {
       rescue,
-      retrieving,
     } = this.props
+
+    const {
+      loading,
+    } = this.state
 
     const userCanEdit = this.userCanEdit()
 
@@ -108,17 +124,17 @@ class Paperwork extends Component {
           <h1>{title}</h1>
         </header>
 
-        {retrieving && (
+        {loading && (
           <div className="loading page-content" />
         )}
 
-        {(!retrieving && !rescue) && (
+        {(!loading && !rescue) && (
           <div className="loading page-content">
             <p>Sorry, we couldn't find the paperwork you requested.</p>
           </div>
         )}
 
-        {(!retrieving && rescue) && (
+        {(!loading && rescue) && (
           <div className="page-content">
             <menu type="toolbar">
               <div className="primary">
@@ -237,17 +253,16 @@ class Paperwork extends Component {
 
 
 
-const mapDispatchToProps = ['retrievePaperwork']
+const mapDispatchToProps = ['getRescue']
 
-const mapStateToProps = state => {
-  const { paperwork } = state
-  const { rescueId } = paperwork
+const mapStateToProps = (state, ownProps) => {
+  const { id: rescueId } = ownProps.query
   let firstLimpet = []
   let rats = []
   let rescue = null
 
   if (rescueId) {
-    rescue = state.rescues.rescues.find(item => item.id === rescueId)
+    rescue = state.rescues[rescueId]
   }
 
   if (rescue) {
@@ -267,13 +282,13 @@ const mapStateToProps = state => {
   const currentUserGroups = currentUser.relationships ? [...currentUser.relationships.groups.data].map(group => state.groups[group.id]) : []
 
 
-  return Object.assign({
+  return {
     firstLimpet,
     rats,
     rescue,
     currentUser,
     currentUserGroups,
-  }, paperwork)
+  }
 }
 
 

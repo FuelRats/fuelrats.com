@@ -6,7 +6,6 @@ import epics from './epics'
 import error from './error'
 import flags from './flags'
 import groups from './groups'
-import paperwork from './paperwork'
 import user from './user'
 import rats from './rats'
 import rescues from './rescues'
@@ -27,7 +26,6 @@ export default combineReducers({
   error,
   flags,
   groups,
-  paperwork,
   user,
   rats,
   rescues,

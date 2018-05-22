@@ -15,8 +15,6 @@ const {
   TRAVIS_COMMIT_RANGE,
 } = process.env
 
-console.log(process.env)
-
 module.exports = withSass({
   publicRuntimeConfig: {
     apis: {

@@ -2,14 +2,14 @@
 
 'use strict'
 
+// Import variables from .env file.
+require('dotenv').config()
+
 const isDev = process.env.NODE_ENV !== 'production'
 
 /******************************************************************************\
-  Module imports
-\******************************************************************************/
-
-// Import variables from .env file.
-require('dotenv').config()
+ Module imports
+ \******************************************************************************/
 
 const config = require('./config')
 const koa = new (require('koa'))

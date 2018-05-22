@@ -35,23 +35,13 @@ export default {
 
   groups: {},
 
-  paperwork: {
-    rescueId: null,
-    retrieving: true,
-    submitting: false,
-  },
-
   rats: {
     rats: [],
     retrieving: false,
     total: 0,
   },
 
-  rescues: {
-    rescues: [],
-    retrieving: false,
-    total: 0,
-  },
+  rescues: {},
 
   rescuesByRat: {
     loading: false,

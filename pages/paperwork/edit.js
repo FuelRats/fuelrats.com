@@ -1,4 +1,5 @@
 // Component imports
+import { actions } from '../../store'
 import { Router } from '../../routes'
 import Component from '../../components/Component'
 import FirstLimpetInput from '../../components/FirstLimpetInput'
@@ -24,58 +25,21 @@ class Paperwork extends Component {
     Public Methods
   \***************************************************************************/
 
-  componentDidMount () {
-    const { id } = this.props.query
+  _handleChange = ({ target }) => {
+    const {
+      name,
+      value,
+    } = target
 
-    if (id) {
-      this.props.retrievePaperwork(id)
-    }
+    this._setChanges({
+      [name]: value,
+    })
   }
 
-  componentWillReceiveProps (nextProps) {
-    if (this.props.rescue !== nextProps.rescue) {
-      this.setState({
-        firstLimpetId: nextProps.firstLimpetId,
-        rats: nextProps.rats,
-        system: { value: nextProps.rescue.attributes.system },
-        rescue: nextProps.rescue,
-      })
-    }
-  }
+  _handleNotesChange = event => this._setChanges({ notes: event.target.value })
 
-  constructor (props) {
-    super(props)
-
-    this._bindMethods([
-      'onSubmit',
-      'handleNotesChange',
-      'handleRadioOptionsChange',
-      'handleFirstLimpetChange',
-      'handleRatsChange',
-      'handleSystemChange',
-    ])
-
-    this.state = {
-      error: null,
-      firstLimpetId: null,
-      rats: null,
-      rescue: null,
-      system: null,
-    }
-  }
-
-  handleNotesChange (event) {
-    const newState = Object.assign({}, this.state)
-
-    newState.rescue.attributes.notes = event.target.value
-
-    this.dirtyFields.add('notes')
-    this.setState(newState)
-  }
-
-  handleRadioOptionsChange(option) {
+  _handleRadioOptionsChange = (option) => {
     const attribute = option.name
-    const newState = { ...this.state }
     let { value } = option
 
     if (value === 'true') {
@@ -84,136 +48,225 @@ class Paperwork extends Component {
       value = false
     }
 
-    newState.rescue.attributes[attribute] = value
+    const changes = {}
 
-    if (attribute === 'platform') {
-      newState.firstLimpetId = null
-      newState.rats = []
-      newState.rescue.attributes.firstLimpetId = null
+    if (attribute === 'platform' && value !== this.props.rescue) {
+      changes.firstLimpetId = null
+      changes.ratsAdded = {}
+      changes.ratsRemoved = { ...this.props.rats }
     }
 
-    this.dirtyFields.add(attribute)
-    this.setState(newState)
+    this._setChanges({
+      ...changes,
+      [attribute]: value,
+    })
   }
 
-  handleFirstLimpetChange(value) {
-    const {
-      rescue,
-    } = this.state
-    const newState = { ...this.state }
-
-    if (value.length && (value[0].id !== rescue.attributes.firstLimpetId)) {
-      [newState.firstLimpetId] = value
-      newState.rescue.attributes.firstLimpetId = value[0].id
-    } else if (!value.length && rescue.attributes.firstLimpetId) {
-      newState.firstLimpetId = null
-      newState.rescue.attributes.firstLimpetId = null
+  _handleFirstLimpetChange = value => {
+    // Because tagsInput sometimes decides to randomly call onChange when it hasn't changed.
+    if (typeof this.state.changes.firstLimpetId === 'undefined' && value.length && value[0].id === this.props.rescue.attributes.firstLimpetId) {
+      return
     }
 
-    this.dirtyFields.add('firstLimpetId')
-    this.setState(newState)
-  }
+    let newValue = null
 
-  handleSystemChange(value) {
-    const {
-      rescue,
-    } = this.state
-    const newState = { ...this.state }
-
-    if (value.length && (value[0].value !== rescue.attributes.system)) {
-      [newState.system] = value
-      newState.rescue.attributes.system = value[0].value.toUpperCase()
-    } else if (!value.length && rescue.attributes.system) {
-      newState.system = null
-      newState.rescue.attributes.system = null
-    }
-
-    this.dirtyFields.add('system')
-    this.setState(newState)
-  }
-
-  handleRatsChange (value) {
-    const newRatIds = value.map(rat => rat.id)
-    const oldRatIds = this.props.rats.map(rat => rat.id)
-
-    if (newRatIds.join(',') !== oldRatIds.join(',')) {
-      const newState = Object.assign({}, this.state)
-
-      newState.rats = value
-
-      if (!value.find(rat => newState.rescue.attributes.firstLimpetId === rat.id)) {
-        newState.firstLimpetId = null
-        newState.rescue.attributes.firstLimpetId = null
+    if (value.length) {
+      if (value[0].id === this.props.rescue.attributes.firstLimpetId) {
+        newValue = undefined
+      } else {
+        newValue = value
       }
+    }
 
-      this.setState(newState)
-      this.dirtyFields.add('rats')
+    this._setChanges({ firstLimpetId: newValue })
+  }
+
+  _handleSystemChange = value => {
+    // Because tagsInput sometimes decides to randomly call onChange when it hasn't changed.
+    if (typeof this.state.changes.system === 'undefined' && value.length && value[0].value === this.props.rescue.attributes.system) {
+      return
+    }
+
+    let newValue = null
+
+    if (value.length) {
+      if (value[0].value === this.props.rescue.attributes.system) {
+        newValue = undefined
+      } else {
+        newValue = value
+      }
+    }
+
+    this._setChanges({ system: newValue })
+  }
+
+  _handleRatsAdd = value => {
+    const {
+      ratsAdded,
+      ratsRemoved,
+    } = this.state.changes
+
+    // See if the rat was previously removed so we don't add them twice.
+    const ratWasRemoved = ratsRemoved && ratsRemoved[value.id]
+
+    if (ratWasRemoved) {
+      const newRatsRemoved = { ...ratsRemoved }
+      delete newRatsRemoved[value.id]
+      this._setChanges({ ratsRemoved: newRatsRemoved })
+    } else {
+      this._setChanges({
+        ratsAdded: {
+          ...(ratsAdded || {}),
+          [value.id]: value,
+        },
+      })
     }
   }
 
-  async onSubmit (event) {
+  _handleRatsRemove = value => {
+    const {
+      ratsAdded,
+      ratsRemoved,
+      firstLimpetId,
+    } = this.state.changes
+    const newChanges = {}
+
+    // Remove the rat from ratsAdded if they are new additions to the assigned list.
+    const ratWasAdded = ratsAdded && ratsAdded[value.id]
+
+    if (ratWasAdded) {
+      const newRatsAdded = { ...ratsAdded }
+      delete newRatsAdded[value.id]
+      newChanges.ratsAdded = newRatsAdded
+    } else {
+      newChanges.ratsRemoved = {
+        ...(ratsRemoved || {}),
+        [value.id]: value,
+      }
+    }
+
+    if (value.id === firstLimpetId || value.id === this.props.rescue.attributes.firstLimpetId) {
+      newChanges.firstLimpetId = null
+    }
+
+    this._setChanges(newChanges)
+  }
+
+  _onSubmit = async (event) => {
     event.preventDefault()
 
+    const { rescue } = this.props
+    const { changes } = this.state
+
+    if (!rescue.attributes.outcome || !changes.outcome) {
+      return
+    }
+
     const {
-      rats,
-      rescue,
-    } = this.state
-    const rescueUpdates = {}
+      ratsAdded,
+      ratsRemoved,
+      ...attributeChanges
+    } = changes
+    let {
+      system,
+      firstLimpetId,
+    } = changes
+
     let ratUpdates = null
 
-    for (const field of this.dirtyFields) {
-      if (field !== 'rats') {
-        rescueUpdates[field] = rescue.attributes[field]
-      }
-    }
-
-    if (!rescue.attributes.outcome) {
-      rescueUpdates.outcome = 'success'
-    }
-
-    if (this.dirtyFields.has('rats')) {
-      const oldRats = rescue.relationships.rats.data
-
+    if ((ratsAdded && Object.values(ratsAdded).length) || (ratsRemoved && Object.values(ratsRemoved).length)) {
       ratUpdates = {
-        added: rats.filter(rat => !oldRats.find(oldRat => rat.id === oldRat.id)),
-        removed: oldRats.filter(oldRat => !rats.find(rat => oldRat.id === rat.id)),
+        added: ratsAdded ? Object.values(ratsAdded).map(rat => rat.id) : [],
+        removed: ratsRemoved ? Object.values(ratsRemoved).map(rat => rat.id) : [],
       }
     }
 
-    const { status } = await this.props.submitPaperwork(rescue.id, rescueUpdates, ratUpdates)
+    if (firstLimpetId && firstLimpetId.length && firstLimpetId[0].id !== rescue.attributes.firstLimpetId) {
+      firstLimpetId = firstLimpetId[0].id
+    }
 
-    if (status !== 'success') {
+    if (system && system.length && system[0].value !== rescue.attributes.system) {
+      system = system[0].value.toUpperCase()
+    }
+
+    const { status } = await this.props.updateRescue(rescue.id, {
+      ...attributeChanges,
+      firstLimpetId,
+      system,
+    }, ratUpdates)
+
+    console.log('HEYO')
+
+    if (status === 'error') {
       this.setState({ error: true })
       return
     }
 
-    this.dirtyFields.clear()
-
     Router.pushRoute('paperwork view', { id: rescue.id })
+  }
+
+  _setChanges = changedFields => {
+    const {
+      rescue,
+    } = this.props
+    const changes = { ...this.state.changes }
+
+    Object.entries(changedFields).forEach(([key, value]) => {
+      changes[key] = value === rescue.attributes[key] ? undefined : value
+    })
+
+    this.setState({
+      changes,
+    })
+  }
+
+  /***************************************************************************\
+    Public Methods
+  \***************************************************************************/
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      error: null,
+      changes: {},
+    }
+  }
+
+  static async getInitialProps({ query, store }) {
+    await actions.getRescue(query.id)(store.dispatch)
   }
 
   render () {
     const {
-      retrieving,
-      submitting,
+      rescue,
     } = this.props
     const {
+      loading,
+      submitting,
       error,
-      firstLimpetId,
-      system,
-      rats,
-      rescue,
     } = this.state
 
     const classes = ['page-content']
 
-    if (submitting) {
+    if (loading || submitting) {
       classes.push('loading', 'force')
     }
 
+    const fieldValues = this.getFieldValues()
+
+    const {
+      codeRed,
+      firstLimpetId,
+      notes,
+      outcome,
+      platform,
+      rats,
+      system,
+    } = fieldValues
+
     const ratNameTemplate = rat => `${rat.attributes.name} [${rat.attributes.platform.toUpperCase()}]`
 
-    const invalidPaperwork = this.validate()
+    const pwValidity = this.validate(fieldValues)
 
     return (
       <div className="page-wrapper">
@@ -229,30 +282,30 @@ class Paperwork extends Component {
           </div>
         )}
 
-        {retrieving && (
+        {loading && (
           <div className="loading page-content" />
         )}
 
-        {(!retrieving && !rescue) && (
+        {(!loading && !rescue) && (
           <div className="loading page-content">
             <p>Sorry, we couldn't find the paperwork you requested.</p>
           </div>
         )}
 
-        {(!retrieving && rescue) && (
+        {(!loading && rescue) && (
           <form
             className={classes.join(' ')}
-            onSubmit={this.onSubmit}>
+            onSubmit={this._onSubmit}>
             <fieldset>
               <label htmlFor="platform">What platform was the rescue on?</label>
 
               <RadioOptionsInput
-                disabled={submitting || retrieving}
+                disabled={submitting || loading}
                 className="platform"
                 name="platform"
                 id="platform"
-                value={rescue.attributes.platform}
-                onChange={this.handleRadioOptionsChange}
+                value={platform}
+                onChange={this._handleRadioOptionsChange}
                 options={[
                   {
                     value: 'pc',
@@ -273,12 +326,12 @@ class Paperwork extends Component {
               <label htmlFor="outcome-success">Was the rescue successful?</label>
 
               <RadioOptionsInput
-                disabled={submitting || retrieving}
+                disabled={submitting || loading}
                 className="outcome"
                 name="outcome"
                 id="outcome"
-                value={rescue.attributes.outcome}
-                onChange={this.handleRadioOptionsChange}
+                value={outcome}
+                onChange={this._handleRadioOptionsChange}
                 options={[
                   {
                     value: 'success',
@@ -302,12 +355,12 @@ class Paperwork extends Component {
             <fieldset>
               <label htmlFor="codeRed-yes">Was it a code red?</label>
               <RadioOptionsInput
-                disabled={submitting || retrieving}
+                disabled={submitting || loading}
                 className="codeRed"
                 name="codeRed"
                 id="codeRed"
-                value={`${rescue.attributes.codeRed}`}
-                onChange={this.handleRadioOptionsChange}
+                value={`${codeRed}`}
+                onChange={this._handleRadioOptionsChange}
                 options={[
                   {
                     value: 'true',
@@ -324,10 +377,11 @@ class Paperwork extends Component {
               <label htmlFor="rats">Who was assigned to this rescue?</label>
 
               <RatTagsInput
-                data-platform={rescue.attributes.platform}
-                disabled={submitting || retrieving}
+                data-platform={platform}
+                disabled={submitting || loading}
                 name="rats"
-                onChange={this.handleRatsChange}
+                onAdd={this._handleRatsAdd}
+                onRemove={this._handleRatsRemove}
                 value={rats}
                 valueProp={ratNameTemplate} />
             </fieldset>
@@ -337,9 +391,9 @@ class Paperwork extends Component {
 
               <FirstLimpetInput
                 data-single
-                disabled={submitting || retrieving}
+                disabled={submitting || loading}
                 name="firstLimpetId"
-                onChange={this.handleFirstLimpetChange}
+                onChange={this._handleFirstLimpetChange}
                 options={rats}
                 value={firstLimpetId}
                 valueProp={ratNameTemplate} />
@@ -350,9 +404,9 @@ class Paperwork extends Component {
 
               <SystemTagsInput
                 data-allownew
-                disabled={submitting || retrieving}
+                disabled={submitting || loading}
                 name="system"
-                onChange={this.handleSystemChange}
+                onChange={this._handleSystemChange}
                 data-single
                 value={system} />
             </fieldset>
@@ -361,18 +415,18 @@ class Paperwork extends Component {
               <label htmlFor="notes">Notes</label>
 
               <textarea
-                disabled={submitting || retrieving}
+                disabled={submitting || loading}
                 id="notes"
                 name="notes"
-                onChange={this.handleNotesChange}
-                value={rescue.attributes.notes} />
+                onChange={this._handleNotesChange}
+                value={notes} />
             </fieldset>
 
             <menu type="toolbar">
               <div className="primary">
-                {invalidPaperwork && (<span className="invalidity-explainer">{invalidPaperwork}</span>)}
+                <div className={`invalidity-explainer ${pwValidity.noChange ? 'no-change' : ''} ${!pwValidity.valid ? 'show' : ''}`}>{pwValidity.reason}</div>
                 <button
-                  disabled={submitting || retrieving || invalidPaperwork}
+                  disabled={submitting || loading || !pwValidity.valid}
                   type="submit">
                   {submitting ? 'Submitting...' : 'Submit'}
                 </button>
@@ -386,20 +440,30 @@ class Paperwork extends Component {
     )
   }
 
-  validate () {
-    const { rescue } = this.state
+  lastInvalidReason = null
+  validate (values) {
+    const { rescue } = this.props
+    const { changes } = this.state
 
     let invalidReason = null
+    let noChange = false
 
-    switch (rescue.attributes.outcome) {
+    if (!rescue) {
+      return {
+        valid: false,
+        reason: 'Rescue Not Found',
+      }
+    }
+
+    switch (values.outcome) {
       case 'other':
       case 'invalid':
-        invalidReason = this.validateCaseWithInvalidOutcome()
+        invalidReason = this.validateCaseWithInvalidOutcome(values)
         break
 
       case 'success':
       case 'failure':
-        invalidReason = this.validateCaseWithValidOutcome()
+        invalidReason = this.validateCaseWithValidOutcome(values)
         break
 
       default:
@@ -411,42 +475,78 @@ class Paperwork extends Component {
       invalidReason = 'You cannot edit this rescue.'
     }
 
-    return invalidReason
+    if (invalidReason === null && !Object.keys(changes).length) {
+      invalidReason = 'No changes have been made yet!'
+      noChange = true
+    }
+
+    const response = {
+      valid: Boolean(invalidReason === null),
+      reason: invalidReason || this.lastInvalidReason,
+      noChange,
+    }
+
+    this.lastInvalidReason = invalidReason
+
+    return response
   }
 
-  validateCaseWithValidOutcome() {
-    const {
-      rats,
-      rescue,
-    } = this.state
-
-    if (!rats || !rats.length) {
+  validateCaseWithValidOutcome = (values) => {
+    if (!values.rats || !values.rats.length) {
       return 'Valid cases must have at least one rat assigned.'
     }
 
-    if (!rescue.attributes.system) {
+    if (!values.system) {
       return 'Valid cases must have a star system location.'
     }
 
-    if (!rescue.attributes.platform) {
+    if (!values.platform) {
       return 'Valid cases must have a platform.'
     }
 
-    if (rescue.attributes.outcome === 'success' && !rescue.attributes.firstLimpetId) {
+    if (values.outcome === 'success' && !values.firstLimpetId) {
       return 'Successful rescues must have a first limpet rat.'
     }
 
     return null
   }
 
-  validateCaseWithInvalidOutcome() {
-    const { rescue } = this.state
-
-    if (!rescue.attributes.notes.replace(/\s/g, '')) {
+  validateCaseWithInvalidOutcome = (values) => {
+    if (!values.notes.replace(/\s/g, '')) {
       return 'Invalid cases must have notes explaining why the rescue is invalid.'
     }
 
     return null
+  }
+
+  getFieldValues () {
+    const { rescue, rats: assignedRats } = this.props
+    const { changes } = this.state
+
+    const isDefined = (value, fallback) => (typeof value !== 'undefined' ? value : fallback)
+    const getValue = (value) => isDefined(changes[value], rescue.attributes[value])
+
+
+    const rats = {
+      ...assignedRats,
+      ...(changes.ratsAdded || {}),
+    }
+
+    if (changes.ratsRemoved) {
+      for (const removedRat of Object.keys(changes.ratsRemoved)) {
+        delete rats[removedRat]
+      }
+    }
+
+    return {
+      codeRed: getValue('codeRed'),
+      firstLimpetId: isDefined(changes.firstLimpetId, rats[rescue.attributes.firstLimpetId]) || null,
+      notes: getValue('notes'),
+      outcome: getValue('outcome'),
+      platform: getValue('platform'),
+      rats: Object.values(rats),
+      system: isDefined(changes.system, { value: rescue.attributes.system.toUpperCase() }),
+    }
   }
 
 
@@ -456,10 +556,6 @@ class Paperwork extends Component {
   /***************************************************************************\
     Getters
   \***************************************************************************/
-
-  get dirtyFields () {
-    return this._dirtyFields || (this._dirtyFields = new Set)
-  }
 
   get userCanEdit () {
     const {
@@ -498,17 +594,16 @@ class Paperwork extends Component {
 
 
 
-const mapDispatchToProps = ['submitPaperwork', 'retrievePaperwork']
+const mapDispatchToProps = ['updateRescue', 'getRescue']
 
-const mapStateToProps = state => {
-  const { paperwork } = state
-  const { rescueId } = paperwork
+const mapStateToProps = (state, ownProps) => {
+  const { id: rescueId } = ownProps.query
   let firstLimpetId = []
-  let rats = []
+  let rats = {}
   let rescue = null
 
   if (rescueId) {
-    rescue = state.rescues.rescues.find(item => item.id === rescueId)
+    rescue = state.rescues[rescueId]
   }
 
   if (rescue) {
@@ -519,22 +614,25 @@ const mapStateToProps = state => {
     rats = state.rats.rats
       .filter(rat => rescue.relationships.rats.data.find(({ id }) => rat.id === id))
       .map(rat => ({
-        id: rat.id,
-        value: rat.attributes.name,
         ...rat,
+        value: rat.attributes.name,
       }))
+      .reduce((accumulator, rat) => ({
+        ...accumulator,
+        [rat.id]: rat,
+      }), {})
   }
 
   const currentUser = state.user
   const currentUserGroups = currentUser.relationships ? [...currentUser.relationships.groups.data].map(group => state.groups[group.id]) : []
 
-  return Object.assign({
+  return {
     firstLimpetId,
     rats,
     rescue,
     currentUser,
     currentUserGroups,
-  }, paperwork)
+  }
 }
 
 
