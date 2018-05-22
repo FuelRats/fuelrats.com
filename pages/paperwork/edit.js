@@ -158,16 +158,16 @@ class Paperwork extends Component {
     const { rescue } = this.props
     const changes = { ...this.state.changes }
 
-    if (!rescue.attributes.outcome || !changes.outcome) {
+    if (!rescue.attributes.outcome && !changes.outcome) {
       return
     }
 
     if (changes.ratsAdded && Object.values(changes.ratsAdded).length) {
-      changes.ratsAdded = Object.values(changes.ratsAdded).map(rat => rat.id)
+      changes.ratsAdded = Object.keys(changes.ratsAdded)
     }
 
     if (changes.ratsRemoved && Object.values(changes.ratsRemoved).length) {
-      changes.ratsRemoved = Object.values(changes.ratsRemoved).map(rat => rat.id)
+      changes.ratsRemoved = Object.keys(changes.ratsRemoved)
     }
 
     if (changes.firstLimpetId && changes.firstLimpetId.length && changes.firstLimpetId[0].id !== rescue.attributes.firstLimpetId) {
@@ -410,6 +410,7 @@ class Paperwork extends Component {
                 <div className={`invalidity-explainer ${pwValidity.noChange ? 'no-change' : ''} ${!pwValidity.valid ? 'show' : ''}`}>{pwValidity.reason}</div>
                 <button
                   disabled={submitting || loading || !pwValidity.valid}
+                  className="green"
                   type="submit">
                   {submitting ? 'Submitting...' : 'Submit'}
                 </button>
