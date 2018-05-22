@@ -57,10 +57,8 @@ const navItems = [
       },
       {
         key: 'merch',
-        title: 'Merch (Coming Soon)',
-        href: '#',
-        /* href: 'https://donate.fuelrats.com/' */
-        disabled: true,
+        title: 'Merch',
+        href: 'https://donate.fuelrats.com/',
       },
     ],
   },
