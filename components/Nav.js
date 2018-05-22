@@ -51,14 +51,14 @@ const navItems = [
     title: 'Support Us',
     subnav: [
       {
+        key: 'merch',
+        title: 'Merch',
+        href: 'https://www.teespring.com/stores/fuelrats',
+      },
+      {
         key: 'donate',
         title: 'Donations',
         href: 'https://donate.fuelrats.com/donate.php',
-      },
-      {
-        key: 'merch',
-        title: 'Merch',
-        href: 'https://donate.fuelrats.com/',
       },
     ],
   },
