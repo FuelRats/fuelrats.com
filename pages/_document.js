@@ -17,7 +17,7 @@ export default class extends Document {
 
           <meta name="apple-mobile-web-app-title" content="Fuel Rats" />
 
-          <meta name="msapplication-config" content="/static/browserconfig.xml" />
+          <meta name="msapplication-config" content="/browserconfig.xml" />
           <meta name="msapplication-TileColor" content="#d65050" />
           <meta name="msapplication-TileImage" content="/static/favicon/mstile-144x144.png" />
           <meta name="msapplication-square70x70logo" content="/static/favicon/mstile-70x70.png" />
@@ -41,7 +41,7 @@ export default class extends Document {
           <link rel="icon" type="image/png" href="/static/favicon/favicon-16.png" sizes="16x16" />
           <link rel="icon" type="image/png" href="/static/favicon/favicon-128.png" sizes="128x128" />
 
-          <link rel="manifest" href="/static/manifest.json" />
+          <link rel="manifest" href="/manifest.json" />
 
           <link rel="shortcut icon" href="/static/favicon/favicon.ico" />
         </Head>
