@@ -69,8 +69,8 @@ module.exports = function (nextjs, koa) {
     await send(ctx, '/static/sitemap.xml')
   })
 
-  router.get('/sw.js', async ctx => {
-    await send(ctx, '/static/sw.js')
+  router.get('/manifest.json', async ctx => {
+    await send(ctx, '/static/manifest.json')
   })
 
   // Legacy Wordpress permalinks
