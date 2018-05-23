@@ -1,0 +1,19 @@
+{
+  "name": "The Fuel Rats",
+  "short_name": "FuelRats",
+  "icons": [
+    {
+      "src": "/static/favicon/favicon-196.png?v=dwa6inFKgBFoaM",
+      "sizes": "196x196",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/favicon/favicon-512.png?v=dwa6inFKgBFoaM",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#d65050",
+  "background_color": "#1a1a1a",
+  "display": "standalone"
+}
