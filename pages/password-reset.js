@@ -60,7 +60,7 @@ class PasswordReset extends Component {
 
     this.setState({ submitting: true })
 
-    await this.props.resetPassword(password, token)
+    await this.props.resetPassword({ password, token })
 
     this.setState({
       submitted: true,

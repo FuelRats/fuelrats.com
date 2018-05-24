@@ -107,7 +107,14 @@ class Register extends Component {
 
     this.setState({ submitting: true })
 
-    const { status: regStatus } = await this.props.register(email, password, ratName, ratPlatform, nickname, recaptchaResponse)
+    const { status: regStatus } = await this.props.register({
+      email,
+      password,
+      name: ratName,
+      platform: ratPlatform,
+      nickname,
+      recaptcha: recaptchaResponse,
+    })
 
     if (regStatus === 'success') {
       await this.props.login(email, password, '/profile')

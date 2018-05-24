@@ -56,7 +56,12 @@ class Authorize extends Component {
     } = this.props
 
     if (clientId && state && scope && responseType) {
-      const { payload, status } = await getClientOAuthPage(clientId, state, scope, responseType)
+      const { payload, status } = await getClientOAuthPage({
+        clientId,
+        responseType,
+        scope,
+        state,
+      })
 
       if (status === 'success') {
         this.setState({
