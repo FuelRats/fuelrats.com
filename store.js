@@ -26,6 +26,7 @@ import * as rescuesByRatActions from './store/actions/rescuesByRat'
 import * as rescuesBySystemActions from './store/actions/rescuesBySystem'
 import * as rescuesOverTimeActions from './store/actions/rescuesOverTime'
 import * as userActions from './store/actions/user'
+import * as wordpressActions from './store/actions/wordpress'
 
 
 
@@ -43,6 +44,7 @@ export const actions = {
   ...rescuesBySystemActions,
   ...rescuesOverTimeActions,
   ...userActions,
+  ...wordpressActions,
 }
 
 
