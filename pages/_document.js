@@ -6,7 +6,7 @@ import Document, { Head, Main, NextScript } from 'next/document'
 
 
 export default class extends Document {
-  render() {
+  render () {
     return (
       <html lang="en">
         <Head>

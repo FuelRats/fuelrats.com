@@ -215,7 +215,7 @@ class Paperwork extends Component {
     }
   }
 
-  static async getInitialProps({ query, store }) {
+  static async getInitialProps ({ query, store }) {
     await actions.getRescue(query.id)(store.dispatch)
   }
 

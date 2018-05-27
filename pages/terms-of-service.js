@@ -48,7 +48,7 @@ class PrivacyPolicy extends Component {
     this._retrieveBlog()
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {

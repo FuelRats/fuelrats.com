@@ -66,7 +66,7 @@ export default class RadioOptionsInput extends Component {
     }
   }
 
-  getCurrentValue() {
+  getCurrentValue () {
     return this.props.value || (this.state.selectedOption ? this.state.selectedOption.value : null) || this.props.defaultValue || null
   }
 

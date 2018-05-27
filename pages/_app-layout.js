@@ -115,7 +115,7 @@ class AppLayout extends React.Component {
     }
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     if (this.props.verifyError) {
@@ -125,7 +125,7 @@ class AppLayout extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate (prevProps) {
     const {
       loggedIn,
       Component,
