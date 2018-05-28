@@ -115,7 +115,7 @@ class AppLayout extends React.Component {
     }
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     if (this.props.verifyError) {
@@ -125,7 +125,7 @@ class AppLayout extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate (prevProps) {
     const {
       loggedIn,
       Component,
@@ -146,7 +146,6 @@ class AppLayout extends React.Component {
       path,
     } = this.props
 
-    const mainClasses = ['fade-in', 'page', Component.title.toLowerCase().replace(/\s/g, '-')].join(' ')
     return (
       <div role="application">
         <Head title={Component.title} />
@@ -157,9 +156,7 @@ class AppLayout extends React.Component {
 
         <UserMenu />
 
-        <main className={mainClasses}>
-          <Component {...pageProps} />
-        </main>
+        <Component {...pageProps} />
 
         {showLoginDialog && (
           <LoginDialog onClose={() => actions.setFlag('showLoginDialog', false)(store.dispatch)} />

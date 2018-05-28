@@ -90,7 +90,7 @@ class Nav extends Component {
     Public Methods
   \***************************************************************************/
 
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this._bindMethods(['renderNavItem', '_handleSubnavChange'])

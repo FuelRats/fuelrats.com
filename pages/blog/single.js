@@ -9,15 +9,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // Component imports
 import { Link } from '../../routes'
 import Component from '../../components/Component'
-import Page from '../../components/Page'
-
-
-
-
-
-// Component constants
-const title = 'Blog'
-
+import connect from '../../helpers/connect'
+import PageWrapper from '../../components/PageWrapper'
 
 
 
@@ -80,10 +73,7 @@ class Blog extends Component {
 
     /* eslint-disable react/no-danger */
     return (
-      <div className="page-wrapper">
-        <header className="page-header">
-          <h1>{title}</h1>
-        </header>
+      <PageWrapper title="Blog" >
 
         {retrieving && (
           <article className="loading page-content" />
@@ -159,7 +149,7 @@ class Blog extends Component {
         {(!retrieving && !blog) && (
           <article className="error page-content" />
         )}
-      </div>
+      </PageWrapper>
     )
     /* eslint-enable */
   }
@@ -169,12 +159,4 @@ class Blog extends Component {
 
 
 
-const mapDispatchToProps = ['retrieveBlog']
-
-const mapStateToProps = state => state.blogs
-
-
-
-
-
-export default Page(title, false, mapStateToProps, mapDispatchToProps)(Blog)
+export default connect(state => state.blogs, ['retrieveBlog'])(Blog)

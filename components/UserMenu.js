@@ -9,9 +9,9 @@ import React from 'react'
 
 // Component imports
 import { actions } from '../store'
-import AdminUserMenuNav from './AdminUserMenuNav'
 import { Link } from '../routes'
-import { userHasPermission } from '../helpers'
+import AdminUserMenuNav from './AdminUserMenuNav'
+import userHasPermission from '../helpers/userHasPermission'
 
 
 
@@ -40,13 +40,13 @@ const UserMenu = (props) => {
           <nav className="user">
             <ul>
               <li>
-                <Link href="/profile">
+                <Link route="profile">
                   <a><span>My Profile</span></a>
                 </Link>
               </li>
 
               <li>
-                <Link href="/leaderboard">
+                <Link route="stats leaderboard">
                   <a><span>Leaderboard</span></a>
                 </Link>
               </li>

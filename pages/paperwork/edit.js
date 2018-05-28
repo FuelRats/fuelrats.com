@@ -2,10 +2,11 @@
 import { actions } from '../../store'
 import { Router } from '../../routes'
 import Component from '../../components/Component'
+import connect from '../../helpers/connect'
 import FirstLimpetInput from '../../components/FirstLimpetInput'
 import RadioOptionsInput from '../../components/RadioOptionsInput'
 import RatTagsInput from '../../components/RatTagsInput'
-import Page from '../../components/Page'
+import PageWrapper from '../../components/PageWrapper'
 import SystemTagsInput from '../../components/SystemTagsInput'
 import userHasPermission from '../../helpers/userHasPermission'
 
@@ -13,14 +14,25 @@ import userHasPermission from '../../helpers/userHasPermission'
 
 
 
-// Component constants
-const title = 'Paperwork'
-
-
-
-
-
 class Paperwork extends Component {
+  /***************************************************************************\
+    Properties
+  \***************************************************************************/
+
+  static authenicationRequired = true
+
+  state = {
+    loading: !this.props.rescue,
+    submitting: false,
+    error: null,
+    changes: {},
+    userIsCool: false,
+  }
+
+
+
+
+
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
@@ -206,16 +218,8 @@ class Paperwork extends Component {
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
-  constructor (props) {
-    super(props)
 
-    this.state = {
-      error: null,
-      changes: {},
-    }
-  }
-
-  static async getInitialProps({ query, store }) {
+  static async getInitialProps ({ query, store }) {
     await actions.getRescue(query.id)(store.dispatch)
   }
 
@@ -227,6 +231,7 @@ class Paperwork extends Component {
       loading,
       submitting,
       error,
+      userIsCool,
     } = this.state
 
     const classes = ['page-content']
@@ -252,11 +257,7 @@ class Paperwork extends Component {
     const pwValidity = this.validate(fieldValues)
 
     return (
-      <div className="page-wrapper">
-        <header className="page-header">
-          <h1>{title}</h1>
-        </header>
-
+      <PageWrapper title="Paperwork" darkThemeSafe={userIsCool}>
         {(error && !submitting) && (
           <div className="store-errors">
             <div className="store-error">
@@ -420,7 +421,16 @@ class Paperwork extends Component {
             </menu>
           </form>
         )}
-      </div>
+        <div>
+          <button
+            type="button"
+            className="inline link activate-secret"
+            onClick={() => this.setState({ userIsCool: true })}
+            title="Shhh! Don't tell anyone!">
+            Do you want to see something strange and mystical?
+          </button>
+        </div>
+      </PageWrapper>
     )
   }
 
@@ -578,8 +588,6 @@ class Paperwork extends Component {
 
 
 
-const mapDispatchToProps = ['updateRescue', 'getRescue']
-
 const mapStateToProps = (state, ownProps) => {
   const { id: rescueId } = ownProps.query
   let firstLimpetId = []
@@ -623,4 +631,4 @@ const mapStateToProps = (state, ownProps) => {
 
 
 
-export default Page(title, true, mapStateToProps, mapDispatchToProps)(Paperwork)
+export default connect(mapStateToProps, ['updateRescue', 'getRescue'])(Paperwork)

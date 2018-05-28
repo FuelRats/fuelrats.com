@@ -1,5 +1,5 @@
 // Component imports
-import Page from '../components/Page'
+import PageWrapper from '../components/PageWrapper'
 import RescuesBySystemChart from '../components/RescuesBySystemChart'
 import RescuesOverTimeChart from '../components/RescuesOverTimeChart'
 
@@ -7,28 +7,18 @@ import RescuesOverTimeChart from '../components/RescuesOverTimeChart'
 
 
 
-// Component imports
-const title = 'Statistics'
-
-
-
-
-
 const Statistics = () => (
-  <div className="page-wrapper">
-    <header className="page-header">
-      <h1>{title}</h1>
-    </header>
+  <PageWrapper title="Statistics">
 
     <div className="page-content">
       <RescuesOverTimeChart />
       <RescuesBySystemChart />
     </div>
-  </div>
+  </PageWrapper>
 )
 
 
 
 
 
-export default Page(title, false)(Statistics)
+export default Statistics

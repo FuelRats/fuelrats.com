@@ -73,4 +73,8 @@ export default {
     relationships: null,
     retrieving: false,
   },
+
+  wordpress: {
+    page: {},
+  },
 }

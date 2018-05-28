@@ -6,7 +6,7 @@ import React from 'react'
 
 
 // Component imports
-import Page from '../components/Page'
+import PageWrapper from '../components/PageWrapper'
 import TabbedPanel from '../components/TabbedPanel'
 import UserOverview from '../components/UserOverview'
 import UserRatsPanel from '../components/UserRatsPanel'
@@ -16,31 +16,30 @@ import UserSettings from '../components/UserSettings'
 
 
 
-// Component imports
-const title = 'Profile'
-
-
-
-
-
 class Profile extends React.Component {
+  /***************************************************************************\
+    Properties
+  \***************************************************************************/
+
+  static authenticationRequired = true
+
+
+
+
+
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
 
   render () {
     return (
-      <div className="page-wrapper">
-        <header className="page-header">
-          <h1>{title}</h1>
-        </header>
-
+      <PageWrapper title="Profile">
         <div className="page-content">
           <TabbedPanel
             name="User Tabs"
             tabs={Profile.tabs} />
         </div>
-      </div>
+      </PageWrapper>
     )
   }
 
@@ -83,4 +82,4 @@ class Profile extends React.Component {
 
 
 
-export default Page(title, true)(Profile)
+export default Profile

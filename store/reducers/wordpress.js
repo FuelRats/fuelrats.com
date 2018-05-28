@@ -1,8 +1,6 @@
 import actionTypes from '../actionTypes'
 import initialState from '../initialState'
 
-import parseJSONAPIResponseForEntityType from '../../helpers/parseJSONAPIResponseForEntityType'
-
 
 
 
@@ -15,14 +13,19 @@ export default function (state = initialState.rescues, action) {
   } = action
 
   switch (type) {
-    case actionTypes.GET_USER:
-    case actionTypes.GET_RESCUE:
-    case actionTypes.UPDATE_RESCUE:
+    case actionTypes.GET_WORDPRESS_PAGE:
+    case actionTypes.GET_WORDPRESS_PAGES:
       switch (status) {
         case 'success':
           return {
             ...state,
-            ...parseJSONAPIResponseForEntityType(payload, 'rescues', true),
+            page: {
+              ...state.page,
+              ...payload.reduce((accumulator, page) => ({
+                ...accumulator,
+                [page.slug]: page,
+              }), {}),
+            },
           }
 
         default:
