@@ -1,14 +1,25 @@
 const routes = (module.exports = require('next-routes')())
 
 // 'NAME', 'ROUTE', 'PATH'
+// Ordered in general page group priority. Priority is determined by general amount of use of the set of pages.
 routes
-  // About
-  .add('about acknowledgements', '/acknowledgements', '/acknowledgements')
+
+  // Front Page
+  .add('home', '/', '/index')
+  .add('rescue-landing', '/i-need-fuel', '/i-need-fuel')
 
   // Paperwork
   .add('paperwork', '/paperwork/:id', '/paperwork/view')
   .add('paperwork edit', '/paperwork/:id/edit', '/paperwork/edit')
   .add('paperwork view', '/paperwork/:id/view', '/paperwork/view')
+
+  // Profile
+  .add('profile', '/profile', '/profile')
+
+  // Authentication
+  .add('auth authorize', '/authorize', '/authorize')
+  .add('auth forgot-pass', '/forgot-password', '/forgot-password')
+  .add('auth password-reset', '/password-reset', '/password-reset')
 
   // Blog
   .add('blog list author page', '/blog/author/:author/page/:page', '/blog/all')
@@ -22,9 +33,19 @@ routes
 
   .add('blog view', '/blog/:id', '/blog/single')
 
+  // Statistics
+  .add('stats statistics', '/statistics', '/statistics')
+  .add('stats leaderboard', '/leaderboard', '/leaderboard')
+
+  // About
+  .add('about fuelrats', '/about', '/about')
+  .add('about acknowledgements', '/acknowledgements', '/acknowledgements')
+
   // Epics
   .add('epic nominate', '/epic/nominate', '/epics/nominate')
 
-  // Legal
-  .add('legal terms', '/terms-of-service', '/terms-of-service')
-  .add('legal privacy', '/privacy-policy', '/privacy-policy')
+  // Other
+  .add('home legacy', '/home-page', '/index')
+
+  // Wordpress
+  .add('wordpress', '/:slug+', '/wordpress-proxy')

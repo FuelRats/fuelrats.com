@@ -39,7 +39,7 @@ By default, the website doesn't know much about connecting to the Fuel Rats API 
 | `FRDC_API_KEY`            | REQUIRED                | This is your OAuth application's client key or ID                                                              |
 | `FRDC_API_SECRET`         | REQUIRED                | This is your OAuth application's client secret                                                                 |
 | `FRDC_API_URL`            | `http://localhost:8080` | This is the URL at which the **SERVER** can reach the Fuel Rats API                                            |
-| `FRDC_LOCAL_API_URL`      | `/api`                  | This is the URL at which the **CLIENT** can reach the Fuel Rats API.                                           |
+| `FRDC_PUBLIC_URL`         | `http://localhost:3000` | This is the URL where the website is publically available. If in development, use localhost, or leave blank    |
 | `PORT`                    | `3000`                  | This is the port to run the application at                                                                     |
 
 You can define any or all of these variables in the same command you use to start the server:

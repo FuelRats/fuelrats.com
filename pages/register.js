@@ -1,33 +1,22 @@
-// Module imports
-import fetch from 'isomorphic-fetch'
-
 // Component imports
 import { Link } from '../routes'
 import Component from '../components/Component'
-import Page from '../components/Page'
+import connect from '../helpers/connect'
+import PageWrapper from '../components/PageWrapper'
 import PasswordField from '../components/PasswordField'
 import RadioOptionsInput from '../components/RadioOptionsInput'
 import TermsDialog from '../components/TermsDialog'
+import { actions } from '../store'
+
+
 
 
 // Component constants
-const title = 'Register'
-
-const getWordpressPageElement = async id => {
-  const response = await fetch(`/wp-api/pages/${id}`)
-  let page = null
-
-  if (response.ok) {
-    page = await response.json()
-    page = page.content.rendered.replace(/<ul>/gi, '<ul class="bulleted">').replace(/<ol>/gi, '<ol class="numbered">')
-  }
-
-  /* eslint-disable react/no-danger */
-  return (
-    <div dangerouslySetInnerHTML={{ __html: page }} />
-  )
-  /* eslint-enable react/no-danger */
-}
+/* eslint-disable react/no-danger */
+const getWordpressPageElement = page => (
+  <div dangerouslySetInnerHTML={{ __html: page.content.rendered.replace(/<ul>/gi, '<ul class="bulleted">').replace(/<ol>/gi, '<ol class="numbered">') }} />
+)
+/* eslint-enable react/no-danger */
 
 
 
@@ -71,6 +60,11 @@ class Register extends Component {
     }
   }
 
+  static async getInitialProps ({ store }) {
+    await actions.getWordpressPage('terms-of-service')(store.dispatch)
+    await actions.getWordpressPage('privacy-policy')(store.dispatch)
+  }
+
   handleChange ({ target }) {
     const {
       name,
@@ -90,6 +84,7 @@ class Register extends Component {
   }
 
   handleRadioOptionsChange ({ name, value }) {
+    sessionStorage.setItem(`register.${name}`, value)
     this.setState({ [name]: value })
   }
 
@@ -117,13 +112,18 @@ class Register extends Component {
     })
 
     if (regStatus === 'success') {
-      await this.props.login(email, password, '/profile')
+      await this.props.login(email, password, 'profile')
     } else {
       this.setState({ submitting: false })
     }
   }
 
   render () {
+    const {
+      termsPage,
+      privacyPage,
+    } = this.props
+
     const {
       acceptTerms,
       acceptPrivacy,
@@ -135,11 +135,7 @@ class Register extends Component {
     } = this.state
 
     return (
-      <div className="page-wrapper">
-        <header className="page-header">
-          <h1>{title}</h1>
-        </header>
-
+      <PageWrapper title="Register">
         <form
           className={`${submitting ? 'loading force' : ''}`}
           data-loader-text="Submitting"
@@ -254,10 +250,10 @@ class Register extends Component {
                 id="acceptTerms"
                 name="acceptTerms"
                 type="checkbox"
-                checked={acceptTerms && acceptPrivacy}
+                checked={Boolean(acceptTerms && acceptPrivacy)}
                 onChange={this.handleChange} />
               <label htmlFor="acceptTerms">
-                I agree that I have read and agree to the <Link route="legal terms"><a>Terms of Service</a></Link> and <Link route="legal privacy"><a>Privacy Policy</a></Link>, and that I am 13 years of age or older.
+                I agree that I have read and agree to the <Link route="wordpress" params={{ slug: 'terms-of-service' }}><a>Terms of Service</a></Link> and <Link route="wordpress" params={{ slug: 'terms-of-service' }}><a>Privacy Policy</a></Link>, and that I am 13 years of age or older.
               </label>
             </span>
           </fieldset>
@@ -277,7 +273,7 @@ class Register extends Component {
 
         { !acceptTerms && !acceptPrivacy && (
           <TermsDialog
-            dialogContent={() => getWordpressPageElement(3545)}
+            dialogContent={() => getWordpressPageElement(termsPage)}
             onClose={() => this.setState({ acceptTerms: true })}
             title="Terms of Service"
             checkboxLabel="I have read and agree to these Terms of Service" />
@@ -285,16 +281,16 @@ class Register extends Component {
 
         { acceptTerms && !acceptPrivacy && (
           <TermsDialog
-            dialogContent={() => getWordpressPageElement(3542)}
+            dialogContent={() => getWordpressPageElement(privacyPage)}
             onClose={() => {
               this.setState({ acceptPrivacy: true })
-              sessionStorage.setItem('termsAccepted', true)
+              sessionStorage.setItem('register.acceptTerms', true)
             }}
             title="Privacy Policy"
             checkboxLabel="I have read and agree to this Privacy Policy" />
         )}
 
-      </div>
+      </PageWrapper>
     )
   }
 
@@ -327,13 +323,10 @@ class Register extends Component {
 }
 
 
+const mapStateToProps = state => ({
+  termsPage: state.wordpress.page['terms-of-service'],
+  privacyPage: state.wordpress.page['privacy-policy'],
+})
 
 
-
-const mapDispatchToProps = ['register', 'login']
-
-
-
-
-
-export default Page(title, false, null, mapDispatchToProps)(Register)
+export default connect(mapStateToProps, ['register', 'login'])(Register)
