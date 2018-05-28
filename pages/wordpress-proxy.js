@@ -24,7 +24,6 @@ class WordpressProxy extends Component {
 
     if (!store.getState().wordpress.page[slug]) {
       const { status } = await actions.getWordpressPage(slug)(store.dispatch)
-
       if (status === 'error' && res) {
         res.statusCode = 404
       }
