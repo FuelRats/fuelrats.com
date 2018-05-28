@@ -1,15 +1,9 @@
 // Component imports
 import { Link } from '../routes'
 import Component from '../components/Component'
-import Page from '../components/Page'
+import connect from '../helpers/connect'
+import PageWrapper from '../components/PageWrapper'
 import PasswordField from '../components/PasswordField'
-
-
-
-
-
-// Component imports
-const title = 'Password Reset'
 
 
 
@@ -78,10 +72,7 @@ class PasswordReset extends Component {
     } = this.state
 
     return (
-      <div className="page-wrapper">
-        <header className="page-header">
-          <h1>{title}</h1>
-        </header>
+      <PageWrapper title="Password Reset">
 
         <div className="page-content">
           {validating && (
@@ -137,7 +128,7 @@ class PasswordReset extends Component {
             </div>
           )}
         </div>
-      </div>
+      </PageWrapper>
     )
   }
 
@@ -158,10 +149,4 @@ class PasswordReset extends Component {
 
 
 
-const mapDispatchToProps = ['resetPassword', 'validatePasswordResetToken']
-
-
-
-
-
-export default Page(title, false, null, mapDispatchToProps)(PasswordReset)
+export default connect(null, ['resetPassword', 'validatePasswordResetToken'])(PasswordReset)

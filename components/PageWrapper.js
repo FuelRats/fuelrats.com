@@ -11,7 +11,7 @@ import PropTypes from 'prop-types'
 
 // Component imports
 import Component from './Component'
-
+import classnames from '../helpers/classNames'
 
 
 
@@ -38,13 +38,22 @@ class Page extends Component {
   render () {
     const {
       children,
+      className,
+      darkThemeSafe,
       description,
       title,
-      renderTitle,
+      displayTitle,
+      renderHeader,
     } = this.props
 
-    const displayTitle = typeof renderTitle === 'function' ? renderTitle() : (<h1>{title}</h1>)
-    const mainClasses = ['fade-in', 'page', title.toLowerCase().replace(/\s/g, '-')].join(' ')
+    const titleContent = renderHeader && displayTitle(title)
+    const mainClasses = classnames(
+      'fade-in',
+      'page',
+      [className, Boolean(className)],
+      title.toLowerCase().replace(/\s/g, '-'),
+      ['--experiment-dark-theme', darkThemeSafe]
+    )
 
     return (
       <Fragment>
@@ -55,9 +64,11 @@ class Page extends Component {
           <meta property="og:description" content={description} />
         </NextHead>
         <main className={mainClasses}>
-          <header className="page-header">
-            {displayTitle}
-          </header>
+          {renderHeader && (
+            <header className="page-header">
+              {titleContent}
+            </header>
+          )}
           {children}
         </main>
       </Fragment>
@@ -65,13 +76,17 @@ class Page extends Component {
   }
 
   static defaultProps = {
+    darkThemeSafe: false,
     description: 'The Fuel Rats are Elite: Dangerous\'s premier emergency refueling service. Fueling the galaxy, one ship at a time, since 3301.',
-    renderTitle: null,
+    displayTitle: title => (<h1>{title}</h1>),
+    renderHeader: true,
   }
   static propTypes = {
     title: PropTypes.string.isRequired,
-    renderTitle: PropTypes.function,
+    darkThemeSafe: PropTypes.bool,
     description: PropTypes.string,
+    displayTitle: PropTypes.func,
+    renderHeader: PropTypes.bool,
   }
 }
 

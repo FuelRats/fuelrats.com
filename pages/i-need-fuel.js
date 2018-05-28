@@ -1,23 +1,13 @@
 // Component imports
 import { Link } from '../routes'
-import Page from '../components/Page'
-
-
-
-
-
-// Component constants
-const title = 'I Need Fuel'
+import PageWrapper from '../components/PageWrapper'
 
 
 
 
 
 const INeedFuel = () => (
-  <div className="page-wrapper">
-    <header className="page-header">
-      <h1>{title}</h1>
-    </header>
+  <PageWrapper title="I Need Fuel" >
 
     <div className="page-content">
       <div>
@@ -63,11 +53,11 @@ const INeedFuel = () => (
         <small>By connecting to our IRC and using our services, you agree to our <Link route="legal terms"><a>Terms of Service</a></Link> and <Link route="legal privacy"><a>Privacy Policy</a></Link>.</small>
       </div>
     </div>
-  </div>
+  </PageWrapper>
 )
 
 
 
 
 
-export default Page(title, false)(INeedFuel)
+export default INeedFuel

@@ -1,14 +1,9 @@
 // Component imports
-import Page from '../components/Page'
-
-
+import PageWrapper from '../components/PageWrapper'
 
 
 
 // Component constants
-const title = 'Acknowledgements'
-
-
 const brands = [
   {
     key: 'atlassian',
@@ -32,12 +27,8 @@ const brands = [
   },
 ]
 
-const Acknowledgements = () => (
-  <div className="page-wrapper">
-    <header className="page-header">
-      <h1>{title}</h1>
-    </header>
-
+const Acknowledgements = props => (
+  <PageWrapper title="Acknowledgements">
     <div className="page-content">
       {
         brands.map(brand => (
@@ -52,12 +43,12 @@ const Acknowledgements = () => (
           </div>
         ))
       }
+      {JSON.stringify(props.auth)}
     </div>
-  </div>
+  </PageWrapper>
 )
 
+Acknowledgements.StuffAndThings = 'urmamagey'
 
 
-
-
-export default Page(title, false)(Acknowledgements)
+export default Acknowledgements

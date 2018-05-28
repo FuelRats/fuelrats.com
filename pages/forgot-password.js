@@ -1,12 +1,7 @@
 // Component imports
 import Component from '../components/Component'
-import Page from '../components/Page'
-
-
-
-
-// Component constants
-const title = 'Forgot Password'
+import PageWrapper from '../components/PageWrapper'
+import connect from '../helpers/connect'
 
 
 
@@ -63,11 +58,7 @@ class ForgotPassword extends Component {
     } = this.state
 
     return (
-      <div className="page-wrapper">
-        <header className="page-header">
-          <h1>{title}</h1>
-        </header>
-
+      <PageWrapper title="Forgot Password" >
         <div className="page-content">
           {error && (
             <div className="store-errors">
@@ -113,7 +104,7 @@ class ForgotPassword extends Component {
             </div>
           )}
         </div>
-      </div>
+      </PageWrapper>
     )
   }
 
@@ -134,10 +125,4 @@ class ForgotPassword extends Component {
 
 
 
-const mapDispatchToProps = ['sendPasswordResetEmail']
-
-
-
-
-
-export default Page(title, false, null, mapDispatchToProps)(ForgotPassword)
+export default connect(null, ['sendPasswordResetEmail'])(ForgotPassword)

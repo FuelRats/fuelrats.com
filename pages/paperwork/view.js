@@ -8,21 +8,30 @@ import moment from 'moment'
 // Component imports
 import { actions } from '../../store'
 import { Link } from '../../routes'
+import connect from '../../helpers/connect'
 import Component from '../../components/Component'
-import Page from '../../components/Page'
+import PageWrapper from '../../components/PageWrapper'
 import userHasPermission from '../../helpers/userHasPermission'
-
-
-
-
-// Component imports
-const title = 'Paperwork'
 
 
 
 
 
 class Paperwork extends Component {
+  /***************************************************************************\
+    Properties
+  \***************************************************************************/
+
+  static authenicationRequired = true
+
+  state = {
+    loading: !this.props.rescue,
+  }
+
+
+
+
+
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
@@ -39,36 +48,22 @@ class Paperwork extends Component {
     }
   }
 
-  constructor (props) {
-    super(props)
-
-    this._bindMethods([
-      'renderRat',
-    ])
-
-    this.state = {
-      loading: !this.props.rescue,
-    }
-  }
-
-  static renderQuote (quote, index) {
-    return (
-      <li key={index}>
-        {quote.message}
-        {!!quote.author && (
-          <span>
-            - <em>${quote.author}</em>
-          </span>
+  static renderQuote = (quote, index) => (
+    <li key={index}>
+      {quote.message}
+      {!!quote.author && (
+      <span>
+        - <em>${quote.author}</em>
+      </span>
         )}
-      </li>
-    )
-  }
+    </li>
+  )
 
   static async getInitialProps ({ query, store }) {
     await actions.getRescue(query.id)(store.dispatch)
   }
 
-  renderQuotes () {
+  renderQuotes = () => {
     const { rescue } = this.props
 
     if (rescue.attributes.quotes) {
@@ -84,7 +79,7 @@ class Paperwork extends Component {
     )
   }
 
-  renderRat (rat, index) {
+  renderRat = (rat, index) => {
     const { rescue } = this.props
 
     return (
@@ -97,7 +92,7 @@ class Paperwork extends Component {
     )
   }
 
-  renderRats () {
+  renderRats = () => {
     const { rats } = this.props
 
     return (
@@ -119,10 +114,7 @@ class Paperwork extends Component {
     const userCanEdit = this.userCanEdit()
 
     return (
-      <div className="page-wrapper">
-        <header className="page-header">
-          <h1>{title}</h1>
-        </header>
+      <PageWrapper title="Paperwork" >
 
         {loading && (
           <div className="loading page-content" />
@@ -204,7 +196,7 @@ class Paperwork extends Component {
             </table>
           </div>
         )}
-      </div>
+      </PageWrapper>
     )
   }
 
@@ -216,7 +208,7 @@ class Paperwork extends Component {
     Getters
   \***************************************************************************/
 
-  userCanEdit () {
+  userCanEdit = () => {
     const {
       rescue,
       currentUser,
@@ -252,8 +244,6 @@ class Paperwork extends Component {
 
 
 
-
-const mapDispatchToProps = ['getRescue']
 
 const mapStateToProps = (state, ownProps) => {
   const { id: rescueId } = ownProps.query
@@ -295,4 +285,4 @@ const mapStateToProps = (state, ownProps) => {
 
 
 
-export default Page(title, true, mapStateToProps, mapDispatchToProps)(Paperwork)
+export default connect(mapStateToProps, ['getRescue'])(Paperwork)

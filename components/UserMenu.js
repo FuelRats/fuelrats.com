@@ -9,9 +9,9 @@ import React from 'react'
 
 // Component imports
 import { actions } from '../store'
-import AdminUserMenuNav from './AdminUserMenuNav'
 import { Link } from '../routes'
-import { userHasPermission } from '../helpers'
+import AdminUserMenuNav from './AdminUserMenuNav'
+import userHasPermission from '../helpers/userHasPermission'
 
 
 

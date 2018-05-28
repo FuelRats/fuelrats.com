@@ -6,25 +6,16 @@ import React from 'react'
 
 
 // Component imports
-import Page from '../components/Page'
-
-
-
-
-
-// Component constants
-const title = 'About'
+import PageWrapper from '../components/PageWrapper'
 
 
 
 
 
 const About = () => (
-  <div className="page-wrapper">
-    <header className="page-header">
-      <h1>{title}</h1>
-    </header>
-  </div>
+  <PageWrapper title="About">
+    <div className="nothing-here" />
+  </PageWrapper>
 )
 
-export default Page(title, false)(About)
+export default About

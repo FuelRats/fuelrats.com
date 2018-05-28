@@ -4,15 +4,16 @@ import fetch from 'isomorphic-fetch'
 // Component imports
 import { Link } from '../routes'
 import Component from '../components/Component'
-import Page from '../components/Page'
+import connect from '../helpers/connect'
+import PageWrapper from '../components/PageWrapper'
 import PasswordField from '../components/PasswordField'
 import RadioOptionsInput from '../components/RadioOptionsInput'
 import TermsDialog from '../components/TermsDialog'
 
 
-// Component constants
-const title = 'Register'
 
+
+// Component constants
 const getWordpressPageElement = async id => {
   const response = await fetch(`/wp-api/pages/${id}`)
   let page = null
@@ -135,11 +136,7 @@ class Register extends Component {
     } = this.state
 
     return (
-      <div className="page-wrapper">
-        <header className="page-header">
-          <h1>{title}</h1>
-        </header>
-
+      <PageWrapper title="Register">
         <form
           className={`${submitting ? 'loading force' : ''}`}
           data-loader-text="Submitting"
@@ -294,7 +291,7 @@ class Register extends Component {
             checkboxLabel="I have read and agree to this Privacy Policy" />
         )}
 
-      </div>
+      </PageWrapper>
     )
   }
 
@@ -330,10 +327,4 @@ class Register extends Component {
 
 
 
-const mapDispatchToProps = ['register', 'login']
-
-
-
-
-
-export default Page(title, false, null, mapDispatchToProps)(Register)
+export default connect(null, ['register', 'login'])(Register)

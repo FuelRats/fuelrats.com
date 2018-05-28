@@ -1,22 +1,16 @@
 // Module imports
-import moment from 'moment'
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import moment from 'moment'
 
 
 
 
 // Component imports
 import { Link } from '../../routes'
+import connect from '../../helpers/connect'
 import Component from '../../components/Component'
-import Page from '../../components/Page'
-
-
-
-
-
-// Component constants
-const title = 'Blog'
+import PageWrapper from '../../components/PageWrapper'
 
 
 
@@ -167,11 +161,7 @@ class Blogs extends Component {
     } = this.state
 
     return (
-      <div className="page-wrapper">
-        <header className="page-header">
-          <h1>{title}</h1>
-        </header>
-
+      <PageWrapper title="Blog" >
         <div className="page-content">
           <ol className="article-list loading">
             {!retrieving && blogs && blogs.map(blog => {
@@ -241,7 +231,7 @@ class Blogs extends Component {
 
           {this._renderMenu()}
         </div>
-      </div>
+      </PageWrapper>
     )
   }
 }
@@ -250,12 +240,4 @@ class Blogs extends Component {
 
 
 
-const mapDispatchToProps = ['retrieveBlogs']
-
-const mapStateToProps = state => state.blogs
-
-
-
-
-
-export default Page(title, false, mapStateToProps, mapDispatchToProps)(Blogs)
+export default connect(state => state.blogs, ['retrieveBlogs'])(Blogs)
