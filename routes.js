@@ -25,6 +25,5 @@ routes
   // Epics
   .add('epic nominate', '/epic/nominate', '/epics/nominate')
 
-  // Legal
-  .add('legal terms', '/terms-of-service', '/terms-of-service')
-  .add('legal privacy', '/privacy-policy', '/privacy-policy')
+  // Wordpress
+  .add('wordpress', '/:slug+', '/wordpress-proxy')

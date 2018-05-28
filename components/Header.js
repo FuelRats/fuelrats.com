@@ -50,7 +50,7 @@ const Header = (props) => {
         <ul className="about-actions fa-ul">
 
           <li>
-            <Link route="legal terms">
+            <Link route="wordpress" params={{ slug: 'terms-of-service' }}>
               <a className="button link">
                 <FontAwesomeIcon icon="book" listItem />
                 <span className="link-text">Terms of Serivce</span>
@@ -59,7 +59,7 @@ const Header = (props) => {
           </li>
 
           <li>
-            <Link route="legal privacy">
+            <Link route="wordpress" params={{ slug: 'privacy-policy' }}>
               <a className="button link">
                 <FontAwesomeIcon icon="user-secret" listItem />
                 <span className="link-text">Privacy Policy</span>

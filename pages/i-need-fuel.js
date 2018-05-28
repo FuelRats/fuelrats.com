@@ -50,7 +50,7 @@ const INeedFuel = () => (
 
         <br />
 
-        <small>By connecting to our IRC and using our services, you agree to our <Link route="legal terms"><a>Terms of Service</a></Link> and <Link route="legal privacy"><a>Privacy Policy</a></Link>.</small>
+        <small>By connecting to our IRC and using our services, you agree to our <Link route="wordpress" params={{ slug: 'terms-of-service' }}><a>Terms of Service</a></Link> and <Link route="wordpress" params={{ slug: 'terms-of-service' }}><a>Privacy Policy</a></Link>.</small>
       </div>
     </div>
   </PageWrapper>

@@ -9,6 +9,9 @@ const localWordpressApiUrl = publicRuntimeConfig.apis.wordpress.url
 let instance = null
 
 
+
+
+
 export default function () {
   return instance || (instance = axios.create({
     baseURL: localWordpressApiUrl,

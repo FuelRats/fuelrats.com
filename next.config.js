@@ -20,11 +20,11 @@ module.exports = withSass({
   publicRuntimeConfig: {
     apis: {
       fuelRats: {
-        local: `${FRDC_PUBLIC_URL}/api` || `http://localhost:${PORT || 3000}/api`,
+        local: FRDC_PUBLIC_URL ? `${FRDC_PUBLIC_URL}/api` : `http://localhost:${PORT || 3000}/api`,
         server: FRDC_API_URL || 'http://localhost:8080',
       },
       wordpress: {
-        url: `${FRDC_PUBLIC_URL}/wp-api` || `http://localhost:${PORT || 3000}/wp-api`,
+        url: FRDC_PUBLIC_URL ? `${FRDC_PUBLIC_URL}/wp-api` : `http://localhost:${PORT || 3000}/wp-api`,
       },
     },
   },

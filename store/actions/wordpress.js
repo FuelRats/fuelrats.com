@@ -12,4 +12,9 @@ export const getWordpressPage = slug => createWpAction({
   params: {
     slug,
   },
+  onSuccess: res => {
+    if (res.data && !res.data.length) {
+      throw new Error('No page in response')
+    }
+  },
 })
