@@ -16,6 +16,9 @@ routes
   // Profile
   .add('profile', '/profile', '/profile')
 
+  // Register
+  .add('register', '/register', '/register')
+
   // Authentication
   .add('auth authorize', '/authorize', '/authorize')
   .add('auth forgot-pass', '/forgot-password', '/forgot-password')
