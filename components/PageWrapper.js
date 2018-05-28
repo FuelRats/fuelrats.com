@@ -52,7 +52,7 @@ class Page extends Component {
       'page',
       [className, Boolean(className)],
       title.toLowerCase().replace(/\s/g, '-'),
-      ['--experiment-dark-theme', darkThemeSafe]
+      ['--experiment-dark-mode', darkThemeSafe]
     )
 
     return (

@@ -22,8 +22,11 @@ class Paperwork extends Component {
   static authenicationRequired = true
 
   state = {
+    loading: !this.props.rescue,
+    submitting: false,
     error: null,
     changes: {},
+    userIsCool: false,
   }
 
 
@@ -228,6 +231,7 @@ class Paperwork extends Component {
       loading,
       submitting,
       error,
+      userIsCool,
     } = this.state
 
     const classes = ['page-content']
@@ -253,7 +257,7 @@ class Paperwork extends Component {
     const pwValidity = this.validate(fieldValues)
 
     return (
-      <PageWrapper title="Paperwork">
+      <PageWrapper title="Paperwork" darkThemeSafe={userIsCool}>
         {(error && !submitting) && (
           <div className="store-errors">
             <div className="store-error">
@@ -417,6 +421,15 @@ class Paperwork extends Component {
             </menu>
           </form>
         )}
+        <div>
+          <button
+            type="button"
+            className="inline link activate-secret"
+            onClick={() => this.setState({ userIsCool: true })}
+            title="Shhh! Don't tell anyone!">
+            Do you want to see something strange and mystical?
+          </button>
+        </div>
       </PageWrapper>
     )
   }
