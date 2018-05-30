@@ -48,7 +48,5 @@ const Acknowledgements = props => (
   </PageWrapper>
 )
 
-Acknowledgements.StuffAndThings = 'urmamagey'
-
 
 export default Acknowledgements
