@@ -1,5 +1,4 @@
 // Module imports
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import moment from 'moment'
 import React from 'react'
@@ -8,14 +7,7 @@ import React from 'react'
 
 
 
-// Component imports
-import { actions } from '../store'
-
-
-
-
-
-const UserDetailsPanel = (props) => {
+const UserDetailsPanel = props => {
   let { attributes } = props
 
   attributes = attributes || {}
@@ -51,12 +43,10 @@ const UserDetailsPanel = (props) => {
 
 
 
-const mapDispatchToProps = dispatch => ({ getRats: bindActionCreators(actions.getRats, dispatch) })
-
 const mapStateToProps = state => state.user || {}
 
 
 
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserDetailsPanel)
+export default connect(mapStateToProps, null)(UserDetailsPanel)
