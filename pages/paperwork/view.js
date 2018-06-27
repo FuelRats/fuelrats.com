@@ -22,7 +22,7 @@ class Paperwork extends Component {
     Properties
   \***************************************************************************/
 
-  static authenicationRequired = true
+  static authRequired = true
 
   state = {
     loading: !this.props.rescue,

@@ -21,7 +21,7 @@ class Profile extends React.Component {
     Properties
   \***************************************************************************/
 
-  static authenticationRequired = true
+  static authRequired = true
 
 
 
