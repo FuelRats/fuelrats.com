@@ -19,7 +19,7 @@ class Paperwork extends Component {
     Properties
   \***************************************************************************/
 
-  static authenicationRequired = true
+  static authRequired = true
 
   state = {
     loading: !this.props.rescue,
@@ -539,7 +539,7 @@ class Paperwork extends Component {
       outcome: getValue('outcome'),
       platform: getValue('platform'),
       rats: Object.values(rats),
-      system: isDefined(changes.system, { value: rescue.attributes.system.toUpperCase() }),
+      system: isDefined(changes.system, { value: rescue.attributes.system && rescue.attributes.system.toUpperCase() }),
     }
   }
 

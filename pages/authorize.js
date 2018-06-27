@@ -20,7 +20,7 @@ class Authorize extends Component {
     Properties
   \***************************************************************************/
 
-  authenticationRequired = true
+  static authRequired = true
 
   state = {
     clientName: null,

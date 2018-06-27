@@ -16,7 +16,7 @@ class EpicNominate extends Component {
     Properties
   \***************************************************************************/
 
-  static authenicationRequired = true
+  static authRequired = true
 
   state = {
     epicType: 'epicRescue',
