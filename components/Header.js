@@ -53,7 +53,7 @@ const Header = (props) => {
             <Link route="wordpress" params={{ slug: 'terms-of-service' }}>
               <a className="button link">
                 <FontAwesomeIcon icon="book" listItem />
-                <span className="link-text">Terms of Serivce</span>
+                <span className="link-text">Terms of Service</span>
               </a>
             </Link>
           </li>
