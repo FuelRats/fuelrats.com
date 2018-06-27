@@ -21,6 +21,6 @@ const Rescues = () => (
   </PageWrapper>
 )
 
-Rescues.authenticationRequired = true
+Rescues.authRequired = true
 
 export default Rescues

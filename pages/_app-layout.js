@@ -84,7 +84,7 @@ class AppLayout extends React.Component {
 
     const accessToken = await AppLayout._initUserSessionData(ctx)
 
-    if (!accessToken && Component.authenticationRequired) {
+    if (!accessToken && Component.authRequired) {
       if (res) {
         res.writeHead(302, {
           Location: `/?authenticate=true&destination=${encodeURIComponent(asPath)}`,
@@ -131,7 +131,7 @@ class AppLayout extends React.Component {
       Component,
     } = this.props
 
-    if (!loggedIn && prevProps.loggedIn && Component.authenticationRequired) {
+    if (!loggedIn && prevProps.loggedIn && Component.authRequired) {
       Router.push('/')
     }
   }
