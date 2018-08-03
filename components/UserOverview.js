@@ -1,7 +1,7 @@
 // Component imports
-import UserDecalPanel from '../components/UserDecalPanel'
-import UserDetailsPanel from '../components/UserDetailsPanel'
-import UserNicknamesPanel from '../components/UserNicknamesPanel'
+import UserDecalPanel from './UserDecalPanel'
+import UserDetailsPanel from './UserDetailsPanel'
+import UserNicknamesPanel from './UserNicknamesPanel'
 
 
 

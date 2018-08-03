@@ -46,7 +46,7 @@ class Blogs extends Component {
         type="toolbar">
         <div className="secondary">
           {(page > 1) && (
-            <Link route={page - 1 > 1 ? `${route}/page/${page - 1}` : route} >
+            <Link route={page - 1 > 1 ? `${route}/page/${page - 1}` : route}>
               <a className="button">Previous Page</a>
             </Link>
           )}
@@ -54,7 +54,7 @@ class Blogs extends Component {
 
         <div className="primary">
           {(page < totalPages) && (
-            <Link route={`${route}/page/${page + 1}`} >
+            <Link route={`${route}/page/${page + 1}`}>
               <a className="button">Next Page</a>
             </Link>
           )}
@@ -161,7 +161,7 @@ class Blogs extends Component {
     } = this.state
 
     return (
-      <PageWrapper title="Blog" >
+      <PageWrapper title="Blog">
         <div className="page-content">
           <ol className="article-list loading">
             {!retrieving && blogs && blogs.map(blog => {

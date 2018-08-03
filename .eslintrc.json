@@ -32,6 +32,8 @@
     "jsx-a11y/anchor-is-valid": ["off"],
     "jsx-a11y/label-has-for": ["off"],
     "jsx-a11y/no-noninteractive-element-interactions": ["off"],
+    "react/destructuring-assignment": ["off"],
+    "react/jsx-one-expression-per-line": ["off"],
     "react/no-unescaped-entities": ["off"],
     "react/no-did-mount-set-state": ["off"],
     "react/prop-types": ["off"]

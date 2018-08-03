@@ -83,7 +83,7 @@ class Authorize extends Component {
     const submitUrl = `/api/oauth2/authorize?bearer=${this.state.token}`
 
     return (
-      <PageWrapper title="Authorize Application" >
+      <PageWrapper title="Authorize Application">
 
         {this.state.clientName && hasRequiredParameters && (
           <div className="page-content">

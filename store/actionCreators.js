@@ -200,11 +200,10 @@ const createTimeoutAction = options => createAction({
   actionFunction: opts => {
     const data = { data: opts.data }
 
-    return new Promise((resolve, reject) =>
-      setTimeout(
-        () => (opts.fail ? reject(data) : resolve(data)),
-        opts.timeout || 1000
-      ))
+    return new Promise((resolve, reject) => setTimeout(
+      () => (opts.fail ? reject(data) : resolve(data)),
+      opts.timeout || 1000
+    ))
   },
 })
 

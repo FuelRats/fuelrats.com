@@ -11,10 +11,10 @@ import Cookies from 'next-cookies'
 import { actions } from '../store'
 import { Router } from '../routes'
 import apiService from '../services/api'
-import Head from '../components/Head'
-import Header from '../components/Header'
-import UserMenu from '../components/UserMenu'
-import LoginDialog from '../components/LoginDialog'
+import Head from './Head'
+import Header from './Header'
+import UserMenu from './UserMenu'
+import LoginDialog from './LoginDialog'
 
 
 

@@ -42,7 +42,7 @@ class INeedFuel extends Component {
     } = this.props
 
     return (
-      <PageWrapper title="I Need Fuel" >
+      <PageWrapper title="I Need Fuel">
 
         <div className="page-content">
           <div>

@@ -63,12 +63,11 @@ class EpicNominate extends Component {
 
       if (value.length) {
         const [rescue] = value
-        newState.rats =
-          rescue.relationships &&
-          rescue.relationships.rats &&
-          rescue.relationships.rats.data &&
-          rescue.relationships.rats.data.length ?
-            rescue.relationships.rats.data : []
+        newState.rats = rescue.relationships
+          && rescue.relationships.rats
+          && rescue.relationships.rats.data
+          && rescue.relationships.rats.data.length
+          ? rescue.relationships.rats.data : []
       }
 
       newState.rescue = value
@@ -132,7 +131,7 @@ class EpicNominate extends Component {
     )
 
     return (
-      <PageWrapper title="Epic Nomination" >
+      <PageWrapper title="Epic Nomination">
 
         {(error && !submitting) && (
           <div className="store-errors">

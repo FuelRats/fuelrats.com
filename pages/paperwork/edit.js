@@ -435,6 +435,7 @@ class Paperwork extends Component {
   }
 
   lastInvalidReason = null
+
   validate (values) {
     const { rescue } = this.props
     const { changes } = this.state

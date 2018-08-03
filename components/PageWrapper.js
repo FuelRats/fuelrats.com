@@ -94,6 +94,7 @@ class Page extends Component {
     displayTitle: title => (<h1>{title}</h1>),
     renderHeader: true,
   }
+
   static propTypes = {
     title: PropTypes.string.isRequired,
     darkThemeSafe: PropTypes.bool,
