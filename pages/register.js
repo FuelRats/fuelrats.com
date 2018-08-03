@@ -135,14 +135,16 @@ class Register extends Component {
     } = this.state
 
     return (
-      <PageWrapper title="Register">
+      <PageWrapper
+        displayTitle="Become a Rat"
+        title="register">
         <form
           className={`${submitting ? 'loading force' : ''}`}
           data-loader-text="Submitting"
           onSubmit={this.onSubmit}>
 
           <fieldset data-name="Email">
-            <h5>NOTE: This registration page is to become a rat! Need fuel? Click "Get Help" in the bottom left!</h5><br />
+            <h5>NOTE: This registration page is for joining the The Fuel Rats! Need fuel? Click "Get Help" in the sidebar!</h5><br />
 
             <label htmlFor="email">
               Email
@@ -259,11 +261,13 @@ class Register extends Component {
           </fieldset>
 
           <menu type="toolbar">
-            <div className="primary">
+            <div className="primary position-vertical">
               <button
                 disabled={submitting || !this.validate()}
+                className="green"
+                title="Don't want to sign up to rescue people? You're in the wrong place."
                 type="submit">
-                {submitting ? 'Submitting...' : 'Submit'}
+                {submitting ? 'Submitting...' : 'I want to rescue others!'}
               </button>
             </div>
 
