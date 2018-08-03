@@ -153,6 +153,12 @@ const Header = (props) => {
 
         <div className="join-actions">
 
+          <Link href="/i-need-fuel">
+            <a className="button">
+              Get Help
+            </a>
+          </Link>
+
           {!loggedIn && !loggingIn && (
             <Link href="/register">
               <a className="button secondary">
@@ -160,12 +166,6 @@ const Header = (props) => {
               </a>
             </Link>
           )}
-
-          <Link href="/i-need-fuel">
-            <a className="button">
-              Get Help
-            </a>
-          </Link>
 
         </div>
       </header>
