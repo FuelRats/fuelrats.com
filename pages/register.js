@@ -112,7 +112,7 @@ class Register extends Component {
     })
 
     if (regStatus === 'success') {
-      await this.props.login(email, password, 'profile', { firstLogin: 1 })
+      await this.props.login(email, password, 'profile', { firstLogin: '1' })
     } else {
       this.setState({ submitting: false })
     }
