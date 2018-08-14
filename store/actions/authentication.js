@@ -29,7 +29,7 @@ export const changePassword = (currentPassword, newPassword) => createApiAction(
 
 
 
-export const login = (email, password, route) => createApiAction({
+export const login = (email, password, route, routeParams) => createApiAction({
   actionType: actionTypes.LOGIN,
   url: '/oauth2/token',
   method: 'post',
@@ -63,7 +63,7 @@ export const login = (email, password, route) => createApiAction({
 
       Router.pushRoute(destination)
     } else if (route) {
-      Router.pushRoute(route)
+      Router.pushRoute(route, routeParams)
     }
     /* eslint-enable no-restricted-globals*/
   },

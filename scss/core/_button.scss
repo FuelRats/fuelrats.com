@@ -25,6 +25,15 @@ input[type=button],
     color: $red;
   }
 
+  &:active,
+  &:focus {
+    color: inherit;
+
+    &:hover {
+      color: $red;
+    }
+  }
+
   &[disabled] {
     background-color: $grey;
     border-color: $grey;
@@ -45,6 +54,17 @@ input[type=button],
   &.link {
     background: none;
     border: none;
+
+    &.inline {
+      color: $red;
+      text-decoration: underline;
+      padding: 0;
+      display: inline;
+
+      &:hover {
+        color: inherit;
+      }
+    }
 
     &:hover {
       background-color: none;

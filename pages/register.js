@@ -112,7 +112,7 @@ class Register extends Component {
     })
 
     if (regStatus === 'success') {
-      await this.props.login(email, password, 'profile')
+      await this.props.login(email, password, 'profile', { firstLogin: 1 })
     } else {
       this.setState({ submitting: false })
     }
@@ -144,8 +144,7 @@ class Register extends Component {
           onSubmit={this.onSubmit}>
 
           <fieldset data-name="Email">
-            <h5>NOTE: This registration page is for joining the The Fuel Rats! Need fuel? Click "Get Help" in the sidebar!</h5><br />
-
+            <h5>This registration page is to become a Fuel Rat! <br /> Need fuel? No need to register! Just click "Get Help" in the sidebar!</h5><br />
             <label htmlFor="email">
               Email
             </label>
@@ -265,7 +264,7 @@ class Register extends Component {
               <button
                 disabled={submitting || !this.validate()}
                 className="green"
-                title="Don't want to sign up to rescue people? You're in the wrong place."
+                title="Don't want to rescue people? You're in the wrong place."
                 type="submit">
                 {submitting ? 'Submitting...' : 'I want to rescue others!'}
               </button>
