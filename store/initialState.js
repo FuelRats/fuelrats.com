@@ -29,7 +29,6 @@ export default {
   },
 
   flags: {
-    openSubNav: '',
     showLoginDialog: false,
   },
 
