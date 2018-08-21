@@ -17,6 +17,17 @@ export default function (state = initialState.user, action) {
       }
       break
 
+    case actionTypes.DELETE_NICKNAME:
+      console.log('DELETE_NICKNAME:', action)
+      if (status === 'success') {
+        const newState = { ...state }
+
+        newState.attributes.nicknames = newState.attributes.nicknames.filter(nick => nick !== action.nickname)
+
+        return newState
+      }
+      break
+
     case actionTypes.CREATE_RAT:
       if (action.status === 'success') {
         return Object.assign({}, state, {
