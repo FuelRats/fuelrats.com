@@ -1,0 +1,17 @@
+div.user-nicknames {
+  .panel-content {
+    padding: 0;
+
+    ul > li {
+      /* Disabled until Delete nick feature is ready for use.
+      display: flex;
+      justify-content: space-between; */
+      align-items: center;
+      padding: 1rem;
+
+      &:nth-child(even) {
+        background-color: $light-grey;
+      }
+    }
+  }
+}
