@@ -66,9 +66,6 @@ export default {
   user: {
     attributes: null,
     id: null,
-    preferences: {
-      allowUniversalTracking: false,
-    },
     relationships: null,
     retrieving: false,
   },

@@ -14,6 +14,9 @@ export const addNickname = (nickname, password) => createApiAction({
     nickname,
     password,
   },
+  postDispatch: {
+    nickname,
+  },
 })
 
 
