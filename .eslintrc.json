@@ -4,6 +4,9 @@
   },
   "extends": "airbnb",
   "parser": "babel-eslint",
+  "plugins": [
+    "babel"
+  ],
   "rules": {
     "arrow-parens": ["off"],
     "comma-dangle": ["error", "always-multiline"],
@@ -26,9 +29,12 @@
     "react/no-multi-comp": ["off"],
     "react/react-in-jsx-scope": ["off"],
     "react/sort-comp": ["off"],
-    "semi": ["error", "never"],
     "space-before-function-paren": ["error", "always"],
     "spaced-comment": ["off"],
+    "quotes": ["off"],
+    "babel/quotes": ["error", "single", { "avoidEscape": true }],
+    "semi": ["off"],
+    "babel/semi": ["error", "never"],
     "jsx-a11y/anchor-is-valid": ["off"],
     "jsx-a11y/label-has-for": ["off"],
     "jsx-a11y/no-noninteractive-element-interactions": ["off"],
