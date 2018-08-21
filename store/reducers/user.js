@@ -46,21 +46,7 @@ export default function (state = initialState.user, action) {
           type: 'rats',
         })
 
-        return {
-          ...state,
-          relationships: {
-            ...state.relationships,
-            rats: {
-              data: [
-                ...state.relationships.rats.data,
-                {
-                  id: payload.data.id,
-                  type: 'rats',
-                },
-              ],
-            },
-          },
-        }
+        return newState
       }
       break
 
