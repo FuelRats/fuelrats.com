@@ -15,10 +15,10 @@ import Dialog from './Dialog'
 
 const FirstLoginDialog = props => (
   <Dialog
-    className="first-login-dialog transparency"
+    className="first-login-dialog"
     title={`Welcome to the Fuel Rats, CMDR ${props.cmdrName}!`}
     onClose={props.onClose}>
-    <div className="center-content">
+    <div className="center-content ">
       <p>
         Your name might be on the roster, but there is much more to being a fuel rat.
         <br />
