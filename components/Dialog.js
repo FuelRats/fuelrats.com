@@ -58,12 +58,10 @@ class Dialog extends Component {
 
             {showClose && (
               <button
-                action="close"
-                category="Dialog"
                 className="danger"
                 name="close"
-                onClick={onClose}
-                label="">
+                type="button"
+                onClick={onClose}>
                 <FontAwesomeIcon icon="times" fixedWidth />
               </button>
             )}

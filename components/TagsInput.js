@@ -40,24 +40,22 @@ export default class TagsInputComponent extends React.Component {
 
   addTag (tag) {
     const { onAdd } = this.props
-    const { allowDuplicates } = this.state
-    const tags = Object.assign([], this.state.tags)
 
-    if (!allowDuplicates) {
-      const duplicateIndex = tags.findIndex(searchTag => this.getValue(searchTag) === this.getValue(tag))
-
-      if (duplicateIndex !== -1) {
+    if (!this.state.allowDuplicates) {
+      const isDuplicate = this.state.tags.findIndex(searchTag => this.getValue(searchTag) === this.getValue(tag)) !== -1
+      if (isDuplicate) {
         return false
       }
     }
 
-    tags.push(tag)
-
-    this.setState({
+    this.setState(prevState => ({
       options: [],
       selectedOption: null,
-      tags,
-    })
+      tags: [
+        ...prevState.tags,
+        tag,
+      ],
+    }))
 
     if (onAdd) {
       onAdd(tag)

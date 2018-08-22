@@ -62,25 +62,44 @@ const navItems = [
       },
     ],
   },
+  {
+    key: 'rat-links',
+    title: 'Rat Links',
+    condition: props => props.loggedIn,
+    subnav: [
+      {
+        key: 'confluence',
+        title: 'Knowledge Base',
+        href: 'https://confluence.fuelrats.com/display/FRKB/Fuel+Rats+Knowledge+Base',
+      },
+      {
+        key: 'support-desk',
+        title: 'Support Desk',
+        href: 'https://t.fuelr.at/help',
+      },
+    ],
+  },
 ]
 
 
 class Nav extends Component {
   /***************************************************************************\
+    Class Properties
+  \***************************************************************************/
+
+  state = {
+    openSubNav: '',
+  }
+
+
+
+
+
+  /***************************************************************************\
     Private Methods
   \***************************************************************************/
 
-  _handleSubnavChange ({ target }) {
-    const { id } = target
-    const {
-      setFlag,
-      openSubNav,
-    } = this.props
-
-    const newChecked = openSubNav === id ? '' : id
-
-    setFlag('openSubNav', newChecked)
-  }
+  _handleSubnavChange = ({ target: { id } }) => this.setState(prevState => ({ openSubNav: prevState.openSubNav === id ? '' : id }))
 
 
 
@@ -90,12 +109,6 @@ class Nav extends Component {
     Public Methods
   \***************************************************************************/
 
-  constructor (props) {
-    super(props)
-
-    this._bindMethods(['renderNavItem', '_handleSubnavChange'])
-  }
-
   render () {
     return (
       <nav>
@@ -104,10 +117,10 @@ class Nav extends Component {
     )
   }
 
-  renderNavItem (item) {
+  renderNavItem = (item) => {
     const {
       openSubNav,
-    } = this.props
+    } = this.state
 
     const {
       condition,
@@ -183,7 +196,7 @@ class Nav extends Component {
 
 
 const mapStateToProps = state => ({
-  openSubNav: state.flags.openSubNav,
+  ...state.authentication,
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({

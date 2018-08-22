@@ -12,7 +12,7 @@ import LocalForage from 'localforage'
 // Component imports
 import { initStore } from '../store'
 import * as faIcons from '../helpers/faIconLibrary'
-import AppLayout from './_app-layout'
+import AppLayout from '../components/AppLayout'
 
 
 

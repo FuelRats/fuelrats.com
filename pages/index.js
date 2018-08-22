@@ -26,7 +26,7 @@ class Index extends React.Component {
   }
 
   render = () => (
-    <PageWrapper title="Home" renderHeader={false} >
+    <PageWrapper title="Home" renderHeader={false}>
       <section className="hero">
         <header>
           <h1>We Have Fuel. You Don't.</h1>

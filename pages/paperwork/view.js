@@ -52,10 +52,10 @@ class Paperwork extends Component {
     <li key={index}>
       {quote.message}
       {!!quote.author && (
-      <span>
-        - <em>${quote.author}</em>
-      </span>
-        )}
+        <span>
+          - <em>${quote.author}</em>
+        </span>
+      )}
     </li>
   )
 
@@ -114,7 +114,7 @@ class Paperwork extends Component {
     const userCanEdit = this.userCanEdit()
 
     return (
-      <PageWrapper title="Paperwork" >
+      <PageWrapper title="Paperwork">
 
         {loading && (
           <div className="loading page-content" />
@@ -131,7 +131,7 @@ class Paperwork extends Component {
             <menu type="toolbar">
               <div className="primary">
                 {userCanEdit && (
-                  <Link route="paperwork edit" params={{ id: rescue.id }} >
+                  <Link route="paperwork edit" params={{ id: rescue.id }}>
                     <a className="button">
                         Edit
                     </a>

@@ -73,7 +73,7 @@ class Blog extends Component {
 
     /* eslint-disable react/no-danger */
     return (
-      <PageWrapper title="Blog" >
+      <PageWrapper title="Blog">
 
         {retrieving && (
           <article className="loading page-content" />
