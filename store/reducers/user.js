@@ -79,6 +79,8 @@ export default function (state = initialState.user, action) {
       break
 
     default:
-      return { ...state }
+      break
   }
+
+  return { ...state }
 }
