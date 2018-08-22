@@ -37,7 +37,6 @@ export default {
   rats: {
     rats: [],
     retrieving: false,
-    total: 0,
   },
 
   rescues: {},
