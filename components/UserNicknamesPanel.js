@@ -1,7 +1,7 @@
 // Module imports
 import connect from '../helpers/connect'
 import AddNicknameForm from './AddNicknameForm'
-import ConfirmActionButton from './ConfirmActionButton'
+//import ConfirmActionButton from './ConfirmActionButton'
 import Component from './Component'
 
 
