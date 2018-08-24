@@ -11,6 +11,14 @@
   z-index: 401;
   padding: 2rem;
 
+  &.transparency {
+    background-color: rgba($black, .75);
+  }
+
+  &.center-title > header {
+    justify-content: center;
+  }
+
   @media screen and (max-width: 768px) {
     min-width: 100vw;
   }
@@ -28,16 +36,26 @@
     [name=close] {
       border-radius: 0;
       margin-left: auto;
+      padding: 1rem;
     }
   }
 
   > .content {
     flex-shrink: 1;
-    padding-top: 2rem;
+    padding: 2rem 2rem 0 2rem;
+    color: $white;
+
+    input {
+      color: $black;
+    }
+
+    > .center-content {
+      text-align: center;
+    }
   }
 
   > footer {
-    color: white;
+    color: $white;
   }
 
   menu[type=toolbar] {

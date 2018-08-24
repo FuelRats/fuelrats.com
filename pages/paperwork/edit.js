@@ -200,20 +200,15 @@ class Paperwork extends Component {
     Router.pushRoute('paperwork view', { id: rescue.id })
   }
 
-  _setChanges = changedFields => {
-    const {
-      rescue,
-    } = this.props
-    const changes = { ...this.state.changes }
-
-    Object.entries(changedFields).forEach(([key, value]) => {
-      changes[key] = value === rescue.attributes[key] ? undefined : value
-    })
-
-    this.setState({
-      changes,
-    })
-  }
+  _setChanges = changedFields => this.setState((prevState, props) => ({
+    changes: {
+      ...prevState.changes,
+      ...Object.entries(changedFields).reduce((acc, [key, value]) => ({
+        ...acc,
+        [key]: value === props.rescue.attributes[key] ? undefined : value,
+      }), {}),
+    },
+  }))
 
   /***************************************************************************\
     Public Methods
@@ -435,6 +430,7 @@ class Paperwork extends Component {
   }
 
   lastInvalidReason = null
+
   validate (values) {
     const { rescue } = this.props
     const { changes } = this.state

@@ -11,7 +11,6 @@ const isDev = process.env.NODE_ENV !== 'production'
  Module imports
  \******************************************************************************/
 
-const config = require('./config')
 const koa = new (require('koa'))
 const path = require('path')
 
@@ -19,6 +18,8 @@ const next = require('next')({
   dev: isDev,
   dir: path.resolve('.'),
 })
+
+const config = require('./config')
 
 
 

@@ -6,11 +6,13 @@ import React from 'react'
 
 
 // Component imports
+import { Router } from '../routes'
 import PageWrapper from '../components/PageWrapper'
 import TabbedPanel from '../components/TabbedPanel'
 import UserOverview from '../components/UserOverview'
 import UserRatsPanel from '../components/UserRatsPanel'
 import UserSettings from '../components/UserSettings'
+import FirstLoginDialog from '../components/FirstLoginDialog'
 
 
 
@@ -25,11 +27,31 @@ class Profile extends React.Component {
 
 
 
+  state = {
+    showFirstLoginDialog: false,
+  }
+
+  /***************************************************************************\
+    Public Methods
+  \***************************************************************************/
+
+
+  _closeFirstLoginDialog = () => {
+    this.setState({ showFirstLoginDialog: false })
+    Router.replaceRoute('profile')
+  }
+
 
 
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
+
+  componentDidMount () {
+    if (this.props.query.firstLogin === '1') {
+      this.setState({ showFirstLoginDialog: true })
+    }
+  }
 
   render () {
     return (
@@ -39,6 +61,9 @@ class Profile extends React.Component {
             name="User Tabs"
             tabs={Profile.tabs} />
         </div>
+
+        {this.state.showFirstLoginDialog && (<FirstLoginDialog onClose={this._closeFirstLoginDialog} />)}
+
       </PageWrapper>
     )
   }

@@ -56,7 +56,8 @@ class UserDetailsPanel extends Component {
         <div>
           <p>You're eligible for a decal but you haven't redeemed it yet.</p>
           <button
-            onClick={() => this._redeemDecal()}>
+            onClick={() => this._redeemDecal()}
+            type="button">
             Redeem
           </button>
         </div>

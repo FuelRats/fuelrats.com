@@ -14,8 +14,23 @@ export const addNickname = (nickname, password) => createApiAction({
     nickname,
     password,
   },
+  postDispatch: {
+    nickname,
+  },
 })
 
+
+
+
+
+export const deleteNickname = nickname => createApiAction({
+  actionType: actionTypes.DELETE_NICKNAME,
+  url: `/nicknames/${nickname}`,
+  method: 'delete',
+  postDispatch: {
+    nickname,
+  },
+})
 
 
 

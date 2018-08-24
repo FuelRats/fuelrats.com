@@ -42,11 +42,10 @@ class Page extends Component {
       darkThemeSafe,
       description,
       title,
-      displayTitle,
       renderHeader,
     } = this.props
 
-    const titleContent = renderHeader && displayTitle(title)
+    const titleContent = renderHeader && this.displayTitle
     const mainClasses = classnames(
       'fade-in',
       'page',
@@ -75,17 +74,35 @@ class Page extends Component {
     )
   }
 
+
+  get displayTitle () {
+    const {
+      displayTitle,
+      title,
+    } = this.props
+
+    if (typeof displayTitle === 'function') {
+      return displayTitle(title)
+    }
+
+    return (<h1>{displayTitle}</h1>)
+  }
+
   static defaultProps = {
     darkThemeSafe: false,
     description: 'The Fuel Rats are Elite: Dangerous\'s premier emergency refueling service. Fueling the galaxy, one ship at a time, since 3301.',
     displayTitle: title => (<h1>{title}</h1>),
     renderHeader: true,
   }
+
   static propTypes = {
     title: PropTypes.string.isRequired,
     darkThemeSafe: PropTypes.bool,
     description: PropTypes.string,
-    displayTitle: PropTypes.func,
+    displayTitle: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.string,
+    ]),
     renderHeader: PropTypes.bool,
   }
 }

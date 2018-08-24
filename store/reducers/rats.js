@@ -13,18 +13,19 @@ export default function (state = initialState.rats, action) {
     status,
     type,
   } = action
-  const { rats } = state
+  const rats = [...state.rats]
   let newRats
 
   switch (type) {
     case actionTypes.CREATE_RAT:
       switch (status) {
         case 'success':
-          rats.push(action.rat)
+          rats.push(payload.data)
 
-          return Object.assign({}, state, {
+          return {
+            ...state,
             rats,
-          })
+          }
 
         default:
           return state
@@ -51,7 +52,6 @@ export default function (state = initialState.rats, action) {
             ...state,
             rats,
             retrieving: false,
-            total: action.total,
           }
 
         default:

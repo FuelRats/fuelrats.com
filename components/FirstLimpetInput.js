@@ -1,4 +1,4 @@
-import RatTagsInput from '../components/RatTagsInput'
+import RatTagsInput from './RatTagsInput'
 
 
 

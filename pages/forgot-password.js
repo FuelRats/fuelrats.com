@@ -58,7 +58,7 @@ class ForgotPassword extends Component {
     } = this.state
 
     return (
-      <PageWrapper title="Forgot Password" >
+      <PageWrapper title="Forgot Password">
         <div className="page-content">
           {error && (
             <div className="store-errors">

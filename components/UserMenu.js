@@ -93,7 +93,8 @@ const UserMenu = (props) => {
       {!loggedIn && !loggingIn && (
         <button
           className="login"
-          onClick={() => props.setFlag('showLoginDialog', true)}>
+          onClick={() => props.setFlag('showLoginDialog', true)}
+          type="button">
           Rat Login
         </button>
       )}
