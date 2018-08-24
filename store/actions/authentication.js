@@ -72,7 +72,7 @@ export const login = (email, password, route, routeParams) => createApiAction({
 
 export const getClientOAuthPage = opts => createApiAction({
   actionType: actionTypes.GET_CLIENT_AUTHORIZATION_PAGE,
-  url: `/oauth2/authorize?client_id=${opts.clientId}&scope=${opts.scope}&state=${opts.state}&response_type=${opts.responseType}`,
+  url: `/oauth2/authorize?client_id=${opts.clientId}&scope=${opts.scope}&response_type=${opts.responseType}${opts.state ? `&state=${opts.state}` : ''}`,
   method: 'get',
 })
 

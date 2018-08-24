@@ -51,7 +51,7 @@ class Authorize extends Component {
       getClientOAuthPage,
     } = this.props
 
-    if (clientId && state && scope && responseType) {
+    if (clientId && scope && responseType) {
       const { payload, status } = await getClientOAuthPage({
         clientId,
         responseType,
@@ -73,13 +73,12 @@ class Authorize extends Component {
   render () {
     const {
       client_id: clientId,
-      state,
       scope,
       response_type: responseType,
     } = this.props
     const { submitting } = this.state
 
-    const hasRequiredParameters = clientId && state && scope && responseType
+    const hasRequiredParameters = clientId && scope && responseType
     const submitUrl = `/api/oauth2/authorize?bearer=${this.state.token}`
 
     return (
