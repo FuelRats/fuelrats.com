@@ -65,13 +65,14 @@ export default class extends Component {
               <h1>Squeakmas 3303</h1>
 
               <div className="buttons">
-                <button onClick={() => this.setState({ dialogIsOpen: true })}>
+                <button onClick={() => this.setState({ dialogIsOpen: true })} type="button">
                   Click here to learn more
                 </button>
 
                 <button
                   className="secondary"
-                  onClick={this.dismiss}>
+                  onClick={this.dismiss}
+                  type="button">
                   Dismiss
                 </button>
               </div>

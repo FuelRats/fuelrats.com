@@ -1,7 +1,7 @@
 import actionTypes from '../actionTypes'
 import initialState from '../initialState'
 
-import parseJSONAPIResponseForEntityType from '../../helpers/parse-json-api-response-for-entity-type'
+import parseJSONAPIResponseForEntityType from '../../helpers/parseJSONAPIResponseForEntityType'
 
 
 
@@ -13,26 +13,27 @@ export default function (state = initialState.rats, action) {
     status,
     type,
   } = action
-  const { rats } = state
+  const rats = [...state.rats]
   let newRats
 
   switch (type) {
     case actionTypes.CREATE_RAT:
       switch (status) {
         case 'success':
-          rats.push(action.rat)
+          rats.push(payload.data)
 
-          return Object.assign({}, state, {
+          return {
+            ...state,
             rats,
-          })
+          }
 
         default:
           return state
       }
 
     case actionTypes.GET_USER:
-    case actionTypes.RETRIEVE_PAPERWORK:
-    case actionTypes.SUBMIT_PAPERWORK:
+    case actionTypes.GET_RESCUE:
+    case actionTypes.UPDATE_RESCUE:
       switch (status) {
         case 'success':
           newRats = parseJSONAPIResponseForEntityType(payload, 'rats')
@@ -51,7 +52,6 @@ export default function (state = initialState.rats, action) {
             ...state,
             rats,
             retrieving: false,
-            total: action.total,
           }
 
         default:

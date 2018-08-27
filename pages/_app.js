@@ -12,7 +12,7 @@ import LocalForage from 'localforage'
 // Component imports
 import { initStore } from '../store'
 import * as faIcons from '../helpers/faIconLibrary'
-import AppLayout from './_app-layout'
+import AppLayout from '../components/AppLayout'
 
 
 
@@ -34,7 +34,7 @@ faLibrary.add(faIcons)
 
 
 class NextApp extends App {
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     LocalForage.config({
@@ -43,7 +43,7 @@ class NextApp extends App {
     })
   }
 
-  static async getInitialProps(appProps) {
+  static async getInitialProps (appProps) {
     return AppLayout.getInitialProps(appProps)
   }
 

@@ -11,10 +11,10 @@ import Cookies from 'next-cookies'
 import { actions } from '../store'
 import { Router } from '../routes'
 import apiService from '../services/api'
-import Head from '../components/Head'
-import Header from '../components/Header'
-import UserMenu from '../components/UserMenu'
-import LoginDialog from '../components/LoginDialog'
+import Head from './Head'
+import Header from './Header'
+import UserMenu from './UserMenu'
+import LoginDialog from './LoginDialog'
 
 
 
@@ -84,7 +84,7 @@ class AppLayout extends React.Component {
 
     const accessToken = await AppLayout._initUserSessionData(ctx)
 
-    if (!accessToken && Component.authenticationRequired) {
+    if (!accessToken && Component.authRequired) {
       if (res) {
         res.writeHead(302, {
           Location: `/?authenticate=true&destination=${encodeURIComponent(asPath)}`,
@@ -115,7 +115,7 @@ class AppLayout extends React.Component {
     }
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     if (this.props.verifyError) {
@@ -125,13 +125,13 @@ class AppLayout extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate (prevProps) {
     const {
       loggedIn,
       Component,
     } = this.props
 
-    if (!loggedIn && prevProps.loggedIn && Component.authenticationRequired) {
+    if (!loggedIn && prevProps.loggedIn && Component.authRequired) {
       Router.push('/')
     }
   }
@@ -146,7 +146,6 @@ class AppLayout extends React.Component {
       path,
     } = this.props
 
-    const mainClasses = ['fade-in', 'page', Component.title.toLowerCase().replace(/\s/g, '-')].join(' ')
     return (
       <div role="application">
         <Head title={Component.title} />
@@ -157,9 +156,7 @@ class AppLayout extends React.Component {
 
         <UserMenu />
 
-        <main className={mainClasses}>
-          <Component {...pageProps} />
-        </main>
+        <Component {...pageProps} />
 
         {showLoginDialog && (
           <LoginDialog onClose={() => actions.setFlag('showLoginDialog', false)(store.dispatch)} />

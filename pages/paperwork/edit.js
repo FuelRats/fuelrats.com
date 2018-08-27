@@ -2,10 +2,11 @@
 import { actions } from '../../store'
 import { Router } from '../../routes'
 import Component from '../../components/Component'
+import connect from '../../helpers/connect'
 import FirstLimpetInput from '../../components/FirstLimpetInput'
 import RadioOptionsInput from '../../components/RadioOptionsInput'
 import RatTagsInput from '../../components/RatTagsInput'
-import Page from '../../components/Page'
+import PageWrapper from '../../components/PageWrapper'
 import SystemTagsInput from '../../components/SystemTagsInput'
 import userHasPermission from '../../helpers/userHasPermission'
 
@@ -13,14 +14,25 @@ import userHasPermission from '../../helpers/userHasPermission'
 
 
 
-// Component constants
-const title = 'Paperwork'
-
-
-
-
-
 class Paperwork extends Component {
+  /***************************************************************************\
+    Properties
+  \***************************************************************************/
+
+  static authRequired = true
+
+  state = {
+    loading: !this.props.rescue,
+    submitting: false,
+    error: null,
+    changes: {},
+    userIsCool: false,
+  }
+
+
+
+
+
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
@@ -156,46 +168,29 @@ class Paperwork extends Component {
     event.preventDefault()
 
     const { rescue } = this.props
-    const { changes } = this.state
+    const changes = { ...this.state.changes }
 
-    if (!rescue.attributes.outcome || !changes.outcome) {
+    if (!rescue.attributes.outcome && !changes.outcome) {
       return
     }
 
-    const {
-      ratsAdded,
-      ratsRemoved,
-      ...attributeChanges
-    } = changes
-    let {
-      system,
-      firstLimpetId,
-    } = changes
-
-    let ratUpdates = null
-
-    if ((ratsAdded && Object.values(ratsAdded).length) || (ratsRemoved && Object.values(ratsRemoved).length)) {
-      ratUpdates = {
-        added: ratsAdded ? Object.values(ratsAdded).map(rat => rat.id) : [],
-        removed: ratsRemoved ? Object.values(ratsRemoved).map(rat => rat.id) : [],
-      }
+    if (changes.ratsAdded && Object.values(changes.ratsAdded).length) {
+      changes.ratsAdded = Object.keys(changes.ratsAdded)
     }
 
-    if (firstLimpetId && firstLimpetId.length && firstLimpetId[0].id !== rescue.attributes.firstLimpetId) {
-      firstLimpetId = firstLimpetId[0].id
+    if (changes.ratsRemoved && Object.values(changes.ratsRemoved).length) {
+      changes.ratsRemoved = Object.keys(changes.ratsRemoved)
     }
 
-    if (system && system.length && system[0].value !== rescue.attributes.system) {
-      system = system[0].value.toUpperCase()
+    if (changes.firstLimpetId && changes.firstLimpetId.length && changes.firstLimpetId[0].id !== rescue.attributes.firstLimpetId) {
+      changes.firstLimpetId = changes.firstLimpetId[0].id
     }
 
-    const { status } = await this.props.updateRescue(rescue.id, {
-      ...attributeChanges,
-      firstLimpetId,
-      system,
-    }, ratUpdates)
+    if (changes.system && changes.system.length && changes.system[0].value !== rescue.attributes.system) {
+      changes.system = changes.system[0].value.toUpperCase()
+    }
 
-    console.log('HEYO')
+    const { status } = await this.props.updateRescue(rescue.id, changes)
 
     if (status === 'error') {
       this.setState({ error: true })
@@ -205,34 +200,21 @@ class Paperwork extends Component {
     Router.pushRoute('paperwork view', { id: rescue.id })
   }
 
-  _setChanges = changedFields => {
-    const {
-      rescue,
-    } = this.props
-    const changes = { ...this.state.changes }
-
-    Object.entries(changedFields).forEach(([key, value]) => {
-      changes[key] = value === rescue.attributes[key] ? undefined : value
-    })
-
-    this.setState({
-      changes,
-    })
-  }
+  _setChanges = changedFields => this.setState((prevState, props) => ({
+    changes: {
+      ...prevState.changes,
+      ...Object.entries(changedFields).reduce((acc, [key, value]) => ({
+        ...acc,
+        [key]: value === props.rescue.attributes[key] ? undefined : value,
+      }), {}),
+    },
+  }))
 
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
-  constructor (props) {
-    super(props)
 
-    this.state = {
-      error: null,
-      changes: {},
-    }
-  }
-
-  static async getInitialProps({ query, store }) {
+  static async getInitialProps ({ query, store }) {
     await actions.getRescue(query.id)(store.dispatch)
   }
 
@@ -244,6 +226,7 @@ class Paperwork extends Component {
       loading,
       submitting,
       error,
+      userIsCool,
     } = this.state
 
     const classes = ['page-content']
@@ -269,11 +252,7 @@ class Paperwork extends Component {
     const pwValidity = this.validate(fieldValues)
 
     return (
-      <div className="page-wrapper">
-        <header className="page-header">
-          <h1>{title}</h1>
-        </header>
-
+      <PageWrapper title="Paperwork" darkThemeSafe={userIsCool}>
         {(error && !submitting) && (
           <div className="store-errors">
             <div className="store-error">
@@ -427,6 +406,7 @@ class Paperwork extends Component {
                 <div className={`invalidity-explainer ${pwValidity.noChange ? 'no-change' : ''} ${!pwValidity.valid ? 'show' : ''}`}>{pwValidity.reason}</div>
                 <button
                   disabled={submitting || loading || !pwValidity.valid}
+                  className="green"
                   type="submit">
                   {submitting ? 'Submitting...' : 'Submit'}
                 </button>
@@ -436,11 +416,21 @@ class Paperwork extends Component {
             </menu>
           </form>
         )}
-      </div>
+        <div>
+          <button
+            type="button"
+            className="inline link activate-secret"
+            onClick={() => this.setState({ userIsCool: true })}
+            title="Shhh! Don't tell anyone!">
+            Do you want to see something strange and mystical?
+          </button>
+        </div>
+      </PageWrapper>
     )
   }
 
   lastInvalidReason = null
+
   validate (values) {
     const { rescue } = this.props
     const { changes } = this.state
@@ -545,7 +535,7 @@ class Paperwork extends Component {
       outcome: getValue('outcome'),
       platform: getValue('platform'),
       rats: Object.values(rats),
-      system: isDefined(changes.system, { value: rescue.attributes.system.toUpperCase() }),
+      system: isDefined(changes.system, { value: rescue.attributes.system && rescue.attributes.system.toUpperCase() }),
     }
   }
 
@@ -594,8 +584,6 @@ class Paperwork extends Component {
 
 
 
-const mapDispatchToProps = ['updateRescue', 'getRescue']
-
 const mapStateToProps = (state, ownProps) => {
   const { id: rescueId } = ownProps.query
   let firstLimpetId = []
@@ -639,4 +627,4 @@ const mapStateToProps = (state, ownProps) => {
 
 
 
-export default Page(title, true, mapStateToProps, mapDispatchToProps)(Paperwork)
+export default connect(mapStateToProps, ['updateRescue', 'getRescue'])(Paperwork)

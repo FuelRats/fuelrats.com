@@ -50,16 +50,16 @@ const Header = (props) => {
         <ul className="about-actions fa-ul">
 
           <li>
-            <Link route="legal terms">
+            <Link route="wordpress" params={{ slug: 'terms-of-service' }}>
               <a className="button link">
                 <FontAwesomeIcon icon="book" listItem />
-                <span className="link-text">Terms of Serivce</span>
+                <span className="link-text">Terms of Service</span>
               </a>
             </Link>
           </li>
 
           <li>
-            <Link route="legal privacy">
+            <Link route="wordpress" params={{ slug: 'privacy-policy' }}>
               <a className="button link">
                 <FontAwesomeIcon icon="user-secret" listItem />
                 <span className="link-text">Privacy Policy</span>
@@ -69,7 +69,7 @@ const Header = (props) => {
 
           <li>
             <Link route="about acknowledgements">
-              <a className="button link" >
+              <a className="button link">
                 <FontAwesomeIcon icon="hands-helping" listItem />
                 <span className="link-text">Acknowledgements</span>
               </a>
@@ -82,7 +82,7 @@ const Header = (props) => {
                 className="button link"
                 href={`https://www.github.com/fuelrats/fuelrats.com/${buildCommitRange ? `compare/${buildCommitRange}` : ''}`}
                 target="_blank"
-                rel="noopener noreferrer" >
+                rel="noopener noreferrer">
                 <FontAwesomeIcon icon="code-branch" listItem />
                 <span className="link-text">{buildCommit}</span>
               </a>
@@ -98,7 +98,7 @@ const Header = (props) => {
             href="https://www.twitter.com/FuelRats/"
             target="_blank"
             rel="noopener noreferrer"
-            title="Fuel Rats on Twitter" >
+            title="Fuel Rats on Twitter">
             <FontAwesomeIcon
               icon={['fab', 'twitter']}
               fixedWidth />
@@ -109,7 +109,7 @@ const Header = (props) => {
             href="https://www.reddit.com/r/FuelRats/"
             target="_blank"
             rel="noopener noreferrer"
-            title="Fuel Rats on Reddit" >
+            title="Fuel Rats on Reddit">
             <FontAwesomeIcon
               icon={['fab', 'reddit-alien']}
               fixedWidth />
@@ -120,7 +120,7 @@ const Header = (props) => {
             href="https://www.twitch.tv/fuelrats/"
             target="_blank"
             rel="noopener noreferrer"
-            title="Fuel Rats on Twitch" >
+            title="Fuel Rats on Twitch">
             <FontAwesomeIcon
               icon={['fab', 'twitch']}
               fixedWidth />
@@ -131,7 +131,7 @@ const Header = (props) => {
             href="https://www.github.com/FuelRats/"
             target="_blank"
             rel="noopener noreferrer"
-            title="Tech Rats on GitHub" >
+            title="Tech Rats on GitHub">
             <FontAwesomeIcon
               icon={['fab', 'github']}
               fixedWidth />
@@ -142,7 +142,7 @@ const Header = (props) => {
             href="https://forums.frontier.co.uk/showthread.php/150703-Out-of-Fuel-Explorer-Rescue-Service-The-Fuel-Rats"
             target="_blank"
             rel="noopener noreferrer"
-            title="Fuel Rats on Frontier Forums" >
+            title="Fuel Rats on Frontier Forums">
             <FontAwesomeIcon
               icon="space-shuttle"
               transform={{ rotate: -45 }}
@@ -153,6 +153,12 @@ const Header = (props) => {
 
         <div className="join-actions">
 
+          <Link href="/i-need-fuel">
+            <a className="button">
+              Get Help
+            </a>
+          </Link>
+
           {!loggedIn && !loggingIn && (
             <Link href="/register">
               <a className="button secondary">
@@ -160,12 +166,6 @@ const Header = (props) => {
               </a>
             </Link>
           )}
-
-          <Link href="/i-need-fuel">
-            <a className="button">
-              Get Help
-            </a>
-          </Link>
 
         </div>
       </header>

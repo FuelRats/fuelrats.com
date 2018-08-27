@@ -29,7 +29,6 @@ export default {
   },
 
   flags: {
-    openSubNav: '',
     showLoginDialog: false,
   },
 
@@ -38,7 +37,6 @@ export default {
   rats: {
     rats: [],
     retrieving: false,
-    total: 0,
   },
 
   rescues: {},
@@ -67,10 +65,11 @@ export default {
   user: {
     attributes: null,
     id: null,
-    preferences: {
-      allowUniversalTracking: false,
-    },
     relationships: null,
     retrieving: false,
+  },
+
+  wordpress: {
+    page: {},
   },
 }

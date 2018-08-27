@@ -15,7 +15,7 @@ export default () => (
       <ul className="inline">
         <li>
             #each rats.models
-          <button data-rat-id="{attributes.id}">{}</button>
+          <button data-rat-id="{attributes.id}" type="button">{}</button>
             /each
         </li>
       </ul>

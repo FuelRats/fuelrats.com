@@ -6,18 +6,13 @@ import React from 'react'
 
 
 // Component imports
-import Page from '../components/Page'
+import { Router } from '../routes'
+import PageWrapper from '../components/PageWrapper'
 import TabbedPanel from '../components/TabbedPanel'
 import UserOverview from '../components/UserOverview'
 import UserRatsPanel from '../components/UserRatsPanel'
 import UserSettings from '../components/UserSettings'
-
-
-
-
-
-// Component imports
-const title = 'Profile'
+import FirstLoginDialog from '../components/FirstLoginDialog'
 
 
 
@@ -25,22 +20,51 @@ const title = 'Profile'
 
 class Profile extends React.Component {
   /***************************************************************************\
+    Properties
+  \***************************************************************************/
+
+  static authRequired = true
+
+
+
+  state = {
+    showFirstLoginDialog: false,
+  }
+
+  /***************************************************************************\
     Public Methods
   \***************************************************************************/
 
+
+  _closeFirstLoginDialog = () => {
+    this.setState({ showFirstLoginDialog: false })
+    Router.replaceRoute('profile')
+  }
+
+
+
+  /***************************************************************************\
+    Public Methods
+  \***************************************************************************/
+
+  componentDidMount () {
+    if (this.props.query.firstLogin === '1') {
+      this.setState({ showFirstLoginDialog: true })
+    }
+  }
+
   render () {
     return (
-      <div className="page-wrapper">
-        <header className="page-header">
-          <h1>{title}</h1>
-        </header>
-
+      <PageWrapper title="Profile">
         <div className="page-content">
           <TabbedPanel
             name="User Tabs"
             tabs={Profile.tabs} />
         </div>
-      </div>
+
+        {this.state.showFirstLoginDialog && (<FirstLoginDialog onClose={this._closeFirstLoginDialog} />)}
+
+      </PageWrapper>
     )
   }
 
@@ -83,4 +107,4 @@ class Profile extends React.Component {
 
 
 
-export default Page(title, true)(Profile)
+export default Profile

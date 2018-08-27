@@ -1,6 +1,5 @@
 // Module imports
 import React from 'react'
-import PropTypes from 'prop-types'
 
 
 
@@ -8,14 +7,8 @@ import PropTypes from 'prop-types'
 
 // Component imports
 import { Link } from '../routes'
-import Page from '../components/Page'
-
-
-
-
-
-// Component constants
-const title = 'Home'
+import connect from '../helpers/connect'
+import PageWrapper from '../components/PageWrapper'
 
 
 
@@ -32,12 +25,11 @@ class Index extends React.Component {
     }
   }
 
-  render () {
-    return (
+  render = () => (
+    <PageWrapper title="Home" renderHeader={false}>
       <section className="hero">
         <header>
-          <h1>We Have Fuel. You Don&apos;t.</h1>
-
+          <h1>We Have Fuel. You Don't.</h1>
           <h2>Any Questions?</h2>
         </header>
 
@@ -47,17 +39,12 @@ class Index extends React.Component {
           </Link>
         </footer>
       </section>
-    )
-  }
+    </PageWrapper>
+  )
 }
 
 
 
 
 
-Index.propTypes = {
-  query: PropTypes.object.isRequired,
-}
-
-
-export default Page(title, false, null, ['setFlag'])(Index)
+export default connect(null, ['setFlag'])(Index)

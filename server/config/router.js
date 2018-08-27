@@ -60,6 +60,19 @@ module.exports = function (nextjs, koa) {
     Redirects
   \******************************************************************************/
 
+  // SEO Stuff
+  router.get('/browserconfig.xml', async ctx => {
+    await send(ctx, '/static/browserconfig.xml')
+  })
+
+  router.get('/sitemap.xml', async ctx => {
+    await send(ctx, '/static/sitemap.xml')
+  })
+
+  router.get('/manifest.json', async ctx => {
+    await send(ctx, '/static/manifest.json')
+  })
+
   // Legacy Wordpress permalinks
   // e.g. /2017/09/07/universal-service-a-fuel-rats-thargoid-cartoon
   router.get('/:year/:month/:day/:slug', async (ctx, next) => {

@@ -1,32 +1,21 @@
 // Component imports
-import Page from '../components/Page'
+import PageWrapper from '../components/PageWrapper'
 import RescuesByRatTable from '../components/RescuesByRatTable'
 
 
 
 
 
-// Component imports
-const title = 'Leaderboard'
-
-
-
-
-
 const Leaderboard = () => (
-  <div className="page-wrapper">
-    <header className="page-header">
-      <h1>{title}</h1>
-    </header>
-
+  <PageWrapper title="Leaderboard">
     <div className="page-content">
       <RescuesByRatTable />
     </div>
-  </div>
+  </PageWrapper>
 )
 
 
 
 
 
-export default Page(title, false)(Leaderboard)
+export default Leaderboard

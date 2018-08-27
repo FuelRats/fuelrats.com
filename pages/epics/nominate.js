@@ -1,17 +1,11 @@
 // Component imports
+import Component from '../../components/Component'
+import connect from '../../helpers/connect'
+import classNames from '../../helpers/classNames'
+import PageWrapper from '../../components/PageWrapper'
 import RadioOptionsInput from '../../components/RadioOptionsInput'
 import RescuesTagsInput from '../../components/RescuesTagsInput'
 import RatTagsInput from '../../components/RatTagsInput'
-import Component from '../../components/Component'
-import classNames from '../../helpers/classNames'
-import Page from '../../components/Page'
-
-
-
-
-
-// Component constants
-const title = 'Epic Nomination'
 
 
 
@@ -19,33 +13,30 @@ const title = 'Epic Nomination'
 
 class EpicNominate extends Component {
   /***************************************************************************\
-    Public Methods
+    Properties
   \***************************************************************************/
 
-  constructor (props) {
-    super(props)
+  static authRequired = true
 
-    this._bindMethods([
-      'onSubmit',
-      'handleEpicTypeChange',
-      'handleNotesChange',
-      'handleRatsChange',
-      'handleRescuesChange',
-    ])
-
-    this.state = {
-      epicType: 'epicRescue',
-      error: null,
-      notes: '',
-      rats: [],
-      rescue: [],
-      submitted: false,
-      submitting: false,
-    }
+  state = {
+    epicType: 'epicRescue',
+    error: null,
+    notes: '',
+    rats: [],
+    rescue: [],
+    submitted: false,
+    submitting: false,
   }
 
 
-  handleEpicTypeChange (newValue) {
+
+
+
+  /***************************************************************************\
+    Public Methods
+  \***************************************************************************/
+
+  handleEpicTypeChange = (newValue) => {
     if (this.state.epicType !== newValue.value) {
       this.setState({
         epicType: newValue.value,
@@ -56,7 +47,7 @@ class EpicNominate extends Component {
   }
 
 
-  handleRatsChange (value) {
+  handleRatsChange = (value) => {
     const newRatIds = value.map(rat => rat.id).join(',')
     const oldRatIds = this.state.rats.map(rat => rat.id).join(',')
     if (newRatIds !== oldRatIds) {
@@ -64,7 +55,7 @@ class EpicNominate extends Component {
     }
   }
 
-  handleRescuesChange (value) {
+  handleRescuesChange = (value) => {
     const newRescueId = value.map(rescue => rescue.id).join('')
     const oldRescueId = this.state.rescue.map(rescue => rescue.id).join('')
     if (newRescueId !== oldRescueId) {
@@ -72,12 +63,11 @@ class EpicNominate extends Component {
 
       if (value.length) {
         const [rescue] = value
-        newState.rats =
-          rescue.relationships &&
-          rescue.relationships.rats &&
-          rescue.relationships.rats.data &&
-          rescue.relationships.rats.data.length ?
-            rescue.relationships.rats.data : []
+        newState.rats = rescue.relationships
+          && rescue.relationships.rats
+          && rescue.relationships.rats.data
+          && rescue.relationships.rats.data.length
+          ? rescue.relationships.rats.data : []
       }
 
       newState.rescue = value
@@ -85,11 +75,10 @@ class EpicNominate extends Component {
     }
   }
 
-  handleNotesChange (event) {
-    this.setState({ notes: event.target.value })
-  }
+  handleNotesChange = (event) => this.setState({ notes: event.target.value })
 
-  async onSubmit (event) {
+
+  onSubmit = async (event) => {
     event.preventDefault()
 
     const {
@@ -142,10 +131,7 @@ class EpicNominate extends Component {
     )
 
     return (
-      <div className="page-wrapper">
-        <header className="page-header">
-          <h1>{title}</h1>
-        </header>
+      <PageWrapper title="Epic Nomination">
 
         {(error && !submitting) && (
           <div className="store-errors">
@@ -245,11 +231,11 @@ class EpicNominate extends Component {
             <p>Note that while we track who nominates who, the nominees will never be notified of who made the original nomination for their epic deed.</p>
           </div>
         )}
-      </div>
+      </PageWrapper>
     )
   }
 
-  validate () {
+  validate = () => {
     const {
       epicType,
       notes,
@@ -277,10 +263,4 @@ class EpicNominate extends Component {
 
 
 
-const mapDispatchToProps = ['createEpic']
-
-
-
-
-
-export default Page(title, true, null, mapDispatchToProps)(EpicNominate)
+export default connect(null, ['createEpic'])(EpicNominate)

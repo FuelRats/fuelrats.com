@@ -1,0 +1,56 @@
+main.page.--experiment-dark-mode {
+  background-color: #101010;
+  color: #EEE;
+
+  .panel {
+    background: #000000;
+    color: #EEE;
+  }
+
+  .ReactTable {
+    .-loading,
+    .rt-noData {
+      background: rgba(30,30,30,.8);
+      color: #EEE;
+    }
+
+    .-loading.-active > div {
+      color: #EEE;
+    }
+  }
+
+  .tabbed-panel {
+    .tab.active,
+    .tab:hover {
+      color: #EEE;
+    }
+  }
+
+  textarea {
+    background-color: #000;
+    border-color: #333;
+  }
+
+  .tags-input {
+    background-color: #000;
+    border-color: #333;
+
+    input {
+      background-color: #000;
+    }
+
+    .tag {
+      background-color: #1a1a1a;
+    }
+  }
+
+  button.activate-secret:not(:hover) {
+    color: #101010;
+  }
+}
+
+button.activate-secret {
+  padding: .5rem .2rem;
+  margin: 0;
+  font-size: .6rem;
+}

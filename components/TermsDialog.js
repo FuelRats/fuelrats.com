@@ -6,7 +6,7 @@ import React from 'react'
 
 
 // Component imports
-import Component from '../components/Component'
+import Component from './Component'
 import Dialog from './Dialog'
 
 
@@ -35,7 +35,7 @@ class TermsDialog extends Component {
     })
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
@@ -99,7 +99,8 @@ class TermsDialog extends Component {
         (
           <button
             disabled={!termsAgreed}
-            onClick={() => this.props.onClose()}>
+            onClick={() => this.props.onClose()}
+            type="button">
             Next
           </button>
         ),

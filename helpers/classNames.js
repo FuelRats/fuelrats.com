@@ -1,4 +1,4 @@
-export default function classNames(...classes) {
+export default function classNames (...classes) {
   const computedClasses = {}
 
   for (const className of classes) {

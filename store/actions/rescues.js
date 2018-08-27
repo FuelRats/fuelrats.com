@@ -37,20 +37,33 @@ export const updateRescueRatsRemoved = (rescueId, data) => createApiAction({
   data,
 })
 
-export const updateRescue = (rescueId, rescue, rats) => {
+export const updateRescue = (rescueId, changes) => {
+  const {
+    ratsAdded,
+    ratsRemoved,
+    ...attributeChanges
+  } = changes
+
   const actions = []
 
-  if (rats) {
-    if (rats.added.length) {
-      actions.push(updateRescueRatsAssigned(rescueId, rats.added))
-    }
-
-    if (rats.removed.length) {
-      actions.push(updateRescueRatsRemoved(rescueId, rats.removed))
-    }
+  if (ratsAdded && ratsAdded.length) {
+    actions.push(updateRescueRatsAssigned(rescueId, ratsAdded))
   }
-  if (rescue) {
-    actions.push(updateRescueDetails(rescueId, rescue))
+
+  if (ratsRemoved && ratsRemoved.length) {
+    actions.push(updateRescueRatsRemoved(rescueId, ratsRemoved))
+  }
+
+  if (Object.keys(attributeChanges).length) {
+    actions.push(updateRescueDetails(rescueId, attributeChanges))
+  }
+
+  if (!actions.length) {
+    return () => ({
+      payload: null,
+      status: 'error',
+      type: actionTypes.UPDATE_RESCUE,
+    })
   }
 
   return actionSeries(actions, false, true)

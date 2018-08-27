@@ -8,14 +8,8 @@ import React from 'react'
 
 // Component imports
 import Component from '../components/Component'
-import Page from '../components/Page'
-
-
-
-
-
-// Component constants
-const title = 'Authorize Application'
+import connect from '../helpers/connect'
+import PageWrapper from '../components/PageWrapper'
 
 
 
@@ -23,21 +17,23 @@ const title = 'Authorize Application'
 
 class Authorize extends Component {
   /***************************************************************************\
-   Public Methods
-   \***************************************************************************/
+    Properties
+  \***************************************************************************/
 
-  constructor (props) {
-    super(props)
+  static authRequired = true
 
-    this.state = {
-      clientName: null,
-      redirectUri: null,
-      scopes: [],
-      token: Cookie.get('access_token'),
-      transactionId: '',
-      submitting: false,
-    }
+  state = {
+    clientName: null,
+    redirectUri: null,
+    scopes: [],
+    token: Cookie.get('access_token'),
+    transactionId: '',
+    submitting: false,
   }
+
+  /***************************************************************************\
+    Public Methods
+  \***************************************************************************/
 
   static async getInitialProps ({ query }) {
     if (query.redirectUri) {
@@ -55,8 +51,13 @@ class Authorize extends Component {
       getClientOAuthPage,
     } = this.props
 
-    if (clientId && state && scope && responseType) {
-      const { payload, status } = await getClientOAuthPage(clientId, state, scope, responseType)
+    if (clientId && scope && responseType) {
+      const { payload, status } = await getClientOAuthPage({
+        clientId,
+        responseType,
+        scope,
+        state,
+      })
 
       if (status === 'success') {
         this.setState({
@@ -72,20 +73,16 @@ class Authorize extends Component {
   render () {
     const {
       client_id: clientId,
-      state,
       scope,
       response_type: responseType,
     } = this.props
     const { submitting } = this.state
 
-    const hasRequiredParameters = clientId && state && scope && responseType
+    const hasRequiredParameters = clientId && scope && responseType
     const submitUrl = `/api/oauth2/authorize?bearer=${this.state.token}`
 
     return (
-      <div>
-        <header className="page-header">
-          <h2>{this.title}</h2>
-        </header>
+      <PageWrapper title="Authorize Application">
 
         {this.state.clientName && hasRequiredParameters && (
           <div className="page-content">
@@ -159,12 +156,13 @@ class Authorize extends Component {
             <p>You loaded this page with missing parameters, please contact the developer of the application you are trying to use</p>
           </div>
         )}
-      </div>
+      </PageWrapper>
     )
   }
 }
 
 
-const mapDispatchToProps = ['getClientOAuthPage']
 
-export default Page(title, true, null, mapDispatchToProps)(Authorize)
+
+
+export default connect(null, ['getClientOAuthPage'])(Authorize)

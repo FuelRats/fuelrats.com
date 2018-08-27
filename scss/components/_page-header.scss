@@ -10,6 +10,7 @@
   padding: 1rem 4rem;
   position: relative;
   transition: min-width 0.2s;
+  z-index: 10;
 
   &:after {
     background-image: linear-gradient(

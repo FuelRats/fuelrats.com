@@ -6,81 +6,81 @@ import initialState from '../initialState'
 
 
 export default function (state = initialState.user, action) {
-  switch (action.type) {
-    case actionTypes.ADD_NICKNAME:
-      if (action.status === 'success') {
-        const newState = Object.assign({}, state)
+  const {
+    payload,
+    status,
+    type,
+  } = action
 
-        newState.attributes.nicknames.push(action.payload)
+  switch (type) {
+    case actionTypes.ADD_NICKNAME:
+      if (status === 'success') {
+        const newState = { ...state }
+
+        newState.attributes.nicknames.push(action.nickname)
+
+        return newState
+      }
+      break
+
+    case actionTypes.DELETE_NICKNAME:
+      if (status === 'success') {
+        const newState = { ...state }
+
+        newState.attributes.nicknames = newState.attributes.nicknames.filter(nick => nick !== action.nickname)
 
         return newState
       }
       break
 
     case actionTypes.CREATE_RAT:
-      if (action.status === 'success') {
-        return Object.assign({}, state, {
-          relationships: {
-            rats: {
-              data: (state.relationships.rats.data || []).concat({
-                id: action.rat.id,
-                type: 'rats',
-              }),
-            },
-          },
+      if (status === 'success') {
+        const newState = { ...state }
+
+        if (!newState.relationships.rats.data) {
+          newState.relationships.rats.data = []
+        }
+
+        newState.relationships.rats.data.push({
+          id: payload.data.id,
+          type: 'rats',
         })
+
+        return newState
       }
       break
 
     case actionTypes.GET_USER:
-      if (action.status === 'success') {
-        const { payload } = action
-
+      if (status === 'success') {
         if (payload) {
-          const user = Object.assign({}, state, payload.data)
-
-          // Generate an Adorable avatar if the user doesn't already have one set
-          user.attributes.image = payload.data.attributes.image || `//api.adorable.io/avatars/${payload.data.id}`
-
-          // Create the user's data store if it doesn't already exist
-          if (!user.data) {
-            user.data = {}
+          return {
+            ...state,
+            ...payload.data,
+            attributes: {
+              ...payload.data.attributes,
+              image: payload.data.attributes.image || `//api.adorable.io/avatars/${payload.data.id}`,
+            },
+            retrieving: false,
           }
-
-          // Parse the user's data store if it came in as a string
-          if (typeof user.data === 'string') {
-            user.data = JSON.parse(user.data)
-          }
-
-          // Create the website's walled garden in the data store
-          if (!user.data.website) {
-            user.data.website = {}
-          }
-
-          // Abstract the user's website preferences if they exist, otherwise the
-          // defaults should already be set in the initialState
-          if (user.data.website.preferences) {
-            user.preferences = user.data.website.preferences
-          }
-
-          return user
         }
       }
       break
 
     case actionTypes.LOGOUT:
-      return Object.assign({}, initialState.user)
+      return { ...initialState.user }
 
     case actionTypes.UPDATE_USER:
       if (action.user) {
-        const { user } = action
-
-        return Object.assign({}, state, user)
+        return {
+          ...state,
+          ...action.user,
+        }
       }
       break
 
     default:
       break
   }
-  return state
+
+  return { ...state }
 }

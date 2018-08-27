@@ -1,8 +1,9 @@
 import { isPlainObject } from 'lodash'
 
 // Component imports
-import { isRequired } from '../helpers'
+import isRequired from '../helpers/isRequired'
 import apiService from '../services/api'
+import wpService from '../services/wordpress'
 
 
 
@@ -187,16 +188,22 @@ const createApiAction = options => createAction({
   onUnhandledError: res => res && res.response && res.response.data,
 })
 
+const createWpAction = options => createAction({
+  ...options,
+  actionFunction: wpService().request,
+  onUnhandledSuccess: res => res.data,
+  onUnhandledError: res => res && res.response && res.response.data,
+})
+
 const createTimeoutAction = options => createAction({
   ...options,
   actionFunction: opts => {
     const data = { data: opts.data }
 
-    return new Promise((resolve, reject) =>
-      setTimeout(
-        () => (opts.fail ? reject(data) : resolve(data)),
-        opts.timeout || 1000
-      ))
+    return new Promise((resolve, reject) => setTimeout(
+      () => (opts.fail ? reject(data) : resolve(data)),
+      opts.timeout || 1000
+    ))
   },
 })
 
@@ -246,4 +253,5 @@ export {
   createAction,
   createApiAction,
   createTimeoutAction,
+  createWpAction,
 }

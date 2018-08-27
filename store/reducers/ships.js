@@ -1,7 +1,7 @@
 import actionTypes from '../actionTypes'
 import initialState from '../initialState'
 
-import parseJSONAPIResponseForEntityType from '../../helpers/parse-json-api-response-for-entity-type'
+import parseJSONAPIResponseForEntityType from '../../helpers/parseJSONAPIResponseForEntityType'
 
 
 

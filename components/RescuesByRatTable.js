@@ -54,7 +54,7 @@ class RescuesByRatTable extends Component {
         <ReactTable
           className="rescues-by-rat"
           columns={this.columns}
-          data={statistics}
+          data={statistics.filter(rat => rat.attributes.rescueCount > 0)}
           loading={loading}
           manual
           showPagination={false} />

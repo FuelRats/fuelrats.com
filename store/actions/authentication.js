@@ -29,7 +29,7 @@ export const changePassword = (currentPassword, newPassword) => createApiAction(
 
 
 
-export const login = (email, password, route) => createApiAction({
+export const login = (email, password, route, routeParams) => createApiAction({
   actionType: actionTypes.LOGIN,
   url: '/oauth2/token',
   method: 'post',
@@ -63,16 +63,16 @@ export const login = (email, password, route) => createApiAction({
 
       Router.pushRoute(destination)
     } else if (route) {
-      Router.pushRoute(route)
+      Router.pushRoute(route, routeParams)
     }
     /* eslint-enable no-restricted-globals*/
   },
 })
 
 
-export const getClientOAuthPage = (clientId, scope, state, responseType) => createApiAction({
+export const getClientOAuthPage = opts => createApiAction({
   actionType: actionTypes.GET_CLIENT_AUTHORIZATION_PAGE,
-  url: `/oauth2/authorize?client_id=${clientId}&scope=${scope}&state=${state}&response_type=${responseType}`,
+  url: `/oauth2/authorize?client_id=${opts.clientId}&scope=${opts.scope}&response_type=${opts.responseType}${opts.state ? `&state=${opts.state}` : ''}`,
   method: 'get',
 })
 
@@ -96,16 +96,12 @@ export const logout = fromVerification => async dispatch => {
 
 
 
-export const register = (email, password, name, platform, nickname, recaptcha) => createApiAction({
+export const register = ({ recaptcha, ...data }) => createApiAction({
   actionType: actionTypes.REGISTER,
   url: '/register',
   method: 'post',
   data: {
-    email,
-    password,
-    name,
-    platform,
-    nickname,
+    ...data,
     'g-recaptcha-response': recaptcha,
   },
 })
@@ -114,7 +110,7 @@ export const register = (email, password, name, platform, nickname, recaptcha) =
 
 
 
-export const resetPassword = (password, token) => createApiAction({
+export const resetPassword = ({ password, token }) => createApiAction({
   actionType: actionTypes.RESET_PASSWORD,
   method: 'post',
   url: `/reset/${token}`,
@@ -137,7 +133,7 @@ export const sendPasswordResetEmail = email => createApiAction({
 })
 
 
-export const updateLoggingInState = (success) => async dispatch => dispatch({
+export const updateLoggingInState = success => async dispatch => dispatch({
   payload: null,
   status: success ? 'success' : 'noToken',
   type: actionTypes.LOGIN,
@@ -147,7 +143,7 @@ export const updateLoggingInState = (success) => async dispatch => dispatch({
 
 
 
-export const validatePasswordResetToken = (token) => createApiAction({
+export const validatePasswordResetToken = token => createApiAction({
   actionType: actionTypes.VALIDATE_PASSWORD_RESET_TOKEN,
   url: `/reset/${token}`,
 })

@@ -6,30 +6,21 @@ import React from 'react'
 
 
 // Component imports
-import Page from '../../components/Page'
+import PageWrapper from '../../components/PageWrapper'
 import RescuesTablePanel from '../../components/RescuesTablePanel'
 
 
 
 
 
-// Component constants
-const title = 'Rescues'
-
-
-
-
-
 const Rescues = () => (
-  <div className="page-wrapper">
-    <header className="page-header">
-      <h1>{title}</h1>
-    </header>
-
+  <PageWrapper title="Rescues">
     <div className="page-content">
       <RescuesTablePanel />
     </div>
-  </div>
+  </PageWrapper>
 )
 
-export default Page(title, true)(Rescues)
+Rescues.authRequired = true
+
+export default Rescues
