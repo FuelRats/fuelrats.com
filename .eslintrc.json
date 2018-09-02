@@ -22,6 +22,10 @@
     "no-restricted-syntax": ["off"],
     "no-return-assign": ["off"],
     "no-underscore-dangle": ["off"],
+    "prefer-const": ["error", {
+      "destructuring": "all",
+      "ignoreReadBeforeAssign": true
+    }],
     "prefer-rest-params": ["off"],
     "react/forbid-prop-types": ["off"],
     "react/jsx-closing-bracket-location": ["off"],
@@ -35,6 +39,12 @@
     "babel/quotes": ["error", "single", { "avoidEscape": true }],
     "semi": ["off"],
     "babel/semi": ["error", "never"],
+    "no-unused-expressions": ["off"],
+    "babel/no-unused-expressions": ["error", {
+      "allowShortCircuit": false,
+      "allowTernary": false,
+      "allowTaggedTemplates": false
+    }],
     "jsx-a11y/anchor-is-valid": ["off"],
     "jsx-a11y/label-has-for": ["off"],
     "jsx-a11y/no-noninteractive-element-interactions": ["off"],
