@@ -5,29 +5,25 @@ import isRequired from '../helpers/isRequired'
 import apiService from '../services/api'
 import wpService from '../services/wordpress'
 
-
-
-
-
-const getCleanedPayload = options => {
-  const payload = { ...options }
-
-  delete payload.actionFunction
-  delete payload.actionPayload
-  delete payload.actionType
-  delete payload.onError
-  delete payload.onSuccess
-  delete payload.onUnhandledError
-  delete payload.onUnhandledSuccess
-  delete payload.preDispatch
-  delete payload.postDispatch
-
-  return payload
-}
-
-
 const getActionOptions = (options = isRequired('options')) => {
-  let onError = null
+  let {
+    actionFunction,
+    actionType,
+    onComplete,
+    onError,
+    onSuccess,
+    onUnhandledResult,
+    onUnhandledResult: onUnhandledError,
+    onUnhandledResult: onUnhandledSuccess,
+    preDispatch,
+    postDispatch,
+    ...actionPayload
+  } = options
+
+  if (typeof actionFunction !== 'function') {
+    isRequired('options.actionFunction')
+  }
+
   switch (typeof options.onError) {
     case 'function':
       ({ onError } = options)
@@ -38,7 +34,6 @@ const getActionOptions = (options = isRequired('options')) => {
       break
   }
 
-  let onSuccess = null
   switch (typeof options.onSuccess) {
     case 'function':
       ({ onSuccess } = options)
@@ -49,25 +44,6 @@ const getActionOptions = (options = isRequired('options')) => {
       break
   }
 
-  const {
-    actionFunction,
-  } = options
-
-  let {
-    onUnhandledResult,
-    onUnhandledResult: onUnhandledError,
-    onUnhandledResult: onUnhandledSuccess,
-    actionPayload,
-  } = options
-
-  if (typeof actionFunction !== 'function') {
-    isRequired('options.actionFunction')
-  }
-
-  if (typeof onUnhandledResult === 'function') {
-    ({ onUnhandledResult } = options)
-  }
-
   if (typeof options.onUnhandledError === 'function') {
     ({ onUnhandledError } = options)
   }
@@ -76,21 +52,11 @@ const getActionOptions = (options = isRequired('options')) => {
     ({ onUnhandledSuccess } = options)
   }
 
-  if (typeof actionPayload === 'undefined') {
-    actionPayload = getCleanedPayload(options)
-  } else if (typeof actionPayload === 'function') {
-    actionPayload = actionPayload(options)
-  }
-
-  if (!Array.isArray(actionPayload)) {
-    actionPayload = [actionPayload]
-  }
-
   return {
     actionFunction,
-    actionPayload,
+    actionPayload: [actionPayload],
     actionType: options.actionType || isRequired('options.actionType'),
-    onComplete: options.onComplete,
+    onComplete,
     onError,
     onSuccess,
     onUnhandledError,
@@ -108,8 +74,8 @@ const getActionOptions = (options = isRequired('options')) => {
  *
  * @param   {Object.<string, *>} options                      Object containing configuration settings for the action.
  * @param   {Function}           options.actionFunction       The main action to perform.
- * @param   {*}                  [options.actionPayload]      Arguments to be sent to the actionFunction.
  * @param   {String}             options.actionType           Redux action type.
+ * @param   {Function}           [options.onComplete]         Called immediately after the action has been completed and dispatched to redux.
  * @param   {Function}           [options.onError]            Called immediately after catching an error thrown by the action.
  * @param   {Function}           [options.onSuccess]          Called immediately after the action completes.
  * @param   {Function}           [options.onUnhandledResult]  Convenience option to populate both onUnhandledError/Success.
