@@ -1,14 +1,13 @@
 
 // Module imports
 import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
 import React from 'react'
 import Cookies from 'next-cookies'
 
 
 
 // Component imports
-import { actions } from '../store'
+import { actions, connect } from '../store'
 import { Router } from '../routes'
 import apiService from '../services/api'
 import Head from './Head'
@@ -19,7 +18,7 @@ import LoginDialog from './LoginDialog'
 
 
 
-
+@connect
 class AppLayout extends React.Component {
   static async _getUserData (getUser, logout) {
     const { payload, status } = await getUser()
@@ -165,21 +164,34 @@ class AppLayout extends React.Component {
       </div>
     )
   }
+
+  static mapStateToProps = ({ authentication, flags, user }) => ({
+    loggedIn: authentication.loggedIn,
+    showLoginDialog: flags.showLoginDialog,
+    verifyError: authentication.verifyError,
+    user,
+  })
+
+  static mapDispatchToProps = dispatch => bindActionCreators({
+    getUser: actions.getUser,
+    logout: actions.logout,
+    setFlag: actions.setFlag,
+    updateLoggingInState: actions.updateLoggingInState,
+  }, dispatch)
 }
 
 
-const mapStateToProps = ({ authentication, flags, user }) => ({
-  loggedIn: authentication.loggedIn,
-  showLoginDialog: flags.showLoginDialog,
-  verifyError: authentication.verifyError,
-  user,
-})
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  getUser: actions.getUser,
-  logout: actions.logout,
-  setFlag: actions.setFlag,
-  updateLoggingInState: actions.updateLoggingInState,
-}, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(AppLayout)
+export default AppLayout
+
+
+
+
+
+/**
+ * Decorator to mark a page as requiring user authentication.
+ */
+export function authenticated (target) {
+  target.authRequired = true
+}

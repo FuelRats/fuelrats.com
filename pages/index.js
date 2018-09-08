@@ -7,13 +7,13 @@ import React from 'react'
 
 // Component imports
 import { Link } from '../routes'
-import connect from '../helpers/connect'
+import { connect } from '../store'
 import PageWrapper from '../components/PageWrapper'
 
 
 
 
-
+@connect
 class Index extends React.Component {
   /***************************************************************************\
     Public Methods
@@ -41,10 +41,12 @@ class Index extends React.Component {
       </section>
     </PageWrapper>
   )
+
+  static mapDisaptchToProps = ['setFlag']
 }
 
 
 
 
 
-export default connect(null, ['setFlag'])(Index)
+export default Index

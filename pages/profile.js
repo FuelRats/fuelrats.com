@@ -6,6 +6,7 @@ import React from 'react'
 
 
 // Component imports
+import { authenticated } from '../components/AppLayout'
 import { Router } from '../routes'
 import PageWrapper from '../components/PageWrapper'
 import TabbedPanel from '../components/TabbedPanel'
@@ -17,29 +18,30 @@ import FirstLoginDialog from '../components/FirstLoginDialog'
 
 
 
-
+@authenticated
 class Profile extends React.Component {
   /***************************************************************************\
-    Properties
+    Class Properties
   \***************************************************************************/
-
-  static authRequired = true
-
-
 
   state = {
     showFirstLoginDialog: false,
   }
 
+
+
+
+
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
-
 
   _closeFirstLoginDialog = () => {
     this.setState({ showFirstLoginDialog: false })
     Router.replaceRoute('profile')
   }
+
+
 
 
 

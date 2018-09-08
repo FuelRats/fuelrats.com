@@ -1,12 +1,11 @@
 // Component imports
+import { actions, connect } from '../store'
 import { Link } from '../routes'
 import Component from '../components/Component'
-import connect from '../helpers/connect'
 import PageWrapper from '../components/PageWrapper'
 import PasswordField from '../components/PasswordField'
 import RadioOptionsInput from '../components/RadioOptionsInput'
 import TermsDialog from '../components/TermsDialog'
-import { actions } from '../store'
 
 
 
@@ -21,7 +20,7 @@ const getWordpressPageElement = page => (
 
 
 
-
+@connect
 class Register extends Component {
   /***************************************************************************\
     Public Methods
@@ -323,13 +322,16 @@ class Register extends Component {
 
     return true
   }
+
+  static mapStateToProps = state => ({
+    termsPage: state.wordpress.page['terms-of-service'],
+    privacyPage: state.wordpress.page['privacy-policy'],
+  })
+
+  static mapDispatchToProps = ['register', 'login']
 }
 
 
-const mapStateToProps = state => ({
-  termsPage: state.wordpress.page['terms-of-service'],
-  privacyPage: state.wordpress.page['privacy-policy'],
-})
 
 
-export default connect(mapStateToProps, ['register', 'login'])(Register)
+export default Register

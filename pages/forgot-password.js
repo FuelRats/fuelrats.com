@@ -1,12 +1,12 @@
 // Component imports
+import { connect } from '../store'
 import Component from '../components/Component'
 import PageWrapper from '../components/PageWrapper'
-import connect from '../helpers/connect'
 
 
 
 
-
+@connect
 class ForgotPassword extends Component {
   /***************************************************************************\
     Public Methods
@@ -119,10 +119,12 @@ class ForgotPassword extends Component {
 
     return true
   }
+
+  static mapDispatchToProps = ['sendPasswordResetEmail']
 }
 
 
 
 
 
-export default connect(null, ['sendPasswordResetEmail'])(ForgotPassword)
+export default ForgotPassword

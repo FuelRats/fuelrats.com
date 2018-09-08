@@ -7,20 +7,20 @@ import React from 'react'
 
 
 // Component imports
+import { authenticated } from '../components/AppLayout'
+import { connect } from '../store'
 import Component from '../components/Component'
-import connect from '../helpers/connect'
 import PageWrapper from '../components/PageWrapper'
 
 
 
 
-
+@authenticated
+@connect
 class Authorize extends Component {
   /***************************************************************************\
     Properties
   \***************************************************************************/
-
-  static authRequired = true
 
   state = {
     clientName: null,
@@ -30,6 +30,10 @@ class Authorize extends Component {
     transactionId: '',
     submitting: false,
   }
+
+
+
+
 
   /***************************************************************************\
     Public Methods
@@ -159,10 +163,12 @@ class Authorize extends Component {
       </PageWrapper>
     )
   }
+
+   static mapDispatchToProps = ['getClientOAuthPage']
 }
 
 
 
 
 
-export default connect(null, ['getClientOAuthPage'])(Authorize)
+export default Authorize

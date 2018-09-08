@@ -7,14 +7,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 // Component imports
+import { connect } from '../../store'
 import { Link } from '../../routes'
 import Component from '../../components/Component'
-import connect from '../../helpers/connect'
 import PageWrapper from '../../components/PageWrapper'
 
 
 
-
+@connect
 class Blog extends Component {
   /***************************************************************************\
     Private Methods
@@ -153,10 +153,14 @@ class Blog extends Component {
     )
     /* eslint-enable */
   }
+
+  static mapStateToProps = state => state.blogs
+
+  static mapDispatchToProps = ['retrieveBlogs']
 }
 
 
 
 
 
-export default connect(state => state.blogs, ['retrieveBlog'])(Blog)
+export default Blog

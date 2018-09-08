@@ -32,7 +32,7 @@ faLibrary.add(faIcons)
 
 
 
-
+@withRedux(initStore)
 class NextApp extends App {
   constructor (props) {
     super(props)
@@ -62,4 +62,8 @@ class NextApp extends App {
   }
 }
 
-export default withRedux(initStore)(NextApp)
+
+
+
+
+export default NextApp
