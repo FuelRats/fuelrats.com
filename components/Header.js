@@ -31,7 +31,7 @@ const Header = (props) => {
 
       <input id="nav-control" type="checkbox" />
 
-      <label title="Expand/Collapse Menu" htmlFor="nav-control" className="burger button secondary" id="burger">
+      <label title="Expand/Collapse Menu" htmlFor="nav-control" className="burger button tall secondary" id="burger">
         <FontAwesomeIcon icon="bars" />
       </label>
 
