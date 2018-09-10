@@ -35,7 +35,7 @@ class Index extends React.Component {
 
         <footer className="call-to-action">
           <Link href="/i-need-fuel">
-            <a className="button">Get Help</a>
+            <a className="button tall">Get Help</a>
           </Link>
         </footer>
       </section>
