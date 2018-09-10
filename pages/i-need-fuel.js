@@ -79,7 +79,7 @@ class INeedFuel extends Component {
 
                   <a
                     className="button secondary"
-                    href="https://kiwi.fuelrats.com:7778/"
+                    href="https://kiwi.fuelrats.com/"
                     rel="noopener noreferrer"
                     target="_blank">
                     Click here to chat with the rats!
