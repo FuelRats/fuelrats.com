@@ -52,8 +52,8 @@ const navItems = [
     subnav: [
       {
         key: 'merch',
-        title: 'Merch',
-        href: 'https://www.teespring.com/stores/fuelrats',
+        title: 'Merch Store',
+        route: '/store/products',
       },
       {
         key: 'donate',

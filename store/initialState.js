@@ -62,6 +62,18 @@ export default {
     total: 0,
   },
 
+  orders: {
+    hasMore: false,
+    orders: {},
+  },
+
+  products: {
+    hasMore: false,
+    products: {},
+  },
+
+  storeCart: {},
+
   user: {
     attributes: null,
     id: null,

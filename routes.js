@@ -40,6 +40,10 @@ routes
   .add('stats statistics', '/statistics', '/statistics')
   .add('stats leaderboard', '/leaderboard', '/leaderboard')
 
+  // Storefront
+  .add('store list', '/store/products/:page?', '/store/list')
+  .add('store cart', '/store/cart', '/store/cart')
+
   // About
   .add('about fuelrats', '/about', '/about')
   .add('about acknowledgements', '/acknowledgements', '/acknowledgements')

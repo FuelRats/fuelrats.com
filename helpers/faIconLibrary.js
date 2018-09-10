@@ -1,4 +1,5 @@
 export {
+  faArrowLeft,
   faBars,
   faBook,
   faCheck,
@@ -10,6 +11,7 @@ export {
   faFolder,
   faHandsHelping,
   faInfoCircle,
+  faShoppingCart,
   faSpaceShuttle,
   faSpinner,
   faTimes,
