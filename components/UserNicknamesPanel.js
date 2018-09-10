@@ -1,10 +1,10 @@
 // Module imports
-import connect from '../helpers/connect'
+import { connect } from '../store'
 import AddNicknameForm from './AddNicknameForm'
 //import ConfirmActionButton from './ConfirmActionButton'
 import Component from './Component'
 
-
+@connect
 class UserNicknamesPanel extends Component {
   _deleteNickname = async (event) => {
     await this.props.deleteNickname(event.target.name)
@@ -44,16 +44,14 @@ class UserNicknamesPanel extends Component {
       </div>
     )
   }
+
+  static mapDispatchToProps = ['deleteNickname']
+
+  static mapStateToProps = state => ({ user: state.user })
 }
 
 
 
 
 
-const mapDispatchToProps = ['deleteNickname']
-const mapStateToProps = state => ({ user: state.user })
-
-
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserNicknamesPanel)
+export default UserNicknamesPanel

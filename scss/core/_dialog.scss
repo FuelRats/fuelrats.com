@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   margin: 0 auto auto auto;
-  min-width: 75rem;
+  min-width: 60rem;
   overflow: hidden;
   pointer-events: initial;
   z-index: 401;
@@ -17,10 +17,6 @@
 
   &.center-title > header {
     justify-content: center;
-  }
-
-  @media screen and (max-width: 768px) {
-    min-width: 100vw;
   }
 
   > header {
@@ -42,7 +38,7 @@
 
   > .content {
     flex-shrink: 1;
-    padding: 2rem 2rem 0 2rem;
+    padding: 2rem;
     color: $white;
 
     input {
@@ -51,6 +47,8 @@
 
     > .center-content {
       text-align: center;
+      display: flex;
+      justify-content: center;
     }
   }
 
@@ -95,5 +93,9 @@
     .button {
       border-radius: 0;
     }
+  }
+
+  @media screen and (max-width: 768px) {
+    min-width: 100vw;
   }
 }

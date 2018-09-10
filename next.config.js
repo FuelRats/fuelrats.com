@@ -10,6 +10,7 @@ const glob = require('glob')
 const {
   FRDC_API_URL,
   FRDC_PUBLIC_URL,
+  FRDC_STRIPE_API_PK,
   PORT,
   TRAVIS_BRANCH,
   TRAVIS_COMMIT,
@@ -25,6 +26,9 @@ module.exports = withSass({
       },
       wordpress: {
         url: FRDC_PUBLIC_URL ? `${FRDC_PUBLIC_URL}/wp-api` : `http://localhost:${PORT || 3000}/wp-api`,
+      },
+      stripe: {
+        public: FRDC_STRIPE_API_PK || null,
       },
     },
   },

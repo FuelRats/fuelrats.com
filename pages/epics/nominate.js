@@ -1,6 +1,7 @@
 // Component imports
+import { authenticated } from '../../components/AppLayout'
+import { connect } from '../../store'
 import Component from '../../components/Component'
-import connect from '../../helpers/connect'
 import classNames from '../../helpers/classNames'
 import PageWrapper from '../../components/PageWrapper'
 import RadioOptionsInput from '../../components/RadioOptionsInput'
@@ -10,13 +11,12 @@ import RatTagsInput from '../../components/RatTagsInput'
 
 
 
-
+@authenticated
+@connect
 class EpicNominate extends Component {
   /***************************************************************************\
-    Properties
+    Class Properties
   \***************************************************************************/
-
-  static authRequired = true
 
   state = {
     epicType: 'epicRescue',
@@ -257,10 +257,12 @@ class EpicNominate extends Component {
 
     return true
   }
+
+  static mapDispatchToProps = ['createEpic']
 }
 
 
 
 
 
-export default connect(null, ['createEpic'])(EpicNominate)
+export default EpicNominate

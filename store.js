@@ -1,9 +1,11 @@
 // Module imports
 import {
+  bindActionCreators,
   createStore,
   applyMiddleware,
 } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
+import { connect } from 'react-redux'
 import thunkMiddleware from 'redux-thunk'
 
 
@@ -14,7 +16,7 @@ import thunkMiddleware from 'redux-thunk'
 import initialState from './store/initialState'
 import reducer from './store/reducers/index'
 
-/* actions */
+// actions
 import * as authenticationActions from './store/actions/authentication'
 import * as blogsActions from './store/actions/blogs'
 import * as decalsActions from './store/actions/decals'
@@ -32,7 +34,7 @@ import * as wordpressActions from './store/actions/wordpress'
 
 
 
-export const actions = {
+const actions = {
   ...authenticationActions,
   ...blogsActions,
   ...decalsActions,
@@ -51,4 +53,68 @@ export const actions = {
 
 
 
-export const initStore = (state = initialState) => createStore(reducer, state, composeWithDevTools(applyMiddleware(thunkMiddleware)))
+const initStore = (state = initialState) => createStore(reducer, state, composeWithDevTools(applyMiddleware(thunkMiddleware)))
+
+
+
+
+
+const connectDecorator = target => {
+  const {
+    mapDispatchToProps: mDTP,
+    mapStateToProps,
+    mergeProps,
+    reduxOptions,
+  } = target
+  let mapDispatchToProps = mDTP
+
+  if (Array.isArray(mDTP)) {
+    mapDispatchToProps = dispatch => bindActionCreators(
+      mDTP.reduce((acc, actionName) => ({
+        ...acc,
+        [actionName]: actions[actionName],
+      }
+      ), {}),
+      dispatch
+    )
+  }
+
+  return connect(
+    mapStateToProps || (() => ({})),
+    mapDispatchToProps || {},
+    mergeProps,
+    reduxOptions
+  )(target)
+}
+
+
+
+
+
+const bindActionByName = (action, dispatch) => {
+  let resolvedAction = action
+
+  if (Array.isArray(action) && typeof action === 'string') {
+    resolvedAction = action.reduce((acc, actionName) => ({
+      ...acc,
+      [actionName]: actions[actionName],
+    }), {})
+  }
+
+  if (typeof action === 'string') {
+    resolvedAction = actions[action]
+  }
+
+  return bindActionCreators(resolvedAction, dispatch)
+}
+
+
+
+
+
+export {
+  actions,
+  bindActionByName as getActionCreators,
+  connectDecorator as connect,
+  initStore,
+}

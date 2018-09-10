@@ -6,7 +6,7 @@ import React from 'react'
 
 
 // Component imports
-import connect from '../helpers/connect'
+import { connect } from '../store'
 import Dialog from './Dialog'
 
 
@@ -34,7 +34,7 @@ const FirstLoginDialog = props => (
 )
 
 
-const mapStateToProps = ({ user, rats }) => {
+FirstLoginDialog.mapStateToProps = ({ user, rats }) => {
   let cmdrName = null
 
   if (user && user.attributes) {
@@ -60,4 +60,4 @@ const mapStateToProps = ({ user, rats }) => {
 }
 
 
-export default connect(mapStateToProps)(FirstLoginDialog)
+export default connect(FirstLoginDialog)

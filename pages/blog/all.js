@@ -8,14 +8,14 @@ import moment from 'moment'
 
 // Component imports
 import { Link } from '../../routes'
-import connect from '../../helpers/connect'
+import { connect } from '../../store'
 import Component from '../../components/Component'
 import PageWrapper from '../../components/PageWrapper'
 
 
 
 
-
+@connect
 class Blogs extends Component {
   /***************************************************************************\
     Private Methods
@@ -234,10 +234,14 @@ class Blogs extends Component {
       </PageWrapper>
     )
   }
+
+  static mapStateToProps = state => state.blogs
+
+  static mapDispatchToProps = ['retrieveBlogs']
 }
 
 
 
 
 
-export default connect(state => state.blogs, ['retrieveBlogs'])(Blogs)
+export default Blogs
