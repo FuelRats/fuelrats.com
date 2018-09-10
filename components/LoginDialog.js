@@ -17,26 +17,30 @@ import Dialog from './Dialog'
 
 class LoginDialog extends Component {
   /***************************************************************************\
+    Class Properties
+  \***************************************************************************/
+
+  state = {
+    email: '',
+    password: '',
+    error: false,
+  }
+
+  emailInput = React.createRef()
+
+
+
+
+
+  /***************************************************************************\
     Public Methods
   \***************************************************************************/
 
   componentDidMount () {
-    this.emailInput.focus()
+    this.emailInput.current.focus()
   }
 
-  constructor (props) {
-    super(props)
-
-    this._bindMethods(['onSubmit'])
-
-    this.state = {
-      email: '',
-      password: '',
-      error: false,
-    }
-  }
-
-  async onSubmit (event) {
+  onSubmit = async event => {
     event.preventDefault()
 
     const { status } = await this.props.login(this.state.email, this.state.password)
@@ -60,6 +64,7 @@ class LoginDialog extends Component {
 
     return (
       <Dialog
+        className="login-dialog"
         title="Login"
         onClose={this.props.onClose}>
         <form onSubmit={this.onSubmit}>
@@ -78,7 +83,7 @@ class LoginDialog extends Component {
             name="email"
             onInput={event => this.setState({ email: event.target.value })}
             placeholder="Email"
-            ref={emailInput => this.emailInput = emailInput}
+            ref={this.emailInput}
             required
             type="email" />
 
@@ -106,7 +111,7 @@ class LoginDialog extends Component {
             </div>
 
             <div className="primary">
-              <a className="button link" href="/forgot-password">Forgot password?</a>
+              <a className="button link secondary mobile-button" href="/forgot-password">Forgot password?</a>
               <button
                 disabled={!email || !password || this.props.loggingIn}
                 type="submit">
