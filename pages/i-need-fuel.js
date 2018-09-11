@@ -70,7 +70,7 @@ class INeedFuel extends Component {
                     href="https://clients.fuelrats.com:7778/"
                     rel="noopener noreferrer"
                     target="_blank">
-                    Click here to get refueled!
+                    Yes, I Need Fuel!
                   </a>
 
                   <br />
@@ -79,10 +79,10 @@ class INeedFuel extends Component {
 
                   <a
                     className="button secondary"
-                    href="https://kiwi.fuelrats.com:7778/"
+                    href="https://kiwi.fuelrats.com/"
                     rel="noopener noreferrer"
                     target="_blank">
-                    Click here to chat with the rats!
+                    I don't need fuel, but I still want to chat.
                   </a>
                 </div>
 

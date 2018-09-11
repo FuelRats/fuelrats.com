@@ -27,8 +27,6 @@ import * as rescuesActions from './store/actions/rescues'
 import * as rescuesByRatActions from './store/actions/rescuesByRat'
 import * as rescuesBySystemActions from './store/actions/rescuesBySystem'
 import * as rescuesOverTimeActions from './store/actions/rescuesOverTime'
-import * as storeCartActions from './store/actions/storeCart'
-import * as stripeActions from './store/actions/stripe'
 import * as userActions from './store/actions/user'
 import * as wordpressActions from './store/actions/wordpress'
 
@@ -47,8 +45,6 @@ const actions = {
   ...rescuesByRatActions,
   ...rescuesBySystemActions,
   ...rescuesOverTimeActions,
-  ...storeCartActions,
-  ...stripeActions,
   ...userActions,
   ...wordpressActions,
 }

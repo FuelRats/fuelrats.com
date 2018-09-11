@@ -96,7 +96,7 @@ class Authorize extends Component {
 
             <ul>
               {this.state.scopes.map(scopeData => (
-                <li key={scopeData} className={scopeData.accessible ? 'inaccessible' : null}>{scopeData.permission}</li>
+                <li key={scopeData} className={scopeData.accessible ? null : 'inaccessible'}>{scopeData.permission}</li>
               ))}
             </ul>
 
