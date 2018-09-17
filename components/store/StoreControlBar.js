@@ -45,7 +45,7 @@ class StoreControlBar extends Component {
           <Link route="store checkout">
             <a
               className="button compact"
-              title="Procede to Checkout">
+              title="Proceed to Checkout">
               Checkout
             </a>
           </Link>
