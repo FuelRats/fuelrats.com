@@ -1,9 +1,9 @@
 // Component imports
 import { actions, connect } from '../../store'
-import StoreControlBar from '../../components/store/StoreControlBar'
+import { Link } from '../../routes'
 import Component from '../../components/Component'
 import PageWrapper from '../../components/PageWrapper'
-
+import StoreControlBar from '../../components/store/StoreControlBar'
 
 @connect
 class ListCart extends Component {
@@ -164,9 +164,9 @@ class ListCart extends Component {
                 )
               })}
               <div className="cart-item key">
-                <span className="item-name-key it-exist-to-set-margins" />
+                <span className="item-name-key this-exists-to-set-margins-cuz-clapton-is-lazy" />
                 <span className="item-total-key">
-                  {'Subtotal: '}
+                  {'SubTotal: '}
                   {
                     (Object.entries(cart).reduce((acc, [skuId, quantity]) => {
                       const product = Object.values(products).find(datum => datum.attributes.skus && datum.attributes.skus[skuId])
@@ -180,6 +180,13 @@ class ListCart extends Component {
                     })
                   }
                 </span>
+                {Boolean(Object.keys(cart).length) && (
+                  <Link route="store checkout">
+                    <a className="button compact">
+                      Checkout
+                    </a>
+                  </Link>
+                )}
               </div>
             </div>
           </div>

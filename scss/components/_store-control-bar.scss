@@ -9,10 +9,6 @@
   justify-content: flex-end;
   align-items: center;
 
-  svg {
-    color: $black;
-  }
-
   > *:not(:last-child) {
     margin-right: 1rem;
   }

@@ -23,13 +23,18 @@ class StoreControlBar extends Component {
   }
 
   render () {
-    const { backRoute } = this.props
-    const totalItems = Object.values(this.props.cart).reduce((acc, quantity) => acc + quantity, 0)
+    const {
+      backRoute,
+      backTitle,
+      cart,
+    } = this.props
+
+    const totalItems = Object.values(cart).reduce((acc, quantity) => acc + quantity, 0)
     return (
       <div className="store-control-bar">
         {Boolean(backRoute) && (
           <Link route={backRoute}>
-            <a className="back-button">
+            <a className="back-button icon" title={backTitle}>
               <FontAwesomeIcon icon="arrow-left" size="2x" />
             </a>
           </Link>
@@ -37,10 +42,16 @@ class StoreControlBar extends Component {
 
         }
         {Boolean(totalItems) && (
-          <Link route="store checkout"><a className="button compact">Checkout</a></Link>
+          <Link route="store checkout">
+            <a
+              className="button compact"
+              title="Procede to Checkout">
+              Checkout
+            </a>
+          </Link>
         )}
         <Link route="store cart">
-          <a className="cart-button">
+          <a className="cart-button icon">
             <FontAwesomeIcon icon="shopping-cart" fixedWidth size="2x" />
             <span className="icon-badge grey">{totalItems}</span>
           </a>
