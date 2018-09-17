@@ -28,7 +28,10 @@ class ListProducts extends Component {
   \***************************************************************************/
 
   static async getInitialProps ({ store }) {
-    await actions.getProducts({ type: 'good' })(store.dispatch)
+    const state = store.getState()
+    if (!Object.keys(state.products.products).length) {
+      await actions.getProducts({ type: 'good' })(store.dispatch)
+    }
   }
 
   render () {
