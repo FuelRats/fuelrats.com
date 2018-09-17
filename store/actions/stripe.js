@@ -44,9 +44,17 @@ export const getOrder = id => createApiAction({
 
 
 
-export const updateOrder = (id, changes) => createApiAction({
+export const updateOrder = (id, data) => createApiAction({
   actionType: actionTypes.UPDATE_STRIPE_ORDER,
   url: `/orders/${id}`,
   method: 'post',
-  data: changes,
+  data,
+})
+
+
+export const createCustomer = data => createApiAction({
+  actionType: actionTypes.CREATE_STRIPE_CUSTOMER,
+  url: '/customers',
+  method: 'post',
+  data,
 })
