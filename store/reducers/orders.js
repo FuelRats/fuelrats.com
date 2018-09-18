@@ -18,7 +18,7 @@ export default function (state = initialState.orders, action) {
       if (status === 'success') {
         return {
           orders: {
-            ...state,
+            ...state.orders,
             ...payload.data.reduce((acc, order) => ({
               ...acc,
               [order.id]: order,

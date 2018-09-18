@@ -1,5 +1,6 @@
 table {
   max-width: 100%;
+  table-layout: fixed;
 
   &.full-width {
     width: 100%;
