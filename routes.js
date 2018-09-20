@@ -43,6 +43,7 @@ routes
   // Storefront
   .add('store list', '/store/products/:page?', '/store/list')
   .add('store cart', '/store/cart', '/store/cart')
+  .add('store orders', '/store/orders', '/store/orders')
 
   // About
   .add('about fuelrats', '/about', '/about')

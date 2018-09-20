@@ -1,0 +1,45 @@
+address {
+  display: grid;
+  grid-template-areas:
+    'name name name name'
+    'line1 line1 line1 line1'
+    'line2 line2 line2 line2'
+    'city state country zip';
+  grid-template-columns: repeat(4, max-content);
+
+  .name {
+    grid-area: name;
+  }
+
+  .line1 {
+    grid-area: line1;
+  }
+
+  .line2 {
+    grid-area: line2;
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  .city, .state, .country {
+    margin-right: 0.2em;
+  }
+
+  .city {
+    grid-area: city;
+  }
+
+  .state {
+    grid-area: state;
+  }
+
+  .country {
+    grid-area: country;
+  }
+
+  .zip {
+    grid-area: zip;
+  }
+}
