@@ -44,6 +44,8 @@ export default class extends Document {
           <link rel="manifest" href="/manifest.json" />
 
           <link rel="shortcut icon" href="/static/favicon/favicon.ico" />
+
+          <script id="stripe-js" src="https://js.stripe.com/v3/" async defer />
         </Head>
 
         <body>

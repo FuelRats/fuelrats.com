@@ -1,77 +1,42 @@
 
 // Module imports
 import { bindActionCreators } from 'redux'
+import {
+  StripeProvider,
+} from 'react-stripe-elements'
+import getConfig from 'next/config'
+import hoistNonReactStatics from 'hoist-non-react-statics'
+import NextHead from 'next/head'
+import NProgress from 'nprogress'
 import React from 'react'
-import Cookies from 'next-cookies'
-
-
 
 // Component imports
 import { actions, connect } from '../store'
 import { Router } from '../routes'
 import apiService from '../services/api'
-import Head from './Head'
 import Header from './Header'
 import UserMenu from './UserMenu'
 import LoginDialog from './LoginDialog'
+import initUserSession from '../helpers/initUserSession'
 
+
+
+
+NProgress.configure({ showSpinner: false })
+Router.onRouteChangeStart = () => NProgress.start()
+Router.onRouteChangeError = () => NProgress.done()
+Router.onRouteChangeComplete = () => NProgress.done()
+
+const { publicRuntimeConfig } = getConfig()
+const STRIPE_API_PK = publicRuntimeConfig.apis.stripe.public
 
 
 
 @connect
 class AppLayout extends React.Component {
-  static async _getUserData (getUser, logout) {
-    const { payload, status } = await getUser()
-    if (status === 'error' && payload && Array.isArray(payload.errors)) {
-      const errMsg = payload.errors[0] && payload.errors[0].status
-      if (errMsg === 'Unauthorized') {
-        logout(true)
-        return false
-      }
-    }
-
-    return true
-  }
-
-  static async _initUserSessionData (ctx) {
-    const {
-      store,
-    } = ctx
-
-    const {
-      authentication: {
-        loggedIn,
-        verifyError,
-      },
-      user: {
-        attributes: userAttributes,
-      },
-    } = store.getState()
-
-    const getUser = (...args) => actions.getUser(...args)(store.dispatch)
-    const logout = (...args) => actions.logout(...args)(store.dispatch)
-
-    const {
-      access_token: accessToken,
-    } = Cookies(ctx)
-
-    let verified = loggedIn && userAttributes && !verifyError
-
-    if (accessToken) {
-      apiService().defaults.headers.common.Authorization = `Bearer ${accessToken}`
-
-      if (!verified) {
-        verified = await AppLayout._getUserData(getUser, logout)
-      }
-    } else {
-      actions.updateLoggingInState()(store.dispatch)
-    }
-
-    if (!verified) {
-      return null
-    }
-    return accessToken
-  }
+  /***************************************************************************\
+    Public Methods
+  \***************************************************************************/
 
   static async getInitialProps ({ Component, ctx }) {
     const {
@@ -81,9 +46,9 @@ class AppLayout extends React.Component {
       query,
     } = ctx
 
-    const accessToken = await AppLayout._initUserSessionData(ctx)
+    const accessToken = await initUserSession(ctx)
 
-    if (!accessToken && Component.authRequired) {
+    if (!accessToken && Component.ಠ_ಠ_AUTHENTICATION_REQUIRED) {
       if (res) {
         res.writeHead(302, {
           Location: `/?authenticate=true&destination=${encodeURIComponent(asPath)}`,
@@ -130,7 +95,7 @@ class AppLayout extends React.Component {
       Component,
     } = this.props
 
-    if (!loggedIn && prevProps.loggedIn && Component.authRequired) {
+    if (!loggedIn && prevProps.loggedIn && Component.ಠ_ಠ_AUTHENTICATION_REQUIRED) {
       Router.push('/')
     }
   }
@@ -147,7 +112,10 @@ class AppLayout extends React.Component {
 
     return (
       <div role="application">
-        <Head title={Component.title} />
+        <NextHead>
+          <title>{Component.title} | Fuelrats.com</title>
+          <link rel="stylesheet" href="/_next/static/style.css" />
+        </NextHead>
 
         <Header
           isServer={isServer}
@@ -155,7 +123,9 @@ class AppLayout extends React.Component {
 
         <UserMenu />
 
+
         <Component {...pageProps} />
+
 
         {showLoginDialog && (
           <LoginDialog onClose={() => actions.setFlag('showLoginDialog', false)(store.dispatch)} />
@@ -193,5 +163,38 @@ export default AppLayout
  * Decorator to mark a page as requiring user authentication.
  */
 export function authenticated (target) {
-  target.authRequired = true
+  target.ಠ_ಠ_AUTHENTICATION_REQUIRED = true
+}
+
+/**
+ * Decorator to wrap a page with stripe context
+ */
+export function withStripe (Component) {
+  class StripePage extends React.Component {
+    state = {
+      stripe: null,
+    }
+
+    componentDidMount () {
+      if (!this.state.stripe) {
+        if (window.Stripe) {
+          this.setState({ stripe: window.Stripe(STRIPE_API_PK) })
+        } else {
+          document.querySelector('#stripe-js').addEventListener('load', () => {
+            this.setState({ stripe: window.Stripe(STRIPE_API_PK) })
+          })
+        }
+      }
+    }
+
+    render () {
+      return (
+        <StripeProvider stripe={this.state.stripe}>
+          <Component {...this.props} />
+        </StripeProvider>
+      )
+    }
+  }
+
+  return hoistNonReactStatics(StripePage, Component)
 }

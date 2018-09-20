@@ -95,10 +95,10 @@ const connectDecorator = target => {
 
 
 
-const bindActionByName = (action, dispatch) => {
+const getActionCreators = (action, dispatch) => {
   let resolvedAction = action
 
-  if (Array.isArray(action) && typeof action === 'string') {
+  if (Array.isArray(action) && typeof action[0] === 'string') {
     resolvedAction = action.reduce((acc, actionName) => ({
       ...acc,
       [actionName]: actions[actionName],
@@ -118,7 +118,7 @@ const bindActionByName = (action, dispatch) => {
 
 export {
   actions,
-  bindActionByName as getActionCreators,
+  getActionCreators,
   connectDecorator as connect,
   initStore,
 }
