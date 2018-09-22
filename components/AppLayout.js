@@ -1,4 +1,3 @@
-
 // Module imports
 import { bindActionCreators } from 'redux'
 import {
@@ -6,9 +5,13 @@ import {
 } from 'react-stripe-elements'
 import getConfig from 'next/config'
 import hoistNonReactStatics from 'hoist-non-react-statics'
-import NextHead from 'next/head'
+import NextError from 'next/error'
 import NProgress from 'nprogress'
 import React from 'react'
+
+
+
+
 
 // Component imports
 import { actions, connect } from '../store'
@@ -22,6 +25,7 @@ import initUserSession from '../helpers/initUserSession'
 
 
 
+
 NProgress.configure({ showSpinner: false })
 Router.onRouteChangeStart = () => NProgress.start()
 Router.onRouteChangeError = () => NProgress.done()
@@ -29,6 +33,8 @@ Router.onRouteChangeComplete = () => NProgress.done()
 
 const { publicRuntimeConfig } = getConfig()
 const STRIPE_API_PK = publicRuntimeConfig.apis.stripe.public
+
+
 
 
 
@@ -68,8 +74,15 @@ class AppLayout extends React.Component {
       pageProps = await Component.getInitialProps(ctx)
     }
 
+    let statusCode = 200
+
+    if (ctx.res) {
+      ({ statusCode } = ctx.res)
+    }
+
     return {
       accessToken,
+      statusCode,
       pageProps: {
         asPath,
         isServer,
@@ -106,17 +119,13 @@ class AppLayout extends React.Component {
       isServer,
       pageProps,
       showLoginDialog,
+      statusCode,
       store,
       path,
     } = this.props
 
     return (
       <div role="application">
-        <NextHead>
-          <title>{Component.title} | Fuelrats.com</title>
-          <link rel="stylesheet" href="/_next/static/style.css" />
-        </NextHead>
-
         <Header
           isServer={isServer}
           path={path} />
@@ -124,8 +133,16 @@ class AppLayout extends React.Component {
         <UserMenu />
 
 
-        <Component {...pageProps} />
-
+        {statusCode === 200
+          ? <Component {...pageProps} />
+          : (
+            <main className="fade-in page error-page">
+              <div className="page-content">
+                <NextError className="test" statusCode={statusCode} />
+              </div>
+            </main>
+          )
+        }
 
         {showLoginDialog && (
           <LoginDialog onClose={() => actions.setFlag('showLoginDialog', false)(store.dispatch)} />
