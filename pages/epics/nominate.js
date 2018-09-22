@@ -59,19 +59,22 @@ class EpicNominate extends Component {
     const newRescueId = value.map(rescue => rescue.id).join('')
     const oldRescueId = this.state.rescue.map(rescue => rescue.id).join('')
     if (newRescueId !== oldRescueId) {
-      const newState = { ...this.state }
+      this.setState(state => {
+        const newState = { ...state }
 
-      if (value.length) {
-        const [rescue] = value
-        newState.rats = rescue.relationships
-          && rescue.relationships.rats
-          && rescue.relationships.rats.data
-          && rescue.relationships.rats.data.length
-          ? rescue.relationships.rats.data : []
-      }
+        if (value.length) {
+          const [rescue] = value
+          newState.rats = rescue.relationships
+            && rescue.relationships.rats
+            && rescue.relationships.rats.data
+            && rescue.relationships.rats.data.length
+            ? rescue.relationships.rats.data : []
+        }
 
-      newState.rescue = value
-      this.setState(newState)
+        newState.rescue = value
+
+        return newState
+      })
     }
   }
 

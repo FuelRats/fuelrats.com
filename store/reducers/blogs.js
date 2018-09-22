@@ -16,9 +16,10 @@ export default function (state = initialState.blogs, action) {
     case actionTypes.RETRIEVE_BLOG:
       switch (status) {
         case 'success':
-          return Object.assign({}, state, {
+          return {
+            ...state,
             blogs: state.blogs.concat(payload),
-          })
+          }
 
         default:
           return state
@@ -27,13 +28,14 @@ export default function (state = initialState.blogs, action) {
     case actionTypes.RETRIEVE_BLOGS:
       switch (status) {
         case 'error':
-          return Object.assign({}, state, {
+          return {
+            ...state,
             blogs: [],
             total: null,
-          })
+          }
 
         case 'success':
-          return Object.assign({}, state, payload)
+          return { ...state, ...payload }
 
         default:
           return state

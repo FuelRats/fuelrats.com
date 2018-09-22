@@ -44,33 +44,35 @@ export default class PasswordField extends Component {
       onChange,
     } = this.props
     const { value } = event.target
-    const newState = Object.assign({}, this.state)
 
-    const passwordEvaluation = zxcvbn(value)
+    this.setState(state => {
+      const newState = { ...state }
+      const passwordEvaluation = zxcvbn(value)
 
-    newState.passwordWarnings.clear()
-    newState.passwordSuggestions.clear()
+      newState.passwordWarnings.clear()
+      newState.passwordSuggestions.clear()
 
-    if (minLength && (value.length < minLength)) {
-      newState.passwordWarnings.add(`Password must be at least ${minLength} characters`)
-    }
+      if (minLength && (value.length < minLength)) {
+        newState.passwordWarnings.add(`Password must be at least ${minLength} characters`)
+      }
 
-    if (maxLength && (value.length > maxLength)) {
-      newState.passwordWarnings.add(`Password must be no longer than ${maxLength} characters`)
-    }
+      if (maxLength && (value.length > maxLength)) {
+        newState.passwordWarnings.add(`Password must be no longer than ${maxLength} characters`)
+      }
 
-    if (passwordEvaluation.feedback.warning) {
-      newState.passwordWarnings.add(passwordEvaluation.feedback.warning)
-    }
+      if (passwordEvaluation.feedback.warning) {
+        newState.passwordWarnings.add(passwordEvaluation.feedback.warning)
+      }
 
-    newState.password = value
-    newState.passwordStrength = passwordEvaluation.score
+      newState.password = value
+      newState.passwordStrength = passwordEvaluation.score
 
-    for (const suggestion of passwordEvaluation.feedback.suggestions) {
-      newState.passwordSuggestions.add(suggestion)
-    }
+      for (const suggestion of passwordEvaluation.feedback.suggestions) {
+        newState.passwordSuggestions.add(suggestion)
+      }
 
-    this.setState(newState)
+      return newState
+    })
 
     if (this._el) {
       this.validity = this._el.validity
@@ -82,9 +84,7 @@ export default class PasswordField extends Component {
   }
 
   handleShowPasswordClick () {
-    const { showPassword } = this.state
-
-    this.setState({ showPassword: !showPassword })
+    this.setState(state => ({ showPassword: !state.showPassword }))
     this._el.focus()
   }
 
@@ -101,7 +101,7 @@ export default class PasswordField extends Component {
       showSuggestions,
     } = this.props
 
-    const inputProps = Object.assign({}, this.props)
+    const inputProps = { ...this.props }
 
     delete inputProps.onChange
     delete inputProps.showStrength

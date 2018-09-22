@@ -2,26 +2,25 @@
 import { bindActionCreators } from 'redux'
 import React from 'react'
 import ReactTable from 'react-table'
-import { connect } from 'react-redux'
 
 
 
 
 
 // Module imports
-import { actions } from '../store'
+import { actions, connect } from '../store'
 import Component from './Component'
 
 
 
 
-
+@connect
 class RescuesByRatTable extends Component {
   /***************************************************************************\
     Private Methods
   \***************************************************************************/
 
-  async _getRescuesByRatStatistics () {
+  _getRescuesByRatStatistics = async () => {
     await this.props.getRescuesByRatStatistics()
   }
 
@@ -37,12 +36,6 @@ class RescuesByRatTable extends Component {
     this._getRescuesByRatStatistics()
   }
 
-  constructor (props) {
-    super(props)
-
-    this._bindMethods(['_getRescuesByRatStatistics'])
-  }
-
   render () {
     const {
       loading,
@@ -54,7 +47,7 @@ class RescuesByRatTable extends Component {
         <ReactTable
           className="rescues-by-rat"
           columns={this.columns}
-          data={statistics.filter(rat => rat.attributes.rescueCount > 0)}
+          data={statistics}
           loading={loading}
           manual
           showPagination={false} />
@@ -93,30 +86,26 @@ class RescuesByRatTable extends Component {
       },
     ])
   }
-}
 
-
-
-
-
-const mapDispatchToProps = dispatch => ({
-  getRescuesByRatStatistics: bindActionCreators(actions.getRescuesByRatStatistics, dispatch),
-})
-
-const mapStateToProps = state => {
-  const {
-    loading,
-    statistics,
-  } = state.rescuesByRat
-
-  return Object.assign({}, {
-    loading,
-    statistics,
+  static mapDispatchToProps = dispatch => ({
+    getRescuesByRatStatistics: bindActionCreators(actions.getRescuesByRatStatistics, dispatch),
   })
+
+  static mapStateToProps = state => {
+    const {
+      loading,
+      statistics,
+    } = state.rescuesByRat
+
+    return {
+      loading,
+      statistics: statistics.filter(rat => rat.attributes.rescueCount > 0),
+    }
+  }
 }
 
 
 
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(RescuesByRatTable)
+export default RescuesByRatTable

@@ -256,10 +256,11 @@ class Paperwork extends Component {
 
       rats = state.rats.rats
         .filter(rat => rescue.relationships.rats.data.find(({ id }) => rat.id === id))
-        .map(rat => Object.assign({
+        .map(rat => ({
           id: rat.id,
           value: rat.attributes.name,
-        }, rat))
+          ...rat,
+        }))
     }
 
     const currentUser = state.user

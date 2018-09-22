@@ -428,7 +428,7 @@ export default class TagsInputComponent extends React.Component {
       classes = classes.concat(className)
     }
 
-    const divProps = Object.assign({}, this.props)
+    const divProps = { ...this.props }
 
     delete divProps.onAdd
     delete divProps.onChange

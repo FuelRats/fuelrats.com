@@ -244,10 +244,10 @@ const mapStateToProps = state => {
     statistics,
   } = state.rescuesOverTime
 
-  return Object.assign({}, {
+  return {
     loading,
     statistics,
-  })
+  }
 }
 
 

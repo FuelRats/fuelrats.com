@@ -37,16 +37,14 @@ class ChangePasswordForm extends Component {
   }
 
   handleChange (event) {
-    const newState = {}
     const {
       name,
       value,
     } = event.target
-    const attribute = name
 
-    newState[attribute] = value
-
-    this.setState(newState)
+    this.setState({
+      [name]: value,
+    })
   }
 
   async onSubmit (event) {
