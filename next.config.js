@@ -1,5 +1,4 @@
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const webpack = require('webpack')
 const withSass = require('@zeit/next-sass')
 
@@ -39,10 +38,6 @@ module.exports = withSass({
         analyzerPort: 8888,
         openAnalyzer: true,
       }))
-    }
-
-    if (!dev) {
-      config.plugins.push(new UglifyJsPlugin())
     }
 
     config.plugins.push(new webpack.DefinePlugin({

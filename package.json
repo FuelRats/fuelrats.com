@@ -86,7 +86,6 @@
     "sass-loader": "^7.1.0",
     "stripe": "^6.11.0",
     "style-loader": "^0.23.0",
-    "uglifyjs-webpack-plugin": "^2.0.1",
     "webpack": "^4.19.1",
     "webpack-bundle-analyzer": "^3.0.2",
     "zxcvbn": "^4.4.2"
