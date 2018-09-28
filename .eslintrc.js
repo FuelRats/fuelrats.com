@@ -9,7 +9,7 @@ module.exports = {
   ],
   rules: {
     // eslint-core
-    'arrow-parens': ['off'],
+    'arrow-parens': ['error', 'as-needed'],
     'brace-style': ['error', '1tbs', { allowSingleLine: false }],
     'comma-dangle': ['error', 'always-multiline'],
     'max-classes-per-file': ['error', 2],

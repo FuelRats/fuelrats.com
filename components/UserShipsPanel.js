@@ -22,7 +22,7 @@ class UserShipsPanel extends Component {
   \***************************************************************************/
 
   static _renderShips (ships) {
-    return ships.map((ship) => {
+    return ships.map(ship => {
       const { id } = ship
       const {
         name,

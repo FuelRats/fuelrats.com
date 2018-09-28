@@ -117,7 +117,7 @@ class Nav extends Component {
     )
   }
 
-  renderNavItem = (item) => {
+  renderNavItem = item => {
     const {
       openSubNav,
     } = this.state

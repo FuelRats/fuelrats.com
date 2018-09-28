@@ -58,8 +58,8 @@ module.exports = withSass({
   },
   sassLoaderOptions: {
     includePaths: ['styles', 'node_modules']
-      .map((d) => path.join(__dirname, d))
-      .map((g) => glob.sync(g))
+      .map(d => path.join(__dirname, d))
+      .map(g => glob.sync(g))
       .reduce((a, c) => a.concat(c), []),
   },
 })

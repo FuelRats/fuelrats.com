@@ -168,9 +168,9 @@ class RescuesBySystemChart extends Component {
           filter="url(#glow)"
           key={index}
           onBlur={this._hideTooltip}
-          onFocus={(event) => this._showTooltip(event, system)}
+          onFocus={event => this._showTooltip(event, system)}
           onMouseOut={this._hideTooltip}
-          onMouseOver={(event) => this._showTooltip(event, system)}
+          onMouseOver={event => this._showTooltip(event, system)}
           transform={`translate(${system.x}, ${system.y})`}>
           <circle
             className={classes.join(' ')}

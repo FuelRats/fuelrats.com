@@ -36,7 +36,7 @@ class EpicNominate extends Component {
     Public Methods
   \***************************************************************************/
 
-  handleEpicTypeChange = (newValue) => {
+  handleEpicTypeChange = newValue => {
     if (this.state.epicType !== newValue.value) {
       this.setState({
         epicType: newValue.value,
@@ -47,7 +47,7 @@ class EpicNominate extends Component {
   }
 
 
-  handleRatsChange = (value) => {
+  handleRatsChange = value => {
     const newRatIds = value.map(rat => rat.id).join(',')
     const oldRatIds = this.state.rats.map(rat => rat.id).join(',')
     if (newRatIds !== oldRatIds) {
@@ -55,7 +55,7 @@ class EpicNominate extends Component {
     }
   }
 
-  handleRescuesChange = (value) => {
+  handleRescuesChange = value => {
     const newRescueId = value.map(rescue => rescue.id).join('')
     const oldRescueId = this.state.rescue.map(rescue => rescue.id).join('')
     if (newRescueId !== oldRescueId) {
@@ -78,10 +78,10 @@ class EpicNominate extends Component {
     }
   }
 
-  handleNotesChange = (event) => this.setState({ notes: event.target.value })
+  handleNotesChange = event => this.setState({ notes: event.target.value })
 
 
-  onSubmit = async (event) => {
+  onSubmit = async event => {
     event.preventDefault()
 
     const {

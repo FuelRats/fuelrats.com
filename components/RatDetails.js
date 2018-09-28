@@ -12,7 +12,7 @@ import UserShipsTable from './UserShipsTable'
 
 
 
-export default (props) => (
+export default props => (
   <div className="rat-details">
     <UserShipsTable data={props.ships} />
   </div>

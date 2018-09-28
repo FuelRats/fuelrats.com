@@ -16,7 +16,7 @@ import userHasPermission from '../helpers/userHasPermission'
 
 
 
-const UserMenu = (props) => {
+const UserMenu = props => {
   const {
     loggedIn,
     loggingIn,

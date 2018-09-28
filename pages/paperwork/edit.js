@@ -49,7 +49,7 @@ class Paperwork extends Component {
 
   _handleNotesChange = event => this._setChanges({ notes: event.target.value })
 
-  _handleRadioOptionsChange = (option) => {
+  _handleRadioOptionsChange = option => {
     const attribute = option.name
     let { value } = option
 
@@ -163,7 +163,7 @@ class Paperwork extends Component {
     this._setChanges(newChanges)
   }
 
-  _onSubmit = async (event) => {
+  _onSubmit = async event => {
     event.preventDefault()
 
     const { rescue } = this.props
@@ -480,7 +480,7 @@ class Paperwork extends Component {
     return response
   }
 
-  validateCaseWithValidOutcome = (values) => {
+  validateCaseWithValidOutcome = values => {
     if (!values.rats || !values.rats.length) {
       return 'Valid cases must have at least one rat assigned.'
     }
@@ -500,7 +500,7 @@ class Paperwork extends Component {
     return null
   }
 
-  validateCaseWithInvalidOutcome = (values) => {
+  validateCaseWithInvalidOutcome = values => {
     if (!values.notes.replace(/\s/g, '')) {
       return 'Invalid cases must have notes explaining why the rescue is invalid.'
     }
@@ -513,7 +513,7 @@ class Paperwork extends Component {
     const { changes } = this.state
 
     const isDefined = (value, fallback) => (typeof value !== 'undefined' ? value : fallback)
-    const getValue = (value) => isDefined(changes[value], rescue.attributes[value])
+    const getValue = value => isDefined(changes[value], rescue.attributes[value])
 
 
     const rats = {

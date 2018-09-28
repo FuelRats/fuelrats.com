@@ -21,7 +21,7 @@ const buildCommit = BUILD_COMMIT
 const buildCommitRange = BUILD_COMMIT_RANGE
 
 
-const Header = (props) => {
+const Header = props => {
   const {
     loggedIn,
     loggingIn,
