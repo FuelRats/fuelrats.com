@@ -9,6 +9,7 @@ import React from 'react'
 import { connect } from '../../store'
 import Dialog from '../Dialog'
 import Component from '../Component'
+import isInStock from '../../helpers/isInStock'
 
 
 
@@ -28,28 +29,6 @@ const currencyStringOptions = [
 
 
 
-
-const isInStock = ({ quantity, type, value }) => {
-  switch (type) {
-    case 'finite':
-      return quantity > 0
-
-    case 'bucket':
-      switch (value) {
-        case 'in_stock':
-        case 'limited':
-          return true
-        default:
-          return false
-      }
-
-    case 'infinite':
-      return true
-
-    default:
-      return false
-  }
-}
 
 @connect
 class CartUpdateDialog extends Component {
@@ -168,6 +147,8 @@ class CartUpdateDialog extends Component {
                       name="quantity"
                       onChange={this._handleQuantityChange}
                       type="number"
+                      min={0}
+                      max={activeSKU.inventory.quantity || undefined}
                       value={this.state.quantity} />
                   </div>
                 </div>
