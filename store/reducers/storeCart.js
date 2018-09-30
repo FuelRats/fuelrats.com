@@ -13,6 +13,7 @@ export default function (state = initialState.storeCart, action) {
   } = action
 
   switch (type) {
+    case actionTypes.CLEAR_CART:
     case actionTypes.DELETE_CART_ITEM:
     case actionTypes.GET_CART:
     case actionTypes.UPDATE_CART_ITEM:

@@ -48,3 +48,11 @@ export const removeCartItem = ({ id }) => createAction({
     return cart
   },
 })
+
+export const clearCart = () => createAction({
+  actionType: actionTypes.CLEAR_CART,
+  actionFunction: async () => {
+    await localForage.setItem(STORE_CART, { ...initialState.storeCart })
+    return { ...initialState.storeCart }
+  },
+})
