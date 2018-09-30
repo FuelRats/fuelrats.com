@@ -8,6 +8,7 @@ import moment from 'moment'
 // Component imports
 import { actions, connect } from '../../store'
 // import { Link } from '../../routes'
+import { authenticated } from '../../components/AppLayout'
 import Component from '../../components/Component'
 import OrderStatusIndicator from '../../components/OrderStatusIndicator'
 import PageWrapper from '../../components/PageWrapper'
@@ -16,6 +17,7 @@ import PageWrapper from '../../components/PageWrapper'
 
 
 
+@authenticated('order.read')
 @connect
 class ListOrders extends Component {
   /***************************************************************************\
@@ -41,27 +43,8 @@ class ListOrders extends Component {
   \***************************************************************************/
 
   static async getInitialProps ({ store }) {
-    await actions.getOrders(/*{ type: 'good' }*/)(store.dispatch)
+    await actions.getOrders()(store.dispatch)
   }
-
-  // async componentDidMount () {
-  //   const {
-  //     cart,
-  //     getStoreCart,
-  //   } = this.props
-
-  //   if (!Object.keys(cart).length) {
-  //     const { payload } = await getStoreCart()
-
-  //     this.setState({
-  //       quantity: payload,
-  //     })
-  //   } else {
-  //     this.setState({
-  //       quantity: cart,
-  //     })
-  //   }
-  // }
 
   render () {
     const {
@@ -138,16 +121,12 @@ class ListOrders extends Component {
               ))}
             </tbody>
           </table>
-
-          {/* <pre>
-            {JSON.stringify(orders, null, 2)}
-          </pre> */}
         </div>
       </PageWrapper>
     )
   }
 
-  static mapDispatchToProps = ['getOrders']
+  static mapDispatchToProps = ['getOrders', 'updateOrder']
 
   static mapStateToProps = ({ orders }) => orders
 }

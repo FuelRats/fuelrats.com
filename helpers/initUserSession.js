@@ -17,9 +17,7 @@ export default async function initUserSession (ctx) {
       loggedIn,
       verifyError,
     },
-    user: {
-      attributes: userAttributes,
-    },
+    user,
   } = store.getState()
   const {
     getUser,
@@ -31,13 +29,14 @@ export default async function initUserSession (ctx) {
     'updateLoggingInState',
   ], store.dispatch)
 
-  let verified = loggedIn && userAttributes && !verifyError
+  let verified = loggedIn && user.attributes && !verifyError
 
   if (accessToken) {
     apiService().defaults.headers.common.Authorization = `Bearer ${accessToken}`
 
     if (!verified) {
       const { payload, status } = await getUser()
+
       if (status === 'error' && payload && Array.isArray(payload.errors)) {
         const errMsg = payload.errors[0] && payload.errors[0].status
         if (errMsg === 'Unauthorized') {
@@ -46,7 +45,9 @@ export default async function initUserSession (ctx) {
         }
       }
 
-      verified = true
+      if (status === 'success') {
+        verified = true
+      }
     }
   } else {
     updateLoggingInState()
@@ -55,5 +56,6 @@ export default async function initUserSession (ctx) {
   if (!verified) {
     return null
   }
+
   return accessToken
 }

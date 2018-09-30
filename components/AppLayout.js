@@ -21,6 +21,7 @@ import Header from './Header'
 import UserMenu from './UserMenu'
 import LoginDialog from './LoginDialog'
 import initUserSession from '../helpers/initUserSession'
+import userHasPermission from '../helpers/userHasPermission'
 
 
 
@@ -50,8 +51,10 @@ class AppLayout extends React.Component {
       asPath,
       isServer,
       query,
+      store,
     } = ctx
 
+    let statusCode = 200
     const accessToken = await initUserSession(ctx)
 
     if (!accessToken && Component.ಠ_ಠ_AUTHENTICATION_REQUIRED) {
@@ -68,13 +71,37 @@ class AppLayout extends React.Component {
       return null
     }
 
+    if (accessToken && Component.ಠ_ಠ_REQUIRED_PERMISSION) {
+      const {
+        groups,
+        user,
+      } = store.getState()
+
+      let userGroups = []
+
+      if (user.relationships.groups.data) {
+        userGroups = user.relationships.groups.data.reduce((acc, group) => [
+          ...acc,
+          groups[group.id],
+        ], [])
+      }
+
+      if (!userHasPermission(userGroups, Component.ಠ_ಠ_REQUIRED_PERMISSION)) {
+        if (ctx.res) {
+          ctx.res.statusCode = 401
+        } else {
+          statusCode = 401
+        }
+      }
+    }
+
     let pageProps = {}
 
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx)
     }
 
-    let statusCode = 200
+
 
     if (ctx.res) {
       ({ statusCode } = ctx.res)
@@ -179,8 +206,24 @@ export default AppLayout
 /**
  * Decorator to mark a page as requiring user authentication.
  */
-export function authenticated (target) {
-  target.ಠ_ಠ_AUTHENTICATION_REQUIRED = true
+export function authenticated (_target) {
+  const requiredPermission = typeof _target === 'string' ? _target : null
+
+  const setProperties = target => {
+    target.ಠ_ಠ_AUTHENTICATION_REQUIRED = true
+
+    if (requiredPermission) {
+      target.ಠ_ಠ_REQUIRED_PERMISSION = requiredPermission
+    }
+
+    return target
+  }
+
+  if (requiredPermission) {
+    return setProperties
+  }
+
+  return setProperties(_target)
 }
 
 /**
