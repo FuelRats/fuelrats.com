@@ -14,7 +14,6 @@ export default function (state = initialState.orders, action) {
 
   switch (type) {
     case actionTypes.GET_STRIPE_ORDERS:
-    case actionTypes.GET_STRIPE_ORDER:
       if (status === 'success') {
         return {
           orders: {
@@ -23,6 +22,18 @@ export default function (state = initialState.orders, action) {
               ...acc,
               [order.id]: order,
             }), {}),
+          },
+        }
+      }
+      break
+
+
+    case actionTypes.GET_STRIPE_ORDER:
+      if (status === 'success') {
+        return {
+          orders: {
+            ...state.orders,
+            [payload.data.id]: payload.data,
           },
         }
       }
