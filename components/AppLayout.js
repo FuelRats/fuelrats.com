@@ -71,7 +71,7 @@ class AppLayout extends React.Component {
       return null
     }
 
-    if (accessToken && Component.ಠ_ಠ_REQUIRED_PERMISSION) {
+    if (Component.ಠ_ಠ_REQUIRED_PERMISSION) {
       const {
         groups,
         user,
@@ -96,7 +96,6 @@ class AppLayout extends React.Component {
     }
 
     let pageProps = {}
-
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx)
     }
