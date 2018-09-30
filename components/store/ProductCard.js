@@ -8,7 +8,7 @@ import PropTypes from 'prop-types'
 
 // Component imports
 import Component from '../Component'
-
+import skuIsInStock from '../../helpers/isInStock'
 
 
 
@@ -42,7 +42,9 @@ class ProductCard extends Component {
     Public Methods
   \***************************************************************************/
 
-  render = () => {
+  render () {
+    const { isInStock } = this
+
     const {
       product,
     } = this.props
@@ -71,6 +73,7 @@ class ProductCard extends Component {
       }
     }
 
+
     return (
       <div className="product-card">
         {images && images[0] && (
@@ -93,9 +96,10 @@ class ProductCard extends Component {
                 </span>
                 <button
                   className="compact"
+                  disabled={!isInStock}
                   onClick={this._handleCartButtonClick}
                   type="button">
-                  Add to Cart
+                  {isInStock ? 'Add to Cart' : 'Out of Stock'}
                 </button>
               </>
             }
@@ -106,8 +110,23 @@ class ProductCard extends Component {
   }
 
 
+  /***************************************************************************\
+    Getters
+  \***************************************************************************/
 
+  get isInStock () {
+    const { skus } = this.props.product.attributes
 
+    if (Object.keys(skus).length) {
+      return Object.values(skus).some(sku => skuIsInStock(sku.inventory))
+    }
+
+    return false
+  }
+
+  /***************************************************************************\
+    Prop Definitions
+  \***************************************************************************/
 
   static propTypes = {
     product: PropTypes.object.isRequired,
