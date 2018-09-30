@@ -414,6 +414,7 @@ export default class TagsInputComponent extends React.Component {
     const {
       className,
       name,
+      placeholder,
     } = this.props
     const {
       allowNew,
@@ -421,8 +422,13 @@ export default class TagsInputComponent extends React.Component {
       loading,
       newFocus,
       options,
+      tags,
     } = this.state
     let classes = ['tags-input']
+
+    if (tags.length) {
+      classes.push('has-tags')
+    }
 
     if (className) {
       classes = classes.concat(className)
@@ -435,6 +441,7 @@ export default class TagsInputComponent extends React.Component {
     delete divProps.onRemove
     delete divProps.options
     delete divProps.valueProp
+    delete divProps.placeholder
 
     return (
       <div {...divProps} className={classes.join(' ')}>
@@ -447,6 +454,7 @@ export default class TagsInputComponent extends React.Component {
           onFocus={TagsInputComponent.onFocus}
           onInput={this.onInput}
           onKeyDown={this.onKeyDown}
+          placeholder={placeholder}
           ref={input => this.input = input}
           type="search" />
 
