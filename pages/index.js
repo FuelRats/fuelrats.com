@@ -42,7 +42,7 @@ class Index extends React.Component {
     </PageWrapper>
   )
 
-  static mapDisaptchToProps = ['setFlag']
+  static mapDispatchToProps = ['setFlag']
 }
 
 
