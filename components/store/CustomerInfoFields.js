@@ -13,8 +13,8 @@ import CountryTagsInput from '../CountryTagsInput'
 
 
 // Component Constants
-const INVALID_NAME_MESSAGE = 'Address is Required'
-const INVALID_EMAIL_MESSAGE = 'Address is Required'
+const INVALID_NAME_MESSAGE = 'Name is Required'
+const INVALID_EMAIL_MESSAGE = 'Email is Required'
 const INVALID_ADDRESS_MESSAGE = 'Address is Required'
 const INVALID_CITY_MESSAGE = 'City is Required'
 const INVALID_COUNTRY_MESSAGE = 'Country is Required'
