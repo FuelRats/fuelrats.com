@@ -97,6 +97,7 @@ class CheckoutForm extends React.Component {
         await localForage.setItem('currentOrder', payload.data.id)
         await localForage.setItem('lastStage', 1)
         this.setState({
+          error: null,
           cardToken: token,
           order: payload.data,
           shippingMethod: payload.data.attributes.shippingMethod,
@@ -133,6 +134,7 @@ class CheckoutForm extends React.Component {
       if (status === 'success') {
         await localForage.setItem('lastStage', 2)
         this.setState({
+          error: null,
           order: payload.data,
           stage: 2,
         })
@@ -187,8 +189,8 @@ class CheckoutForm extends React.Component {
       await localForage.removeItem('currentOrder')
       await localForage.removeItem('lastStage')
       this.setState({
-        order: payload.data,
         error: null,
+        order: payload.data,
         stage: 3,
       })
     } else {
