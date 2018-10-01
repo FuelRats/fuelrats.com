@@ -10,6 +10,12 @@ table {
     th, td {
       padding: 1rem;
     }
+
+    &.compact {
+      th, td {
+        padding: .5rem;
+      }
+    }
   }
 
   &.striped {
@@ -26,10 +32,14 @@ thead {
 
 th, td {
   text-align: left;
-  vertical-align: top;
+  vertical-align: middle;
 }
 
 th {
   font-weight: bold;
   padding-right: 1rem;
+}
+
+td.total {
+  border-top: 3px double $black;
 }
