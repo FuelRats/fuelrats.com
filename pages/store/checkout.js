@@ -43,11 +43,16 @@ class Checkout extends Component {
   }
 
   render () {
+    const {
+      cart,
+    } = this.props
     return (
       <>
         <PageWrapper title="Your Cart">
           <div className="page-content">
-            <StoreControlBar backRoute="store cart" backTitle="Return to Cart" />
+            <StoreControlBar
+              backRoute={Object.keys(cart).length ? 'store cart' : 'store list'}
+              backTitle={Object.keys(cart).length ? 'Return to Cart' : 'Return to Store'} />
             <Elements>
               <CheckoutForm />
             </Elements>
