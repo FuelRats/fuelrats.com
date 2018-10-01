@@ -404,8 +404,9 @@ class CheckoutForm extends React.Component {
             <>
               <h2>Success!</h2>
               <span>Your Order has been submitted. Be sure to check your email for confirmation!</span>
-              <span>You will receive a shipment confirmation email once your items are shipped!</span>
-              <span>Questions, concerns, or wish to cancel? Contact us at _INSERT_EMAIL_</span>
+              <span>Once our quartermaster ships your order, you will receive a shipment confirmation email.</span>
+              <span>Please note that only larger items sent by parcel have tracking numbers; smaller items like stickers and badges are sent as normal mail, but we'll still let you know when it's shipped!</span>
+              <span>If you have any questions or concerns, please contact us at <a href="mailto:orders@fuelrats.com">orders@fuelrats.com</a>. You can find our return and cancellation policy in your order confirmation email.</span>
             </>
           }
         }}
