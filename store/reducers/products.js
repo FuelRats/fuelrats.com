@@ -12,10 +12,14 @@ export default function (state = initialState.products, action) {
     case actionTypes.GET_STRIPE_PRODUCTS:
     case actionTypes.GET_STRIPE_PRODUCT:
       if (status === 'success') {
+        let products = payload.data
+        if (!Array.isArray(products)) {
+          products = [products]
+        }
         return {
           products: {
             ...state.products,
-            ...payload.data.reduce((acc, product) => ({
+            ...products.reduce((acc, product) => ({
               ...acc,
               [product.id]: {
                 ...product,

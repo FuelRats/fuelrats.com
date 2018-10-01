@@ -62,6 +62,8 @@ export default {
     total: 0,
   },
 
+  skus: {},
+
   orders: {
     hasMore: false,
     orders: {},

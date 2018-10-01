@@ -29,6 +29,8 @@ export default function (state = initialState.orders, action) {
 
 
     case actionTypes.GET_STRIPE_ORDER:
+    case actionTypes.UPDATE_STRIPE_ORDER:
+    case actionTypes.CREATE_STRIPE_ORDER:
       if (status === 'success') {
         return {
           orders: {

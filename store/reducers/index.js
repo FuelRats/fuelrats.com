@@ -13,6 +13,7 @@ import rescuesByRat from './rescuesByRat'
 import rescuesBySystem from './rescuesBySystem'
 import rescuesOverTime from './rescuesOverTime'
 import ships from './ships'
+import skus from './skus'
 import orders from './orders'
 import products from './products'
 import storeCart from './storeCart'
@@ -37,6 +38,7 @@ export default combineReducers({
   rescuesBySystem,
   rescuesOverTime,
   ships,
+  skus,
   orders,
   products,
   storeCart,
