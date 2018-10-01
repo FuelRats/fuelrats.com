@@ -27,17 +27,12 @@ const getDefaultOptionProps = () => ({
 
 export default class RadioOptionsInput extends Component {
   componentWillReceiveProps (nextProps) {
-    const newState = { ...this.state }
+    const options = nextProps.options.map(option => ({ ...getDefaultOptionProps(), ...option }))
 
-    newState.options = nextProps.options.map(option => Object.assign({}, getDefaultOptionProps(), option))
-
-    const selectedOption = newState.options.filter(option => option.value === nextProps.value)
-
-    if (selectedOption.length > 0) {
-      [newState.selectedOption] = selectedOption
-    }
-
-    this.setState(newState)
+    this.setState(state => ({
+      options,
+      selectedOption: options.find(option => option.value === nextProps.value) || state.selectedOption,
+    }))
   }
 
   constructor (props) {
@@ -52,7 +47,7 @@ export default class RadioOptionsInput extends Component {
 
     const currentValue = this.props.value || this.props.defaultValue
 
-    const options = this.props.options.map(option => Object.assign({}, getDefaultOptionProps(), option))
+    const options = this.props.options.map(option => ({ ...getDefaultOptionProps(), ...option }))
 
     let selectedOption = options.filter(option => option.value === currentValue)
 
@@ -100,7 +95,7 @@ export default class RadioOptionsInput extends Component {
       ['disabled', disabled]
     )
 
-    const divProps = Object.assign({}, this.props)
+    const divProps = { ...this.props }
 
     delete divProps.className
     delete divProps.onChange
@@ -134,7 +129,7 @@ export default class RadioOptionsInput extends Component {
       ['selected', !disabled && this.getCurrentValue() === value]
     )
 
-    const liParams = Object.assign({}, option)
+    const liParams = { ...option }
 
     delete liParams.className
     delete liParams.disabled

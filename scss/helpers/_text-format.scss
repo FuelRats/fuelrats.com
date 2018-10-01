@@ -15,5 +15,17 @@
 }
 
 .text-warning {
-  color: $yellow
+  color: $yellow;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.text-space-right {
+  padding-right: 1rem;
 }

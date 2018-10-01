@@ -97,8 +97,8 @@ class UserRatsPanel extends Component {
         <ReactTable
           className="user-rats"
           columns={this.columns}
-          data={rats.rats}
-          defaultPageSize={rats.rats.length}
+          data={rats}
+          defaultPageSize={rats.length}
           manual
           showPagination={false}
           SubComponent={this._renderSubcomponent} />
@@ -160,18 +160,14 @@ class UserRatsPanel extends Component {
 const mapDispatchToProps = dispatch => ({ createRat: bindActionCreators(actions.createRat, dispatch) })
 
 const mapStateToProps = state => {
-  let { rats } = state
+  const { rats } = state
   const {
     ships,
     user,
   } = state
 
-  rats = Object.assign(rats, {
-    rats: rats.rats.filter(rat => user.id === rat.attributes.userId),
-  })
-
   return {
-    rats,
+    rats: rats.rats.filter(rat => user.id === rat.attributes.userId),
     ships,
   }
 }

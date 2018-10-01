@@ -1,0 +1,42 @@
+div.radio-card-input {
+  ul.options {
+    display: flex;
+
+    li.radio-card {
+      padding: 1rem 2rem;
+      text-align: center;
+      margin: 0 .25rem;
+      box-shadow: 0 0 0.5rem 0 rgba($red-lightened, 0);
+      border: .1rem solid $grey-lightened;
+      transition: all .2s;
+      cursor: pointer;
+
+
+      &:not(.disabled) {
+        &:hover,
+        &.selected {
+          border-color: $red;
+
+        }
+        &.selected {
+          box-shadow: 0 0 0.5rem 0 rgba($red-lightened, 0.5);
+        }
+      }
+
+      &.disabled {
+        background-color: $grey;
+        border-color: $grey;
+        color: $grey-lightened;
+      }
+
+      div.card-content {
+        display: flex;
+        flex-direction: column;
+
+        .title {
+          font-size: 1.1em;
+        }
+      }
+    }
+  }
+}

@@ -102,9 +102,9 @@ class RescuesOverTimeChart extends Component {
               className="datum"
               key={rescue.id}
               onBlur={this._hideTooltip}
-              onFocus={(event) => this._showTooltip(event, rescue)}
+              onFocus={event => this._showTooltip(event, rescue)}
               onMouseOut={this._hideTooltip}
-              onMouseOver={(event) => this._showTooltip(event, rescue)}
+              onMouseOver={event => this._showTooltip(event, rescue)}
               transform={`translate(${xScale(rescue.attributes.date)}, 0)`}>
               <rect
                 className="success"
@@ -244,10 +244,10 @@ const mapStateToProps = state => {
     statistics,
   } = state.rescuesOverTime
 
-  return Object.assign({}, {
+  return {
     loading,
     statistics,
-  })
+  }
 }
 
 

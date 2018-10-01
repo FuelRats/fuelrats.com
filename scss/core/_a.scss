@@ -8,4 +8,12 @@ a {
     color: $black;
     outline: none;
   }
+
+  &.icon {
+    color: $black;
+
+    &:hover {
+      color: $red;
+    }
+  }
 }

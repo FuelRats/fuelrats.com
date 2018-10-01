@@ -87,7 +87,7 @@ export const retrieveBlog = id => async dispatch => {
 
 
 
-export const retrieveBlogs = (options) => async dispatch => {
+export const retrieveBlogs = options => async dispatch => {
   dispatch({ type: actionTypes.RETRIEVE_BLOGS })
 
   const queryParams = []

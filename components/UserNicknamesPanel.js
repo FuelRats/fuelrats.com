@@ -6,7 +6,7 @@ import Component from './Component'
 
 @connect
 class UserNicknamesPanel extends Component {
-  _deleteNickname = async (event) => {
+  _deleteNickname = async event => {
     await this.props.deleteNickname(event.target.name)
     return 'Deleted!'
   }

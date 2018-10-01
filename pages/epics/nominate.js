@@ -36,7 +36,7 @@ class EpicNominate extends Component {
     Public Methods
   \***************************************************************************/
 
-  handleEpicTypeChange = (newValue) => {
+  handleEpicTypeChange = newValue => {
     if (this.state.epicType !== newValue.value) {
       this.setState({
         epicType: newValue.value,
@@ -47,7 +47,7 @@ class EpicNominate extends Component {
   }
 
 
-  handleRatsChange = (value) => {
+  handleRatsChange = value => {
     const newRatIds = value.map(rat => rat.id).join(',')
     const oldRatIds = this.state.rats.map(rat => rat.id).join(',')
     if (newRatIds !== oldRatIds) {
@@ -55,30 +55,33 @@ class EpicNominate extends Component {
     }
   }
 
-  handleRescuesChange = (value) => {
+  handleRescuesChange = value => {
     const newRescueId = value.map(rescue => rescue.id).join('')
     const oldRescueId = this.state.rescue.map(rescue => rescue.id).join('')
     if (newRescueId !== oldRescueId) {
-      const newState = { ...this.state }
+      this.setState(state => {
+        const newState = { ...state }
 
-      if (value.length) {
-        const [rescue] = value
-        newState.rats = rescue.relationships
-          && rescue.relationships.rats
-          && rescue.relationships.rats.data
-          && rescue.relationships.rats.data.length
-          ? rescue.relationships.rats.data : []
-      }
+        if (value.length) {
+          const [rescue] = value
+          newState.rats = rescue.relationships
+            && rescue.relationships.rats
+            && rescue.relationships.rats.data
+            && rescue.relationships.rats.data.length
+            ? rescue.relationships.rats.data : []
+        }
 
-      newState.rescue = value
-      this.setState(newState)
+        newState.rescue = value
+
+        return newState
+      })
     }
   }
 
-  handleNotesChange = (event) => this.setState({ notes: event.target.value })
+  handleNotesChange = event => this.setState({ notes: event.target.value })
 
 
-  onSubmit = async (event) => {
+  onSubmit = async event => {
     event.preventDefault()
 
     const {

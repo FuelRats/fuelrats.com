@@ -1,5 +1,4 @@
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const webpack = require('webpack')
 const withSass = require('@zeit/next-sass')
 
@@ -41,10 +40,6 @@ module.exports = withSass({
       }))
     }
 
-    if (!dev) {
-      config.plugins.push(new UglifyJsPlugin())
-    }
-
     config.plugins.push(new webpack.DefinePlugin({
       IS_DEVELOPMENT: JSON.stringify(dev),
       IS_STAGING: JSON.stringify(['develop', 'beta'].includes(TRAVIS_BRANCH)),
@@ -63,8 +58,8 @@ module.exports = withSass({
   },
   sassLoaderOptions: {
     includePaths: ['styles', 'node_modules']
-      .map((d) => path.join(__dirname, d))
-      .map((g) => glob.sync(g))
+      .map(d => path.join(__dirname, d))
+      .map(g => glob.sync(g))
       .reduce((a, c) => a.concat(c), []),
   },
 })

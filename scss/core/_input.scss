@@ -14,7 +14,15 @@
 
   &:focus, &[data-focus] {
     border-color: $grey;
-    box-shadow: 0 0 0.5rem 0 rgba($red, 0.5);
+    box-shadow: 0 0 0.5rem 0 rgba($green-lightened, 0.5);
+  }
+
+  &[required]:not(:valid) {
+    border-color: $red-lightened;
+
+    &:focus, &[data-focus] {
+      box-shadow: 0 0 0.5rem 0 rgba($red, 0.5);
+    }
   }
 }
 

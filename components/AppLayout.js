@@ -1,8 +1,15 @@
-
 // Module imports
 import { bindActionCreators } from 'redux'
+import {
+  StripeProvider,
+} from 'react-stripe-elements'
+import getConfig from 'next/config'
+import hoistNonReactStatics from 'hoist-non-react-statics'
+import NextError from 'next/error'
+import NProgress from 'nprogress'
 import React from 'react'
-import Cookies from 'next-cookies'
+
+
 
 
 
@@ -10,68 +17,33 @@ import Cookies from 'next-cookies'
 import { actions, connect } from '../store'
 import { Router } from '../routes'
 import apiService from '../services/api'
-import Head from './Head'
 import Header from './Header'
 import UserMenu from './UserMenu'
 import LoginDialog from './LoginDialog'
+import initUserSession from '../helpers/initUserSession'
+import userHasPermission from '../helpers/userHasPermission'
+
+
+
+
+
+NProgress.configure({ showSpinner: false })
+Router.onRouteChangeStart = () => NProgress.start()
+Router.onRouteChangeError = () => NProgress.done()
+Router.onRouteChangeComplete = () => NProgress.done()
+
+const { publicRuntimeConfig } = getConfig()
+const STRIPE_API_PK = publicRuntimeConfig.apis.stripe.public
+
 
 
 
 
 @connect
 class AppLayout extends React.Component {
-  static async _getUserData (getUser, logout) {
-    const { payload, status } = await getUser()
-    if (status === 'error' && payload && Array.isArray(payload.errors)) {
-      const errMsg = payload.errors[0] && payload.errors[0].status
-      if (errMsg === 'Unauthorized') {
-        logout(true)
-        return false
-      }
-    }
-
-    return true
-  }
-
-  static async _initUserSessionData (ctx) {
-    const {
-      store,
-    } = ctx
-
-    const {
-      authentication: {
-        loggedIn,
-        verifyError,
-      },
-      user: {
-        attributes: userAttributes,
-      },
-    } = store.getState()
-
-    const getUser = (...args) => actions.getUser(...args)(store.dispatch)
-    const logout = (...args) => actions.logout(...args)(store.dispatch)
-
-    const {
-      access_token: accessToken,
-    } = Cookies(ctx)
-
-    let verified = loggedIn && userAttributes && !verifyError
-
-    if (accessToken) {
-      apiService().defaults.headers.common.Authorization = `Bearer ${accessToken}`
-
-      if (!verified) {
-        verified = await AppLayout._getUserData(getUser, logout)
-      }
-    } else {
-      actions.updateLoggingInState()(store.dispatch)
-    }
-
-    if (!verified) {
-      return null
-    }
-    return accessToken
-  }
+  /***************************************************************************\
+    Public Methods
+  \***************************************************************************/
 
   static async getInitialProps ({ Component, ctx }) {
     const {
@@ -79,11 +51,13 @@ class AppLayout extends React.Component {
       asPath,
       isServer,
       query,
+      store,
     } = ctx
 
-    const accessToken = await AppLayout._initUserSessionData(ctx)
+    let statusCode = 200
+    const accessToken = await initUserSession(ctx)
 
-    if (!accessToken && Component.authRequired) {
+    if (!accessToken && Component.ಠ_ಠ_AUTHENTICATION_REQUIRED) {
       if (res) {
         res.writeHead(302, {
           Location: `/?authenticate=true&destination=${encodeURIComponent(asPath)}`,
@@ -97,14 +71,44 @@ class AppLayout extends React.Component {
       return null
     }
 
-    let pageProps = {}
+    if (Component.ಠ_ಠ_REQUIRED_PERMISSION) {
+      const {
+        groups,
+        user,
+      } = store.getState()
 
+      let userGroups = []
+
+      if (user.relationships.groups.data) {
+        userGroups = user.relationships.groups.data.reduce((acc, group) => [
+          ...acc,
+          groups[group.id],
+        ], [])
+      }
+
+      if (!userHasPermission(userGroups, Component.ಠ_ಠ_REQUIRED_PERMISSION)) {
+        if (ctx.res) {
+          ctx.res.statusCode = 401
+        } else {
+          statusCode = 401
+        }
+      }
+    }
+
+    let pageProps = {}
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx)
     }
 
+
+
+    if (ctx.res) {
+      ({ statusCode } = ctx.res)
+    }
+
     return {
       accessToken,
+      statusCode,
       pageProps: {
         asPath,
         isServer,
@@ -130,7 +134,7 @@ class AppLayout extends React.Component {
       Component,
     } = this.props
 
-    if (!loggedIn && prevProps.loggedIn && Component.authRequired) {
+    if (!loggedIn && prevProps.loggedIn && Component.ಠ_ಠ_AUTHENTICATION_REQUIRED) {
       Router.push('/')
     }
   }
@@ -141,21 +145,30 @@ class AppLayout extends React.Component {
       isServer,
       pageProps,
       showLoginDialog,
+      statusCode,
       store,
       path,
     } = this.props
 
     return (
       <div role="application">
-        <Head title={Component.title} />
-
         <Header
           isServer={isServer}
           path={path} />
 
         <UserMenu />
 
-        <Component {...pageProps} />
+
+        {statusCode === 200
+          ? <Component {...pageProps} />
+          : (
+            <main className="fade-in page error-page">
+              <div className="page-content">
+                <NextError className="test" statusCode={statusCode} />
+              </div>
+            </main>
+          )
+        }
 
         {showLoginDialog && (
           <LoginDialog onClose={() => actions.setFlag('showLoginDialog', false)(store.dispatch)} />
@@ -192,6 +205,55 @@ export default AppLayout
 /**
  * Decorator to mark a page as requiring user authentication.
  */
-export function authenticated (target) {
-  target.authRequired = true
+export function authenticated (_target) {
+  const requiredPermission = typeof _target === 'string' ? _target : null
+
+  const setProperties = target => {
+    target.ಠ_ಠ_AUTHENTICATION_REQUIRED = true
+
+    if (requiredPermission) {
+      target.ಠ_ಠ_REQUIRED_PERMISSION = requiredPermission
+    }
+
+    return target
+  }
+
+  if (requiredPermission) {
+    return setProperties
+  }
+
+  return setProperties(_target)
+}
+
+/**
+ * Decorator to wrap a page with stripe context
+ */
+export function withStripe (Component) {
+  class StripePage extends React.Component {
+    state = {
+      stripe: null,
+    }
+
+    componentDidMount () {
+      if (!this.state.stripe) {
+        if (window.Stripe) {
+          this.setState({ stripe: window.Stripe(STRIPE_API_PK) })
+        } else {
+          document.querySelector('#stripe-js').addEventListener('load', () => {
+            this.setState({ stripe: window.Stripe(STRIPE_API_PK) })
+          })
+        }
+      }
+    }
+
+    render () {
+      return (
+        <StripeProvider stripe={this.state.stripe}>
+          <Component {...this.props} />
+        </StripeProvider>
+      )
+    }
+  }
+
+  return hoistNonReactStatics(StripePage, Component)
 }
