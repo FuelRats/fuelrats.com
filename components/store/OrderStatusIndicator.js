@@ -19,6 +19,7 @@ export default ({ status }) => {
       title={status}>
       <FontAwesomeIcon
         icon="shopping-cart"
+        size="lg"
         className="text-success" />
 
       <FontAwesomeIcon
@@ -29,6 +30,7 @@ export default ({ status }) => {
         <>
           <FontAwesomeIcon
             icon="money-bill"
+            size="lg"
             className={isPaid ? 'text-success' : 'text-muted'} />
 
           <FontAwesomeIcon
@@ -37,6 +39,7 @@ export default ({ status }) => {
 
           <FontAwesomeIcon
             icon="truck"
+            size="lg"
             className={isFulfilled ? 'text-success' : 'text-muted'} />
         </>
       )}
@@ -44,12 +47,14 @@ export default ({ status }) => {
       {isReturned && (
         <FontAwesomeIcon
           icon="undo"
+          size="lg"
           className="text-danger" />
       )}
 
       {isCanceled && (
         <FontAwesomeIcon
           icon="times-circle"
+          size="lg"
           className="text-danger" />
       )}
     </span>
