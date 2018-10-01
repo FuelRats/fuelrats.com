@@ -1,3 +1,4 @@
+//Country data from https://www.freeformatter.com/iso-country-list-html-select.html
 const countryList = [
   'Afghanistan',
   'Åland Islands',
@@ -232,9 +233,9 @@ const countryList = [
   'Tuvalu',
   'Uganda',
   'Ukraine',
+  'United Arab Emirates',
   'United Kingdom',
   'United States',
-  'United Arab Emirates',
   'United States Minor Outlying Islands',
   'Uruguay',
   'Uzbekistan',

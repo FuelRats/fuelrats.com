@@ -2,7 +2,7 @@
   border-color: $grey-lightened;
   border-style: solid;
   border-width: 0.1rem;
-  box-shadow: 0 0 0.5rem 0 rgba($red, 0);
+  box-shadow: 0 0 0.5rem 0 rgba($grey, 0);
   color: inherit;
   font-family: inherit;
   font-size: inherit;
@@ -12,16 +12,24 @@
   padding: 1rem;
   width: 100%;
 
-  &:focus, &[data-focus] {
+  &:focus {
     border-color: $grey;
-    box-shadow: 0 0 0.5rem 0 rgba($green-lightened, 0.5);
+    box-shadow: 0 0 0.5rem 0 rgba($grey, 0.5);
   }
 
-  &[required]:not(:valid) {
+  &[required] {
     border-color: $red-lightened;
-
-    &:focus, &[data-focus] {
+    &:focus {
+      border-color: $red;
       box-shadow: 0 0 0.5rem 0 rgba($red, 0.5);
+    }
+
+    &:valid {
+      border-color: $green-lightened;
+      &:focus {
+        border-color: $green;
+        box-shadow: 0 0 0.5rem 0 rgba($green, 0.5);
+      }
     }
   }
 }

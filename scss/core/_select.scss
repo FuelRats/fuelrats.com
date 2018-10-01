@@ -1,5 +1,37 @@
 select {
-  padding: 1rem;
-  border: 1px solid $grey-lightened;
+  padding: 1rem 1rem 1rem 0.65rem;
+  border: 0.1rem solid $grey-lightened;
   min-height: 41px;
+  width: 100%;
+  outline: 0;
+  transition-duration: 0.5s;
+  transition-property: border-color, box-shadow;
+
+  &:not(:valid) {
+    color: #999;
+  }
+
+  option {
+    color: #000;
+    &[value=""] {
+      display: none;
+      color: #999;
+    }
+  }
+
+  &.required {
+    border-color: $red-lightened;
+    &:focus {
+      border-color: $red;
+      box-shadow: 0 0 0.5rem 0 rgba($red, 0.5);
+    }
+
+    &:valid {
+      border-color: $green-lightened;
+      &:focus {
+        border-color: $green;
+        box-shadow: 0 0 0.5rem 0 rgba($green, 0.5);
+      }
+    }
+  }
 }

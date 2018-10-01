@@ -2,11 +2,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+// Component imports
+import countryList from '../data/CountryList'
+import classNames from '../helpers/classNames'
 
 
 
 
-class ValidatedFormInput extends React.Component {
+class ValidatedCountrySelect extends React.Component {
   /***************************************************************************\
     Private Methods
   \***************************************************************************/
@@ -16,8 +19,6 @@ class ValidatedFormInput extends React.Component {
       invalidMessage,
       label,
       onChange,
-      pattern,
-      patternMessage,
       required,
     } = this.props
     const {
@@ -25,21 +26,11 @@ class ValidatedFormInput extends React.Component {
     } = target
 
     let valid = true
-    let message
+    let message = null
 
     if (required && value === '') {
       valid = false
-      message = `${label} is Required`
-    }
-
-    if (pattern && !value.match(pattern)) {
-      valid = false
-      message = patternMessage
-    }
-
-    if (!target.checkValidity()) {
-      valid = false
-      message = invalidMessage || `${label} is invalid`
+      message = invalidMessage || `${label} is Required`
     }
 
     onChange({
@@ -59,30 +50,49 @@ class ValidatedFormInput extends React.Component {
 
   render () {
     const {
+      className,
       id,
       label,
       renderLabel,
+      required,
     } = this.props
+
+    const classes = classNames(
+      'country-select',
+      ['required', required],
+      [className, Boolean(className)],
+    )
+
     return (
       <fieldset>
         {renderLabel && <label htmlFor={id}>{label}</label>}
-        <input
-          placeholder={!renderLabel ? label : undefined}
-          {...this.inputProps}
-          onChange={this._handleChange} />
+
+        <select
+          autoComplete="country-name"
+          {...this.selectProps}
+          className={classes}
+          onChange={this._handleChange}>
+          {!renderLabel && (<option value="">{label}</option>)}
+          {countryList.map(country => (
+            <option
+              key={country}
+              value={country}>
+              {country}
+            </option>
+          ))}
+        </select>
       </fieldset>
     )
   }
 
 
-  get inputProps () {
+  get selectProps () {
     const inputProps = { ...this.props }
 
     delete inputProps.invalidMessage
     delete inputProps.label
     delete inputProps.renderLabel
     delete inputProps.onChange
-    delete inputProps.patternMessage
 
     if (!inputProps.name) {
       inputProps.name = inputProps.id
@@ -95,9 +105,6 @@ class ValidatedFormInput extends React.Component {
   static defaultProps = {
     invalidMessage: null,
     name: null,
-    type: 'text',
-    pattern: null,
-    patternMessage: null,
     renderLabel: false,
     onChange: () => ({}),
   }
@@ -108,12 +115,11 @@ class ValidatedFormInput extends React.Component {
     label: PropTypes.string.isRequired,
     name: PropTypes.string,
     onChange: PropTypes.func,
-    pattern: PropTypes.string,
-    patternMessage: PropTypes.string,
     renderLabel: PropTypes.bool,
-    type: PropTypes.string,
   }
 }
 
 
-export default ValidatedFormInput
+
+
+export default ValidatedCountrySelect
