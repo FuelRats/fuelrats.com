@@ -16,7 +16,6 @@ import classNames from '../helpers/classNames'
 const getDefaultOptionProps = () => ({
   className: null,
   disabled: false,
-  show: true,
   value: null,
   key: '',
 })
@@ -27,12 +26,15 @@ const getDefaultOptionProps = () => ({
 
 class RadioCardInput extends Component {
   componentWillReceiveProps (nextProps) {
+    const currentValue = nextProps.value || (this.state.selectedOption ? this.state.selectedOption.key : null) || nextProps.defaultValue || null
     const options = nextProps.options.map(option => ({ ...getDefaultOptionProps(), ...option }))
 
-    this.setState(state => ({
+    const selectedOption = options.find(option => option.key === currentValue)
+
+    this.setState({
       options,
-      selectedOption: options.find(option => option.key === nextProps.value) || state.selectedOption,
-    }))
+      selectedOption,
+    })
   }
 
   constructor (props) {
@@ -49,10 +51,16 @@ class RadioCardInput extends Component {
 
     const options = this.props.options.map(option => ({ ...getDefaultOptionProps(), ...option }))
 
-    let selectedOption = options.filter(option => option.value === currentValue)
+    let selectedOption = options.find(option => option.key === currentValue && !option.disabled)
+    if (!selectedOption) {
+      selectedOption = options.find(option => !option.disabled)
+    }
 
-    if (selectedOption.length > 0) {
-      [selectedOption] = selectedOption
+    if (selectedOption && selectedOption.key !== currentValue) {
+      this.props.onChange({
+        ...selectedOption,
+        name: this.props.name,
+      })
     }
 
     this.state = {
@@ -120,7 +128,6 @@ class RadioCardInput extends Component {
       className,
       disabled,
       key,
-      show,
     } = option
 
     if (!key || typeof key !== 'string') {
@@ -140,9 +147,8 @@ class RadioCardInput extends Component {
     delete liParams.disabled
     delete liParams.value
     delete liParams.key
-    delete liParams.show
 
-    return show && (
+    return (
       <li
         {...liParams}
         className={classes}
