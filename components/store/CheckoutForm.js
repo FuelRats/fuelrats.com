@@ -127,6 +127,7 @@ class CheckoutForm extends React.Component {
 
     if (shippingMethod !== order.attributes.shippingMethod) {
       this.setState({ submitting: true })
+
       const { payload, status } = await updateOrder(order.id, {
         selected_shipping_method: shippingMethod,
       })
@@ -137,6 +138,7 @@ class CheckoutForm extends React.Component {
           error: null,
           order: payload.data,
           stage: 2,
+          submitting: false,
         })
       } else {
         this.setState({
@@ -192,12 +194,11 @@ class CheckoutForm extends React.Component {
         error: null,
         order: payload.data,
         stage: 3,
+        submitting: false,
       })
     } else {
-      // eslint-disable-next-line
-      console.log(payload.data)
       this.setState({
-        error: 'Error while submitting order.',
+        error: payload.errors && payload.errors.length ? `Error: ${payload.errors[0].detail.message}` : 'Error while submitting order.',
         cardToken: null,
         submitting: false,
       })
@@ -343,7 +344,7 @@ class CheckoutForm extends React.Component {
                   <tbody>
                     {order.attributes.items.map(item => {
                       const sku = skus[item.parent]
-                      const descriptors = (sku && Object.keys(sku.attributes.attributes).length) ? Object.values(sku.attributes.attributes)[0] : 'Unknown'
+                      const descriptors = (sku && Object.keys(sku.attributes.attributes).length) ? Object.values(sku.attributes.attributes)[0] : null
                       return (
                         <tr key={item.parent}>
                           <td className="text-right text-space-right">{item.quantity && `${item.quantity}x `}{item.description}{descriptors && ` (${descriptors})`}</td>
