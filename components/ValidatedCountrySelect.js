@@ -66,21 +66,22 @@ class ValidatedCountrySelect extends React.Component {
     return (
       <fieldset>
         {renderLabel && <label htmlFor={id}>{label}</label>}
-
-        <select
-          autoComplete="country-name"
-          {...this.selectProps}
-          className={classes}
-          onChange={this._handleChange}>
-          {!renderLabel && (<option value="">{label}</option>)}
-          {countryList.map(country => (
-            <option
-              key={country}
-              value={country}>
-              {country}
-            </option>
-          ))}
-        </select>
+        <div className="select-wrapper">
+          <select
+            autoComplete="country-name"
+            {...this.selectProps}
+            className={classes}
+            onChange={this._handleChange}>
+            {!renderLabel && (<option value="">{label}</option>)}
+            {countryList.map(country => (
+              <option
+                key={country}
+                value={country}>
+                {country}
+              </option>
+            ))}
+          </select>
+        </div>
       </fieldset>
     )
   }

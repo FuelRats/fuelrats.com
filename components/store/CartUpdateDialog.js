@@ -126,16 +126,18 @@ class CartUpdateDialog extends Component {
                       <label htmlFor="skuSelect">
                         {prodAttr[0].replace(/^\w/, char => char.toUpperCase())}:
                       </label>
-                      <select
-                        id="skuSelect"
-                        name="activeSKU"
-                        value={this.state.activeSKU}
-                        onChange={this._handleSKUChange}>
-                        {Object.values(skus).map(sku => {
-                          const inStock = isInStock(sku.inventory)
-                          return <option value={sku.id} key={sku.id} disabled={!inStock}>{sku.attributes[prodAttr[0]]} {!inStock && '(Sold Out!)'}</option>
-                        })}
-                      </select>
+                      <div className="select-wrapper">
+                        <select
+                          id="skuSelect"
+                          name="activeSKU"
+                          value={this.state.activeSKU}
+                          onChange={this._handleSKUChange}>
+                          {Object.values(skus).map(sku => {
+                            const inStock = isInStock(sku.inventory)
+                            return <option value={sku.id} key={sku.id} disabled={!inStock}>{sku.attributes[prodAttr[0]]} {!inStock && '(Sold Out!)'}</option>
+                          })}
+                        </select>
+                      </div>
                     </div>
                   )}
 

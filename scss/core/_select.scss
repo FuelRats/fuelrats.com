@@ -1,11 +1,13 @@
 select {
-  padding: 1rem 1rem 1rem 0.65rem;
+  padding: 1rem;
   border: 0.1rem solid $grey-lightened;
-  min-height: 41px;
-  width: 100%;
-  outline: 0;
+  font-family: inherit;
+  font-size: inherit;
+  outline: none;
   transition-duration: 0.5s;
   transition-property: border-color, box-shadow;
+  width: 100%;
+  appearance: none;
 
   &:not(:valid) {
     color: #999;
@@ -33,5 +35,22 @@ select {
         box-shadow: 0 0 0.5rem 0 rgba($green, 0.5);
       }
     }
+  }
+}
+
+
+div.select-wrapper {
+  position: relative;
+
+  &::after {
+    content: '▼';
+    color: #999;
+    font-size: 1rem;
+    line-height: 2;
+    top: 0;
+    right: 0;
+    padding: 1rem;
+    position: absolute;
+    pointer-events: none;
   }
 }
