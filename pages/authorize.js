@@ -71,10 +71,17 @@ class Authorize extends Component {
     return {}
   }
 
+  componentDidMount () {
+    if (this.props.preAuthorized) {
+      this._formRef.current.submit()
+    }
+  }
+
   render () {
     const {
       clientId,
       clientName,
+      preAuthorized,
       redirectUri,
       responseType,
       scope,
@@ -87,7 +94,7 @@ class Authorize extends Component {
     const hasRequiredParameters = clientId && scope && responseType
 
     return (
-      <PageWrapper title="Authorize Application">
+      <PageWrapper className={preAuthorized ? 'hidden' : ''} title="Authorize Application">
         <div className="page-content">
           {hasRequiredParameters && (
             <>
@@ -111,6 +118,7 @@ class Authorize extends Component {
                     transaction_id: transactionId,
                     scope,
                     redirectUri,
+                    ...(preAuthorized ? { allow: 'true' } : {}),
                   }} />
 
                 <div className="primary">
@@ -141,7 +149,7 @@ class Authorize extends Component {
                 <h3>Invalid Authorize Request</h3>
               </header>
 
-              <p>You loaded this page with missing parameters, please contact the developer of the application you are trying to use</p>
+              <p>Missing request parameters. Please contact the developer of the application you are trying to use.</p>
             </>
           )}
         </div>
