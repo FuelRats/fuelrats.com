@@ -16,7 +16,6 @@ import ValidatedFormInput from '../ValidatedFormInput'
 
 
 // Component constants
-const INVALID_TRACKING_NUMBER = 'Tracking Number is Required'
 const INVALID_CARRIER = 'Carrier is Required'
 
 
@@ -27,7 +26,7 @@ class CartUpdateDialog extends Component {
   \***************************************************************************/
 
   state = {
-    carrier: '',
+    carrier: 'Royal Mail',
     trackingNumber: '',
     submitting: false,
   }
@@ -124,11 +123,9 @@ class CartUpdateDialog extends Component {
             value={carrier} />
           <ValidatedFormInput
             id="trackingNumber"
-            invalidMessage={INVALID_TRACKING_NUMBER}
             label={`${carrier ? `${carrier} ` : ''}Tracking Number`}
             name="trackingNumber"
             onChange={this._handleChange}
-            required={Boolean(carrier)}
             value={trackingNumber} />
         </div>
       </Dialog>
@@ -140,7 +137,7 @@ class CartUpdateDialog extends Component {
 
 
   /***************************************************************************\
-    getters
+    Getters
   \***************************************************************************/
 
   get controls () {
@@ -167,10 +164,6 @@ class CartUpdateDialog extends Component {
     } = this.state
 
     if (submitting) {
-      return false
-    }
-
-    if (carrier && !trackingNumber) {
       return false
     }
 
