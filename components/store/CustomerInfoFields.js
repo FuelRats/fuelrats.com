@@ -7,7 +7,7 @@ import React from 'react'
 
 // Component imports
 import ValidatedFormInput from '../ValidatedFormInput'
-import CountryTagsInput from '../CountryTagsInput'
+import ValidatedCountrySelect from '../ValidatedCountrySelect'
 
 
 
@@ -34,7 +34,7 @@ class CustomerInfoFields extends React.Component {
     line2: '',
     city: '',
     state: '',
-    country: [],
+    country: '',
     postalCode: '',
     validity: {
       name: INVALID_NAME_MESSAGE,
@@ -53,16 +53,6 @@ class CustomerInfoFields extends React.Component {
   /***************************************************************************\
     Private Methods
   \***************************************************************************/
-
-  _handleCountryChange = tags => {
-    this.setState(state => ({
-      country: tags,
-      validity: {
-        ...state.validity,
-        country: Boolean(tags.length) || INVALID_COUNTRY_MESSAGE,
-      },
-    }))
-  }
 
   _handleFieldChange = ({ target, valid, message }) => {
     const {
@@ -108,7 +98,7 @@ class CustomerInfoFields extends React.Component {
               city,
               state,
               postal_code: postalCode,
-              country: country.length ? country[0].value : '',
+              country,
             },
           },
         },
@@ -135,7 +125,7 @@ class CustomerInfoFields extends React.Component {
     return (
       <>
         <ValidatedFormInput
-          autoComplete="name"
+          autoComplete="shipping name"
           id="name"
           invalidMessage={INVALID_NAME_MESSAGE}
           label="Name"
@@ -144,7 +134,7 @@ class CustomerInfoFields extends React.Component {
           required
           value={name} />
         <ValidatedFormInput
-          autoComplete="email"
+          autoComplete="shipping email"
           id="email"
           invalidMessage={INVALID_EMAIL_MESSAGE}
           label="Email"
@@ -188,16 +178,15 @@ class CustomerInfoFields extends React.Component {
             value={state} />
         </div>
         <div className="form-row">
-          <fieldset>
-            <CountryTagsInput
-              data-single
-              id="country"
-              placeholder="Country"
-              name="country"
-              onChange={this._handleCountryChange}
-              required
-              value={country} />
-          </fieldset>
+          <ValidatedCountrySelect
+            autoComplete="shipping country-name"
+            id="country"
+            invalidMessage={INVALID_COUNTRY_MESSAGE}
+            label="Country"
+            name="country"
+            onChange={this._handleFieldChange}
+            required
+            value={country} />
           <ValidatedFormInput
             autoComplete="shipping postal-code"
             id="postalCode"
