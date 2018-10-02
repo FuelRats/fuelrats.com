@@ -9,6 +9,9 @@ const localApiUrl = publicRuntimeConfig.apis.fuelRats.local
 let instance = null
 
 
+
+
+
 export default function () {
   return instance || (instance = axios.create({
     baseURL: localApiUrl,

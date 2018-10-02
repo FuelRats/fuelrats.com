@@ -97,7 +97,10 @@ class AppLayout extends React.Component {
 
     let pageProps = {}
     if (Component.getInitialProps) {
-      pageProps = await Component.getInitialProps(ctx)
+      pageProps = await Component.getInitialProps({
+        ...ctx,
+        ...(Component.ಠ_ಠ_AUTHENTICATION_REQUIRED ? { accessToken } : {}),
+      })
     }
 
 
