@@ -16,8 +16,7 @@ import ValidatedFormInput from '../ValidatedFormInput'
 
 
 // Component constants
-const INVALID_TRACKING_NUMBER = 'Tracking Number is Required'
-
+const INVALID_CARRIER = 'Carrier is Required'
 
 
 @connect
@@ -27,6 +26,7 @@ class CartUpdateDialog extends Component {
   \***************************************************************************/
 
   state = {
+    carrier: 'Royal Mail',
     trackingNumber: '',
     submitting: false,
   }
@@ -46,6 +46,7 @@ class CartUpdateDialog extends Component {
     } = this.props
 
     const {
+      carrier,
       trackingNumber,
     } = this.state
 
@@ -53,10 +54,12 @@ class CartUpdateDialog extends Component {
 
     const { status } = await this.props.updateOrder(orderId, {
       status: 'fulfilled',
-      shipping: {
-        carrier: 'Royal Mail',
-        tracking_number: trackingNumber,
-      },
+      ...(carrier && trackingNumber ? {
+        shipping: {
+          carrier,
+          tracking_number: trackingNumber,
+        },
+      } : {}),
     })
 
     if (status === 'success') {
@@ -92,6 +95,7 @@ class CartUpdateDialog extends Component {
 
     const {
       error,
+      carrier,
       trackingNumber,
     } = this.state
 
@@ -110,12 +114,18 @@ class CartUpdateDialog extends Component {
             </div>
           )}
           <ValidatedFormInput
+            id="carrier"
+            invalidMessage={INVALID_CARRIER}
+            label="Carrier Name"
+            name="carrier"
+            onChange={this._handleChange}
+            required={Boolean(trackingNumber)}
+            value={carrier} />
+          <ValidatedFormInput
             id="trackingNumber"
-            invalidMessage={INVALID_TRACKING_NUMBER}
-            label="Royal Mail Tracking Number"
+            label={`${carrier ? `${carrier} ` : ''}Tracking Number`}
             name="trackingNumber"
             onChange={this._handleChange}
-            required
             value={trackingNumber} />
         </div>
       </Dialog>
@@ -127,7 +137,7 @@ class CartUpdateDialog extends Component {
 
 
   /***************************************************************************\
-    getters
+    Getters
   \***************************************************************************/
 
   get controls () {
@@ -149,10 +159,15 @@ class CartUpdateDialog extends Component {
   get isValid () {
     const {
       submitting,
+      carrier,
       trackingNumber,
     } = this.state
 
-    if (submitting || !trackingNumber.length) {
+    if (submitting) {
+      return false
+    }
+
+    if (trackingNumber && !carrier) {
       return false
     }
 
