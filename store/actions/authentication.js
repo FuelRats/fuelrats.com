@@ -73,6 +73,7 @@ export const login = (email, password, route, routeParams) => createApiAction({
 export const getClientOAuthPage = params => createApiAction({
   actionType: actionTypes.GET_CLIENT_AUTHORIZATION_PAGE,
   url: '/oauth2/authorize',
+  onSuccess: res => res,
   params,
 })
 

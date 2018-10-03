@@ -37,7 +37,7 @@ class Authorize extends Component {
   \***************************************************************************/
 
   static async getInitialProps ({
-    accessToken, query, store,
+    accessToken, query, res, store,
   }) {
     const {
       client_id: clientId,
@@ -50,7 +50,11 @@ class Authorize extends Component {
       const {
         client,
         ...oauthProps
-      } = payload
+      } = payload.data
+
+      if (res && payload.headers['set-cookie']) {
+        res.setHeader('set-cookie', payload.headers['set-cookie'])
+      }
 
       return {
         clientId,
