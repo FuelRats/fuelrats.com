@@ -94,7 +94,7 @@ class CheckoutForm extends React.Component {
       const { token, error } = await stripe.createToken({ name: cardName })
 
       if (!error) {
-        await localForage.setItem('currentOrder', payload.data.id)
+        sessionStorage.setItem('currentOrder', payload.data.id)
         await localForage.setItem('lastStage', 1)
         this.setState({
           error: null,
@@ -188,7 +188,7 @@ class CheckoutForm extends React.Component {
 
     if (status === 'success') {
       await clearCart()
-      await localForage.removeItem('currentOrder')
+      sessionStorage.removeItem('currentOrder')
       await localForage.removeItem('lastStage')
       this.setState({
         error: null,
@@ -213,7 +213,7 @@ class CheckoutForm extends React.Component {
   \***************************************************************************/
 
   async componentDidMount () {
-    const currentOrderId = await localForage.getItem('currentOrder')
+    const currentOrderId = sessionStorage.getItem('currentOrder')
     const lastStage = await localForage.getItem('lastStage')
     let order = null
 
@@ -229,7 +229,7 @@ class CheckoutForm extends React.Component {
       loading: false,
       order,
       shippingMethod: order ? order.attributes.shippingMethod : '',
-      stage: lastStage || (order ? 1 : 0),
+      stage: order ? (lastStage || 1) : 0,
     })
   }
 
