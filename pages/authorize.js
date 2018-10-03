@@ -36,27 +36,25 @@ class Authorize extends Component {
     Public Methods
   \***************************************************************************/
 
-  static async getInitialProps ({ query, store, accessToken }) {
+  static async getInitialProps ({
+    accessToken, query, res, store,
+  }) {
     const {
       client_id: clientId,
-      state,
-      scope,
       response_type: responseType,
     } = query
 
-    const { payload, status } = await actions.getClientOAuthPage({
-      clientId,
-      responseType,
-      scope,
-      state,
-    })(store.dispatch)
-
+    const { payload, status } = await actions.getClientOAuthPage(query)(store.dispatch)
 
     if (status === 'success') {
       const {
         client,
         ...oauthProps
-      } = payload
+      } = payload.data
+
+      if (res && payload.headers['set-cookie']) {
+        res.setHeader('set-cookie', payload.headers['set-cookie'])
+      }
 
       return {
         clientId,
