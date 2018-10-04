@@ -94,7 +94,7 @@ const Header = props => {
         <div className="social-actions">
 
           <a
-            className="button link icon"
+            className="button link"
             href="https://www.twitter.com/FuelRats/"
             target="_blank"
             rel="noopener noreferrer"
@@ -105,7 +105,7 @@ const Header = props => {
           </a>
 
           <a
-            className="button link icon"
+            className="button link"
             href="https://www.reddit.com/r/FuelRats/"
             target="_blank"
             rel="noopener noreferrer"
@@ -116,7 +116,7 @@ const Header = props => {
           </a>
 
           <a
-            className="button link icon"
+            className="button link"
             href="https://www.twitch.tv/fuelrats/"
             target="_blank"
             rel="noopener noreferrer"
@@ -127,7 +127,7 @@ const Header = props => {
           </a>
 
           <a
-            className="button link icon"
+            className="button link"
             href="https://www.github.com/FuelRats/"
             target="_blank"
             rel="noopener noreferrer"
@@ -138,7 +138,7 @@ const Header = props => {
           </a>
 
           <a
-            className="button link icon"
+            className="button link"
             href="https://forums.frontier.co.uk/showthread.php/150703-Out-of-Fuel-Explorer-Rescue-Service-The-Fuel-Rats"
             target="_blank"
             rel="noopener noreferrer"
