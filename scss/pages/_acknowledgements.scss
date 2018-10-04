@@ -37,7 +37,7 @@
 
     &.atlassian-brand {
       background-image: url(/static/images/brandlogos/atlassian.png);
-      
+
     }
 
     &.statuspage-brand {
@@ -51,6 +51,35 @@
 
     &.slack-brand {
       background-image: url(/static/images/brandlogos/slack.png);
+    }
+
+    &.onepass-brand {
+      background-image:  url(/static/images/brandlogos/onepassword.png);
+    }
+  }
+
+  .dependency-list {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 2rem;
+
+    > span {
+      font-size: 1.25em;
+      font-family: Raleway, sans-serif;
+      border-bottom: .1rem solid $black;
+    }
+
+    > ul {
+      min-width: 450px;
+      max-height: 550px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      border: .1rem solid $black;
+      padding: .5rem 1rem;
+      margin: 1rem;
+      font-family: 'Operator Mono', 'SF Mono', 'Fira Code', 'Source Code Pro', Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Consolas, monospace, sans-serif;
     }
   }
 }
