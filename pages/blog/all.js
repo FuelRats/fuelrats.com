@@ -75,9 +75,8 @@ class Blogs extends Component {
 
     const wpOptions = {}
 
-    author = options.author || author
-    category = options.category || category
-    wpOptions.page = options.page || page
+    author = typeof options.author !== 'undefined' ? options.author : author
+    category = typeof options.category !== 'undefined' ? options.category : category
 
     if (author) {
       wpOptions.author = author
@@ -86,6 +85,8 @@ class Blogs extends Component {
     if (category) {
       wpOptions.categories = category
     }
+
+    wpOptions.page = options.page || page
 
     this.setState({
       retrieving: true,
@@ -117,15 +118,21 @@ class Blogs extends Component {
       page,
     } = this.props
 
-    const authorMatches = author === nextProps.author
-    const categoryMatches = category === nextProps.category
-    const pageMatches = page === nextProps.page
+    const {
+      author: nextAuthor,
+      category: nextCategory,
+      page: nextPage,
+    } = nextProps
+
+    const authorMatches = author === nextAuthor
+    const categoryMatches = category === nextCategory
+    const pageMatches = page === nextPage
 
     if (!authorMatches || !categoryMatches || !pageMatches) {
       this._retrieveBlogs({
-        author: nextProps.author,
-        category: nextProps.category,
-        page: nextProps.page,
+        author: nextAuthor || null,
+        category: nextCategory || null,
+        page: nextPage,
       })
     }
   }
