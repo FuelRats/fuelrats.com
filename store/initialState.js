@@ -8,8 +8,10 @@ export default {
   },
 
   blogs: {
+    authors: {},
     blogs: [],
-    totalPages: 0,
+    categories: {},
+    total: null,
   },
 
   decals: {

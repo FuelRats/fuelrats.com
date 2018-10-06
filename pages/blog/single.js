@@ -11,7 +11,7 @@ import { connect } from '../../store'
 import { Link } from '../../routes'
 import Component from '../../components/Component'
 import PageWrapper from '../../components/PageWrapper'
-
+import TextPlaceholder from '../../components/TextPlaceholder'
 
 
 @connect
@@ -31,7 +31,7 @@ class Blog extends Component {
     await retrieveBlog(query.id)
 
     this.setState({
-      blog: this.props.blogs.find(blog => (blog.id === query.id) || (blog.slug === query.id)),
+      blog: this.props.blogs.find(blog => (blog.id.toString() === query.id) || (blog.slug === query.id)),
       retrieving: false,
     })
   }
@@ -65,10 +65,20 @@ class Blog extends Component {
       retrieving,
     } = this.state
 
-    let content
+    const {
+      authors,
+      categories,
+    } = this.props
+
+    let content = null
+    let author = null
 
     if (blog) {
       content = blog.content.rendered.replace(/<ul>/gi, '<ul class="bulleted">').replace(/<ol>/gi, '<ol class="numbered">')
+      author = authors[blog.author] || {
+        id: blog.author,
+        name: (<TextPlaceholder size={30} loading />),
+      }
     }
 
     /* eslint-disable react/no-danger */
@@ -96,8 +106,8 @@ class Blog extends Component {
               <span className="author">
                 <FontAwesomeIcon icon="user" fixedWidth />
 
-                <Link as={`/blog/author/${blog.author.id}`} href={`/blog/all?author=${blog.author.id}`}>
-                  <a>{blog.author.name}</a>
+                <Link as={`/blog/author/${author.id}`} href={`/blog/all?author=${author.id}`}>
+                  <a>{author.name}</a>
                 </Link>
               </span>
 
@@ -105,13 +115,21 @@ class Blog extends Component {
                 <FontAwesomeIcon icon="folder" fixedWidth />
 
                 <ul className="category-list">
-                  {blog.categories.map(category => (
-                    <li key={category.id}>
-                      <Link as={`/blog/category/${category.id}`} href={`/blog/all?category=${category.id}`}>
-                        <a title={category.description}>{category.name}</a>
-                      </Link>
-                    </li>
-                  ))}
+                  {blog.categories.map(catId => {
+                    const category = categories[catId] || {
+                      id: catId,
+                      description: 'Loading...',
+                      name: (<TextPlaceholder size={25} loading />),
+                    }
+
+                    return (
+                      <li key={category.id}>
+                        <Link as={`/blog/category/${category.id}`} href={`/blog/all?category=${category.id}`}>
+                          <a title={category.description}>{category.name}</a>
+                        </Link>
+                      </li>
+                    )
+                  })}
                 </ul>
               </span>
             </small>
@@ -120,7 +138,7 @@ class Blog extends Component {
               className="article-content"
               dangerouslySetInnerHTML={{ __html: content }} />
 
-            <aside className="comments">
+            {/*<aside className="comments">
               <header>
                 <h3>Comments</h3>
               </header>
@@ -142,7 +160,7 @@ class Blog extends Component {
                   </li>
                 )) : 'No comments... yet.'}
               </ol>
-            </aside>
+            </aside>*/}
           </article>
         )}
 
@@ -156,7 +174,7 @@ class Blog extends Component {
 
   static mapStateToProps = state => state.blogs
 
-  static mapDispatchToProps = ['retrieveBlogs']
+  static mapDispatchToProps = ['retrieveBlog']
 }
 
 
