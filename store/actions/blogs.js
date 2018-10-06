@@ -13,138 +13,129 @@ import actionTypes from '../actionTypes'
 
 
 
-// Cache
-const cache = {
-  authors: {},
-  categories: {},
-}
+export const retrieveBlog = id => async (dispatch, getState) => {
+  dispatch({ type: actionTypes.GET_WORDPRESS_POST })
 
+  const { authors, categories } = getState().blogs
 
-
-
-
-export const retrieveBlog = id => async dispatch => {
-  dispatch({ type: actionTypes.RETRIEVE_BLOG })
+  let response = null
+  let success = true
 
   try {
-    let blogUrl = '/wp-api/posts/'
+    response = await fetch(`/wp-api/posts/${id}`)
+    response = await response.json()
 
-    if (parseInt(id, 10)) {
-      blogUrl += id
-    } else {
-      blogUrl += `?slug=${id}`
+    if (!authors[response.author.toString()]) {
+      fetch(`/wp-api/users/${response.author}`)
+        .then(authorResponse => authorResponse.json())
+        .then(author => {
+          dispatch({
+            payload: { ...author },
+            status: 'success',
+            type: actionTypes.GET_WORDPRESS_AUTHOR,
+          })
+        }).catch(error => {
+          throw error
+        })
     }
 
-    const response = await fetch(blogUrl)
-    let blog = await response.json()
-
-    if (Array.isArray(blog)) {
-      [blog] = blog
-    }
-
-    blog.id = blog.id.toString()
-
-    let authorResponse = await fetch(`/wp-api/users/${blog.author}`)
-    authorResponse = await authorResponse.json()
-
-    blog.author = {
-      id: authorResponse.id,
-      name: authorResponse.name,
-    }
-
-    for (const [key, value] of blog.categories.entries()) {
-      let categoryResponse = await fetch(`/wp-api/categories/${value}`)
-      categoryResponse = await categoryResponse.json()
-
-      blog.categories[key] = {
-        description: categoryResponse.description,
-        id: categoryResponse.id,
-        name: categoryResponse.name,
+    response.categories.forEach(categoryId => {
+      if (!Object.keys(categories).includes(categoryId.toString())) {
+        fetch(`/wp-api/categories/${categoryId}`)
+          .then(categoryResponse => categoryResponse.json())
+          .then(category => {
+            dispatch({
+              payload: { ...category },
+              status: 'success',
+              type: actionTypes.GET_WORDPRESS_CATEGORY,
+            })
+          }).catch(error => {
+            throw error
+          })
       }
-    }
-
-    const commentsResponse = await fetch(`/wp-api/comments?post=${id}`)
-    blog.comments = await commentsResponse.json()
-    blog.comments = blog.comments || []
-
-    dispatch({
-      payload: blog,
-      status: 'success',
-      type: actionTypes.RETRIEVE_BLOG,
     })
-    return null
   } catch (error) {
-    dispatch({
-      payload: error,
-      status: 'error',
-      type: actionTypes.RETRIEVE_BLOG,
-    })
-    return error
+    response = error
+    success = false
   }
+
+  dispatch({
+    payload: response,
+    status: success ? 'success' : 'error',
+    type: actionTypes.GET_WORDPRESS_POST,
+  })
 }
 
 
 
 
 
-export const retrieveBlogs = options => async dispatch => {
-  dispatch({ type: actionTypes.RETRIEVE_BLOGS })
+export const retrieveBlogs = options => async (dispatch, getState) => {
+  dispatch({ type: actionTypes.GET_WORDPRESS_POSTS })
 
-  const queryParams = []
+  const { authors: authorCache, categories: catCache } = getState().blogs
+  const newAuthors = {}
+  const newCategories = {}
 
-  for (const option in options) {
-    if ({}.hasOwnProperty.call(options, option)) {
-      queryParams.push(`${option}=${options[option]}`)
-    }
-  }
+  let response = null
+  let success = true
+
+  const params = Object.entries(options).reduce((acc, [key, val]) => [...acc, `${key}=${val}`], []).join('&')
 
   try {
-    const response = await fetch(`/wp-api/posts?${queryParams.join('&')}`)
-    const blogs = await response.json()
+    response = await fetch(`/wp-api/posts?${params}`)
     const headers = await response.headers
+    response = await response.json()
 
-    for (const blog of blogs) {
-      if (cache.authors[blog.author]) {
-        blog.author = cache.authors[blog.author]
-      } else {
-        let authorResponse = await fetch(`/wp-api/users/${blog.author}`)
-        authorResponse = await authorResponse.json()
-
-        cache.authors[blog.author] = blog.author = {
-          id: authorResponse.id,
-          name: authorResponse.name,
-        }
+    response.forEach(({ author: authorId }) => {
+      if (!Object.keys(authorCache).includes(authorId.toString()) && !newAuthors[authorId.toString()]) {
+        newAuthors[authorId] = true
+        fetch(`/wp-api/users/${authorId}`)
+          .then(authorResponse => authorResponse.json())
+          .then(author => {
+            dispatch({
+              payload: { ...author },
+              status: 'success',
+              type: actionTypes.GET_WORDPRESS_AUTHOR,
+            })
+          }).catch(error => {
+            throw error
+          })
       }
+    })
 
-      for (const [key, value] of blog.categories.entries()) {
-        if (cache.categories[value]) {
-          blog.categories[key] = cache.categories[value]
-        } else {
-          let categoryResponse = await fetch(`/wp-api/categories/${value}`)
-          categoryResponse = await categoryResponse.json()
+    response.forEach(({ categories }) => {
+      categories.forEach(catId => {
+        if (!Object.keys(catCache).includes(catId.toString()) && !newCategories[catId.toString()]) {
+          newCategories[catId] = true
 
-          cache.categories[value] = blog.categories[key] = {
-            description: categoryResponse.description,
-            id: categoryResponse.id,
-            name: categoryResponse.name,
-          }
+          fetch(`/wp-api/categories/${catId}`)
+            .then(categoryResponse => categoryResponse.json())
+            .then(category => {
+              dispatch({
+                payload: { ...category },
+                status: 'success',
+                type: actionTypes.GET_WORDPRESS_CATEGORY,
+              })
+            }).catch(error => {
+              throw error
+            })
         }
-      }
+      })
+    })
+
+    response = {
+      blogs: [...response],
+      totalPages: parseInt(headers.get('x-wp-totalpages'), 10),
     }
-
-    dispatch({
-      payload: {
-        blogs,
-        totalPages: parseInt(headers.get('x-wp-totalpages'), 10),
-      },
-      status: 'success',
-      type: actionTypes.RETRIEVE_BLOGS,
-    })
   } catch (error) {
-    dispatch({
-      payload: error,
-      status: 'error',
-      type: actionTypes.RETRIEVE_BLOGS,
-    })
+    response = error
+    success = false
   }
+
+  dispatch({
+    payload: response,
+    status: success ? 'success' : 'error',
+    type: actionTypes.GET_WORDPRESS_POSTS,
+  })
 }

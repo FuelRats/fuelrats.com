@@ -13,33 +13,63 @@ export default function (state = initialState.blogs, action) {
   } = action
 
   switch (type) {
-    case actionTypes.RETRIEVE_BLOG:
+    case actionTypes.GET_WORDPRESS_POST:
       switch (status) {
         case 'success':
           return {
             ...state,
-            blogs: state.blogs.concat(payload),
+            blogs: [payload],
+            totalPages: null,
           }
 
         default:
           return state
       }
 
-    case actionTypes.RETRIEVE_BLOGS:
+    case actionTypes.GET_WORDPRESS_POSTS:
       switch (status) {
         case 'error':
           return {
             ...state,
             blogs: [],
-            total: null,
+            totalPages: 0,
           }
 
         case 'success':
-          return { ...state, ...payload }
+          return {
+            ...state,
+            blogs: [...payload.blogs],
+            totalPages: payload.totalPages,
+          }
 
         default:
           return state
       }
+
+
+    case actionTypes.GET_WORDPRESS_AUTHOR:
+      if (status === 'success') {
+        return {
+          ...state,
+          authors: {
+            ...state.authors,
+            [payload.id]: { ...payload },
+          },
+        }
+      }
+      return state
+
+    case actionTypes.GET_WORDPRESS_CATEGORY:
+      if (status === 'success') {
+        return {
+          ...state,
+          categories: {
+            ...state.categories,
+            [payload.id]: { ...payload },
+          },
+        }
+      }
+      return state
 
     default:
       return state

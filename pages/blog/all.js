@@ -11,7 +11,7 @@ import { Link } from '../../routes'
 import { connect } from '../../store'
 import Component from '../../components/Component'
 import PageWrapper from '../../components/PageWrapper'
-
+import TextPlaceholder from '../../components/TextPlaceholder'
 
 
 
@@ -155,7 +155,7 @@ class Blogs extends Component {
   }
 
   render () {
-    const { blogs } = this.props
+    const { authors, blogs, categories } = this.props
     const {
       retrieving,
     } = this.state
@@ -164,12 +164,15 @@ class Blogs extends Component {
       <PageWrapper title="Blog">
         <div className="page-content">
           <ol className="article-list loading">
-            {!retrieving && blogs && blogs.map(blog => {
+            {!retrieving && Boolean(blogs.length) && blogs.map(blog => {
               const {
-                author,
                 id,
               } = blog
               const postedAt = moment(blog.date_gmt)
+              const author = authors[blog.author] || {
+                id: blog.author,
+                name: (<TextPlaceholder size={30} loading />),
+              }
 
               /* eslint-disable react/no-danger */
               return (
@@ -201,7 +204,13 @@ class Blogs extends Component {
                         <FontAwesomeIcon icon="folder" fixedWidth />
 
                         <ul className="category-list">
-                          {blog.categories.map(category => {
+                          {blog.categories.map(catId => {
+                            const category = categories[catId] || {
+                              id: catId,
+                              description: 'Loading...',
+                              name: (<TextPlaceholder size={25} loading />),
+                            }
+
                             const {
                               description,
                               name,
