@@ -1,8 +1,8 @@
 {
   "name": "fuelrats-react",
-  "version": "1.0.0",
+  "version": "2.5.0",
   "main": "index.js",
-  "license": "MIT",
+  "license": "BSD-3-Clause",
   "scripts": {
     "add-contributor": "all-contributors add",
     "analyze": "cross-env ANALYZE=1 next build",
