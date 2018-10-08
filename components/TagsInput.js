@@ -1,5 +1,5 @@
 // Module imports
-import { debounce } from 'lodash'
+import debounce from 'lodash-es/debounce'
 import React from 'react'
 
 
