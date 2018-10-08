@@ -1,15 +1,14 @@
-/* eslint-disable */
-'use strict'
-
 // Module imports
 const router = require('koa-router')()
+const send = require('koa-send')
+
+// Component imports
 const routes = require('../../routes')
 
 
 
 
-
-module.exports = function (nextjs, koa) {
+module.exports = (nextjs, koa) => {
   /******************************************************************************\
     Router setup
   \******************************************************************************/
@@ -40,39 +39,39 @@ module.exports = function (nextjs, koa) {
   // Legacy Wordpress permalinks
   // e.g. /2017/09/07/universal-service-a-fuel-rats-thargoid-cartoon
   router.get('/:year/:month/:day/:slug', async (ctx, next) => {
-    let {
+    const {
       day,
       month,
       slug,
       year,
     } = ctx.params
 
-    let dayIsValid = parseInt(day) && (day.length === 2)
-    let monthIsValid = parseInt(month) && (month.length === 2)
-    let yearIsValid = parseInt(year) && (year.length === 4)
+    const dayIsValid = parseInt(day, 10) && (day.length === 2)
+    const monthIsValid = parseInt(month, 10) && (month.length === 2)
+    const yearIsValid = parseInt(year, 10) && (year.length === 4)
 
     if (dayIsValid && monthIsValid && yearIsValid) {
       ctx.status = 301
-      return await ctx.redirect(`/blog/${slug}`)
+      await ctx.redirect(`/blog/${slug}`)
     }
 
     await next()
   })
 
   // Permanent Redirects
-  router.all('/blogs', async (ctx, next) => {
+  router.all('/blogs', async ctx => {
     ctx.status = 301
-    await ctx.redirect(`/blog`)
+    await ctx.redirect('/blog')
   })
 
-  router.all('/get-help', async (ctx, next) => {
+  router.all('/get-help', async ctx => {
     ctx.status = 301
-    await ctx.redirect(`/i-need-fuel`)
+    await ctx.redirect('/i-need-fuel')
   })
 
-  router.all('/fuel-rats-lexicon', async (ctx, next) => {
+  router.all('/fuel-rats-lexicon', async ctx => {
     ctx.status = 301
-    await ctx.redirect(`https://confluence.fuelrats.com/pages/viewpage.action?pageId=3637257`)
+    await ctx.redirect('https://confluence.fuelrats.com/pages/viewpage.action?pageId=3637257')
   })
 
 
