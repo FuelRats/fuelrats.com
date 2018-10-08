@@ -1,4 +1,4 @@
-import isPlainObject from 'lodash-es/isPlainObject'
+import isPlainObject from 'lodash/isPlainObject'
 
 // Component imports
 import isRequired from '../helpers/isRequired'
