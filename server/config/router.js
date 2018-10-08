@@ -1,17 +1,8 @@
 /* eslint-disable */
 'use strict'
 
-/******************************************************************************\
-  Module imports
-\******************************************************************************/
-
-const { URL } = require('url')
-const cookie = require('koa-cookie')
-const next = require('next')
-const path = require('path')
-const request = require('request-promise-native')
+// Module imports
 const router = require('koa-router')()
-
 const routes = require('../../routes')
 
 
@@ -23,34 +14,7 @@ module.exports = function (nextjs, koa) {
     Router setup
   \******************************************************************************/
 
-  const handle = routes.getRequestHandler(nextjs)
-
-  router.use(cookie.default())
-
-
-
-
-
-  /******************************************************************************\
-    Authenticated routes
-  \******************************************************************************/
-
-  // let authenticatedRoutes = [
-  //   '/admin/*',
-  //   '/paperwork',
-  //   '/paperwork/*',
-  //   '/profile',
-  //   '/authorize'
-  // ]
-
-  // router.get(authenticatedRoutes, async (ctx, next) => {
-  //   if (ctx.cookie && ctx.cookie.access_token) {
-  //     await next()
-  //
-  //   } else {
-  //     await ctx.redirect(`/?authenticate=true&destination=${encodeURIComponent(ctx.request.url)}`)
-  //   }
-  // })
+  const nextRoutesHandler = routes.getRequestHandler(nextjs)
 
 
 
@@ -111,12 +75,17 @@ module.exports = function (nextjs, koa) {
     await ctx.redirect(`https://confluence.fuelrats.com/pages/viewpage.action?pageId=3637257`)
   })
 
+
+
+
+
   /******************************************************************************\
     Fallthrough routes
   \******************************************************************************/
 
+  // Pass off to next-routes
   router.get('*', async ctx => {
-    await handle(ctx.req, ctx.res)
+    await nextRoutesHandler(ctx.req, ctx.res)
     ctx.respond = false
   })
 
