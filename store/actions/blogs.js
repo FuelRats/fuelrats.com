@@ -1,13 +1,13 @@
-/* eslint no-await-in-loop:off */
-// Module imports
-import fetch from 'isomorphic-fetch'
-
-
-
-
-
 // Component imports
 import actionTypes from '../actionTypes'
+import wpService from '../../services/wordpress'
+
+
+
+
+
+// Component constants
+const wpFetch = url => wpService().request({ url })
 
 
 
@@ -22,36 +22,40 @@ export const retrieveBlog = id => async (dispatch, getState) => {
   let success = true
 
   try {
-    response = await fetch(`/wp-api/posts/${id}`)
-    response = await response.json()
+    response = await wpFetch(`/posts/${id}`)
+    response = response.data
 
-    if (!authors[response.author.toString()]) {
-      fetch(`/wp-api/users/${response.author}`)
-        .then(authorResponse => authorResponse.json())
-        .then(author => {
-          dispatch({
-            payload: { ...author },
-            status: 'success',
-            type: actionTypes.GET_WORDPRESS_AUTHOR,
-          })
-        }).catch(error => {
-          throw error
+    if (!authors[response.author]) {
+      wpFetch(`/users/${response.author}`).then(({ data: payload }) => {
+        dispatch({
+          payload,
+          status: 'success',
+          type: actionTypes.GET_WORDPRESS_AUTHOR,
         })
+      }).catch(({ response: payload }) => {
+        dispatch({
+          payload,
+          status: 'error',
+          type: actionTypes.GET_WORDPRESS_AUTHOR,
+        })
+      })
     }
 
     response.categories.forEach(categoryId => {
-      if (!Object.keys(categories).includes(categoryId.toString())) {
-        fetch(`/wp-api/categories/${categoryId}`)
-          .then(categoryResponse => categoryResponse.json())
-          .then(category => {
-            dispatch({
-              payload: { ...category },
-              status: 'success',
-              type: actionTypes.GET_WORDPRESS_CATEGORY,
-            })
-          }).catch(error => {
-            throw error
+      if (!Object.keys(categories).includes(categoryId)) {
+        wpFetch(`/categories/${categoryId}`).then(({ data: payload }) => {
+          dispatch({
+            payload,
+            status: 'success',
+            type: actionTypes.GET_WORDPRESS_CATEGORY,
           })
+        }).catch(({ response: payload }) => {
+          dispatch({
+            payload,
+            status: 'error',
+            type: actionTypes.GET_WORDPRESS_CATEGORY,
+          })
+        })
       }
     })
   } catch (error) {
@@ -73,9 +77,9 @@ export const retrieveBlog = id => async (dispatch, getState) => {
 export const retrieveBlogs = options => async (dispatch, getState) => {
   dispatch({ type: actionTypes.GET_WORDPRESS_POSTS })
 
-  const { authors: authorCache, categories: catCache } = getState().blogs
-  const newAuthors = {}
-  const newCategories = {}
+  const { blogs } = getState()
+  const authorCache = { ...blogs.authors }
+  const categoryCache = { ...blogs.categories }
 
   let response = null
   let success = true
@@ -83,50 +87,54 @@ export const retrieveBlogs = options => async (dispatch, getState) => {
   const params = Object.entries(options).reduce((acc, [key, val]) => [...acc, `${key}=${val}`], []).join('&')
 
   try {
-    response = await fetch(`/wp-api/posts?${params}`)
-    const headers = await response.headers
-    response = await response.json()
+    response = await wpFetch(`/posts?${params}`)
+    const headers = { ...response.headers }
+    response = { ...response.data }
 
-    response.forEach(({ author: authorId }) => {
-      if (!Object.keys(authorCache).includes(authorId.toString()) && !newAuthors[authorId.toString()]) {
-        newAuthors[authorId] = true
-        fetch(`/wp-api/users/${authorId}`)
-          .then(authorResponse => authorResponse.json())
-          .then(author => {
-            dispatch({
-              payload: { ...author },
-              status: 'success',
-              type: actionTypes.GET_WORDPRESS_AUTHOR,
-            })
-          }).catch(error => {
-            throw error
+    // Gather Author and category information
+    Object.values(response).forEach(({ author: authorId, categories }) => {
+      if (!authorCache[authorId]) {
+        authorCache[authorId] = {}
+
+        wpFetch(`/users/${authorId}`).then(({ data: payload }) => {
+          dispatch({
+            payload,
+            status: 'success',
+            type: actionTypes.GET_WORDPRESS_AUTHOR,
           })
+        }).catch(({ response: payload }) => {
+          dispatch({
+            payload,
+            status: 'error',
+            type: actionTypes.GET_WORDPRESS_AUTHOR,
+          })
+        })
       }
-    })
 
-    response.forEach(({ categories }) => {
       categories.forEach(catId => {
-        if (!Object.keys(catCache).includes(catId.toString()) && !newCategories[catId.toString()]) {
-          newCategories[catId] = true
+        if (!categoryCache[catId]) {
+          categoryCache[catId] = {}
 
-          fetch(`/wp-api/categories/${catId}`)
-            .then(categoryResponse => categoryResponse.json())
-            .then(category => {
-              dispatch({
-                payload: { ...category },
-                status: 'success',
-                type: actionTypes.GET_WORDPRESS_CATEGORY,
-              })
-            }).catch(error => {
-              throw error
+          wpFetch(`/categories/${catId}`).then(({ data: payload }) => {
+            dispatch({
+              payload,
+              status: 'success',
+              type: actionTypes.GET_WORDPRESS_CATEGORY,
             })
+          }).catch(({ response: payload }) => {
+            dispatch({
+              payload,
+              status: 'error',
+              type: actionTypes.GET_WORDPRESS_CATEGORY,
+            })
+          })
         }
       })
     })
 
     response = {
-      blogs: [...response],
-      totalPages: parseInt(headers.get('x-wp-totalpages'), 10),
+      blogs: [...Object.values(response)],
+      totalPages: parseInt(headers['x-wp-totalpages'], 10),
     }
   } catch (error) {
     response = error
