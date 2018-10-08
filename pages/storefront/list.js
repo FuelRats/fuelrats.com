@@ -1,10 +1,10 @@
 // Component imports
 import { actions, connect } from '../../store'
-import StoreControlBar from '../../components/store/StoreControlBar'
-import CartUpdateDialog from '../../components/store/CartUpdateDialog'
+import StoreControlBar from '../../components/storefront/StoreControlBar'
+import CartUpdateDialog from '../../components/storefront/CartUpdateDialog'
 import Component from '../../components/Component'
 import PageWrapper from '../../components/PageWrapper'
-import ProductCard from '../../components/store/ProductCard'
+import ProductCard from '../../components/storefront/ProductCard'
 
 
 @connect
