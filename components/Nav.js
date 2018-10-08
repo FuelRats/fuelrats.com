@@ -37,12 +37,12 @@ const navItems = [
       {
         key: 'stats-statistics',
         title: 'General',
-        route: '/statistics',
+        route: 'stats statistics',
       },
       {
         key: 'stats-leaderboard',
         title: 'Leaderboard',
-        route: '/leaderboard',
+        route: 'stats leaderboard',
       },
     ],
   },
@@ -53,7 +53,7 @@ const navItems = [
       {
         key: 'merch',
         title: 'Merch Store',
-        route: '/store/products',
+        route: 'store list',
       },
       {
         key: 'donate',
