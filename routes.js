@@ -41,10 +41,10 @@ routes
   .add('stats leaderboard', '/leaderboard', '/leaderboard')
 
   // Storefront
-  .add('store list', '/store/products/:page?', '/store/list')
-  .add('store cart', '/store/cart', '/store/cart')
-  .add('store orders', '/store/orders', '/store/orders')
-  .add('store checkout', '/store/checkout', '/store/checkout')
+  .add('store list', '/store/products/:page?', '/storefront/list')
+  .add('store cart', '/store/cart', '/storefront/cart')
+  .add('store orders', '/store/orders', '/storefront/orders')
+  .add('store checkout', '/store/checkout', '/storefront/checkout')
 
   // About
   .add('about fuelrats', '/about', '/about')

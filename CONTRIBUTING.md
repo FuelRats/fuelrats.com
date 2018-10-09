@@ -80,19 +80,16 @@ Below are steps which must be followed by Fuel Rats org members. External collab
 
 ### Steps for development
 
-> Due to complications caused by a pending major update of our API, all current development will be done from the beta branch.
-> This will change once APIv2.1 is released.
-
-1. Branch from beta using the formatting rules below.
+1. Branch from `develop` using the formatting rules below.
 2. Do the work required to satisfy the Ticket or objective. If work unrelated to the objective needs to be done, make a separate branch.
-3. Submit PR to merge back into beta.
+3. Submit PR to merge back into `develop`.
     * Any change which would affect current development should be documented in the description.
     * PRs for a ticket should be tagged in the title with the ticket. IE: `[WEB-##] Fix bug`
     * Assign the PR to yourself.
     * The PR should be labeled with the label most fitting to the type of work. If the PR is a bugfix which must be merged to fix a major problem, it should be labeled `Urgent`.
     * When the PR is ready to be merged, A review should be requested from the `FuelRats/web` team.
 4. Once the PR is approved, it is the responsibility of the **assignee** to merge the changes to the branch.
-5. After the build has been deployed, test the changes on the [staging preview website][betasite].
+5. After the build has been deployed, test the changes on the [staging preview website][testsite].
 6. Once the change is confirmed working, delete the working branch. If further changes need to be made, change them **on the same branch** and submit a new PR.
 
 
@@ -120,7 +117,7 @@ Types:
 
 
 [all-contributors]: https://github.com/kentcdodds/all-contributors
-[betasite]: https://beta.fuelrats.com/
+[testsite]: https://dev.fuelrats.com/
 [bugs]: https://jira.fuelrats.com/servicedesk/customer/portal/2/create/4
 [egghead]: https://egghead.io/series/how-to-contribute-to-an-open-source-project-on-github
 [jira]: https://jira.fuelrats.com/browse/WEB

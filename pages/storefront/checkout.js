@@ -8,9 +8,9 @@ import { Elements } from 'react-stripe-elements'
 // Component imports
 import { actions, connect } from '../../store'
 import { withStripe } from '../../components/AppLayout'
-import StoreControlBar from '../../components/store/StoreControlBar'
+import StoreControlBar from '../../components/storefront/StoreControlBar'
 import Component from '../../components/Component'
-import CheckoutForm from '../../components/store/CheckoutForm'
+import CheckoutForm from '../../components/storefront/CheckoutForm'
 import PageWrapper from '../../components/PageWrapper'
 
 

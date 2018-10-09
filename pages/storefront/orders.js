@@ -10,9 +10,9 @@ import { actions, connect } from '../../store'
 // import { Link } from '../../routes'
 import { authenticated } from '../../components/AppLayout'
 import Component from '../../components/Component'
-import OrderStatusIndicator from '../../components/store/OrderStatusIndicator'
+import OrderStatusIndicator from '../../components/storefront/OrderStatusIndicator'
 import PageWrapper from '../../components/PageWrapper'
-import FulfillOrderDialog from '../../components/store/FulfillOrderDialog'
+import FulfillOrderDialog from '../../components/storefront/FulfillOrderDialog'
 
 
 

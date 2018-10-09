@@ -3,7 +3,7 @@ import { actions, connect } from '../../store'
 import { Link } from '../../routes'
 import Component from '../../components/Component'
 import PageWrapper from '../../components/PageWrapper'
-import StoreControlBar from '../../components/store/StoreControlBar'
+import StoreControlBar from '../../components/storefront/StoreControlBar'
 
 @connect
 class ListCart extends Component {

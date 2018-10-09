@@ -15,8 +15,11 @@ import thunkMiddleware from 'redux-thunk'
 // Component imports
 import initialState from './store/initialState'
 import reducer from './store/reducers/index'
+import actionStatus from './store/actionStatus'
 
-// actions
+
+
+// Action imports
 import * as authenticationActions from './store/actions/authentication'
 import * as blogsActions from './store/actions/blogs'
 import * as decalsActions from './store/actions/decals'
@@ -118,6 +121,7 @@ const getActionCreators = (action, dispatch) => {
 
 export {
   actions,
+  actionStatus,
   getActionCreators,
   connectDecorator as connect,
   initStore,
