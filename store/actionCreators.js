@@ -5,66 +5,39 @@ import isRequired from '../helpers/isRequired'
 import apiService from '../services/api'
 import wpService from '../services/wordpress'
 
-const getActionOptions = (options = isRequired('options')) => {
-  let {
+
+
+
+
+const buildActionOptions = (options = isRequired('options')) => {
+  const {
     actionFunction,
     actionType,
     onComplete,
     onError,
     onSuccess,
     onUnhandledResult,
-    onUnhandledResult: onUnhandledError,
-    onUnhandledResult: onUnhandledSuccess,
+    onUnhandledError,
+    onUnhandledSuccess,
     preDispatch,
     postDispatch,
     ...actionPayload
   } = options
 
-  if (typeof actionFunction !== 'function') {
-    isRequired('options.actionFunction')
-  }
-
-  switch (typeof options.onError) {
-    case 'function':
-      ({ onError } = options)
-      break
-
-    default:
-      onError = () => undefined
-      break
-  }
-
-  switch (typeof options.onSuccess) {
-    case 'function':
-      ({ onSuccess } = options)
-      break
-
-    default:
-      onSuccess = () => undefined
-      break
-  }
-
-  if (typeof options.onUnhandledError === 'function') {
-    ({ onUnhandledError } = options)
-  }
-
-  if (typeof options.onUnhandledSuccess === 'function') {
-    ({ onUnhandledSuccess } = options)
-  }
-
   return {
-    actionFunction,
+    actionFunction: typeof actionFunction !== 'function' ? actionFunction : isRequired('options.actionFunction'),
     actionPayload: [actionPayload],
-    actionType: options.actionType || isRequired('options.actionType'),
-    onComplete,
-    onError,
-    onSuccess,
-    onUnhandledError,
-    onUnhandledSuccess,
-    preDispatch: isPlainObject(options.preDispatch) ? options.preDispatch : {},
-    postDispatch: isPlainObject(options.postDispatch) ? options.postDispatch : {},
+    actionType: actionType || isRequired('options.actionType'),
+    onComplete: typeof onComplete === 'function' ? onComplete : () => undefined,
+    onError: typeof onError === 'function' ? onError : () => undefined,
+    onSuccess: typeof onSuccess === 'function' ? onSuccess : () => undefined,
+    onUnhandledError: typeof onUnhandledError === 'function' ? onUnhandledError : onUnhandledResult,
+    onUnhandledSuccess: typeof onUnhandledSuccess === 'function' ? onUnhandledSuccess : onUnhandledResult,
+    preDispatch: isPlainObject(preDispatch) ? preDispatch : {},
+    postDispatch: isPlainObject(postDispatch) ? postDispatch : {},
   }
 }
+
 
 
 
@@ -98,7 +71,7 @@ function createAction (options) {
     onUnhandledSuccess,
     preDispatch,
     postDispatch,
-  } = getActionOptions(options)
+  } = buildActionOptions(options)
 
   return async (dispatch, getState) => {
     let response = null
@@ -147,6 +120,10 @@ function createAction (options) {
   }
 }
 
+
+
+
+
 const createApiAction = options => createAction({
   ...options,
   actionFunction: apiService().request,
@@ -154,12 +131,20 @@ const createApiAction = options => createAction({
   onUnhandledError: res => res && res.response && res.response.data,
 })
 
+
+
+
+
 const createWpAction = options => createAction({
   ...options,
   actionFunction: wpService().request,
   onUnhandledSuccess: res => res.data,
   onUnhandledError: res => res && res.response && res.response.data,
 })
+
+
+
+
 
 const createTimeoutAction = options => createAction({
   ...options,
@@ -172,6 +157,10 @@ const createTimeoutAction = options => createAction({
     ))
   },
 })
+
+
+
+
 
 /**
  * Performs a series of specified redux actions
@@ -211,6 +200,9 @@ function actionSeries (actions = isRequired('actions'), silentFail, returnLast) 
   }
 }
 /* eslint-enable no-await-in-loop */
+
+
+
 
 
 export default createAction
