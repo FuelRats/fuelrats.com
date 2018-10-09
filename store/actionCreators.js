@@ -100,7 +100,7 @@ function createAction (options) {
     postDispatch,
   } = getActionOptions(options)
 
-  return async dispatch => {
+  return async (dispatch, getState) => {
     let response = null
     let success = false
 
@@ -112,7 +112,7 @@ function createAction (options) {
     try {
       response = await actionFunction(...actionPayload)
 
-      const eventResponse = await onSuccess(response)
+      const eventResponse = await onSuccess(response, getState)
 
       if (typeof eventResponse !== 'undefined') {
         response = eventResponse
@@ -122,7 +122,7 @@ function createAction (options) {
 
       success = true
     } catch (error) {
-      const eventResponse = await onError(error)
+      const eventResponse = await onError(error, getState)
 
       if (typeof eventResponse !== 'undefined') {
         response = eventResponse
