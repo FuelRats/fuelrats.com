@@ -1,10 +1,10 @@
 import isPlainObject from 'lodash/isPlainObject'
 
 // Component imports
+import actionStatus from './actionStatus'
 import isRequired from '../helpers/isRequired'
 import apiService from '../services/api'
 import wpService from '../services/wordpress'
-
 
 
 
@@ -25,7 +25,7 @@ const buildActionOptions = (options = isRequired('options')) => {
   } = options
 
   return {
-    actionFunction: typeof actionFunction !== 'function' ? actionFunction : isRequired('options.actionFunction'),
+    actionFunction: typeof actionFunction === 'function' ? actionFunction : isRequired('options.actionFunction'),
     actionPayload: [actionPayload],
     actionType: actionType || isRequired('options.actionType'),
     onComplete: typeof onComplete === 'function' ? onComplete : () => undefined,
@@ -85,7 +85,7 @@ function createAction (options) {
     try {
       response = await actionFunction(...actionPayload)
 
-      const eventResponse = await onSuccess(response, getState)
+      const eventResponse = await onSuccess(response, { dispatch, getState })
 
       if (typeof eventResponse !== 'undefined') {
         response = eventResponse
@@ -95,7 +95,7 @@ function createAction (options) {
 
       success = true
     } catch (error) {
-      const eventResponse = await onError(error, getState)
+      const eventResponse = await onError(error, { dispatch, getState })
 
       if (typeof eventResponse !== 'undefined') {
         response = eventResponse
@@ -109,7 +109,7 @@ function createAction (options) {
     let postDispatchObj = dispatch({
       ...postDispatch,
       payload: response || null,
-      status: success ? 'success' : 'error',
+      status: success ? actionStatus.SUCCESS : actionStatus.ERROR,
       type: actionType,
     })
 
@@ -182,7 +182,7 @@ function actionSeries (actions = isRequired('actions'), silentFail, returnLast) 
 
           responses.push(response)
 
-          if (!silentFail && response && response.status && response.status === 'error') {
+          if (!silentFail && response && response.status && response.status === actionStatus.ERROR) {
             break
           }
         }
