@@ -1,149 +1,77 @@
 // Component imports
+import { createWpAction } from '../actionCreators'
 import actionTypes from '../actionTypes'
-import wpService from '../../services/wordpress'
 
 
 
 
 
-// Component constants
-const wpFetch = url => wpService().request({ url })
+export const retrieveAuthor = authorId => createWpAction({
+  actionType: actionTypes.GET_WORDPRESS_AUTHOR,
+  url: `/users/${authorId}`,
+})
 
 
 
 
 
-export const retrieveBlog = id => async (dispatch, getState) => {
-  dispatch({ type: actionTypes.GET_WORDPRESS_POST })
+export const retrieveCategory = categoryId => createWpAction({
+  actionType: actionTypes.GET_WORDPRESS_CATEGORY,
+  url: `/categories/${categoryId}`,
+})
 
-  const { authors, categories } = getState().blogs
 
-  let response = null
-  let success = true
 
-  try {
-    response = await wpFetch(`/posts/${id}`)
-    response = response.data
 
-    if (!authors[response.author]) {
-      wpFetch(`/users/${response.author}`).then(({ data: payload }) => {
-        dispatch({
-          payload,
-          status: 'success',
-          type: actionTypes.GET_WORDPRESS_AUTHOR,
-        })
-      }).catch(({ response: payload }) => {
-        dispatch({
-          payload,
-          status: 'error',
-          type: actionTypes.GET_WORDPRESS_AUTHOR,
-        })
-      })
+
+export const retrieveBlog = id => createWpAction({
+  actionType: actionTypes.GET_WORDPRESS_POST,
+  url: `/posts/${id}`,
+  onSuccess: ({ author: authorId, categories: categoryIds }, { dispatch, getState }) => {
+    const { authors, categories } = getState().blogs
+
+    if (!authors[authorId]) {
+      retrieveAuthor(authorId)(dispatch)
     }
 
-    response.categories.forEach(categoryId => {
-      if (!Object.keys(categories).includes(categoryId)) {
-        wpFetch(`/categories/${categoryId}`).then(({ data: payload }) => {
-          dispatch({
-            payload,
-            status: 'success',
-            type: actionTypes.GET_WORDPRESS_CATEGORY,
-          })
-        }).catch(({ response: payload }) => {
-          dispatch({
-            payload,
-            status: 'error',
-            type: actionTypes.GET_WORDPRESS_CATEGORY,
-          })
-        })
+    categoryIds.forEach(categoryId => {
+      if (!categories[categoryId]) {
+        retrieveCategory(categoryId)(dispatch)
       }
     })
-  } catch (error) {
-    response = error
-    success = false
-  }
-
-  dispatch({
-    payload: response,
-    status: success ? 'success' : 'error',
-    type: actionTypes.GET_WORDPRESS_POST,
-  })
-}
+  },
+})
 
 
 
 
 
-export const retrieveBlogs = options => async (dispatch, getState) => {
-  dispatch({ type: actionTypes.GET_WORDPRESS_POSTS })
+export const retrieveBlogs = params => createWpAction({
+  actionType: actionTypes.GET_WORDPRESS_POSTS,
+  url: '/posts',
+  params,
+  onSuccess: ({ data: blogs, headers }, { dispatch, getState }) => {
+    const state = getState()
+    const authorCache = { ...state.blogs.authors }
+    const categoryCache = { ...state.blogs.categories }
 
-  const { blogs } = getState()
-  const authorCache = { ...blogs.authors }
-  const categoryCache = { ...blogs.categories }
-
-  let response = null
-  let success = true
-
-  const params = Object.entries(options).reduce((acc, [key, val]) => [...acc, `${key}=${val}`], []).join('&')
-
-  try {
-    response = await wpFetch(`/posts?${params}`)
-    const headers = { ...response.headers }
-    response = { ...response.data }
-
-    // Gather Author and category information
-    Object.values(response).forEach(({ author: authorId, categories }) => {
+    Object.values(blogs).forEach(({ author: authorId, categories: categoryIds }) => {
       if (!authorCache[authorId]) {
         authorCache[authorId] = {}
-
-        wpFetch(`/users/${authorId}`).then(({ data: payload }) => {
-          dispatch({
-            payload,
-            status: 'success',
-            type: actionTypes.GET_WORDPRESS_AUTHOR,
-          })
-        }).catch(({ response: payload }) => {
-          dispatch({
-            payload,
-            status: 'error',
-            type: actionTypes.GET_WORDPRESS_AUTHOR,
-          })
-        })
+        retrieveAuthor(authorId)(dispatch)
       }
 
-      categories.forEach(catId => {
-        if (!categoryCache[catId]) {
-          categoryCache[catId] = {}
-
-          wpFetch(`/categories/${catId}`).then(({ data: payload }) => {
-            dispatch({
-              payload,
-              status: 'success',
-              type: actionTypes.GET_WORDPRESS_CATEGORY,
-            })
-          }).catch(({ response: payload }) => {
-            dispatch({
-              payload,
-              status: 'error',
-              type: actionTypes.GET_WORDPRESS_CATEGORY,
-            })
-          })
+      categoryIds.forEach(categoryId => {
+        if (!categoryCache[categoryId]) {
+          categoryCache[categoryId] = {}
+          retrieveCategory(categoryId)(dispatch)
         }
       })
     })
 
-    response = {
-      blogs: [...Object.values(response)],
+    return {
+      blogs,
       totalPages: parseInt(headers['x-wp-totalpages'], 10),
     }
-  } catch (error) {
-    response = error
-    success = false
-  }
-
-  dispatch({
-    payload: response,
-    status: success ? 'success' : 'error',
-    type: actionTypes.GET_WORDPRESS_POSTS,
-  })
-}
+  },
+})
