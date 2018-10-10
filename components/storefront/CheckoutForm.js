@@ -240,7 +240,6 @@ class CheckoutForm extends React.Component {
 
     const {
       cardName,
-      cardToken,
       error,
       loading,
       order,
@@ -264,19 +263,6 @@ class CheckoutForm extends React.Component {
             <h4>Loading...</h4>
           } else if (stage === 0) {
             <form className="compact" onSubmit={this._handleOrderCreate}>
-              <h4>Billing Info</h4>
-              <ValidatedFormInput
-                autoComplete="cc-name"
-                id="name"
-                label="Cardholder Name"
-                name="name"
-                onChange={this._handleCardNameChange}
-                required
-                value={cardName} />
-              <fieldset>
-                <CardElement onChange={this._handleCardElementChange} />
-              </fieldset>
-              <br />
               <h4>Shipping Info</h4>
               <CustomerInfoFields onChange={this._handleCustomerInfoChange} />
               <br />
@@ -374,22 +360,18 @@ class CheckoutForm extends React.Component {
                 </table>
               </div>
               <form className="compact center" onSubmit={this._handleOrderConfirm}>
-                {!cardToken && (
-                  <>
-                    <h4>Billing Info</h4>
-                    <ValidatedFormInput
-                      autoComplete="cc-name"
-                      id="name"
-                      label="Cardholder Name"
-                      name="name"
-                      onChange={this._handleCardNameChange}
-                      required
-                      value={cardName} />
-                    <fieldset>
-                      <CardElement onChange={this._handleCardElementChange} />
-                    </fieldset>
-                  </>
-                )}
+                <h4>Billing Info</h4>
+                <ValidatedFormInput
+                  autoComplete="cc-name"
+                  id="name"
+                  label="Cardholder Name"
+                  name="name"
+                  onChange={this._handleCardNameChange}
+                  required
+                  value={cardName} />
+                <fieldset>
+                  <CardElement onChange={this._handleCardElementChange} />
+                </fieldset>
                 <menu type="toolbar">
                   <div className="primary">
                     <button
@@ -441,12 +423,6 @@ class CheckoutForm extends React.Component {
 
     switch (stage) {
       case 0:
-        if (cardName === '') {
-          return INVALID_CARDHOLDER_NAME_MESSAGE
-        }
-        if (cardValidity !== true) {
-          return cardValidity
-        }
         if (customerInfo.valid !== true) {
           return customerInfo.valid
         }
