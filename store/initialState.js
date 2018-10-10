@@ -8,8 +8,10 @@ export default {
   },
 
   blogs: {
+    authors: {},
     blogs: [],
-    totalPages: 0,
+    categories: {},
+    total: null,
   },
 
   decals: {
@@ -61,6 +63,20 @@ export default {
     retrieving: false,
     total: 0,
   },
+
+  skus: {},
+
+  orders: {
+    hasMore: false,
+    orders: {},
+  },
+
+  products: {
+    hasMore: false,
+    products: {},
+  },
+
+  storeCart: {},
 
   user: {
     attributes: null,

@@ -18,6 +18,7 @@ module.exports = (koa, config) => {
   koa.use(proxy('/api/oauth2/token', {
     auth: `${config.api.clientId}:${config.api.clientSecret}`,
     changeOrigin: true,
+    jar: true,
     rewrite: path => path.replace(/^\/api/, ''),
     secure: true,
     target: config.api.url,
@@ -25,6 +26,7 @@ module.exports = (koa, config) => {
 
   koa.use(proxy('/api', {
     changeOrigin: true,
+    jar: true,
     rewrite: path => path.replace(/^\/api/, ''),
     secure: true,
     target: config.api.url,

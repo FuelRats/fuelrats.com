@@ -84,15 +84,23 @@
 
 // Fuelrats styles
 .tags-input {
-  border-color: #c4c3c3;
+  border-color: $grey-lightened;
   border-style: solid;
   border-width: 0.1rem;
   transition-duration: 0.5s;
   transition-property: border-color, box-shadow;
 
   &.focus {
-    border-color: #aaa;
-    box-shadow: 0 0 0.5rem 0 rgba(214, 80, 80, 0.5);
+    border-color: $grey;
+    box-shadow: 0 0 0.5rem 0 rgba($green-lightened, 0.5);
+  }
+
+  &[required]:not(.has-tags) {
+    border-color: $red-lightened;
+
+    &.focus {
+      box-shadow: 0 0 0.5rem 0 rgba($red, 0.5);
+    }
   }
 
   input[type=search] {

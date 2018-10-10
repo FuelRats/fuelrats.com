@@ -1,14 +1,14 @@
 // Component imports
+import { connect } from '../store'
 import { Link } from '../routes'
 import Component from '../components/Component'
-import connect from '../helpers/connect'
 import PageWrapper from '../components/PageWrapper'
 import PasswordField from '../components/PasswordField'
 
 
 
 
-
+@connect
 class PasswordReset extends Component {
   /***************************************************************************\
     Public Methods
@@ -143,10 +143,12 @@ class PasswordReset extends Component {
 
     return true
   }
+
+  static mapDispatchToProps = ['resetPassword', 'validatePasswordResetToken']
 }
 
 
 
 
 
-export default connect(null, ['resetPassword', 'validatePasswordResetToken'])(PasswordReset)
+export default PasswordReset

@@ -114,3 +114,20 @@ $pc-background-gradients: append($pc-background-gradients, radial-gradient(
     }
   }
 }
+
+.icon-badge {
+  @extend .badge;
+  margin: 0;
+  text-shadow: none;
+  border-radius: 1rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 1.75 rem;
+  line-height: 1.75;
+
+  &.grey {
+    background-color: $grey-lightened;
+    color: $black;
+  }
+}

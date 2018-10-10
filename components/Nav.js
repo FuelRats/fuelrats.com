@@ -52,8 +52,8 @@ const navItems = [
     subnav: [
       {
         key: 'merch',
-        title: 'Merch',
-        href: 'https://www.teespring.com/stores/fuelrats',
+        title: 'Merch Store',
+        route: '/store/products',
       },
       {
         key: 'donate',
@@ -117,7 +117,7 @@ class Nav extends Component {
     )
   }
 
-  renderNavItem = (item) => {
+  renderNavItem = item => {
     const {
       openSubNav,
     } = this.state

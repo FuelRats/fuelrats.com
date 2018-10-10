@@ -1,8 +1,8 @@
 // Component imports
-import { actions } from '../../store'
+import { actions, connect } from '../../store'
+import { authenticated } from '../../components/AppLayout'
 import { Router } from '../../routes'
 import Component from '../../components/Component'
-import connect from '../../helpers/connect'
 import FirstLimpetInput from '../../components/FirstLimpetInput'
 import RadioOptionsInput from '../../components/RadioOptionsInput'
 import RatTagsInput from '../../components/RatTagsInput'
@@ -13,13 +13,12 @@ import userHasPermission from '../../helpers/userHasPermission'
 
 
 
-
+@authenticated
+@connect
 class Paperwork extends Component {
   /***************************************************************************\
     Properties
   \***************************************************************************/
-
-  static authRequired = true
 
   state = {
     loading: !this.props.rescue,
@@ -50,7 +49,7 @@ class Paperwork extends Component {
 
   _handleNotesChange = event => this._setChanges({ notes: event.target.value })
 
-  _handleRadioOptionsChange = (option) => {
+  _handleRadioOptionsChange = option => {
     const attribute = option.name
     let { value } = option
 
@@ -164,7 +163,7 @@ class Paperwork extends Component {
     this._setChanges(newChanges)
   }
 
-  _onSubmit = async (event) => {
+  _onSubmit = async event => {
     event.preventDefault()
 
     const { rescue } = this.props
@@ -481,7 +480,7 @@ class Paperwork extends Component {
     return response
   }
 
-  validateCaseWithValidOutcome = (values) => {
+  validateCaseWithValidOutcome = values => {
     if (!values.rats || !values.rats.length) {
       return 'Valid cases must have at least one rat assigned.'
     }
@@ -501,7 +500,7 @@ class Paperwork extends Component {
     return null
   }
 
-  validateCaseWithInvalidOutcome = (values) => {
+  validateCaseWithInvalidOutcome = values => {
     if (!values.notes.replace(/\s/g, '')) {
       return 'Invalid cases must have notes explaining why the rescue is invalid.'
     }
@@ -514,7 +513,7 @@ class Paperwork extends Component {
     const { changes } = this.state
 
     const isDefined = (value, fallback) => (typeof value !== 'undefined' ? value : fallback)
-    const getValue = (value) => isDefined(changes[value], rescue.attributes[value])
+    const getValue = value => isDefined(changes[value], rescue.attributes[value])
 
 
     const rats = {
@@ -578,53 +577,52 @@ class Paperwork extends Component {
 
     return false
   }
-}
 
 
+  static mapStateToProps = (state, ownProps) => {
+    const { id: rescueId } = ownProps.query
+    let firstLimpetId = []
+    let rats = {}
+    let rescue = null
 
-
-
-const mapStateToProps = (state, ownProps) => {
-  const { id: rescueId } = ownProps.query
-  let firstLimpetId = []
-  let rats = {}
-  let rescue = null
-
-  if (rescueId) {
-    rescue = state.rescues[rescueId]
-  }
-
-  if (rescue) {
-    if (rescue.relationships.firstLimpet.data) {
-      firstLimpetId = state.rats.rats.filter(rat => rescue.relationships.firstLimpet.data.id === rat.id)
+    if (rescueId) {
+      rescue = state.rescues[rescueId]
     }
 
-    rats = state.rats.rats
-      .filter(rat => rescue.relationships.rats.data.find(({ id }) => rat.id === id))
-      .map(rat => ({
-        ...rat,
-        value: rat.attributes.name,
-      }))
-      .reduce((accumulator, rat) => ({
-        ...accumulator,
-        [rat.id]: rat,
-      }), {})
+    if (rescue) {
+      if (rescue.relationships.firstLimpet.data) {
+        firstLimpetId = state.rats.rats.filter(rat => rescue.relationships.firstLimpet.data.id === rat.id)
+      }
+
+      rats = state.rats.rats
+        .filter(rat => rescue.relationships.rats.data.find(({ id }) => rat.id === id))
+        .map(rat => ({
+          ...rat,
+          value: rat.attributes.name,
+        }))
+        .reduce((accumulator, rat) => ({
+          ...accumulator,
+          [rat.id]: rat,
+        }), {})
+    }
+
+    const currentUser = state.user
+    const currentUserGroups = currentUser.relationships ? [...currentUser.relationships.groups.data].map(group => state.groups[group.id]) : []
+
+    return {
+      firstLimpetId,
+      rats,
+      rescue,
+      currentUser,
+      currentUserGroups,
+    }
   }
 
-  const currentUser = state.user
-  const currentUserGroups = currentUser.relationships ? [...currentUser.relationships.groups.data].map(group => state.groups[group.id]) : []
-
-  return {
-    firstLimpetId,
-    rats,
-    rescue,
-    currentUser,
-    currentUserGroups,
-  }
+  static mapDispatchToProps = ['updateRescue', 'getRescue']
 }
 
 
 
 
 
-export default connect(mapStateToProps, ['updateRescue', 'getRescue'])(Paperwork)
+export default Paperwork

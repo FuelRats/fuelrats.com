@@ -1,5 +1,8 @@
 // Component imports
 import PageWrapper from '../components/PageWrapper'
+import { dependencies } from '../package.json'
+
+
 
 
 
@@ -25,9 +28,18 @@ const brands = [
     homepage: 'https://slack.com/',
     description: 'Our Techrats extensively use Slack, both for keeping in touch and to streamline notifications from our various systems. Thank you for helping us out, Slack!',
   },
+  {
+    key: 'onepass',
+    homepage: 'https://1password.com/',
+    description: '1Password keeps all of our super secret passwords safe, while making it easy to manage who gets them. In a modern age where strong passwords are must, 1Password remembers what our techrats physically can\'t.',
+  },
 ]
 
-const Acknowledgements = props => (
+
+
+
+
+const Acknowledgements = () => (
   <PageWrapper title="Acknowledgements">
     <div className="page-content">
       {
@@ -43,7 +55,18 @@ const Acknowledgements = props => (
           </div>
         ))
       }
-      {JSON.stringify(props.auth)}
+      <div className="dependency-list-wrapper">
+        <div className="dependency-list">
+          <span>Fuelrats.com would not be possible without these awesome packages</span>
+          <ul>
+            {Object.keys({
+              ...dependencies,
+            }).map(dep => (
+              <li><a target="_blank" rel="noopener noreferrer" href={`https://www.npmjs.com/package/${dep}`}>{dep}</a></li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
   </PageWrapper>
 )

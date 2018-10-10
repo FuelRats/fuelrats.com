@@ -218,7 +218,7 @@ class RescuesTablePanel extends Component {
 
 const mapDispatchToProps = dispatch => ({ getRescues: bindActionCreators(actions.getRescues, dispatch) })
 
-const mapStateToProps = state => Object.assign({}, state.rescues)
+const mapStateToProps = state => ({ ...state.rescues })
 
 
 

@@ -6,9 +6,9 @@ import moment from 'moment'
 
 
 // Component imports
-import { actions } from '../../store'
+import { actions, connect } from '../../store'
+import { authenticated } from '../../components/AppLayout'
 import { Link } from '../../routes'
-import connect from '../../helpers/connect'
 import Component from '../../components/Component'
 import PageWrapper from '../../components/PageWrapper'
 import userHasPermission from '../../helpers/userHasPermission'
@@ -16,13 +16,12 @@ import userHasPermission from '../../helpers/userHasPermission'
 
 
 
-
+@authenticated
+@connect
 class Paperwork extends Component {
   /***************************************************************************\
     Properties
   \***************************************************************************/
-
-  static authRequired = true
 
   state = {
     loading: !this.props.rescue,
@@ -239,50 +238,49 @@ class Paperwork extends Component {
 
     return false
   }
-}
 
+  static mapStateToProps = (state, ownProps) => {
+    const { id: rescueId } = ownProps.query
+    let firstLimpet = []
+    let rats = []
+    let rescue = null
 
-
-
-
-const mapStateToProps = (state, ownProps) => {
-  const { id: rescueId } = ownProps.query
-  let firstLimpet = []
-  let rats = []
-  let rescue = null
-
-  if (rescueId) {
-    rescue = state.rescues[rescueId]
-  }
-
-  if (rescue) {
-    if (rescue.relationships.firstLimpet.data) {
-      firstLimpet = state.rats.rats.filter(rat => rescue.relationships.firstLimpet.data.id === rat.id)
+    if (rescueId) {
+      rescue = state.rescues[rescueId]
     }
 
-    rats = state.rats.rats
-      .filter(rat => rescue.relationships.rats.data.find(({ id }) => rat.id === id))
-      .map(rat => Object.assign({
-        id: rat.id,
-        value: rat.attributes.name,
-      }, rat))
+    if (rescue) {
+      if (rescue.relationships.firstLimpet.data) {
+        firstLimpet = state.rats.rats.filter(rat => rescue.relationships.firstLimpet.data.id === rat.id)
+      }
+
+      rats = state.rats.rats
+        .filter(rat => rescue.relationships.rats.data.find(({ id }) => rat.id === id))
+        .map(rat => ({
+          id: rat.id,
+          value: rat.attributes.name,
+          ...rat,
+        }))
+    }
+
+    const currentUser = state.user
+    const currentUserGroups = currentUser.relationships ? [...currentUser.relationships.groups.data].map(group => state.groups[group.id]) : []
+
+
+    return {
+      firstLimpet,
+      rats,
+      rescue,
+      currentUser,
+      currentUserGroups,
+    }
   }
 
-  const currentUser = state.user
-  const currentUserGroups = currentUser.relationships ? [...currentUser.relationships.groups.data].map(group => state.groups[group.id]) : []
-
-
-  return {
-    firstLimpet,
-    rats,
-    rescue,
-    currentUser,
-    currentUserGroups,
-  }
+  static mapDispatchToProps = ['getRescue']
 }
 
 
 
 
 
-export default connect(mapStateToProps, ['getRescue'])(Paperwork)
+export default Paperwork

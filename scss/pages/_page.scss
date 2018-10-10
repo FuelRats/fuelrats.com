@@ -9,4 +9,9 @@ main.page {
   @media only screen and (max-width: 769px) {
     margin-left: 0;
   }
+
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
 }

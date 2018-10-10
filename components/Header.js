@@ -21,7 +21,7 @@ const buildCommit = BUILD_COMMIT
 const buildCommitRange = BUILD_COMMIT_RANGE
 
 
-const Header = (props) => {
+const Header = props => {
   const {
     loggedIn,
     loggingIn,
@@ -31,7 +31,7 @@ const Header = (props) => {
 
       <input id="nav-control" type="checkbox" />
 
-      <label title="Expand/Collapse Menu" htmlFor="nav-control" className="burger button secondary" id="burger">
+      <label title="Expand/Collapse Menu" htmlFor="nav-control" className="burger button tall secondary" id="burger">
         <FontAwesomeIcon icon="bars" />
       </label>
 
@@ -94,7 +94,7 @@ const Header = (props) => {
         <div className="social-actions">
 
           <a
-            className="button link icon"
+            className="button link"
             href="https://www.twitter.com/FuelRats/"
             target="_blank"
             rel="noopener noreferrer"
@@ -105,7 +105,7 @@ const Header = (props) => {
           </a>
 
           <a
-            className="button link icon"
+            className="button link"
             href="https://www.reddit.com/r/FuelRats/"
             target="_blank"
             rel="noopener noreferrer"
@@ -116,7 +116,7 @@ const Header = (props) => {
           </a>
 
           <a
-            className="button link icon"
+            className="button link"
             href="https://www.twitch.tv/fuelrats/"
             target="_blank"
             rel="noopener noreferrer"
@@ -127,7 +127,7 @@ const Header = (props) => {
           </a>
 
           <a
-            className="button link icon"
+            className="button link"
             href="https://www.github.com/FuelRats/"
             target="_blank"
             rel="noopener noreferrer"
@@ -138,7 +138,7 @@ const Header = (props) => {
           </a>
 
           <a
-            className="button link icon"
+            className="button link"
             href="https://forums.frontier.co.uk/showthread.php/150703-Out-of-Fuel-Explorer-Rescue-Service-The-Fuel-Rats"
             target="_blank"
             rel="noopener noreferrer"

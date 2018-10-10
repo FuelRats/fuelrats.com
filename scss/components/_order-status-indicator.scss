@@ -1,0 +1,11 @@
+.order-status-indicator {
+  align-items: center;
+  display: inline-flex;
+  vertical-align: text-top;
+  margin: 0 1rem;
+
+  [data-icon=arrow-right] {
+    font-size: 0.5em;
+    margin: 0 1rem;
+  }
+}

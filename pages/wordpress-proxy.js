@@ -1,19 +1,18 @@
 // Module imports
 import React from 'react'
-import { connect } from 'react-redux'
 
 
 
 
 
 // Component imports
-import { actions } from '../store'
+import { actions, connect } from '../store'
 import Component from '../components/Component'
 import PageWrapper from '../components/PageWrapper'
 
 
 
-
+@connect
 class WordpressProxy extends Component {
   /***************************************************************************\
     Public Methods
@@ -65,11 +64,10 @@ class WordpressProxy extends Component {
     )
     /* eslint-enable */
   }
+
+  static mapStateToProps = (state, ownProps) => ({
+    page: state.wordpress.page[ownProps.query.slug] || ownProps.query.page || null,
+  })
 }
 
-
-const mapStateToProps = (state, ownProps) => ({
-  page: state.wordpress.page[ownProps.query.slug] || ownProps.query.page || null,
-})
-
-export default connect(mapStateToProps)(WordpressProxy)
+export default WordpressProxy

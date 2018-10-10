@@ -10,7 +10,7 @@ export default function (state = initialState.decals, action) {
     payload,
     status,
   } = action
-  const newState = Object.assign({}, state)
+  const newState = { ...state }
 
   switch (action.type) {
     case actionTypes.CHECK_DECAL_ELIGIBILITY:

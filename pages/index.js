@@ -7,13 +7,13 @@ import React from 'react'
 
 // Component imports
 import { Link } from '../routes'
-import connect from '../helpers/connect'
+import { connect } from '../store'
 import PageWrapper from '../components/PageWrapper'
 
 
 
 
-
+@connect
 class Index extends React.Component {
   /***************************************************************************\
     Public Methods
@@ -35,16 +35,18 @@ class Index extends React.Component {
 
         <footer className="call-to-action">
           <Link href="/i-need-fuel">
-            <a className="button">Get Help</a>
+            <a className="button tall">Get Help</a>
           </Link>
         </footer>
       </section>
     </PageWrapper>
   )
+
+  static mapDispatchToProps = ['setFlag']
 }
 
 
 
 
 
-export default connect(null, ['setFlag'])(Index)
+export default Index

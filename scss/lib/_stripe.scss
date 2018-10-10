@@ -1,0 +1,20 @@
+div.StripeElement {
+  border: 0.1rem solid $red-lightened;
+  padding: 1.111rem 1rem;
+  box-shadow: 0 0 0.5rem 0 rgba($red, 0);
+  transition-duration: 0.5s;
+  transition-property: border-color, box-shadow;
+  color: red;
+
+  &.StripeElement--focus {
+    box-shadow: 0 0 0.5rem 0 rgba($red, 0.5);
+  }
+
+  &.StripeElement--complete {
+    border-color: $grey-lightened;
+
+    &.StripeElement--focus {
+      box-shadow: 0 0 0.5rem 0 rgba($green, 0.5);
+    }
+  }
+}

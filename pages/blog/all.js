@@ -8,14 +8,14 @@ import moment from 'moment'
 
 // Component imports
 import { Link } from '../../routes'
-import connect from '../../helpers/connect'
+import { connect } from '../../store'
 import Component from '../../components/Component'
 import PageWrapper from '../../components/PageWrapper'
+import TextPlaceholder from '../../components/TextPlaceholder'
 
 
 
-
-
+@connect
 class Blogs extends Component {
   /***************************************************************************\
     Private Methods
@@ -75,9 +75,8 @@ class Blogs extends Component {
 
     const wpOptions = {}
 
-    author = options.author || author
-    category = options.category || category
-    wpOptions.page = options.page || page
+    author = typeof options.author !== 'undefined' ? options.author : author
+    category = typeof options.category !== 'undefined' ? options.category : category
 
     if (author) {
       wpOptions.author = author
@@ -86,6 +85,8 @@ class Blogs extends Component {
     if (category) {
       wpOptions.categories = category
     }
+
+    wpOptions.page = options.page || page
 
     this.setState({
       retrieving: true,
@@ -117,15 +118,21 @@ class Blogs extends Component {
       page,
     } = this.props
 
-    const authorMatches = author === nextProps.author
-    const categoryMatches = category === nextProps.category
-    const pageMatches = page === nextProps.page
+    const {
+      author: nextAuthor,
+      category: nextCategory,
+      page: nextPage,
+    } = nextProps
+
+    const authorMatches = author === nextAuthor
+    const categoryMatches = category === nextCategory
+    const pageMatches = page === nextPage
 
     if (!authorMatches || !categoryMatches || !pageMatches) {
       this._retrieveBlogs({
-        author: nextProps.author,
-        category: nextProps.category,
-        page: nextProps.page,
+        author: nextAuthor || null,
+        category: nextCategory || null,
+        page: nextPage,
       })
     }
   }
@@ -155,7 +162,7 @@ class Blogs extends Component {
   }
 
   render () {
-    const { blogs } = this.props
+    const { authors, blogs, categories } = this.props
     const {
       retrieving,
     } = this.state
@@ -164,12 +171,15 @@ class Blogs extends Component {
       <PageWrapper title="Blog">
         <div className="page-content">
           <ol className="article-list loading">
-            {!retrieving && blogs && blogs.map(blog => {
+            {!retrieving && Boolean(blogs.length) && blogs.map(blog => {
               const {
-                author,
                 id,
               } = blog
               const postedAt = moment(blog.date_gmt)
+              const author = authors[blog.author] || {
+                id: blog.author,
+                name: (<TextPlaceholder size={30} loading />),
+              }
 
               /* eslint-disable react/no-danger */
               return (
@@ -201,7 +211,13 @@ class Blogs extends Component {
                         <FontAwesomeIcon icon="folder" fixedWidth />
 
                         <ul className="category-list">
-                          {blog.categories.map(category => {
+                          {blog.categories.map(catId => {
+                            const category = categories[catId] || {
+                              id: catId,
+                              description: 'Loading...',
+                              name: (<TextPlaceholder size={25} loading />),
+                            }
+
                             const {
                               description,
                               name,
@@ -234,10 +250,14 @@ class Blogs extends Component {
       </PageWrapper>
     )
   }
+
+  static mapStateToProps = state => state.blogs
+
+  static mapDispatchToProps = ['retrieveBlogs']
 }
 
 
 
 
 
-export default connect(state => state.blogs, ['retrieveBlogs'])(Blogs)
+export default Blogs

@@ -1,3 +1,25 @@
+@mixin link-button {
+  background: none;
+  border: none;
+
+  &.inline {
+    color: $red;
+    text-decoration: underline;
+    padding: 0;
+    display: inline;
+
+    &:hover {
+      color: inherit;
+    }
+  }
+
+  &:hover {
+    background-color: none;
+    border: none;
+  }
+}
+
+
 button,
 input[type=button],
 .button {
@@ -23,6 +45,7 @@ input[type=button],
   text-align: center;
   text-decoration: none;
   transition: all 0.2s;
+  line-height: normal;
 
   &:hover {
     background-color: var(--background-color-hover);
@@ -38,33 +61,24 @@ input[type=button],
     }
   }
 
-  &.icon {
-    padding: 1rem;
+  &.link {
+    @media screen and (max-width: 768px) {
+      &:not(.mobile-button) {
+        @include link-button()
+      }
+    }
+
+    @media screen and (min-width: 769px) {
+      @include link-button();
+    }
   }
 
   &.compact {
     padding: .5rem 1rem;
   }
 
-  &.link {
-    background: none;
-    border: none;
-
-    &.inline {
-      color: $red;
-      text-decoration: underline;
-      padding: 0;
-      display: inline;
-
-      &:hover {
-        color: inherit;
-      }
-    }
-
-    &:hover {
-      background-color: none;
-      border: none;
-    }
+  &.tall {
+    line-height: 2;
   }
 
   &.secondary {

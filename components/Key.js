@@ -4,7 +4,7 @@ import React from 'react'
 
 
 
-export default (props) => {
+export default props => {
   let key = props.children
 
   switch (key.toLowerCase()) {

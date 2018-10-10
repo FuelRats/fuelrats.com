@@ -1,5 +1,4 @@
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const webpack = require('webpack')
 const withSass = require('@zeit/next-sass')
 
@@ -10,6 +9,7 @@ const glob = require('glob')
 const {
   FRDC_API_URL,
   FRDC_PUBLIC_URL,
+  FRDC_STRIPE_API_PK,
   PORT,
   TRAVIS_BRANCH,
   TRAVIS_COMMIT,
@@ -26,6 +26,9 @@ module.exports = withSass({
       wordpress: {
         url: FRDC_PUBLIC_URL ? `${FRDC_PUBLIC_URL}/wp-api` : `http://localhost:${PORT || 3000}/wp-api`,
       },
+      stripe: {
+        public: FRDC_STRIPE_API_PK || null,
+      },
     },
   },
   webpack: (config, { dev }) => {
@@ -35,10 +38,6 @@ module.exports = withSass({
         analyzerPort: 8888,
         openAnalyzer: true,
       }))
-    }
-
-    if (!dev) {
-      config.plugins.push(new UglifyJsPlugin())
     }
 
     config.plugins.push(new webpack.DefinePlugin({
@@ -59,8 +58,8 @@ module.exports = withSass({
   },
   sassLoaderOptions: {
     includePaths: ['styles', 'node_modules']
-      .map((d) => path.join(__dirname, d))
-      .map((g) => glob.sync(g))
+      .map(d => path.join(__dirname, d))
+      .map(g => glob.sync(g))
       .reduce((a, c) => a.concat(c), []),
   },
 })
