@@ -1,10 +1,10 @@
 
 
 // ( ͡° ͜ʖ ͡°) because xlexious told me to
-export default function getMoney (amount, currency) {
+export default function getMoney (amount, currency = 'EUR') {
   (amount / 100).toLocaleString('en-GB', {
     style: 'currency',
-    currency: currency || 'EUR',
+    currency,
     currencyDisplay: 'symbol',
   })
 }
