@@ -25,6 +25,10 @@ const CONFIRMATION_DISPLAY_TIME = 1000
 
 @connect
 class CartUpdateDialog extends Component {
+  /***************************************************************************\
+    Private Methods
+  \***************************************************************************/
+
   _handleQuantityChange = event => {
     this.setState({
       [event.target.name]: Number(event.target.value),
@@ -57,12 +61,28 @@ class CartUpdateDialog extends Component {
       quantity,
     })
 
+    await this._cancelCurrentOrder()
+
     this.setState({
       updateComplete: true,
     }, () => {
       setTimeout(this.props.onClose, CONFIRMATION_DISPLAY_TIME)
     })
   }
+
+  _cancelCurrentOrder = async () => {
+    const { updateOrder } = this.props
+    const currentOrder = sessionStorage.getItem('currentOrder')
+
+    if (currentOrder) {
+      await updateOrder(currentOrder, { status: 'canceled' })
+      sessionStorage.removeItem('currentOrder')
+    }
+  }
+
+  /***************************************************************************\
+    Public Methods
+  \***************************************************************************/
 
   constructor (props) {
     super(props)
@@ -210,7 +230,7 @@ class CartUpdateDialog extends Component {
   }
 
 
-  static mapDispatchToProps = ['updateCartItem']
+  static mapDispatchToProps = ['updateCartItem', 'updateOrder']
 
   static mapStateToProps = state => ({ cart: state.storeCart })
 }
