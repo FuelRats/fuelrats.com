@@ -14,7 +14,7 @@ import { connect } from '../../store'
 import CustomerInfoFields from './CustomerInfoFields'
 import RadioCardInput from '../RadioCardInput'
 import ValidatedFormInput from '../ValidatedFormInput'
-
+import StripeBadgeSvg from '../svg/StripeBadgeSvg'
 
 
 // Component constants
@@ -34,7 +34,6 @@ class CheckoutForm extends React.Component {
 
   state = {
     cardName: '',
-    cardToken: null,
     customerInfo: {
       value: {},
       valid: INVALID_INFO_MESSAGE,
@@ -72,10 +71,8 @@ class CheckoutForm extends React.Component {
     event.preventDefault()
 
     const {
-      cardName,
       cart,
       createOrder,
-      stripe,
     } = this.props
     const {
       customerInfo,
@@ -91,22 +88,15 @@ class CheckoutForm extends React.Component {
 
 
     if (status === 'success') {
-      const { token, error } = await stripe.createToken({ name: cardName })
-
-      if (!error) {
-        sessionStorage.setItem('currentOrder', payload.data.id)
-        await localForage.setItem('lastStage', 1)
-        this.setState({
-          error: null,
-          cardToken: token,
-          order: payload.data,
-          shippingMethod: payload.data.attributes.shippingMethod,
-          stage: 1,
-          submitting: false,
-        })
-      } else {
-        this.setState({ error: error.message })
-      }
+      sessionStorage.setItem('currentOrder', payload.data.id)
+      await localForage.setItem('lastStage', 1)
+      this.setState({
+        error: null,
+        order: payload.data,
+        shippingMethod: payload.data.attributes.shippingMethod,
+        stage: 1,
+        submitting: false,
+      })
     } else {
       this.setState({ error: 'Error while creating order.' })
     }
@@ -163,27 +153,22 @@ class CheckoutForm extends React.Component {
       payOrder,
       stripe,
     } = this.props
-    let {
+    const {
       cardName,
-      cardToken,
       order,
     } = this.state
 
     this.setState({ submitting: true })
 
-    if (!cardToken) {
-      const { token, error } = await stripe.createToken({ name: cardName })
+    const { token, error } = await stripe.createToken({ name: cardName })
 
-      if (!error) {
-        cardToken = token
-      } else {
-        this.setState({ error: error.message, submitting: false })
-        return
-      }
+    if (error) {
+      this.setState({ error: error.message, submitting: false })
+      return
     }
 
     const { payload, status } = await payOrder(order.id, {
-      source: cardToken.id,
+      source: token.id,
     })
 
     if (status === 'success') {
@@ -199,7 +184,6 @@ class CheckoutForm extends React.Component {
     } else {
       this.setState({
         error: payload.errors && payload.errors.length ? `Error: ${payload.errors[0].detail.message}` : 'Error while submitting order.',
-        cardToken: null,
         submitting: false,
       })
     }
@@ -330,10 +314,10 @@ class CheckoutForm extends React.Component {
                   <tbody>
                     {order.attributes.items.map(item => {
                       const sku = skus[item.parent]
-                      const descriptors = (sku && Object.keys(sku.attributes.attributes).length) ? Object.values(sku.attributes.attributes)[0] : null
+                      const descriptors = (sku && Object.keys(sku.attributes.attributes).length) ? Object.values(sku.attributes.attributes).join(', ') : null
                       return (
                         <tr key={item.parent}>
-                          <td className="text-right text-space-right">{item.quantity && `${item.quantity}x `}{item.description}{descriptors && ` (${descriptors})`}</td>
+                          <td className="text-right text-space-right">{item.quantity && `${item.quantity}x `}{item.description} {descriptors && `(${descriptors})`}</td>
                           <td>{
                             (item.amount / 100).toLocaleString('en-GB', {
                               style: 'currency',
@@ -359,8 +343,11 @@ class CheckoutForm extends React.Component {
                   </tbody>
                 </table>
               </div>
+              <br />
               <form className="compact center" onSubmit={this._handleOrderConfirm}>
-                <h4>Billing Info</h4>
+                <fieldset>
+                  <h4>Billing Info <a href="https://stripe.com/" style={{ float: 'right' }} target="_blank" rel="noopener noreferrer"><StripeBadgeSvg style={{ verticalAlign: 'bottom' }} /></a></h4>
+                </fieldset>
                 <ValidatedFormInput
                   autoComplete="cc-name"
                   id="name"
