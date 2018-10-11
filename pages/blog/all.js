@@ -11,8 +11,8 @@ import { Link } from '../../routes'
 import { connect } from '../../store'
 import Component from '../../components/Component'
 import PageWrapper from '../../components/PageWrapper'
+import safeParseInt from '../../helpers/safeParseInt'
 import TextPlaceholder from '../../components/TextPlaceholder'
-
 
 
 @connect
@@ -148,7 +148,7 @@ class Blogs extends Component {
   static async getInitialProps ({ query }) {
     const props = {}
 
-    props.page = parseInt(query.page || 1, 10)
+    props.page = safeParseInt(query.page || 1, 10, 1)
 
     if (query.category) {
       props.category = query.category

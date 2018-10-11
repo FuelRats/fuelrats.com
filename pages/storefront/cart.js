@@ -3,7 +3,8 @@ import { actions, connect } from '../../store'
 import { Link } from '../../routes'
 import Component from '../../components/Component'
 import PageWrapper from '../../components/PageWrapper'
-import StoreControlBar from '../../components/store/StoreControlBar'
+import StoreControlBar from '../../components/storefront/StoreControlBar'
+import getMoney from '../../helpers/getMoney'
 
 @connect
 class ListCart extends Component {
@@ -13,6 +14,7 @@ class ListCart extends Component {
 
   state = {
     quantity: {},
+    submitting: false,
   }
 
 
@@ -23,7 +25,7 @@ class ListCart extends Component {
     Private Methods
   \***************************************************************************/
 
-  _handleSKUUpdate = event => {
+  _handleSKUUpdate = async event => {
     const { name } = event.target
     const { quantity } = this.state
     const { updateCartItem } = this.props
@@ -32,6 +34,8 @@ class ListCart extends Component {
       id: name,
       quantity: Number(quantity[name]),
     })
+
+    this._cancelCurrentOrder()
   }
 
   _handleSKURemove = event => {
@@ -39,6 +43,23 @@ class ListCart extends Component {
     const { removeCartItem } = this.props
 
     removeCartItem({ id: name })
+
+    this._cancelCurrentOrder()
+  }
+
+
+  _cancelCurrentOrder = async () => {
+    const { updateOrder } = this.props
+    const currentOrder = sessionStorage.getItem('currentOrder')
+
+    if (currentOrder) {
+      this.setState({ submitting: true })
+
+      await updateOrder(currentOrder, { status: 'canceled' })
+      sessionStorage.removeItem('currentOrder')
+
+      this.setState({ submitting: true })
+    }
   }
 
   _handleQuantityChange = event => {
@@ -99,6 +120,11 @@ class ListCart extends Component {
       cart,
       products,
     } = this.props
+
+    const {
+      submitting,
+    } = this.state
+
     return (
       <>
         <PageWrapper title="Your Cart">
@@ -117,27 +143,23 @@ class ListCart extends Component {
                 } = product.attributes
                 const {
                   attributes,
-                  currency,
                   inventory,
                   price,
                 } = sku
+
+                const descriptors = (sku && Object.keys(attributes).length) ? Object.values(attributes).join(', ') : null
 
                 return (
                   <div key={skuId} className="cart-item">
                     <span className="item-name">
                       <font className="name-quantity">{quantity}</font>
                       <font className="subscript">X</font>
-                      {` ${name}: `}
-                      {`${Object.values(attributes)[0]} `}
-                      ( {((price * quantity) / 100).toLocaleString('en-GB', {
-                        style: 'currency',
-                        currency,
-                        currencyDisplay: 'symbol',
-                      })} )
+                      {` ${name}`} {descriptors && `(${descriptors})`} {getMoney(price * quantity)}
                     </span>
 
                     <input
                       className="item-quantity"
+                      disabled={submitting}
                       name={skuId}
                       onChange={this._handleQuantityChange}
                       type="number"
@@ -147,6 +169,7 @@ class ListCart extends Component {
 
                     <button
                       className="compact"
+                      disabled={submitting}
                       name={skuId}
                       onClick={this._handleSKUUpdate}
                       type="button">
@@ -155,6 +178,7 @@ class ListCart extends Component {
 
                     <button
                       className="compact"
+                      disabled={submitting}
                       name={skuId}
                       onClick={this._handleSKURemove}
                       type="button">
@@ -168,21 +192,17 @@ class ListCart extends Component {
                 <span className="item-total-key">
                   {'SubTotal: '}
                   {
-                    (Object.entries(cart).reduce((acc, [skuId, quantity]) => {
+                    getMoney(Object.entries(cart).reduce((acc, [skuId, quantity]) => {
                       const product = Object.values(products).find(datum => datum.attributes.skus && datum.attributes.skus[skuId])
                       const sku = product.attributes.skus[skuId]
 
                       return acc + (sku.price * quantity)
-                    }, 0) / 100).toLocaleString('en-GB', {
-                      style: 'currency',
-                      currency: 'EUR',
-                      currencyDisplay: 'symbol',
-                    })
+                    }, 0))
                   }
                 </span>
                 {Boolean(Object.keys(cart).length) && (
                   <Link route="store checkout">
-                    <a className="button compact">
+                    <a className="button compact" disabled={submitting}>
                       Checkout
                     </a>
                   </Link>
@@ -195,7 +215,12 @@ class ListCart extends Component {
     )
   }
 
-  static mapDispatchToProps = ['getStoreCart', 'updateCartItem', 'removeCartItem']
+
+  /***************************************************************************\
+    Redux Properites
+  \***************************************************************************/
+
+  static mapDispatchToProps = ['getStoreCart', 'updateCartItem', 'removeCartItem', 'updateOrder']
 
   static mapStateToProps = store => ({
     ...store.products,
