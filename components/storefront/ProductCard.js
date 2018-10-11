@@ -9,19 +9,7 @@ import PropTypes from 'prop-types'
 // Component imports
 import Component from '../Component'
 import skuIsInStock from '../../helpers/isInStock'
-
-
-
-
-// Component constants
-const currencyStringOptions = [
-  'en-GB',
-  {
-    style: 'currency',
-    currency: 'EUR',
-    currencyDisplay: 'symbol',
-  },
-]
+import getMoney from '../../helpers/getMoney'
 
 
 
@@ -67,9 +55,9 @@ class ProductCard extends Component {
       const maxPrice = Math.max(...priceList)
 
       if (minPrice === maxPrice) {
-        priceRange = `${(minPrice / 100).toLocaleString(...currencyStringOptions)}`
+        priceRange = `${getMoney(minPrice)}`
       } else {
-        priceRange = `${(minPrice / 100).toLocaleString(...currencyStringOptions)} ~ ${(maxPrice / 100).toLocaleString(...currencyStringOptions)}`
+        priceRange = `${getMoney(minPrice)} ~ ${getMoney(maxPrice)}`
       }
     }
 

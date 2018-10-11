@@ -14,8 +14,8 @@ import { connect } from '../../store'
 import CustomerInfoFields from './CustomerInfoFields'
 import RadioCardInput from '../RadioCardInput'
 import ValidatedFormInput from '../ValidatedFormInput'
-
-
+import StripeBadgeSvg from '../svg/StripeBadgeSvg'
+import getMoney from '../../helpers/getMoney'
 
 // Component constants
 const INVALID_CARD_MESSAGE = 'Credit Card is Required'
@@ -34,7 +34,6 @@ class CheckoutForm extends React.Component {
 
   state = {
     cardName: '',
-    cardToken: null,
     customerInfo: {
       value: {},
       valid: INVALID_INFO_MESSAGE,
@@ -72,10 +71,8 @@ class CheckoutForm extends React.Component {
     event.preventDefault()
 
     const {
-      cardName,
       cart,
       createOrder,
-      stripe,
     } = this.props
     const {
       customerInfo,
@@ -91,22 +88,15 @@ class CheckoutForm extends React.Component {
 
 
     if (status === 'success') {
-      const { token, error } = await stripe.createToken({ name: cardName })
-
-      if (!error) {
-        sessionStorage.setItem('currentOrder', payload.data.id)
-        await localForage.setItem('lastStage', 1)
-        this.setState({
-          error: null,
-          cardToken: token,
-          order: payload.data,
-          shippingMethod: payload.data.attributes.shippingMethod,
-          stage: 1,
-          submitting: false,
-        })
-      } else {
-        this.setState({ error: error.message })
-      }
+      sessionStorage.setItem('currentOrder', payload.data.id)
+      await localForage.setItem('lastStage', 1)
+      this.setState({
+        error: null,
+        order: payload.data,
+        shippingMethod: payload.data.attributes.shippingMethod,
+        stage: 1,
+        submitting: false,
+      })
     } else {
       this.setState({ error: 'Error while creating order.' })
     }
@@ -163,27 +153,22 @@ class CheckoutForm extends React.Component {
       payOrder,
       stripe,
     } = this.props
-    let {
+    const {
       cardName,
-      cardToken,
       order,
     } = this.state
 
     this.setState({ submitting: true })
 
-    if (!cardToken) {
-      const { token, error } = await stripe.createToken({ name: cardName })
+    const { token, error } = await stripe.createToken({ name: cardName })
 
-      if (!error) {
-        cardToken = token
-      } else {
-        this.setState({ error: error.message, submitting: false })
-        return
-      }
+    if (error) {
+      this.setState({ error: error.message, submitting: false })
+      return
     }
 
     const { payload, status } = await payOrder(order.id, {
-      source: cardToken.id,
+      source: token.id,
     })
 
     if (status === 'success') {
@@ -199,7 +184,6 @@ class CheckoutForm extends React.Component {
     } else {
       this.setState({
         error: payload.errors && payload.errors.length ? `Error: ${payload.errors[0].detail.message}` : 'Error while submitting order.',
-        cardToken: null,
         submitting: false,
       })
     }
@@ -240,7 +224,6 @@ class CheckoutForm extends React.Component {
 
     const {
       cardName,
-      cardToken,
       error,
       loading,
       order,
@@ -264,19 +247,6 @@ class CheckoutForm extends React.Component {
             <h4>Loading...</h4>
           } else if (stage === 0) {
             <form className="compact" onSubmit={this._handleOrderCreate}>
-              <h4>Billing Info</h4>
-              <ValidatedFormInput
-                autoComplete="cc-name"
-                id="name"
-                label="Cardholder Name"
-                name="name"
-                onChange={this._handleCardNameChange}
-                required
-                value={cardName} />
-              <fieldset>
-                <CardElement onChange={this._handleCardElementChange} />
-              </fieldset>
-              <br />
               <h4>Shipping Info</h4>
               <CustomerInfoFields onChange={this._handleCustomerInfoChange} />
               <br />
@@ -308,11 +278,7 @@ class CheckoutForm extends React.Component {
                     <>
                       <span className="title">{value.description}</span>
                       <span>
-                        {(value.amount / 100).toLocaleString('en-GB', {
-                          style: 'currency',
-                          currency: value.currency,
-                          currencyDisplay: 'symbol',
-                        })}
+                        {getMoney(value.amount, value.currency)}
                       </span>
                     </>
                   )}
@@ -344,52 +310,39 @@ class CheckoutForm extends React.Component {
                   <tbody>
                     {order.attributes.items.map(item => {
                       const sku = skus[item.parent]
-                      const descriptors = (sku && Object.keys(sku.attributes.attributes).length) ? Object.values(sku.attributes.attributes)[0] : null
+                      const descriptors = (sku && Object.keys(sku.attributes.attributes).length) ? Object.values(sku.attributes.attributes).join(', ') : null
                       return (
                         <tr key={item.parent}>
-                          <td className="text-right text-space-right">{item.quantity && `${item.quantity}x `}{item.description}{descriptors && ` (${descriptors})`}</td>
-                          <td>{
-                            (item.amount / 100).toLocaleString('en-GB', {
-                              style: 'currency',
-                              currency: order.attributes.currency,
-                              currencyDisplay: 'symbol',
-                            })}
+                          <td className="text-right text-space-right">{item.quantity && `${item.quantity}x `}{item.description} {descriptors && `(${descriptors})`}</td>
+                          <td>{getMoney(item.amount, order.attributes.currency)}
                           </td>
                         </tr>
                       )
                     })}
                     <tr>
                       <td className="text-bold text-right">Total</td>
-                      <td className="text-bold total">
-                        {
-                          (order.attributes.amount / 100).toLocaleString('en-GB', {
-                            style: 'currency',
-                            currency: order.attributes.currency,
-                            currencyDisplay: 'symbol',
-                          })
-                        }
+                      <td className="text-bold total">{getMoney(order.attributes.amount, order.attributes.currency)}
                       </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
+              <br />
               <form className="compact center" onSubmit={this._handleOrderConfirm}>
-                {!cardToken && (
-                  <>
-                    <h4>Billing Info</h4>
-                    <ValidatedFormInput
-                      autoComplete="cc-name"
-                      id="name"
-                      label="Cardholder Name"
-                      name="name"
-                      onChange={this._handleCardNameChange}
-                      required
-                      value={cardName} />
-                    <fieldset>
-                      <CardElement onChange={this._handleCardElementChange} />
-                    </fieldset>
-                  </>
-                )}
+                <fieldset>
+                  <h4>Billing Info <a href="https://stripe.com/" style={{ float: 'right' }} target="_blank" rel="noopener noreferrer"><StripeBadgeSvg style={{ verticalAlign: 'bottom' }} /></a></h4>
+                </fieldset>
+                <ValidatedFormInput
+                  autoComplete="cc-name"
+                  id="name"
+                  label="Cardholder Name"
+                  name="name"
+                  onChange={this._handleCardNameChange}
+                  required
+                  value={cardName} />
+                <fieldset>
+                  <CardElement onChange={this._handleCardElementChange} />
+                </fieldset>
                 <menu type="toolbar">
                   <div className="primary">
                     <button
@@ -441,12 +394,6 @@ class CheckoutForm extends React.Component {
 
     switch (stage) {
       case 0:
-        if (cardName === '') {
-          return INVALID_CARDHOLDER_NAME_MESSAGE
-        }
-        if (cardValidity !== true) {
-          return cardValidity
-        }
         if (customerInfo.valid !== true) {
           return customerInfo.valid
         }
