@@ -15,7 +15,7 @@ import CustomerInfoFields from './CustomerInfoFields'
 import RadioCardInput from '../RadioCardInput'
 import ValidatedFormInput from '../ValidatedFormInput'
 import StripeBadgeSvg from '../svg/StripeBadgeSvg'
-
+import getMoney from '../../helpers/getMoney'
 
 // Component constants
 const INVALID_CARD_MESSAGE = 'Credit Card is Required'
@@ -278,11 +278,7 @@ class CheckoutForm extends React.Component {
                     <>
                       <span className="title">{value.description}</span>
                       <span>
-                        {(value.amount / 100).toLocaleString('en-GB', {
-                          style: 'currency',
-                          currency: value.currency,
-                          currencyDisplay: 'symbol',
-                        })}
+                        {getMoney(value.amount, value.currency)}
                       </span>
                     </>
                   )}
@@ -318,26 +314,14 @@ class CheckoutForm extends React.Component {
                       return (
                         <tr key={item.parent}>
                           <td className="text-right text-space-right">{item.quantity && `${item.quantity}x `}{item.description} {descriptors && `(${descriptors})`}</td>
-                          <td>{
-                            (item.amount / 100).toLocaleString('en-GB', {
-                              style: 'currency',
-                              currency: order.attributes.currency,
-                              currencyDisplay: 'symbol',
-                            })}
+                          <td>{getMoney(item.amount, order.attributes.currency)}
                           </td>
                         </tr>
                       )
                     })}
                     <tr>
                       <td className="text-bold text-right">Total</td>
-                      <td className="text-bold total">
-                        {
-                          (order.attributes.amount / 100).toLocaleString('en-GB', {
-                            style: 'currency',
-                            currency: order.attributes.currency,
-                            currencyDisplay: 'symbol',
-                          })
-                        }
+                      <td className="text-bold total">{getMoney(order.attributes.amount, order.attributes.currency)}
                       </td>
                     </tr>
                   </tbody>

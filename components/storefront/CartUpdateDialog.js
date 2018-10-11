@@ -10,6 +10,7 @@ import { connect } from '../../store'
 import Dialog from '../Dialog'
 import Component from '../Component'
 import isInStock from '../../helpers/isInStock'
+import getMoney from '../../helpers/getMoney'
 
 
 
@@ -17,14 +18,6 @@ import isInStock from '../../helpers/isInStock'
 
 // Component constants
 const CONFIRMATION_DISPLAY_TIME = 1000
-const currencyStringOptions = [
-  'en-GB',
-  {
-    style: 'currency',
-    currency: 'EUR',
-    currencyDisplay: 'symbol',
-  },
-]
 
 
 
@@ -184,8 +177,8 @@ class CartUpdateDialog extends Component {
           <span>
             {
               activeSKU && quantity > 0
-                ? `${quantity} @ ${(activeSKU.price / 100).toLocaleString(...currencyStringOptions)}${quantity > 1 ? ` = ${((activeSKU.price * quantity) / 100).toLocaleString(...currencyStringOptions)}` : ''}`
-                : '€0.00'
+                ? `${quantity} @ ${getMoney(activeSKU.price)}${quantity > 1 ? ` = ${getMoney(activeSKU.price * quantity)}` : ''}`
+                : getMoney(0)
             }
           </span>
         ),

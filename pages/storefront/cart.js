@@ -4,6 +4,7 @@ import { Link } from '../../routes'
 import Component from '../../components/Component'
 import PageWrapper from '../../components/PageWrapper'
 import StoreControlBar from '../../components/storefront/StoreControlBar'
+import getMoney from '../../helpers/getMoney'
 
 @connect
 class ListCart extends Component {
@@ -117,23 +118,18 @@ class ListCart extends Component {
                 } = product.attributes
                 const {
                   attributes,
-                  currency,
                   inventory,
                   price,
                 } = sku
+
+                const descriptors = (sku && Object.keys(attributes).length) ? Object.values(attributes).join(', ') : null
 
                 return (
                   <div key={skuId} className="cart-item">
                     <span className="item-name">
                       <font className="name-quantity">{quantity}</font>
                       <font className="subscript">X</font>
-                      {` ${name}: `}
-                      {`${Object.values(attributes)[0]} `}
-                      ( {((price * quantity) / 100).toLocaleString('en-GB', {
-                        style: 'currency',
-                        currency,
-                        currencyDisplay: 'symbol',
-                      })} )
+                      {` ${name}`} {descriptors && `(${descriptors})`} {getMoney(price * quantity)}
                     </span>
 
                     <input
@@ -168,16 +164,12 @@ class ListCart extends Component {
                 <span className="item-total-key">
                   {'SubTotal: '}
                   {
-                    (Object.entries(cart).reduce((acc, [skuId, quantity]) => {
+                    getMoney(Object.entries(cart).reduce((acc, [skuId, quantity]) => {
                       const product = Object.values(products).find(datum => datum.attributes.skus && datum.attributes.skus[skuId])
                       const sku = product.attributes.skus[skuId]
 
                       return acc + (sku.price * quantity)
-                    }, 0) / 100).toLocaleString('en-GB', {
-                      style: 'currency',
-                      currency: 'EUR',
-                      currencyDisplay: 'symbol',
-                    })
+                    }, 0))
                   }
                 </span>
                 {Boolean(Object.keys(cart).length) && (
