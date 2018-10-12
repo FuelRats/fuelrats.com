@@ -1,6 +1,5 @@
 // Module imports
 import React from 'react'
-import { connect } from 'react-redux'
 
 
 
@@ -23,10 +22,4 @@ const UserSettings = () => (
 
 
 
-const mapStateToProps = state => state.user || {}
-
-
-
-
-
-export default connect(mapStateToProps, null)(UserSettings)
+export default UserSettings

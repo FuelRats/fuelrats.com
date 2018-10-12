@@ -1,6 +1,4 @@
 // Module imports
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
 import * as d3 from 'd3'
 import moment from 'moment'
 
@@ -9,13 +7,13 @@ import moment from 'moment'
 
 
 // Module imports
-import { actions } from '../store'
+import { connect } from '../store'
 import Component from './Component'
 
 
 
 
-
+@connect
 class RescuesOverTimeChart extends Component {
   /***************************************************************************\
     Private Methods
@@ -228,25 +226,27 @@ class RescuesOverTimeChart extends Component {
       </section>
     )
   }
-}
 
 
 
 
 
-const mapDispatchToProps = dispatch => ({
-  getRescuesOverTimeStatistics: bindActionCreators(actions.getRescuesOverTimeStatistics, dispatch),
-})
+  /***************************************************************************\
+    Redux Properties
+  \***************************************************************************/
 
-const mapStateToProps = state => {
-  const {
-    loading,
-    statistics,
-  } = state.rescuesOverTime
+  static mapDispatchToProps = ['getRescuesOverTimeStatistics']
 
-  return {
-    loading,
-    statistics,
+  static mapStateToProps = state => {
+    const {
+      loading,
+      statistics,
+    } = state.rescuesOverTime
+
+    return {
+      loading,
+      statistics,
+    }
   }
 }
 
@@ -254,4 +254,4 @@ const mapStateToProps = state => {
 
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(RescuesOverTimeChart)
+export default RescuesOverTimeChart

@@ -1,21 +1,19 @@
 // Module imports
-import { bindActionCreators } from 'redux'
 import React from 'react'
-import { connect } from 'react-redux'
 
 
 
 
 
 // Component imports
-import { actions } from '../store'
+import { connect } from '../store'
 import Component from './Component'
 import PasswordField from './PasswordField'
 
 
 
 
-
+@connect
 class ChangePasswordForm extends Component {
   /***************************************************************************\
     Public Methods
@@ -133,16 +131,20 @@ class ChangePasswordForm extends Component {
 
     return true
   }
+
+
+
+
+
+  /***************************************************************************\
+    Redux Properties
+  \***************************************************************************/
+
+  static mapDispatchToProps = ['changePassword']
 }
 
 
 
 
 
-const mapDispatchToProps = dispatch => ({ changePassword: bindActionCreators(actions.changePassword, dispatch) })
-
-
-
-
-
-export default connect(null, mapDispatchToProps)(ChangePasswordForm)
+export default ChangePasswordForm

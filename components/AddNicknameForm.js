@@ -1,6 +1,4 @@
 // Module imports
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
 import React from 'react'
 
 
@@ -8,13 +6,13 @@ import React from 'react'
 
 
 // Component imports
-import { actions } from '../store'
+import { connect } from '../store'
 import Component from './Component'
 
 
 
 
-
+@connect
 class AddNicknameForm extends Component {
   /***************************************************************************\
     Public Methods
@@ -74,16 +72,20 @@ class AddNicknameForm extends Component {
       </form>
     )
   }
+
+
+
+
+
+  /***************************************************************************\
+    Redux Properties
+  \***************************************************************************/
+
+  static mapDispatchToProps = ['addNickname']
 }
 
 
 
 
 
-const mapDispatchToProps = dispatch => ({ addNickname: bindActionCreators(actions.addNickname, dispatch) })
-
-
-
-
-
-export default connect(null, mapDispatchToProps)(AddNicknameForm)
+export default AddNicknameForm

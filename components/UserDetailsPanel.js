@@ -1,7 +1,13 @@
 // Module imports
-import { connect } from 'react-redux'
 import moment from 'moment'
 import React from 'react'
+
+
+
+
+
+// Component imports
+import { connect } from '../store'
 
 
 
@@ -43,10 +49,10 @@ const UserDetailsPanel = props => {
 
 
 
-const mapStateToProps = state => state.user || {}
+UserDetailsPanel.mapStateToProps = state => state.user || {}
 
 
 
 
 
-export default connect(mapStateToProps, null)(UserDetailsPanel)
+export default connect(UserDetailsPanel)

@@ -1,8 +1,5 @@
 // Module imports
-import { bindActionCreators } from 'redux'
-import {
-  StripeProvider,
-} from 'react-stripe-elements'
+import { StripeProvider } from 'react-stripe-elements'
 import getConfig from 'next/config'
 import hoistNonReactStatics from 'hoist-non-react-statics'
 import NextError from 'next/error'
@@ -14,7 +11,7 @@ import React from 'react'
 
 
 // Component imports
-import { actions, connect } from '../store'
+import { connect } from '../store'
 import { Router } from '../routes'
 import apiService from '../services/api'
 import Header from './Header'
@@ -149,7 +146,7 @@ class AppLayout extends React.Component {
       pageProps,
       showLoginDialog,
       statusCode,
-      store,
+      setFlag,
       path,
     } = this.props
 
@@ -174,12 +171,22 @@ class AppLayout extends React.Component {
         }
 
         {showLoginDialog && (
-          <LoginDialog onClose={() => actions.setFlag('showLoginDialog', false)(store.dispatch)} />
+          <LoginDialog onClose={() => setFlag('showLoginDialog', false)} />
         )}
 
       </div>
     )
   }
+
+
+
+
+
+  /***************************************************************************\
+    Redux Properties
+  \***************************************************************************/
+
+  static mapDispatchToProps = ['getUser', 'logout', 'setFlag', 'updateLoggingInState']
 
   static mapStateToProps = ({ authentication, flags, user }) => ({
     loggedIn: authentication.loggedIn,
@@ -187,13 +194,6 @@ class AppLayout extends React.Component {
     verifyError: authentication.verifyError,
     user,
   })
-
-  static mapDispatchToProps = dispatch => bindActionCreators({
-    getUser: actions.getUser,
-    logout: actions.logout,
-    setFlag: actions.setFlag,
-    updateLoggingInState: actions.updateLoggingInState,
-  }, dispatch)
 }
 
 

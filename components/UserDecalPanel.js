@@ -1,6 +1,4 @@
 // Module imports
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
 import moment from 'moment'
 import React from 'react'
 import ReactTable from 'react-table'
@@ -10,13 +8,13 @@ import ReactTable from 'react-table'
 
 
 // Module imports
-import { actions } from '../store'
+import { connect } from '../store'
 import Component from './Component'
 
 
 
 
-
+@connect
 class UserDetailsPanel extends Component {
   /***************************************************************************\
     Private Methods
@@ -152,21 +150,22 @@ class UserDetailsPanel extends Component {
       },
     ]
   }
+
+
+
+
+
+  /***************************************************************************\
+    Redux Properties
+  \***************************************************************************/
+
+  static mapDispatchToProps = ['checkDecalEligibility', 'redeemDecal']
+
+  static mapStateToProps = state => state.decals
 }
 
 
 
 
 
-const mapDispatchToProps = dispatch => ({
-  checkDecalEligibility: bindActionCreators(actions.checkDecalEligibility, dispatch),
-  redeemDecal: bindActionCreators(actions.redeemDecal, dispatch),
-})
-
-const mapStateToProps = state => state.decals
-
-
-
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserDetailsPanel)
+export default UserDetailsPanel

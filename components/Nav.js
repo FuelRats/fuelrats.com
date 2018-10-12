@@ -1,10 +1,8 @@
 // Module imports
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
 import React from 'react'
 
 // Component imports
-import { actions } from '../store'
+import { connect } from '../store'
 import { Link } from '../routes'
 import Component from './Component'
 
@@ -81,7 +79,7 @@ const navItems = [
   },
 ]
 
-
+@connect
 class Nav extends Component {
   /***************************************************************************\
     Class Properties
@@ -189,22 +187,24 @@ class Nav extends Component {
       </li>
     )
   }
+
+
+
+
+
+  /***************************************************************************\
+    Redux Properties
+  \***************************************************************************/
+
+  static mapDispatchToProps = ['setFlag']
+
+  static mapStateToProps = state => ({
+    ...state.authentication,
+  })
 }
 
 
 
 
 
-const mapStateToProps = state => ({
-  ...state.authentication,
-})
-
-const mapDispatchToProps = dispatch => bindActionCreators({
-  setFlag: actions.setFlag,
-}, dispatch)
-
-
-
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(Nav)
+export default Nav

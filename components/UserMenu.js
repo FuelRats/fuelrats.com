@@ -1,6 +1,4 @@
 // Module imports
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
 import React from 'react'
 
 
@@ -8,7 +6,7 @@ import React from 'react'
 
 
 // Component imports
-import { actions } from '../store'
+import { connect } from '../store'
 import { Link } from '../routes'
 import AdminUserMenuNav from './AdminUserMenuNav'
 import userHasPermission from '../helpers/userHasPermission'
@@ -106,12 +104,9 @@ const UserMenu = props => {
 
 
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  logout: actions.logout,
-  setFlag: actions.setFlag,
-}, dispatch)
+UserMenu.mapDispatchToProps = ['logout', 'setFlag']
 
-const mapStateToProps = ({ authentication, user, groups }) => {
+UserMenu.mapStateToProps = ({ authentication, user, groups }) => {
   const userGroups = user.relationships ? user.relationships.groups.data.map(group => groups[group.id]) : []
 
   return {
@@ -125,4 +120,4 @@ const mapStateToProps = ({ authentication, user, groups }) => {
 
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserMenu)
+export default connect(UserMenu)

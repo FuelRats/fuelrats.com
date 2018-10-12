@@ -1,6 +1,4 @@
 // Module imports
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
 import moment from 'moment'
 import React from 'react'
 import ReactTable from 'react-table'
@@ -10,7 +8,7 @@ import ReactTable from 'react-table'
 
 
 // Component imports
-import { actions } from '../store'
+import { connect } from '../store'
 import { Link } from '../routes'
 import AddRatForm from './AddRatForm'
 import Component from './Component'
@@ -19,7 +17,7 @@ import RatDetails from './RatDetails'
 
 
 
-
+@connect
 class UserRatsPanel extends Component {
   /***************************************************************************\
     Private Methods
@@ -151,24 +149,28 @@ class UserRatsPanel extends Component {
       },
     ]
   }
-}
 
 
 
 
 
-const mapDispatchToProps = dispatch => ({ createRat: bindActionCreators(actions.createRat, dispatch) })
+  /***************************************************************************\
+    Redux Properties
+  \***************************************************************************/
 
-const mapStateToProps = state => {
-  const { rats } = state
-  const {
-    ships,
-    user,
-  } = state
+  static mapDispatchToProps = ['createRat']
 
-  return {
-    rats: rats.rats.filter(rat => user.id === rat.attributes.userId),
-    ships,
+  static mapStateToProps = state => {
+    const { rats } = state
+    const {
+      ships,
+      user,
+    } = state
+
+    return {
+      rats: rats.rats.filter(rat => user.id === rat.attributes.userId),
+      ships,
+    }
   }
 }
 
@@ -176,4 +178,4 @@ const mapStateToProps = state => {
 
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserRatsPanel)
+export default UserRatsPanel

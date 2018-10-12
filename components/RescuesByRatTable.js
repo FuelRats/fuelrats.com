@@ -1,5 +1,4 @@
 // Module imports
-import { bindActionCreators } from 'redux'
 import React from 'react'
 import ReactTable from 'react-table'
 
@@ -8,7 +7,7 @@ import ReactTable from 'react-table'
 
 
 // Module imports
-import { actions, connect } from '../store'
+import { connect } from '../store'
 import Component from './Component'
 
 
@@ -87,9 +86,7 @@ class RescuesByRatTable extends Component {
     ])
   }
 
-  static mapDispatchToProps = dispatch => ({
-    getRescuesByRatStatistics: bindActionCreators(actions.getRescuesByRatStatistics, dispatch),
-  })
+  static mapDispatchToProps = ['getRescuesByRatStatistics']
 
   static mapStateToProps = state => {
     const {
