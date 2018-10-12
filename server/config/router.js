@@ -7,18 +7,17 @@ const routes = require('../../routes')
 
 
 
+// Component constants
+const permanentRedirect = path => async ctx => {
+  ctx.status = 301
+  await ctx.redirect(path)
+}
+
+
+
+
 
 module.exports = (nextjs, koa) => {
-  /******************************************************************************\
-    Router setup
-  \******************************************************************************/
-
-  const nextRoutesHandler = routes.getRequestHandler(nextjs)
-
-
-
-
-
   /******************************************************************************\
     Redirects
   \******************************************************************************/
@@ -35,6 +34,10 @@ module.exports = (nextjs, koa) => {
   router.get('/manifest.json', async ctx => {
     await send(ctx, '/static/manifest.json')
   })
+
+
+
+
 
   // Legacy Wordpress permalinks
   // e.g. /2017/09/07/universal-service-a-fuel-rats-thargoid-cartoon
@@ -58,21 +61,18 @@ module.exports = (nextjs, koa) => {
     await next()
   })
 
+
+
+
+
   // Permanent Redirects
-  router.all('/blogs', async ctx => {
-    ctx.status = 301
-    await ctx.redirect('/blog')
-  })
+  router.all('/blogs', permanentRedirect('/blog'))
 
-  router.all('/get-help', async ctx => {
-    ctx.status = 301
-    await ctx.redirect('/i-need-fuel')
-  })
+  router.all('/get-help', permanentRedirect('/i-need-fuel'))
 
-  router.all('/fuel-rats-lexicon', async ctx => {
-    ctx.status = 301
-    await ctx.redirect('https://confluence.fuelrats.com/pages/viewpage.action?pageId=3637257')
-  })
+  router.all('/fuel-rats-lexicon', permanentRedirect('https://confluence.fuelrats.com/pages/viewpage.action?pageId=3637257'))
+
+  router.all('/help', permanentRedirect('https://t.fuelr.at/help'))
 
 
 
@@ -83,6 +83,7 @@ module.exports = (nextjs, koa) => {
   \******************************************************************************/
 
   // Pass off to next-routes
+  const nextRoutesHandler = routes.getRequestHandler(nextjs)
   router.get('*', async ctx => {
     await nextRoutesHandler(ctx.req, ctx.res)
     ctx.respond = false
@@ -98,7 +99,7 @@ module.exports = (nextjs, koa) => {
 
 
   /******************************************************************************\
-    Attach the router to the app
+    Attach router to server
   \******************************************************************************/
 
   koa.use(router.routes())
