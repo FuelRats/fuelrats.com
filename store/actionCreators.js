@@ -114,7 +114,7 @@ function createAction (options) {
     })
 
     if (onComplete) {
-      postDispatchObj = onComplete(postDispatchObj) || postDispatchObj
+      postDispatchObj = onComplete(postDispatchObj, { dispatch, getState }) || postDispatchObj
     }
     return postDispatchObj
   }
