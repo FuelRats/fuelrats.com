@@ -11,7 +11,7 @@ module.exports = {
     // eslint-core
     'arrow-parens': ['error', 'as-needed'],
     'brace-style': ['error', '1tbs', { allowSingleLine: false }],
-    camelcase: ['error', {
+    'camelcase': ['error', {
       properties: 'never',
       allow: [
         '^UNSAFE_', // for unsafe React lifecycle methods
@@ -46,25 +46,15 @@ module.exports = {
     'no-return-assign': ['off'],
     'no-underscore-dangle': ['off'],
     'no-unused-expressions': ['off'],
-    'padding-line-between-statements': [
-      'warn',
-      // Group const and lets together, enforce blank line after each group
-      { blankLine: 'always', prev: ['const', 'let'], next: '*' },
-      { blankLine: 'never', prev: ['const'], next: ['const'] },
-      { blankLine: 'never', prev: ['let'], next: ['let'] },
-
-      // Blank line separates return statement
-      { blankLine: 'always', prev: '*', next: 'return' },
-    ],
     'prefer-const': ['error', {
       destructuring: 'all',
       ignoreReadBeforeAssign: true,
     }],
     'prefer-object-spread': ['error'],
     'prefer-rest-params': ['off'],
-    quotes: ['off'],
+    'quotes': ['off'],
     'require-atomic-updates': ['error'],
-    semi: ['off'],
+    'semi': ['off'],
     'space-before-function-paren': ['error', 'always'],
     'spaced-comment': ['off'],
 
