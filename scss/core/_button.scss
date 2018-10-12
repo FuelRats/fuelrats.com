@@ -92,9 +92,9 @@ input[type=button],
   }
 
   &.green {
-    --background-color: #{$green};
+    --background-color: #{$green-darkened};
     --text-color: #{$white};
-    --text-color-hover: #{$green};
+    --text-color-hover: #{$green-darkened};
   }
 
   &[disabled] {
