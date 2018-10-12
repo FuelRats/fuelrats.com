@@ -32,6 +32,22 @@
       }
     }
   }
+
+  &.dark {
+    background: $black-lighter;
+    color: $white;
+    border-width: 0 0 0.2rem;
+    border-color: transparent;
+    box-shadow: none !important;
+
+    &[required] {
+      border-color: $red;
+
+      &:valid {
+        border-color: $green;
+      }
+    }
+  }
 }
 
 input {
