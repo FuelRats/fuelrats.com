@@ -1,21 +1,19 @@
 // Module imports
-import { bindActionCreators } from 'redux'
 import * as d3 from 'd3'
 import React from 'react'
-import { connect } from 'react-redux'
 
 
 
 
 
 // Module imports
-import { actions } from '../store'
+import { connect } from '../store'
 import Component from './Component'
 
 
 
 
-
+@connect
 class RescuesBySystemChart extends Component {
   /***************************************************************************\
     Private Methods
@@ -334,25 +332,27 @@ class RescuesBySystemChart extends Component {
       </section>
     )
   }
-}
 
 
 
 
 
-const mapDispatchToProps = dispatch => ({
-  getRescuesBySystemStatistics: bindActionCreators(actions.getRescuesBySystemStatistics, dispatch),
-})
+  /***************************************************************************\
+    Redux Properties
+  \***************************************************************************/
 
-const mapStateToProps = state => {
-  const {
-    loading,
-    statistics,
-  } = state.rescuesBySystem
+  static mapDispatchToProps = ['getRescuesBySystemStatistics']
 
-  return {
-    loading,
-    statistics,
+  static mapStateToProps = state => {
+    const {
+      loading,
+      statistics,
+    } = state.rescuesBySystem
+
+    return {
+      loading,
+      statistics,
+    }
   }
 }
 
@@ -360,4 +360,4 @@ const mapStateToProps = state => {
 
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(RescuesBySystemChart)
+export default RescuesBySystemChart

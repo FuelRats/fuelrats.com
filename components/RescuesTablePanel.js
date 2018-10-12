@@ -1,6 +1,4 @@
 // Module imports
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
 import moment from 'moment'
 import React from 'react'
 import ReactTable from 'react-table'
@@ -10,14 +8,14 @@ import ReactTable from 'react-table'
 
 
 // Module imports
-import { actions } from '../store'
+import { connect } from '../store'
 import { Router } from '../routes'
 import Component from './Component'
 
 
 
 
-
+@connect
 class RescuesTablePanel extends Component {
   /***************************************************************************\
     Private Methods
@@ -210,18 +208,22 @@ class RescuesTablePanel extends Component {
       },
     ]
   }
+
+
+
+
+
+  /***************************************************************************\
+    Redux Properties
+  \***************************************************************************/
+
+  static mapDispatchToProps = ['getRescues']
+
+  static mapStateToProps = state => ({ ...state.rescues })
 }
 
 
 
 
 
-const mapDispatchToProps = dispatch => ({ getRescues: bindActionCreators(actions.getRescues, dispatch) })
-
-const mapStateToProps = state => ({ ...state.rescues })
-
-
-
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(RescuesTablePanel)
+export default RescuesTablePanel

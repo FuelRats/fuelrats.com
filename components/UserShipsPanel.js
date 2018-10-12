@@ -1,14 +1,12 @@
 // Module imports
-import { bindActionCreators } from 'redux'
 import React from 'react'
-import { connect } from 'react-redux'
 
 
 
 
 
 // Component imports
-import { actions } from '../store'
+import { connect } from '../store'
 import { Link } from '../routes'
 import Component from './Component'
 
@@ -16,6 +14,7 @@ import Component from './Component'
 
 
 
+@connect
 class UserShipsPanel extends Component {
   /***************************************************************************\
     Public Methods
@@ -73,23 +72,27 @@ class UserShipsPanel extends Component {
       </div>
     )
   }
-}
 
 
 
 
 
-const mapDispatchToProps = dispatch => ({ getRats: bindActionCreators(actions.getRats, dispatch) })
+  /***************************************************************************\
+    Redux Properties
+  \***************************************************************************/
 
-const mapStateToProps = state => {
-  const {
-    ships,
-    user,
-  } = state
+  static mapDispatchToProps = ['getRats']
 
-  return {
-    ships,
-    user,
+  static mapStateToProps = state => {
+    const {
+      ships,
+      user,
+    } = state
+
+    return {
+      ships,
+      user,
+    }
   }
 }
 
@@ -97,4 +100,4 @@ const mapStateToProps = state => {
 
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserShipsPanel)
+export default UserShipsPanel

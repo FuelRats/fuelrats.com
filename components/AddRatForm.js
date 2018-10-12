@@ -1,20 +1,18 @@
 // Module imports
-import { bindActionCreators } from 'redux'
 import React from 'react'
-import { connect } from 'react-redux'
 
 
 
 
 
 // Component imports
-import { actions } from '../store'
+import { connect } from '../store'
 import Component from './Component'
 
 
 
 
-
+@connect
 class AddRatForm extends Component {
   /***************************************************************************\
     Public Methods
@@ -128,21 +126,25 @@ class AddRatForm extends Component {
       </form>
     )
   }
-}
 
 
 
 
 
-const mapDispatchToProps = dispatch => ({ createRat: bindActionCreators(actions.createRat, dispatch) })
+  /***************************************************************************\
+    Redux Properties
+  \***************************************************************************/
 
-const mapStateToProps = state => {
-  const {
-    id,
-  } = state.user
+  static mapDispatchToProps = ['createRat']
 
-  return {
-    userId: id,
+  static mapStateToProps = state => {
+    const {
+      id,
+    } = state.user
+
+    return {
+      userId: id,
+    }
   }
 }
 
@@ -150,4 +152,4 @@ const mapStateToProps = state => {
 
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddRatForm)
+export default AddRatForm

@@ -2,16 +2,19 @@
 
 // Module imports
 import React from 'react'
-import { connect } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 
 
+
 // Component imports
+import { connect } from '../store'
 import Nav from './Nav'
 import { Link } from '../routes'
 import BrandSvg from './svg/BrandSvg'
+
+
 
 
 
@@ -19,6 +22,9 @@ import BrandSvg from './svg/BrandSvg'
 const isDevOrStaging = IS_DEVELOPMENT || IS_STAGING
 const buildCommit = BUILD_COMMIT
 const buildCommitRange = BUILD_COMMIT_RANGE
+
+
+
 
 
 const Header = props => {
@@ -174,7 +180,10 @@ const Header = props => {
 }
 
 
-const mapStateToProps = state => {
+
+
+
+Header.mapStateToProps = state => {
   const { loggedIn, loggingIn } = state.authentication
 
   return {
@@ -187,4 +196,4 @@ const mapStateToProps = state => {
 
 
 
-export default connect(mapStateToProps, null)(Header)
+export default connect(Header)
