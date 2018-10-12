@@ -52,8 +52,8 @@ const Header = props => {
           <li>
             <Link route="wordpress" params={{ slug: 'terms-of-service' }}>
               <a className="button link">
-                <FontAwesomeIcon icon="book" listItem />
-                <span className="link-text">Terms of Service</span>
+                <FontAwesomeIcon icon="book" fixedWidth />
+                Terms of Service
               </a>
             </Link>
           </li>
@@ -61,8 +61,8 @@ const Header = props => {
           <li>
             <Link route="wordpress" params={{ slug: 'privacy-policy' }}>
               <a className="button link">
-                <FontAwesomeIcon icon="user-secret" listItem />
-                <span className="link-text">Privacy Policy</span>
+                <FontAwesomeIcon icon="user-secret" fixedWidth />
+                Privacy Policy
               </a>
             </Link>
           </li>
@@ -70,8 +70,8 @@ const Header = props => {
           <li>
             <Link route="about acknowledgements">
               <a className="button link">
-                <FontAwesomeIcon icon="hands-helping" listItem />
-                <span className="link-text">Acknowledgements</span>
+                <FontAwesomeIcon icon="hands-helping" fixedWidth />
+                Acknowledgements
               </a>
             </Link>
           </li>
@@ -83,8 +83,8 @@ const Header = props => {
                 href={`https://www.github.com/fuelrats/fuelrats.com/${buildCommitRange ? `compare/${buildCommitRange}` : ''}`}
                 target="_blank"
                 rel="noopener noreferrer">
-                <FontAwesomeIcon icon="code-branch" listItem />
-                <span className="link-text">{buildCommit}</span>
+                <FontAwesomeIcon icon="code-branch" fixedWidth />
+                {buildCommit}
               </a>
             </li>
           )}

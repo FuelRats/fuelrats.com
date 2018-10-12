@@ -227,9 +227,12 @@
     .button.link {
       text-align: left;
       padding: 0;
-      line-height: 1.3rem;
       margin: 0;
       width: 100%;
+      margin-left: 0.55rem;
+      font-size: 1.3rem;
+
+
 
       &:focus {
         color: $white;
@@ -239,14 +242,8 @@
         color: $red;
       }
 
-      .fa-li {
-        left: 0;
-        transition: opacity .2s;
-      }
-
-      span.link-text {
-        font-size: 1.3rem;
-        padding-left: 2.5rem;
+      .fa-fw {
+        margin-right: 0.55rem;
       }
     }
   }

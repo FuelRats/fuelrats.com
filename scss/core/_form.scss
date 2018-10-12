@@ -3,6 +3,10 @@ form {
     padding: .5rem 4rem;
   }
 
+  &.dialog fieldset {
+    padding: .5rem 2rem;
+  }
+
   &.compact .form-row fieldset {
     padding: .5rem;
 

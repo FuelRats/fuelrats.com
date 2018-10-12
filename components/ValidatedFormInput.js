@@ -84,6 +84,11 @@ class ValidatedFormInput extends React.Component {
     delete inputProps.onChange
     delete inputProps.patternMessage
 
+    if (inputProps.inputRef) {
+      delete inputProps.inputRef
+      inputProps.ref = this.props.inputRef
+    }
+
     if (!inputProps.name) {
       inputProps.name = inputProps.id
     }

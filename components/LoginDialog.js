@@ -1,21 +1,23 @@
 // Module imports
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
 import React from 'react'
+import PropTypes from 'prop-types'
 
 
 
 
 
 // Component imports
-import { actions } from '../store'
+import { connect } from '../store'
 import { Router } from '../routes'
-import Component from './Component'
 import Dialog from './Dialog'
+import ValidatedFormInput from './ValidatedFormInput'
+import Switch from './Switch'
 
 
 
-class LoginDialog extends Component {
+
+@connect
+class LoginDialog extends React.Component {
   /***************************************************************************\
     Class Properties
   \***************************************************************************/
@@ -23,10 +25,62 @@ class LoginDialog extends Component {
   state = {
     email: '',
     password: '',
+    remember: false,
     error: false,
+    validity: {
+      email: false,
+      password: false,
+    },
   }
 
   emailInput = React.createRef()
+
+
+
+
+
+  /***************************************************************************\
+    Private Methods
+  \***************************************************************************/
+
+  _handleChange = ({ target, valid }) => this.setState(({ validity }) => {
+    const {
+      name,
+      value,
+    } = target
+    const required = typeof validity[name] !== 'undefined'
+
+    return {
+      [name]: value,
+      ...(required ? {
+        validity: {
+          ...validity,
+          [name]: valid,
+        },
+      } : {}),
+    }
+  })
+
+  _handleSwitchChange = ({ target }) => this.setState({ [target.name]: target.checked })
+
+  _handleSubmit = async event => {
+    event.preventDefault()
+
+    const { status } = await this.props.login({
+      email: this.state.email,
+      password: this.state.password,
+      remember: this.state.remember,
+    })
+
+    if (status === 'success') {
+      this.props.getUser()
+      this.props.onClose()
+    } else {
+      this.setState({
+        error: true,
+      })
+    }
+  }
 
 
 
@@ -40,34 +94,20 @@ class LoginDialog extends Component {
     this.emailInput.current.focus()
   }
 
-  onSubmit = async event => {
-    event.preventDefault()
-
-    const { status } = await this.props.login(this.state.email, this.state.password)
-    this.props.getUser()
-
-    if (status === 'success') {
-      this.props.onClose()
-    } else {
-      this.setState({
-        error: true,
-      })
-    }
-  }
-
   render () {
     const {
       email,
       error,
       password,
+      remember,
     } = this.state
 
     return (
       <Dialog
-        className="login-dialog"
+        className="login-dialog no-pad"
         title="Login"
         onClose={this.props.onClose}>
-        <form onSubmit={this.onSubmit}>
+        <form className="dialog" onSubmit={this._handleSubmit}>
           {error && !this.props.loggingIn && (
             <div className="store-errors">
               <div className="store-error">
@@ -76,26 +116,45 @@ class LoginDialog extends Component {
             </div>
           )}
 
-          <input
-            className="email"
+          <ValidatedFormInput
+            aria-label="Fuel rats account e-mail"
+            autoComplete="username"
+            className="email dark"
             disabled={this.props.loggingIn}
             id="email"
+            inputRef={this.emailInput}
+            label="Email"
             name="email"
-            onInput={event => this.setState({ email: event.target.value })}
-            placeholder="Email"
-            ref={this.emailInput}
+            onChange={this._handleChange}
             required
-            type="email" />
+            type="email"
+            value={email} />
 
-          <input
-            className="password"
+          <ValidatedFormInput
+            aria-label="Fuel rats account password"
+            autoComplete="current-password"
+            className="password dark"
             disabled={this.props.loggingIn}
             id="password"
+            label="Password"
             name="password"
-            onInput={event => this.setState({ password: event.target.value })}
-            placeholder="Password"
+            onChange={this._handleChange}
+            pattern="^.{8,}$"
             required
-            type="password" />
+            type="password"
+            value={password} />
+          <fieldset>
+            <div className="switch-form-container">
+              <Switch
+                aria-label="Remember me on this computer"
+                disabled={this.props.loggingIn}
+                id="remember"
+                label="Remember me"
+                name="remember"
+                onChange={this._handleSwitchChange}
+                checked={remember} />
+            </div>
+          </fieldset>
 
           <menu type="toolbar">
             <div className="secondary">
@@ -113,7 +172,8 @@ class LoginDialog extends Component {
             <div className="primary">
               <a className="button link secondary mobile-button" href="/forgot-password">Forgot password?</a>
               <button
-                disabled={!email || !password || this.props.loggingIn}
+                className="green"
+                disabled={!this.isValid}
                 type="submit">
                 {this.props.loggingIn ? 'Submitting...' : 'Login'}
               </button>
@@ -123,21 +183,49 @@ class LoginDialog extends Component {
       </Dialog>
     )
   }
+
+
+
+
+
+  /***************************************************************************\
+    Getters
+  \***************************************************************************/
+
+  get isValid () {
+    return !this.props.loggingIn && Object.values(this.state.validity).find(value => value !== true)
+  }
+
+
+
+
+
+  /***************************************************************************\
+    Redux Properties
+  \***************************************************************************/
+
+  static mapDispatchToProps = ['login', 'getUser']
+
+  static mapStateToProps = state => ({ ...state.authentication })
+
+
+
+
+
+  /***************************************************************************\
+    Prop Definitions
+  \***************************************************************************/
+
+  static propTypes = {
+    getUser: PropTypes.func.isRequired,
+    loggingIn: PropTypes.bool.isRequired,
+    login: PropTypes.func.isRequired,
+    onClose: PropTypes.func.isRequired,
+  }
 }
 
 
 
 
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  login: actions.login,
-  getUser: actions.getUser,
-}, dispatch)
-
-const mapStateToProps = state => ({ ...state.authentication })
-
-
-
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginDialog)
+export default LoginDialog

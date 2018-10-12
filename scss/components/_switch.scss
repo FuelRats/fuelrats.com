@@ -1,0 +1,70 @@
+div.switch-container {
+  display: inline-block;
+  vertical-align: middle;
+  width: 4.4rem;
+  height: 2.2rem;
+  position: relative;
+
+
+  > .switch-background {
+    background: $black-lightened;
+    position: absolute;
+    width: calc(100% - 0.8rem);
+    height: calc(100% - 0.4rem);
+    margin: .2rem .4rem;
+    border-radius: 1.2rem;
+  }
+
+  > .switch-input {
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+  }
+
+  > .switch-handle {
+    position: absolute;
+    height: 2.2rem;
+    width: 2.2rem;
+    background: $red;
+    transition: .2s cubic-bezier(0.19, 1, 0.22, 1);
+    color: $black-lightened;
+    border-radius: 50%;
+  }
+
+  &.checked > .switch-handle {
+    background: $green;
+    transform: translateX(100%);
+  }
+
+  &.disabled > .siwtch-handle {
+    background: $grey-lightened;
+  }
+
+  > .switch-label {
+    position: absolute;
+    white-space: nowrap;
+    height: 100%;
+    left: calc(100% + .5rem);
+    line-height: 2rem;
+    color: $grey;
+    user-select: none;
+  }
+
+  &.checked > .switch-label {
+    color: $white;
+  }
+}
+
+
+div.switch-form-container {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0 0;
+
+  > .switch-container {
+    margin-right: 1rem;
+  }
+}

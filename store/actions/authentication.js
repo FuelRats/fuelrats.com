@@ -29,7 +29,13 @@ export const changePassword = (currentPassword, newPassword) => createApiAction(
 
 
 
-export const login = (email, password, route, routeParams) => createApiAction({
+export const login = ({
+  email,
+  password,
+  route,
+  routeParams,
+  remember,
+}) => createApiAction({
   actionType: actionTypes.LOGIN,
   url: '/oauth2/token',
   method: 'post',
@@ -41,7 +47,7 @@ export const login = (email, password, route, routeParams) => createApiAction({
   onSuccess: response => {
     const token = response.data.access_token
 
-    Cookies.set('access_token', token, { expires: 365 })
+    Cookies.set('access_token', token, { expires: remember ? 365 : null })
     apiService().defaults.headers.common.Authorization = `Bearer ${token}`
   },
   onComplete: ({ status }) => {
