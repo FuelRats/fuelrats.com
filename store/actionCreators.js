@@ -59,7 +59,7 @@ const buildActionOptions = (options = isRequired('options')) => {
  * @param   {*}                  [options.any]                All other entries of the options object are passed to the actionFunction by default.
  * @returns {Function}                                        Function which performs a redux action defined by the given configuration.
  */
-function createAction (options) {
+const createAction = options => {
   const {
     actionFunction,
     actionPayload,
@@ -171,33 +171,31 @@ const createTimeoutAction = options => createAction({
  * @returns {Array|Object}              Array of responses from the actions performed, or the last response in the chain depending on returnLast
  */
 /* eslint-disable no-await-in-loop */
-function actionSeries (actions = isRequired('actions'), silentFail, returnLast) {
-  return async dispatch => {
-    const responses = []
+const actionSeries = (actions = isRequired('actions'), silentFail, returnLast) => async dispatch => {
+  const responses = []
 
-    if (Array.isArray(actions) && actions.length) {
-      for (const action of actions) {
-        if (typeof action === 'function') {
-          const response = await action(dispatch)
+  if (Array.isArray(actions) && actions.length) {
+    for (const action of actions) {
+      if (typeof action === 'function') {
+        const response = await action(dispatch)
 
-          responses.push(response)
+        responses.push(response)
 
-          if (!silentFail && response && response.status && response.status === actionStatus.ERROR) {
-            break
-          }
+        if (!silentFail && response && response.status && response.status === actionStatus.ERROR) {
+          break
         }
       }
     }
-
-    if (returnLast) {
-      if (responses.length) {
-        return responses[responses.length - 1]
-      }
-      return null
-    }
-
-    return responses
   }
+
+  if (returnLast) {
+    if (responses.length) {
+      return responses[responses.length - 1]
+    }
+    return null
+  }
+
+  return responses
 }
 /* eslint-enable no-await-in-loop */
 

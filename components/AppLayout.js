@@ -208,7 +208,7 @@ export default AppLayout
 /**
  * Decorator to mark a page as requiring user authentication.
  */
-export function authenticated (_target) {
+export const authenticated = _target => {
   const requiredPermission = typeof _target === 'string' ? _target : null
 
   const setProperties = target => {
@@ -231,7 +231,7 @@ export function authenticated (_target) {
 /**
  * Decorator to wrap a page with stripe context
  */
-export function withStripe (Component) {
+export const withStripe = Component => {
   class StripePage extends React.Component {
     state = {
       stripe: null,
