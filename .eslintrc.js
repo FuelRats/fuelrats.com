@@ -4,6 +4,9 @@ module.exports = {
   },
   extends: 'airbnb',
   parser: 'babel-eslint',
+  parserOptions: {
+    codeFrame: false,
+  },
   plugins: [
     'babel',
   ],
@@ -18,6 +21,7 @@ module.exports = {
       ],
     }],
     'comma-dangle': ['error', 'always-multiline'],
+    'func-style': ['error', 'expression'],
     'max-classes-per-file': ['error', 2],
     'max-len': ['off'],
     'new-parens': ['off'],
@@ -44,6 +48,9 @@ module.exports = {
     }],
     'no-restricted-syntax': ['off'],
     'no-return-assign': ['off'],
+    'no-self-assign': ['error', {
+      props: true,
+    }],
     'no-underscore-dangle': ['off'],
     'no-unused-expressions': ['off'],
     'prefer-const': ['error', {
