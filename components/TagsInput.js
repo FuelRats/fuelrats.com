@@ -334,7 +334,7 @@ export default class TagsInputComponent extends React.Component {
 
       /* eslint-disable no-console */
       console[type].apply(this, arguments)
-      /* eslint-disable */
+      /* eslint-enable no-console */
     }
   }
 
@@ -393,13 +393,14 @@ export default class TagsInputComponent extends React.Component {
     return typeof optionValue !== 'string' ? optionValue : { value: optionValue }
   }
 
-  removeTag (tag) {
-    const { onRemove } = this.props
-    const tags = [...this.state.tags]
+  removeTag = tag => this.setState(state => {
+    const tags = [...state.tags]
 
     tags.splice(tags.indexOf(tag), 1)
 
-    this.setState({ tags })
+    return { tags }
+  }, () => {
+    const { onRemove } = this.props
 
     if (onRemove) {
       onRemove(tag)
@@ -408,7 +409,7 @@ export default class TagsInputComponent extends React.Component {
     this.log('groupCollapsed', 'removing tag')
     this.log('value:', tag)
     this.log('groupEnd')
-  }
+  })
 
   render () {
     const {
