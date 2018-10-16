@@ -5,7 +5,7 @@ import initialState from '../initialState'
 
 
 
-export default function (state = initialState.decals, action) {
+export default function decalsReducer (state = initialState.decals, action) {
   const {
     payload,
     status,

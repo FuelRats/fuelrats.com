@@ -5,7 +5,7 @@ import initialState from '../initialState'
 
 
 
-export default function (state = initialState.blogs, action) {
+export default function blogsReducer (state = initialState.blogs, action) {
   const {
     payload,
     status,

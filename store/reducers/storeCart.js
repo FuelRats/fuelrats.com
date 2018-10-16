@@ -5,7 +5,7 @@ import initialState from '../initialState'
 
 
 
-export default function (state = initialState.storeCart, action) {
+export default function storeCartReducer (state = initialState.storeCart, action) {
   const {
     payload,
     status,

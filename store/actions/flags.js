@@ -4,8 +4,9 @@ import initialState from '../initialState'
 
 
 
-
-export const setFlag = (name, _value) => async dispatch => {
+/* eslint-disable import/prefer-default-export */
+// prefer export member for consistency
+export const setFlag = (name, _value) => (dispatch) => {
   dispatch({ type: actionTypes.SET_FLAG })
 
   let value = _value

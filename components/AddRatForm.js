@@ -15,22 +15,24 @@ import Component from './Component'
 @connect
 class AddRatForm extends Component {
   /***************************************************************************\
-    Public Methods
+    Class Properties
   \***************************************************************************/
 
-  constructor (props) {
-    super(props)
-
-    this._bindMethods(['onSubmit'])
-
-    this.state = {
-      name: '',
-      platform: 'pc',
-      submitting: false,
-    }
+  state = {
+    name: '',
+    platform: 'pc',
+    submitting: false,
   }
 
-  async onSubmit (event) {
+
+
+
+
+  /***************************************************************************\
+    Private Methods
+  \***************************************************************************/
+
+  _handleSubmit = async (event) => {
     const {
       createRat,
       userId,
@@ -49,6 +51,14 @@ class AddRatForm extends Component {
     this.setState({ submitting: false })
   }
 
+
+
+
+
+  /***************************************************************************\
+    Public Methods
+  \***************************************************************************/
+
   render () {
     const {
       name,
@@ -59,7 +69,7 @@ class AddRatForm extends Component {
     return (
       <form
         className="add-rat"
-        onSubmit={this.onSubmit}>
+        onSubmit={this._handleSubmit}>
         <div className="stretch-12">
           <label htmlFor="add-rat">Add a rat</label>
         </div>
@@ -137,7 +147,7 @@ class AddRatForm extends Component {
 
   static mapDispatchToProps = ['createRat']
 
-  static mapStateToProps = state => {
+  static mapStateToProps = (state) => {
     const {
       id,
     } = state.user

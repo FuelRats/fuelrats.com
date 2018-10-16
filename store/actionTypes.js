@@ -1,4 +1,4 @@
-export default {
+const actionTypes = {
   ADD_NICKNAME: 'ADD_NICKNAME',
   CHANGE_PASSWORD: 'CHANGE_PASSWORD',
   CHECK_DECAL_ELIGIBILITY: 'CHECK_DECAL_ELIGIBILITY',
@@ -45,3 +45,9 @@ export default {
   UPDATE_USER: 'UPDATE_USER',
   VALIDATE_PASSWORD_RESET_TOKEN: 'VALIDATE_PASSWORD_RESET_TOKEN',
 }
+
+
+
+
+
+export default actionTypes

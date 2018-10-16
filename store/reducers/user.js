@@ -5,7 +5,7 @@ import initialState from '../initialState'
 
 
 
-export default function (state = initialState.user, action) {
+export default function userReducer (state = initialState.user, action) {
   const {
     payload,
     status,

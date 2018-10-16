@@ -1,7 +1,7 @@
 import actionTypes from '../actionTypes'
 import initialState from '../initialState'
 
-export default function (state = initialState.products, action) {
+export default function productsReducer (state = initialState.products, action) {
   const {
     payload,
     status,
@@ -25,10 +25,12 @@ export default function (state = initialState.products, action) {
                 ...product,
                 attributes: {
                   ...product.attributes,
-                  skus: product.attributes.skus ? product.attributes.skus.reduce((skuAcc, sku) => ({
-                    ...skuAcc,
-                    [sku.id]: sku,
-                  }), {}) : {},
+                  skus: product.attributes.skus
+                    ? product.attributes.skus.reduce((skuAcc, sku) => ({
+                      ...skuAcc,
+                      [sku.id]: sku,
+                    }), {})
+                    : {},
                 },
               },
             }), {}),

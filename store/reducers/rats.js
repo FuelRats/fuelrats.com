@@ -7,14 +7,13 @@ import parseJSONAPIResponseForEntityType from '../../helpers/parseJSONAPIRespons
 
 
 
-export default function (state = initialState.rats, action) {
+export default function ratsReducer (state = initialState.rats, action) {
   const {
     payload,
     status,
     type,
   } = action
-  const rats = [...state.rats]
-  let newRats
+  const { rats } = state
 
   switch (type) {
     case actionTypes.CREATE_RAT:
@@ -36,21 +35,12 @@ export default function (state = initialState.rats, action) {
     case actionTypes.UPDATE_RESCUE:
       switch (status) {
         case 'success':
-          newRats = parseJSONAPIResponseForEntityType(payload, 'rats')
-
-          for (const newRat of newRats) {
-            const index = rats.findIndex(rat => newRat.id === rat.id)
-
-            if (index === -1) {
-              rats.push(newRat)
-            } else {
-              rats[index] = newRat
-            }
-          }
-
           return {
             ...state,
-            rats,
+            rats: {
+              ...rats,
+              ...parseJSONAPIResponseForEntityType(payload, 'rats', true),
+            },
             retrieving: false,
           }
 

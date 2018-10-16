@@ -1,4 +1,3 @@
-
 // Module imports
 import localForage from 'localforage'
 

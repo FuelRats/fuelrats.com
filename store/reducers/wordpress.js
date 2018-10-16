@@ -5,7 +5,7 @@ import initialState from '../initialState'
 
 
 
-export default function (state = initialState.rescues, action) {
+export default function wordpressReducer (state = initialState.rescues, action) {
   const {
     payload,
     status,

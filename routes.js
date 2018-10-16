@@ -1,9 +1,12 @@
-const routes = (module.exports = require('next-routes')())
+const routes = require('next-routes')()
+
+
+
+
 
 // 'NAME', 'ROUTE', 'PATH'
 // Ordered in general page group priority. Priority is determined by general amount of use of the set of pages.
 routes
-
   // Front Page
   .add('home', '/', '/index')
   .add('rescue-landing', '/i-need-fuel', '/i-need-fuel')
@@ -58,3 +61,9 @@ routes
 
   // Wordpress
   .add('wordpress', '/:slug+', '/wordpress-proxy')
+
+
+
+
+
+module.exports = routes

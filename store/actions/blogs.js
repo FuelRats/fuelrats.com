@@ -34,7 +34,7 @@ export const retrieveBlog = id => createWpAction({
       retrieveAuthor(authorId)(dispatch)
     }
 
-    categoryIds.forEach(categoryId => {
+    categoryIds.forEach((categoryId) => {
       if (!categories[categoryId]) {
         retrieveCategory(categoryId)(dispatch)
       }
@@ -61,7 +61,7 @@ export const retrieveBlogs = params => createWpAction({
         retrieveAuthor(authorId)(dispatch)
       }
 
-      categoryIds.forEach(categoryId => {
+      categoryIds.forEach((categoryId) => {
         if (!categoryCache[categoryId]) {
           categoryCache[categoryId] = {}
           retrieveCategory(categoryId)(dispatch)

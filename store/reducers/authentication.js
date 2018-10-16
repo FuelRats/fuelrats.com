@@ -5,7 +5,7 @@ import initialState from '../initialState'
 
 
 
-export default function (state = initialState.authentication, action) {
+export default function authenticationReducer (state = initialState.authentication, action) {
   const {
     payload,
     status,

@@ -1,4 +1,4 @@
-export default {
+const initialState = {
   authentication: {
     loggedIn: false,
     loggingIn: true,
@@ -25,7 +25,7 @@ export default {
   },
 
   epics: {
-    epics: [],
+    epics: {},
     retrieving: false,
     total: 0,
   },
@@ -89,3 +89,9 @@ export default {
     page: {},
   },
 }
+
+
+
+
+
+export default initialState

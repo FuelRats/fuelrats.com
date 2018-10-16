@@ -1,3 +1,5 @@
+/* eslint-env node */
+
 /* eslint-disable strict, global-require */
 
 'use strict'
@@ -5,54 +7,67 @@
 // Import variables from .env file.
 require('dotenv').config()
 
-const isDev = process.env.NODE_ENV !== 'production'
 
-/******************************************************************************\
- Module imports
- \******************************************************************************/
 
-const koa = new (require('koa'))
+
+// Module imports
+const Koa = require('koa')
 const path = require('path')
+const next = require('next')
 
-const next = require('next')({
-  dev: isDev,
-  dir: path.resolve('.'),
-})
 
+
+
+
+// Component imports
 const config = require('./config')
 
 
 
 
 
-/******************************************************************************\
-  Initialize the app
-\******************************************************************************/
+// Constants
+const IS_DEV = process.env.NODE_ENV !== 'production'
+const DEFAULT_PORT = 3000
 
-next.prepare()
+
+
+
+
+const server = new Koa()
+const nextInstance = next({
+  dev: IS_DEV,
+  dir: path.resolve('.'),
+})
+
+
+
+
+
+nextInstance.prepare()
   .then(() => {
     // Set up the loggers
-    if (isDev) {
-      require('./config/file-logger')(koa)
+    if (IS_DEV) {
+      require('./config/file-logger')(server)
     }
 
-    koa.use(require('koa-no-trailing-slash')())
+    server.use(require('koa-no-trailing-slash')())
 
-    koa.use(require('koa-logger')())
+    server.use(require('koa-logger')())
 
     // Configure proxies
-    require('./config/proxy')(koa, config)
+    require('./config/proxy')(server, config)
 
     // Compress responses
-    koa.use(require('koa-compress')())
+    server.use(require('koa-compress')())
 
     // Parse request bodies
-    koa.use(require('koa-body')())
+    server.use(require('koa-body')())
 
     // Configure the router
-    require('./config/router')(next, koa, config)
+    require('./config/router')(next, server, config)
 
     // Start the server
     //  console.log('Listening on port', process.env.PORT || 3000)
-    koa.listen(process.env.PORT || 3000)
+    server.listen(process.env.PORT || DEFAULT_PORT)
   })

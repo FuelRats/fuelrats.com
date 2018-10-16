@@ -21,7 +21,7 @@ const skuPresenter = ({
 
 
 
-export default function (state = initialState.skus, action) {
+export default function skusReducer (state = initialState.skus, action) {
   const {
     payload,
     status,

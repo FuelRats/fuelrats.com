@@ -59,7 +59,7 @@ const buildActionOptions = (options = isRequired('options')) => {
  * @param   {*}                  [options.any]                All other entries of the options object are passed to the actionFunction by default.
  * @returns {Function}                                        Function which performs a redux action defined by the given configuration.
  */
-const createAction = options => {
+const createAction = (options) => {
   const {
     actionFunction,
     actionPayload,
@@ -85,7 +85,10 @@ const createAction = options => {
     try {
       response = await actionFunction(...actionPayload)
 
-      const eventResponse = await onSuccess(response, { dispatch, getState })
+      const eventResponse = await onSuccess(response, {
+        dispatch,
+        getState,
+      })
 
       if (typeof eventResponse !== 'undefined') {
         response = eventResponse
@@ -95,7 +98,10 @@ const createAction = options => {
 
       success = true
     } catch (error) {
-      const eventResponse = await onError(error, { dispatch, getState })
+      const eventResponse = await onError(error, {
+        dispatch,
+        getState,
+      })
 
       if (typeof eventResponse !== 'undefined') {
         response = eventResponse
@@ -114,7 +120,10 @@ const createAction = options => {
     })
 
     if (onComplete) {
-      postDispatchObj = onComplete(postDispatchObj, { dispatch, getState }) || postDispatchObj
+      postDispatchObj = onComplete(postDispatchObj, {
+        dispatch,
+        getState,
+      }) || postDispatchObj
     }
     return postDispatchObj
   }
@@ -148,7 +157,7 @@ const createWpAction = options => createAction({
 
 const createTimeoutAction = options => createAction({
   ...options,
-  actionFunction: opts => {
+  actionFunction: (opts) => {
     const data = { data: opts.data }
 
     return new Promise((resolve, reject) => setTimeout(
@@ -165,13 +174,14 @@ const createTimeoutAction = options => createAction({
 /**
  * Performs a series of specified redux actions
  *
+ * @deprecated Avoid using. Will be removed once we start patching rat list for paperwork
  * @param   {String}       actions      List of actions to take
  * @param   {Boolean}      [silentFail] Determines if the action chain should ignore actions which return with an error
  * @param   {Boolean}      [returnLast] Determines if the last response or the entire array of responses should be returned
  * @returns {Array|Object}              Array of responses from the actions performed, or the last response in the chain depending on returnLast
  */
-/* eslint-disable no-await-in-loop */
-const actionSeries = (actions = isRequired('actions'), silentFail, returnLast) => async dispatch => {
+/* eslint-disable no-await-in-loop, no-restricted-syntax */
+const actionSeries = (actions = isRequired('actions'), silentFail, returnLast) => async (dispatch) => {
   const responses = []
 
   if (Array.isArray(actions) && actions.length) {
@@ -197,7 +207,7 @@ const actionSeries = (actions = isRequired('actions'), silentFail, returnLast) =
 
   return responses
 }
-/* eslint-enable no-await-in-loop */
+/* eslint-enable no-await-in-loop, no-restricted-syntax */
 
 
 

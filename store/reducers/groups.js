@@ -6,7 +6,7 @@ import parseJSONAPIResponseForEntityType from '../../helpers/parseJSONAPIRespons
 
 
 
-export default function (state = initialState.groups, action) {
+export default function groupsReducer (state = initialState.groups, action) {
   const {
     payload,
     status,

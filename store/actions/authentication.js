@@ -15,6 +15,13 @@ import apiService from '../../services/api'
 
 
 
+// Component constants
+const SESSION_TOKEN_LENGTH = 365 // days
+
+
+
+
+
 export const changePassword = (currentPassword, newPassword) => createApiAction({
   actionType: actionTypes.CHANGE_PASSWORD,
   url: '/users/setpassword',
@@ -40,14 +47,14 @@ export const login = ({
   url: '/oauth2/token',
   method: 'post',
   data: {
-    grant_type: 'password',
+    grant_type: 'password', /* eslint-disable-line camelcase */ // name required by api
     password,
     username: email,
   },
-  onSuccess: response => {
+  onSuccess: (response) => {
     const token = response.data.access_token
 
-    Cookies.set('access_token', token, { expires: remember ? 365 : null })
+    Cookies.set('access_token', token, { expires: remember ? SESSION_TOKEN_LENGTH : null })
     apiService().defaults.headers.common.Authorization = `Bearer ${token}`
   },
   onComplete: ({ status }) => {
@@ -55,11 +62,11 @@ export const login = ({
       return
     }
 
-    /* eslint-disable no-restricted-globals*/
+    /* eslint-disable no-restricted-globals */
     if (location && location.search) {
       const searchParams = {}
 
-      location.search.replace(/^\?/, '').split('&').forEach(searchParam => {
+      location.search.replace(/^\?/u, '').split('&').forEach((searchParam) => {
         const [key, value] = searchParam.split('=')
 
         searchParams[key] = value
@@ -71,7 +78,7 @@ export const login = ({
     } else if (route) {
       Router.pushRoute(route, routeParams)
     }
-    /* eslint-enable no-restricted-globals*/
+    /* eslint-enable no-restricted-globals */
   },
 })
 
@@ -84,7 +91,7 @@ export const getClientOAuthPage = params => createApiAction({
 })
 
 
-export const logout = fromVerification => async dispatch => {
+export const logout = fromVerification => (dispatch) => {
   Cookies.remove('access_token')
   delete apiService().defaults.headers.common.Authorization
 
@@ -140,7 +147,7 @@ export const sendPasswordResetEmail = email => createApiAction({
 })
 
 
-export const updateLoggingInState = success => async dispatch => dispatch({
+export const updateLoggingInState = success => dispatch => dispatch({
   payload: null,
   status: success ? 'success' : 'noToken',
   type: actionTypes.LOGIN,

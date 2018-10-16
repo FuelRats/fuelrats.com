@@ -5,7 +5,8 @@ import actionTypes from '../actionTypes'
 
 
 
-
+/* eslint-disable import/prefer-default-export */
+// prefer export member for consistency
 export const createRat = (name, platform, userId) => createApiAction({
   actionType: actionTypes.CREATE_RAT,
   url: '/rats',
@@ -16,15 +17,3 @@ export const createRat = (name, platform, userId) => createApiAction({
     userId,
   },
 })
-
-
-
-
-
-export const getRats = ratIds => dispatch => Promise.all(ratIds.map(ratId => createApiAction({
-  actionType: actionTypes.GET_RAT,
-  url: `/rats/${ratId}`,
-  preDispatch: {
-    rat: ratId,
-  },
-})(dispatch)))

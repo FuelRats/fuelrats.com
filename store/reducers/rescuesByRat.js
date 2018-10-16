@@ -5,7 +5,7 @@ import initialState from '../initialState'
 
 
 
-export default function (state = initialState.rescuesByRat, action) {
+export default function rescuesByRatReducer (state = initialState.rescuesByRat, action) {
   const {
     payload,
     status,

@@ -7,7 +7,7 @@ import parseJSONAPIResponseForEntityType from '../../helpers/parseJSONAPIRespons
 
 
 
-export default function (state = initialState.epics, action) {
+export default function epicsReducer (state = initialState.epics, action) {
   const {
     payload,
     status,
@@ -16,28 +16,18 @@ export default function (state = initialState.epics, action) {
   const {
     epics,
   } = state
-  let newEpics
 
   switch (type) {
     case actionTypes.RETRIEVE_EPIC:
     case actionTypes.CREATE_EPIC:
       switch (status) {
         case 'success':
-          newEpics = parseJSONAPIResponseForEntityType(payload, 'epics')
-
-          for (const newEpic of newEpics) {
-            const index = epics.findIndex(rescue => newEpic.id === rescue.id)
-
-            if (index === -1) {
-              epics.push(newEpic)
-            } else {
-              epics[index] = newEpic
-            }
-          }
-
           return {
             ...state,
-            epics,
+            epics: {
+              ...epics,
+              ...parseJSONAPIResponseForEntityType(payload, 'epics', true),
+            },
             retrieving: false,
             total: action.total,
           }

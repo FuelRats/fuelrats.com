@@ -81,8 +81,6 @@ class UserShipsPanel extends Component {
     Redux Properties
   \***************************************************************************/
 
-  static mapDispatchToProps = ['getRats']
-
   static mapStateToProps = state => {
     const {
       ships,

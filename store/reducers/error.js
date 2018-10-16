@@ -5,7 +5,7 @@ import initialState from '../initialState'
 const isDev = IS_DEVELOPMENT || IS_STAGING
 
 
-export default function (state = initialState.error, action) {
+export default function errorReducer (state = initialState.error, action) {
   if (action.status && action.status === 'error') {
     /* eslint-disable no-console */
     console.error('ACTION ERR:', action)

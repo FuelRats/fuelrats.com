@@ -7,7 +7,7 @@ import parseJSONAPIResponseForEntityType from '../../helpers/parseJSONAPIRespons
 
 
 
-export default function (state = initialState.rescues, action) {
+export default function rescuesReducer (state = initialState.rescues, action) {
   const {
     payload,
     status,

@@ -15,21 +15,23 @@ import Component from './Component'
 @connect
 class AddNicknameForm extends Component {
   /***************************************************************************\
-    Public Methods
+    Class Properties
   \***************************************************************************/
 
-  constructor (props) {
-    super(props)
-
-    this._bindMethods(['onSubmit'])
-
-    this.state = {
-      nickname: '',
-      submitting: false,
-    }
+  state = {
+    nickname: '',
+    submitting: false,
   }
 
-  async onSubmit (event) {
+
+
+
+
+  /***************************************************************************\
+    Private Methods
+  \***************************************************************************/
+
+  _handleSubmit = async (event) => {
     const { addNickname } = this.props
     const { nickname } = this.state
 
@@ -47,6 +49,14 @@ class AddNicknameForm extends Component {
     })
   }
 
+
+
+
+
+  /***************************************************************************\
+    Public Methods
+  \***************************************************************************/
+
   render () {
     const {
       nickname,
@@ -56,7 +66,7 @@ class AddNicknameForm extends Component {
     return (
       <form
         className="row"
-        onSubmit={this.onSubmit}>
+        onSubmit={this._handleSubmit}>
         <input
           className="stretch-9"
           name="add-nickname"

@@ -12,10 +12,13 @@ let instance = null
 
 
 
-export default function () {
-  return instance || (instance = axios.create({
-    baseURL: localWordpressApiUrl,
-    headers: { 'Content-Type': 'application/json' },
-    timeout: 10000,
-  }))
+export default function getWordpressService () {
+  if (!instance) {
+    instance = axios.create({
+      baseURL: localWordpressApiUrl,
+      headers: { 'Content-Type': 'application/json' },
+      timeout: 10000,
+    })
+  }
+  return instance
 }

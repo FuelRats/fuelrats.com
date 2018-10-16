@@ -1,3 +1,9 @@
+/* eslint-env node */
+
+
+
+
+
 module.exports = {
   api: {
     clientId: process.env.FRDC_API_KEY,

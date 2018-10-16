@@ -1,12 +1,14 @@
+/* eslint-env node */
+
+// Module imports
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+const glob = require('glob')
+const path = require('path')
 const webpack = require('webpack')
 const withSass = require('@zeit/next-sass')
 
-const { ANALYZE } = process.env
-const path = require('path')
-const glob = require('glob')
-
 const {
+  ANALYZE,
   FRDC_API_URL,
   FRDC_PUBLIC_URL,
   FRDC_STRIPE_API_PK,
@@ -16,15 +18,19 @@ const {
   TRAVIS_COMMIT_RANGE,
 } = process.env
 
+
+const DEFAULT_PORT = 3000
+const COMMIT_HASH_LENGTH = 10
+
 module.exports = withSass({
   publicRuntimeConfig: {
     apis: {
       fuelRats: {
-        local: FRDC_PUBLIC_URL ? `${FRDC_PUBLIC_URL}/api` : `http://localhost:${PORT || 3000}/api`,
+        local: FRDC_PUBLIC_URL ? `${FRDC_PUBLIC_URL}/api` : `http://localhost:${PORT || DEFAULT_PORT}/api`,
         server: FRDC_API_URL || 'http://localhost:8080',
       },
       wordpress: {
-        url: FRDC_PUBLIC_URL ? `${FRDC_PUBLIC_URL}/wp-api` : `http://localhost:${PORT || 3000}/wp-api`,
+        url: FRDC_PUBLIC_URL ? `${FRDC_PUBLIC_URL}/wp-api` : `http://localhost:${PORT || DEFAULT_PORT}/wp-api`,
       },
       stripe: {
         public: FRDC_STRIPE_API_PK || null,
@@ -43,23 +49,23 @@ module.exports = withSass({
     config.plugins.push(new webpack.DefinePlugin({
       IS_DEVELOPMENT: JSON.stringify(dev),
       IS_STAGING: JSON.stringify(['develop', 'beta'].includes(TRAVIS_BRANCH)),
-      BUILD_COMMIT: JSON.stringify((TRAVIS_COMMIT && TRAVIS_COMMIT.slice(0, 10)) || TRAVIS_BRANCH || 'Development'),
+      BUILD_COMMIT: JSON.stringify((TRAVIS_COMMIT && TRAVIS_COMMIT.slice(0, COMMIT_HASH_LENGTH)) || TRAVIS_BRANCH || 'Development'),
       BUILD_COMMIT_RANGE: JSON.stringify(TRAVIS_COMMIT_RANGE),
     }))
 
     config.module.rules.unshift({
       enforce: 'pre',
-      exclude: /node_modules/,
+      exclude: /node_modules/u,
       loader: 'eslint-loader',
-      test: /\.js$/,
+      test: /\.js$/u,
     })
 
     return config
   },
   sassLoaderOptions: {
     includePaths: ['styles', 'node_modules']
-      .map(d => path.join(__dirname, d))
-      .map(g => glob.sync(g))
-      .reduce((a, c) => a.concat(c), []),
+      .map(dir => path.join(__dirname, dir))
+      .map(dir => glob.sync(dir))
+      .reduce((acc, dir) => acc.concat(dir), []),
   },
 })

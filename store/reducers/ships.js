@@ -7,7 +7,7 @@ import parseJSONAPIResponseForEntityType from '../../helpers/parseJSONAPIRespons
 
 
 
-export default function (state = initialState.ships, action) {
+export default function shipsReducer (state = initialState.ships, action) {
   const {
     payload,
     status,
@@ -18,27 +18,17 @@ export default function (state = initialState.ships, action) {
     retrieving,
     total,
   } = state
-  let newShips
 
   switch (type) {
     case actionTypes.GET_USER:
       switch (status) {
         case 'success':
-          newShips = parseJSONAPIResponseForEntityType(payload, 'ships')
-
-          for (const newShip of newShips) {
-            const index = ships.findIndex(ship => newShip.id === ship.id)
-
-            if (index === -1) {
-              ships.push(newShip)
-            } else {
-              ships[index] = newShip
-            }
-          }
-
           return {
             ...state,
-            ships,
+            ships: {
+              ...ships,
+              ...parseJSONAPIResponseForEntityType(payload, 'ships', true),
+            },
             retrieving: false,
             total: action.total,
           }

@@ -66,7 +66,7 @@ const initStore = (state = initialState) => createStore(reducer, state, composeW
 
 
 
-const connectDecorator = target => {
+const connectDecorator = (target) => {
   const {
     mapDispatchToProps: mDTP,
     mapStateToProps,
