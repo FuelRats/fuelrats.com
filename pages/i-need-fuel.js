@@ -23,7 +23,7 @@ class INeedFuel extends Component {
     let isSupported = true
     let supportMessage = () => null
 
-    if (userAgent.match(/playstation/gi)) {
+    if (userAgent.match(/playstation/giu)) {
       isSupported = false
       supportMessage = 'The built-in PS4 browser is currently not supported. Please use your phone or computer instead.'
     }
@@ -88,7 +88,17 @@ class INeedFuel extends Component {
 
                 <br />
 
-                <small>By connecting to our IRC and using our services, you agree to our <Link route="wordpress" params={{ slug: 'terms-of-service' }}><a>Terms of Service</a></Link> and <Link route="wordpress" params={{ slug: 'terms-of-service' }}><a>Privacy Policy</a></Link>.</small>
+                <small>
+                  {'By connecting to our IRC and using our services, you agree to our '}
+                  <Link route="wordpress" params={{ slug: 'terms-of-service' }}>
+                    <a>Terms of Service</a>
+                  </Link>
+                  {' and '}
+                  <Link route="wordpress" params={{ slug: 'terms-of-service' }}>
+                    <a>Privacy Policy</a>
+                  </Link>
+                  {'.'}
+                </small>
               </React.Fragment>
             )}
 

@@ -1,3 +1,10 @@
+// Module imports
+import React from 'react'
+
+
+
+
+
 // Component imports
 import { actions, connect } from '../../store'
 import { Link } from '../../routes'
@@ -5,6 +12,10 @@ import Component from '../../components/Component'
 import PageWrapper from '../../components/PageWrapper'
 import StoreControlBar from '../../components/storefront/StoreControlBar'
 import getMoney from '../../helpers/getMoney'
+
+
+
+
 
 @connect
 class ListCart extends Component {
@@ -25,7 +36,7 @@ class ListCart extends Component {
     Private Methods
   \***************************************************************************/
 
-  _handleSKUUpdate = async event => {
+  _handleSKUUpdate = (event) => {
     const { name } = event.target
     const { quantity } = this.state
     const { updateCartItem } = this.props
@@ -38,7 +49,7 @@ class ListCart extends Component {
     this._cancelCurrentOrder()
   }
 
-  _handleSKURemove = event => {
+  _handleSKURemove = (event) => {
     const { name } = event.target
     const { removeCartItem } = this.props
 
@@ -62,7 +73,7 @@ class ListCart extends Component {
     }
   }
 
-  _handleQuantityChange = event => {
+  _handleQuantityChange = (event) => {
     const {
       name,
       value,
@@ -102,15 +113,15 @@ class ListCart extends Component {
       getStoreCart,
     } = this.props
 
-    if (!Object.keys(cart).length) {
+    if (Object.keys(cart).length) {
+      this.setState({
+        quantity: cart,
+      })
+    } else {
       const { payload } = await getStoreCart()
 
       this.setState({
         quantity: payload,
-      })
-    } else {
-      this.setState({
-        quantity: cart,
       })
     }
   }
@@ -214,6 +225,9 @@ class ListCart extends Component {
       </>
     )
   }
+
+
+
 
 
   /***************************************************************************\

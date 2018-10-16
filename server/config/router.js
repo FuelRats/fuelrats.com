@@ -8,7 +8,7 @@ const routes = require('../../routes')
 
 
 // Component constants
-const permanentRedirect = path => async ctx => {
+const permanentRedirect = path => async (ctx) => {
   ctx.status = 301
   await ctx.redirect(path)
 }
@@ -18,27 +18,29 @@ const permanentRedirect = path => async ctx => {
 
 
 module.exports = (nextjs, koa) => {
-  /******************************************************************************\
+  /** ****************************************************************************\
     Redirects
   \******************************************************************************/
 
   // SEO Stuff
-  router.get('/browserconfig.xml', async ctx => {
+  router.get('/browserconfig.xml', async (ctx) => {
     await send(ctx, '/static/browserconfig.xml')
   })
 
-  router.get('/sitemap.xml', async ctx => {
+  router.get('/sitemap.xml', async (ctx) => {
     await send(ctx, '/static/sitemap.xml')
   })
 
-  router.get('/manifest.json', async ctx => {
+  router.get('/manifest.json', async (ctx) => {
     await send(ctx, '/static/manifest.json')
   })
 
 
 
 
-
+  const DAY_CHAR_LENGTH = 2
+  const MONTH_CHAR_LENGTH = 2
+  const YEAR_CHAR_LENGTH = 4
   // Legacy Wordpress permalinks
   // e.g. /2017/09/07/universal-service-a-fuel-rats-thargoid-cartoon
   router.get('/:year/:month/:day/:slug', async (ctx, next) => {
@@ -49,9 +51,9 @@ module.exports = (nextjs, koa) => {
       year,
     } = ctx.params
 
-    const dayIsValid = parseInt(day, 10) && (day.length === 2)
-    const monthIsValid = parseInt(month, 10) && (month.length === 2)
-    const yearIsValid = parseInt(year, 10) && (year.length === 4)
+    const dayIsValid = parseInt(day, 10) && (day.length === DAY_CHAR_LENGTH)
+    const monthIsValid = parseInt(month, 10) && (month.length === MONTH_CHAR_LENGTH)
+    const yearIsValid = parseInt(year, 10) && (year.length === YEAR_CHAR_LENGTH)
 
     if (dayIsValid && monthIsValid && yearIsValid) {
       ctx.status = 301
@@ -78,13 +80,13 @@ module.exports = (nextjs, koa) => {
 
 
 
-  /******************************************************************************\
+  /** ****************************************************************************\
     Fallthrough routes
   \******************************************************************************/
 
   // Pass off to next-routes
   const nextRoutesHandler = routes.getRequestHandler(nextjs)
-  router.get('*', async ctx => {
+  router.get('*', async (ctx) => {
     await nextRoutesHandler(ctx.req, ctx.res)
     ctx.respond = false
   })
@@ -98,7 +100,7 @@ module.exports = (nextjs, koa) => {
 
 
 
-  /******************************************************************************\
+  /** ****************************************************************************\
     Attach router to server
   \******************************************************************************/
 

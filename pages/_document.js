@@ -1,11 +1,18 @@
 // Module imports
+import React from 'react'
+
+
+
+
+
+// Module imports
 import Document, { Head, Main, NextScript } from 'next/document'
 
 
 
 
 
-export default class extends Document {
+class FuelRatsWebsite extends Document {
   render () {
     return (
       <html lang="en">
@@ -63,3 +70,7 @@ export default class extends Document {
     )
   }
 }
+
+
+
+export default FuelRatsWebsite

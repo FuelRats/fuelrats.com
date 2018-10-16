@@ -1,3 +1,7 @@
+// Module imports
+import React from 'react'
+
+
 // Component imports
 import { actions, connect } from '../../store'
 import { authenticated } from '../../components/AppLayout'
@@ -9,6 +13,14 @@ import RatTagsInput from '../../components/RatTagsInput'
 import PageWrapper from '../../components/PageWrapper'
 import SystemTagsInput from '../../components/SystemTagsInput'
 import userHasPermission from '../../helpers/userHasPermission'
+
+
+
+
+
+// Component constants
+const PAPERWORK_MAX_EDIT_TIME = 3600000
+
 
 
 
@@ -49,7 +61,7 @@ class Paperwork extends Component {
 
   _handleNotesChange = event => this._setChanges({ notes: event.target.value })
 
-  _handleRadioOptionsChange = option => {
+  _handleRadioOptionsChange = (option) => {
     const attribute = option.name
     let { value } = option
 
@@ -73,7 +85,7 @@ class Paperwork extends Component {
     })
   }
 
-  _handleFirstLimpetChange = value => {
+  _handleFirstLimpetChange = (value) => {
     // Because tagsInput sometimes decides to randomly call onChange when it hasn't changed.
     if (typeof this.state.changes.firstLimpetId === 'undefined' && value.length && value[0].id === this.props.rescue.attributes.firstLimpetId) {
       return
@@ -92,7 +104,7 @@ class Paperwork extends Component {
     this._setChanges({ firstLimpetId: newValue })
   }
 
-  _handleSystemChange = value => {
+  _handleSystemChange = (value) => {
     // Because tagsInput sometimes decides to randomly call onChange when it hasn't changed.
     if (typeof this.state.changes.system === 'undefined' && value.length && value[0].value === this.props.rescue.attributes.system) {
       return
@@ -111,7 +123,7 @@ class Paperwork extends Component {
     this._setChanges({ system: newValue })
   }
 
-  _handleRatsAdd = value => {
+  _handleRatsAdd = (value) => {
     const {
       ratsAdded,
       ratsRemoved,
@@ -134,7 +146,7 @@ class Paperwork extends Component {
     }
   }
 
-  _handleRatsRemove = value => {
+  _handleRatsRemove = (value) => {
     const {
       ratsAdded,
       ratsRemoved,
@@ -163,7 +175,7 @@ class Paperwork extends Component {
     this._setChanges(newChanges)
   }
 
-  _onSubmit = async event => {
+  _handleSubmit = async (event) => {
     event.preventDefault()
 
     const { rescue } = this.props
@@ -273,7 +285,7 @@ class Paperwork extends Component {
         {(!loading && rescue) && (
           <form
             className={classes.join(' ')}
-            onSubmit={this._onSubmit}>
+            onSubmit={this._handleSubmit}>
             <fieldset>
               <label htmlFor="platform">What platform was the rescue on?</label>
 
@@ -402,7 +414,7 @@ class Paperwork extends Component {
 
             <menu type="toolbar">
               <div className="primary">
-                <div className={`invalidity-explainer ${pwValidity.noChange ? 'no-change' : ''} ${!pwValidity.valid ? 'show' : ''}`}>{pwValidity.reason}</div>
+                <div className={`invalidity-explainer ${pwValidity.noChange ? 'no-change' : ''} ${pwValidity.valid ? '' : 'show'}`}>{pwValidity.reason}</div>
                 <button
                   disabled={submitting || loading || !pwValidity.valid}
                   className="green"
@@ -480,7 +492,7 @@ class Paperwork extends Component {
     return response
   }
 
-  validateCaseWithValidOutcome = values => {
+  validateCaseWithValidOutcome = (values) => {
     if (!values.rats || !values.rats.length) {
       return 'Valid cases must have at least one rat assigned.'
     }
@@ -500,8 +512,8 @@ class Paperwork extends Component {
     return null
   }
 
-  validateCaseWithInvalidOutcome = values => {
-    if (!values.notes.replace(/\s/g, '')) {
+  validateCaseWithInvalidOutcome = (values) => {
+    if (!values.notes.replace(/\s/gu, '')) {
       return 'Invalid cases must have notes explaining why the rescue is invalid.'
     }
 
@@ -512,7 +524,7 @@ class Paperwork extends Component {
     const { rescue, rats: assignedRats } = this.props
     const { changes } = this.state
 
-    const isDefined = (value, fallback) => (typeof value !== 'undefined' ? value : fallback)
+    const isDefined = (value, fallback) => (typeof value === 'undefined' ? fallback : value)
     const getValue = value => isDefined(changes[value], rescue.attributes[value])
 
 
@@ -522,9 +534,9 @@ class Paperwork extends Component {
     }
 
     if (changes.ratsRemoved) {
-      for (const removedRat of Object.keys(changes.ratsRemoved)) {
+      Object.keys(changes.ratsRemoved).forEach((removedRat) => {
         delete rats[removedRat]
-      }
+      })
     }
 
     return {
@@ -566,7 +578,7 @@ class Paperwork extends Component {
     }
 
     // Check if the paperwork is not yet time locked
-    if ((new Date()).getTime() - (new Date(rescue.attributes.createdAt)).getTime() <= 3600000) {
+    if ((new Date()).getTime() - (new Date(rescue.attributes.createdAt)).getTime() <= PAPERWORK_MAX_EDIT_TIME) {
       return true
     }
 

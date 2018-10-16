@@ -6,7 +6,7 @@ const proxy = require('koa-proxies')
 
 
 module.exports = (koa, config) => {
-  /******************************************************************************\
+  /** ****************************************************************************\
     Proxy Fuelrats API requests
   \******************************************************************************/
 
@@ -14,7 +14,7 @@ module.exports = (koa, config) => {
     auth: `${config.api.clientId}:${config.api.clientSecret}`,
     changeOrigin: true,
     jar: true,
-    rewrite: path => path.replace(/^\/api/, ''),
+    rewrite: path => path.replace(/^\/api/u, ''),
     secure: true,
     target: config.api.url,
   }))
@@ -22,7 +22,7 @@ module.exports = (koa, config) => {
   koa.use(proxy('/api', {
     changeOrigin: true,
     jar: true,
-    rewrite: path => path.replace(/^\/api/, ''),
+    rewrite: path => path.replace(/^\/api/u, ''),
     secure: true,
     target: config.api.url,
   }))
@@ -31,13 +31,13 @@ module.exports = (koa, config) => {
 
 
 
-  /******************************************************************************\
+  /** ****************************************************************************\
     Proxy EDSM API requests
   \******************************************************************************/
 
   koa.use(proxy('/edsm-api', {
     changeOrigin: true,
-    rewrite: path => path.replace(/^\/edsm-api/, ''),
+    rewrite: path => path.replace(/^\/edsm-api/u, ''),
     target: config.edsm.url,
   }))
 
@@ -45,13 +45,13 @@ module.exports = (koa, config) => {
 
 
 
-  /******************************************************************************\
+  /** ****************************************************************************\
     Proxy Wordpress requests
   \******************************************************************************/
 
   koa.use(proxy('/wp-api', {
     changeOrigin: true,
-    rewrite: path => path.replace(/^\/wp-api/, '/wp-json/wp/v2'),
+    rewrite: path => path.replace(/^\/wp-api/u, '/wp-json/wp/v2'),
     target: config.wordpress.url,
   }))
 

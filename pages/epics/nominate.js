@@ -1,3 +1,10 @@
+// Module imports
+import React from 'react'
+
+
+
+
+
 // Component imports
 import { authenticated } from '../../components/AppLayout'
 import { connect } from '../../store'
@@ -7,6 +14,7 @@ import PageWrapper from '../../components/PageWrapper'
 import RadioOptionsInput from '../../components/RadioOptionsInput'
 import RescuesTagsInput from '../../components/RescuesTagsInput'
 import RatTagsInput from '../../components/RatTagsInput'
+
 
 
 
@@ -36,7 +44,7 @@ class EpicNominate extends Component {
     Public Methods
   \***************************************************************************/
 
-  handleEpicTypeChange = newValue => {
+  handleEpicTypeChange = (newValue) => {
     if (this.state.epicType !== newValue.value) {
       this.setState({
         epicType: newValue.value,
@@ -47,7 +55,7 @@ class EpicNominate extends Component {
   }
 
 
-  handleRatsChange = value => {
+  handleRatsChange = (value) => {
     const newRatIds = value.map(rat => rat.id).join(',')
     const oldRatIds = this.state.rats.map(rat => rat.id).join(',')
     if (newRatIds !== oldRatIds) {
@@ -55,11 +63,11 @@ class EpicNominate extends Component {
     }
   }
 
-  handleRescuesChange = value => {
+  handleRescuesChange = (value) => {
     const newRescueId = value.map(rescue => rescue.id).join('')
     const oldRescueId = this.state.rescue.map(rescue => rescue.id).join('')
     if (newRescueId !== oldRescueId) {
-      this.setState(state => {
+      this.setState((state) => {
         const newState = { ...state }
 
         if (value.length) {
@@ -68,7 +76,8 @@ class EpicNominate extends Component {
             && rescue.relationships.rats
             && rescue.relationships.rats.data
             && rescue.relationships.rats.data.length
-            ? rescue.relationships.rats.data : []
+            ? rescue.relationships.rats.data
+            : []
         }
 
         newState.rescue = value
@@ -81,7 +90,7 @@ class EpicNominate extends Component {
   handleNotesChange = event => this.setState({ notes: event.target.value })
 
 
-  onSubmit = async event => {
+  _handleSubmit = async (event) => {
     event.preventDefault()
 
     const {
@@ -147,7 +156,7 @@ class EpicNominate extends Component {
         {!submitted && (
           <form
             className={classes}
-            onSubmit={this.onSubmit}>
+            onSubmit={this._handleSubmit}>
             <fieldset>
               <label htmlFor="epic-type">Who are you nominating for an epic today?</label>
 

@@ -1,4 +1,5 @@
 // Module imports
+import React from 'react'
 import moment from 'moment'
 
 
@@ -37,10 +38,13 @@ class ListOrders extends Component {
     Private Methods
   \***************************************************************************/
 
-  _handleFullfillButtonClick = async event => {
+  _handleFullfillButtonClick = (event) => {
     const { name: orderId } = event.target
 
-    this.setState({ showFullfillDialog: true, activeOrder: orderId })
+    this.setState({
+      showFullfillDialog: true,
+      activeOrder: orderId,
+    })
   }
 
   _handleFullfillDialogComplete = () => {
@@ -113,7 +117,7 @@ class ListOrders extends Component {
 
                     <td>
                       <ul>
-                        {order.attributes.items.filter(({ type }) => (type === 'sku')).map(item => {
+                        {order.attributes.items.filter(({ type }) => (type === 'sku')).map((item) => {
                           const sku = skus[item.parent]
                           const descriptors = Object.keys(sku.attributes.attributes).length ? Object.values(sku.attributes.attributes).join(', ') : null
                           return (
@@ -129,7 +133,7 @@ class ListOrders extends Component {
                       {!order.attributes.shipping.carrier && (
                         'TBD'
                       )}
-                      {!!order.attributes.shipping.carrier && (
+                      {Boolean(order.attributes.shipping.carrier) && (
                         <>
                           {order.attributes.shipping.carrier}<br />
                           {order.attributes.shipping.tracking_number}

@@ -37,7 +37,7 @@ class WordpressProxy extends Component {
 
     if (page) {
       title = page.title.rendered
-      content = page.content.rendered.replace(/<ul>/gi, '<ul class="bulleted">').replace(/<ol>/gi, '<ol class="numbered">')
+      content = page.content.rendered.replace(/<ul>/giu, '<ul class="bulleted">').replace(/<ol>/giu, '<ol class="numbered">')
     }
 
     /* eslint-disable react/no-danger */

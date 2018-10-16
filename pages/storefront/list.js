@@ -1,3 +1,10 @@
+// Module imports
+import React from 'react'
+
+
+
+
+
 // Component imports
 import { actions, connect } from '../../store'
 import StoreControlBar from '../../components/storefront/StoreControlBar'
@@ -13,9 +20,21 @@ import productPriorityDecendingSort from '../../helpers/productPriorityDecending
 
 @connect
 class ListProducts extends Component {
+  /***************************************************************************\
+    Class Properties
+  \***************************************************************************/
+
   state = ListProducts.initialState
 
-  _showCartUpdateDialog = product => {
+
+
+
+
+  /***************************************************************************\
+    Private Methods
+  \***************************************************************************/
+
+  _handleCartButtonClick = (product) => {
     this.setState({
       activeProduct: product,
       showDialog: true,
@@ -25,6 +44,9 @@ class ListProducts extends Component {
   _handleCartUpdateDialogClose = () => {
     this.setState(ListProducts.initialState)
   }
+
+
+
 
 
   /***************************************************************************\
@@ -53,7 +75,7 @@ class ListProducts extends Component {
                 <ProductCard
                   key={product.id}
                   product={product}
-                  onCartButtonClick={this._showCartUpdateDialog} />
+                  onCartButtonClick={this._handleCartButtonClick} />
               ))}
             </div>
           </div>

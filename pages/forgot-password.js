@@ -1,7 +1,15 @@
+// Module imports
+import React from 'react'
+
+
+
+
+
 // Component imports
 import { connect } from '../store'
 import Component from '../components/Component'
 import PageWrapper from '../components/PageWrapper'
+
 
 
 
@@ -16,7 +24,7 @@ class ForgotPassword extends Component {
     super(props)
 
     this._bindMethods([
-      'onSubmit',
+      '_handleSubmit',
     ])
 
     this.state = {
@@ -27,12 +35,15 @@ class ForgotPassword extends Component {
     }
   }
 
-  async onSubmit (event) {
+  async _handleSubmit (event) {
     event.preventDefault()
 
     const { email } = this.state
 
-    this.setState({ submitting: true, error: false })
+    this.setState({
+      submitting: true,
+      error: false,
+    })
 
     const { status } = await this.props.sendPasswordResetEmail(email)
 
@@ -69,7 +80,7 @@ class ForgotPassword extends Component {
           )}
 
           {!submitted && (
-            <form onSubmit={this.onSubmit}>
+            <form onSubmit={this._handleSubmit}>
               <fieldset>
                 <label htmlFor="email">Enter the email address associated with your account <small>We'll send you an email with a link to reset your password.</small></label>
 
@@ -77,7 +88,9 @@ class ForgotPassword extends Component {
                   id="email"
                   onChange={event => this.setState({ email: event.target.value })}
                   name="email"
-                  ref={_emailEl => this._emailEl = _emailEl}
+                  ref={(_emailEl) => {
+                    this._emailEl = _emailEl
+                  }}
                   type="email"
                   value={email} />
               </fieldset>
@@ -100,7 +113,10 @@ class ForgotPassword extends Component {
             <div>
               <h3>Thanks!</h3>
 
-              <p>If there's a Fuel Rats account associated with that address, you should receive an email shortly with the final steps for resetting your password. If you don't receive an email, please contact <a href="mailto:support@fuelrats.com">support@fuelrats.com</a>.</p>
+              <p>
+                If there's a Fuel Rats account associated with that address, you should receive an email shortly with the final steps for resetting your password.
+                If you don't receive an email, please contact <a href="mailto:support@fuelrats.com">support@fuelrats.com</a>.
+              </p>
             </div>
           )}
         </div>

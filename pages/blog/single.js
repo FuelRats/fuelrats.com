@@ -55,7 +55,7 @@ class Blog extends Component {
 
     this.state = {
       blog,
-      retrieving: !!blog,
+      retrieving: Boolean(blog),
     }
   }
 
@@ -74,7 +74,7 @@ class Blog extends Component {
     let author = null
 
     if (blog) {
-      content = blog.content.rendered.replace(/<ul>/gi, '<ul class="bulleted">').replace(/<ol>/gi, '<ol class="numbered">')
+      content = blog.content.rendered.replace(/<ul>/giu, '<ul class="bulleted">').replace(/<ol>/giu, '<ol class="numbered">')
       author = authors[blog.author] || {
         id: blog.author,
         name: (<TextPlaceholder size={30} loading />),
@@ -115,7 +115,7 @@ class Blog extends Component {
                 <FontAwesomeIcon icon="folder" fixedWidth />
 
                 <ul className="category-list">
-                  {blog.categories.map(catId => {
+                  {blog.categories.map((catId) => {
                     const category = categories[catId] || {
                       id: catId,
                       description: 'Loading...',
@@ -138,7 +138,7 @@ class Blog extends Component {
               className="article-content"
               dangerouslySetInnerHTML={{ __html: content }} />
 
-            {/*<aside className="comments">
+            {/* <aside className="comments">
               <header>
                 <h3>Comments</h3>
               </header>
@@ -160,7 +160,7 @@ class Blog extends Component {
                   </li>
                 )) : 'No comments... yet.'}
               </ol>
-            </aside>*/}
+            </aside> */}
           </article>
         )}
 

@@ -36,7 +36,7 @@ class Profile extends React.Component {
     Public Methods
   \***************************************************************************/
 
-  _closeFirstLoginDialog = () => {
+  _handleFLDClose = () => {
     this.setState({ showFirstLoginDialog: false })
     Router.replaceRoute('profile')
   }
@@ -64,7 +64,7 @@ class Profile extends React.Component {
             tabs={Profile.tabs} />
         </div>
 
-        {this.state.showFirstLoginDialog && (<FirstLoginDialog onClose={this._closeFirstLoginDialog} />)}
+        {this.state.showFirstLoginDialog && (<FirstLoginDialog onClose={this._handleFLDClose} />)}
 
       </PageWrapper>
     )

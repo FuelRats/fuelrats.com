@@ -1,4 +1,5 @@
 // Module imports
+import React from 'react'
 import { Elements } from 'react-stripe-elements'
 
 
@@ -61,6 +62,13 @@ class Checkout extends Component {
       </>
     )
   }
+
+
+
+
+  /***************************************************************************\
+    Redux Properties
+  \***************************************************************************/
 
   static mapDispatchToProps = ['getStoreCart']
 

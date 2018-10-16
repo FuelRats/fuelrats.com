@@ -1,4 +1,5 @@
 // Module imports
+import React from 'react'
 import moment from 'moment'
 
 
@@ -12,6 +13,14 @@ import { Link } from '../../routes'
 import Component from '../../components/Component'
 import PageWrapper from '../../components/PageWrapper'
 import userHasPermission from '../../helpers/userHasPermission'
+
+
+
+
+
+// Component constants
+const PAPERWORK_MAX_EDIT_TIME = 3600000
+
 
 
 
@@ -50,7 +59,7 @@ class Paperwork extends Component {
   static renderQuote = (quote, index) => (
     <li key={index}>
       {quote.message}
-      {!!quote.author && (
+      {Boolean(quote.author) && (
         <span>
           - <em>${quote.author}</em>
         </span>
@@ -227,7 +236,7 @@ class Paperwork extends Component {
     }
 
     // Check if the paperwork is not yet time locked
-    if ((new Date()).getTime() - (new Date(rescue.attributes.createdAt)).getTime() <= 3600000) {
+    if ((new Date()).getTime() - (new Date(rescue.attributes.createdAt)).getTime() <= PAPERWORK_MAX_EDIT_TIME) {
       return true
     }
 

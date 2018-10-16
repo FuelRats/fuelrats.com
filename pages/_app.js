@@ -1,4 +1,3 @@
-
 // Module imports
 import { library as faLibrary, config as faConfig } from '@fortawesome/fontawesome-svg-core'
 import { Provider } from 'react-redux'
@@ -19,7 +18,7 @@ import AppLayout from '../components/AppLayout'
 
 
 // Style imports
-import '../scss/app.scss'
+import '../scss/app.scss' /* eslint-disable-line import/no-unassigned-import */// import required to initiate css loading
 
 
 
@@ -43,7 +42,7 @@ class NextApp extends App {
     })
   }
 
-  static async getInitialProps (appProps) {
+  static getInitialProps (appProps) {
     return AppLayout.getInitialProps(appProps)
   }
 

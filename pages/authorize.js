@@ -113,7 +113,7 @@ class Authorize extends Component {
 
                 <HiddenFormData
                   data={{
-                    transaction_id: transactionId,
+                    transaction_id: transactionId, /* eslint-disable-line camelcase */// Required by API
                     scope,
                     redirectUri,
                     ...(preAuthorized ? { allow: 'true' } : {}),

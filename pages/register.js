@@ -1,3 +1,10 @@
+// Module imports
+import React from 'react'
+
+
+
+
+
 // Component imports
 import { actions, connect } from '../store'
 import { Link } from '../routes'
@@ -10,12 +17,14 @@ import TermsDialog from '../components/TermsDialog'
 
 
 
+
 // Component constants
 /* eslint-disable react/no-danger */
 const getWordpressPageElement = page => (
-  <div dangerouslySetInnerHTML={{ __html: page.content.rendered.replace(/<ul>/gi, '<ul class="bulleted">').replace(/<ol>/gi, '<ol class="numbered">') }} />
+  <div dangerouslySetInnerHTML={{ __html: page.content.rendered.replace(/<ul>/giu, '<ul class="bulleted">').replace(/<ol>/giu, '<ol class="numbered">') }} />
 )
 /* eslint-enable react/no-danger */
+
 
 
 
@@ -26,7 +35,7 @@ class Register extends Component {
     Public Methods
   \***************************************************************************/
 
-  async componentDidMount () {
+  componentDidMount () {
     this.setState({
       acceptTerms: sessionStorage.getItem('register.acceptTerms'),
       acceptPrivacy: sessionStorage.getItem('register.acceptTerms'),
@@ -43,7 +52,7 @@ class Register extends Component {
     this._bindMethods([
       'handleChange',
       'handleRadioOptionsChange',
-      'onSubmit',
+      '_handleSubmit',
     ])
 
     this.state = {
@@ -87,7 +96,7 @@ class Register extends Component {
     this.setState({ [name]: value })
   }
 
-  async onSubmit (event) {
+  async _handleSubmit (event) {
     event.preventDefault()
 
     const {
@@ -140,7 +149,7 @@ class Register extends Component {
         <form
           className={`${submitting ? 'loading force' : ''}`}
           data-loader-text="Submitting"
-          onSubmit={this.onSubmit}>
+          onSubmit={this._handleSubmit}>
 
           <fieldset data-name="Email">
             <h5>This registration page is to become a Fuel Rat! <br /> Need fuel? No need to register! Just click "Get Help" in the sidebar!</h5><br />
@@ -154,7 +163,9 @@ class Register extends Component {
               disabled={submitting}
               onChange={this.handleChange}
               placeholder="i.e. surly_badger@gmail.com"
-              ref={_emailEl => this._emailEl = _emailEl}
+              ref={(_emailEl) => {
+                this._emailEl = _emailEl
+              }}
               required
               type="email"
               value={email} />
@@ -174,7 +185,9 @@ class Register extends Component {
               onChange={this.handleChange}
               pattern="^[^\s]{5,42}$"
               placeholder="Use a strong password to keep your account secure"
-              ref={_password => this._password = _password}
+              ref={(_password) => {
+                this._password = _password
+              }}
               required
               showStrength
               showSuggestions />
@@ -192,7 +205,9 @@ class Register extends Component {
               onChange={this.handleChange}
               pattern="^[A-z_\-\[\]\\^{}|`][A-z0-9_\-\[\]\\^{}|`]+$"
               placeholder="Surly_Badger"
-              ref={_nicknameEl => this._nicknameEl = _nicknameEl}
+              ref={(_nicknameEl) => {
+                this._nicknameEl = _nicknameEl
+              }}
               required
               type="text"
               value={nickname} />
@@ -210,7 +225,9 @@ class Register extends Component {
               onChange={this.handleChange}
               pattern="^[\x00-\x7F]+$"
               placeholder="Surly Badger"
-              ref={_ratNameEl => this._ratNameEl = _ratNameEl}
+              ref={(_ratNameEl) => {
+                this._ratNameEl = _ratNameEl
+              }}
               required
               type="text"
               value={ratName} />
@@ -253,7 +270,15 @@ class Register extends Component {
                 checked={Boolean(acceptTerms && acceptPrivacy)}
                 onChange={this.handleChange} />
               <label htmlFor="acceptTerms">
-                I agree that I have read and agree to the <Link route="wordpress" params={{ slug: 'terms-of-service' }}><a>Terms of Service</a></Link> and <Link route="wordpress" params={{ slug: 'terms-of-service' }}><a>Privacy Policy</a></Link>, and that I am 13 years of age or older.
+                {'I agree that I have read and agree to the  '}
+                <Link route="wordpress" params={{ slug: 'terms-of-service' }}>
+                  <a>Terms of Service</a>
+                </Link>
+                {' and '}
+                <Link route="wordpress" params={{ slug: 'terms-of-service' }}>
+                  <a>Privacy Policy</a>
+                </Link>
+                {', and that I am 13 years of age or older.'}
               </label>
             </span>
           </fieldset>

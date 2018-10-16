@@ -1,9 +1,17 @@
+// Module imports
+import React from 'react'
+
+
+
+
+
 // Component imports
 import { connect } from '../store'
 import { Link } from '../routes'
 import Component from '../components/Component'
 import PageWrapper from '../components/PageWrapper'
 import PasswordField from '../components/PasswordField'
+
 
 
 
@@ -16,7 +24,7 @@ class PasswordReset extends Component {
 
   async componentDidMount () {
     const token = this.props.query.t
-    let tokenIsValid
+    let tokenIsValid = false
 
     if (token) {
       const { status } = await this.props.validatePasswordResetToken(token)
@@ -32,7 +40,7 @@ class PasswordReset extends Component {
   constructor (props) {
     super(props)
 
-    this._bindMethods(['onSubmit'])
+    this._bindMethods(['_handleSubmit'])
 
     this.state = {
       password: '',
@@ -44,7 +52,7 @@ class PasswordReset extends Component {
     }
   }
 
-  async onSubmit (event) {
+  async _handleSubmit (event) {
     const {
       password,
       token,
@@ -54,7 +62,10 @@ class PasswordReset extends Component {
 
     this.setState({ submitting: true })
 
-    await this.props.resetPassword({ password, token })
+    await this.props.resetPassword({
+      password,
+      token,
+    })
 
     this.setState({
       submitted: true,
@@ -84,7 +95,7 @@ class PasswordReset extends Component {
           )}
 
           {(!submitted && !validating && tokenIsValid) && (
-            <form onSubmit={this.onSubmit}>
+            <form onSubmit={this._handleSubmit}>
               <fieldset>
                 <label htmlFor="password">
                   New Password
@@ -97,7 +108,9 @@ class PasswordReset extends Component {
                   onChange={event => this.setState({ password: event.target.value })}
                   pattern="^[^\s]{5,42}$"
                   placeholder="Use a strong password to keep your account secure"
-                  ref={_password => this._password = _password}
+                  ref={(_password) => {
+                    this._password = _password
+                  }}
                   required
                   showStrength
                   showSuggestions

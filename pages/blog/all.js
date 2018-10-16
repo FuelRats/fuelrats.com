@@ -15,6 +15,17 @@ import safeParseInt from '../../helpers/safeParseInt'
 import TextPlaceholder from '../../components/TextPlaceholder'
 
 
+
+
+
+// Component constants
+const BASE_TEN_RADIX = 10
+const DEFAULT_PAGE = 1
+
+
+
+
+/* eslint-disable react/no-unsafe */// Acknowledged. Refactor inbound.
 @connect
 class Blogs extends Component {
   /***************************************************************************\
@@ -75,8 +86,8 @@ class Blogs extends Component {
 
     const wpOptions = {}
 
-    author = typeof options.author !== 'undefined' ? options.author : author
-    category = typeof options.category !== 'undefined' ? options.category : category
+    author = typeof options.author === 'undefined' ? author : options.author
+    category = typeof options.category === 'undefined' ? category : options.category
 
     if (author) {
       wpOptions.author = author
@@ -111,7 +122,7 @@ class Blogs extends Component {
     this._retrieveBlogs()
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     const {
       author,
       category,
@@ -145,10 +156,10 @@ class Blogs extends Component {
     }
   }
 
-  static async getInitialProps ({ query }) {
+  static getInitialProps ({ query }) {
     const props = {}
 
-    props.page = safeParseInt(query.page || 1, 10, 1)
+    props.page = safeParseInt(query.page || DEFAULT_PAGE, BASE_TEN_RADIX, DEFAULT_PAGE)
 
     if (query.category) {
       props.category = query.category
@@ -171,7 +182,7 @@ class Blogs extends Component {
       <PageWrapper title="Blog">
         <div className="page-content">
           <ol className="article-list loading">
-            {!retrieving && Boolean(blogs.length) && blogs.map(blog => {
+            {!retrieving && Boolean(blogs.length) && blogs.map((blog) => {
               const {
                 id,
               } = blog
@@ -211,7 +222,7 @@ class Blogs extends Component {
                         <FontAwesomeIcon icon="folder" fixedWidth />
 
                         <ul className="category-list">
-                          {blog.categories.map(catId => {
+                          {blog.categories.map((catId) => {
                             const category = categories[catId] || {
                               id: catId,
                               description: 'Loading...',

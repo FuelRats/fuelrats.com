@@ -22,5 +22,7 @@ module.exports = {
     'arrow-parens': ['error', 'as-needed', {
       requireForBlockBody: true,
     }],
+    'react/no-unescaped-entities': ['off'],
+    'react/jsx-one-expression-per-line': ['off'],
   },
 }

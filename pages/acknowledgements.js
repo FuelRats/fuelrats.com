@@ -1,3 +1,7 @@
+// Module imports
+import React from 'react'
+
+
 // Component imports
 import PageWrapper from '../components/PageWrapper'
 import { dependencies } from '../package.json'
@@ -7,6 +11,7 @@ import { dependencies } from '../package.json'
 
 
 // Component constants
+/* eslint-disable max-len */// descriptions should be single lines.
 const brands = [
   {
     key: 'atlassian',
@@ -62,7 +67,7 @@ const Acknowledgements = () => (
             {Object.keys({
               ...dependencies,
             }).map(dep => (
-              <li><a target="_blank" rel="noopener noreferrer" href={`https://www.npmjs.com/package/${dep}`}>{dep}</a></li>
+              <li key={dep}><a target="_blank" rel="noopener noreferrer" href={`https://www.npmjs.com/package/${dep}`}>{dep}</a></li>
             ))}
           </ul>
         </div>
