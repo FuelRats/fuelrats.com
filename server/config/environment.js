@@ -5,6 +5,7 @@
 
 
 module.exports = {
+  dev: process.env.NODE_ENV !== 'production',
   api: {
     clientId: process.env.FRDC_API_KEY,
     clientSecret: process.env.FRDC_API_SECRET,

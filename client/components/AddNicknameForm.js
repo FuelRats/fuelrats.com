@@ -8,6 +8,7 @@ import React from 'react'
 // Component imports
 import { connect } from '../store'
 import Component from './Component'
+import ValidatedFormInput from './ValidatedFormInput'
 
 
 
@@ -49,6 +50,8 @@ class AddNicknameForm extends Component {
     })
   }
 
+  _handleChange =
+
 
 
 
@@ -67,7 +70,7 @@ class AddNicknameForm extends Component {
       <form
         className="row"
         onSubmit={this._handleSubmit}>
-        <input
+        <ValidatedFormInput
           className="stretch-9"
           name="add-nickname"
           onChange={event => this.setState({ nickname: event.target.value })}

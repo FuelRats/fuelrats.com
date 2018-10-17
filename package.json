@@ -1,7 +1,8 @@
 {
-  "name": "fuelrats-react",
+  "name": "fuelrats.com",
   "version": "2.5.0",
-  "main": "index.js",
+  "description": "The primary website of The Fuel Rats!",
+  "main": "server/server.js",
   "license": "BSD-3-Clause",
   "scripts": {
     "add-contributor": "all-contributors add",

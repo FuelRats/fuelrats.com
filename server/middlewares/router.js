@@ -2,8 +2,14 @@
 const router = require('koa-router')()
 const send = require('koa-send')
 
+
+
+
+
 // Component imports
-const routes = require('../../routes')
+const routes = require('../../client/routes')
+
+
 
 
 
