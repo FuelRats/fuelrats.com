@@ -1,5 +1,5 @@
 // Module imports
-import Cookies from 'next-cookies'
+import cookies from 'next-cookies'
 
 // Component imports
 import { getActionCreators } from '../store'
@@ -10,7 +10,7 @@ import apiService from '../services/api'
 
 
 export default async function initUserSession (ctx) {
-  const { access_token: accessToken } = Cookies(ctx)
+  const { access_token: accessToken } = cookies(ctx)
   const { store } = ctx
   const {
     authentication: {

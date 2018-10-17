@@ -117,8 +117,8 @@ class ProductCard extends Component {
   \***************************************************************************/
 
   static propTypes = {
-    product: PropTypes.object.isRequired,
     onCartButtonClick: PropTypes.func.isRequired,
+    product: PropTypes.object.isRequired,
   }
 }
 

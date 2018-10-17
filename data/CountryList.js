@@ -1,4 +1,4 @@
-//Country data from https://www.freeformatter.com/iso-country-list-html-select.html
+// Country data from https://www.freeformatter.com/iso-country-list-html-select.html
 const countryList = [
   'Afghanistan',
   'Åland Islands',

@@ -54,12 +54,14 @@ class CartUpdateDialog extends Component {
 
     const { status } = await this.props.updateOrder(orderId, {
       status: 'fulfilled',
-      ...(carrier && trackingNumber ? {
-        shipping: {
-          carrier,
-          tracking_number: trackingNumber,
-        },
-      } : {}),
+      ...(carrier && trackingNumber
+        ? {
+          shipping: {
+            carrier,
+            tracking_number: trackingNumber, /* eslint-disable-line camelcase */// Required By API
+          },
+        }
+        : {}),
     })
 
     if (status === 'success') {
@@ -146,6 +148,7 @@ class CartUpdateDialog extends Component {
         (
           <button
             disabled={!this.isValid}
+            key="UpdateButton"
             onClick={this._handleSubmit}
             type="button">
             Update

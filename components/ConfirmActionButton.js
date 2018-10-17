@@ -33,7 +33,7 @@ class ConfirmActionButton extends Component {
     Private Methods
   \***************************************************************************/
 
-  _onClick = async event => {
+  _handleClick = async (event) => {
     const {
       onConfirm,
       onClick,
@@ -93,7 +93,7 @@ class ConfirmActionButton extends Component {
           <button
             className="compact"
             data-action="deny"
-            onClick={this._onClick}
+            onClick={this._handleClick}
             type="button">
             {denyButtonText}
           </button>
@@ -101,7 +101,7 @@ class ConfirmActionButton extends Component {
         <button
           className={confirmingAction ? 'compact green' : 'compact'}
           data-action="confirm"
-          onClick={this._onClick}
+          onClick={this._handleClick}
           type="button"
           {...this.renderProps}>
           {performingAction && (

@@ -25,7 +25,7 @@ const DEFAULT_PAGE = 1
 
 
 
-/* eslint-disable react/no-unsafe */// Acknowledged. Refactor inbound.
+
 @connect
 class Blogs extends Component {
   /***************************************************************************\

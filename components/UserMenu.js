@@ -14,7 +14,7 @@ import userHasPermission from '../helpers/userHasPermission'
 
 
 
-const UserMenu = props => {
+const UserMenu = (props) => {
   const {
     loggedIn,
     loggingIn,
@@ -63,7 +63,7 @@ const UserMenu = props => {
             <AdminUserMenuNav />
           )}
 
-          {/*<div
+          {/* <div
             className="stats"
             hidden>
             <header>My Stats</header>
@@ -84,7 +84,7 @@ const UserMenu = props => {
                 </tr>
               </tbody>
             </table>
-          </div>*/}
+          </div> */}
         </menu>
       )}
 

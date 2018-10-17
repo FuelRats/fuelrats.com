@@ -1,12 +1,23 @@
 // Module imports
+import React from 'react'
+
+
+
+
+
+// Component imports
 import { connect } from '../store'
 import AddNicknameForm from './AddNicknameForm'
-//import ConfirmActionButton from './ConfirmActionButton'
+// import ConfirmActionButton from './ConfirmActionButton'
 import Component from './Component'
+
+
+
+
 
 @connect
 class UserNicknamesPanel extends Component {
-  _deleteNickname = async event => {
+  _deleteNickname = async (event) => {
     await this.props.deleteNickname(event.target.name)
     return 'Deleted!'
   }
@@ -44,6 +55,10 @@ class UserNicknamesPanel extends Component {
       </div>
     )
   }
+
+
+
+
 
   static mapDispatchToProps = ['deleteNickname']
 

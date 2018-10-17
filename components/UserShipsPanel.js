@@ -21,7 +21,7 @@ class UserShipsPanel extends Component {
   \***************************************************************************/
 
   static _renderShips (ships) {
-    return ships.map(ship => {
+    return ships.map((ship) => {
       const { id } = ship
       const {
         name,
@@ -81,7 +81,7 @@ class UserShipsPanel extends Component {
     Redux Properties
   \***************************************************************************/
 
-  static mapStateToProps = state => {
+  static mapStateToProps = (state) => {
     const {
       ships,
       user,

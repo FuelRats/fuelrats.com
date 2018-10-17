@@ -27,7 +27,7 @@ const buildCommitRange = BUILD_COMMIT_RANGE
 
 
 
-const Header = props => {
+const Header = (props) => {
   const {
     loggedIn,
     loggingIn,
@@ -183,7 +183,7 @@ const Header = props => {
 
 
 
-Header.mapStateToProps = state => {
+Header.mapStateToProps = (state) => {
   const { loggedIn, loggingIn } = state.authentication
 
   return {

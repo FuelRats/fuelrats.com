@@ -18,7 +18,6 @@ import Component from './Component'
 /**
  * Component for presenting dialogs and modals to the user.
  */
-
 class Dialog extends Component {
   /***************************************************************************\
     Private Methods

@@ -63,32 +63,36 @@ class RescuesByRatTable extends Component {
   \***************************************************************************/
 
   get columns () {
-    return this._columns || (this._columns = [
-      {
-        accessor: datum => datum.attributes['user.displayRat.name'] || datum.attributes.rats[0],
-        className: 'name',
-        Header: 'Name',
-        headerClassName: 'name',
-        id: 'name',
-        resizable: false,
-        sortable: false,
-      },
-      {
-        accessor: 'attributes.rescueCount',
-        className: 'rescues',
-        Header: 'Rescues',
-        headerClassName: 'rescues',
-        id: 'rescues',
-        resizable: false,
-        sortable: false,
-        width: 100,
-      },
-    ])
+    if (!this.columns) {
+      this._columns = [
+        {
+          accessor: datum => datum.attributes['user.displayRat.name'] || datum.attributes.rats[0],
+          className: 'name',
+          Header: 'Name',
+          headerClassName: 'name',
+          id: 'name',
+          resizable: false,
+          sortable: false,
+        },
+        {
+          accessor: 'attributes.rescueCount',
+          className: 'rescues',
+          Header: 'Rescues',
+          headerClassName: 'rescues',
+          id: 'rescues',
+          resizable: false,
+          sortable: false,
+          width: 100,
+        },
+      ]
+    }
+
+    return this._columns
   }
 
   static mapDispatchToProps = ['getRescuesByRatStatistics']
 
-  static mapStateToProps = state => {
+  static mapStateToProps = (state) => {
     const {
       loading,
       statistics,

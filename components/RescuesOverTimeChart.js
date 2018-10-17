@@ -1,4 +1,5 @@
 // Module imports
+import React from 'react'
 import * as d3 from 'd3'
 import moment from 'moment'
 
@@ -6,9 +7,15 @@ import moment from 'moment'
 
 
 
-// Module imports
+// Component imports
 import { connect } from '../store'
 import Component from './Component'
+
+
+
+
+// Component constants
+const DEFAULT_HEIGHT = 300
 
 
 
@@ -23,7 +30,7 @@ class RescuesOverTimeChart extends Component {
     await this.props.getRescuesOverTimeStatistics()
   }
 
-  _hideTooltip () {
+  _handleHideTooltip () {
     this.setState({
       showTooltip: false,
     })
@@ -58,7 +65,7 @@ class RescuesOverTimeChart extends Component {
     const { height } = this.state
 
     // Deserialize the data
-    const data = statistics.map(datum => {
+    const data = statistics.map((datum) => {
       const newDatum = { ...datum }
 
       newDatum.attributes.date = moment(datum.attributes.date)
@@ -77,7 +84,8 @@ class RescuesOverTimeChart extends Component {
     const width = data.length * (barWidth + barGap)
 
     // Define the X axis scaling metrics
-    const xScale = this.xScale = d3.scaleTime()
+    const xScale = d3.scaleTime()
+    this.xScale = xScale
     xScale.domain([
       d3.min(data, datum => datum.attributes.date),
       d3.max(data, datum => datum.attributes.date),
@@ -85,13 +93,16 @@ class RescuesOverTimeChart extends Component {
     xScale.range([0, width])
 
     // Define the Y axis scaling metrics
-    const yScale = this.yScale = d3.scaleLinear()
+    const yScale = d3.scaleLinear()
+    this.yScale = yScale
     yScale.domain([d3.max(data, datum => datum.attributes.success + datum.attributes.failure), 0])
     yScale.range([0, height])
 
     return (
       <svg
-        ref={_svg => this._svg = _svg}
+        ref={(_svg) => {
+          this._svg = _svg
+        }}
         height={height + xAxisMargin}
         width={width + yAxisMargin}>
         <g className="data">
@@ -99,9 +110,9 @@ class RescuesOverTimeChart extends Component {
             <g
               className="datum"
               key={rescue.id}
-              onBlur={this._hideTooltip}
+              onBlur={this._handleHideTooltip}
               onFocus={event => this._showTooltip(event, rescue)}
-              onMouseOut={this._hideTooltip}
+              onMouseOut={this._handleHideTooltip}
               onMouseOver={event => this._showTooltip(event, rescue)}
               transform={`translate(${xScale(rescue.attributes.date)}, 0)`}>
               <rect
@@ -127,11 +138,15 @@ class RescuesOverTimeChart extends Component {
 
         <g
           className="axis x"
-          ref={_xAxis => this._xAxis = _xAxis} />
+          ref={(_xAxis) => {
+            this._xAxis = _xAxis
+          }} />
 
         <g
           className="axis y"
-          ref={_yAxis => this._yAxis = _yAxis} />
+          ref={(_yAxis) => {
+            this._yAxis = _yAxis
+          }} />
       </svg>
     )
   }
@@ -179,7 +194,7 @@ class RescuesOverTimeChart extends Component {
 
     this._bindMethods([
       '_getRescuesOverTimeStatistics',
-      '_hideTooltip',
+      '_handleHideTooltip',
       '_renderAxes',
       '_renderXAxis',
       '_renderYAxis',
@@ -188,7 +203,7 @@ class RescuesOverTimeChart extends Component {
     ])
 
     this.state = {
-      height: props.height || 300,
+      height: props.height || DEFAULT_HEIGHT,
       showTooltip: false,
       tooltipContent: null,
       tooltipX: 0,
@@ -237,7 +252,7 @@ class RescuesOverTimeChart extends Component {
 
   static mapDispatchToProps = ['getRescuesOverTimeStatistics']
 
-  static mapStateToProps = state => {
+  static mapStateToProps = (state) => {
     const {
       loading,
       statistics,

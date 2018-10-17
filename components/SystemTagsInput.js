@@ -5,7 +5,7 @@ import TagsInput from './TagsInput'
 
 
 
-export default class extends TagsInput {
+class SystemTagsInput extends TagsInput {
   async search (query) {
     if (query) {
       let response = await fetch(`/edsm-api/typeahead/systems/query/${query}`)
@@ -19,3 +19,7 @@ export default class extends TagsInput {
     }
   }
 }
+
+
+
+export default SystemTagsInput

@@ -106,8 +106,8 @@ class ValidatedCountrySelect extends React.Component {
   static defaultProps = {
     invalidMessage: null,
     name: null,
-    renderLabel: false,
     onChange: () => ({}),
+    renderLabel: false,
   }
 
   static propTypes = {

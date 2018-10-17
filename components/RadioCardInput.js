@@ -25,7 +25,7 @@ const getDefaultOptionProps = () => ({
 
 
 class RadioCardInput extends Component {
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     const currentValue = nextProps.value || (this.state.selectedOption ? this.state.selectedOption.key : null) || nextProps.defaultValue || null
     const options = nextProps.options.map(option => ({ ...getDefaultOptionProps(), ...option }))
 

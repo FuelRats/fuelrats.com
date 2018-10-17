@@ -1,3 +1,10 @@
+// Module imports
+import React from 'react'
+
+
+
+
+
 // Component imports
 import UserDecalPanel from './UserDecalPanel'
 import UserDetailsPanel from './UserDetailsPanel'
@@ -7,7 +14,7 @@ import UserNicknamesPanel from './UserNicknamesPanel'
 
 
 
-export default () => (
+const UserOverview = () => (
   <div className="user-overview-tab">
     <UserDetailsPanel />
 
@@ -16,3 +23,8 @@ export default () => (
     <UserDecalPanel />
   </div>
 )
+
+
+
+
+export default UserOverview

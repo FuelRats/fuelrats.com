@@ -5,7 +5,7 @@ import React from 'react'
 
 
 
-export default () => (
+const UserRescuesPanel = () => (
   <div className="row">
     <div className="row">
       <h2>Rescues</h2>
@@ -24,3 +24,9 @@ export default () => (
     <div className="rescues" />
   </div>
 )
+
+
+
+
+
+export default UserRescuesPanel

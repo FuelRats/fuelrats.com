@@ -24,7 +24,7 @@ class ChangePasswordForm extends Component {
 
     this._bindMethods([
       'handleChange',
-      'onSubmit',
+      '_handleSubmit',
     ])
 
     this.state = {
@@ -45,7 +45,7 @@ class ChangePasswordForm extends Component {
     })
   }
 
-  async onSubmit (event) {
+  async _handleSubmit (event) {
     event.preventDefault()
 
     const {
@@ -68,7 +68,7 @@ class ChangePasswordForm extends Component {
     } = this.state
 
     return (
-      <form onSubmit={this.onSubmit}>
+      <form onSubmit={this._handleSubmit}>
         <header>
           <h3>Change Password</h3>
         </header>
@@ -82,7 +82,9 @@ class ChangePasswordForm extends Component {
             id="currentPassword"
             name="currentPassword"
             onChange={this.handleChange}
-            ref={_currentPasswordEl => this._currentPasswordEl = _currentPasswordEl}
+            ref={(_currentPasswordEl) => {
+              this._currentPasswordEl = _currentPasswordEl
+            }}
             value={currentPassword} />
         </fieldset>
 
@@ -95,7 +97,9 @@ class ChangePasswordForm extends Component {
             id="newPassword"
             name="newPassword"
             onChange={this.handleChange}
-            ref={_newPasswordEl => this._newPasswordEl = _newPasswordEl}
+            ref={(_newPasswordEl) => {
+              this._newPasswordEl = _newPasswordEl
+            }}
             showStrength
             showSuggestions
             value={newPassword} />

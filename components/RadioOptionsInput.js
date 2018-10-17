@@ -26,7 +26,7 @@ const getDefaultOptionProps = () => ({
 
 
 export default class RadioOptionsInput extends Component {
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     const options = nextProps.options.map(option => ({ ...getDefaultOptionProps(), ...option }))
 
     this.setState(state => ({

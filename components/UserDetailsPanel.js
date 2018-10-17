@@ -13,7 +13,14 @@ import { connect } from '../store'
 
 
 
-const UserDetailsPanel = props => {
+// Component constants
+const ELITE_GAME_YEAR_DESPARITY = 1286 // Years between IRL year and Elite universe year
+
+
+
+
+
+const UserDetailsPanel = (props) => {
   let { attributes } = props
 
   attributes = attributes || {}
@@ -39,7 +46,7 @@ const UserDetailsPanel = props => {
         </span>
 
         <label>Member Since:</label>
-        <span>{moment(createdAt).add(1286, 'years').format('DD MMMM, YYYY')}</span>
+        <span>{moment(createdAt).add(ELITE_GAME_YEAR_DESPARITY, 'years').format('DD MMMM, YYYY')}</span>
       </div>
     </div>
   )

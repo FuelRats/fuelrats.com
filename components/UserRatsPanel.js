@@ -160,7 +160,7 @@ class UserRatsPanel extends Component {
 
   static mapDispatchToProps = ['createRat']
 
-  static mapStateToProps = state => {
+  static mapStateToProps = (state) => {
     const { rats } = state
     const {
       ships,

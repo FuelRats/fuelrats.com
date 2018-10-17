@@ -12,8 +12,14 @@ import UserShipsTable from './UserShipsTable'
 
 
 
-export default props => (
+const RatDetails = props => (
   <div className="rat-details">
     <UserShipsTable data={props.ships} />
   </div>
 )
+
+
+
+
+
+export default RatDetails

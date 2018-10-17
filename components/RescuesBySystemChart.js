@@ -1,3 +1,5 @@
+/* eslint-disable no-magic-numbers */
+
 // Module imports
 import * as d3 from 'd3'
 import React from 'react'
@@ -23,7 +25,7 @@ class RescuesBySystemChart extends Component {
     await this.props.getRescuesBySystemStatistics()
   }
 
-  _hideTooltip () {
+  _handleHideTooltip () {
     this.setState({
       showTooltip: false,
     })
@@ -141,7 +143,7 @@ class RescuesBySystemChart extends Component {
     if (system.data.attributes) {
       systemName = system.data.attributes.system
 
-      id = systemName ? systemName.toLowerCase().replace(/\s/g, '_') : 'No system assigned'
+      id = systemName ? systemName.toLowerCase().replace(/\s/gu, '_') : 'No system assigned'
 
       classes.push([
         {
@@ -156,7 +158,7 @@ class RescuesBySystemChart extends Component {
           platform: 'xb',
           value: system.data.attributes.xb,
         },
-      ].reduce((a, b) => (a.value > b.value ? a : b)).platform)
+      ].reduce((plat1, plat2) => (plat1.value > plat2.value ? plat1 : plat2)).platform)
     }
 
     if (system.r) {
@@ -165,9 +167,9 @@ class RescuesBySystemChart extends Component {
           className="datum"
           filter="url(#glow)"
           key={index}
-          onBlur={this._hideTooltip}
+          onBlur={this._handleHideTooltip}
           onFocus={event => this._showTooltip(event, system)}
-          onMouseOut={this._hideTooltip}
+          onMouseOut={this._handleHideTooltip}
           onMouseOver={event => this._showTooltip(event, system)}
           transform={`translate(${system.x}, ${system.y})`}>
           <circle
@@ -287,7 +289,7 @@ class RescuesBySystemChart extends Component {
 
     this._bindMethods([
       '_getRescuesBySystemStatistics',
-      '_hideTooltip',
+      '_handleHideTooltip',
       '_renderSystem',
       '_showTooltip',
     ])
@@ -343,7 +345,7 @@ class RescuesBySystemChart extends Component {
 
   static mapDispatchToProps = ['getRescuesBySystemStatistics']
 
-  static mapStateToProps = state => {
+  static mapStateToProps = (state) => {
     const {
       loading,
       statistics,

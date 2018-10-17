@@ -68,12 +68,14 @@ class CustomerInfoFields extends React.Component {
 
       return {
         [name]: value,
-        ...(required ? {
-          validity: {
-            ...validity,
-            [name]: valid || message,
-          },
-        } : {}),
+        ...(required
+          ? {
+            validity: {
+              ...validity,
+              [name]: valid || message,
+            },
+          }
+          : {}),
       }
     }, () => {
       const {
@@ -97,7 +99,7 @@ class CustomerInfoFields extends React.Component {
               line2,
               city,
               state,
-              postal_code: postalCode,
+              postal_code: postalCode, /* eslint-disable-line camelcase */// Required By API
               country,
             },
           },

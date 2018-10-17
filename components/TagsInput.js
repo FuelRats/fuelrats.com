@@ -1,3 +1,10 @@
+// Complete rewrite pending. We will ignore these errors for now.
+/* eslint-disable no-magic-numbers, no-negated-condition, prefer-rest-params, react/jsx-handler-names, no-restricted-syntax, no-return-assign, react/no-deprecated */
+
+
+
+
+
 // Module imports
 import debounce from 'lodash/debounce'
 import React from 'react'
@@ -393,7 +400,7 @@ export default class TagsInputComponent extends React.Component {
     return typeof optionValue !== 'string' ? optionValue : { value: optionValue }
   }
 
-  removeTag = tag => this.setState(state => {
+  removeTag = tag => this.setState((state) => {
     const tags = [...state.tags]
 
     tags.splice(tags.indexOf(tag), 1)
@@ -459,13 +466,13 @@ export default class TagsInputComponent extends React.Component {
           ref={input => this.input = input}
           type="search" />
 
-        {!!allowNew && this.renderReturnPrompt()}
+        {Boolean(allowNew) && this.renderReturnPrompt()}
 
         {loading && TagsInputComponent._renderLoader()}
 
-        {(!loading && !newFocus && !!currentValue && !options.length) && TagsInputComponent._renderNoResults()}
+        {(!loading && !newFocus && Boolean(currentValue) && !options.length) && TagsInputComponent._renderNoResults()}
 
-        {(!loading && !!options.length) && (
+        {(!loading && Boolean(options.length)) && (
           <ol className="options">
             {this.renderOptions()}
           </ol>
@@ -595,7 +602,7 @@ export default class TagsInputComponent extends React.Component {
       newState.selectedOption = null
     }
 
-    options.forEach(optionValue => {
+    options.forEach((optionValue) => {
       const option = TagsInputComponent.parseOption(optionValue)
 
       if (merge && this.findOption(option)) {

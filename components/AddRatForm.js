@@ -12,6 +12,7 @@ import Component from './Component'
 
 
 
+
 @connect
 class AddRatForm extends Component {
   /***************************************************************************\

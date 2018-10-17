@@ -1,2 +1,14 @@
 // Module imports
-export default () => (<div className="panel reminders minimize" />)
+import React from 'react'
+
+
+
+
+
+const Reminders = () => (<div className="panel reminders minimize" />)
+
+
+
+
+
+export default Reminders

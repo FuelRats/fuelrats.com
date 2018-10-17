@@ -31,8 +31,8 @@ export default class PasswordField extends Component {
       focused: false,
       password: '',
       passwordStrength: 0,
-      passwordSuggestions: new Set,
-      passwordWarnings: new Set,
+      passwordSuggestions: new Set(),
+      passwordWarnings: new Set(),
       showPassword: false,
     }
   }
@@ -45,7 +45,7 @@ export default class PasswordField extends Component {
     } = this.props
     const { value } = event.target
 
-    this.setState(state => {
+    this.setState((state) => {
       const newState = { ...state }
       const passwordEvaluation = zxcvbn(value)
 
@@ -67,9 +67,9 @@ export default class PasswordField extends Component {
       newState.password = value
       newState.passwordStrength = passwordEvaluation.score
 
-      for (const suggestion of passwordEvaluation.feedback.suggestions) {
+      passwordEvaluation.feedback.suggestions.forEach((suggestion) => {
         newState.passwordSuggestions.add(suggestion)
-      }
+      })
 
       return newState
     })
@@ -117,7 +117,9 @@ export default class PasswordField extends Component {
             onBlur={() => this.setState({ focused: false })}
             onChange={this.handleChange}
             onFocus={() => this.setState({ focused: true })}
-            ref={_el => this._el = _el}
+            ref={(_el) => {
+              this._el = _el
+            }}
             type={showPassword ? 'text' : 'password'}
             value={password} />
 
@@ -196,9 +198,13 @@ export default class PasswordField extends Component {
   \***************************************************************************/
 
   get validity () {
-    return this._validity || (this._validity = {
-      valid: false,
-    })
+    if (!this.validity) {
+      this._validity = {
+        valid: false,
+      }
+    }
+
+    return this._validity
   }
 
 

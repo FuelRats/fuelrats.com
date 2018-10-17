@@ -1,4 +1,5 @@
 // Module imports
+import React from 'react'
 import PropTypes from 'prop-types'
 
 
@@ -25,13 +26,13 @@ const TextPlaceholder = ({ size, loading }) => {
 }
 
 TextPlaceholder.defaultProps = {
-  size: 10,
   loading: false,
+  size: 10,
 }
 
 TextPlaceholder.propTypes = {
-  size: PropTypes.number,
   loading: PropTypes.any,
+  size: PropTypes.number,
 }
 
 

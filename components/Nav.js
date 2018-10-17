@@ -115,7 +115,7 @@ class Nav extends Component {
     )
   }
 
-  renderNavItem = item => {
+  renderNavItem = (item) => {
     const {
       openSubNav,
     } = this.state
@@ -132,16 +132,16 @@ class Nav extends Component {
 
     const itemWithOnlyLinkProps = {}
     let renderedItemTitle = typeof title === 'string' ? title : title(this.props)
-    let renderedSubnav
-    let renderedSubnavToggle
+    let renderedSubnav = null
+    let renderedSubnavToggle = null
 
-    const key = item.key || renderedItemTitle.toLowerCase().replace(/\s/g, '-')
+    const key = item.key || renderedItemTitle.toLowerCase().replace(/\s/gu, '-')
 
-    for (const [itemKey, itemValue] of Object.entries(item)) {
+    Object.entries(item).forEach(([itemKey, itemValue]) => {
       if (allowedLinkKeys.includes(itemKey)) {
         itemWithOnlyLinkProps[itemKey] = itemValue
       }
-    }
+    })
 
     if (subnav) {
       renderedItemTitle = (

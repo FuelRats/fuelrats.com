@@ -1,6 +1,6 @@
 // Module Imports
+import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
 
 
 
@@ -12,7 +12,7 @@ import TagsInput from './TagsInput'
 
 
 
-export default class extends TagsInput {
+class RatTagsInput extends TagsInput {
   static renderLoader () {
     return (
       <span>
@@ -53,3 +53,7 @@ export default class extends TagsInput {
     return this.updateOptions([])
   }
 }
+
+
+
+export default RatTagsInput

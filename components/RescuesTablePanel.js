@@ -15,6 +15,14 @@ import Component from './Component'
 
 
 
+
+// Component constants
+const ELITE_GAME_YEAR_DESPARITY = 1286 // Years between IRL year and Elite universe year
+
+
+
+
+
 @connect
 class RescuesTablePanel extends Component {
   /***************************************************************************\
@@ -57,7 +65,7 @@ class RescuesTablePanel extends Component {
   static _renderDateRow (row) {
     const rescue = row.original
 
-    return moment(rescue.date).add(1286, 'years').format('DD MMM, YYYY')
+    return moment(rescue.date).add(ELITE_GAME_YEAR_DESPARITY, 'years').format('DD MMM, YYYY')
   }
 
   static _renderRatsRow (row) {
@@ -128,6 +136,7 @@ class RescuesTablePanel extends Component {
     this.props.getRescues()
   }
 
+
   render () {
     const { rescues } = this.props
 
@@ -137,7 +146,7 @@ class RescuesTablePanel extends Component {
           className="rescues"
           columns={this.columns}
           data={rescues}
-          getTrProps={this._handleRowClick}
+          getTrProps={this._handleRowClick} /* eslint-disable-line react/jsx-handler-names */// Yeah uh "get" as a prop 🤔
           manual
           showPagination={false} />
       </section>

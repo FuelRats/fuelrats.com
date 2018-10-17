@@ -1,7 +1,7 @@
 /* eslint-disable react/no-multi-comp */
 
 // Module imports
-import { Fragment } from 'react'
+import React from 'react'
 import NextHead from 'next/head'
 import PropTypes from 'prop-types'
 
@@ -16,16 +16,24 @@ import classnames from '../helpers/classNames'
 
 
 
+// Component constants
+const MAX_TITLE_LENGTH = 50
+const MAX_DESCR_LENGTH = 300
+
+
+
+
+
 class Page extends Component {
   constructor (props) {
     super(props)
 
     /* eslint-disable no-console */
-    if (this.props.title.length > 50) {
+    if (this.props.title.length > MAX_TITLE_LENGTH) {
       console.warn(`Page titles should be fewer than 60 characters, preferably closer to 50. This page's title is ${this.props.title.length} characters.`)
     }
 
-    if (this.props.description.length > 300) {
+    if (this.props.description.length > MAX_DESCR_LENGTH) {
       console.error(`Page description is too long! The description should be 50-300 characters long, but this page's description is ${this.props.description.length} characters.`)
     }
 
@@ -50,12 +58,12 @@ class Page extends Component {
       'fade-in',
       'page',
       [className, Boolean(className)],
-      title.toLowerCase().replace(/\s/g, '-'),
+      title.toLowerCase().replace(/\s/gu, '-'),
       ['--experiment-dark-mode', darkThemeSafe]
     )
 
     return (
-      <Fragment>
+      <>
         <NextHead>
           <title>{title} | The Fuel Rats</title>
           <meta property="og:title" content={title} />
@@ -70,7 +78,7 @@ class Page extends Component {
           )}
           {children}
         </main>
-      </Fragment>
+      </>
     )
   }
 
@@ -96,7 +104,6 @@ class Page extends Component {
   }
 
   static propTypes = {
-    title: PropTypes.string.isRequired,
     darkThemeSafe: PropTypes.bool,
     description: PropTypes.string,
     displayTitle: PropTypes.oneOfType([
@@ -104,6 +111,7 @@ class Page extends Component {
       PropTypes.string,
     ]),
     renderHeader: PropTypes.bool,
+    title: PropTypes.string.isRequired,
   }
 }
 

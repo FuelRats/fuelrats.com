@@ -764,17 +764,17 @@
     humps "^2.0.1"
     prop-types "^15.5.10"
 
-"@fuelrats/eslint-config-react@0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@fuelrats/eslint-config-react/-/eslint-config-react-0.4.0.tgz#cbed0f2b63f0581b2f96ea955e7911fb112973ac"
-  integrity sha512-Di+jgnesMzEUZ3ep7d8UkKxpJjVRMZ8Q77oTlbmoWLjgOmn4gJnBz5mXXT3xWK4DUG7HvqhKJHsBbLlcpZ+n1A==
+"@fuelrats/eslint-config-react@0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@fuelrats/eslint-config-react/-/eslint-config-react-0.5.0.tgz#5ab935c896526bcbe85ce409020cbc86632d0b3f"
+  integrity sha512-daHtSpxYrMkS0bK0+YZx8ibCdqPnccFUoran0sqqc+Dn2dwWHxuwCzXrdKOB2MBr/9dywqWIakgHkDV28JXfiQ==
   dependencies:
-    "@fuelrats/eslint-config" "^0.4.0"
+    "@fuelrats/eslint-config" "^0.5.0"
 
-"@fuelrats/eslint-config@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@fuelrats/eslint-config/-/eslint-config-0.4.0.tgz#277183acff1ccc17ad94f97747196ca410e47cbf"
-  integrity sha512-riIhlj82zzJOZLqRus2lrFxdxez97PRDm1hgnOTlkDrB6Ec+mdWdm0/ViZlaPllQn2Kah0cA0hL8sHX6G/5YhQ==
+"@fuelrats/eslint-config@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@fuelrats/eslint-config/-/eslint-config-0.5.0.tgz#8801869e95d9e6e2aa595214c07b226c2e7ee076"
+  integrity sha512-yLg53TYKrNLPNXQKEUHWrgT/pYUELpAwcPJrDPKO8FZElEsh7wyajBRLQRA3EIZ7iC8AxtKIClLcvyJP6zPXBw==
   dependencies:
     eslint-restricted-globals "^0.1.1"
 
@@ -1453,13 +1453,13 @@ autodll-webpack-plugin@0.4.2:
     webpack-merge "^4.1.0"
     webpack-sources "^1.0.1"
 
-autoprefixer@^9.2.0:
-  version "9.2.0"
-  resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-9.2.0.tgz#e46f893882b19a160370e7bcd3ec6bbeaace4d10"
-  integrity sha512-OuxUyTvzRe9EvKyouPqfr8QUkQ0pH400NOFzI1LFINO8zwgJr7ZTybLql03P//LjR0iWile2lCoy2vRTRSFpMw==
+autoprefixer@^9.2.1:
+  version "9.2.1"
+  resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-9.2.1.tgz#1f2f1179ceed4711b7ab064dbd5c3f9e83d9dc62"
+  integrity sha512-qlK4GnZk8OXLK+8kBn9ttfzu2PkhRe8kVYoWcc9HsrZEMWiBkQuRYdXyJg9cIIKxfMzhh6UbvlJ1CsstMIzxwA==
   dependencies:
     browserslist "^4.2.1"
-    caniuse-lite "^1.0.30000890"
+    caniuse-lite "^1.0.30000892"
     normalize-range "^0.1.2"
     num2fraction "^1.2.2"
     postcss "^7.0.5"
@@ -1908,7 +1908,7 @@ caniuse-lite@^1.0.30000884:
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000885.tgz#e889e9f8e7e50e769f2a49634c932b8aee622984"
   integrity sha512-cXKbYwpxBLd7qHyej16JazPoUacqoVuDhvR61U7Fr5vSxMUiodzcYa1rQYRYfZ5GexV03vGZHd722vNPLjPJGQ==
 
-caniuse-lite@^1.0.30000890:
+caniuse-lite@^1.0.30000890, caniuse-lite@^1.0.30000892:
   version "1.0.30000892"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000892.tgz#344d2b51ee3ff5977537da4aa449c90eec40b759"
   integrity sha512-X9rxMaWZNbJB5qjkDqPtNv/yfViTeUL6ILk0QJNxLV3OhKC5Acn5vxsuUvllR6B48mog8lmS+whwHq/QIYSL9w==

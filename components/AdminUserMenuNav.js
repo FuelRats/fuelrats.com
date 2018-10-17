@@ -12,7 +12,7 @@ import { Link } from '../routes'
 
 
 
-export default () => (
+const AdminUserMenuNav = () => (
   <nav className="admin">
     <header>Admin</header>
 
@@ -35,3 +35,9 @@ export default () => (
     </ul>
   </nav>
 )
+
+
+
+
+
+export default AdminUserMenuNav

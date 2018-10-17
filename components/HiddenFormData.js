@@ -1,3 +1,4 @@
+import React from 'react'
 
 
 
@@ -15,5 +16,9 @@ const HiddenFormData = ({ data }) => (
     ))}
   </fieldset>
 )
+
+
+
+
 
 export default HiddenFormData

@@ -29,13 +29,13 @@ class CartUpdateDialog extends Component {
     Private Methods
   \***************************************************************************/
 
-  _handleQuantityChange = event => {
+  _handleQuantityChange = (event) => {
     this.setState({
       [event.target.name]: Number(event.target.value),
     })
   }
 
-  _handleSKUChange = event => {
+  _handleSKUChange = (event) => {
     const { cart } = this.props
     const activeSKU = event.target.value
     let quantity = 1
@@ -124,7 +124,11 @@ class CartUpdateDialog extends Component {
         onClose={onClose}>
         <div className="center-content">
           {do {
-            if (!updateComplete) {
+            if (updateComplete) {
+              <div>
+                <h1>{product.attributes.name} Updated!</h1>
+              </div>
+            } else {
               <div className="product-card cart-view">
                 {images && images[0] && (
                   <img src={images[0]} alt="product preview" />
@@ -137,7 +141,7 @@ class CartUpdateDialog extends Component {
                   {(prodAttr && prodAttr[0]) && (
                     <div className="labeled-input">
                       <label htmlFor="skuSelect">
-                        {prodAttr[0].replace(/^\w/, char => char.toUpperCase())}:
+                        {prodAttr[0].replace(/^\w/u, char => char.toUpperCase())}:
                       </label>
                       <div className="select-wrapper">
                         <select
@@ -145,7 +149,7 @@ class CartUpdateDialog extends Component {
                           name="activeSKU"
                           value={this.state.activeSKU}
                           onChange={this._handleSKUChange}>
-                          {Object.values(skus).map(sku => {
+                          {Object.values(skus).map((sku) => {
                             const inStock = isInStock(sku.inventory)
                             return <option value={sku.id} key={sku.id} disabled={!inStock}>{sku.attributes[prodAttr[0]]} {!inStock && '(Sold Out!)'}</option>
                           })}
@@ -168,10 +172,6 @@ class CartUpdateDialog extends Component {
                   </div>
                 </div>
               </div>
-            } else {
-              <div>
-                <h1>{product.attributes.name} Updated!</h1>
-              </div>
             }
           }}
         </div>
@@ -189,12 +189,12 @@ class CartUpdateDialog extends Component {
       quantity,
     } = this.state
 
-    const activeSKU = aSKU !== '' ? product.attributes.skus[aSKU] : null
+    const activeSKU = aSKU === '' ? null : product.attributes.skus[aSKU]
 
     return {
       primary: [
         (
-          <span>
+          <span key="ItemTotal">
             {
               activeSKU && quantity > 0
                 ? `${quantity} @ ${getMoney(activeSKU.price)}${quantity > 1 ? ` = ${getMoney(activeSKU.price * quantity)}` : ''}`
@@ -210,6 +210,7 @@ class CartUpdateDialog extends Component {
               || (cart[aSKU] && cart[aSKU] === quantity)
               || (!cart[aSKU] && quantity < 1)
             }
+            key="UpdateButton"
             onClick={this._handleSubmit}
             type="button">
             {do {

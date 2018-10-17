@@ -1,4 +1,5 @@
 // Module Imports
+import React from 'react'
 import Cookies from 'js-cookie'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -11,7 +12,7 @@ import TagsInput from './TagsInput'
 
 
 
-export default class extends TagsInput {
+class RescuesTagsInput extends TagsInput {
   static renderLoader () {
     return (
       <span>
@@ -60,3 +61,9 @@ export default class extends TagsInput {
     return this.updateOptions([])
   }
 }
+
+
+
+
+
+export default RescuesTagsInput

@@ -1,11 +1,12 @@
 // Module imports
+import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 
 
 
-export default ({ status }) => {
+const OrderStatusIndicator = ({ status }) => {
   const isFulfilled = status === 'fulfilled'
   const isPaid = ['canceled', 'fulfilled', 'paid', 'returned'].includes(status)
   const isReturned = status === 'returned'
@@ -60,3 +61,9 @@ export default ({ status }) => {
     </span>
   )
 }
+
+
+
+
+
+export default OrderStatusIndicator

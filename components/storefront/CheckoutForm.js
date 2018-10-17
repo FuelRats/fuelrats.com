@@ -22,6 +22,12 @@ const INVALID_CARD_MESSAGE = 'Credit Card is Required'
 const INVALID_CARDHOLDER_NAME_MESSAGE = 'Cardholder name is Required'
 const INVALID_INFO_MESSAGE = 'Shipping info is Required'
 const INVALID_SHIPPING_METHOD_MESSAGE = 'Select a shipment method'
+const checkoutStage = {
+  SHIPPING: 0,
+  SHIP_METHOD: 1,
+  BILLING: 2,
+  SUCCESS: 3,
+}
 
 
 
@@ -41,7 +47,7 @@ class CheckoutForm extends React.Component {
     error: null,
     loading: true,
     order: null,
-    stage: 0, // 0=customer info, 1=shipping, 2=review & billing, 3=confirmation
+    stage: checkoutStage.SHIPPING, // 0=SHIPPING, 1=SHIP_METHOD, 2=BILLING, 3=SUCCESS
     submitting: false,
     shippingMethod: '',
     cardValidity: INVALID_CARD_MESSAGE,
@@ -55,11 +61,11 @@ class CheckoutForm extends React.Component {
     Private Methods
   \***************************************************************************/
 
-  _handleCardElementChange = event => {
+  _handleCardElementChange = (event) => {
     this.setState({ cardValidity: event.complete || (event.error ? event.error.message : INVALID_CARD_MESSAGE) })
   }
 
-  _handleCustomerInfoChange = customerInfo => {
+  _handleCustomerInfoChange = (customerInfo) => {
     this.setState({ customerInfo })
   }
 
@@ -67,7 +73,7 @@ class CheckoutForm extends React.Component {
     this.setState({ cardName: target.value })
   }
 
-  _handleOrderCreate = async event => {
+  _handleOrderCreate = async (event) => {
     event.preventDefault()
 
     const {
@@ -89,12 +95,12 @@ class CheckoutForm extends React.Component {
 
     if (status === 'success') {
       sessionStorage.setItem('currentOrder', payload.data.id)
-      await localForage.setItem('lastStage', 1)
+      await localForage.setItem('lastStage', checkoutStage.SHIP_METHOD)
       this.setState({
         error: null,
         order: payload.data,
         shippingMethod: payload.data.attributes.shippingMethod,
-        stage: 1,
+        stage: checkoutStage.SHIP_METHOD,
         submitting: false,
       })
     } else {
@@ -102,11 +108,11 @@ class CheckoutForm extends React.Component {
     }
   }
 
-  _handleShippingMethodChange = event => {
+  _handleShippingMethodChange = (event) => {
     this.setState({ shippingMethod: event.key })
   }
 
-  _handleShippingMethodConfirm = async event => {
+  _handleShippingMethodConfirm = async (event) => {
     event.preventDefault()
 
     const { updateOrder } = this.props
@@ -115,19 +121,25 @@ class CheckoutForm extends React.Component {
       shippingMethod,
     } = this.state
 
-    if (shippingMethod !== order.attributes.shippingMethod) {
+    if (shippingMethod === order.attributes.shippingMethod) {
+      await localForage.setItem('lastStage', checkoutStage.BILLING)
+      this.setState({
+        error: null,
+        stage: checkoutStage.BILLING,
+      })
+    } else {
       this.setState({ submitting: true })
 
       const { payload, status } = await updateOrder(order.id, {
-        selected_shipping_method: shippingMethod,
+        selected_shipping_method: shippingMethod, /* eslint-disable-line camelcase */// Required by API
       })
 
       if (status === 'success') {
-        await localForage.setItem('lastStage', 2)
+        await localForage.setItem('lastStage', checkoutStage.BILLING)
         this.setState({
           error: null,
           order: payload.data,
-          stage: 2,
+          stage: checkoutStage.BILLING,
           submitting: false,
         })
       } else {
@@ -136,16 +148,10 @@ class CheckoutForm extends React.Component {
           submitting: false,
         })
       }
-    } else {
-      await localForage.setItem('lastStage', 2)
-      this.setState({
-        error: null,
-        stage: 2,
-      })
     }
   }
 
-  _handleOrderConfirm = async event => {
+  _handleOrderConfirm = async (event) => {
     event.preventDefault()
 
     const {
@@ -178,7 +184,7 @@ class CheckoutForm extends React.Component {
       this.setState({
         error: null,
         order: payload.data,
-        stage: 3,
+        stage: checkoutStage.SUCCESS,
         submitting: false,
       })
     } else {
@@ -213,7 +219,7 @@ class CheckoutForm extends React.Component {
       loading: false,
       order,
       shippingMethod: order ? order.attributes.shippingMethod : '',
-      stage: order ? (lastStage || 1) : 0,
+      stage: order ? (lastStage || checkoutStage.SHIP_METHOD) : checkoutStage.SHIPPING,
     })
   }
 
@@ -245,7 +251,7 @@ class CheckoutForm extends React.Component {
         {do {
           if (loading) {
             <h4>Loading...</h4>
-          } else if (stage === 0) {
+          } else if (stage === checkoutStage.SHIPPING) {
             <form className="compact" onSubmit={this._handleOrderCreate}>
               <h4>Shipping Info</h4>
               <CustomerInfoFields onChange={this._handleCustomerInfoChange} />
@@ -262,7 +268,7 @@ class CheckoutForm extends React.Component {
                 <div className="secondary" />
               </menu>
             </form>
-          } else if (stage === 1) {
+          } else if (stage === checkoutStage.SHIP_METHOD) {
             <form className="compact center" onSubmit={this._handleShippingMethodConfirm}>
               <h4>Shipping Method</h4>
               <fieldset>
@@ -296,7 +302,7 @@ class CheckoutForm extends React.Component {
                 <div className="secondary" />
               </menu>
             </form>
-          } else if (stage === 2) {
+          } else if (stage === checkoutStage.BILLING) {
             <>
               <div className="order-details">
                 <h4>Summary</h4>
@@ -308,7 +314,7 @@ class CheckoutForm extends React.Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {order.attributes.items.map(item => {
+                    {order.attributes.items.map((item) => {
                       const sku = skus[item.parent]
                       const descriptors = (sku && Object.keys(sku.attributes.attributes).length) ? Object.values(sku.attributes.attributes).join(', ') : null
                       return (
@@ -330,7 +336,12 @@ class CheckoutForm extends React.Component {
               <br />
               <form className="compact center" onSubmit={this._handleOrderConfirm}>
                 <fieldset>
-                  <h4>Billing Info <a href="https://stripe.com/" style={{ float: 'right' }} target="_blank" rel="noopener noreferrer"><StripeBadgeSvg style={{ verticalAlign: 'bottom' }} /></a></h4>
+                  <h4>
+                    {'Billing Info '}
+                    <a href="https://stripe.com/" style={{ float: 'right' }} target="_blank" rel="noopener noreferrer">
+                      <StripeBadgeSvg style={{ verticalAlign: 'bottom' }} />
+                    </a>
+                  </h4>
                 </fieldset>
                 <ValidatedFormInput
                   autoComplete="cc-name"
@@ -356,13 +367,19 @@ class CheckoutForm extends React.Component {
                 </menu>
               </form>
             </>
-          } else if (stage === 3) {
+          } else if (stage === checkoutStage.SUCCESS) {
             <>
               <h2>Success!</h2>
               <span>Your Order has been submitted. Be sure to check your email for confirmation!</span>
               <span>Once our quartermaster ships your order, you will receive a shipment confirmation email.</span>
-              <span>Please note that only larger items sent by parcel have tracking numbers; smaller items like stickers and badges are sent as normal mail, but we'll still let you know when it's shipped!</span>
-              <span>If you have any questions or concerns, please contact us at <a href="mailto:orders@fuelrats.com">orders@fuelrats.com</a>. You can find our return and cancellation policy in your order confirmation email.</span>
+              <span>
+                Please note that only larger items sent by parcel have tracking numbers;
+                smaller items like stickers and badges are sent as normal mail, but we'll still let you know when it's shipped!
+              </span>
+              <span>
+                If you have any questions or concerns, please contact us at <a href="mailto:orders@fuelrats.com">orders@fuelrats.com</a>.
+                You can find our return and cancellation policy in your order confirmation email.
+              </span>
             </>
           }
         }}

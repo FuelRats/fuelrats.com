@@ -25,7 +25,7 @@ class ValidatedFormInput extends React.Component {
     } = target
 
     let valid = true
-    let message
+    let message = null
 
     if (required && value === '') {
       valid = false
@@ -67,7 +67,7 @@ class ValidatedFormInput extends React.Component {
       <fieldset>
         {renderLabel && <label htmlFor={id}>{label}</label>}
         <input
-          placeholder={!renderLabel ? label : undefined}
+          placeholder={renderLabel ? undefined : label}
           {...this.inputProps}
           onChange={this._handleChange} />
       </fieldset>
@@ -100,11 +100,11 @@ class ValidatedFormInput extends React.Component {
   static defaultProps = {
     invalidMessage: null,
     name: null,
-    type: 'text',
+    onChange: () => ({}),
     pattern: null,
     patternMessage: null,
     renderLabel: false,
-    onChange: () => ({}),
+    type: 'text',
   }
 
   static propTypes = {

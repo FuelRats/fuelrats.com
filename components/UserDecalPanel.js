@@ -14,6 +14,14 @@ import Component from './Component'
 
 
 
+
+// Component constants
+const ELITE_GAME_YEAR_DESPARITY = 1286 // Years between IRL year and Elite universe year
+
+
+
+
+
 @connect
 class UserDetailsPanel extends Component {
   /***************************************************************************\
@@ -35,7 +43,7 @@ class UserDetailsPanel extends Component {
   static _renderClaimedAtRow (row) {
     const rescue = row.original
 
-    return moment(rescue.claimedAt).add(1286, 'years').format('DD MMM, YYYY')
+    return moment(rescue.claimedAt).add(ELITE_GAME_YEAR_DESPARITY, 'years').format('DD MMM, YYYY')
   }
 
   _renderNoDataText () {

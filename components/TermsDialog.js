@@ -81,12 +81,12 @@ class TermsDialog extends Component {
       termsAgreed,
     } = this.state
 
-    const checkboxId = `termsDialog-${this.props.title.replace(/\s/g, '')}-checkbox`
+    const checkboxId = `termsDialog-${this.props.title.replace(/\s/gu, '')}-checkbox`
 
     return {
       primary: [
         (
-          <span>
+          <span key="AgreeCheckbox">
             <input
               checked={termsAgreed}
               className="large"
@@ -99,6 +99,7 @@ class TermsDialog extends Component {
         (
           <button
             disabled={!termsAgreed}
+            key="NextButton"
             onClick={() => this.props.onClose()}
             type="button">
             Next

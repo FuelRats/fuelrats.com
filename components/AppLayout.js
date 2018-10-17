@@ -19,7 +19,7 @@ import UserMenu from './UserMenu'
 import LoginDialog from './LoginDialog'
 import initUserSession from '../helpers/initUserSession'
 import userHasPermission from '../helpers/userHasPermission'
-
+import httpStatus from '../helpers/httpStatus'
 
 
 
@@ -30,6 +30,9 @@ Router.onRouteChangeError = () => NProgress.done()
 Router.onRouteChangeComplete = () => NProgress.done()
 
 const { publicRuntimeConfig } = getConfig()
+
+
+// Component Constants
 const STRIPE_API_PK = publicRuntimeConfig.apis.stripe.public
 
 
@@ -51,12 +54,12 @@ class AppLayout extends React.Component {
       store,
     } = ctx
 
-    let statusCode = 200
+    let statusCode = httpStatus.OK
     const accessToken = await initUserSession(ctx)
 
     if (!accessToken && Component.ಠ_ಠ_AUTHENTICATION_REQUIRED) {
       if (res) {
-        res.writeHead(302, {
+        res.writeHead(httpStatus.FOUND, {
           Location: `/?authenticate=true&destination=${encodeURIComponent(asPath)}`,
         })
         res.end()
@@ -87,7 +90,7 @@ class AppLayout extends React.Component {
         if (ctx.res) {
           ctx.res.statusCode = 401
         } else {
-          statusCode = 401
+          statusCode = httpStatus.UNAUTHORIZED
         }
       }
     }
@@ -159,7 +162,7 @@ class AppLayout extends React.Component {
         <UserMenu />
 
 
-        {statusCode === 200
+        {statusCode === httpStatus.OK
           ? <Component {...pageProps} />
           : (
             <main className="fade-in page error-page">
@@ -208,10 +211,10 @@ export default AppLayout
 /**
  * Decorator to mark a page as requiring user authentication.
  */
-export const authenticated = _target => {
+export const authenticated = (_target) => {
   const requiredPermission = typeof _target === 'string' ? _target : null
 
-  const setProperties = target => {
+  const setProperties = (target) => {
     target.ಠ_ಠ_AUTHENTICATION_REQUIRED = true
 
     if (requiredPermission) {
@@ -231,7 +234,7 @@ export const authenticated = _target => {
 /**
  * Decorator to wrap a page with stripe context
  */
-export const withStripe = Component => {
+export const withStripe = (Component) => {
   class StripePage extends React.Component {
     state = {
       stripe: null,

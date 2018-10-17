@@ -1,12 +1,19 @@
 // Module imports
+import React from 'react'
 import ReactTable from 'react-table'
 
 
 
 
 
-// Module imports
+// Component imports
 import Component from './Component'
+
+
+
+
+// Component constants
+const MIN_ID_LENGTH = 4
 
 
 
@@ -20,7 +27,7 @@ export default class UserShipsTable extends Component {
   static _renderIDCell (row) {
     let id = row.value.toString()
 
-    while (id.length < 4) {
+    while (id.length < MIN_ID_LENGTH) {
       id = `0${id}`
     }
 

@@ -13,13 +13,13 @@ import Component from './Component'
 
 
 // Component constants
-const canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement)
+const canUseDOM = Boolean(typeof window !== 'undefined' && window.document && window.document.createElement)
 
 
 
 
 
-export default class extends Component {
+class Alert extends Component {
   constructor (props) {
     super(props)
 
@@ -43,3 +43,9 @@ export default class extends Component {
     return null
   }
 }
+
+
+
+
+
+export default Alert

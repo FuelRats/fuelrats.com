@@ -52,18 +52,20 @@ class LoginDialog extends React.Component {
 
     return {
       [name]: value,
-      ...(required ? {
-        validity: {
-          ...validity,
-          [name]: valid,
-        },
-      } : {}),
+      ...(required
+        ? {
+          validity: {
+            ...validity,
+            [name]: valid,
+          },
+        }
+        : {}),
     }
   })
 
   _handleSwitchChange = ({ target }) => this.setState({ [target.name]: target.checked })
 
-  _handleSubmit = async event => {
+  _handleSubmit = async (event) => {
     event.preventDefault()
 
     const { status } = await this.props.login({

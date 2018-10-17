@@ -11,6 +11,8 @@ export default class Component extends React.Component {
   \***************************************************************************/
 
   _bindMethods (methods) {
-    methods.forEach(method => this[method] = this[method].bind(this))
+    methods.forEach((method) => {
+      this[method] = this[method].bind(this)
+    })
   }
 }

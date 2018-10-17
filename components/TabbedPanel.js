@@ -12,7 +12,7 @@ import Component from './Component'
 
 
 
-export default class extends Component {
+class TabbedPanel extends Component {
   /***************************************************************************\
     Private Methods
   \***************************************************************************/
@@ -88,3 +88,7 @@ export default class extends Component {
     )
   }
 }
+
+
+
+export default TabbedPanel
