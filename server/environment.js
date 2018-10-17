@@ -1,11 +1,13 @@
 /* eslint-env node */
 
-
+// Constants
+const DEFAULT_PORT = 3000
 
 
 
 module.exports = {
-  dev: process.env.NODE_ENV !== 'production',
+  isDev: process.env.NODE_ENV !== 'production',
+  port: process.env.PORT || DEFAULT_PORT,
   api: {
     clientId: process.env.FRDC_API_KEY,
     clientSecret: process.env.FRDC_API_SECRET,

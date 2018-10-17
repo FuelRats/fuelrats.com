@@ -22,15 +22,7 @@ const next = require('next')
 
 
 // Component imports
-const env = require('./config/environment')
-const logger = require('./middlewares/logger')
-const nextConf = require('./config/next')
-const proxy = require('./middlewares/proxy')
-const router = require('./middlewares/router')
-
-
-// Constants
-const DEFAULT_PORT = 3000
+const env = require('./environment')
 
 
 
@@ -38,9 +30,8 @@ const DEFAULT_PORT = 3000
 
 const server = new Koa()
 const app = next({
-  dev: env.dev,
-  dir: path.resolve('.'),
-  conf: nextConf,
+  dev: env.isDev,
+  dir: path.resolve('client'),
 })
 
 
@@ -49,8 +40,8 @@ const app = next({
 
 app.prepare().then(() => {
   // Set up the loggers
-  if (env.dev) {
-    logger(server)
+  if (env.isDev) {
+    require('./middlewares/logger')(server)
   }
 
   server.use(require('koa-no-trailing-slash')())
@@ -58,7 +49,7 @@ app.prepare().then(() => {
   server.use(require('koa-logger')())
 
   // Add proxies
-  proxy(server, env)
+  require('./middlewares/proxy')(server, env)
 
   // Compress responses
   server.use(require('koa-compress')())
@@ -67,8 +58,8 @@ app.prepare().then(() => {
   server.use(require('koa-body')())
 
   // Add routes
-  router(app, server, env)
+  require('./middlewares/router')(app, server, env)
 
   // Start the server
-  server.listen(process.env.PORT || DEFAULT_PORT)
+  server.listen(env.port)
 })
