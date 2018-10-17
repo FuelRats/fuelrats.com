@@ -50,7 +50,9 @@ class AddNicknameForm extends Component {
     })
   }
 
-  _handleChange =
+  _handleChange = (event) => {
+    this.setState({ nickname: event.target.value })
+  }
 
 
 
@@ -73,7 +75,7 @@ class AddNicknameForm extends Component {
         <ValidatedFormInput
           className="stretch-9"
           name="add-nickname"
-          onChange={event => this.setState({ nickname: event.target.value })}
+          onChange={this._handleChange}
           placeholder="Add a nickname..."
           type="text"
           value={nickname} />
