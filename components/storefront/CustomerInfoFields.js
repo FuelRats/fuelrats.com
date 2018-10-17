@@ -12,6 +12,7 @@ import ValidatedCountrySelect from '../ValidatedCountrySelect'
 
 
 
+
 // Component Constants
 const INVALID_NAME_MESSAGE = 'Name is Required'
 const INVALID_EMAIL_MESSAGE = 'Email is Required'
@@ -19,6 +20,8 @@ const INVALID_ADDRESS_MESSAGE = 'Address is Required'
 const INVALID_CITY_MESSAGE = 'City is Required'
 const INVALID_COUNTRY_MESSAGE = 'Country is Required'
 const INVALID_ZIP_MESSAGE = 'Postal Code is Required'
+
+
 
 
 
@@ -108,6 +111,10 @@ class CustomerInfoFields extends React.Component {
       })
     })
   }
+
+
+
+
 
   /***************************************************************************\
     Public Methods
@@ -202,6 +209,14 @@ class CustomerInfoFields extends React.Component {
       </>
     )
   }
+
+
+
+
+
+  /***************************************************************************\
+    Getters
+  \***************************************************************************/
 
   get isValid () {
     const invalidStates = Object.values(this.state.validity).filter(value => value !== true)

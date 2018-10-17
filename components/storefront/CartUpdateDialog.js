@@ -80,6 +80,10 @@ class CartUpdateDialog extends Component {
     }
   }
 
+
+
+
+
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
@@ -179,6 +183,14 @@ class CartUpdateDialog extends Component {
     )
   }
 
+
+
+
+
+  /***************************************************************************\
+    Getters
+  \***************************************************************************/
+
   get controls () {
     const {
       cart,
@@ -231,10 +243,20 @@ class CartUpdateDialog extends Component {
   }
 
 
+
+
+
+  /***************************************************************************\
+    Redux Properties
+  \***************************************************************************/
+
   static mapDispatchToProps = ['updateCartItem', 'updateOrder']
 
   static mapStateToProps = state => ({ cart: state.storeCart })
 }
+
+
+
 
 
 export default CartUpdateDialog
