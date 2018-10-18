@@ -14,6 +14,14 @@ const routes = require('../../client/routes')
 
 
 // Component constants
+const DAY_CHAR_LENGTH = 2
+const MONTH_CHAR_LENGTH = 2
+const YEAR_CHAR_LENGTH = 4
+
+
+
+
+
 const permanentRedirect = path => async (ctx) => {
   ctx.status = 301
   await ctx.redirect(path)
@@ -40,9 +48,7 @@ module.exports = (nextjs, koa) => {
 
 
 
-  const DAY_CHAR_LENGTH = 2
-  const MONTH_CHAR_LENGTH = 2
-  const YEAR_CHAR_LENGTH = 4
+
   // Legacy Wordpress permalinks
   // e.g. /2017/09/07/universal-service-a-fuel-rats-thargoid-cartoon
   router.get('/:year/:month/:day/:slug', async (ctx, next) => {
