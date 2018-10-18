@@ -7,7 +7,7 @@
   "scripts": {
     "add-contributor": "all-contributors add",
     "analyze": "cross-env ANALYZE=1 next build",
-    "build": "next build ./client",
+    "build": "next build client",
     "dev": "node --inspect server/server.js",
     "postinstall": "npm rebuild node-sass"
   },
