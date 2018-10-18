@@ -4,25 +4,40 @@
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const glob = require('glob')
 const path = require('path')
+const crypto = require('crypto')
 const webpack = require('webpack')
 const withSass = require('@zeit/next-sass')
 
+
+
+
+
+// Component constants
 const {
   ANALYZE,
   FRDC_API_URL,
   FRDC_PUBLIC_URL,
   FRDC_STRIPE_API_PK,
   PORT,
+  TRAVIS,
   TRAVIS_BRANCH,
   TRAVIS_COMMIT,
   TRAVIS_COMMIT_RANGE,
 } = process.env
-
-
 const DEFAULT_PORT = 3000
 const COMMIT_HASH_LENGTH = 10
+const DEV_BUILD_ID_LENGTH = 16
+
+
+
+
 
 module.exports = withSass({
+  generateBuildId: () => (
+    TRAVIS
+      ? TRAVIS_COMMIT.toUpperCase()
+      : `DEV_${crypto.randomBytes(DEV_BUILD_ID_LENGTH).toString('hex').toUpperCase()}`
+  ),
   publicRuntimeConfig: {
     apis: {
       fuelRats: {

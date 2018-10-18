@@ -12,6 +12,10 @@ import Component from '../Component'
 
 @connect
 class StoreControlBar extends Component {
+  /***************************************************************************\
+    Public Methods
+  \***************************************************************************/
+
   componentDidMount () {
     const {
       cart,
@@ -61,6 +65,13 @@ class StoreControlBar extends Component {
     )
   }
 
+
+
+
+
+  /***************************************************************************\
+    Redux Properties
+  \***************************************************************************/
   static mapDispatchToProps = ['getStoreCart']
 
   static mapStateToProps = state => ({ cart: state.storeCart })

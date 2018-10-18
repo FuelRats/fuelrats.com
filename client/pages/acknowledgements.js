@@ -4,7 +4,7 @@ import React from 'react'
 
 // Component imports
 import PageWrapper from '../components/PageWrapper'
-import { dependencies } from '../package.json'
+import { dependencies } from '../../package.json'
 
 
 

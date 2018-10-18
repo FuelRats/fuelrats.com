@@ -1,8 +1,10 @@
 /* eslint-env node */
-
 /* eslint-disable strict, global-require */
-
 'use strict'
+
+
+
+
 
 // Import variables from .env file.
 require('dotenv').config()
@@ -20,54 +22,44 @@ const next = require('next')
 
 
 // Component imports
-const config = require('./config')
-
-
-
-
-
-// Constants
-const IS_DEV = process.env.NODE_ENV !== 'production'
-const DEFAULT_PORT = 3000
+const env = require('./environment')
 
 
 
 
 
 const server = new Koa()
-const nextInstance = next({
-  dev: IS_DEV,
-  dir: path.resolve('.'),
+const app = next({
+  dev: env.isDev,
+  dir: path.resolve('client'),
 })
 
 
 
 
 
-nextInstance.prepare()
-  .then(() => {
-    // Set up the loggers
-    if (IS_DEV) {
-      require('./config/file-logger')(server)
-    }
+app.prepare().then(() => {
+  // Set up the loggers
+  if (env.isDev) {
+    require('./middlewares/logger')(server)
+  }
 
-    server.use(require('koa-no-trailing-slash')())
+  server.use(require('koa-no-trailing-slash')())
 
-    server.use(require('koa-logger')())
+  server.use(require('koa-logger')())
 
-    // Configure proxies
-    require('./config/proxy')(server, config)
+  // Add proxies
+  require('./middlewares/proxy')(server, env)
 
-    // Compress responses
-    server.use(require('koa-compress')())
+  // Compress responses
+  server.use(require('koa-compress')())
 
-    // Parse request bodies
-    server.use(require('koa-body')())
+  // Parse request bodies
+  server.use(require('koa-body')())
 
-    // Configure the router
-    require('./config/router')(next, server, config)
+  // Add routes
+  require('./middlewares/router')(app, server, env)
 
-    // Start the server
-    //  console.log('Listening on port', process.env.PORT || 3000)
-    server.listen(process.env.PORT || DEFAULT_PORT)
-  })
+  // Start the server
+  server.listen(env.port)
+})

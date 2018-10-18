@@ -16,25 +16,24 @@ import PasswordField from './PasswordField'
 @connect
 class ChangePasswordForm extends Component {
   /***************************************************************************\
-    Public Methods
+    Class Properties
   \***************************************************************************/
 
-  constructor (props) {
-    super(props)
-
-    this._bindMethods([
-      'handleChange',
-      '_handleSubmit',
-    ])
-
-    this.state = {
-      currentPassword: '',
-      newPassword: '',
-      submitting: false,
-    }
+  state = {
+    currentPassword: '',
+    newPassword: '',
+    submitting: false,
   }
 
-  handleChange (event) {
+
+
+
+
+  /***************************************************************************\
+    Private Methods
+  \***************************************************************************/
+
+  _handleChange = (event) => {
     const {
       name,
       value,
@@ -45,7 +44,7 @@ class ChangePasswordForm extends Component {
     })
   }
 
-  async _handleSubmit (event) {
+  _handleSubmit = async (event) => {
     event.preventDefault()
 
     const {
@@ -59,6 +58,14 @@ class ChangePasswordForm extends Component {
 
     this.setState({ submitting: false })
   }
+
+
+
+
+
+  /***************************************************************************\
+    Public Methods
+  \***************************************************************************/
 
   render () {
     const {
@@ -81,7 +88,7 @@ class ChangePasswordForm extends Component {
           <PasswordField
             id="currentPassword"
             name="currentPassword"
-            onChange={this.handleChange}
+            onChange={this._handleChange}
             ref={(_currentPasswordEl) => {
               this._currentPasswordEl = _currentPasswordEl
             }}
@@ -96,7 +103,7 @@ class ChangePasswordForm extends Component {
           <PasswordField
             id="newPassword"
             name="newPassword"
-            onChange={this.handleChange}
+            onChange={this._handleChange}
             ref={(_newPasswordEl) => {
               this._newPasswordEl = _newPasswordEl
             }}
@@ -108,7 +115,7 @@ class ChangePasswordForm extends Component {
         <menu type="toolbar">
           <div className="primary">
             <button
-              disabled={!this.validate() || submitting}
+              disabled={!this.isValid || submitting}
               type="submit">
               {submitting ? 'Submitting...' : 'Change Password'}
             </button>
@@ -120,7 +127,15 @@ class ChangePasswordForm extends Component {
     )
   }
 
-  validate () {
+
+
+
+
+  /***************************************************************************\
+    Getters
+  \***************************************************************************/
+
+  get isValid () {
     if (!this._currentPasswordEl || !this._newPasswordEl) {
       return false
     }

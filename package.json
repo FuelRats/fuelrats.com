@@ -1,12 +1,13 @@
 {
-  "name": "fuelrats-react",
+  "name": "fuelrats.com",
   "version": "2.5.0",
-  "main": "index.js",
+  "description": "The primary website of The Fuel Rats!",
+  "main": "server/server.js",
   "license": "BSD-3-Clause",
   "scripts": {
     "add-contributor": "all-contributors add",
     "analyze": "cross-env ANALYZE=1 next build",
-    "build": "next build",
+    "build": "next build client",
     "dev": "node --inspect server/server.js",
     "postinstall": "npm rebuild node-sass"
   },

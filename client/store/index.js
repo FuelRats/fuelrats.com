@@ -13,27 +13,27 @@ import thunkMiddleware from 'redux-thunk'
 
 
 // Component imports
-import initialState from './store/initialState'
-import reducer from './store/reducers/index'
-import actionStatus from './store/actionStatus'
+import initialState from './initialState'
+import reducer from './reducers/index'
+import actionStatus from './actionStatus'
 
 
 
 // Action imports
-import * as authenticationActions from './store/actions/authentication'
-import * as blogsActions from './store/actions/blogs'
-import * as decalsActions from './store/actions/decals'
-import * as epicActions from './store/actions/epics'
-import * as flagActions from './store/actions/flags'
-import * as ratsActions from './store/actions/rats'
-import * as rescuesActions from './store/actions/rescues'
-import * as rescuesByRatActions from './store/actions/rescuesByRat'
-import * as rescuesBySystemActions from './store/actions/rescuesBySystem'
-import * as rescuesOverTimeActions from './store/actions/rescuesOverTime'
-import * as storeCartActions from './store/actions/storeCart'
-import * as stripeActions from './store/actions/stripe'
-import * as userActions from './store/actions/user'
-import * as wordpressActions from './store/actions/wordpress'
+import * as authenticationActions from './actions/authentication'
+import * as blogsActions from './actions/blogs'
+import * as decalsActions from './actions/decals'
+import * as epicActions from './actions/epics'
+import * as flagActions from './actions/flags'
+import * as ratsActions from './actions/rats'
+import * as rescuesActions from './actions/rescues'
+import * as rescuesByRatActions from './actions/rescuesByRat'
+import * as rescuesBySystemActions from './actions/rescuesBySystem'
+import * as rescuesOverTimeActions from './actions/rescuesOverTime'
+import * as storeCartActions from './actions/storeCart'
+import * as stripeActions from './actions/stripe'
+import * as userActions from './actions/user'
+import * as wordpressActions from './actions/wordpress'
 
 
 
