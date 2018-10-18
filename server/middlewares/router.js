@@ -19,28 +19,24 @@ const permanentRedirect = path => async (ctx) => {
   await ctx.redirect(path)
 }
 
+const sendFile = path => async (ctx) => {
+  await send(ctx, path)
+}
+
 
 
 
 
 module.exports = (nextjs, koa) => {
-  /** ****************************************************************************\
+  /***************************************************************************\
     Redirects
-  \******************************************************************************/
+  \***************************************************************************/
 
   // SEO Stuff
-  router.get('/browserconfig.xml', async (ctx) => {
-    await send(ctx, '/static/browserconfig.xml')
-  })
-
-  router.get('/sitemap.xml', async (ctx) => {
-    await send(ctx, '/static/sitemap.xml')
-  })
-
-  router.get('/manifest.json', async (ctx) => {
-    await send(ctx, '/static/manifest.json')
-  })
-
+  router.get('/browserconfig.xml', sendFile('/client/static/browserconfig.xml'))
+  router.get('/sitemap.xml', sendFile('/client/static/sitemap.xml'))
+  router.get('/manifest.json', sendFile('/client/static/manifest.json'))
+  router.get('/favicon.ico', sendFile('/client/static/favicon/favicon.ico'))
 
 
 
@@ -86,9 +82,9 @@ module.exports = (nextjs, koa) => {
 
 
 
-  /** ****************************************************************************\
+  /***************************************************************************\
     Fallthrough routes
-  \******************************************************************************/
+  \***************************************************************************/
 
   // Pass off to next-routes
   const nextRoutesHandler = routes.getRequestHandler(nextjs)
@@ -106,9 +102,9 @@ module.exports = (nextjs, koa) => {
 
 
 
-  /** ****************************************************************************\
+  /***************************************************************************\
     Attach router to server
-  \******************************************************************************/
+  \***************************************************************************/
 
   koa.use(router.routes())
   koa.use(router.allowedMethods())
