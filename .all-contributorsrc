@@ -89,7 +89,9 @@
         "design",
         "doc",
         "ideas",
-        "review"
+        "review",
+        "infra",
+        "plugin"
       ]
     },
     {
