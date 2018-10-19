@@ -83,7 +83,13 @@
       "profile": "https://github.com/UncleClapton",
       "contributions": [
         "bug",
-        "code"
+        "code",
+        "question",
+        "blog",
+        "design",
+        "doc",
+        "ideas",
+        "review"
       ]
     },
     {
@@ -95,5 +101,6 @@
         "code"
       ]
     }
-  ]
+  ],
+  "repoType": "github"
 }
