@@ -35,16 +35,45 @@ const sendFile = path => async (ctx) => {
 
 
 
-module.exports = (nextjs, koa) => {
+module.exports = (nextApp, koaServer) => {
   /***************************************************************************\
-    Redirects
+    File Mappings
   \***************************************************************************/
 
-  // SEO Stuff
+  // Root dir static file mappings
   router.get('/browserconfig.xml', sendFile('/client/static/browserconfig.xml'))
   router.get('/sitemap.xml', sendFile('/client/static/sitemap.xml'))
   router.get('/manifest.json', sendFile('/client/static/manifest.json'))
   router.get('/favicon.ico', sendFile('/client/static/favicon/favicon.ico'))
+
+
+
+
+
+  // Static dir mapping
+  router.get('/static/*', async (ctx, next) => {
+    try {
+      await send(ctx, ctx.req.url, { root: '/client' })
+    } catch (err) {
+      await next()
+    }
+  })
+
+
+
+
+
+  /***************************************************************************\
+    Redirects
+  \***************************************************************************/
+
+  // Permanent Redirects
+
+  router.get('/blogs', permanentRedirect('/blog'))
+  router.get('/get-help', permanentRedirect('/i-need-fuel'))
+  router.get('/privacy', permanentRedirect('/privacy-policy'))
+  router.get('/help', permanentRedirect('https://t.fuelr.at/help'))
+  router.get('/fuel-rats-lexicon', permanentRedirect('https://confluence.fuelrats.com/pages/viewpage.action?pageId=3637257'))
 
 
 
@@ -75,44 +104,29 @@ module.exports = (nextjs, koa) => {
 
 
 
-  // Permanent Redirects
-  router.all('/blogs', permanentRedirect('/blog'))
-
-  router.all('/get-help', permanentRedirect('/i-need-fuel'))
-
-  router.all('/fuel-rats-lexicon', permanentRedirect('https://confluence.fuelrats.com/pages/viewpage.action?pageId=3637257'))
-
-  router.all('/help', permanentRedirect('https://t.fuelr.at/help'))
-
-
-
-
-
   /***************************************************************************\
-    Fallthrough routes
+    Next-Routes passthrough
   \***************************************************************************/
 
-  // Pass off to next-routes
-  const nextRoutesHandler = routes.getRequestHandler(nextjs)
+  const nextRoutesHandler = routes.getRequestHandler(nextApp)
   router.get('*', async (ctx) => {
     await nextRoutesHandler(ctx.req, ctx.res)
     ctx.respond = false
   })
 
-  koa.use(async (ctx, next) => {
-    ctx.res.statusCode = 200
-    await next()
-  })
-
 
 
 
 
   /***************************************************************************\
-    Attach router to server
+    Configure server and attach router.
   \***************************************************************************/
 
-  koa.use(router.routes())
-  koa.use(router.allowedMethods())
+  koaServer.use(async (ctx, next) => {
+    ctx.res.statusCode = 200
+    await next()
+  })
+  koaServer.use(router.routes())
+  koaServer.use(router.allowedMethods())
 }
 /* eslint-enable */
