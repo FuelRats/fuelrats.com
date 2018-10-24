@@ -6,18 +6,5 @@ module.exports = {
   rules: {
     'react/prop-types': ['off'], // We're not quite ready to enforce prop-types for all files yet
     'jsx-a11y/no-noninteractive-element-interactions': ['off'], // We intend to enable this once we refactor certain key components
-    'babel/new-cap': ['error', {
-      newIsCap: true,
-      capIsNew: true,
-      newIsCapExceptions: [],
-      capIsNewExceptions: [
-        'GET',
-        'POST',
-        'PUT',
-        'DELETE',
-        'Stripe',
-      ],
-      properties: true,
-    }],
   },
 }
