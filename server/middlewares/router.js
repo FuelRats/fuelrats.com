@@ -50,19 +50,6 @@ module.exports = (nextApp, koaServer) => {
 
 
 
-  // Static dir mapping
-  router.get('/static/*', async (ctx, next) => {
-    try {
-      await send(ctx, ctx.req.url, { root: '/client' })
-    } catch (err) {
-      await next()
-    }
-  })
-
-
-
-
-
   /***************************************************************************\
     Redirects
   \***************************************************************************/
