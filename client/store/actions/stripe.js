@@ -6,10 +6,14 @@ import actionTypes from '../actionTypes'
 
 
 
-export const getProducts = params => createApiAction({
+export const getProducts = (params = {}) => createApiAction({
   actionType: actionTypes.GET_STRIPE_PRODUCTS,
   url: '/products',
-  params,
+  params: {
+    active: true,
+    type: 'good',
+    ...params,
+  },
 })
 
 
