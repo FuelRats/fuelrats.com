@@ -103,7 +103,7 @@ class ListCart extends Component {
   static async getInitialProps ({ store }) {
     const state = store.getState()
     if (!Object.keys(state.products.products).length) {
-      await actions.getProducts({ type: 'good' })(store.dispatch)
+      await actions.getProducts()(store.dispatch)
     }
   }
 

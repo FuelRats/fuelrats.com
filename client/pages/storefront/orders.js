@@ -61,7 +61,7 @@ class ListOrders extends Component {
 
   static async getInitialProps ({ store }) {
     await Promise.all([
-      actions.getProducts({ type: 'good' })(store.dispatch),
+      actions.getProducts()(store.dispatch),
       actions.getOrders({ status: 'paid' })(store.dispatch),
       actions.getOrders({ status: 'created' })(store.dispatch),
     ])
