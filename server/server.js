@@ -16,7 +16,7 @@ require('dotenv').config()
 const Koa = require('koa')
 const path = require('path')
 const next = require('next')
-
+const notify = require('sd-notify')
 
 
 
@@ -62,4 +62,5 @@ app.prepare().then(() => {
 
   // Start the server
   server.listen(env.port)
+  notify.ready()
 })

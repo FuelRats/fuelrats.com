@@ -72,6 +72,7 @@
     "redux-devtools-extension": "^2.13.5",
     "redux-thunk": "^2.3.0",
     "request": "^2.88.0",
+    "sd-notify": "^2.3.1",
     "stripe": "^6.12.1",
     "webpack": "^4.19.1",
     "webpack-bundle-analyzer": "^3.0.3",
