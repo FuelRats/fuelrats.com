@@ -16,8 +16,13 @@ require('dotenv').config()
 const Koa = require('koa')
 const path = require('path')
 const next = require('next')
-const notify = require('sd-notify')
 
+let notify = null
+try {
+  notify = require('sd-notify')
+} catch (err) {
+  // do nothing
+}
 
 
 
@@ -62,5 +67,15 @@ app.prepare().then(() => {
 
   // Start the server
   server.listen(env.port)
-  notify.ready()
+
+  if (notify) {
+    notify.ready()
+
+    const watchdogInterval = notify.watchdogInterval()
+
+    if (watchdogInterval > 0) {
+      const interval = Math.floor(watchdogInterval / 2)
+      notify.startWatchdogMode(interval)
+    }
+  }
 })
