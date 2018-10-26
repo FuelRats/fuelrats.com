@@ -4,8 +4,15 @@ addons:
   ssh_known_hosts:
   - beta.fuelrats.com
   - cheddar.fuelrats.com
+  apt:
+    update: true
+
 
 cache: yarn
+
+
+before_install:
+- sudo apt-get install -y libsystemd-dev
 
 script:
 - yarn run build
@@ -29,7 +36,7 @@ deploy:
   script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/ travis-deployment@cheddar.fuelrats.com:/var/www/dev.fuelrats.com/
   on:
     branch: develop
-    
+
 - provider: script
   skip_cleanup: true
   script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/ travis-deployment@cheddar.fuelrats.com:/var/www/beta.fuelrats.com/
