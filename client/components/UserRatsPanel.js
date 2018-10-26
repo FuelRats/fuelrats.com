@@ -160,18 +160,10 @@ class UserRatsPanel extends Component {
 
   static mapDispatchToProps = ['createRat']
 
-  static mapStateToProps = (state) => {
-    const { rats } = state
-    const {
-      ships,
-      user,
-    } = state
-
-    return {
-      rats: rats.rats.filter(rat => user.id === rat.attributes.userId),
-      ships,
-    }
-  }
+  static mapStateToProps = ({ rats, ships, user }) => ({
+    rats: Object.values(rats.rats).filter(rat => user.id === rat.attributes.userId),
+    ships,
+  })
 }
 
 
