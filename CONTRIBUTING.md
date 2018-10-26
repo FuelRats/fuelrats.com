@@ -26,9 +26,10 @@ This project adheres to the Contributor Covenant code of conduct. By participati
 ## Project setup
 
 1. Fork and clone the repo
-2. `$ yarn install` to install dependencies
-3. `$ yarn run dev` to start up the dev server
-4. Create a branch for your PR
+2. If on a linux distro, make sure `libsystemd-dev` package is installed
+3. `$ yarn install` to install dependencies
+4. `$ yarn run dev` to start up the dev server
+5. Create a branch for your PR
 
 ### Some things you'll need
 
