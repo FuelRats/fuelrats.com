@@ -4,15 +4,8 @@ addons:
   ssh_known_hosts:
   - beta.fuelrats.com
   - cheddar.fuelrats.com
-  apt:
-    update: true
-
 
 cache: yarn
-
-
-before_install:
-- sudo apt-get install -y libsystemd-dev
 
 script:
 - yarn run build
