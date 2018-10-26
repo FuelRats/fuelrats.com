@@ -19,11 +19,12 @@ export default function ratsReducer (state = initialState.rats, action) {
     case actionTypes.CREATE_RAT:
       switch (status) {
         case 'success':
-          rats.push(payload.data)
-
           return {
             ...state,
-            rats,
+            rats: {
+              ...rats,
+              [payload.data.id]: payload.data,
+            },
           }
 
         default:
