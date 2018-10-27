@@ -199,7 +199,7 @@ class LoginDialog extends React.Component {
       return false
     }
 
-    return !Object.values(this.state.validity).filter(value => value === true).length
+    return !Object.values(this.state.validity).filter(value => value !== true).length
   }
 
 
