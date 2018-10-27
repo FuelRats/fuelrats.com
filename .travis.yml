@@ -26,18 +26,9 @@ notifications:
 deploy:
 - provider: script
   skip_cleanup: true
-  script: scripts/dev-deploy.sh
-  on:
-    branch: develop
-
-- provider: script
-  skip_cleanup: true
-  script: scripts/beta-deploy.sh
-  on:
-    branch: beta
-
-- provider: script
-  skip_cleanup: true
-  script: scripts/prod-deploy.sh
-  on:
-    branch: master
+  script: scripts/deploy.sh
+  branches:
+    only:
+    - develop
+    - beta
+    - master
