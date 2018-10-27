@@ -26,13 +26,13 @@ notifications:
 deploy:
 - provider: script
   skip_cleanup: true
-  script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/ travis-deployment@cheddar.fuelrats.com:/var/www/dev.fuelrats.com/
+  script: scripts/dev-deploy.sh
   on:
     branch: develop
 
 - provider: script
   skip_cleanup: true
-  script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/ travis-deployment@cheddar.fuelrats.com:/var/www/beta.fuelrats.com/
+  script: scripts/beta-deploy.sh
   on:
     branch: beta
 
