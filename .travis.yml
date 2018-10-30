@@ -2,8 +2,7 @@ language: node_js
 
 addons:
   ssh_known_hosts:
-  - beta.fuelrats.com
-  - cheddar.fuelrats.com
+  - emmental.fuelrats.com
 
 cache: yarn
 
@@ -26,9 +25,6 @@ notifications:
 deploy:
 - provider: script
   skip_cleanup: true
-  script: scripts/deploy.sh
-  branches:
-    only:
-    - develop
-    - beta
-    - master
+  script: bash scripts/deploy.sh
+  on:
+    all_branches: true
