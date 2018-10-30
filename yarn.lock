@@ -3953,10 +3953,17 @@ hoist-non-react-statics@2.5.5:
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
   integrity sha512-rqcy4pJo55FTTLWt+bU8ukscqHeE/e9KWvsOW2b/a3afxQZhwkQdT1rPPCJ0rYXdj4vNcasY8zHTH+jF/qStxw==
 
-hoist-non-react-statics@^3.0.0, hoist-non-react-statics@^3.0.1:
+hoist-non-react-statics@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.0.1.tgz#fba3e7df0210eb9447757ca1a7cb607162f0a364"
   integrity sha512-1kXwPsOi0OGQIZNVMPvgWJ9tSnGMiMfJdihqEzrPEXlHOBh9AAHXX/QYmAJTXztnz/K+PQ8ryCb4eGaN6HlGbQ==
+  dependencies:
+    react-is "^16.3.2"
+
+hoist-non-react-statics@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.1.0.tgz#42414ccdfff019cd2168168be998c7b3bd5245c0"
+  integrity sha512-MYcYuROh7SBM69xHGqXEwQqDux34s9tz+sCnxJmN18kgWh6JFdTw/5YdZtqsOdZJXddE/wUpCzfEdDrJj8p0Iw==
   dependencies:
     react-is "^16.3.2"
 
@@ -4727,10 +4734,10 @@ koa-no-trailing-slash@^2.1.0:
   resolved "https://registry.yarnpkg.com/koa-no-trailing-slash/-/koa-no-trailing-slash-2.1.0.tgz#a6a090cd4e77f72d47bec75be8b6b895f6a27a12"
   integrity sha1-pqCQzU539y1Hvsdb6La4lfaiehI=
 
-koa-proxies@^0.8.0:
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/koa-proxies/-/koa-proxies-0.8.0.tgz#7294f35525ebe3ff4a6a6d6d78e85c8438e71845"
-  integrity sha512-ObzmUy+JLjj3v7zau07/ajxL3V1qxEtOyNcOxV9l02aIYFSMk7mmx4GAiekQ/j/7KpmHyv8X5ruQZmY8kPZVYQ==
+koa-proxies@^0.8.1:
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/koa-proxies/-/koa-proxies-0.8.1.tgz#717a5fae594a96f95818dfcadc30987e738034a1"
+  integrity sha512-h6hJGaeVQCfW53Mk7pQvCx1mIZzpGupCr+hkpMrdKUumWOm8X5yY2MPdW8j10fXFUAloFruO00ICzzH1Gh7gsQ==
   dependencies:
     http-proxy "^1.16.2"
     path-match "^1.2.4"
@@ -4865,10 +4872,10 @@ loader-utils@1.1.0, loader-utils@^1.0.1, loader-utils@^1.0.2, loader-utils@^1.1.
     emojis-list "^2.0.0"
     json5 "^0.5.0"
 
-localforage@^1.7.2:
-  version "1.7.2"
-  resolved "https://registry.yarnpkg.com/localforage/-/localforage-1.7.2.tgz#fa4442602f806edd2bca6a54ab4e656f031f121c"
-  integrity sha1-+kRCYC+Abt0rympUq05lbwMfEhw=
+localforage@^1.7.3:
+  version "1.7.3"
+  resolved "https://registry.yarnpkg.com/localforage/-/localforage-1.7.3.tgz#0082b3ca9734679e1bd534995bdd3b24cf10f204"
+  integrity sha512-1TulyYfc4udS7ECSBT2vwJksWbkwwTX8BzeUIiq8Y07Riy7bDAAnxDaPU/tWyOVmQAcWJIEIFP9lPfBGqVoPgQ==
   dependencies:
     lie "3.1.1"
 
