@@ -28,6 +28,7 @@ const env = require('./environment')
 
 
 
+// Constants
 const server = new Koa()
 const app = next({
   dev: env.isDev,

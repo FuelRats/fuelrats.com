@@ -63,7 +63,7 @@ class RescuesByRatTable extends Component {
   \***************************************************************************/
 
   get columns () {
-    if (!this.columns) {
+    if (!this._columns) {
       this._columns = [
         {
           accessor: datum => datum.attributes['user.displayRat.name'] || datum.attributes.rats[0],

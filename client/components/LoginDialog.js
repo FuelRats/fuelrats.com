@@ -195,7 +195,11 @@ class LoginDialog extends React.Component {
   \***************************************************************************/
 
   get isValid () {
-    return !this.props.loggingIn && Object.values(this.state.validity).find(value => value !== true)
+    if (this.props.loggingIn) {
+      return false
+    }
+
+    return !Object.values(this.state.validity).filter(value => value !== true).length
   }
 
 
@@ -208,7 +212,7 @@ class LoginDialog extends React.Component {
 
   static mapDispatchToProps = ['login', 'getUser']
 
-  static mapStateToProps = state => ({ ...state.authentication })
+  static mapStateToProps = state => state.authentication
 
 
 
