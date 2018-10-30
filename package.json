@@ -77,7 +77,5 @@
     "webpack-bundle-analyzer": "^3.0.3",
     "zxcvbn": "^4.4.2"
   },
-  "optionalDependencies": {
-    "sd-notify": "^2.3.1"
-  }
+  "optionalDependencies": {}
 }

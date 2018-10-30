@@ -17,13 +17,6 @@ const Koa = require('koa')
 const path = require('path')
 const next = require('next')
 
-let notify = null
-try {
-  notify = require('sd-notify')
-} catch (err) {
-  // do nothing
-}
-
 
 
 // Component imports
@@ -67,15 +60,4 @@ app.prepare().then(() => {
 
   // Start the server
   server.listen(env.port)
-
-  if (notify) {
-    notify.ready()
-
-    const watchdogInterval = notify.watchdogInterval()
-
-    if (watchdogInterval > 0) {
-      const interval = Math.floor(watchdogInterval / 2)
-      notify.startWatchdogMode(interval)
-    }
-  }
 })
