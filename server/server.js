@@ -19,6 +19,8 @@ const next = require('next')
 
 
 
+
+
 // Component imports
 const env = require('./environment')
 
@@ -26,6 +28,7 @@ const env = require('./environment')
 
 
 
+// Constants
 const server = new Koa()
 const app = next({
   dev: env.isDev,
