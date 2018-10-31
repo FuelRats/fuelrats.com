@@ -1,32 +1,45 @@
 /* eslint-env node */
 
-const helmet = require('koa-helmet')
+// Module imports
+const buildCSP = require('content-security-policy-builder')
 const uuidv4 = require('uuid/v4')
 
 
 
-// Derived from https://helmetjs.github.io/docs/csp/
-module.exports = (koaServer, env) => {
-  koaServer.use(({ res }, next) => {
-    res.locals.nonce = uuidv4()
-    next()
+
+
+// Constants
+const headerKeys = [
+  'Content-Security-Policy',
+  'X-Content-Security-Policy',
+  'X-WebKit-CSP',
+]
+
+
+
+
+
+module.exports = isDev => async (ctx, next) => {
+  const nonce = uuidv4()
+
+  ctx.res.nonce = nonce /* eslint-disable-line no-param-reassign */
+
+  const policyString = buildCSP({
+    directives: {
+      scriptSrc: [
+        "'self'",
+        `'nonce-${nonce}'`,
+        "'unsafe-inline'",
+        '*.fuelrats.com',
+        '*.stripe.com',
+        ...(isDev ? ["'unsafe-eval'"] : []),
+      ],
+    },
   })
 
-  koaServer.use(
-    helmet({
-      contentSecurityPolicy: {
-        directives: {
-          scriptSrc: [
-            "'self'",
-            (req, res) => `'nonce-${res.locals.nonce}'`,
-            "'strict-dynamic'",
-            "'unsafe-inline'",
-            '*.fuelrats.com',
-            '*.stripe.com',
-            ...(env.isDev ? ["'unsafe-eval'"] : []),
-          ],
-        },
-      },
-    })
-  )
+  headerKeys.forEach((key) => {
+    ctx.response.set(key, policyString)
+  })
+
+  await next()
 }
