@@ -13,10 +13,17 @@ import Document, { Head, Main, NextScript } from 'next/document'
 
 
 class FuelRatsWebsite extends Document {
+  static async getInitialProps (ctx) {
+    const initialProps = await Document.getInitialProps(ctx)
+    const { nonce } = ctx.res.locals
+    return { ...initialProps, nonce }
+  }
+
   render () {
+    const { nonce } = this.props
     return (
       <html lang="en">
-        <Head>
+        <Head nonce={nonce}>
           <meta name="viewport" content="initial-scale=1.0, viewport-fit=cover, width=device-width" />
 
           <meta name="application-name" content="Fuel Rats" />
@@ -60,7 +67,7 @@ class FuelRatsWebsite extends Document {
 
           <Main className="next-wrapper" />
 
-          <NextScript />
+          <NextScript nonce={nonce} />
 
           <div id="dialog-container" />
 

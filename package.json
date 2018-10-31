@@ -47,6 +47,7 @@
     "koa": "^2.6.1",
     "koa-body": "^4.0.4",
     "koa-compress": "^3.0.0",
+    "koa-helmet": "^4.0.0",
     "koa-logger": "^3.2.0",
     "koa-no-trailing-slash": "^2.1.0",
     "koa-proxies": "^0.8.1",
@@ -73,6 +74,7 @@
     "redux-thunk": "^2.3.0",
     "request": "^2.88.0",
     "stripe": "^6.12.1",
+    "uuid": "^3.3.2",
     "webpack": "^4.19.1",
     "webpack-bundle-analyzer": "^3.0.3",
     "zxcvbn": "^4.4.2"

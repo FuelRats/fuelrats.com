@@ -45,6 +45,8 @@ app.prepare().then(() => {
     require('./middlewares/logger')(server)
   }
 
+  require('./middlewares/csp')(server, env)
+
   server.use(require('koa-no-trailing-slash')())
 
   server.use(require('koa-logger')())
