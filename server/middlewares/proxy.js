@@ -5,26 +5,26 @@ const proxy = require('koa-proxies')
 
 
 
-module.exports = (koa, config) => {
+module.exports = (koaServer, env) => {
   /***************************************************************************\
     Proxy Fuelrats API requests
   \***************************************************************************/
 
-  koa.use(proxy('/api/oauth2/token', {
-    auth: `${config.api.clientId}:${config.api.clientSecret}`,
+  koaServer.use(proxy('/api/oauth2/token', {
+    auth: `${env.api.clientId}:${env.api.clientSecret}`,
     changeOrigin: true,
     jar: true,
     rewrite: path => path.replace(/^\/api/u, ''),
     secure: true,
-    target: config.api.url,
+    target: env.api.url,
   }))
 
-  koa.use(proxy('/api', {
+  koaServer.use(proxy('/api', {
     changeOrigin: true,
     jar: true,
     rewrite: path => path.replace(/^\/api/u, ''),
     secure: true,
-    target: config.api.url,
+    target: env.api.url,
   }))
 
 
@@ -35,10 +35,10 @@ module.exports = (koa, config) => {
     Proxy EDSM API requests
   \***************************************************************************/
 
-  koa.use(proxy('/edsm-api', {
+  koaServer.use(proxy('/edsm-api', {
     changeOrigin: true,
     rewrite: path => path.replace(/^\/edsm-api/u, ''),
-    target: config.edsm.url,
+    target: env.edsm.url,
   }))
 
 
@@ -49,13 +49,13 @@ module.exports = (koa, config) => {
     Proxy Wordpress requests
   \***************************************************************************/
 
-  koa.use(proxy('/wp-api', {
+  koaServer.use(proxy('/wp-api', {
     changeOrigin: true,
     rewrite: path => path.replace(/^\/wp-api/u, '/wp-json/wp/v2'),
-    target: config.wordpress.url,
+    target: env.wordpress.url,
   }))
 
-  koa.use(proxy('/wp-content', {
-    target: config.wordpress.url,
+  koaServer.use(proxy('/wp-content', {
+    target: env.wordpress.url,
   }))
 }

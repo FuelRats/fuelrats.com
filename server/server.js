@@ -40,17 +40,11 @@ const app = next({
 
 
 app.prepare().then(() => {
-  // Set up the loggers
-  if (env.isDev) {
-    require('./middlewares/logger')(server)
-  }
-
+  // Rewrite URLS to remove trailing slashes
   server.use(require('koa-no-trailing-slash')())
 
-  server.use(require('koa-logger')())
-
-  // Add proxies
-  require('./middlewares/proxy')(server, env)
+  // Add CSP
+  server.use(require('./middlewares/csp')(env.isDev))
 
   // Compress responses
   server.use(require('koa-compress')())
@@ -58,8 +52,19 @@ app.prepare().then(() => {
   // Parse request bodies
   server.use(require('koa-body')())
 
+  // Add proxies
+  require('./middlewares/proxy')(server, env)
+
   // Add routes
-  require('./middlewares/router')(app, server, env)
+  require('./middlewares/router')(app, server)
+
+  // Set up file logger
+  if (env.isDev) {
+    server.use(require('./middlewares/dev-logger')())
+  }
+
+  // Set up console logger
+  server.use(require('koa-logger')())
 
   // Start the server
   server.listen(env.port)
