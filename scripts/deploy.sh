@@ -1,25 +1,24 @@
 #!/bin/bash
 
-DEPLOY_HOST="travis-deployment@emmental.fuelrats.com"
 DEPLOY_DIR="trash"
 SERVICE_NAME=""
 
 case $TRAVIS_BRANCH in
 develop)
   DEPLOY_DIR="dev.fuelrats.com"
-  SERVICE_NAME="fuelratsweb_dev"
+  SERVICE_NAME="fr-web_dev"
   ;;
 
 
 beta)
   DEPLOY_DIR="beta.fuelrats.com"
-  SERVICE_NAME="fuelratsweb_beta"
+  SERVICE_NAME="fr-web_beta"
   ;;
 
 
 master)
   DEPLOY_DIR="fuelrats.com"
-  SERVICE_NAME="fuelratsweb"
+  SERVICE_NAME="fr-web"
   ;;
 
 
@@ -30,7 +29,7 @@ master)
 esac
 
 # Move built project files to server
-rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/ $DEPLOY_HOST:/var/www/$DEPLOY_DIR/
+rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/ travis-deployment@emmental.fuelrats.com:/var/www/$DEPLOY_DIR/
 
 # restart service
-ssh -t $DEPLOY_HOST "sudo systemctl restart $SERVICE_NAME.service"
+ssh -t travis-deployment@emmental.fuelrats.com "sudo systemctl restart $SERVICE_NAME.service"
