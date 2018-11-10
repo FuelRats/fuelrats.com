@@ -2,12 +2,12 @@
 
 [![Fuelrats.com build status on Travis CI][travisci-badge]][travisci]
 [![Fuelrats.com dependencies on David DM][daviddm-badge]][daviddm]
-[![Fuelrats.com climate on Code Climate][codeclimate-badge]][codeclimate]
-[![Fuelrats.com coverage on Coveralls][coveralls-badge]][coveralls]
+
 
 [![Fuelrats.com contributors as listed by the all-contributors spec][contributors-badge]][contributors]
 [![Code of Conduct][code-of-conduct-badge]][code-of-conduct]
 [![PRs Welcome][prs-badge]][prs]
+
 
 [![Watch on GitHub][github-watch-badge]][github-watch]
 [![Star on GitHub][github-star-badge]][github-star]

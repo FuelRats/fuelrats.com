@@ -1,6 +1,6 @@
 {
   "projectName": "fuelrats.com",
-  "projectOwner": "trezy",
+  "projectOwner": "fuelrats",
   "files": [
     "CONTRIBUTORS.md",
     "README.md"
@@ -14,13 +14,30 @@
       "avatar_url": "https://avatars2.githubusercontent.com/u/442980?v=4",
       "profile": "http://trezy.com",
       "contributions": [
-        "question",
+        "blog",
         "bug",
         "code",
         "design",
         "doc",
         "ideas",
         "infra",
+        "question",
+        "review"
+      ]
+    },
+    {
+      "login": "UncleClapton",
+      "name": "Cameron \"Clapton\"",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/2686824?v=4",
+      "profile": "https://github.com/UncleClapton",
+      "contributions": [
+        "blog",
+        "bug",
+        "code",
+        "design",
+        "doc",
+        "ideas",
+        "question",
         "review"
       ]
     },
@@ -34,6 +51,15 @@
         "code",
         "ideas",
         "infra"
+      ]
+    },
+    {
+      "login": "itssimple",
+      "name": "Chris Gårdenberg",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/11502257?v=4",
+      "profile": "https://itssimple.se",
+      "contributions": [
+        "code"
       ]
     },
     {
@@ -75,25 +101,7 @@
         "bug",
         "ideas"
       ]
-    },
-    {
-      "login": "UncleClapton",
-      "name": "Cameron \"Clapton\"",
-      "avatar_url": "https://avatars2.githubusercontent.com/u/2686824?v=4",
-      "profile": "https://github.com/UncleClapton",
-      "contributions": [
-        "bug",
-        "code"
-      ]
-    },
-    {
-      "login": "itssimple",
-      "name": "Chris Gårdenberg",
-      "avatar_url": "https://avatars0.githubusercontent.com/u/11502257?v=4",
-      "profile": "https://itssimple.se",
-      "contributions": [
-        "code"
-      ]
     }
-  ]
+  ],
+  "repoType": "github"
 }

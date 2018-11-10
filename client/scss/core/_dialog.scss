@@ -1,0 +1,105 @@
+[role=dialog] {
+  background-color: rgba($black, .99);
+  margin-top: 4rem;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto auto auto;
+  min-width: 60rem;
+  overflow: hidden;
+  pointer-events: initial;
+  z-index: 401;
+  padding: 2rem;
+
+  &.transparency {
+    background-color: rgba($black, .75);
+  }
+
+  &.center-title > header {
+    justify-content: center;
+  }
+
+  > header {
+    align-items: stretch;
+    display: flex;
+    flex-shrink: 0;
+    color: $white;
+
+    h2 {
+      padding: 1rem 2rem;
+    }
+
+    [name=close] {
+      border-radius: 0;
+      margin-left: auto;
+      padding: 1rem;
+    }
+  }
+
+  > .content {
+    flex-shrink: 1;
+    padding: 2rem;
+    color: $white;
+
+    input {
+      color: $black;
+    }
+
+    > .center-content {
+      text-align: center;
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  &.no-pad > .content {
+    padding: 2rem 0 0 0;
+  }
+
+  > footer {
+    color: $white;
+  }
+
+  menu[type=toolbar] {
+    display: flex;
+    flex-shrink: 0;
+    padding: 2rem 0 0 0;
+
+    &.compact {
+      padding: 0;
+    }
+
+    > .primary,
+    > .secondary {
+      display: flex;
+      align-items: baseline;
+    }
+
+    > .primary {
+      margin-left: auto;
+      order: 2;
+
+      > *:not(:first-child) {
+        margin-left: 1rem;
+      }
+    }
+
+    > .secondary {
+      margin-right: auto;
+      order: 1;
+
+      > *:not(:last-child) {
+        margin-right: 1rem;
+      }
+    }
+
+    button,
+    .button {
+      border-radius: 0;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    min-width: 100vw;
+  }
+}

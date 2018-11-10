@@ -1,0 +1,107 @@
+@mixin link-button {
+  background: none;
+  border: none;
+
+  &.inline {
+    color: $red;
+    text-decoration: underline;
+    padding: 0;
+    display: inline;
+
+    &:hover {
+      color: inherit;
+    }
+  }
+
+  &:hover {
+    background-color: none;
+    border: none;
+  }
+}
+
+
+button,
+input[type=button],
+.button {
+  --text-color: #{$white};
+  --text-color-hover: #{$red};
+  --background-color: #{$red};
+  --background-color-hover: transparent;
+  background-color: var(--background-color);
+  border-color: var(--background-color);
+  border-radius: 0;
+  border-style: solid;
+  border-width: 0.2rem;
+  color: var(--text-color);
+  cursor: pointer;
+  display: inline-block;
+  flex-shrink: 0;
+  font-family: inherit;
+  font-size: inherit;
+  margin: 0;
+  outline: none;
+  overflow: hidden;
+  padding: 1rem 2rem;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.2s;
+  line-height: normal;
+
+  &:hover {
+    background-color: var(--background-color-hover);
+    color: var(--text-color-hover);
+  }
+
+  &:active,
+  &:focus {
+    color: var(--text-color);
+
+    &:hover {
+      color: var(--text-color-hover);
+    }
+  }
+
+  &.link {
+    @media screen and (max-width: 768px) {
+      &:not(.mobile-button) {
+        @include link-button()
+      }
+    }
+
+    @media screen and (min-width: 769px) {
+      @include link-button();
+    }
+  }
+
+  &.compact {
+    padding: .5rem 1rem;
+  }
+
+  &.tall {
+    line-height: 2;
+  }
+
+  &.secondary {
+    --background-color: #{$black-lightened};
+    --text-color: #{$grey};
+    --text-color-hover: #{$white};
+
+    &:hover {
+      @include text-outline($black-lightened);
+    }
+  }
+
+  &.green {
+    --background-color: #{$green-darkened};
+    --text-color: #{$white};
+    --text-color-hover: #{$green-darkened};
+  }
+
+  &[disabled] {
+    --background-color: #{$grey};
+    --background-color-hover: #{$grey};
+    --text-color: #{$white};
+    --text-color-hover: #{$white};
+    cursor: default;
+  }
+}

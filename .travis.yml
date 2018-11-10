@@ -2,8 +2,7 @@ language: node_js
 
 addons:
   ssh_known_hosts:
-  - beta.fuelrats.com
-  - cheddar.fuelrats.com
+  - emmental.fuelrats.com
 
 cache: yarn
 
@@ -26,18 +25,6 @@ notifications:
 deploy:
 - provider: script
   skip_cleanup: true
-  script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/ travis-deployment@cheddar.fuelrats.com:/var/www/dev.fuelrats.com/
+  script: bash scripts/deploy.sh
   on:
-    branch: develop
-    
-- provider: script
-  skip_cleanup: true
-  script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/ travis-deployment@cheddar.fuelrats.com:/var/www/beta.fuelrats.com/
-  on:
-    branch: beta
-
-- provider: script
-  skip_cleanup: true
-  script: scripts/prod-deploy.sh
-  on:
-    branch: master
+    all_branches: true

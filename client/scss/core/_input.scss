@@ -1,0 +1,90 @@
+%text-input {
+  border-color: $grey-lightened;
+  border-style: solid;
+  border-width: 0.1rem;
+  box-shadow: 0 0 0.5rem 0 rgba($grey, 0);
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  outline: none;
+  transition-duration: 0.5s;
+  transition-property: border-color, box-shadow;
+  padding: 1rem;
+  width: 100%;
+
+  &:focus {
+    border-color: $grey;
+    box-shadow: 0 0 0.5rem 0 rgba($grey, 0.5);
+  }
+
+  &[required] {
+    border-color: $red-lightened;
+    &:focus {
+      border-color: $red;
+      box-shadow: 0 0 0.5rem 0 rgba($red, 0.5);
+    }
+
+    &:valid {
+      border-color: $green-lightened;
+      &:focus {
+        border-color: $green;
+        box-shadow: 0 0 0.5rem 0 rgba($green, 0.5);
+      }
+    }
+  }
+
+  &.dark {
+    background: $black-lightened;
+    color: $white;
+    border-width: 0 0 0.2rem;
+    border-color: transparent;
+    box-shadow: none !important;
+
+    &[required] {
+      border-color: $red;
+
+      &:valid {
+        border-color: $green;
+      }
+    }
+  }
+}
+
+input {
+  &[type=date],
+  &[type=datetime],
+  &[type=datetime-local],
+  &[type=email],
+  &[type=month],
+  &[type=number],
+  &[type=password],
+  &[type=search],
+  &[type=tel],
+  &[type=text],
+  &[type=time],
+  &[type=url],
+  &[type=week] {
+    @extend %text-input;
+  }
+
+  &[type=checkbox],
+  &[type=radio] {
+    &[hidden]:checked + label.button {
+      background-color: transparent;
+      color: $red;
+    }
+  }
+}
+
+textarea {
+  @extend %text-input;
+
+  min-height: 10rem;
+}
+
+
+input.large[type=checkbox] {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+}
