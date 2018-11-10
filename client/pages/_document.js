@@ -59,7 +59,7 @@ class FuelRatsWebsite extends Document {
 
           <link rel="shortcut icon" href="/static/favicon/favicon.ico" />
 
-          <script id="stripe-js" src="https://js.stripe.com/v3/" async defer />
+          <script id="stripe-js" src="https://js.stripe.com/v3/" nonce={nonce} async defer />
         </Head>
 
         <body>
