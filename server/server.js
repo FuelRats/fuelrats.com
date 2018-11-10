@@ -46,14 +46,14 @@ app.prepare().then(() => {
   // Add CSP
   server.use(require('./middlewares/csp')(env.isDev))
 
+  // Add proxies
+  require('./middlewares/proxy')(server, env)
+
   // Compress responses
   server.use(require('koa-compress')())
 
   // Parse request bodies
   server.use(require('koa-body')())
-
-  // Add proxies
-  require('./middlewares/proxy')(server, env)
 
   // Add routes
   require('./middlewares/router')(app, server)

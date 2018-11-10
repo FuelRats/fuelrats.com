@@ -25,9 +25,9 @@ import httpStatus from '../helpers/httpStatus'
 
 
 NProgress.configure({ showSpinner: false })
-Router.onRouteChangeStart = () => NProgress.start()
-Router.onRouteChangeError = () => NProgress.done()
-Router.onRouteChangeComplete = () => NProgress.done()
+Router.events.on('routeChangeStart', () => NProgress.start())
+Router.events.on('routeChangeError', () => NProgress.done())
+Router.events.on('routeChangeComplete', () => NProgress.done())
 
 const { publicRuntimeConfig } = getConfig()
 
