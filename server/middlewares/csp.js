@@ -15,6 +15,11 @@ const headerKeys = [
   'X-WebKit-CSP',
 ]
 
+const domainWhitelist = [
+  '*.fuelrats.com',
+  '*.stripe.com',
+]
+
 
 
 
@@ -26,14 +31,12 @@ module.exports = isDev => async (ctx, next) => {
 
   const policyString = buildCSP({
     directives: {
-      scriptSrc: [
-        "'self'",
-        `'nonce-${nonce}'`,
-        "'unsafe-inline'",
-        '*.fuelrats.com',
-        '*.stripe.com',
-        ...(isDev ? ["'unsafe-eval'"] : []),
-      ],
+      defaultSrc: ["'self'", ...domainWhitelist, 'wss://*.fuelrats.com'],
+      scriptSrc: ["'self'", `'nonce-${nonce}'`, ...domainWhitelist, ...(isDev ? ["'unsafe-eval'"] : [])],
+      styleSrc: ["'self'", "'unsafe-inline'", ...domainWhitelist],
+      imgSrc: ["'self'", ...domainWhitelist, 'api.adorable.io', '*.wp.com'],
+      mediaSrc: ["'self'"],
+      fontSrc: ["'self'", 'fonts.gstatic.com'],
     },
   })
 
