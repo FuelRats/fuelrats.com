@@ -198,7 +198,7 @@ export default class PasswordField extends Component {
   \***************************************************************************/
 
   get validity () {
-    if (!this.validity) {
+    if (!this._validity) {
       this._validity = {
         valid: false,
       }
