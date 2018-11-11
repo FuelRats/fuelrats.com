@@ -260,10 +260,10 @@ class Paperwork extends Component {
 
     if (rescue) {
       if (rescue.relationships.firstLimpet.data) {
-        firstLimpet = state.rats.rats.filter(rat => rescue.relationships.firstLimpet.data.id === rat.id)
+        firstLimpet = Object.values(state.rats.rats).filter(rat => rescue.relationships.firstLimpet.data.id === rat.id)
       }
 
-      rats = state.rats.rats
+      rats = Object.values(state.rats.rats)
         .filter(rat => rescue.relationships.rats.data.find(({ id }) => rat.id === id))
         .map(rat => ({
           id: rat.id,

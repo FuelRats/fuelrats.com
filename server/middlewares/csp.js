@@ -40,7 +40,7 @@ module.exports = isDev => async (ctx, next) => {
         "'unsafe-inline'",
         ...(isDev ? ["'unsafe-eval'"] : []),
       ],
-      styleSrc: ["'self'", ...domainWhitelist],
+      styleSrc: ["'self'", "'unsafe-inline'", ...domainWhitelist],
       imgSrc: ["'self'", ...domainWhitelist, 'api.adorable.io', '*.wp.com'],
       mediaSrc: ["'self'"],
       objectSrc: ["'self'"],

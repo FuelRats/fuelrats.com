@@ -46,7 +46,7 @@ FirstLoginDialog.mapStateToProps = ({ user, rats }) => {
     }
 
     if (ratId) {
-      const cmdr = rats.rats.find(datum => datum.id === ratId)
+      const cmdr = rats.rats[ratId]
       if (cmdr) {
         cmdrName = cmdr.attributes.name
       }
