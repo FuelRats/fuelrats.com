@@ -21,6 +21,7 @@ const {
   PORT,
   TRAVIS,
   TRAVIS_BRANCH,
+  TRAVIS_BUILD_ID,
   TRAVIS_COMMIT,
   TRAVIS_COMMIT_RANGE,
 } = process.env
@@ -35,8 +36,8 @@ const DEV_BUILD_ID_LENGTH = 16
 module.exports = withSass({
   generateBuildId: () => (
     TRAVIS
-      ? TRAVIS_COMMIT.toUpperCase()
-      : `DEV_${crypto.randomBytes(DEV_BUILD_ID_LENGTH).toString('hex').toUpperCase()}`
+      ? TRAVIS_COMMIT.toLowerCase()
+      : `DEV_${crypto.randomBytes(DEV_BUILD_ID_LENGTH).toString('hex').toLowerCase()}`
   ),
   publicRuntimeConfig: {
     apis: {
@@ -52,7 +53,7 @@ module.exports = withSass({
       },
     },
   },
-  webpack: (config, { dev }) => {
+  webpack: (config, data) => {
     if (ANALYZE) {
       config.plugins.push(new BundleAnalyzerPlugin({
         analyzerMode: 'server',
@@ -62,12 +63,15 @@ module.exports = withSass({
     }
 
     config.plugins.push(new webpack.DefinePlugin({
-      $IS_DEVELOPMENT: JSON.stringify(dev),
+      $IS_DEVELOPMENT: JSON.stringify(data.dev),
       $IS_STAGING: JSON.stringify(['develop', 'beta'].includes(TRAVIS_BRANCH)),
       $BUILD_BRANCH: JSON.stringify(TRAVIS_BRANCH || 'develop'),
       $BUILD_COMMIT: JSON.stringify((TRAVIS_COMMIT && TRAVIS_COMMIT.slice(0, COMMIT_HASH_LENGTH)) || TRAVIS_BRANCH || 'develop'),
       $BUILD_COMMIT_HASH: JSON.stringify(TRAVIS_COMMIT),
       $BUILD_COMMIT_RANGE: JSON.stringify(TRAVIS_COMMIT_RANGE),
+      $BUILD_DATE: JSON.stringify((new Date()).toISOString()),
+      $BUILD_ID: JSON.stringify(TRAVIS_BUILD_ID),
+      $NEXT_BUILD_ID: JSON.stringify(data.buildId),
       $NODE_VERSION: JSON.stringify(process.version),
     }))
 
