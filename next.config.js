@@ -62,10 +62,13 @@ module.exports = withSass({
     }
 
     config.plugins.push(new webpack.DefinePlugin({
-      IS_DEVELOPMENT: JSON.stringify(dev),
-      IS_STAGING: JSON.stringify(['develop', 'beta'].includes(TRAVIS_BRANCH)),
-      BUILD_COMMIT: JSON.stringify((TRAVIS_COMMIT && TRAVIS_COMMIT.slice(0, COMMIT_HASH_LENGTH)) || TRAVIS_BRANCH || 'Development'),
-      BUILD_COMMIT_RANGE: JSON.stringify(TRAVIS_COMMIT_RANGE),
+      $IS_DEVELOPMENT: JSON.stringify(dev),
+      $IS_STAGING: JSON.stringify(['develop', 'beta'].includes(TRAVIS_BRANCH)),
+      $BUILD_BRANCH: JSON.stringify(TRAVIS_BRANCH || 'develop'),
+      $BUILD_COMMIT: JSON.stringify((TRAVIS_COMMIT && TRAVIS_COMMIT.slice(0, COMMIT_HASH_LENGTH)) || TRAVIS_BRANCH || 'develop'),
+      $BUILD_COMMIT_HASH: JSON.stringify(TRAVIS_COMMIT),
+      $BUILD_COMMIT_RANGE: JSON.stringify(TRAVIS_COMMIT_RANGE),
+      $NODE_VERSION: JSON.stringify(process.version),
     }))
 
     config.module.rules.unshift({
