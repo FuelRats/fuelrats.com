@@ -96,10 +96,22 @@ class AppLayout extends React.Component {
     }
 
     let pageProps = {}
+
+    let layoutProps = {
+      renderLayout: true,
+    }
+
+
+
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps({
         ...ctx,
         ...(Component.ಠ_ಠ_AUTHENTICATION_REQUIRED ? { accessToken } : {}),
+      }, (state) => {
+        layoutProps = {
+          ...layoutProps,
+          ...state,
+        }
       })
     }
 
@@ -110,6 +122,7 @@ class AppLayout extends React.Component {
     }
 
     return {
+      ...layoutProps,
       accessToken,
       statusCode,
       pageProps: {
@@ -147,6 +160,7 @@ class AppLayout extends React.Component {
       Component,
       isServer,
       pageProps,
+      renderLayout,
       showLoginDialog,
       statusCode,
       setFlag,
@@ -155,12 +169,16 @@ class AppLayout extends React.Component {
 
     return (
       <div role="application">
-        <Header
-          isServer={isServer}
-          path={path} />
 
-        <UserMenu />
+        {renderLayout && (
+         <>
+           <Header
+             isServer={isServer}
+             path={path} />
 
+           <UserMenu />
+         </>
+        )}
 
         {statusCode === httpStatus.OK
           ? <Component {...pageProps} />

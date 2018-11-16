@@ -1,4 +1,4 @@
-/* globals IS_DEVELOPMENT:false, IS_STAGING:false, BUILD_COMMIT:false, BUILD_COMMIT_RANGE:false */
+/* globals $IS_DEVELOPMENT:false, $IS_STAGING:false, $BUILD_COMMIT:false, $BUILD_COMMIT_RANGE:false */
 
 // Module imports
 import React from 'react'
@@ -19,9 +19,9 @@ import BrandSvg from './svg/BrandSvg'
 
 
 // Component constants
-const isDevOrStaging = IS_DEVELOPMENT || IS_STAGING
-const buildCommit = BUILD_COMMIT
-const buildCommitRange = BUILD_COMMIT_RANGE
+const isDevOrStaging = $IS_DEVELOPMENT || $IS_STAGING
+const buildCommit = $BUILD_COMMIT
+const buildCommitRange = $BUILD_COMMIT_RANGE
 
 
 

@@ -141,7 +141,7 @@ class LoginDialog extends React.Component {
             label="Password"
             name="password"
             onChange={this._handleChange}
-            pattern="^.{8,}$"
+            pattern="^.{5,42}$"
             required
             type="password"
             value={password} />

@@ -38,7 +38,7 @@ class Authorize extends Component {
 
   static async getInitialProps ({
     accessToken, query, res, store,
-  }) {
+  }, setLayoutProps) {
     const {
       client_id: clientId,
       response_type: responseType,
@@ -55,6 +55,10 @@ class Authorize extends Component {
       if (res && payload.headers['set-cookie']) {
         res.setHeader('set-cookie', payload.headers['set-cookie'])
       }
+
+      setLayoutProps({
+        renderLayout: !oauthProps.preAuthorized,
+      })
 
       return {
         clientId,
