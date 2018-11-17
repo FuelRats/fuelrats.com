@@ -52,6 +52,7 @@ routes
   // About
   .add('about fuelrats', '/about', '/about')
   .add('about acknowledgements', '/acknowledgements', '/acknowledgements')
+  .add('about version', '/version/:raw(raw)?', '/version')
 
   // Epics
   .add('epic nominate', '/epic/nominate', '/epics/nominate')

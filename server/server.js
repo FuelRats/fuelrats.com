@@ -43,6 +43,14 @@ app.prepare().then(() => {
   // Rewrite URLS to remove trailing slashes
   server.use(require('koa-no-trailing-slash')())
 
+  // Set up file logger
+  if (env.isDev) {
+    server.use(require('./middlewares/dev-logger')())
+  }
+
+  // Set up console logger
+  server.use(require('koa-logger')())
+
   // Add CSP
   server.use(require('./middlewares/csp')(env.isDev))
 
@@ -57,14 +65,6 @@ app.prepare().then(() => {
 
   // Add routes
   require('./middlewares/router')(app, server)
-
-  // Set up file logger
-  if (env.isDev) {
-    server.use(require('./middlewares/dev-logger')())
-  }
-
-  // Set up console logger
-  server.use(require('koa-logger')())
 
   // Start the server
   server.listen(env.port)

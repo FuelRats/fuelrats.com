@@ -1,4 +1,4 @@
-/* globals IS_DEVELOPMENT:false, IS_STAGING:false */
+/* globals $IS_DEVELOPMENT:false, $IS_STAGING:false */
 
 // Component imports
 import initialState from '../initialState'
@@ -8,7 +8,7 @@ import actionTypes from '../actionTypes'
 
 
 // Component constants
-const isDev = IS_DEVELOPMENT || IS_STAGING
+const isDev = $IS_DEVELOPMENT || $IS_STAGING
 const ignoredTypes = [
 
   // This pops up on every 404 page due to how our fallback system works.

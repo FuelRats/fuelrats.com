@@ -63,7 +63,7 @@ const Acknowledgements = () => (
       <div className="dependency-list-wrapper">
         <div className="dependency-list">
           <span>Fuelrats.com would not be possible without these awesome packages</span>
-          <ul>
+          <ul className="text-mono">
             {Object.keys({
               ...dependencies,
             }).map(dep => (
