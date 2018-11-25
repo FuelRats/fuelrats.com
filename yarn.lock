@@ -771,19 +771,19 @@
     humps "^2.0.1"
     prop-types "^15.5.10"
 
-"@fuelrats/eslint-config-react@0.7.0":
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@fuelrats/eslint-config-react/-/eslint-config-react-0.7.0.tgz#c76f2e40bdd29c43f510d5a1fa2aea9c8126d728"
-  integrity sha512-nCVDyek1AxyP4QYhTP7WhP/RMyGawUL2YYvkKpk/PH699RNFD4wlL2D6sU9j+wWdlLdQBbopXILiLd5tNZ2hrg==
+"@fuelrats/eslint-config-react@0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@fuelrats/eslint-config-react/-/eslint-config-react-0.8.0.tgz#748fcaebbeca8b844d4f76e451e243af5adee631"
+  integrity sha512-ETrXrDnDKvJGON4kA6VGlOEr+L1204sq93C1lTHOL1XRiXOMaiOHESFX8Vt+EegJUqZRXEVyWxcsg1yvvtbvLg==
   dependencies:
-    "@fuelrats/eslint-config" "^0.7.0"
+    "@fuelrats/eslint-config" "^0.8.0"
 
-"@fuelrats/eslint-config@^0.7.0":
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@fuelrats/eslint-config/-/eslint-config-0.7.0.tgz#6a384a6e5854a6106f1ec3b7dc50a597fb3fb067"
-  integrity sha512-AbV9xsr4UXFkEUjcYP+/IrDrs4RpyHK81fnFkjyfqZW25cMKaqrO55h9LoZRUm7b3QTu6exIHs1lO9HXF0xE8Q==
+"@fuelrats/eslint-config@^0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@fuelrats/eslint-config/-/eslint-config-0.8.0.tgz#10068a2df6264f3bf9a29174b930b05ad53b9f50"
+  integrity sha512-W51y7ewIMBYChn7VQfY0MCYn/us4qlhy1nVO/RntUk36k/BfbUcPbnShVttjJwC8EM1lnMXpvazAoDlXwXDIKg==
   dependencies:
-    eslint-restricted-globals "^0.1.1"
+    eslint-restricted-globals "^0.2.0"
 
 "@types/events@*":
   version "1.2.0"
@@ -3075,10 +3075,10 @@ eslint-module-utils@^2.2.0:
     debug "^2.6.8"
     pkg-dir "^1.0.0"
 
-eslint-plugin-babel@^5.2.1:
-  version "5.2.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-babel/-/eslint-plugin-babel-5.2.1.tgz#95cccad9a70908ab1d21276e7e33cc9701a18293"
-  integrity sha512-2bYHrP9TOT3Bq2Ay12xo2FZg76dMZesZMcRzoHZiC4v+Q4CMUA/F0G3hGYseOpwXaaGqxaPXoJyqAyIa3eBF1Q==
+eslint-plugin-babel@^5.3.0:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-babel/-/eslint-plugin-babel-5.3.0.tgz#2e7f251ccc249326da760c1a4c948a91c32d0023"
+  integrity sha512-HPuNzSPE75O+SnxHIafbW5QB45r2w78fxqwK3HmjqIUoPfPzVrq6rD+CINU3yzoDSzEhUkX07VUphbF73Lth/w==
   dependencies:
     eslint-rule-composer "^0.3.0"
 
@@ -3127,6 +3127,11 @@ eslint-restricted-globals@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/eslint-restricted-globals/-/eslint-restricted-globals-0.1.1.tgz#35f0d5cbc64c2e3ed62e93b4b1a7af05ba7ed4d7"
   integrity sha1-NfDVy8ZMLj7WLpO0saevBbp+1Nc=
+
+eslint-restricted-globals@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/eslint-restricted-globals/-/eslint-restricted-globals-0.2.0.tgz#7729f326af97bec7a7e56d9f7d9c064b79285c50"
+  integrity sha512-kwYJALm5KS2QW3Mc1PgObO4V+pTR6RQtRT65L1GQILlEnAhabUQqGAX7/qUjoQR4KZJKehWpBtyDEiDecwmY9A==
 
 eslint-rule-composer@^0.3.0:
   version "0.3.0"
@@ -6512,10 +6517,10 @@ redent@^1.0.0:
     indent-string "^2.1.0"
     strip-indent "^1.0.1"
 
-redux-devtools-extension@^2.13.5:
-  version "2.13.5"
-  resolved "https://registry.yarnpkg.com/redux-devtools-extension/-/redux-devtools-extension-2.13.5.tgz#3ff34f7227acfeef3964194f5f7fc2765e5c5a39"
-  integrity sha512-QQ9BRy77oURHMdGys9rfQcCQDzXZ1T4oW+eUyE5Cg7DNVau69HJzc4YNDMOmpi0Dzpi1zOQgQ2rUpgJta4Lfqg==
+redux-devtools-extension@^2.13.6:
+  version "2.13.6"
+  resolved "https://registry.yarnpkg.com/redux-devtools-extension/-/redux-devtools-extension-2.13.6.tgz#1e59bb9c4e6c05862ac7417c607d0201ca0854c1"
+  integrity sha512-0Ptt0Jr6vMjPGzybQz6d0cQFDsJpPte+LVpnyo6RcvarO9HNGkcPq0kzi/c9nBNWrtapNoe1gXRF/qcX8znsvw==
 
 redux-thunk@^2.3.0:
   version "2.3.0"
@@ -7406,10 +7411,10 @@ strip-json-comments@^2.0.1, strip-json-comments@~2.0.1:
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
   integrity sha1-PFMZQukIwml8DsNEhYwobHygpgo=
 
-stripe@^6.15.0:
-  version "6.15.0"
-  resolved "https://registry.yarnpkg.com/stripe/-/stripe-6.15.0.tgz#27a5449beb41d618446599da1ae6dd97308b85fb"
-  integrity sha512-y5IhN9BtvrruTTYpQ/mExc63MeWecbc1StJJCIW8QARR1zH5WS2diW4jmetTYdDY4AMiqZSwkHsdbzldRiuYgw==
+stripe@^6.15.1:
+  version "6.15.1"
+  resolved "https://registry.yarnpkg.com/stripe/-/stripe-6.15.1.tgz#2a21fc7a1dbbba9f5cb0f80d52db7db7ed16bd5b"
+  integrity sha512-j9C/VcpfjrBc0CRJcS/WBvqskra72YuVPUpUyFyTrEat3pAGM5a+zhfLJkme3x/zocNe8DsYk9v0mBtekhBWLA==
   dependencies:
     lodash.isplainobject "^4.0.6"
     qs "~6.5.1"
