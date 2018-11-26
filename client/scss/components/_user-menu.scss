@@ -4,7 +4,8 @@
   right: 2rem;
   top: 1.5rem;
   z-index: 100;
-  transition: top .2s;
+  transition-duration: 0.2s;
+  transition-property: all;
 
   &.logged-in,
   &.logging-in {

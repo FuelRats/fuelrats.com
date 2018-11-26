@@ -4,4 +4,6 @@ main {
   flex-direction: column;
   flex-grow: 1;
   overflow: auto;
+  transition-duration: 0.2s;
+  transition-property: all;
 }

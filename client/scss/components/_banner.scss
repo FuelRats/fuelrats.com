@@ -30,7 +30,7 @@
 #nav-control {
   display: none;
 
-  ~ header {
+  ~ #header-container header {
     bottom: 0;
     position: fixed;
     right: 100%;
@@ -43,15 +43,22 @@
 
 @media only screen and (max-width: 768px) {
   #nav-control {
-    ~ header {
+    ~ #header-container header {
       right: 100%;
       transform: translateX(0rem);
       box-shadow: 0 0 4px 0 rgba($black, .4);
     }
 
     &:checked {
-      ~ header,
-      ~ #burger {
+      ~ #header-container {
+        header,
+        #burger {
+          transform: translateX(21rem);
+        }
+      }
+
+      ~ main,
+      ~ .user-menu {
         transform: translateX(21rem);
       }
     }
