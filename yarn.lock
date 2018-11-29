@@ -771,17 +771,17 @@
     humps "^2.0.1"
     prop-types "^15.5.10"
 
-"@fuelrats/eslint-config-react@0.8.0":
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/@fuelrats/eslint-config-react/-/eslint-config-react-0.8.0.tgz#748fcaebbeca8b844d4f76e451e243af5adee631"
-  integrity sha512-ETrXrDnDKvJGON4kA6VGlOEr+L1204sq93C1lTHOL1XRiXOMaiOHESFX8Vt+EegJUqZRXEVyWxcsg1yvvtbvLg==
+"@fuelrats/eslint-config-react@0.9.0":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/@fuelrats/eslint-config-react/-/eslint-config-react-0.9.0.tgz#241b69779088f468dab1ee3f5a08bb2ca19899c5"
+  integrity sha512-UzthNoTAIbdwljBvNYGTVcZWIUfaJ73ODoLAEPpFUs0xLyr4aYl48EKEU9537qYyIFQHaLozlRoEti1/yDiXRA==
   dependencies:
-    "@fuelrats/eslint-config" "^0.8.0"
+    "@fuelrats/eslint-config" "^0.9.0"
 
-"@fuelrats/eslint-config@^0.8.0":
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/@fuelrats/eslint-config/-/eslint-config-0.8.0.tgz#10068a2df6264f3bf9a29174b930b05ad53b9f50"
-  integrity sha512-W51y7ewIMBYChn7VQfY0MCYn/us4qlhy1nVO/RntUk36k/BfbUcPbnShVttjJwC8EM1lnMXpvazAoDlXwXDIKg==
+"@fuelrats/eslint-config@^0.9.0":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/@fuelrats/eslint-config/-/eslint-config-0.9.0.tgz#76969b48e54faf5f3520c5e6c3ef690c44340b2b"
+  integrity sha512-WpYOJHjKbU46keYZ6cORShLuLPiDyJWaR82h/GJRkzcSRf5hbMjymds9hf7VcF5JUlFhpbP5w8gKRLwrsev+LQ==
   dependencies:
     eslint-restricted-globals "^0.2.0"
 
@@ -3963,6 +3963,13 @@ hoist-non-react-statics@^3.1.0:
   dependencies:
     react-is "^16.3.2"
 
+hoist-non-react-statics@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.2.0.tgz#d21b9fc72b50fdc38c5d88f6e2c52f2c2dbe5ee2"
+  integrity sha512-3IascCRfaEkbmHjJnUxWSspIUE1okLPjGTMVXW8zraUo1t3yg1BadKAxAGILHwgoBzmMnzrgeeaDGBvpuPz6dA==
+  dependencies:
+    react-is "^16.3.2"
+
 hoopy@^0.1.2:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/hoopy/-/hoopy-0.1.4.tgz#609207d661100033a9a9402ad3dea677381c1b1d"
@@ -6517,10 +6524,10 @@ redent@^1.0.0:
     indent-string "^2.1.0"
     strip-indent "^1.0.1"
 
-redux-devtools-extension@^2.13.6:
-  version "2.13.6"
-  resolved "https://registry.yarnpkg.com/redux-devtools-extension/-/redux-devtools-extension-2.13.6.tgz#1e59bb9c4e6c05862ac7417c607d0201ca0854c1"
-  integrity sha512-0Ptt0Jr6vMjPGzybQz6d0cQFDsJpPte+LVpnyo6RcvarO9HNGkcPq0kzi/c9nBNWrtapNoe1gXRF/qcX8znsvw==
+redux-devtools-extension@^2.13.7:
+  version "2.13.7"
+  resolved "https://registry.yarnpkg.com/redux-devtools-extension/-/redux-devtools-extension-2.13.7.tgz#14bd7a1a7c8bee7f397beb1116fd16fc9633b752"
+  integrity sha512-F2GlWMWxCTJGRjJ+GSZcGDcVAj6Pbf77FKb4C9S8eni5Eah6UBGNwxNj8K1MTtmItdZH1Wx+EvIifHN2KKcQrw==
 
 redux-thunk@^2.3.0:
   version "2.3.0"
@@ -7411,10 +7418,10 @@ strip-json-comments@^2.0.1, strip-json-comments@~2.0.1:
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
   integrity sha1-PFMZQukIwml8DsNEhYwobHygpgo=
 
-stripe@^6.15.1:
-  version "6.15.1"
-  resolved "https://registry.yarnpkg.com/stripe/-/stripe-6.15.1.tgz#2a21fc7a1dbbba9f5cb0f80d52db7db7ed16bd5b"
-  integrity sha512-j9C/VcpfjrBc0CRJcS/WBvqskra72YuVPUpUyFyTrEat3pAGM5a+zhfLJkme3x/zocNe8DsYk9v0mBtekhBWLA==
+stripe@^6.17.0:
+  version "6.17.0"
+  resolved "https://registry.yarnpkg.com/stripe/-/stripe-6.17.0.tgz#385aac025a4b84ee44b6e2dd8539e99570024e73"
+  integrity sha512-VVfLCrqAjqNr5lQNIOo0HbT2KeCCdFsg7NwzBGyfv3J0r3HKW/7iyYMWfwBqtm8Hev1gsi0Z3laMRn06qOFMRg==
   dependencies:
     lodash.isplainobject "^4.0.6"
     qs "~6.5.1"
