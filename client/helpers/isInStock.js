@@ -1,4 +1,4 @@
-export default function isInStock ({ quantity, type, value }) {
+const isInStock = ({ quantity, type, value }) => {
   switch (type) {
     case 'finite':
       return quantity
@@ -19,3 +19,9 @@ export default function isInStock ({ quantity, type, value }) {
       return false
   }
 }
+
+
+
+
+
+export default isInStock
