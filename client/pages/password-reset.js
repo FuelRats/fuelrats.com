@@ -105,7 +105,7 @@ class PasswordReset extends Component {
                   disabled={submitting}
                   id="password"
                   name="password"
-                  onChange={event => this.setState({ password: event.target.value })}
+                  onChange={(event) => this.setState({ password: event.target.value })}
                   pattern="^[^\s]{5,42}$"
                   placeholder="Use a strong password to keep your account secure"
                   ref={(_password) => {

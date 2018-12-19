@@ -31,7 +31,7 @@ class Blog extends Component {
     await retrieveBlog(query.id)
 
     this.setState({
-      blog: this.props.blogs.find(blog => (blog.id.toString() === query.id) || (blog.slug === query.id)),
+      blog: this.props.blogs.find((blog) => (blog.id.toString() === query.id) || (blog.slug === query.id)),
       retrieving: false,
     })
   }
@@ -51,7 +51,7 @@ class Blog extends Component {
   constructor (props) {
     super(props)
 
-    const blog = props.blogs.find(item => item.id === props.id)
+    const blog = props.blogs.find((item) => item.id === props.id)
 
     this.state = {
       blog,
@@ -172,7 +172,7 @@ class Blog extends Component {
     /* eslint-enable */
   }
 
-  static mapStateToProps = state => state.blogs
+  static mapStateToProps = (state) => state.blogs
 
   static mapDispatchToProps = ['retrieveBlog']
 }

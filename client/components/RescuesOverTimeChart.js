@@ -87,15 +87,15 @@ class RescuesOverTimeChart extends Component {
     const xScale = d3.scaleTime()
     this.xScale = xScale
     xScale.domain([
-      d3.min(data, datum => datum.attributes.date),
-      d3.max(data, datum => datum.attributes.date),
+      d3.min(data, (datum) => datum.attributes.date),
+      d3.max(data, (datum) => datum.attributes.date),
     ])
     xScale.range([0, width])
 
     // Define the Y axis scaling metrics
     const yScale = d3.scaleLinear()
     this.yScale = yScale
-    yScale.domain([d3.max(data, datum => datum.attributes.success + datum.attributes.failure), 0])
+    yScale.domain([d3.max(data, (datum) => datum.attributes.success + datum.attributes.failure), 0])
     yScale.range([0, height])
 
     return (
@@ -106,14 +106,14 @@ class RescuesOverTimeChart extends Component {
         height={height + xAxisMargin}
         width={width + yAxisMargin}>
         <g className="data">
-          {data.map(rescue => (
+          {data.map((rescue) => (
             <g
               className="datum"
               key={rescue.id}
               onBlur={this._handleHideTooltip}
-              onFocus={event => this._showTooltip(event, rescue)}
+              onFocus={(event) => this._showTooltip(event, rescue)}
               onMouseOut={this._handleHideTooltip}
-              onMouseOver={event => this._showTooltip(event, rescue)}
+              onMouseOver={(event) => this._showTooltip(event, rescue)}
               transform={`translate(${xScale(rescue.attributes.date)}, 0)`}>
               <rect
                 className="success"

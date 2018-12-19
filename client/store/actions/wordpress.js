@@ -7,7 +7,7 @@ import actionTypes from '../actionTypes'
 
 /* eslint-disable import/prefer-default-export */
 // prefer export member for consistency
-export const getWordpressPage = slug => createWpAction({
+export const getWordpressPage = (slug) => createWpAction({
   actionType: actionTypes.GET_WORDPRESS_PAGE,
   url: '/pages',
   params: {

@@ -14,7 +14,7 @@ module.exports = (koaServer, env) => {
     auth: `${env.api.clientId}:${env.api.clientSecret}`,
     changeOrigin: true,
     jar: true,
-    rewrite: path => path.replace(/^\/api/u, ''),
+    rewrite: (path) => path.replace(/^\/api/u, ''),
     secure: true,
     target: env.api.url,
   }))
@@ -22,7 +22,7 @@ module.exports = (koaServer, env) => {
   koaServer.use(proxy('/api', {
     changeOrigin: true,
     jar: true,
-    rewrite: path => path.replace(/^\/api/u, ''),
+    rewrite: (path) => path.replace(/^\/api/u, ''),
     secure: true,
     target: env.api.url,
   }))
@@ -37,7 +37,7 @@ module.exports = (koaServer, env) => {
 
   koaServer.use(proxy('/edsm-api', {
     changeOrigin: true,
-    rewrite: path => path.replace(/^\/edsm-api/u, ''),
+    rewrite: (path) => path.replace(/^\/edsm-api/u, ''),
     target: env.edsm.url,
   }))
 
@@ -51,7 +51,7 @@ module.exports = (koaServer, env) => {
 
   koaServer.use(proxy('/wp-api', {
     changeOrigin: true,
-    rewrite: path => path.replace(/^\/wp-api/u, '/wp-json/wp/v2'),
+    rewrite: (path) => path.replace(/^\/wp-api/u, '/wp-json/wp/v2'),
     target: env.wordpress.url,
   }))
 

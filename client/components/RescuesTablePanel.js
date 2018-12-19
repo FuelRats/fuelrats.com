@@ -74,7 +74,7 @@ class RescuesTablePanel extends Component {
     if (rats.length) {
       return (
         <ul className="comma-separated inline">
-          {rats.map(rat => <li key={rat.id}>{rat}</li>)}
+          {rats.map((rat) => <li key={rat.id}>{rat}</li>)}
         </ul>
       )
     }
@@ -228,7 +228,7 @@ class RescuesTablePanel extends Component {
 
   static mapDispatchToProps = ['getRescues']
 
-  static mapStateToProps = state => ({ ...state.rescues })
+  static mapStateToProps = (state) => ({ ...state.rescues })
 }
 
 

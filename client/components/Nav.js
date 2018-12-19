@@ -63,7 +63,7 @@ const navItems = [
   {
     key: 'rat-links',
     title: 'Rat Links',
-    condition: props => props.loggedIn,
+    condition: (props) => props.loggedIn,
     subnav: [
       {
         key: 'confluence',
@@ -97,7 +97,7 @@ class Nav extends Component {
     Private Methods
   \***************************************************************************/
 
-  _handleSubnavChange = ({ target: { id } }) => this.setState(prevState => ({ openSubNav: prevState.openSubNav === id ? '' : id }))
+  _handleSubnavChange = ({ target: { id } }) => this.setState((prevState) => ({ openSubNav: prevState.openSubNav === id ? '' : id }))
 
 
 
@@ -198,7 +198,7 @@ class Nav extends Component {
 
   static mapDispatchToProps = ['setFlag']
 
-  static mapStateToProps = state => ({
+  static mapStateToProps = (state) => ({
     ...state.authentication,
   })
 }

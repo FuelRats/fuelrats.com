@@ -13,7 +13,7 @@ import Dialog from './Dialog'
 
 
 
-const FirstLoginDialog = props => (
+const FirstLoginDialog = (props) => (
   <Dialog
     className="first-login-dialog"
     title={`Welcome to the Fuel Rats, CMDR ${props.cmdrName}!`}

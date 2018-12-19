@@ -91,7 +91,7 @@ class CartUpdateDialog extends Component {
   constructor (props) {
     super(props)
 
-    const firstSku = Object.values(this.props.product.attributes.skus).find(sku => isInStock(sku.inventory))
+    const firstSku = Object.values(this.props.product.attributes.skus).find((sku) => isInStock(sku.inventory))
 
     this.state = {
       activeSKU: firstSku ? firstSku.id : '',
@@ -145,7 +145,7 @@ class CartUpdateDialog extends Component {
                   {(prodAttr && prodAttr[0]) && (
                     <div className="labeled-input">
                       <label htmlFor="skuSelect">
-                        {prodAttr[0].replace(/^\w/u, char => char.toUpperCase())}:
+                        {prodAttr[0].replace(/^\w/u, (char) => char.toUpperCase())}:
                       </label>
                       <div className="select-wrapper">
                         <select
@@ -252,7 +252,7 @@ class CartUpdateDialog extends Component {
 
   static mapDispatchToProps = ['updateCartItem', 'updateOrder']
 
-  static mapStateToProps = state => ({ cart: state.storeCart })
+  static mapStateToProps = (state) => ({ cart: state.storeCart })
 }
 
 

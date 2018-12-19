@@ -69,7 +69,7 @@ class RescuesBySystemChart extends Component {
 
     const pie = d3.pie()
     pie.sort(null)
-    pie.value(datum => datum.value)
+    pie.value((datum) => datum.value)
     pie.padAngle(0.03)
 
     const pack = d3.pack()
@@ -77,7 +77,7 @@ class RescuesBySystemChart extends Component {
     pack.padding(10)
 
     const root = d3.hierarchy({ children: statistics })
-    root.sum(datum => (datum.attributes ? datum.attributes.count : 0))
+    root.sum((datum) => (datum.attributes ? datum.attributes.count : 0))
 
     const systems = pack(root).leaves()
 
@@ -115,7 +115,7 @@ class RescuesBySystemChart extends Component {
         <g
           className="platforms"
           transform={`translate(${width / 2},${height / 2})`}>
-          {pie(rescuesByPlatform).map(platform => (
+          {pie(rescuesByPlatform).map((platform) => (
             <g key={platform.data.safeName}>
               <path
                 className={['platform', platform.data.safeName].join(' ')}
@@ -168,9 +168,9 @@ class RescuesBySystemChart extends Component {
           filter="url(#glow)"
           key={index}
           onBlur={this._handleHideTooltip}
-          onFocus={event => this._showTooltip(event, system)}
+          onFocus={(event) => this._showTooltip(event, system)}
           onMouseOut={this._handleHideTooltip}
-          onMouseOver={event => this._showTooltip(event, system)}
+          onMouseOver={(event) => this._showTooltip(event, system)}
           transform={`translate(${system.x}, ${system.y})`}>
           <circle
             className={classes.join(' ')}

@@ -56,16 +56,16 @@ class EpicNominate extends Component {
 
 
   handleRatsChange = (value) => {
-    const newRatIds = value.map(rat => rat.id).join(',')
-    const oldRatIds = this.state.rats.map(rat => rat.id).join(',')
+    const newRatIds = value.map((rat) => rat.id).join(',')
+    const oldRatIds = this.state.rats.map((rat) => rat.id).join(',')
     if (newRatIds !== oldRatIds) {
       this.setState({ rats: value })
     }
   }
 
   handleRescuesChange = (value) => {
-    const newRescueId = value.map(rescue => rescue.id).join('')
-    const oldRescueId = this.state.rescue.map(rescue => rescue.id).join('')
+    const newRescueId = value.map((rescue) => rescue.id).join('')
+    const oldRescueId = this.state.rescue.map((rescue) => rescue.id).join('')
     if (newRescueId !== oldRescueId) {
       this.setState((state) => {
         const newState = { ...state }
@@ -87,7 +87,7 @@ class EpicNominate extends Component {
     }
   }
 
-  handleNotesChange = event => this.setState({ notes: event.target.value })
+  handleNotesChange = (event) => this.setState({ notes: event.target.value })
 
 
   _handleSubmit = async (event) => {
@@ -104,7 +104,7 @@ class EpicNominate extends Component {
     })
 
 
-    let responses = await Promise.all(rats.map(rat => this.props.createEpic({
+    let responses = await Promise.all(rats.map((rat) => this.props.createEpic({
       ratId: rat.id,
       rescueId: rescue.length ? rescue[0].id : null,
       notes,
@@ -206,7 +206,7 @@ class EpicNominate extends Component {
                   name="rats"
                   onChange={this.handleRatsChange}
                   value={rats}
-                  valueProp={rat => `${rat.attributes.name} [${rat.attributes.platform.toUpperCase()}]`} />
+                  valueProp={(rat) => `${rat.attributes.name} [${rat.attributes.platform.toUpperCase()}]`} />
               </fieldset>
             )}
 

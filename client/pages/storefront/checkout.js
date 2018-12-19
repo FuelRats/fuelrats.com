@@ -72,7 +72,7 @@ class Checkout extends Component {
 
   static mapDispatchToProps = ['getStoreCart']
 
-  static mapStateToProps = store => ({ cart: store.storeCart })
+  static mapStateToProps = (store) => ({ cart: store.storeCart })
 }
 
 

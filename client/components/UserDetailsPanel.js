@@ -56,7 +56,7 @@ const UserDetailsPanel = (props) => {
 
 
 
-UserDetailsPanel.mapStateToProps = state => state.user || {}
+UserDetailsPanel.mapStateToProps = (state) => state.user || {}
 
 
 
