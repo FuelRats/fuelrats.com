@@ -76,7 +76,7 @@ const connectDecorator = (target) => {
   let mapDispatchToProps = mDTP
 
   if (Array.isArray(mDTP)) {
-    mapDispatchToProps = dispatch => bindActionCreators(
+    mapDispatchToProps = (dispatch) => bindActionCreators(
       mDTP.reduce((acc, actionName) => ({
         ...acc,
         [actionName]: actions[actionName],

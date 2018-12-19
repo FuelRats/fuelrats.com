@@ -83,15 +83,15 @@ export const login = ({
 })
 
 
-export const getClientOAuthPage = params => createApiAction({
+export const getClientOAuthPage = (params) => createApiAction({
   actionType: actionTypes.GET_CLIENT_AUTHORIZATION_PAGE,
   url: '/oauth2/authorize',
-  onSuccess: res => res,
+  onSuccess: (res) => res,
   params,
 })
 
 
-export const logout = fromVerification => (dispatch) => {
+export const logout = (fromVerification) => (dispatch) => {
   Cookies.remove('access_token')
   delete apiService().defaults.headers.common.Authorization
 
@@ -137,7 +137,7 @@ export const resetPassword = ({ password, token }) => createApiAction({
 
 
 
-export const sendPasswordResetEmail = email => createApiAction({
+export const sendPasswordResetEmail = (email) => createApiAction({
   actionType: actionTypes.SEND_PASSWORD_RESET_EMAIL,
   url: '/reset',
   method: 'post',
@@ -147,7 +147,7 @@ export const sendPasswordResetEmail = email => createApiAction({
 })
 
 
-export const updateLoggingInState = success => dispatch => dispatch({
+export const updateLoggingInState = (success) => (dispatch) => dispatch({
   payload: null,
   status: success ? 'success' : 'noToken',
   type: actionTypes.LOGIN,
@@ -157,7 +157,7 @@ export const updateLoggingInState = success => dispatch => dispatch({
 
 
 
-export const validatePasswordResetToken = token => createApiAction({
+export const validatePasswordResetToken = (token) => createApiAction({
   actionType: actionTypes.VALIDATE_PASSWORD_RESET_TOKEN,
   url: `/reset/${token}`,
 })

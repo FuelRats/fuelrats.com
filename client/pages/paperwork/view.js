@@ -228,10 +228,10 @@ class Paperwork extends Component {
     }
 
     // Check if current user is assigned to case.
-    const assignedRatIds = rescue.relationships.rats.data.map(rat => rat.id)
-    const currentUserRatIds = currentUser.relationships.rats.data.map(rat => rat.id)
+    const assignedRatIds = rescue.relationships.rats.data.map((rat) => rat.id)
+    const currentUserRatIds = currentUser.relationships.rats.data.map((rat) => rat.id)
 
-    if (assignedRatIds.some(ratId => currentUserRatIds.includes(ratId))) {
+    if (assignedRatIds.some((ratId) => currentUserRatIds.includes(ratId))) {
       return true
     }
 
@@ -260,12 +260,12 @@ class Paperwork extends Component {
 
     if (rescue) {
       if (rescue.relationships.firstLimpet.data) {
-        firstLimpet = Object.values(state.rats.rats).filter(rat => rescue.relationships.firstLimpet.data.id === rat.id)
+        firstLimpet = Object.values(state.rats.rats).filter((rat) => rescue.relationships.firstLimpet.data.id === rat.id)
       }
 
       rats = Object.values(state.rats.rats)
-        .filter(rat => rescue.relationships.rats.data.find(({ id }) => rat.id === id))
-        .map(rat => ({
+        .filter((rat) => rescue.relationships.rats.data.find(({ id }) => rat.id === id))
+        .map((rat) => ({
           id: rat.id,
           value: rat.attributes.name,
           ...rat,
@@ -273,7 +273,7 @@ class Paperwork extends Component {
     }
 
     const currentUser = state.user
-    const currentUserGroups = currentUser.relationships ? [...currentUser.relationships.groups.data].map(group => state.groups[group.id]) : []
+    const currentUserGroups = currentUser.relationships ? [...currentUser.relationships.groups.data].map((group) => state.groups[group.id]) : []
 
 
     return {

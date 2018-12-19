@@ -5,7 +5,7 @@ import actionTypes from '../actionTypes'
 
 
 
-export const retrieveEpic = epicId => createApiAction({
+export const retrieveEpic = (epicId) => createApiAction({
   actionType: actionTypes.RETRIEVE_EPIC,
   url: `/epics/${epicId}`,
 })
@@ -14,7 +14,7 @@ export const retrieveEpic = epicId => createApiAction({
 
 
 
-export const createEpic = data => createApiAction({
+export const createEpic = (data) => createApiAction({
   actionType: actionTypes.CREATE_EPIC,
   url: '/epics',
   method: 'post',

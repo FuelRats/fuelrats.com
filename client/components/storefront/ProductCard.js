@@ -50,7 +50,7 @@ class ProductCard extends Component {
     let priceRange = ''
 
     if (Object.keys(skus).length) {
-      const priceList = Object.values(skus).map(sku => sku.price)
+      const priceList = Object.values(skus).map((sku) => sku.price)
       const minPrice = Math.min(...priceList)
       const maxPrice = Math.max(...priceList)
 
@@ -109,7 +109,7 @@ class ProductCard extends Component {
     const { skus } = this.props.product.attributes
 
     if (Object.keys(skus).length) {
-      return Object.values(skus).some(sku => skuIsInStock(sku.inventory))
+      return Object.values(skus).some((sku) => skuIsInStock(sku.inventory))
     }
 
     return false

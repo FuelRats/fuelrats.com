@@ -86,7 +86,7 @@ class ForgotPassword extends Component {
 
                 <input
                   id="email"
-                  onChange={event => this.setState({ email: event.target.value })}
+                  onChange={(event) => this.setState({ email: event.target.value })}
                   name="email"
                   ref={(_emailEl) => {
                     this._emailEl = _emailEl

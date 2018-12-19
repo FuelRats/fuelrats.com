@@ -84,7 +84,7 @@ export default class PasswordField extends Component {
   }
 
   handleShowPasswordClick () {
-    this.setState(state => ({ showPassword: !state.showPassword }))
+    this.setState((state) => ({ showPassword: !state.showPassword }))
     this._el.focus()
   }
 

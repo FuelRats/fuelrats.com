@@ -22,7 +22,7 @@ class TabbedPanel extends Component {
 
     return (
       <div className="tab-pane">
-        {tabs.find(tab => tab.title === activeTab).component}
+        {tabs.find((tab) => tab.title === activeTab).component}
       </div>
     )
   }
@@ -72,7 +72,7 @@ class TabbedPanel extends Component {
     this._bindMethods(['_renderTab'])
 
     this.state = {
-      activeTab: props.tabs.find(tab => tab.default).title,
+      activeTab: props.tabs.find((tab) => tab.default).title,
     }
   }
 

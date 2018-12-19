@@ -22,7 +22,7 @@ import Key from './Key'
 
 export default class TagsInputComponent extends React.Component {
   _bindMethods (methods) {
-    methods.forEach(method => this[method] = this[method].bind(this))
+    methods.forEach((method) => this[method] = this[method].bind(this))
   }
 
   static _renderLoader () {
@@ -49,13 +49,13 @@ export default class TagsInputComponent extends React.Component {
     const { onAdd } = this.props
 
     if (!this.state.allowDuplicates) {
-      const isDuplicate = this.state.tags.findIndex(searchTag => this.getValue(searchTag) === this.getValue(tag)) !== -1
+      const isDuplicate = this.state.tags.findIndex((searchTag) => this.getValue(searchTag) === this.getValue(tag)) !== -1
       if (isDuplicate) {
         return false
       }
     }
 
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       options: [],
       selectedOption: null,
       tags: [
@@ -120,7 +120,7 @@ export default class TagsInputComponent extends React.Component {
     const newNextState = { ...nextState }
 
     if (this.state.tags !== nextState.tags) {
-      newNextState.tags = nextState.tags.map(tag => TagsInputComponent.parseOption(tag))
+      newNextState.tags = nextState.tags.map((tag) => TagsInputComponent.parseOption(tag))
     }
   }
 
@@ -147,7 +147,7 @@ export default class TagsInputComponent extends React.Component {
       tags = [tags]
     }
 
-    tags = tags.map(tag => TagsInputComponent.parseOption(tag))
+    tags = tags.map((tag) => TagsInputComponent.parseOption(tag))
 
     this.state = {
       allowDuplicates: props['data-allowduplicates'],
@@ -164,7 +164,7 @@ export default class TagsInputComponent extends React.Component {
 
   findOption (optionValue) {
     const option = typeof optionValue !== 'string' ? optionValue : { value: optionValue }
-    const optionIndex = this.state.options.findIndex(searchOption => this.getValue(option) === this.getValue(searchOption))
+    const optionIndex = this.state.options.findIndex((searchOption) => this.getValue(option) === this.getValue(searchOption))
 
     if (optionIndex === -1) {
       return false
@@ -175,7 +175,7 @@ export default class TagsInputComponent extends React.Component {
 
   findTag (tagValue) {
     const tag = typeof tagValue !== 'string' ? tagValue : { value: tagValue }
-    const tagIndex = this.state.tags.findIndex(searchTag => this.getValue(tag) === this.getValue(searchTag))
+    const tagIndex = this.state.tags.findIndex((searchTag) => this.getValue(tag) === this.getValue(searchTag))
 
     if (tagIndex === -1) {
       return false
@@ -400,7 +400,7 @@ export default class TagsInputComponent extends React.Component {
     return typeof optionValue !== 'string' ? optionValue : { value: optionValue }
   }
 
-  removeTag = tag => this.setState((state) => {
+  removeTag = (tag) => this.setState((state) => {
     const tags = [...state.tags]
 
     tags.splice(tags.indexOf(tag), 1)
@@ -463,7 +463,7 @@ export default class TagsInputComponent extends React.Component {
           onInput={this.onInput}
           onKeyDown={this.onKeyDown}
           placeholder={placeholder}
-          ref={input => this.input = input}
+          ref={(input) => this.input = input}
           type="search" />
 
         {Boolean(allowNew) && this.renderReturnPrompt()}
@@ -507,10 +507,10 @@ export default class TagsInputComponent extends React.Component {
         className={classes.join(' ')}
         key={index}
         onBlur={TagsInputComponent.handleOptionMouseOut}
-        onFocus={event => this.handleOptionMouseOver(event, index)}
+        onFocus={(event) => this.handleOptionMouseOver(event, index)}
         onMouseDown={() => this.addTag(option)}
         onMouseOut={TagsInputComponent.handleOptionMouseOut}
-        onMouseOver={event => this.handleOptionMouseOver(event, index)}>
+        onMouseOver={(event) => this.handleOptionMouseOver(event, index)}>
         {this.renderValue(option)}
       </li>
     )

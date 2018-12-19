@@ -45,7 +45,7 @@ class UserRatsPanel extends Component {
   }
 
   _renderSubcomponent (row) {
-    const ships = row.original.relationships.ships.data.map(({ id }) => this.props.ships.ships.find(ship => ship.id === id))
+    const ships = row.original.relationships.ships.data.map(({ id }) => this.props.ships.ships.find((ship) => ship.id === id))
 
     return (
       <RatDetails ships={ships} />
@@ -161,7 +161,7 @@ class UserRatsPanel extends Component {
   static mapDispatchToProps = ['createRat']
 
   static mapStateToProps = ({ rats, ships, user }) => ({
-    rats: Object.values(rats.rats).filter(rat => user.id === rat.attributes.userId),
+    rats: Object.values(rats.rats).filter((rat) => user.id === rat.attributes.userId),
     ships,
   })
 }

@@ -84,7 +84,7 @@ class ListCart extends Component {
       newValue = null
     }
 
-    this.setState(state => ({
+    this.setState((state) => ({
       quantity: {
         ...state.quantity,
         [name]: value,
@@ -147,7 +147,7 @@ class ListCart extends Component {
                 <span className="item-quantity-key">Quantity</span>
               </div>
               {Object.entries(cart).map(([skuId, quantity]) => {
-                const product = Object.values(products).find(datum => datum.attributes.skus && datum.attributes.skus[skuId])
+                const product = Object.values(products).find((datum) => datum.attributes.skus && datum.attributes.skus[skuId])
                 const sku = product.attributes.skus[skuId]
                 const {
                   name,
@@ -204,7 +204,7 @@ class ListCart extends Component {
                   {'SubTotal: '}
                   {
                     getMoney(Object.entries(cart).reduce((acc, [skuId, quantity]) => {
-                      const product = Object.values(products).find(datum => datum.attributes.skus && datum.attributes.skus[skuId])
+                      const product = Object.values(products).find((datum) => datum.attributes.skus && datum.attributes.skus[skuId])
                       const sku = product.attributes.skus[skuId]
 
                       return acc + (sku.price * quantity)
@@ -236,7 +236,7 @@ class ListCart extends Component {
 
   static mapDispatchToProps = ['getStoreCart', 'updateCartItem', 'removeCartItem', 'updateOrder']
 
-  static mapStateToProps = store => ({
+  static mapStateToProps = (store) => ({
     ...store.products,
     cart: store.storeCart,
   })

@@ -24,7 +24,7 @@ const domainWhitelist = [
 
 
 
-module.exports = isDev => async (ctx, next) => {
+module.exports = (isDev) => async (ctx, next) => {
   const nonce = uuidv4()
 
   ctx.res.nonce = nonce /* eslint-disable-line no-param-reassign */

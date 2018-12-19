@@ -27,9 +27,9 @@ const getDefaultOptionProps = () => ({
 class RadioCardInput extends Component {
   UNSAFE_componentWillReceiveProps (nextProps) {
     const currentValue = nextProps.value || (this.state.selectedOption ? this.state.selectedOption.key : null) || nextProps.defaultValue || null
-    const options = nextProps.options.map(option => ({ ...getDefaultOptionProps(), ...option }))
+    const options = nextProps.options.map((option) => ({ ...getDefaultOptionProps(), ...option }))
 
-    const selectedOption = options.find(option => option.key === currentValue)
+    const selectedOption = options.find((option) => option.key === currentValue)
 
     this.setState({
       options,
@@ -49,11 +49,11 @@ class RadioCardInput extends Component {
 
     const currentValue = this.props.value || this.props.defaultValue
 
-    const options = this.props.options.map(option => ({ ...getDefaultOptionProps(), ...option }))
+    const options = this.props.options.map((option) => ({ ...getDefaultOptionProps(), ...option }))
 
-    let selectedOption = options.find(option => option.key === currentValue && !option.disabled)
+    let selectedOption = options.find((option) => option.key === currentValue && !option.disabled)
     if (!selectedOption) {
-      selectedOption = options.find(option => !option.disabled)
+      selectedOption = options.find((option) => !option.disabled)
     }
 
     if (selectedOption && selectedOption.key !== currentValue) {

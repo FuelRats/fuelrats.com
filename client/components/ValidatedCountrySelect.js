@@ -73,7 +73,7 @@ class ValidatedCountrySelect extends React.Component {
             className={classes}
             onChange={this._handleChange}>
             {!renderLabel && (<option value="">{label}</option>)}
-            {countryList.map(country => (
+            {countryList.map((country) => (
               <option
                 key={country}
                 value={country}>
