@@ -27,11 +27,11 @@ const getDefaultOptionProps = () => ({
 
 export default class RadioOptionsInput extends Component {
   UNSAFE_componentWillReceiveProps (nextProps) {
-    const options = nextProps.options.map(option => ({ ...getDefaultOptionProps(), ...option }))
+    const options = nextProps.options.map((option) => ({ ...getDefaultOptionProps(), ...option }))
 
-    this.setState(state => ({
+    this.setState((state) => ({
       options,
-      selectedOption: options.find(option => option.value === nextProps.value) || state.selectedOption,
+      selectedOption: options.find((option) => option.value === nextProps.value) || state.selectedOption,
     }))
   }
 
@@ -47,9 +47,9 @@ export default class RadioOptionsInput extends Component {
 
     const currentValue = this.props.value || this.props.defaultValue
 
-    const options = this.props.options.map(option => ({ ...getDefaultOptionProps(), ...option }))
+    const options = this.props.options.map((option) => ({ ...getDefaultOptionProps(), ...option }))
 
-    let selectedOption = options.filter(option => option.value === currentValue)
+    let selectedOption = options.filter((option) => option.value === currentValue)
 
     if (selectedOption.length > 0) {
       [selectedOption] = selectedOption

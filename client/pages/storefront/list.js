@@ -71,7 +71,7 @@ class ListProducts extends Component {
           <div className="page-content">
             <StoreControlBar />
             <div className="product-cards">
-              {Object.values(this.props.products).sort(productPriorityDecendingSort).map(product => (
+              {Object.values(this.props.products).sort(productPriorityDecendingSort).map((product) => (
                 <ProductCard
                   key={product.id}
                   product={product}
@@ -96,7 +96,7 @@ class ListProducts extends Component {
     }
   }
 
-  static mapStateToProps = store => store.products
+  static mapStateToProps = (store) => store.products
 }
 
 

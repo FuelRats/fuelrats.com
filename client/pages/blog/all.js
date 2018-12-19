@@ -262,7 +262,7 @@ class Blogs extends Component {
     )
   }
 
-  static mapStateToProps = state => state.blogs
+  static mapStateToProps = (state) => state.blogs
 
   static mapDispatchToProps = ['retrieveBlogs']
 }

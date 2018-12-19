@@ -107,7 +107,7 @@ const UserMenu = (props) => {
 UserMenu.mapDispatchToProps = ['logout', 'setFlag']
 
 UserMenu.mapStateToProps = ({ authentication, user, groups }) => {
-  const userGroups = user.relationships ? user.relationships.groups.data.map(group => groups[group.id]) : []
+  const userGroups = user.relationships ? user.relationships.groups.data.map((group) => groups[group.id]) : []
 
   return {
     ...authentication,

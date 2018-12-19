@@ -98,7 +98,7 @@ class ListOrders extends Component {
               </thead>
 
               <tbody>
-                {orders.map(order => (
+                {orders.map((order) => (
                   <tr key={order.id}>
                     <td>{moment(order.attributes.createdAt).format('DD MMMM, YYYY')}</td>
 
@@ -170,8 +170,8 @@ class ListOrders extends Component {
   static mapDispatchToProps = ['getOrders', 'updateOrder']
 
   static mapStateToProps = ({ orders: { orders }, skus }) => {
-    const paidOrders = Object.values(orders).filter(order => order.attributes.status === 'paid').reverse()
-    const createdOrders = Object.values(orders).filter(order => order.attributes.status === 'created')
+    const paidOrders = Object.values(orders).filter((order) => order.attributes.status === 'paid').reverse()
+    const createdOrders = Object.values(orders).filter((order) => order.attributes.status === 'created')
 
     return {
       orders: [

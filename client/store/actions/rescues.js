@@ -11,7 +11,7 @@ export const getRescues = () => createApiAction({
   url: '/rescues',
 })
 
-export const getRescue = rescueId => createApiAction({
+export const getRescue = (rescueId) => createApiAction({
   actionType: actionTypes.GET_RESCUE,
   url: `/rescues/${rescueId}`,
 })

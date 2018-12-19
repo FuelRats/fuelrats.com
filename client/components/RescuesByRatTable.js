@@ -66,7 +66,7 @@ class RescuesByRatTable extends Component {
     if (!this._columns) {
       this._columns = [
         {
-          accessor: datum => datum.attributes['user.displayRat.name'] || datum.attributes.rats[0],
+          accessor: (datum) => datum.attributes['user.displayRat.name'] || datum.attributes.rats[0],
           className: 'name',
           Header: 'Name',
           headerClassName: 'name',
@@ -100,7 +100,7 @@ class RescuesByRatTable extends Component {
 
     return {
       loading,
-      statistics: statistics.filter(rat => rat.attributes.rescueCount > 0),
+      statistics: statistics.filter((rat) => rat.attributes.rescueCount > 0),
     }
   }
 }

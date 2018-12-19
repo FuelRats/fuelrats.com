@@ -12,7 +12,7 @@ import UserShipsTable from './UserShipsTable'
 
 
 
-const RatDetails = props => (
+const RatDetails = (props) => (
   <div className="rat-details">
     <UserShipsTable data={props.ships} />
   </div>

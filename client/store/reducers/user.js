@@ -27,7 +27,7 @@ export default function userReducer (state = initialState.user, action) {
       if (status === 'success') {
         const newState = { ...state }
 
-        newState.attributes.nicknames = newState.attributes.nicknames.filter(nick => nick !== action.nickname)
+        newState.attributes.nicknames = newState.attributes.nicknames.filter((nick) => nick !== action.nickname)
 
         return newState
       }

@@ -20,7 +20,7 @@ import TermsDialog from '../components/TermsDialog'
 
 // Component constants
 /* eslint-disable react/no-danger */
-const getWordpressPageElement = page => (
+const getWordpressPageElement = (page) => (
   <div dangerouslySetInnerHTML={{ __html: page.content.rendered.replace(/<ul>/giu, '<ul class="bulleted">').replace(/<ol>/giu, '<ol class="numbered">') }} />
 )
 /* eslint-enable react/no-danger */
@@ -120,7 +120,12 @@ class Register extends Component {
     })
 
     if (regStatus === 'success') {
-      await this.props.login(email, password, 'profile', { firstLogin: '1' })
+      await this.props.login({
+        email,
+        password,
+        route: 'profile',
+        routeParams: { fl: '1' },
+      })
     } else {
       this.setState({ submitting: false })
     }
@@ -348,7 +353,7 @@ class Register extends Component {
     return true
   }
 
-  static mapStateToProps = state => ({
+  static mapStateToProps = (state) => ({
     termsPage: state.wordpress.page['terms-of-service'],
     privacyPage: state.wordpress.page['privacy-policy'],
   })

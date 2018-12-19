@@ -50,7 +50,7 @@ class Profile extends React.Component {
   \***************************************************************************/
 
   componentDidMount () {
-    if (this.props.query.firstLogin === '1') {
+    if (this.props.query.fl === '1') {
       this.setState({ showFirstLoginDialog: true })
     }
   }

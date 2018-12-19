@@ -48,7 +48,7 @@ const Acknowledgements = () => (
   <PageWrapper title="Acknowledgements">
     <div className="page-content">
       {
-        brands.map(brand => (
+        brands.map((brand) => (
           <div key={brand.key} className={`credit-section credit-${brand.key}`}>
             <a
               href={brand.homepage}
@@ -66,7 +66,7 @@ const Acknowledgements = () => (
           <ul className="text-mono">
             {Object.keys({
               ...dependencies,
-            }).map(dep => (
+            }).map((dep) => (
               <li key={dep}><a target="_blank" rel="noopener noreferrer" href={`https://www.npmjs.com/package/${dep}`}>{dep}</a></li>
             ))}
           </ul>
