@@ -74,7 +74,7 @@ class StoreControlBar extends Component {
   \***************************************************************************/
   static mapDispatchToProps = ['getStoreCart']
 
-  static mapStateToProps = state => ({ cart: state.storeCart })
+  static mapStateToProps = (state) => ({ cart: state.storeCart })
 }
 
 

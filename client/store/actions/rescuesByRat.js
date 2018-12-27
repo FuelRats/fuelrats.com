@@ -5,7 +5,7 @@ import actionTypes from '../actionTypes'
 
 
 
-export const getRescuesByRat = ratId => createApiAction({
+export const getRescuesByRat = (ratId) => createApiAction({
   actionType: actionTypes.GET_RESCUES,
   url: `/rescues?rats=${ratId}`,
   preDispatch: {

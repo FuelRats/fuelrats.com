@@ -19,7 +19,7 @@ const path = 'M113.000,26.000 L6.000,26.000 C2.686,26.000 0.000,23.314 0.000,20.
 
 
 
-const StripeBadgeSvg = props => (
+const StripeBadgeSvg = (props) => (
   <Svg
     {...props}
     alt="Powered by Stripe"

@@ -133,29 +133,29 @@ const createAction = (options) => {
 
 
 
-const createApiAction = options => createAction({
+const createApiAction = (options) => createAction({
   ...options,
   actionFunction: apiService().request,
-  onUnhandledSuccess: res => res.data,
-  onUnhandledError: res => res && res.response && res.response.data,
+  onUnhandledSuccess: (res) => res.data,
+  onUnhandledError: (res) => res && res.response && res.response.data,
 })
 
 
 
 
 
-const createWpAction = options => createAction({
+const createWpAction = (options) => createAction({
   ...options,
   actionFunction: wpService().request,
-  onUnhandledSuccess: res => res.data,
-  onUnhandledError: res => res && res.response && res.response.data,
+  onUnhandledSuccess: (res) => res.data,
+  onUnhandledError: (res) => res && res.response && res.response.data,
 })
 
 
 
 
 
-const createTimeoutAction = options => createAction({
+const createTimeoutAction = (options) => createAction({
   ...options,
   actionFunction: (opts) => {
     const data = { data: opts.data }

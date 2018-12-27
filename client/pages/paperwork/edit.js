@@ -59,7 +59,7 @@ class Paperwork extends Component {
     })
   }
 
-  _handleNotesChange = event => this._setChanges({ notes: event.target.value })
+  _handleNotesChange = (event) => this._setChanges({ notes: event.target.value })
 
   _handleRadioOptionsChange = (option) => {
     const attribute = option.name
@@ -211,7 +211,7 @@ class Paperwork extends Component {
     Router.pushRoute('paperwork view', { id: rescue.id })
   }
 
-  _setChanges = changedFields => this.setState((prevState, props) => ({
+  _setChanges = (changedFields) => this.setState((prevState, props) => ({
     changes: {
       ...prevState.changes,
       ...Object.entries(changedFields).reduce((acc, [key, value]) => ({
@@ -258,7 +258,7 @@ class Paperwork extends Component {
       system,
     } = fieldValues
 
-    const ratNameTemplate = rat => `${rat.attributes.name} [${rat.attributes.platform.toUpperCase()}]`
+    const ratNameTemplate = (rat) => `${rat.attributes.name} [${rat.attributes.platform.toUpperCase()}]`
 
     const pwValidity = this.validate(fieldValues)
 
@@ -525,7 +525,7 @@ class Paperwork extends Component {
     const { changes } = this.state
 
     const isDefined = (value, fallback) => (typeof value === 'undefined' ? fallback : value)
-    const getValue = value => isDefined(changes[value], rescue.attributes[value])
+    const getValue = (value) => isDefined(changes[value], rescue.attributes[value])
 
 
     const rats = {
@@ -570,10 +570,10 @@ class Paperwork extends Component {
     }
 
     // Check if current user is assigned to case.
-    const assignedRatIds = rescue.relationships.rats.data.map(rat => rat.id)
-    const currentUserRatIds = currentUser.relationships.rats.data.map(rat => rat.id)
+    const assignedRatIds = rescue.relationships.rats.data.map((rat) => rat.id)
+    const currentUserRatIds = currentUser.relationships.rats.data.map((rat) => rat.id)
 
-    if (assignedRatIds.some(ratId => currentUserRatIds.includes(ratId))) {
+    if (assignedRatIds.some((ratId) => currentUserRatIds.includes(ratId))) {
       return true
     }
 
@@ -603,12 +603,12 @@ class Paperwork extends Component {
 
     if (rescue) {
       if (rescue.relationships.firstLimpet.data) {
-        firstLimpetId = Object.values(state.rats.rats).filter(rat => rescue.relationships.firstLimpet.data.id === rat.id)
+        firstLimpetId = Object.values(state.rats.rats).filter((rat) => rescue.relationships.firstLimpet.data.id === rat.id)
       }
 
       rats = Object.values(state.rats.rats)
-        .filter(rat => rescue.relationships.rats.data.find(({ id }) => rat.id === id))
-        .map(rat => ({
+        .filter((rat) => rescue.relationships.rats.data.find(({ id }) => rat.id === id))
+        .map((rat) => ({
           ...rat,
           value: rat.attributes.name,
         }))
@@ -619,7 +619,7 @@ class Paperwork extends Component {
     }
 
     const currentUser = state.user
-    const currentUserGroups = currentUser.relationships ? [...currentUser.relationships.groups.data].map(group => state.groups[group.id]) : []
+    const currentUserGroups = currentUser.relationships ? [...currentUser.relationships.groups.data].map((group) => state.groups[group.id]) : []
 
     return {
       firstLimpetId,

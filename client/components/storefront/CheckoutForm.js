@@ -276,7 +276,7 @@ class CheckoutForm extends React.Component {
                 <RadioCardInput
                   value={shippingMethod}
                   onChange={this._handleShippingMethodChange}
-                  options={order.attributes.shippingMethods.map(method => ({
+                  options={order.attributes.shippingMethods.map((method) => ({
                     key: method.id,
                     disabled: method.description.startsWith('UK Domestic') && order.attributes.shipping.address.country !== 'United Kingdom',
                     value: { ...method },

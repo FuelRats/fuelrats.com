@@ -81,7 +81,7 @@ class AddRatForm extends Component {
               disabled={submitting}
               id="add-rat"
               name="add-rat"
-              onChange={event => this.setState({ name: event.target.value })}
+              onChange={(event) => this.setState({ name: event.target.value })}
               placeholder="CMDR Name"
               type="text" />
 
@@ -90,7 +90,7 @@ class AddRatForm extends Component {
               hidden
               id="platform-pc"
               name="platform"
-              onChange={event => this.setState({ platform: event.target.value })}
+              onChange={(event) => this.setState({ platform: event.target.value })}
               type="radio"
               value="pc" />
             <label
@@ -104,7 +104,7 @@ class AddRatForm extends Component {
               hidden
               id="platform-xb"
               name="platform"
-              onChange={event => this.setState({ platform: event.target.value })}
+              onChange={(event) => this.setState({ platform: event.target.value })}
               type="radio"
               value="xb" />
             <label
@@ -118,7 +118,7 @@ class AddRatForm extends Component {
               hidden
               id="platform-ps"
               name="platform"
-              onChange={event => this.setState({ platform: event.target.value })}
+              onChange={(event) => this.setState({ platform: event.target.value })}
               type="radio"
               value="ps" />
             <label

@@ -34,7 +34,7 @@ class UserNicknamesPanel extends Component {
         <div className="panel-content">
           <ul>
             {(user.attributes && user.attributes.nicknames)
-              && user.attributes.nicknames.map(nickname => (
+              && user.attributes.nicknames.map((nickname) => (
                 <li key={nickname}>
                   <span>{nickname}</span>
                   {/* Disabled due to problems with current implementation of IRC nick management.
@@ -62,7 +62,7 @@ class UserNicknamesPanel extends Component {
 
   static mapDispatchToProps = ['deleteNickname']
 
-  static mapStateToProps = state => ({ user: state.user })
+  static mapStateToProps = (state) => ({ user: state.user })
 }
 
 

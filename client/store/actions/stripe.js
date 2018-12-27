@@ -20,7 +20,7 @@ export const getProducts = (params = {}) => createApiAction({
 
 
 
-export const getProduct = id => createApiAction({
+export const getProduct = (id) => createApiAction({
   actionType: actionTypes.GET_STRIPE_PRODUCT,
   url: `/products/${id}`,
 })
@@ -29,7 +29,7 @@ export const getProduct = id => createApiAction({
 
 
 
-export const createOrder = data => createApiAction({
+export const createOrder = (data) => createApiAction({
   actionType: actionTypes.CREATE_STRIPE_ORDER,
   url: '/orders',
   method: 'post',
@@ -40,7 +40,7 @@ export const createOrder = data => createApiAction({
 
 
 
-export const getOrders = params => createApiAction({
+export const getOrders = (params) => createApiAction({
   actionType: actionTypes.GET_STRIPE_ORDERS,
   url: '/orders',
   params,
@@ -50,7 +50,7 @@ export const getOrders = params => createApiAction({
 
 
 
-export const getOrder = id => createApiAction({
+export const getOrder = (id) => createApiAction({
   actionType: actionTypes.GET_STRIPE_ORDER,
   url: `/orders/${id}`,
 })
@@ -81,7 +81,7 @@ export const updateOrder = (id, data) => createApiAction({
 
 
 
-export const createCustomer = data => createApiAction({
+export const createCustomer = (data) => createApiAction({
   actionType: actionTypes.CREATE_STRIPE_CUSTOMER,
   url: '/customers',
   method: 'post',

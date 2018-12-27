@@ -169,7 +169,7 @@ class UserDetailsPanel extends Component {
 
   static mapDispatchToProps = ['checkDecalEligibility', 'redeemDecal']
 
-  static mapStateToProps = state => state.decals
+  static mapStateToProps = (state) => state.decals
 }
 
 

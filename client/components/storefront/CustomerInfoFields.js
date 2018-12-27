@@ -219,7 +219,7 @@ class CustomerInfoFields extends React.Component {
   \***************************************************************************/
 
   get isValid () {
-    const invalidStates = Object.values(this.state.validity).filter(value => value !== true)
+    const invalidStates = Object.values(this.state.validity).filter((value) => value !== true)
     return invalidStates.length ? invalidStates[0] : true
   }
 }

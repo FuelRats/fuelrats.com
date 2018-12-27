@@ -6,7 +6,7 @@ import actionTypes from '../actionTypes'
 
 
 
-export const retrieveAuthor = authorId => createWpAction({
+export const retrieveAuthor = (authorId) => createWpAction({
   actionType: actionTypes.GET_WORDPRESS_AUTHOR,
   url: `/users/${authorId}`,
 })
@@ -15,7 +15,7 @@ export const retrieveAuthor = authorId => createWpAction({
 
 
 
-export const retrieveCategory = categoryId => createWpAction({
+export const retrieveCategory = (categoryId) => createWpAction({
   actionType: actionTypes.GET_WORDPRESS_CATEGORY,
   url: `/categories/${categoryId}`,
 })
@@ -24,7 +24,7 @@ export const retrieveCategory = categoryId => createWpAction({
 
 
 
-export const retrieveBlog = id => createWpAction({
+export const retrieveBlog = (id) => createWpAction({
   actionType: actionTypes.GET_WORDPRESS_POST,
   url: `/posts/${id}`,
   onSuccess: ({ author: authorId, categories: categoryIds }, { dispatch, getState }) => {
@@ -46,7 +46,7 @@ export const retrieveBlog = id => createWpAction({
 
 
 
-export const retrieveBlogs = params => createWpAction({
+export const retrieveBlogs = (params) => createWpAction({
   actionType: actionTypes.GET_WORDPRESS_POSTS,
   url: '/posts',
   params,

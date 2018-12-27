@@ -23,7 +23,7 @@ export const addNickname = (nickname, password) => createApiAction({
 
 
 
-export const deleteNickname = nickname => createApiAction({
+export const deleteNickname = (nickname) => createApiAction({
   actionType: actionTypes.DELETE_NICKNAME,
   url: `/nicknames/${nickname}`,
   method: 'delete',

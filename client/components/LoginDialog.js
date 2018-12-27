@@ -199,7 +199,7 @@ class LoginDialog extends React.Component {
       return false
     }
 
-    return !Object.values(this.state.validity).filter(value => value !== true).length
+    return !Object.values(this.state.validity).filter((value) => value !== true).length
   }
 
 
@@ -212,7 +212,7 @@ class LoginDialog extends React.Component {
 
   static mapDispatchToProps = ['login', 'getUser']
 
-  static mapStateToProps = state => state.authentication
+  static mapStateToProps = (state) => state.authentication
 
 
 
