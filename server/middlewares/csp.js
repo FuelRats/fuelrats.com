@@ -31,13 +31,17 @@ module.exports = (isDev) => async (ctx, next) => {
 
   const policyString = buildCSP({
     directives: {
-      defaultSrc: ["'self'", ...domainWhitelist, 'wss://*.fuelrats.com'],
+      defaultSrc: ["'self'", ...domainWhitelist],
+      connectSrc: [
+        "'self'",
+        'wss://*.fuelrats.com',
+        ...(isDev ? ['ws://localhost:*'] : []),
+      ],
       baseUri: ["'none'"],
       scriptSrc: [
         "'self'",
         `'nonce-${nonce}'`,
         "'strict-dynamic'",
-        "'unsafe-inline'",
         ...(isDev ? ["'unsafe-eval'"] : []),
       ],
       styleSrc: ["'self'", "'unsafe-inline'", ...domainWhitelist],
