@@ -169,6 +169,7 @@ class ListCart extends Component {
                     </span>
 
                     <input
+                      aria-label="Item quantity"
                       className="item-quantity"
                       disabled={submitting}
                       name={skuId}

@@ -61,7 +61,7 @@ class INeedFuel extends Component {
 
 
             {browserInfo.isSupported && (
-              <React.Fragment>
+              <>
                 <p>Have you found yourself low on fuel and unable to make it to your nearest refuel point? Never fear! The Fuel Rats are here to help! </p>
 
                 <div className="buttons">
@@ -99,7 +99,7 @@ class INeedFuel extends Component {
                   </Link>
                   {'.'}
                 </small>
-              </React.Fragment>
+              </>
             )}
 
             {!browserInfo.isSupported && (<h5>{browserInfo.supportMessage}</h5>)}

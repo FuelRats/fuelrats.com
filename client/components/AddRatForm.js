@@ -78,6 +78,7 @@ class AddRatForm extends Component {
         <div className="row">
           <div className="input-group stretch-9">
             <input
+              aria-label="Commander Name"
               disabled={submitting}
               id="add-rat"
               name="add-rat"
@@ -86,6 +87,7 @@ class AddRatForm extends Component {
               type="text" />
 
             <input
+              aria-label="P C Commander"
               defaultChecked={platform === 'pc'}
               hidden
               id="platform-pc"
@@ -100,6 +102,7 @@ class AddRatForm extends Component {
             </label>
 
             <input
+              aria-label="Xbox Commander"
               defaultChecked={platform === 'xb'}
               hidden
               id="platform-xb"
@@ -114,6 +117,7 @@ class AddRatForm extends Component {
             </label>
 
             <input
+              aria-label="Playsation Commander"
               defaultChecked={platform === 'ps'}
               hidden
               id="platform-ps"
@@ -129,6 +133,7 @@ class AddRatForm extends Component {
           </div>
 
           <button
+            aria-label="Add Commander"
             disabled={!name || submitting}
             type="submit">
             Add

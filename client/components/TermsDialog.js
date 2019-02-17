@@ -47,6 +47,11 @@ class TermsDialog extends Component {
 
   render () {
     const {
+      onClose,
+      title,
+    } = this.props
+
+    const {
       content,
       loading,
     } = this.state
@@ -55,9 +60,9 @@ class TermsDialog extends Component {
       <Dialog
         className="terms-dialog"
         controls={this.controls}
-        title={this.props.title}
+        title={title}
         showClose={false}
-        onClose={this.props.onClose}>
+        onClose={onClose}>
 
         {loading && (
           <div className="loading content" />
@@ -78,29 +83,36 @@ class TermsDialog extends Component {
 
   get controls () {
     const {
+      checkboxLabel,
+      onClose,
+      title,
+    } = this.props
+
+    const {
       termsAgreed,
     } = this.state
 
-    const checkboxId = `termsDialog-${this.props.title.replace(/\s/gu, '')}-checkbox`
+    const checkboxId = `termsDialog-${title.replace(/\s/gu, '')}-checkbox`
 
     return {
       primary: [
         (
           <span key="AgreeCheckbox">
             <input
+              aria-label={checkboxLabel}
               checked={termsAgreed}
               className="large"
               id={checkboxId}
               onChange={({ target }) => this.setState({ termsAgreed: target.checked })}
               type="checkbox" />
-            <label htmlFor={checkboxId}>{this.props.checkboxLabel}</label>
+            <label htmlFor={checkboxId}>{checkboxLabel}</label>
           </span>
         ),
         (
           <button
             disabled={!termsAgreed}
             key="NextButton"
-            onClick={() => this.props.onClose()}
+            onClick={() => onClose()}
             type="button">
             Next
           </button>

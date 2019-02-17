@@ -65,7 +65,12 @@ class UserShipsPanel extends Component {
           </div>
 
           <form className="row">
-            <input className="stretch-9" name="add-ship" placeholder="Add a ship..." type="text" />
+            <input
+              aria-label="Ship Name"
+              className="stretch-9"
+              name="add-ship"
+              placeholder="Add a ship..."
+              type="text" />
             <button data-action="add-ship" type="submit">Add</button>
           </form>
         </div>

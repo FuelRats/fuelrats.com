@@ -35,7 +35,10 @@ const Header = (props) => {
   return (
     <div id="header-container">
 
-      <input id="nav-control" type="checkbox" />
+      <input
+        aria-label="Navigation toggle"
+        id="nav-control"
+        type="checkbox" />
 
       <label title="Expand/Collapse Menu" htmlFor="nav-control" className="burger button tall secondary" id="burger">
         <FontAwesomeIcon icon="bars" />

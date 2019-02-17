@@ -160,6 +160,7 @@ class Nav extends Component {
 
       renderedSubnavToggle = (
         <input
+          aria-hidden
           className="subnav-toggle"
           hidden
           id={key}
