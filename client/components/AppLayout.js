@@ -171,13 +171,13 @@ class AppLayout extends React.Component {
       <div role="application">
 
         {renderLayout && (
-         <>
-           <Header
-             isServer={isServer}
-             path={path} />
+        <>
+          <Header
+            isServer={isServer}
+            path={path} />
 
-           <UserMenu />
-         </>
+          <UserMenu />
+        </>
         )}
 
         {statusCode === httpStatus.OK

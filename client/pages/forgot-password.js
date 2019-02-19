@@ -85,6 +85,7 @@ class ForgotPassword extends Component {
                 <label htmlFor="email">Enter the email address associated with your account <small>We'll send you an email with a link to reset your password.</small></label>
 
                 <input
+                  aria-label="user email"
                   id="email"
                   onChange={(event) => this.setState({ email: event.target.value })}
                   name="email"

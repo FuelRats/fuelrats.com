@@ -165,6 +165,7 @@ class CartUpdateDialog extends Component {
                   <div className="labeled-input">
                     <label htmlFor="quantitySelect">Quantity:</label>
                     <input
+                      aria-label="product quantity"
                       disabled={activeSKU && !isInStock(activeSKU.inventory)}
                       id="quantitySelect"
                       name="quantity"

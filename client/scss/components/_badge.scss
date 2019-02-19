@@ -6,11 +6,11 @@ $pc-background-gradients: ();
   $texture-colors: ($pc-sun-orange, $pc-sun-yellow);
 
   // Generate a random percentage-based X and Y position for each spot
-  $texture-x: (random(30) + 70) + %;
-  $texture-y: (random(30) + 70) + %;
+  $texture-x: percentage((random(30) + 70) / 100);
+  $texture-y: percentage((random(30) + 70) / 100);
 
   // The texture size is where we'll put our final color stop
-  $texture-size: (random(10)) + %;
+  $texture-size: (random(10)) + "%";
 
   // Generate our opacity, then multiply it by a fraction to ensure it's always significantly transparent
   $texture-opacity: random();
@@ -41,9 +41,9 @@ $pc-background-gradients: append($pc-background-gradients, radial-gradient(
 // Generate the "stars"
 @for $i from 1 through 50 {
   // Generate a random percentage-based X and Y position for each star
-  $star-x: random(100) + %;
-  $star-y: random(100) + %;
-  $star-size: (random(50) * 0.1) + %;
+  $star-x: percentage(random(100) / 100);
+  $star-y: percentage(random(100) / 100);
+  $star-size: percentage((random(50) * 0.1) / 100);
 
   // Create the star's gradient
   $gradient: radial-gradient(

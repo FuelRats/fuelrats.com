@@ -163,6 +163,7 @@ class Register extends Component {
             </label>
 
             <input
+              aria-label="email"
               id="email"
               name="email"
               disabled={submitting}
@@ -204,6 +205,7 @@ class Register extends Component {
             </label>
 
             <input
+              aria-label="Base IRC Nickname"
               disabled={submitting}
               id="nickname"
               name="nickname"
@@ -224,6 +226,7 @@ class Register extends Component {
             </label>
 
             <input
+              aria-label="Commander name"
               disabled={submitting}
               id="ratName"
               name="ratName"
@@ -267,6 +270,7 @@ class Register extends Component {
           <fieldset data-name="Agreements">
             <span>
               <input
+                aria-label="Terms of"
                 className="large"
                 disabled={submitting}
                 id="acceptTerms"

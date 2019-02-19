@@ -367,6 +367,7 @@ class Paperwork extends Component {
               <label htmlFor="rats">Who was assigned to this rescue?</label>
 
               <RatTagsInput
+                aria-label="Assigned rats"
                 data-platform={platform}
                 disabled={submitting || loading}
                 name="rats"
@@ -393,6 +394,7 @@ class Paperwork extends Component {
               <label htmlFor="system">Where did it happen? <small>In what star system did the rescue took place? (put "n/a" if not applicable)</small></label>
 
               <SystemTagsInput
+                aira-label="Rescue system"
                 data-allownew
                 disabled={submitting || loading}
                 name="system"
@@ -405,6 +407,7 @@ class Paperwork extends Component {
               <label htmlFor="notes">Notes</label>
 
               <textarea
+                aria-label="case notes"
                 disabled={submitting || loading}
                 id="notes"
                 name="notes"

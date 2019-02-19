@@ -213,7 +213,7 @@ class RescuesBySystemChart extends Component {
           <table>
             <thead>
               <tr>
-                <th />
+                <th aria-hidden />
 
                 <th>Successful</th>
 

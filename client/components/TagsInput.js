@@ -420,6 +420,7 @@ export default class TagsInputComponent extends React.Component {
 
   render () {
     const {
+      'aria-label': ariaLabel,
       className,
       name,
       placeholder,
@@ -456,6 +457,7 @@ export default class TagsInputComponent extends React.Component {
         <ul className="tags">{this.renderTags()}</ul>
 
         <input
+          aria-label={ariaLabel}
           autoComplete="off"
           name={name}
           onBlur={this.onBlur}

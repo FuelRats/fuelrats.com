@@ -32,7 +32,7 @@ faLibrary.add(faIcons)
 
 
 @withRedux(initStore)
-class NextApp extends App {
+class FuelRatsApp extends App {
   constructor (props) {
     super(props)
 
@@ -49,12 +49,13 @@ class NextApp extends App {
   render () {
     const {
       store,
+      ...layoutProps
     } = this.props
 
     return (
       <Container>
         <Provider store={store}>
-          <AppLayout {...this.props} />
+          <AppLayout {...layoutProps} />
         </Provider>
       </Container>
     )
@@ -65,4 +66,4 @@ class NextApp extends App {
 
 
 
-export default NextApp
+export default FuelRatsApp

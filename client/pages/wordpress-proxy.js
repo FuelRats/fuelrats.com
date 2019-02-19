@@ -42,7 +42,7 @@ class WordpressProxy extends Component {
 
     /* eslint-disable react/no-danger */
     return (
-      <React.Fragment>
+      <>
         {Boolean(page) && (
           <PageWrapper
             className="wordpress-page"
@@ -60,7 +60,7 @@ class WordpressProxy extends Component {
             <article className="error page-content" />
           </PageWrapper>
         )}
-      </React.Fragment>
+      </>
     )
     /* eslint-enable */
   }
