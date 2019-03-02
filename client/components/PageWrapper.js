@@ -1,6 +1,7 @@
 /* eslint-disable react/no-multi-comp */
 
 // Module imports
+import { animated } from 'react-spring/renderprops.cjs'
 import React from 'react'
 import NextHead from 'next/head'
 import PropTypes from 'prop-types'
@@ -10,6 +11,7 @@ import PropTypes from 'prop-types'
 
 
 // Component imports
+import { TransitionContextConsumer } from './AppLayout'
 import Component from './Component'
 import classnames from '../helpers/classNames'
 
@@ -55,7 +57,6 @@ class Page extends Component {
 
     const titleContent = renderHeader && this.displayTitle
     const mainClasses = classnames(
-      'fade-in',
       'page',
       [className, Boolean(className)],
       title.toLowerCase().replace(/\s/gu, '-'),
@@ -70,14 +71,18 @@ class Page extends Component {
           <meta name="description" content={description} />
           <meta property="og:description" content={description} />
         </NextHead>
-        <main className={mainClasses}>
-          {renderHeader && (
-            <header className="page-header">
-              {titleContent}
-            </header>
+        <TransitionContextConsumer>
+          {(style) => (
+            <animated.main className={mainClasses} style={style}>
+              {renderHeader && (
+                <header className="page-header">
+                  {titleContent}
+                </header>
+              )}
+              {children}
+            </animated.main>
           )}
-          {children}
-        </main>
+        </TransitionContextConsumer>
       </>
     )
   }

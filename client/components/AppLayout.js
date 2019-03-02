@@ -1,11 +1,11 @@
 // Module imports
 import { StripeProvider } from 'react-stripe-elements'
+import { Transition } from 'react-spring/renderprops.cjs'
 import getConfig from 'next/config'
 import hoistNonReactStatics from 'hoist-non-react-statics'
 import NextError from 'next/error'
 import NProgress from 'nprogress'
 import React from 'react'
-
 
 
 
@@ -34,6 +34,12 @@ const { publicRuntimeConfig } = getConfig()
 
 // Component Constants
 const STRIPE_API_PK = publicRuntimeConfig.apis.stripe.public
+
+
+
+
+
+const TransitionContext = React.createContext(null)
 
 
 
@@ -161,10 +167,10 @@ class AppLayout extends React.Component {
       isServer,
       pageProps,
       renderLayout,
+      router,
       showLoginDialog,
       statusCode,
       setFlag,
-      path,
     } = this.props
 
     return (
@@ -172,24 +178,42 @@ class AppLayout extends React.Component {
 
         {renderLayout && (
         <>
-          <Header
-            isServer={isServer}
-            path={path} />
-
+          <Header isServer={isServer} />
           <UserMenu />
         </>
         )}
 
-        {statusCode === httpStatus.OK
-          ? <Component {...pageProps} />
-          : (
-            <main className="fade-in page error-page">
-              <div className="page-content">
-                <NextError className="test" statusCode={statusCode} />
-              </div>
-            </main>
-          )
-        }
+        {statusCode === httpStatus.OK && (
+          <Transition
+            native
+            from={{ opacity: 0 }}
+            enter={{ opacity: 1 }}
+            leave={{ opacity: 0 }}
+            config={{
+              tension: 350,
+              friction: 12,
+              clamp: true,
+            }}
+            items={{
+              Item: Component,
+              itemProps: pageProps,
+            }}
+            keys={router.asPath}>
+            {({ Item, itemProps }) => (props) => (
+              <TransitionContext.Provider value={props}>
+                <Item {...itemProps} />
+              </TransitionContext.Provider>
+            )}
+          </Transition>
+        )}
+
+        {statusCode !== httpStatus.OK && (
+          <main className="fade-in page error-page">
+            <div className="page-content">
+              <NextError className="test" statusCode={statusCode} />
+            </div>
+          </main>
+        )}
 
         {showLoginDialog && (
           <LoginDialog onClose={() => setFlag('showLoginDialog', false)} />
@@ -220,16 +244,11 @@ class AppLayout extends React.Component {
 
 
 
-export default AppLayout
-
-
-
-
 
 /**
  * Decorator to mark a page as requiring user authentication.
  */
-export const authenticated = (_target) => {
+const authenticated = (_target) => {
   const requiredPermission = typeof _target === 'string' ? _target : null
 
   const setProperties = (target) => {
@@ -252,7 +271,7 @@ export const authenticated = (_target) => {
 /**
  * Decorator to wrap a page with stripe context
  */
-export const withStripe = (Component) => {
+const withStripe = (Component) => {
   class StripePage extends React.Component {
     state = {
       stripe: null,
@@ -280,4 +299,17 @@ export const withStripe = (Component) => {
   }
 
   return hoistNonReactStatics(StripePage, Component)
+}
+
+
+const {
+  Consumer: TransitionContextConsumer,
+} = TransitionContext
+
+
+export default AppLayout
+export {
+  authenticated,
+  withStripe,
+  TransitionContextConsumer,
 }
