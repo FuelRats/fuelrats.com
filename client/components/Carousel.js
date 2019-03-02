@@ -45,13 +45,22 @@ const Carousel = ({ slides, interval, className }) => {
   ))
 
   const textElement = useTransition(slides[curSlide], (item) => item.id, {
-    from: { transform: 'translate3d(100%,0,0)' },
-    enter: { transform: 'translate3d(0,0,0)' },
-    leave: { transform: 'translate3d(100%,0,0)' },
+    from: { xPos: 100 },
+    enter: { xPos: 0 },
+    leave: { xPos: 100 },
     config: { tension: 280, friction: 85 },
-  }).map(({ item, key, props }) => (
+  }).map(({ item, key, props: { xPos } }) => (
     item.text
-      ? <animated.span className="carousel-slide-text" key={key} style={props}>{item.text}</animated.span>
+      ? (
+        <animated.span
+          className="carousel-slide-text"
+          key={key}
+          style={{
+            transform: xPos.interpolate((value) => `translate3d(${value}%,0,0)`),
+          }}>
+          {item.text}
+        </animated.span>
+      )
       : null
   ))
 
