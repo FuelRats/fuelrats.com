@@ -1,6 +1,7 @@
 // Component imports
 import { createWpAction } from '../actionCreators'
 import actionTypes from '../actionTypes'
+import initialState from '../initialState'
 
 
 
@@ -27,18 +28,20 @@ export const retrieveCategory = (categoryId) => createWpAction({
 export const retrieveBlog = (id) => createWpAction({
   actionType: actionTypes.GET_WORDPRESS_POST,
   url: `/posts/${id}`,
-  onSuccess: ({ author: authorId, categories: categoryIds }, { dispatch, getState }) => {
-    const { authors, categories } = getState().blogs
+  onSuccess: async ({ data: { author: authorId, categories: categoryIds } }, { dispatch, getState }) => {
+    const state = getState ? getState() : { ...initialState }
+    const { authors, categories } = state.blogs
 
     if (!authors[authorId]) {
-      retrieveAuthor(authorId)(dispatch)
+      await retrieveAuthor(authorId)(dispatch)
     }
 
-    categoryIds.forEach((categoryId) => {
+    await Promise.all(categoryIds.map((categoryId) => {
       if (!categories[categoryId]) {
-        retrieveCategory(categoryId)(dispatch)
+        return retrieveCategory(categoryId)(dispatch)
       }
-    })
+      return Promise.resolve()
+    }))
   },
 })
 
@@ -51,7 +54,7 @@ export const retrieveBlogs = (params) => createWpAction({
   url: '/posts',
   params,
   onSuccess: ({ data: blogs, headers }, { dispatch, getState }) => {
-    const state = getState()
+    const state = getState ? getState() : { ...initialState }
     const authorCache = { ...state.blogs.authors }
     const categoryCache = { ...state.blogs.categories }
 
