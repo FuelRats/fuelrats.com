@@ -35,7 +35,7 @@ module.exports = (isDev) => async (ctx, next) => {
       connectSrc: [
         "'self'",
         'wss://*.fuelrats.com',
-        ...(isDev ? ['ws://localhost:*'] : []),
+        ...(isDev ? ['webpack://*'] : []),
       ],
       baseUri: ["'none'"],
       scriptSrc: [

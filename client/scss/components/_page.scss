@@ -1,11 +1,22 @@
 main.page {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   align-content: stretch;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
   margin-left: 21rem;
+  transition: margin .2s;
 
   @media only screen and (max-width: 769px) {
     margin-left: 0;
+  }
+
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
   }
 }

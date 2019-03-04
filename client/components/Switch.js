@@ -1,4 +1,5 @@
 // Module imports
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 
 
@@ -38,7 +39,9 @@ class SwitchInput extends React.Component {
         {...containerProps}
         className={containerClasses}>
         <div className="switch-background" />
-        <div className="switch-handle" />
+        <div className="switch-handle">
+          <FontAwesomeIcon icon={checked ? 'check' : 'times'} fixedWidth />
+        </div>
         <input
           {...this.inputProps}
           className="switch-input"

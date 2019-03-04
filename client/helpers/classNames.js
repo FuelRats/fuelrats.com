@@ -11,7 +11,7 @@ const classNames = (...classes) => classes.reduce((acc, className) => {
   }
 
   return acc
-}, '')
+}, '').trim()
 
 
 

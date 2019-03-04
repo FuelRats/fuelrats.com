@@ -104,11 +104,20 @@ class Dialog extends Component {
 
 
 Dialog.defaultProps = {
+  controls: null,
+  onClose: () => undefined,
   showClose: true,
+  title: 'Dialog',
 }
 
 Dialog.propTypes = {
+  controls: PropTypes.shape({
+    primary: PropTypes.arrayOf(PropTypes.element),
+    secondary: PropTypes.arrayOf(PropTypes.element),
+  }),
+  onClose: PropTypes.func,
   showClose: PropTypes.bool,
+  title: PropTypes.string,
 }
 
 
