@@ -4,7 +4,7 @@ You want to contribute to the project? Awesome!
 
 ## Things to know
 
-This project adheres to the Contributor Covenant code of conduct. By participating, you are expected to uphold this code. Please report unacceptable behavior to [ops@fuelrats.com][ops-email]
+By contributing to this repository, you are expected to know and follow the rules of general conduct outlined in our [Terms of Service][fuelrats-tos]. While not all rules are applicable in the context of github, we still expect the same level of professional behavior detailed by our ToS.
 
 **Working on your first Pull Request?**
 [How to Contribute to an Open Source Project on GitHub][egghead]
@@ -108,6 +108,7 @@ type(component): commit message
 * **component** - Should follow these rules:
     * If the file is a react component (in the Components directory), no suffix is needed. Just use the file name.
     * If the file is a helper file (in the helpers directory), just simply using `helpers` as the component will suffice.
+    * If the file is documentation, no suffix is needed, however docs should **ALWAYS** have a commit type of `docs`.
     * All other files should generally follow the format of `filename-<best-describing-parentdir>` IE: `rescue-actions`, `index-page`, or `badge-scss`.
     * Remain as consistent in naming as possible. Use git history as precedence for the component name given to a file.
 * **commit message** - should quickly summarize changes made. If there are multiple changes, multiline commit messages are allowed to fully summarize changes made.
@@ -131,7 +132,7 @@ There is also 1 additional type allowed for branches **only**
 
 * `experiment` - A new feature idea or major structural change which has a questionable outcome.
 
-
+[fuelrats-tos]: https://fuelrats.com/terms-of-service
 [all-contributors]: https://github.com/kentcdodds/all-contributors
 [testsite]: https://dev.fuelrats.com/
 [bugs]: https://jira.fuelrats.com/servicedesk/customer/portal/2/create/4
