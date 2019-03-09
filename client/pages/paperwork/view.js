@@ -58,11 +58,10 @@ class Paperwork extends Component {
 
   static renderQuote = (quote, index) => (
     <li key={index}>
-      {quote.message}
-      {Boolean(quote.author) && (
-        <span>
-          - <em>${quote.author}</em>
-        </span>
+      <span className="time">{moment(quote.updatedAt).format('DD MMM, YYYY [\n]HH:mm')}</span>
+      <span className="message">{quote.message}</span>
+      {Boolean(quote.lastAuthor) && (
+        <span className="author">{quote.lastAuthor}</span>
       )}
     </li>
   )
@@ -94,7 +93,7 @@ class Paperwork extends Component {
       <li key={index}>
         {rat.attributes.name}
         {(rat.id === rescue.attributes.firstLimpetId) && (
-          <span className="badge">First Limpet</span>
+          <span className="badge fl">1st</span>
         )}
       </li>
     )
@@ -149,59 +148,90 @@ class Paperwork extends Component {
 
               <div className="secondary" />
             </menu>
-            <table>
-              <tbody>
-                <tr>
-                  <th>Created</th>
-                  <td>{moment(rescue.attributes.createdAt).format('DD MMM, YYYY HH:mm')}</td>
-                </tr>
 
-                <tr>
-                  <th>Updated</th>
-                  <td>{moment(rescue.attributes.updatedAt).format('DD MMM, YYYY HH:mm')}</td>
-                </tr>
+            <header className="paperwork-header">
+              {(rescue.attributes.status !== 'open') && (
+                <div className="board-index"><span>#{rescue.attributes.data.boardIndex}</span></div>
+              )}
+              <div className="title">
+                <span>
+                  Rescue of
+                  <span className="CMDR-name"> {rescue.attributes.client}</span> in
+                  <span className="system"> {(rescue.attributes.system) && (rescue.attributes.system)}</span>
+                </span>
+              </div>
+            </header>
 
-                <tr>
-                  <th>Platform</th>
-                  <td>{rescue.attributes.platform}</td>
-                </tr>
+            <div className="tags">
+              {(rescue.attributes.status === 'closed') && (
+                <div className="tag status-group">
+                  <span className="status">closed</span>
+                  {(rescue.attributes.outcome !== null) && (
+                    <span className="outcome">{rescue.attributes.outcome}</span>
+                  )}
+                </div>
+              )}
 
-                <tr>
-                  <th>Status</th>
-                  <td>{rescue.attributes.status}</td>
-                </tr>
+              {(rescue.attributes.status === 'inactive') && (
+                <div className="tag status-group">
+                  <span className="status">open</span>
+                  <span className="outcome">inactive</span>
+                </div>
+              )}
 
-                <tr>
-                  <th>Outcome</th>
-                  <td>{rescue.attributes.outcome}</td>
-                </tr>
+              {(rescue.attributes.status === 'open') && (
+                <div className="tag status-group">
+                  <span className="status">open</span>
+                  <span className="outcome">active</span>
+                </div>
+              )}
 
-                <tr>
-                  <th>Code Red</th>
-                  <td>{rescue.attributes.codeRed ? 'Yes' : 'No'}</td>
-                </tr>
+              {(rescue.attributes.platform === 'pc') && (
+                <div className="tag platform pc">{rescue.attributes.platform.toUpperCase()}</div>
+              )}
+              {(rescue.attributes.platform === 'xb') && (
+                <div className="tag platform xb">{rescue.attributes.platform.toUpperCase()}</div>
+              )}
+              {(rescue.attributes.platform === 'ps') && (
+                <div className="tag platform ps">{rescue.attributes.platform.toUpperCase()}</div>
+              )}
+              {(rescue.attributes.codeRed) && (
+                <div className="tag code-red">CR</div>
+              )}
+              {(rescue.attributes.data.markedForDeletion.marked) && (
+                <div className="md-group">
+                  <div className="marked-for-deletion">Marked for Deletion</div>
+                  <div className="md-reason">{rescue.attributes.data.markedForDeletion.reason}</div>
+                  <div className="md-reporter">{rescue.attributes.data.markedForDeletion.reporter}</div>
+                </div>
+              )}
+            </div>
 
-                <tr>
-                  <th>Rats</th>
-                  <td>{this.renderRats()}</td>
-                </tr>
+            <div className="info">
+              <span className="label">Created</span>
+              <span className="date-created content">{moment(rescue.attributes.createdAt).format('DD MMM, YYYY HH:mm')}</span>
+              <span className="label">Updated</span>
+              <span className="date-updated content">{moment(rescue.attributes.updatedAt).format('DD MMM, YYYY HH:mm')}</span>
+              <span className="label">IRC Nick</span>
+              <span className="irc-nick content">{rescue.attributes.data.IRCNick}</span>
+              <span className="label">Language</span>
+              <span className="language content">{rescue.attributes.data.langID}</span>
+            </div>
 
-                <tr>
-                  <th>System</th>
-                  <td>{rescue.attributes.system}</td>
-                </tr>
+            <div className="panel rats">
+              <header>Rats</header>
+              <div className="panel-content">{this.renderRats()}</div>
+            </div>
 
-                <tr>
-                  <th>Quotes</th>
-                  <td>{this.renderQuotes()}</td>
-                </tr>
+            <div className="panel quotes">
+              <header>Quotes</header>
+              <div className="panel-content">{this.renderQuotes()}</div>
+            </div>
 
-                <tr>
-                  <th>Notes</th>
-                  <td>{rescue.attributes.notes}</td>
-                </tr>
-              </tbody>
-            </table>
+            <div className="panel notes">
+              <header>Notes</header>
+              <div className="panel-content">{rescue.attributes.notes}</div>
+            </div>
           </div>
         )}
       </PageWrapper>

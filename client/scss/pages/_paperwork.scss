@@ -7,9 +7,13 @@
     border-bottom: 1px solid black;
   }
 
-  menu[type=toolbar] div.primary {
-    align-items: center;
+  menu[type=toolbar] {
+    width: 100%;
+    padding: 0.5rem 2rem;
 
+    div.primary {
+      align-items: center;
+    }
 
     div.invalidity-explainer {
       background-color: $red;
@@ -39,6 +43,231 @@
       &[disabled] {
         transform: translateX(50%) scale(0);
       }
+    }
+  }
+
+  .page-content {
+    display: flex;
+    flex-flow: row wrap;
+  }
+
+  header.paperwork-header, div.tags, div.info, div.panel {
+    margin: 0.5rem 2rem;
+  }
+
+  div.info, div.panel {
+    margin: 2rem;
+  }
+
+  header.paperwork-header {
+    width: 100%;
+    flex: 1 1 auto;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    background-color: $red;
+    font-size: 2em;
+    line-height: normal;
+    color: rgba($white,0.5);
+    order: 1;
+    transform: skewX(-10deg);
+
+    div {
+      padding: 0.2em 0.4em;
+
+      &.board-index {
+        flex: 0 0 auto;
+        align-self: flex-start;
+        margin: 0.2rem;
+        font-weight: bold;
+        // background: $white;
+        color: $white;
+      }
+
+      &.title {
+        margin-left: 0.2em;
+      }
+
+      &>span {
+        transform: skewX(10deg);
+        display: inline-block;
+      }
+
+      span.CMDR-name, span.system {
+        display: inline;
+        font-weight: bold;
+        color: $white;
+      }
+    }
+  }
+
+  div.tags {
+    line-height: normal;
+    margin-top: 0;
+    margin-bottom: 0;
+    color: $white;
+    width: 100%;
+    flex: 1 1 auto;
+    order: 3;
+    font-size: 0.9em;
+    opacity: 0.9;
+
+    div.md-group, div.tag {
+      background: $black;
+      margin: 0 0.5rem 0.5rem 0;
+    }
+
+    div.tag {
+      display: inline-block;
+      padding: 0.4em 0.8em;
+      background-color: $black;
+      margin: 0 0.5rem 0.5rem 0;
+      font-weight: bold;
+      border: 0.2rem solid $black;
+
+      &.status-group {
+        padding: 0;
+        span {
+          display: inline-block;
+          padding: 0.4em 0.8em;
+
+          &.outcome {
+            background: $white;
+            color: $black;
+            font-weight: normal;
+          }
+        }
+      }
+
+      &.platform.pc {
+        color: $red;
+      }
+
+      &.platform.xb {
+        color: $xbox-green;
+      }
+
+      &.platform.ps {
+        color: lighten($playstation-blue, 10%);
+      }
+
+      &.code-red {
+        color: darken($red, 20%);
+      }
+    }
+    div.md-group {
+      display: inline-flex;
+      border: 0.2rem solid $black;
+
+      div {
+        padding: 0.4em 0.8em;
+
+        &.marked-for-deletion {
+          font-weight: bold;
+        }
+
+        &.md-reason {
+          background: $white;
+          color: $black;
+          flex: 0 1 auto;
+        }
+
+        &.md-reporter {
+          background: $black;
+        }
+      }
+    }
+  }
+
+  div.info {
+    flex: 0 0 auto;
+    align-self: flex-start;
+    display: grid;
+    grid-template-columns: 8rem auto;
+    grid-column-gap: 1em;
+    padding: 0.5em 1em;
+    // margin: 0.5rem 0 1rem 0;
+    order: 5;
+    @media screen and (max-width: 768px) {
+      order: 4;
+      // margin-top: 0;
+      width: 100%;
+    }
+
+    span.label {
+      grid-column: 1;
+      opacity: 0.5;
+    }
+  }
+
+  div.panel {
+    // margin-bottom: 1rem;
+    width: 100%;
+    flex: 1 1 auto;
+    order: 6;
+
+    &.rats {
+      width: auto;
+      flex: 1 0 auto;
+      order: 4;
+    }
+
+    div.panel-content {
+      ul li {
+        margin-bottom: 0.5em;
+
+        span.badge {
+          margin-left: 0.5em;
+
+          &.unidentified {
+            background: #b0a154;
+          }
+        }
+      }
+
+      ol li {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        align-items: baseline;
+        padding-bottom: 0.5em;
+        margin-bottom: 0.5em;
+        border-bottom: 0.1rem solid rgba(70, 70, 70, 0.05);
+        @media screen and (max-width: 768px) {
+          flex-flow: column nowrap;
+          span.author {
+            align-self: flex-end;
+          }
+        }
+
+        span.time {
+          flex: 0 0 auto;
+          opacity: 0.5;
+          font-size: 0.8em;
+          margin-right: 1em;
+          line-height: normal;
+          white-space: pre-line;
+          @media screen and (max-width: 768px) {
+            white-space: normal;
+          }
+        }
+
+        span.message {
+          flex: 1 1 auto;
+        }
+
+        span.author {
+          opacity: 0.5;
+          flex: 0 0 auto;
+          font-size: 0.9em;
+          margin-left: 1em;
+          align-self: flex-end;
+        }
+      }
+    }
+
+    &.notes div.panel-content {
+      white-space: pre-line;
     }
   }
 
