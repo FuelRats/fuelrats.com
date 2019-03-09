@@ -56,15 +56,27 @@ class Paperwork extends Component {
     }
   }
 
-  static renderQuote = (quote, index) => (
-    <li key={index}>
-      <span className="time">{moment(quote.updatedAt).format('DD MMM, YYYY [\n]HH:mm')}</span>
-      <span className="message">{quote.message}</span>
-      {Boolean(quote.lastAuthor) && (
-        <span className="author">{quote.lastAuthor}</span>
-      )}
-    </li>
-  )
+  static renderQuote = (quote, index) => {
+    const createdAt = moment(quote.createdAt).format('DD MMM, YYYY HH:mm')
+    const updatedAt = moment(quote.updatedAt).format('DD MMM, YYYY HH:mm')
+    return (
+      <li key={index}>
+        <div className="times">
+          <div className="created" title="Created at">{createdAt}</div>
+          {(updatedAt !== createdAt) && (
+            <div className="updated" title="Updated at">{updatedAt}</div>
+          )}
+        </div>
+        <span className="message">{quote.message}</span>
+        <div className="authors">
+          <div className="author" title="Created by">{quote.author}</div>
+          {(quote.author !== quote.lastAuthor) && (
+            <div className="lastAuthor" title="Last updated by">{quote.lastAuthor}</div>
+          )}
+        </div>
+      </li>
+    )
+  }
 
   static async getInitialProps ({ query, store }) {
     await actions.getRescue(query.id)(store.dispatch)
@@ -101,10 +113,12 @@ class Paperwork extends Component {
 
   renderRats = () => {
     const { rats } = this.props
+    const { rescue } = this.props
 
     return (
       <ul>
         {rats.map(this.renderRat)}
+        {rescue.attributes.unidentifiedRats.map((rat) => `${rat}<span className="badge unidentified">UnID</span>`)}
       </ul>
     )
   }
@@ -119,6 +133,21 @@ class Paperwork extends Component {
     } = this.state
 
     const userCanEdit = this.userCanEdit()
+
+    // This makes 2 new variables called status and outcome, and sets them to the values of the outcome and status in the rescue object.
+    let {
+      status,
+      outcome,
+    } = rescue.attributes
+
+    if (status === 'inactive') {
+      status = 'open'
+      outcome = 'inactive'
+    }
+
+    if (status === 'open') {
+      outcome = 'active'
+    }
 
     return (
       <PageWrapper title="Paperwork">
@@ -150,7 +179,7 @@ class Paperwork extends Component {
             </menu>
 
             <header className="paperwork-header">
-              {(rescue.attributes.status !== 'open') && (
+              {(rescue.attributes.status !== 'closed') && (
                 <div className="board-index"><span>#{rescue.attributes.data.boardIndex}</span></div>
               )}
               <div className="title">
@@ -163,41 +192,19 @@ class Paperwork extends Component {
             </header>
 
             <div className="tags">
-              {(rescue.attributes.status === 'closed') && (
-                <div className="tag status-group">
-                  <span className="status">closed</span>
-                  {(rescue.attributes.outcome !== null) && (
-                    <span className="outcome">{rescue.attributes.outcome}</span>
-                  )}
-                </div>
+              <div className="tag status-group">
+                <span className={`status ${status}`}>{status}</span>
+                <span className="outcome">{outcome || 'unfiled'}</span>
+              </div>
+
+              {(rescue.attributes.platform) && (
+                <div className={`tag platform ${rescue.attributes.platform}`}>{rescue.attributes.platform}</div>
               )}
 
-              {(rescue.attributes.status === 'inactive') && (
-                <div className="tag status-group">
-                  <span className="status">open</span>
-                  <span className="outcome">inactive</span>
-                </div>
-              )}
-
-              {(rescue.attributes.status === 'open') && (
-                <div className="tag status-group">
-                  <span className="status">open</span>
-                  <span className="outcome">active</span>
-                </div>
-              )}
-
-              {(rescue.attributes.platform === 'pc') && (
-                <div className="tag platform pc">{rescue.attributes.platform.toUpperCase()}</div>
-              )}
-              {(rescue.attributes.platform === 'xb') && (
-                <div className="tag platform xb">{rescue.attributes.platform.toUpperCase()}</div>
-              )}
-              {(rescue.attributes.platform === 'ps') && (
-                <div className="tag platform ps">{rescue.attributes.platform.toUpperCase()}</div>
-              )}
               {(rescue.attributes.codeRed) && (
                 <div className="tag code-red">CR</div>
               )}
+
               {(rescue.attributes.data.markedForDeletion.marked) && (
                 <div className="md-group">
                   <div className="marked-for-deletion">Marked for Deletion</div>

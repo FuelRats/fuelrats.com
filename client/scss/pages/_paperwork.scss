@@ -124,6 +124,7 @@
       margin: 0 0.5rem 0.5rem 0;
       font-weight: bold;
       border: 0.2rem solid $black;
+      text-transform: capitalize;
 
       &.status-group {
         padding: 0;
@@ -139,22 +140,28 @@
         }
       }
 
-      &.platform.pc {
-        color: $red;
-      }
+      &.platform {
+        text-transform: uppercase;
 
-      &.platform.xb {
-        color: $xbox-green;
-      }
+        &.pc {
+          color: $red;
+        }
 
-      &.platform.ps {
-        color: lighten($playstation-blue, 10%);
+        &.xb {
+          color: $xbox-green;
+        }
+
+        &.ps {
+          color: lighten($playstation-blue, 10%);
+        }
       }
 
       &.code-red {
         color: darken($red, 20%);
+        text-transform: uppercase;
       }
     }
+
     div.md-group {
       display: inline-flex;
       border: 0.2rem solid $black;
@@ -183,7 +190,7 @@
     flex: 0 0 auto;
     align-self: flex-start;
     display: grid;
-    grid-template-columns: 8rem auto;
+    grid-template-columns: min-content auto;
     grid-column-gap: 1em;
     padding: 0.5em 1em;
     // margin: 0.5rem 0 1rem 0;
@@ -235,12 +242,17 @@
         border-bottom: 0.1rem solid rgba(70, 70, 70, 0.05);
         @media screen and (max-width: 768px) {
           flex-flow: column nowrap;
-          span.author {
-            align-self: flex-end;
+          div.times, div.authors {
+            div {
+              display: inline;
+              &::before {
+                content: " " attr(title) " ";
+              }
+            }
           }
         }
 
-        span.time {
+        div.times {
           flex: 0 0 auto;
           opacity: 0.5;
           font-size: 0.8em;
@@ -256,12 +268,14 @@
           flex: 1 1 auto;
         }
 
-        span.author {
+        div.authors {
           opacity: 0.5;
           flex: 0 0 auto;
-          font-size: 0.9em;
+          font-size: 0.8em;
           margin-left: 1em;
           align-self: flex-end;
+          text-align: right;
+          line-height: normal;
         }
       }
     }
