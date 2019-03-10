@@ -8,6 +8,18 @@ import PropTypes from 'prop-types'
 
 class ValidatedFormInput extends React.Component {
   /***************************************************************************\
+    Constructor
+  \***************************************************************************/
+  constructor (props) {
+    super(props)
+    this.state = {
+      errorMessage: '',
+    }
+  }
+
+
+
+  /***************************************************************************\
     Private Methods
   \***************************************************************************/
 
@@ -35,6 +47,7 @@ class ValidatedFormInput extends React.Component {
     if (pattern && !value.match(pattern)) {
       valid = false
       message = patternMessage
+      this.setState({ errorMessage: patternMessage })
     }
 
     if (!target.checkValidity()) {
@@ -70,6 +83,7 @@ class ValidatedFormInput extends React.Component {
           placeholder={renderLabel ? undefined : label}
           {...this.inputProps}
           onChange={this._handleChange} />
+        <span>{this.state.errorMessage}</span>
       </fieldset>
     )
   }
