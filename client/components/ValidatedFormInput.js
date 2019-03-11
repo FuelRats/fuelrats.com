@@ -1,7 +1,7 @@
 // Module imports
 import React from 'react'
 import PropTypes from 'prop-types'
-
+import classNames from '../helpers/classNames'
 
 
 
@@ -39,6 +39,11 @@ class ValidatedFormInput extends React.Component {
     let valid = true
     let message = null
 
+    if (!target.checkValidity()) {
+      valid = false
+      message = invalidMessage || `${label} is invalid`
+    }
+
     if (required && value === '') {
       valid = false
       message = `${label} is Required`
@@ -47,13 +52,9 @@ class ValidatedFormInput extends React.Component {
     if (pattern && !value.match(pattern)) {
       valid = false
       message = patternMessage
-      this.setState({ errorMessage: patternMessage })
     }
 
-    if (!target.checkValidity()) {
-      valid = false
-      message = invalidMessage || `${label} is invalid`
-    }
+    this.setState({ errorMessage: message })
 
     onChange({
       target,
@@ -72,18 +73,28 @@ class ValidatedFormInput extends React.Component {
 
   render () {
     const {
+      errorMessage,
+    } = this.state
+    const {
       id,
       label,
+      value,
       renderLabel,
     } = this.props
+
+    const tooltipClasses = classNames(
+      'tooltiptext',
+      ['should-display', value && errorMessage]
+    )
+
     return (
-      <fieldset>
+      <fieldset className="validated-form-input">
         {renderLabel && <label htmlFor={id}>{label}</label>}
         <input
           placeholder={renderLabel ? undefined : label}
           {...this.inputProps}
           onChange={this._handleChange} />
-        <span>{this.state.errorMessage}</span>
+        <div className={tooltipClasses}>{this.state.errorMessage}</div>
       </fieldset>
     )
   }

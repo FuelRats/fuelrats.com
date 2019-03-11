@@ -77,8 +77,8 @@ class AddNicknameForm extends Component {
           name="add-nickname"
           onChange={this._handleChange}
           placeholder="Add a nickname..."
-          pattern="^[A-Za-z_\\`\[\]{}][A-Za-z0-9_\\`\[\]{}]{1,29}$"
-          patternMessage="This is a test"
+          pattern="^[A-Za-z_\\`\[\]{}]{1}[A-Za-z0-9_\\`\[\]{}]{0,29}$"
+          patternMessage="Nickname must start with a letter, contain no spaces, and is between 2-30 characters"
           type="text"
           value={nickname} />
         <button
