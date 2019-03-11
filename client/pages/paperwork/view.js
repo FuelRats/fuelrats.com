@@ -71,7 +71,7 @@ class Paperwork extends Component {
         <div className="authors">
           <div className="author" title="Created by">{quote.author}</div>
           {(quote.author !== quote.lastAuthor) && (
-            <div className="lastAuthor" title="Last updated by">{quote.lastAuthor}</div>
+            <div className="last-author" title="Last updated by">{quote.lastAuthor}</div>
           )}
         </div>
       </li>
