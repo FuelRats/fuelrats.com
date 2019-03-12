@@ -250,7 +250,7 @@
           font-size: 0.8em;
           line-height: normal;
 
-          ::before {
+          .label {
             font-size: 0.8em;
           }
         }
@@ -263,7 +263,7 @@
           }
 
           .updated {
-            &::before {
+            .label {
               opacity: 0.7;
               content: ' Updated at ';
               display: block;
@@ -283,7 +283,7 @@
 
           .last-author {
             margin-left: 0.3em;
-            &::before {
+            .label {
               opacity: 0.7;
               content: ' Updated by ';
             }
@@ -298,7 +298,7 @@
             .author,
             .last-author {
               display: inline-block;
-              &::before {
+              .label {
                 display: inline;
               }
             }

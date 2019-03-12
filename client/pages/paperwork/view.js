@@ -20,6 +20,7 @@ import userHasPermission from '../../helpers/userHasPermission'
 
 // Component constants
 const PAPERWORK_MAX_EDIT_TIME = 3600000
+const ELITE_GAME_YEAR_DESPARITY = 1286 // Years between IRL year and Elite universe year
 
 
 
@@ -57,21 +58,21 @@ class Paperwork extends Component {
   }
 
   static renderQuote = (quote, index) => {
-    const createdAt = moment(quote.createdAt).format('DD MMM, YYYY HH:mm')
-    const updatedAt = moment(quote.updatedAt).format('DD MMM, YYYY HH:mm')
+    const createdAt = moment(quote.createdAt).add(ELITE_GAME_YEAR_DESPARITY, 'years').format('DD MMM, YYYY HH:mm')
+    const updatedAt = moment(quote.updatedAt).add(ELITE_GAME_YEAR_DESPARITY, 'years').format('DD MMM, YYYY HH:mm')
     return (
       <li key={index}>
         <div className="times">
           <div className="created" title="Created at">{createdAt}</div>
           {(updatedAt !== createdAt) && (
-            <div className="updated" title="Updated at">{updatedAt}</div>
+            <div className="updated" title="Updated at"><span className="label">Updated at </span>{updatedAt}</div>
           )}
         </div>
         <span className="message">{quote.message}</span>
         <div className="authors">
           <div className="author" title="Created by">{quote.author}</div>
           {(quote.author !== quote.lastAuthor) && (
-            <div className="last-author" title="Last updated by">{quote.lastAuthor}</div>
+            <div className="last-author" title="Last updated by"><span className="label">Updated by </span>{quote.lastAuthor}</div>
           )}
         </div>
       </li>
@@ -197,9 +198,7 @@ class Paperwork extends Component {
                 <span className="outcome">{outcome || 'unfiled'}</span>
               </div>
 
-              {(rescue.attributes.platform) && (
-                <div className={`tag platform ${rescue.attributes.platform}`}>{rescue.attributes.platform}</div>
-              )}
+              <div className={`tag platform ${rescue.attributes.platform || 'none'}`}>{rescue.attributes.platform || 'No Platform'}</div>
 
               {(rescue.attributes.codeRed) && (
                 <div className="tag code-red">CR</div>
@@ -216,9 +215,9 @@ class Paperwork extends Component {
 
             <div className="info">
               <span className="label">Created</span>
-              <span className="date-created content">{moment(rescue.attributes.createdAt).format('DD MMM, YYYY HH:mm')}</span>
+              <span className="date-created content">{moment(rescue.attributes.createdAt).add(ELITE_GAME_YEAR_DESPARITY, 'years').format('DD MMM, YYYY HH:mm')}</span>
               <span className="label">Updated</span>
-              <span className="date-updated content">{moment(rescue.attributes.updatedAt).format('DD MMM, YYYY HH:mm')}</span>
+              <span className="date-updated content">{moment(rescue.attributes.updatedAt).add(ELITE_GAME_YEAR_DESPARITY, 'years').format('DD MMM, YYYY HH:mm')}</span>
               <span className="label">IRC Nick</span>
               <span className="irc-nick content">{rescue.attributes.data.IRCNick}</span>
               <span className="label">Language</span>
