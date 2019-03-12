@@ -192,7 +192,7 @@ class Paperwork extends Component {
               </div>
             </header>
 
-            <div className="tags">
+            <div className="rescue-tags">
               <div className="tag status-group">
                 <span className={`status ${status}`}>{status}</span>
                 <span className="outcome">{outcome || 'unfiled'}</span>

@@ -7,13 +7,13 @@ main.page.--experiment-dark-mode {
     color: #EEE;
   }
 
-  header.paperwork-header div.board-index {
+  header.paperwork-header .board-index {
     background: #101010;
     color: $white;
   }
 
-  div.tags div {
-    &.tag.status-group span.outcome, &.md-group div.md-reason {
+  .rescue-tags {
+    .tag.status-group .outcome, .md-group .md-reason {
       background: #101010;
       color: $white;
     }
