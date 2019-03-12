@@ -8,14 +8,14 @@ import classNames from '../helpers/classNames'
 
 class ValidatedFormInput extends React.Component {
   /***************************************************************************\
-    Constructor
+    Class Propreties
   \***************************************************************************/
-  constructor (props) {
-    super(props)
-    this.state = {
-      errorMessage: '',
-    }
+
+  state = {
+    errorMessage: '',
   }
+
+
 
 
 
