@@ -51,11 +51,13 @@ class Register extends Component {
 
     this._bindMethods([
       'handleChange',
+      'handleTOSChange',
       'handleRadioOptionsChange',
       '_handleSubmit',
     ])
 
     this.state = {
+      checkedTOS: false,
       acceptTerms: true,
       acceptPrivacy: true,
       email: '',
@@ -89,6 +91,22 @@ class Register extends Component {
       [name]: value,
       ...(name === 'acceptTerms' ? { acceptPrivacy: value } : {}),
     })
+  }
+
+  handleTOSChange () {
+    const {
+      acceptTerms,
+      acceptPrivacy,
+      checkedTOS,
+    } = this.state
+
+    if (!acceptTerms && !acceptPrivacy && !checkedTOS) {
+      this.setState({ checkedTOS: true })
+    }
+
+    if (acceptTerms && acceptPrivacy) {
+      this.setState({ acceptPrivacy: false, acceptTerms: false, checkedTOS: false })
+    }
   }
 
   handleRadioOptionsChange ({ name, value }) {
@@ -138,6 +156,7 @@ class Register extends Component {
     } = this.props
 
     const {
+      checkedTOS,
       acceptTerms,
       acceptPrivacy,
       email,
@@ -277,7 +296,7 @@ class Register extends Component {
                 name="acceptTerms"
                 type="checkbox"
                 checked={Boolean(acceptTerms && acceptPrivacy)}
-                onChange={this.handleChange} />
+                onChange={this.handleTOSChange} />
               <label htmlFor="acceptTerms">
                 {'I agree that I have read and agree to the  '}
                 <Link route="wordpress" params={{ slug: 'terms-of-service' }}>
@@ -307,7 +326,7 @@ class Register extends Component {
           </menu>
         </form>
 
-        { !acceptTerms && !acceptPrivacy && (
+        { checkedTOS && !acceptTerms && !acceptPrivacy && (
           <TermsDialog
             dialogContent={() => getWordpressPageElement(termsPage)}
             onClose={() => this.setState({ acceptTerms: true })}
@@ -315,7 +334,7 @@ class Register extends Component {
             checkboxLabel="I have read and agree to these Terms of Service" />
         )}
 
-        { acceptTerms && !acceptPrivacy && (
+        { checkedTOS && acceptTerms && !acceptPrivacy && (
           <TermsDialog
             dialogContent={() => getWordpressPageElement(privacyPage)}
             onClose={() => {
