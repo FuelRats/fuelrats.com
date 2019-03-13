@@ -15,8 +15,8 @@ const selectUserDisplayRatId = (state) => {
   if (state.user.attributes) {
     if (state.user.attributes.displayRatId) {
       ({ displayRatId } = state.user.attributes)
-    } else if (state.user.attributes.relationships.rats.data.length) {
-      displayRatId = state.user.attributes.relationships.rats.data[0].id
+    } else if (state.user.relationships.rats.data.length) {
+      displayRatId = state.user.relationships.rats.data[0].id
     }
   }
 
