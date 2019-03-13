@@ -198,7 +198,7 @@ class AppLayout extends React.Component {
               Item: Component,
               itemProps: pageProps,
             }}
-            keys={router.asPath}>
+            keys={router.pathname}>
             {({ Item, itemProps }) => (props) => (
               <TransitionContext.Provider value={props}>
                 <Item {...itemProps} />
