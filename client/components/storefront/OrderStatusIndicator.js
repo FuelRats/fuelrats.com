@@ -16,12 +16,12 @@ const OrderStatusIndicator = ({ status }) => {
     <span
       alt={status}
       className="order-status-indicator"
-      role="img"
-      title={status}>
+      role="img">
       <FontAwesomeIcon
         icon="shopping-cart"
         size="lg"
-        className="text-success" />
+        className="text-success"
+        title="created" />
 
       <FontAwesomeIcon
         icon="arrow-right"
@@ -32,7 +32,8 @@ const OrderStatusIndicator = ({ status }) => {
           <FontAwesomeIcon
             icon="money-bill"
             size="lg"
-            className={isPaid ? 'text-success' : 'text-muted'} />
+            className={isPaid ? 'text-success' : 'text-muted'}
+            title="paid" />
 
           <FontAwesomeIcon
             icon="arrow-right"
@@ -41,7 +42,8 @@ const OrderStatusIndicator = ({ status }) => {
           <FontAwesomeIcon
             icon="truck"
             size="lg"
-            className={isFulfilled ? 'text-success' : 'text-muted'} />
+            className={isFulfilled ? 'text-success' : 'text-muted'}
+            title="fulfilled" />
         </>
       )}
 
@@ -49,14 +51,16 @@ const OrderStatusIndicator = ({ status }) => {
         <FontAwesomeIcon
           icon="undo"
           size="lg"
-          className="text-danger" />
+          className="text-danger"
+          title="returned" />
       )}
 
       {isCanceled && (
         <FontAwesomeIcon
           icon="times-circle"
           size="lg"
-          className="text-danger" />
+          className="text-danger"
+          title="cancelled" />
       )}
     </span>
   )
