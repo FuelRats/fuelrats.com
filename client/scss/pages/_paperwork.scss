@@ -79,8 +79,7 @@ $margin: 2rem;
     order: 1;
     transform: skewX(-10deg);
     margin-left: calc(#{$margin} + 0.5rem);
-    margin-right: -4rem;
-    padding-right: 4.5rem;
+    margin-right: calc(#{$margin} + 0.5rem);
 
     &>div {
       padding: 0.2em 0.4em;
