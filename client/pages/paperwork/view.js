@@ -103,10 +103,10 @@ class Paperwork extends Component {
     const { rescue } = this.props
 
     return (
-      <li key={index}>
+      <li key={index} className="first-limpet">
         {rat.attributes.name}
         {(rat.id === rescue.attributes.firstLimpetId) && (
-          <span className="badge fl">1st</span>
+          <span className="badge first-limpet">1st</span>
         )}
       </li>
     )
@@ -119,7 +119,7 @@ class Paperwork extends Component {
     return (
       <ul>
         {rats.map(this.renderRat)}
-        {rescue.attributes.unidentifiedRats.map((rat) => `${rat}<span className="badge unidentified">UnID</span>`)}
+        {rescue.attributes.unidentifiedRats.map((rat) => <li key={rat.id} className="unidentified">{rat}<span className="badge">UnID</span></li>)}
       </ul>
     )
   }
@@ -184,11 +184,19 @@ class Paperwork extends Component {
                 <div className="board-index"><span>#{rescue.attributes.data.boardIndex}</span></div>
               )}
               <div className="title">
-                <span>
-                  Rescue of
-                  <span className="CMDR-name"> {rescue.attributes.client}</span> in
-                  <span className="system"> {(rescue.attributes.system) && (rescue.attributes.system)}</span>
-                </span>
+                {(!rescue.attributes.title) && (
+                  <span>
+                    Rescue of
+                    <span className="CMDR-name"> {rescue.attributes.client}</span> in
+                    <span className="system"> {(rescue.attributes.system) || ('Unknown')}</span>
+                  </span>
+                )}
+                {(rescue.attributes.title) && (
+                  <span>
+                    Operation
+                    <span className="rescue-title"> {rescue.attributes.title}</span>
+                  </span>
+                )}
               </div>
             </header>
 
@@ -207,13 +215,23 @@ class Paperwork extends Component {
               {(rescue.attributes.data.markedForDeletion.marked) && (
                 <div className="md-group">
                   <div className="marked-for-deletion">Marked for Deletion</div>
-                  <div className="md-reason">{rescue.attributes.data.markedForDeletion.reason}</div>
-                  <div className="md-reporter">{rescue.attributes.data.markedForDeletion.reporter}</div>
+                  <div className="md-reason">
+                    &quot;{rescue.attributes.data.markedForDeletion.reason}&quot;
+                    <div className="md-reporter"> -     {rescue.attributes.data.markedForDeletion.reporter}</div>
+                  </div>
                 </div>
               )}
             </div>
 
             <div className="info">
+              {(rescue.attributes.title) && (
+                <>
+                  <span className="label">Client</span>
+                  <span className="CMDR-name"> {rescue.attributes.client}</span>
+                  <span className="label">System</span>
+                  <span className="system"> {(rescue.attributes.system) || ('Unknown')}</span>
+                </>
+              )}
               <span className="label">Created</span>
               <span className="date-created content">{moment(rescue.attributes.createdAt).add(ELITE_GAME_YEAR_DESPARITY, 'years').format('DD MMM, YYYY HH:mm')}</span>
               <span className="label">Updated</span>

@@ -102,7 +102,7 @@ class Page extends Component {
   }
 
   static defaultProps = {
-    darkThemeSafe: false,
+    darkThemeSafe: true,
     description: 'The Fuel Rats are Elite: Dangerous\'s premier emergency refueling service. Fueling the galaxy, one ship at a time, since 3301.',
     displayTitle: (title) => (<h1>{title}</h1>),
     renderHeader: true,
