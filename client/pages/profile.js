@@ -11,6 +11,7 @@ import { Router } from '../routes'
 import PageWrapper from '../components/PageWrapper'
 import TabbedPanel from '../components/TabbedPanel'
 import UserOverview from '../components/UserOverview'
+import ProfileHeader from '../components/ProfileHeader'
 import UserRatsPanel from '../components/UserRatsPanel'
 import UserSettings from '../components/UserSettings'
 import FirstLoginDialog from '../components/FirstLoginDialog'
@@ -59,6 +60,7 @@ class Profile extends React.Component {
     return (
       <PageWrapper title="Profile">
         <div className="page-content">
+          <ProfileHeader />
           <TabbedPanel
             name="User Tabs"
             tabs={Profile.tabs} />
