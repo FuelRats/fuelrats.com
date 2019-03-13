@@ -12,6 +12,10 @@
   padding: 1rem;
   width: 100%;
 
+  &.inline {
+    padding: 0.25rem;
+  }
+
   &:focus {
     border-color: $grey;
     box-shadow: 0 0 0.5rem 0 rgba($grey, 0.5);
