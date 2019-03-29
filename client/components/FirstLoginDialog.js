@@ -18,7 +18,7 @@ const FirstLoginDialog = (props) => (
     className="first-login-dialog"
     title={`Welcome to the Fuel Rats, CMDR ${props.displayRat.attributes.name}!`}
     onClose={props.onClose}>
-    <div className="flex column align-center align-text">
+    <div className="flex column justify-center align-text">
       <p>
         <br />
         Your name might be on the roster, but there is much more to being a fuel rat.

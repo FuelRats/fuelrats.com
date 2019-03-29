@@ -1,7 +1,11 @@
 .flex {
   display: flex;
 
-  &.align-center {
+  &.column {
+    flex-direction: column;
+  }
+
+  &.justify-center {
     justify-content: center;
 
     &.align-text {
@@ -9,7 +13,31 @@
     }
   }
 
-  &.column {
-    flex-direction: column;
+  &.align-center {
+    align-items: center;
   }
+
+  &.space-between {
+    justify-content: space-between;
+  }
+
+  &.justify-end {
+    justify-content: flex-end;
+  }
+
+  &.center-middle > * {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:first-child {
+      justify-content: flex-start;
+    }
+
+    &:last-child {
+      justify-content: flex-end;
+    }
+  }
+
 }
