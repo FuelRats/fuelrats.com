@@ -58,11 +58,7 @@ const initialState = {
     statistics: [],
   },
 
-  ships: {
-    ships: [],
-    retrieving: false,
-    total: 0,
-  },
+  ships: {},
 
   skus: {},
 
