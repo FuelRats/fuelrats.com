@@ -12,10 +12,6 @@
   padding: 1rem;
   width: 100%;
 
-  &.inline {
-    padding: 0.25rem;
-  }
-
   &:focus {
     border-color: $grey;
     box-shadow: 0 0 0.5rem 0 rgba($grey, 0.5);
@@ -40,9 +36,12 @@
   &.dark {
     background: $black-lightened;
     color: $white;
-    border-width: 0 0 0.2rem;
-    border-color: transparent;
     box-shadow: none !important;
+    &:not(.inline) {
+      border-width: 0 0 0.2rem;
+      border-color: transparent;
+    }
+
 
     &[required] {
       border-color: $red;
@@ -51,6 +50,13 @@
         border-color: $green;
       }
     }
+  }
+
+  &.inline {
+    padding: 0.25rem;
+    background: transparent;
+    display: inline;
+    width: auto;
   }
 }
 
