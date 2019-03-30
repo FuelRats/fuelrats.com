@@ -60,7 +60,6 @@ const selectUserDisplayRat = (state) => selectRatById(state, { ratId: selectUser
 export {
   selectUser,
   selectUserRats,
-  selectUserStats,
   selectUserDisplayRat,
   selectUserDisplayRatId,
 }
