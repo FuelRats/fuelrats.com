@@ -253,7 +253,7 @@ class RatCard extends React.Component {
     Redux Properties
   \***************************************************************************/
 
-  static mapDispatchToProps = []
+  static mapDispatchToProps = ['updateRat']
 
   static mapStateToProps = (state, props) => ({
     user: selectUser(state),
