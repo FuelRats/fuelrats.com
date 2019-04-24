@@ -157,18 +157,17 @@ class AddRatForm extends Component {
         <div className="form-control">
           {formOpen && (
             <button
-              aria-label="Submit New Commander"
+              aria-label="submit new commander"
               className="green compact square"
-              disabled={!this.isValid}
+              disabled={!this.canSubmit}
               onClick={this._handleSubmit}
               type="button">
               <FontAwesomeIcon icon="check" fixedWidth />
             </button>
           )}
           <button
-            aria-label="Add Commander"
+            aria-label={formOpen ? 'cancel new commander creation' : 'add commander'}
             className={`compact square ${formOpen ? '' : 'green'}`}
-            disabled={!this.isValid}
             onClick={this._handleToggle}
             title={formOpen ? 'Cancel' : 'Add new commander'}
             type="button">
@@ -184,9 +183,16 @@ class AddRatForm extends Component {
     Getters
   \***************************************************************************/
 
-  get isValid () {
-    const invalidStates = Object.values(this.state.validity).filter((value) => value !== true)
-    return invalidStates.length ? invalidStates[0] : true
+  get canSubmit () {
+    const {
+      name,
+      platform,
+      validity,
+    } = this.state
+
+    const isValid = Object.values(validity).filter((validityMember) => validityMember).length
+
+    return name && platform && isValid
   }
 
 
