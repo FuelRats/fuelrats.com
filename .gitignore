@@ -7,3 +7,5 @@ node_modules
 static/compiled
 static/fonts/font-awesome
 logs/
+tsconfig.json
+package-lock.json
