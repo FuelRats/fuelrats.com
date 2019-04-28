@@ -40,7 +40,7 @@
 			"",
 			"",
 			"@connect",
-			"class ${1:ClassName} extends React.Component {",
+			"class ${TM_FILENAME_BASE} extends React.Component {",
 			"  /***************************************************************************\\",
 			"    Class Properties",
 			"  \\***************************************************************************/",
@@ -108,7 +108,7 @@
 			"",
 			"",
 			"",
-			"export default ${1:ClassName}",
+			"export default ${TM_FILENAME_BASE}",
 			""
 		],
 		"description": "React Class Component with standard structure for a fuelrats.com component file"
