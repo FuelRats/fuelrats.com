@@ -3,27 +3,6 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
-const getFirstButtonTitle = (controlType, editMode, canSubmit) => {
-  if (editMode) {
-    return canSubmit ? 'Save changes' : "There's nothing to save!"
-  }
-
-  return `Edit ${controlType}`
-}
-
-
-const getSecondbuttonTitle = (controlType, editMode, canDelete) => {
-  if (editMode) {
-    return 'Cancel changes'
-  }
-
-  if (!canDelete) {
-    return `You cannot delete this ${controlType}.`
-  }
-
-  return `Delete ${controlType}`
-}
-
 
 
 
@@ -40,26 +19,65 @@ const CardControls = (props) => {
     onSubmitClick,
   } = props
 
+  let editModeSubmitTitle = "There's nothing to save!"
+  let editModeCancelTitle = 'Cancel changes'
+
+  if (editMode && canSubmit) {
+    editModeSubmitTitle = 'Save changes'
+  }
+
+  if (deleteMode) {
+    editModeSubmitTitle = `Yes, delete ${controlType}`
+    editModeCancelTitle = `No, don't delete ${controlType}`
+  }
+
   return (
     <>
-      <button
-        className={`icon ${editMode ? 'green' : ''}`}
-        disabled={editMode ? !canSubmit : false}
-        name={editMode || deleteMode ? 'confirm' : 'edit'}
-        onClick={editMode ? onSubmitClick : onEditClick}
-        title={getFirstButtonTitle(controlType, editMode, canSubmit)}
-        type="button">
-        <FontAwesomeIcon icon={editMode ? 'check' : 'pen'} fixedWidth />
-      </button>
-      <button
-        className="icon"
-        disabled={editMode ? false : !canDelete}
-        name={editMode || deleteMode ? 'cancel' : 'delete'}
-        onClick={editMode ? onCancelClick : onDeleteClick}
-        title={getSecondbuttonTitle(controlType, editMode, canDelete)}
-        type="button">
-        <FontAwesomeIcon icon={editMode ? 'times' : 'trash'} fixedWidth />
-      </button>
+      {deleteMode && (<small>Are you sure? </small>)}
+
+      {!(editMode || deleteMode) && (
+        <>
+          <button
+            className={`icon ${editMode || deleteMode ? 'green' : ''}`}
+            name="edit"
+            onClick={onEditClick}
+            title={`Edit ${controlType}`}
+            type="button">
+            <FontAwesomeIcon icon="pen" fixedWidth />
+          </button>
+          <button
+            className="icon"
+            disabled={!canDelete}
+            name="delete"
+            onClick={onDeleteClick}
+            title={canDelete ? `Delete ${controlType}` : `You cannot delete this ${controlType}.`}
+            type="button">
+            <FontAwesomeIcon icon="trash" fixedWidth />
+          </button>
+        </>
+      )}
+
+      {(editMode || deleteMode) && (
+        <>
+          <button
+            className="icon green"
+            disabled={editMode ? !canSubmit : false}
+            name="confirm"
+            onClick={onSubmitClick}
+            title={editModeSubmitTitle}
+            type="button">
+            <FontAwesomeIcon icon="check" fixedWidth />
+          </button>
+          <button
+            className="icon"
+            name="cancel"
+            onClick={onCancelClick}
+            title={editModeCancelTitle}
+            type="button">
+            <FontAwesomeIcon icon="times" fixedWidth />
+          </button>
+        </>
+      )}
     </>
   )
 }
