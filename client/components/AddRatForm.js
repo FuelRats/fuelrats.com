@@ -10,9 +10,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect } from '../store'
 import { selectUser } from '../store/selectors'
 import Component from './Component'
+import classNames from '../helpers/classNames'
 import ValidatedFormInput from './ValidatedFormInput'
 import ValidatedFormSelect from './ValidatedFormSelect'
-
 
 
 
@@ -120,8 +120,14 @@ class AddRatForm extends Component {
       formOpen,
     } = this.state
 
+    const classes = classNames(
+      'add-rat',
+      'compact',
+      ['form-open', formOpen]
+    )
+
     return (
-      <form className="add-rat compact">
+      <form className={classes}>
         {formOpen && (
           <div className="form-row submit-row flex align-center">
             <ValidatedFormInput

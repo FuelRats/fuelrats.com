@@ -1,15 +1,13 @@
 form.add-rat {
   display: flex;
   align-items: center;
-  margin-bottom: 2rem;
+  transition: padding .2s ease;
 
-
-  .cmdr-input {
-    width: 200px;
-  }
-
-  .platform-input {
-    width: 100px;
+  &.form-open {
+    background: #ffffffff;
+    box-shadow: 0 0 1rem rgba(26, 26, 26, 0.1);
+    border: 1px solid rgba(26,26,26, 0.2);
+    padding: .5rem;
   }
 
   .form-control {
@@ -18,13 +16,32 @@ form.add-rat {
     }
   }
 
+  @media only screen and (min-width: 769px) {
+    .cmdr-input {
+      width: 200px;
+    }
+
+    .platform-input {
+      width: 100px;
+    }
+  }
 
   @media only screen and (max-width: 768px) {
     flex-direction: column;
     align-items: flex-end;
 
+    &.form-open {
+      align-items: stretch;
+    }
+
     .form-control {
-      margin: 0 0.25rem;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+
+      button {
+        flex-grow: 1;
+      }
     }
   }
 }
