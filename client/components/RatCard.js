@@ -2,7 +2,7 @@
 import React from 'react'
 import moment from 'moment'
 import PropTypes from 'prop-types'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 
@@ -48,36 +48,7 @@ class RatCard extends React.Component {
     Private Methods
   \***************************************************************************/
 
-  _handleDelete = async (event) => {
-    const {
-      deleteConfirm,
-    } = this.state
-
-    const {
-      deleteRat,
-      rat,
-    } = this.state
-
-    if (deleteConfirm) {
-      if (event.target.name === 'cancel') {
-        this.setState({ deleteConfirm: false })
-        return
-      }
-
-      this.setState({
-        deleteConfirm: false,
-        submitting: 'deleting',
-      })
-
-      await deleteRat(rat.id)
-
-      this.setState({
-        submitting: false,
-      })
-
-      return
-    }
-
+  _handleDelete = () => {
     this.setState({ deleteConfirm: true })
   }
 
@@ -96,14 +67,34 @@ class RatCard extends React.Component {
 
   _handleSubmit = async () => {
     const {
+      changes,
+      deleteConfirm,
+    } = this.state
+
+    const {
       updateRat,
+      deleteRat,
+      rat,
     } = this.props
+
+    if (deleteConfirm) {
+      this.setState({
+        deleteConfirm: false,
+        submitting: 'deleting',
+      })
+
+      deleteRat(rat.id)
+      return
+    }
 
     this.setState({ submitting: true })
 
-    await updateRat()
+    await updateRat(rat.id, changes)
 
-    this.setState({ submitting: false })
+    this.setState({
+      editMode: false,
+      submitting: false,
+    })
   }
 
   _handleEdit = () => {
@@ -113,6 +104,18 @@ class RatCard extends React.Component {
   }
 
   _handleCancel = () => {
+    const {
+      deleteConfirm,
+    } = this.state
+
+    if (deleteConfirm) {
+      this.setState({
+        deleteConfirm: false,
+      })
+
+      return
+    }
+
     this.setState({
       editMode: false,
       changes: {},
@@ -132,9 +135,12 @@ class RatCard extends React.Component {
 
   render () {
     const {
+      userHasMultipleRats,
+    } = this
+
+    const {
       rat,
       // ships,
-      ratCount,
     } = this.props
 
     const {
@@ -170,23 +176,26 @@ class RatCard extends React.Component {
               value={cmdrNameValue} />
           </div>
           <div>
-            {ratCount > 1 && (
+            {userHasMultipleRats && (
               <DefaultRatButton ratId={rat.id} />
             )}
             <span className="rat-platform">{rat.attributes.platform.toUpperCase()}</span>
           </div>
         </header>
+        {/* Disabled until ships are fully implemented
         <div className="panel-content">
           ships.
         </div>
-        <footer className="panel-content flex center-middle justify-center">
-          <div>
+        */}
+        <footer className="panel-content">
+          <div className="rat-created-date">
             <small>
               <span className="text-muted">Created: </span>
               {createdAt}
             </small>
           </div>
-          <div>
+          {/* Disabled until ships are fully implemented
+          <div className="rat-ships-expander">
             <button
               className="inline ship-expand-button"
               type="button"
@@ -194,9 +203,10 @@ class RatCard extends React.Component {
               <FontAwesomeIcon icon="angle-down" fixedWidth />
             </button>
           </div>
+          */}
           <div className="rat-controls">
             <CardControls
-              canDelete={this.canDelete}
+              canDelete={userHasMultipleRats}
               canSubmit={this.canSubmit}
               controlType="rat"
               deleteMode={deleteConfirm}
@@ -230,7 +240,7 @@ class RatCard extends React.Component {
     Getters
   \***************************************************************************/
 
-  get canDelete () {
+  get userHasMultipleRats () {
     return this.props.user.relationships.rats.data.length > 1
   }
 
@@ -253,7 +263,7 @@ class RatCard extends React.Component {
     Redux Properties
   \***************************************************************************/
 
-  static mapDispatchToProps = ['updateRat']
+  static mapDispatchToProps = ['updateRat', 'deleteRat']
 
   static mapStateToProps = (state, props) => ({
     user: selectUser(state),

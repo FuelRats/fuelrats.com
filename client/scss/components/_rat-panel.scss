@@ -1,6 +1,12 @@
 .rat-panel {
   min-width: 36.5rem;
 
+  margin: 1rem;
+
+  &:last-child {
+    margin-bottom: 1rem;
+  }
+
   header {
     overflow-y: hidden;
     position: relative;
@@ -13,6 +19,15 @@
       position: relative;
       top: -2px;
       margin-right: .2rem;
+      --text-color: #{rgba($white, 0.4)};
+      --text-color-hover: #{rgba($white, 0.75)};
+
+      &[disabled] {
+        --background-color: transparent;
+        --background-color-hover: transparent;
+        --text-color: #{$white};
+        --text-color-hover: #{$white};
+      }
     }
 
     .rat-platform {
@@ -23,16 +38,31 @@
   }
 
   footer {
-    .ship-expand-button {
-      width: 100%;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
 
-      svg {
-        transition: transform .2s ease;
+    .rat-ships-expander {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+
+      .ship-expand-button {
+        width: 48px;
+        svg {
+          transition: transform .2s ease;
+        }
       }
     }
 
-    .rat-controls button {
-      margin-left: .4rem;
+    .rat-controls {
+      button {
+        margin-left: .4rem;
+      }
     }
   }
 
