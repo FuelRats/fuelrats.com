@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 // Component imports
 import { connect } from '../../store'
-import { selectRatById, selectUser } from '../../store/selectors'
+import { selectUserId, selectUserDisplayRatId } from '../../store/selectors'
 
 
 
@@ -35,6 +35,16 @@ class ClassName extends React.Component {
     Private Methods
   \***************************************************************************/
 
+  _handleSetDisplayRat = () => {
+    const {
+      updateUser,
+      userId,
+      ratId,
+    } = this.props
+
+    updateUser(userId, { displayRatId: ratId })
+  }
+
 
 
 
@@ -44,12 +54,15 @@ class ClassName extends React.Component {
   \***************************************************************************/
 
   render () {
+    const {
+      isDefaultRat,
+    } = this
     return (
       <button
-        className="inline white display-rat-button"
+        className="inline display-rat-button"
         type="button"
-        disabled={this.canBeDefaultRat}
-        title="Use this rat to represent you. (Display Rat)"
+        disabled={isDefaultRat}
+        title={isDefaultRat ? 'This rat represents you.' : 'Use this rat to represent you. (Display Rat)'}
         onClick={this._handleSetDisplayRat}>
         <FontAwesomeIcon icon="id-card-alt" size="lg" fixedWidth />
       </button>
@@ -64,13 +77,13 @@ class ClassName extends React.Component {
     Getters
   \***************************************************************************/
 
-  get canBeDefaultRat () {
+  get isDefaultRat () {
     const {
-      user,
+      displayRatId,
       ratId,
     } = this.props
 
-    return user.attributes.displayRatId !== ratId
+    return displayRatId === ratId
   }
 
 
@@ -79,11 +92,11 @@ class ClassName extends React.Component {
     Redux Properties
   \***************************************************************************/
 
-  static mapDispatchToProps = []
+  static mapDispatchToProps = ['updateUser']
 
-  static mapStateToProps = (state, ownProps) => ({
-    user: selectUser(state),
-    rat: selectRatById(state, ownProps),
+  static mapStateToProps = (state) => ({
+    userId: selectUserId(state),
+    displayRatId: selectUserDisplayRatId(state),
   })
 
 
