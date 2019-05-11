@@ -1,11 +1,7 @@
 .rat-panel {
   min-width: 36.5rem;
-
+  position: relative;
   margin: 1rem;
-
-  &:last-child {
-    margin-bottom: 1rem;
-  }
 
   header {
     overflow-y: hidden;
@@ -68,5 +64,27 @@
 
   &.expanded .ship-expand-button svg {
     transform: rotate(180deg);
+  }
+
+  &.submitting:after {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    content: "Updating...";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: calc(100% - 2rem);
+    height: calc(100% - 2rem);
+    padding: 1rem;
+    background-color: rgba(26, 26, 26, 0.7);
+    color: white;
+    font-family: Raleway, sans-serif;
+    font-size: 1.1em;
+    text-shadow: 0px 0px 8px #1a1a1a;
+  }
+
+  &.submitting[data-loader-text]:after {
+    content: attr(data-loader-text)
   }
 }

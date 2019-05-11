@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 
 
 // Component imports
-import { connect } from '../store'
+import { connect, actionStatus } from '../store'
 import { selectUser, selectRatById, selectShipsByRatId } from '../store/selectors'
 import classNames from '../helpers/classNames'
 import CardControls from './CardControls'
@@ -80,7 +80,7 @@ class RatCard extends React.Component {
     if (deleteConfirm) {
       this.setState({
         deleteConfirm: false,
-        submitting: 'deleting',
+        submitting: 'delete',
       })
 
       deleteRat(rat.id)
@@ -92,8 +92,12 @@ class RatCard extends React.Component {
     await updateRat(rat.id, changes)
 
     this.setState({
+      changes: {},
       editMode: false,
       submitting: false,
+      validity: {
+        name: false,
+      },
     })
   }
 
@@ -125,7 +129,15 @@ class RatCard extends React.Component {
     })
   }
 
+  _handleDisplayRatClick = () => {
+    this.setState({ submitting: true })
+  }
 
+  _handleDisplayRatUpdate = (res) => {
+    if (res.status === actionStatus.SUCCESS) {
+      this.setState({ submitting: false })
+    }
+  }
 
 
 
@@ -162,9 +174,10 @@ class RatCard extends React.Component {
     )
 
     const cmdrNameValue = typeof changes.name === 'string' ? changes.name : rat.attributes.name
+    const submitText = submitting === 'delete' ? 'Deleting...' : 'Updating...'
 
     return (
-      <div className={classes}>
+      <div className={classes} data-loader-text={submitting ? submitText : null}>
         <header>
           <div>
             <span>CMDR </span>
@@ -177,7 +190,10 @@ class RatCard extends React.Component {
           </div>
           <div>
             {userHasMultipleRats && (
-              <DefaultRatButton ratId={rat.id} />
+              <DefaultRatButton
+                ratId={rat.id}
+                onClick={this._handleDisplayRatClick}
+                onUpdate={this._handleDisplayRatUpdate} />
             )}
             <span className="rat-platform">{rat.attributes.platform.toUpperCase()}</span>
           </div>
