@@ -4,7 +4,7 @@ import { createSelector } from 'reselect'
 
 // Component imports
 import { selectRats, selectRatById } from './rats'
-
+import { selectGroups } from './groups'
 
 
 
@@ -12,9 +12,10 @@ import { selectRats, selectRatById } from './rats'
 const selectUser = (state) => (state.user.attributes ? state.user : null)
 
 
+const selectUserAvatar = (state) => state.user && state.user.attributes && (state.user.attributes.image || `//api.adorable.io/avatars/${state.user.id}`)
+
 
 const selectUserId = (state) => state.user.id
-
 
 
 const selectUserRats = createSelector(
@@ -26,9 +27,6 @@ const selectUserRats = createSelector(
     return null
   }
 )
-
-
-
 
 
 const selectUserDisplayRatId = (state) => {
@@ -46,10 +44,18 @@ const selectUserDisplayRatId = (state) => {
 }
 
 
-
-
-
 const selectUserDisplayRat = (state) => selectRatById(state, { ratId: selectUserDisplayRatId(state) })
+
+
+const selectUserGroups = createSelector(
+  [selectUser, selectGroups],
+  (user, groups) => {
+    if (user) {
+      return user.relationships.groups.data.map(({ id }) => groups[id])
+    }
+    return []
+  }
+)
 
 
 
@@ -57,8 +63,10 @@ const selectUserDisplayRat = (state) => selectRatById(state, { ratId: selectUser
 
 export {
   selectUser,
+  selectUserAvatar,
   selectUserId,
   selectUserRats,
   selectUserDisplayRat,
   selectUserDisplayRatId,
+  selectUserGroups,
 }
