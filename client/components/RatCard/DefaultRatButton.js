@@ -35,14 +35,24 @@ class ClassName extends React.Component {
     Private Methods
   \***************************************************************************/
 
-  _handleSetDisplayRat = () => {
+  _handleClick = async (event) => {
     const {
       updateUser,
       userId,
       ratId,
+      onClick,
+      onUpdate,
     } = this.props
 
-    updateUser(userId, { displayRatId: ratId })
+    if (onClick) {
+      await onClick(event)
+    }
+
+    const response = await updateUser(userId, { displayRatId: ratId })
+
+    if (onUpdate) {
+      onUpdate(response)
+    }
   }
 
 
@@ -63,7 +73,7 @@ class ClassName extends React.Component {
         type="button"
         disabled={isDefaultRat}
         title={isDefaultRat ? 'This rat represents you.' : 'Use this rat to represent you. (Display Rat)'}
-        onClick={this._handleSetDisplayRat}>
+        onClick={this._handleClick}>
         <FontAwesomeIcon icon="id-card-alt" size="lg" fixedWidth />
       </button>
     )
