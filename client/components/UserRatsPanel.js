@@ -16,12 +16,16 @@ const UserRatsPanel = ({ user }) => {
   const { rats } = user.relationships
 
   return (
-    <div className="user-rats-tab flex column">
-      <div className="flex justify-end">
+    <div className="user-rats-tab">
+      <div className="add-rat-form-container">
         <AddRatForm />
       </div>
-      <div className="flex">
-        {rats.data.map(({ id }) => <RatCard key={id} ratId={id} />)}
+      <div className="rat-cards-container">
+        {rats.data.map(({ id }) => (
+          <div key={id} className="rat-card-wrapper">
+            <RatCard ratId={id} />
+          </div>
+        ))}
       </div>
     </div>
   )
