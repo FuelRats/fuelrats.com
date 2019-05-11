@@ -29,6 +29,9 @@ const deleteRat = (ratId) => createApiAction({
   actionType: actionTypes.DELETE_RAT,
   url: `/rats/${ratId}`,
   method: 'delete',
+  postDispatch: {
+    ratId,
+  },
 })
 
 const updateRat = (ratId, data) => createApiAction({
