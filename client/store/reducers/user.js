@@ -88,10 +88,10 @@ export default function userReducer (state = initialState.user, action) {
       return { ...initialState.user }
 
     case actionTypes.UPDATE_USER:
-      if (action.user) {
+      if (status === 'success' && payload.data[0].id === state.id) {
         return {
           ...state,
-          ...action.user,
+          ...payload.data[0],
         }
       }
       break
