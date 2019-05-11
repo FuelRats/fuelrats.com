@@ -26,8 +26,9 @@ export default function userReducer (state = initialState.user, action) {
     case actionTypes.DELETE_NICKNAME:
       if (status === 'success') {
         const newState = { ...state }
+        const nickIndex = newState.attributes.nicknames.findIndex((nick) => nick === action.nickname)
 
-        newState.attributes.nicknames = newState.attributes.nicknames.filter((nick) => nick !== action.nickname)
+        newState.attributes.nicknames.splice(nickIndex, 1)
 
         return newState
       }
