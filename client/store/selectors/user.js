@@ -13,6 +13,8 @@ const selectUser = (state) => (state.user.attributes ? state.user : null)
 
 
 
+const selectUserId = (state) => state.user.id
+
 
 
 const selectUserRats = createSelector(
@@ -30,21 +32,17 @@ const selectUserRats = createSelector(
 
 
 const selectUserDisplayRatId = (state) => {
-  let displayRatId = null
+  let ratId = null
 
   if (state.user.attributes) {
     if (state.user.attributes.displayRatId) {
-      ({ displayRatId } = state.user.attributes)
+      ratId = state.user.attributes.displayRatId
     } else if (state.user.relationships.rats.data.length) {
-      displayRatId = state.user.relationships.rats.data[0].id
+      ratId = state.user.relationships.rats.data[0].id
     }
   }
 
-  if (state.user.displayRatId) {
-    return displayRatId
-  }
-
-  return displayRatId
+  return ratId
 }
 
 
@@ -59,6 +57,7 @@ const selectUserDisplayRat = (state) => selectRatById(state, { ratId: selectUser
 
 export {
   selectUser,
+  selectUserId,
   selectUserRats,
   selectUserDisplayRat,
   selectUserDisplayRatId,
