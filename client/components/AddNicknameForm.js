@@ -74,6 +74,8 @@ class AddNicknameForm extends Component {
         onSubmit={this._handleSubmit}>
         <ValidatedFormInput
           className="stretch-9"
+          id="addNickname"
+          label="Nickname"
           name="add-nickname"
           onChange={this._handleChange}
           placeholder="Add a nickname..."

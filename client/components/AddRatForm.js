@@ -6,9 +6,30 @@ import React from 'react'
 
 
 // Component imports
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect } from '../store'
+import { selectUser } from '../store/selectors'
 import Component from './Component'
+import classNames from '../helpers/classNames'
+import ValidatedFormInput from './ValidatedFormInput'
+import ValidatedFormSelect from './ValidatedFormSelect'
 
+
+
+
+// Component Constants
+const INVALID_NAME_MESSAGE = 'CMDR Name is Required'
+const INVALID_PLATFORM_MESSAGE = 'Platform is Required'
+const initialState = {
+  formOpen: false,
+  name: '',
+  platform: '',
+  validity: {
+    name: INVALID_NAME_MESSAGE,
+    platform: INVALID_PLATFORM_MESSAGE,
+  },
+  submitting: false,
+}
 
 
 
@@ -20,9 +41,7 @@ class AddRatForm extends Component {
   \***************************************************************************/
 
   state = {
-    name: '',
-    platform: 'pc',
-    submitting: false,
+    ...initialState,
   }
 
 
@@ -47,9 +66,42 @@ class AddRatForm extends Component {
 
     this.setState({ submitting: true })
 
-    await createRat(name, platform, userId)
+    await createRat({
+      name,
+      platform,
+      userId,
+    })
 
-    this.setState({ submitting: false })
+    this.setState({ ...initialState })
+  }
+
+  _handleToggle = () => {
+    this.setState((state) => ({
+      ...initialState,
+      formOpen: !state.formOpen,
+    }))
+  }
+
+  _handleFieldChange = ({ target, valid, message }) => {
+    this.setState(({ validity }) => {
+      const {
+        name,
+        value,
+      } = target
+      const required = typeof validity[name] !== 'undefined'
+
+      return {
+        [name]: value,
+        ...(required
+          ? {
+            validity: {
+              ...validity,
+              [name]: valid || message,
+            },
+          }
+          : {}),
+      }
+    })
   }
 
 
@@ -65,82 +117,88 @@ class AddRatForm extends Component {
       name,
       platform,
       submitting,
+      formOpen,
     } = this.state
 
-    return (
-      <form
-        className="add-rat"
-        onSubmit={this._handleSubmit}>
-        <div className="stretch-12">
-          <label htmlFor="add-rat">Add a rat</label>
-        </div>
+    const classes = classNames(
+      'add-rat',
+      'compact',
+      ['form-open', formOpen]
+    )
 
-        <div className="row">
-          <div className="input-group stretch-9">
-            <input
+    return (
+      <form className={classes}>
+        {formOpen && (
+          <div className="form-row submit-row flex align-center">
+            <ValidatedFormInput
               aria-label="Commander Name"
+              className="cmdr-input"
               disabled={submitting}
-              id="add-rat"
-              name="add-rat"
+              id="newRatName"
+              invalidMessage={INVALID_NAME_MESSAGE}
+              label="CMDR Name"
+              name="name"
               onChange={(event) => this.setState({ name: event.target.value })}
               placeholder="CMDR Name"
-              type="text" />
+              required
+              value={name} />
 
-            <input
-              aria-label="P C Commander"
-              defaultChecked={platform === 'pc'}
-              hidden
-              id="platform-pc"
+            <ValidatedFormSelect
+              className="platform-input"
+              disabled={submitting}
+              id="newRatPlatform"
+              invalidMessage={INVALID_PLATFORM_MESSAGE}
               name="platform"
-              onChange={(event) => this.setState({ platform: event.target.value })}
-              type="radio"
-              value="pc" />
-            <label
-              className="button"
-              htmlFor="platform-pc">
-              PC
-            </label>
-
-            <input
-              aria-label="Xbox Commander"
-              defaultChecked={platform === 'xb'}
-              hidden
-              id="platform-xb"
-              name="platform"
-              onChange={(event) => this.setState({ platform: event.target.value })}
-              type="radio"
-              value="xb" />
-            <label
-              className="button"
-              htmlFor="platform-xb">
-              XB
-            </label>
-
-            <input
-              aria-label="Playsation Commander"
-              defaultChecked={platform === 'ps'}
-              hidden
-              id="platform-ps"
-              name="platform"
-              onChange={(event) => this.setState({ platform: event.target.value })}
-              type="radio"
-              value="ps" />
-            <label
-              className="button"
-              htmlFor="platform-ps">
-              PS
-            </label>
+              label="Platform"
+              onChange={this._handleFieldChange}
+              options={{
+                pc: 'PC',
+                xb: 'XB1',
+                ps: 'PS4',
+              }}
+              required
+              value={platform} />
           </div>
-
+        )}
+        <div className="form-control">
+          {formOpen && (
+            <button
+              aria-label="submit new commander"
+              className="green compact square"
+              disabled={!this.canSubmit}
+              onClick={this._handleSubmit}
+              type="button">
+              <FontAwesomeIcon icon="check" fixedWidth />
+            </button>
+          )}
           <button
-            aria-label="Add Commander"
-            disabled={!name || submitting}
-            type="submit">
-            Add
+            aria-label={formOpen ? 'cancel new commander creation' : 'add commander'}
+            className={`compact square ${formOpen ? '' : 'green'}`}
+            onClick={this._handleToggle}
+            title={formOpen ? 'Cancel' : 'Add new commander'}
+            type="button">
+            <FontAwesomeIcon icon={formOpen ? 'times' : 'plus'} fixedWidth />
           </button>
         </div>
       </form>
     )
+  }
+
+
+  /***************************************************************************\
+    Getters
+  \***************************************************************************/
+
+  get canSubmit () {
+    const {
+      name,
+      platform,
+      validity,
+    } = this.state
+
+    const isValid = Object.values(validity).filter((validityMember) => validityMember).length
+
+    return name && platform && isValid
   }
 
 
@@ -153,15 +211,9 @@ class AddRatForm extends Component {
 
   static mapDispatchToProps = ['createRat']
 
-  static mapStateToProps = (state) => {
-    const {
-      id,
-    } = state.user
-
-    return {
-      userId: id,
-    }
-  }
+  static mapStateToProps = (state, ownProps) => ({
+    userId: ownProps.userId || selectUser(state).id,
+  })
 }
 
 

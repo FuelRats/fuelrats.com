@@ -26,8 +26,9 @@ export default function userReducer (state = initialState.user, action) {
     case actionTypes.DELETE_NICKNAME:
       if (status === 'success') {
         const newState = { ...state }
+        const nickIndex = newState.attributes.nicknames.findIndex((nick) => nick === action.nickname)
 
-        newState.attributes.nicknames = newState.attributes.nicknames.filter((nick) => nick !== action.nickname)
+        newState.attributes.nicknames.splice(nickIndex, 1)
 
         return newState
       }
@@ -50,16 +51,30 @@ export default function userReducer (state = initialState.user, action) {
       }
       break
 
+    case actionTypes.DELETE_RAT:
+      if (status === 'success') {
+        const newState = { ...state }
+
+        if (!newState.relationships.rats.data) {
+          return state
+        }
+
+        const ratIndex = newState.relationships.rats.data.findIndex((rat) => rat.id === action.ratId)
+
+        if (ratIndex > -1) {
+          newState.relationships.rats.data.splice(ratIndex, 1)
+        }
+
+        return newState
+      }
+      break
+
     case actionTypes.GET_USER:
       if (status === 'success') {
         if (payload) {
           return {
             ...state,
             ...payload.data,
-            attributes: {
-              ...payload.data.attributes,
-              image: payload.data.attributes.image || `//api.adorable.io/avatars/${payload.data.id}`,
-            },
             retrieving: false,
           }
         }
@@ -70,10 +85,10 @@ export default function userReducer (state = initialState.user, action) {
       return { ...initialState.user }
 
     case actionTypes.UPDATE_USER:
-      if (action.user) {
+      if (status === 'success' && payload.data[0].id === state.id) {
         return {
           ...state,
-          ...action.user,
+          ...payload.data[0],
         }
       }
       break

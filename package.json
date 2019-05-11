@@ -75,6 +75,7 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
     "request": "^2.88.0",
+    "reselect": "^4.0.0",
     "stripe": "^6.25.1",
     "uuid": "^3.3.2",
     "webpack": "4.29.0",

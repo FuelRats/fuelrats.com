@@ -16,38 +16,32 @@ export default function ratsReducer (state = initialState.rats, action) {
   const { rats } = state
 
   switch (type) {
-    case actionTypes.CREATE_RAT:
-      switch (status) {
-        case 'success':
-          return {
-            ...state,
-            rats: {
-              ...rats,
-              [payload.data.id]: payload.data,
-            },
-          }
-
-        default:
-          return state
-      }
-
     case actionTypes.GET_USER:
     case actionTypes.GET_RESCUE:
+    case actionTypes.CREATE_RAT:
+    case actionTypes.UPDATE_RAT:
     case actionTypes.UPDATE_RESCUE:
-      switch (status) {
-        case 'success':
-          return {
-            ...state,
-            rats: {
-              ...rats,
-              ...parseJSONAPIResponseForEntityType(payload, 'rats', true),
-            },
-            retrieving: false,
-          }
-
-        default:
-          return state
+      if (status === 'success') {
+        return {
+          ...state,
+          rats: {
+            ...rats,
+            ...parseJSONAPIResponseForEntityType(payload, 'rats', true),
+          },
+          retrieving: false,
+        }
       }
+      return state
+
+    case actionTypes.DELETE_RAT:
+      if (status === 'success') {
+        const newState = { ...state }
+
+        delete newState.rats[action.ratId]
+
+        return newState
+      }
+      return state
 
     default:
       return state
