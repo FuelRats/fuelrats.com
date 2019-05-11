@@ -18,7 +18,13 @@ const selectShipById = (state, { shipId }) => state.ships[shipId]
 
 const selectShipsByRatId = createSelector(
   [selectRatById, selectShips],
-  (rat, ships) => rat.relationships.ships.data.map(({ id }) => ships[id])
+  (rat, ships) => {
+    if (!rat.relationships.ships.data) {
+      return null
+    }
+
+    return rat.relationships.ships.data.map(({ id }) => ships[id])
+  }
 )
 
 
