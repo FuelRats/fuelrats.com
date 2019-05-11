@@ -50,6 +50,24 @@ export default function userReducer (state = initialState.user, action) {
       }
       break
 
+    case actionTypes.DELETE_RAT:
+      if (status === 'success') {
+        const newState = { ...state }
+
+        if (!newState.relationships.rats.data) {
+          return state
+        }
+
+        const ratIndex = newState.relationships.rats.data.findIndex((rat) => rat.id === action.ratId)
+
+        if (ratIndex > -1) {
+          newState.relationships.rats.data.splice(ratIndex, 1)
+        }
+
+        return newState
+      }
+      break
+
     case actionTypes.GET_USER:
       if (status === 'success') {
         if (payload) {
