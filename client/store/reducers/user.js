@@ -75,10 +75,6 @@ export default function userReducer (state = initialState.user, action) {
           return {
             ...state,
             ...payload.data,
-            attributes: {
-              ...payload.data.attributes,
-              image: payload.data.attributes.image || `//api.adorable.io/avatars/${payload.data.id}`,
-            },
             retrieving: false,
           }
         }
