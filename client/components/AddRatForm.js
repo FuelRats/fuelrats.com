@@ -138,6 +138,8 @@ class AddRatForm extends Component {
               invalidMessage={INVALID_NAME_MESSAGE}
               label="CMDR Name"
               name="name"
+              minLength={1}
+              maxLength={18}
               onChange={(event) => this.setState({ name: event.target.value })}
               placeholder="CMDR Name"
               required
