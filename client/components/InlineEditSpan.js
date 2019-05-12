@@ -12,8 +12,18 @@ const InlineEditor = ({
   ...inputProps
 }) => (
   canEdit
-    ? (<input className={`inline-editor inline ${inputClassName || ''}`} type="text" value={value} {...inputProps} />)
-    : (<span className={`inline-editor ${className}`}>{value}</span>)
+    ? (
+      <input
+        className={`inline-editor inline ${inputClassName || ''}`}
+        type="text"
+        value={value}
+        {...inputProps} />
+    )
+    : (
+      <span className={`inline-editor ${className}`}>
+        {value}
+      </span>
+    )
 )
 
 
