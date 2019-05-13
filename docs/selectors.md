@@ -1,4 +1,4 @@
-# FR.com Redux Selector Spec v1
+# [FR.com][fuelrats] Redux Selector Spec v1
 
 This document aims to explain the concept and implementation of selectors as they exist within the fuelrats.com repository.
 
@@ -146,6 +146,6 @@ selectRatById
 * [Reselect][reselect-documentation]
 * [Redux docs on selectors][redux-computing-derived]
 
-
+[fuelrats]: https://fuelrats.com/
 [reselect-documentation]: https://github.com/reduxjs/reselect
 [redux-computing-derived]: https://redux.js.org/recipes/computing-derived-data
