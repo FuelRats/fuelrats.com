@@ -250,6 +250,8 @@ class Register extends Component {
               id="ratName"
               name="ratName"
               onChange={this.handleChange}
+              minLength={1}
+              maxLength={18}
               pattern="^[\x00-\x7F]+$"
               placeholder="Surly Badger"
               ref={(_ratNameEl) => {

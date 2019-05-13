@@ -185,6 +185,8 @@ class RatCard extends React.Component {
               canEdit={editMode}
               inputClassName="dark"
               name="name"
+              minLength={1}
+              maxLength={18}
               onChange={this._handleNameChange}
               value={cmdrNameValue} />
           </div>
