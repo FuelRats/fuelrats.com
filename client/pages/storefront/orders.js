@@ -135,7 +135,9 @@ class ListOrders extends Component {
                       <ul>
                         {order.attributes.items.filter(({ type }) => (type === 'sku')).map((item) => {
                           const sku = skus[item.parent]
-                          const descriptors = Object.keys(sku.attributes.attributes).length ? Object.values(sku.attributes.attributes).join(', ') : null
+
+                          const descriptors = sku && Object.keys(sku.attributes.attributes).length ? Object.values(sku.attributes.attributes).join(', ') : null
+
                           return (
                             <li key={item.parent}>
                               {item.quantity}x {item.description} {descriptors && `(${descriptors})`}
