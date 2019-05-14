@@ -5,7 +5,6 @@
 
 
 [![Fuelrats.com contributors as listed by the all-contributors spec][contributors-badge]][contributors]
-[![Code of Conduct][code-of-conduct-badge]][code-of-conduct]
 [![PRs Welcome][prs-badge]][prs]
 
 
@@ -18,6 +17,7 @@ This is the home of the Fuel Rats' main website. Check us out at https://fuelrat
 ## Staging Previews
 
 If you want to beta test our upcoming features, visit https://beta.fuelrats.com.
+
 If you you like living on the edge (you rebel), come see whats coming next at https://dev.fuelrats.com (may not always work as intended).
 
 **Disclaimer**: Our staging preview sites connect to separate APIs from our main website, and therefore have a separate account database. If you need a development account, please contact a TechRat on [IRC][irc] before registering.

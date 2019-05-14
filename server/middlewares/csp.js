@@ -1,5 +1,3 @@
-/* eslint-env node */
-
 // Module imports
 const buildCSP = require('content-security-policy-builder')
 const uuidv4 = require('uuid/v4')
