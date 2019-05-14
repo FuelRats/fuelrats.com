@@ -11,6 +11,7 @@ import localForage from 'localforage'
 
 // Component imports
 import { connect } from '../../store'
+import { selectStoreCart, selectSkus } from '../../store/selectors'
 import CustomerInfoFields from './CustomerInfoFields'
 import RadioCardInput from '../RadioCardInput'
 import ValidatedFormInput from '../ValidatedFormInput'
@@ -451,9 +452,9 @@ class CheckoutForm extends React.Component {
 
   static mapDispatchToProps = ['createOrder', 'getOrder', 'updateOrder', 'payOrder', 'clearCart']
 
-  static mapStateToProps = ({ skus, storeCart }) => ({
-    cart: storeCart,
-    skus,
+  static mapStateToProps = (state) => ({
+    cart: selectStoreCart(state),
+    skus: selectSkus(state),
   })
 }
 

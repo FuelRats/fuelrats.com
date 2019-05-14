@@ -12,6 +12,7 @@ import React from 'react'
 
 // Component imports
 import { connect } from '../store'
+import { selectAuthentication, selectUser } from '../store/selectors'
 import { Router } from '../routes'
 import apiService from '../services/api'
 import Header from './Header'
@@ -233,11 +234,9 @@ class AppLayout extends React.Component {
 
   static mapDispatchToProps = ['getUser', 'logout', 'setFlag', 'updateLoggingInState']
 
-  static mapStateToProps = ({ authentication, flags, user }) => ({
-    loggedIn: authentication.loggedIn,
-    showLoginDialog: flags.showLoginDialog,
-    verifyError: authentication.verifyError,
-    user,
+  static mapStateToProps = (state) => ({
+    ...selectAuthentication(state),
+    user: selectUser(state),
   })
 }
 

@@ -7,7 +7,12 @@ import React from 'react'
 
 // Component imports
 import { connect } from '../store'
-import { selectUser, selectUserAvatar, selectUserGroups } from '../store/selectors'
+import {
+  selectAuthentication,
+  selectUser,
+  selectUserAvatar,
+  selectUserGroups,
+} from '../store/selectors'
 import { Link } from '../routes'
 import AdminUserMenuNav from './AdminUserMenuNav'
 import userHasPermission from '../helpers/userHasPermission'
@@ -109,7 +114,7 @@ const UserMenu = (props) => {
 UserMenu.mapDispatchToProps = ['logout', 'setFlag']
 
 UserMenu.mapStateToProps = (state) => ({
-  ...state.authentication,
+  ...selectAuthentication(state),
   user: selectUser(state),
   userAvatar: selectUserAvatar(state),
   showAdmin: userHasPermission(selectUserGroups(state), 'isAdministrator'),

@@ -1,9 +1,19 @@
 // Module imports
 import React from 'react'
+import { createSelector } from 'reselect'
+
+
+
 
 
 // Component imports
 import { actions, connect } from '../../store'
+import {
+  selectRatsByRescueId,
+  selectRescueById,
+  selectUser,
+  selectUserGroups,
+} from '../../store/selectors'
 import { authenticated } from '../../components/AppLayout'
 import { Router } from '../../routes'
 import Component from '../../components/Component'
@@ -20,6 +30,20 @@ import userHasPermission from '../../helpers/userHasPermission'
 
 // Component constants
 const PAPERWORK_MAX_EDIT_TIME = 3600000
+
+
+const selectFormattedRatsByRescueId = createSelector(
+  selectRatsByRescueId,
+  (rats) => rats
+    .map((rat) => ({
+      ...rat,
+      value: rat.attributes.name,
+    }))
+    .reduce((accumulator, rat) => ({
+      ...accumulator,
+      [rat.id]: rat,
+    }), {})
+)
 
 
 
@@ -596,40 +620,12 @@ class Paperwork extends Component {
 
   static mapStateToProps = (state, ownProps) => {
     const { id: rescueId } = ownProps.query
-    let firstLimpetId = []
-    let rats = {}
-    let rescue = null
-
-    if (rescueId) {
-      rescue = state.rescues[rescueId]
-    }
-
-    if (rescue) {
-      if (rescue.relationships.firstLimpet.data) {
-        firstLimpetId = Object.values(state.rats.rats).filter((rat) => rescue.relationships.firstLimpet.data.id === rat.id)
-      }
-
-      rats = Object.values(state.rats.rats)
-        .filter((rat) => rescue.relationships.rats.data.find(({ id }) => rat.id === id))
-        .map((rat) => ({
-          ...rat,
-          value: rat.attributes.name,
-        }))
-        .reduce((accumulator, rat) => ({
-          ...accumulator,
-          [rat.id]: rat,
-        }), {})
-    }
-
-    const currentUser = state.user
-    const currentUserGroups = currentUser.relationships ? [...currentUser.relationships.groups.data].map((group) => state.groups[group.id]) : []
 
     return {
-      firstLimpetId,
-      rats,
-      rescue,
-      currentUser,
-      currentUserGroups,
+      rats: selectFormattedRatsByRescueId(state, { rescueId }),
+      rescue: selectRescueById(state, { rescueId }),
+      currentUser: selectUser(state),
+      currentUserGroups: selectUserGroups(state),
     }
   }
 

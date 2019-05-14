@@ -12,6 +12,7 @@ import { Link } from '../../routes'
 import Component from '../../components/Component'
 import PageWrapper from '../../components/PageWrapper'
 import TextPlaceholder from '../../components/TextPlaceholder'
+import { selectBlogStatistics, selectBlogAuthors, selectBlogCategories, selectBlogById } from '../../store/selectors'
 
 
 @connect
@@ -129,9 +130,11 @@ class Blog extends Component {
     /* eslint-enable */
   }
 
-  static mapStateToProps = ({ blogs: { blogs, ...restBlogs } }, { query }) => ({
-    blog: blogs.find((blog) => (blog.id.toString() === query.id) || (blog.slug === query.id)),
-    ...restBlogs,
+  static mapStateToProps = (state, ownProps) => ({
+    blog: selectBlogById(state, { blogId: ownProps.query.id }),
+    categories: selectBlogCategories(state),
+    authors: selectBlogAuthors(state),
+    ...selectBlogStatistics(state),
   })
 
   static mapDispatchToProps = ['retrieveBlog']
