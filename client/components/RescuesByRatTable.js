@@ -8,6 +8,7 @@ import ReactTable from 'react-table'
 
 // Module imports
 import { connect } from '../store'
+import { selectRescuesByRatLoading, selectRescuesByRatStatistics } from '../store/selectors'
 import Component from './Component'
 
 
@@ -92,17 +93,10 @@ class RescuesByRatTable extends Component {
 
   static mapDispatchToProps = ['getRescuesByRatStatistics']
 
-  static mapStateToProps = (state) => {
-    const {
-      loading,
-      statistics,
-    } = state.rescuesByRat
-
-    return {
-      loading,
-      statistics: statistics.filter((rat) => rat.attributes.rescueCount > 0),
-    }
-  }
+  static mapStateToProps = (state) => ({
+    loading: selectRescuesByRatLoading(state),
+    statistics: selectRescuesByRatStatistics(state),
+  })
 }
 
 

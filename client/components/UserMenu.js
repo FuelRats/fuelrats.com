@@ -7,6 +7,12 @@ import React from 'react'
 
 // Component imports
 import { connect } from '../store'
+import {
+  selectAuthentication,
+  selectUser,
+  selectUserAvatar,
+  selectUserGroups,
+} from '../store/selectors'
 import { Link } from '../routes'
 import AdminUserMenuNav from './AdminUserMenuNav'
 import userHasPermission from '../helpers/userHasPermission'
@@ -20,6 +26,7 @@ const UserMenu = (props) => {
     loggingIn,
     logout,
     user,
+    userAvatar,
     showAdmin,
   } = props
 
@@ -27,13 +34,13 @@ const UserMenu = (props) => {
     <div className={`user-menu ${loggedIn ? 'logged-in' : ''} ${loggingIn ? 'logging-in' : ''}`}>
       {Boolean(loggedIn || loggingIn) && (
         <div className="avatar medium">
-          {Boolean(!loggingIn && user.attributes) && (
-            <img alt="Your avatar" src={user.attributes.image} />
+          {Boolean(!loggingIn && user) && (
+            <img alt="Your avatar" src={userAvatar} />
           )}
         </div>
       )}
 
-      {(loggedIn && user.attributes) && (
+      {(loggedIn && user) && (
         <menu>
           <nav className="user">
             <ul>
@@ -106,15 +113,12 @@ const UserMenu = (props) => {
 
 UserMenu.mapDispatchToProps = ['logout', 'setFlag']
 
-UserMenu.mapStateToProps = ({ authentication, user, groups }) => {
-  const userGroups = user.relationships ? user.relationships.groups.data.map((group) => groups[group.id]) : []
-
-  return {
-    ...authentication,
-    user,
-    showAdmin: user.relationships ? userHasPermission(userGroups, 'isAdministrator') : false,
-  }
-}
+UserMenu.mapStateToProps = (state) => ({
+  ...selectAuthentication(state),
+  user: selectUser(state),
+  userAvatar: selectUserAvatar(state),
+  showAdmin: userHasPermission(selectUserGroups(state), 'isAdministrator'),
+})
 
 
 

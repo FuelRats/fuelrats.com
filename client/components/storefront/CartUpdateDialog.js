@@ -7,6 +7,7 @@ import React from 'react'
 
 // Component imports
 import { connect } from '../../store'
+import { selectStoreCart } from '../../store/selectors'
 import Dialog from '../Dialog'
 import Component from '../Component'
 import isInStock from '../../helpers/isInStock'
@@ -253,7 +254,7 @@ class CartUpdateDialog extends Component {
 
   static mapDispatchToProps = ['updateCartItem', 'updateOrder']
 
-  static mapStateToProps = (state) => ({ cart: state.storeCart })
+  static mapStateToProps = (state) => ({ cart: selectStoreCart(state) })
 }
 
 

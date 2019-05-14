@@ -22,7 +22,7 @@ const domainWhitelist = [
 
 
 
-module.exports = (isDev) => async (ctx, next) => {
+module.exports = ({ isDev, publicUrl }) => async (ctx, next) => {
   const nonce = uuidv4()
 
   ctx.res.nonce = nonce /* eslint-disable-line no-param-reassign */
@@ -33,7 +33,12 @@ module.exports = (isDev) => async (ctx, next) => {
       connectSrc: [
         "'self'",
         'wss://*.fuelrats.com',
-        ...(isDev ? ['webpack://*'] : []),
+        ...(isDev
+          ? [
+            publicUrl,
+            'webpack://*',
+          ]
+          : []),
       ],
       baseUri: ["'none'"],
       scriptSrc: [

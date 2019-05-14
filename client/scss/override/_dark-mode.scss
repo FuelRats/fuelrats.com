@@ -3,8 +3,20 @@ main.page.--experiment-dark-mode {
   color: #EEE;
 
   .panel {
-    background: #000000;
+    background: #111111;
     color: #EEE;
+  }
+
+  header.paperwork-header .board-index {
+    background: #101010;
+    color: $white;
+  }
+
+  .rescue-tags {
+    .tag.status-group .outcome, .md-group .md-reason {
+      background: #101010;
+      color: $white;
+    }
   }
 
   .ReactTable {

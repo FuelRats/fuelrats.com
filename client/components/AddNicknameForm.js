@@ -74,9 +74,13 @@ class AddNicknameForm extends Component {
         onSubmit={this._handleSubmit}>
         <ValidatedFormInput
           className="stretch-9"
+          id="addNickname"
+          label="Nickname"
           name="add-nickname"
           onChange={this._handleChange}
           placeholder="Add a nickname..."
+          pattern="^[A-Za-z_\\`\[\]{}]{1}[A-Za-z0-9_\\`\[\]{}]{0,29}$"
+          patternMessage="Nickname must start with a letter, contain no spaces, and is between 2-30 characters"
           type="text"
           value={nickname} />
         <button

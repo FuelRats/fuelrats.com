@@ -10,6 +10,7 @@ import React from 'react'
 
 // Module imports
 import { connect } from '../store'
+import { selectRescuesBySystemLoading, selectRescuesBySystemStatistics } from '../store/selectors'
 import Component from './Component'
 
 
@@ -345,17 +346,10 @@ class RescuesBySystemChart extends Component {
 
   static mapDispatchToProps = ['getRescuesBySystemStatistics']
 
-  static mapStateToProps = (state) => {
-    const {
-      loading,
-      statistics,
-    } = state.rescuesBySystem
-
-    return {
-      loading,
-      statistics,
-    }
-  }
+  static mapStateToProps = (state) => ({
+    loading: selectRescuesBySystemLoading(state),
+    statistics: selectRescuesBySystemStatistics(state),
+  })
 }
 
 

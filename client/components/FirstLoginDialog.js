@@ -7,8 +7,8 @@ import React from 'react'
 
 // Component imports
 import { connect } from '../store'
+import { selectUserDisplayRat } from '../store/selectors'
 import Dialog from './Dialog'
-
 
 
 
@@ -16,10 +16,11 @@ import Dialog from './Dialog'
 const FirstLoginDialog = (props) => (
   <Dialog
     className="first-login-dialog"
-    title={`Welcome to the Fuel Rats, CMDR ${props.cmdrName}!`}
+    title={`Welcome to the Fuel Rats, CMDR ${props.displayRat.attributes.name}!`}
     onClose={props.onClose}>
-    <div className="center-content ">
+    <div className="flex column justify-center align-text">
       <p>
+        <br />
         Your name might be on the roster, but there is much more to being a fuel rat.
         <br />
         <br />
@@ -34,30 +35,9 @@ const FirstLoginDialog = (props) => (
 )
 
 
-FirstLoginDialog.mapStateToProps = ({ user, rats }) => {
-  let cmdrName = null
-
-  if (user && user.attributes) {
-    let ratId = null
-    if (user.attributes.displayRatId) {
-      ratId = user.attributes.displayRatId
-    } else if (user.relationships.rats.data.length > 0) {
-      ratId = user.relationships.rats.data[0].id
-    }
-
-    if (ratId) {
-      const cmdr = rats.rats[ratId]
-      if (cmdr) {
-        cmdrName = cmdr.attributes.name
-      }
-    }
-  }
-
-
-  return {
-    cmdrName,
-  }
-}
+FirstLoginDialog.mapStateToProps = (state) => ({
+  displayRat: selectUserDisplayRat(state),
+})
 
 
 export default connect(FirstLoginDialog)
