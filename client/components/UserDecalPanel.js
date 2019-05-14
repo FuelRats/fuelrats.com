@@ -20,8 +20,9 @@ const ELITE_GAME_YEAR_DESPARITY = 1286 // Years between IRL year and Elite unive
 
 
 
-
-
+/***********************************************/
+/* DUE FOR REFACTORING. DO NOT MODIFY FURTHER. */
+/***********************************************/
 @connect
 class UserDetailsPanel extends Component {
   /***************************************************************************\

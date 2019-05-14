@@ -9,6 +9,7 @@ import ReactTable from 'react-table'
 
 // Module imports
 import { connect } from '../store'
+import { selectRescues } from '../store/selectors'
 import { Router } from '../routes'
 import Component from './Component'
 
@@ -228,7 +229,9 @@ class RescuesTablePanel extends Component {
 
   static mapDispatchToProps = ['getRescues']
 
-  static mapStateToProps = (state) => ({ ...state.rescues })
+  static mapStateToProps = (state) => ({
+    rescues: selectRescues(state),
+  })
 }
 
 

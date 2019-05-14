@@ -7,6 +7,7 @@ import React from 'react'
 
 // Component imports
 import { actions, connect } from '../store'
+import { selectWordpressPageBySlug } from '../store/selectors'
 import { Link } from '../routes'
 import Component from '../components/Component'
 import PageWrapper from '../components/PageWrapper'
@@ -379,8 +380,8 @@ class Register extends Component {
   }
 
   static mapStateToProps = (state) => ({
-    termsPage: state.wordpress.page['terms-of-service'],
-    privacyPage: state.wordpress.page['privacy-policy'],
+    termsPage: selectWordpressPageBySlug(state, { slug: 'terms-of-service' }),
+    privacyPage: selectWordpressPageBySlug(state, { slug: 'privacy-policy' }),
   })
 
   static mapDispatchToProps = ['register', 'login']

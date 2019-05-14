@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 // Component imports
 import { connect } from '../store'
+import { selectAuthentication } from '../store/selectors'
 import Nav from './Nav'
 import { Link } from '../routes'
 import BrandSvg from './svg/BrandSvg'
@@ -186,14 +187,7 @@ const Header = (props) => {
 
 
 
-Header.mapStateToProps = (state) => {
-  const { loggedIn, loggingIn } = state.authentication
-
-  return {
-    loggedIn,
-    loggingIn,
-  }
-}
+Header.mapStateToProps = (state) => selectAuthentication(state)
 
 
 
