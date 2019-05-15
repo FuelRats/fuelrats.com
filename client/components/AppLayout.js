@@ -12,7 +12,11 @@ import React from 'react'
 
 // Component imports
 import { connect } from '../store'
-import { selectAuthentication, selectUser } from '../store/selectors'
+import {
+  selectAuthentication,
+  selectFlagByName,
+  selectUser,
+} from '../store/selectors'
 import { Router } from '../routes'
 import apiService from '../services/api'
 import Header from './Header'
@@ -236,6 +240,7 @@ class AppLayout extends React.Component {
 
   static mapStateToProps = (state) => ({
     ...selectAuthentication(state),
+    showLoginDialog: selectFlagByName(state, { name: 'showLoginDialog' }),
     user: selectUser(state),
   })
 }
