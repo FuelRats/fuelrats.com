@@ -310,6 +310,27 @@ class Paperwork extends Component {
           <form
             className={classes.join(' ')}
             onSubmit={this._handleSubmit}>
+            <header className="paperwork-header">
+              {(rescue.attributes.status !== 'closed') && (
+                <div className="board-index"><span>#{rescue.attributes.data.boardIndex}</span></div>
+              )}
+              <div className="title">
+                {(!rescue.attributes.title) && (
+                  <span>
+                    Rescue of
+                    <span className="CMDR-name"> {rescue.attributes.client}</span> in
+                    <span className="system"> {(rescue.attributes.system) || ('Unknown')}</span>
+                  </span>
+                )}
+                {(rescue.attributes.title) && (
+                  <span>
+                    Operation
+                    <span className="rescue-title"> {rescue.attributes.title}</span>
+                  </span>
+                )}
+              </div>
+            </header>
+
             <fieldset>
               <label htmlFor="platform">What platform was the rescue on?</label>
 
