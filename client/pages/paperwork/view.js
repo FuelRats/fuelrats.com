@@ -150,9 +150,7 @@ class Paperwork extends Component {
     if (status === 'inactive') {
       status = 'open'
       outcome = 'inactive'
-    }
-
-    if (status === 'open') {
+    } else if (status === 'open') {
       outcome = 'active'
     }
 
