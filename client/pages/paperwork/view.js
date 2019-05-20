@@ -1,6 +1,5 @@
 // Module imports
 import React from 'react'
-import moment from 'moment'
 
 
 
@@ -15,6 +14,7 @@ import {
   selectUserGroups,
 } from '../../store/selectors'
 import { authenticated } from '../../components/AppLayout'
+import { formatAsEliteDateTime } from '../../helpers/formatTime'
 import { Link } from '../../routes'
 import Component from '../../components/Component'
 import PageWrapper from '../../components/PageWrapper'
@@ -26,7 +26,6 @@ import userHasPermission from '../../helpers/userHasPermission'
 
 // Component constants
 const PAPERWORK_MAX_EDIT_TIME = 3600000
-const ELITE_GAME_YEAR_DESPARITY = 1286 // Years between IRL year and Elite universe year
 
 
 
@@ -64,8 +63,8 @@ class Paperwork extends Component {
   }
 
   static renderQuote = (quote, index) => {
-    const createdAt = moment(quote.createdAt).add(ELITE_GAME_YEAR_DESPARITY, 'years').format('DD MMM, YYYY HH:mm')
-    const updatedAt = moment(quote.updatedAt).add(ELITE_GAME_YEAR_DESPARITY, 'years').format('DD MMM, YYYY HH:mm')
+    const createdAt = formatAsEliteDateTime(quote.createdAt)
+    const updatedAt = formatAsEliteDateTime(quote.updatedAt)
     return (
       <li key={index}>
         <div className="times">
@@ -237,9 +236,9 @@ class Paperwork extends Component {
                 </>
               )}
               <span className="label">Created</span>
-              <span className="date-created content">{moment(rescue.attributes.createdAt).add(ELITE_GAME_YEAR_DESPARITY, 'years').format('DD MMM, YYYY HH:mm')}</span>
+              <span className="date-created content">{formatAsEliteDateTime(rescue.attributes.createdAt)}</span>
               <span className="label">Updated</span>
-              <span className="date-updated content">{moment(rescue.attributes.updatedAt).add(ELITE_GAME_YEAR_DESPARITY, 'years').format('DD MMM, YYYY HH:mm')}</span>
+              <span className="date-updated content">{formatAsEliteDateTime(rescue.attributes.updatedAt)}</span>
               <span className="label">IRC Nick</span>
               <span className="irc-nick content">{rescue.attributes.data.IRCNick}</span>
               <span className="label">Language</span>
