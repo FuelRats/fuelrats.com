@@ -23,20 +23,17 @@ export default function shipsReducer (state = initialState.ships, action) {
     case actionTypes.GET_SHIPS:
     case actionTypes.CREATE_SHIP:
     case actionTypes.UPDATE_SHIP:
-      switch (status) {
-        case 'success':
-          return {
-            ...state,
-            ...parseJSONAPIResponseForEntityType(payload, 'ships', true),
-          }
-
-        default:
-          return {
-            ...state,
-          }
+      if (status === 'success') {
+        return {
+          ...state,
+          ...parseJSONAPIResponseForEntityType(payload, 'ships', true),
+        }
       }
+      break
 
     default:
-      return state
+      break
   }
+
+  return state
 }

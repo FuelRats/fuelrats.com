@@ -17,19 +17,19 @@ export default function rescuesReducer (state = initialState.rescues, action) {
   switch (type) {
     case actionTypes.GET_USER:
     case actionTypes.GET_RESCUE:
+    case actionTypes.GET_RESCUES:
     case actionTypes.UPDATE_RESCUE:
-      switch (status) {
-        case 'success':
-          return {
-            ...state,
-            ...parseJSONAPIResponseForEntityType(payload, 'rescues', true),
-          }
-
-        default:
-          return state
+      if (status === 'success') {
+        return {
+          ...state,
+          ...parseJSONAPIResponseForEntityType(payload, 'rescues', true),
+        }
       }
+      break
 
     default:
-      return state
+      break
   }
+
+  return state
 }

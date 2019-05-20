@@ -97,5 +97,5 @@ export default function userReducer (state = initialState.user, action) {
       break
   }
 
-  return { ...state }
+  return state
 }
