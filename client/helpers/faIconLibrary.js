@@ -22,6 +22,7 @@ export {
   faShoppingCart,
   faSpaceShuttle,
   faSpinner,
+  faSync,
   faTimes,
   faTimesCircle,
   faTrash,

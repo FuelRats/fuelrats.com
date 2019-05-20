@@ -39,6 +39,9 @@ routes
 
   .add('blog view', '/blog/:id', '/blog/single')
 
+  // Administration
+  .add('admin rescues list', '/admin/rescues', '/admin/rescues/list')
+
   // Statistics
   .add('stats statistics', '/statistics', '/statistics')
   .add('stats leaderboard', '/leaderboard', '/leaderboard')

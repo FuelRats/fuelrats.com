@@ -6,9 +6,16 @@ import actionTypes from '../actionTypes'
 
 
 
-export const getRescues = () => createApiAction({
+export const getRescues = (params, opts) => createApiAction({
   actionType: actionTypes.GET_RESCUES,
   url: '/rescues',
+  params,
+  postDispatch: {
+    pageView: opts.pageView && {
+      id: opts.pageView,
+      type: 'rescues',
+    },
+  },
 })
 
 export const getRescue = (rescueId) => createApiAction({

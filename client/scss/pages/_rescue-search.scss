@@ -1,0 +1,41 @@
+.page.rescue-search {
+
+  .searchControls {
+    align-self: flex-end;
+  }
+
+  .rescue-list {
+    justify-content: flex-start;
+    padding: 0 2rem;
+  }
+
+  .rescue-list-item {
+    display: flex;
+    flex-direction: column;
+    padding: .5rem 0;
+
+    &:not(:first-child) {
+      border-top: 1px solid #c4c4c4;
+    }
+
+    small {
+      font-family: 'consolas' monospace;
+    }
+
+    .primary-info {
+      font-size: 1em;
+      z-index: 2;
+    }
+
+    .secondary-info {
+      margin-top: -1.25rem;
+    }
+  }
+
+  @media only screen and (min-width: 1251px) {
+    .page-content {
+      min-width: 1000px;
+      align-self: center;
+    }
+  }
+}
