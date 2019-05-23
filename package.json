@@ -79,7 +79,7 @@
     "stripe": "^6.25.1",
     "uuid": "^3.3.2",
     "webpack": "4.29.0",
-    "webpack-bundle-analyzer": "^3.1.0",
+    "webpack-bundle-analyzer": "^3.3.2",
     "zxcvbn": "^4.4.2"
   },
   "optionalDependencies": {}
