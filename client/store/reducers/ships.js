@@ -18,6 +18,7 @@ export default function shipsReducer (state = initialState.ships, action) {
     case actionTypes.GET_USER:
     case actionTypes.GET_RAT:
     case actionTypes.GET_RATS:
+    case actionTypes.GET_RESCUES:
     case actionTypes.UPDATE_RAT:
     case actionTypes.GET_SHIP:
     case actionTypes.GET_SHIPS:
