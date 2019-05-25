@@ -46,6 +46,9 @@ class Paperwork extends Component {
   }
 
 
+
+
+
   /***************************************************************************\
     Private Methods
   \***************************************************************************/
@@ -69,6 +72,10 @@ class Paperwork extends Component {
   _handleDeleteCancel = () => {
     this.setState({ deleteConfirm: false })
   }
+
+
+
+
 
   /***************************************************************************\
     Public Methods
@@ -388,18 +395,22 @@ class Paperwork extends Component {
     return false
   }
 
-  static mapStateToProps = (state, ownProps) => {
-    const { id: rescueId } = ownProps.query
 
-    return {
-      rats: selectRatsByRescueId(state, { rescueId }) || [],
-      rescue: selectRescueById(state, { rescueId }),
-      currentUser: selectUser(state),
-      currentUserGroups: selectUserGroups(state),
-    }
-  }
+
+
+
+  /***************************************************************************\
+    Redux Properties
+  \***************************************************************************/
 
   static mapDispatchToProps = ['getRescue', 'deleteRescue']
+
+  static mapStateToProps = (state, { query }) => ({
+    rats: selectRatsByRescueId(state, query) || [],
+    rescue: selectRescueById(state, query),
+    currentUser: selectUser(state),
+    currentUserGroups: selectUserGroups(state),
+  })
 }
 
 
