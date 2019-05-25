@@ -12,9 +12,9 @@ routes
   .add('rescue-landing', '/i-need-fuel', '/i-need-fuel')
 
   // Paperwork
-  .add('paperwork', '/paperwork/:id', '/paperwork/view')
-  .add('paperwork edit', '/paperwork/:id/edit', '/paperwork/edit')
-  .add('paperwork view', '/paperwork/:id/view', '/paperwork/view')
+  .add('paperwork', '/paperwork/:rescueId', '/paperwork/view')
+  .add('paperwork edit', '/paperwork/:rescueId/edit', '/paperwork/edit')
+  .add('paperwork view', '/paperwork/:rescueId/view', '/paperwork/view')
 
   // Profile
   .add('profile', '/profile/:tab(overview|rats|settings)?', '/profile')
