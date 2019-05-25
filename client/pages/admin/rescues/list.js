@@ -89,15 +89,45 @@ class ListRescues extends React.Component {
     const {
       client,
       createdAt,
+      data,
+      outcome,
       status,
       system,
     } = rescue.attributes
+
+    let statusIcon = null
+
+    if (status === 'closed' && !outcome) {
+      statusIcon = {
+        icon: 'folder-open',
+        text: 'This rescue has not yet been filed.',
+      }
+    }
+
+    if (data && data.markedForDeletion && data.markedForDeletion.marked) {
+      statusIcon = {
+        icon: 'trash',
+        text: 'This rescue is marked for deletion',
+      }
+    }
+
     return (
       <div key={rescue.id} className="rescue-list-item">
-        <Link route="paperwork view" params={{ id: rescue.id }}>
-          <a className="primary-info"><small>CMDR</small> {client} <small>in</small> {system}</a>
-        </Link>
-        <span className="secondary-info"><small>{rescue.id} - {formatAsEliteDateTime(createdAt)}{status === 'closed' ? '' : ` - ${status}`}</small></span>
+        <span className="primary-info">
+          <Link route="paperwork view" params={{ id: rescue.id }}>
+            <a><small>CMDR</small> {client} <small>in</small> {system}</a>
+          </Link>
+        </span>
+        <span className="secondary-info">
+          <small>{rescue.id} - {formatAsEliteDateTime(createdAt)}{status === 'closed' ? '' : ` - ${status}`}</small>
+          {statusIcon && (
+            <span
+              className="status-icon"
+              title={statusIcon.text}>
+              <FontAwesomeIcon icon={statusIcon.icon} fixedWidth size="2x" />
+            </span>
+          )}
+        </span>
       </div>
     )
   }
