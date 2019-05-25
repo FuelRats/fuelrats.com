@@ -16,6 +16,7 @@ import {
   selectAuthentication,
   selectFlagByName,
   selectUser,
+  selectUserGroups,
 } from '../store/selectors'
 import { Router } from '../routes'
 import apiService from '../services/api'
@@ -83,19 +84,8 @@ class AppLayout extends React.Component {
     }
 
     if (Component.ಠ_ಠ_REQUIRED_PERMISSION) {
-      const {
-        groups,
-        user,
-      } = store.getState()
-
-      let userGroups = []
-
-      if (user.relationships.groups.data) {
-        userGroups = user.relationships.groups.data.reduce((acc, group) => [
-          ...acc,
-          groups[group.id],
-        ], [])
-      }
+      const state = store.getState()
+      const userGroups = selectUserGroups(state)
 
       if (!userHasPermission(userGroups, Component.ಠ_ಠ_REQUIRED_PERMISSION)) {
         if (ctx.res) {
