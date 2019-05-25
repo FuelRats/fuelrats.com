@@ -13,17 +13,17 @@ export default function ratsReducer (state = initialState.rats, action) {
     status,
     type,
   } = action
-  const { rats } = state
 
   switch (type) {
     case actionTypes.GET_USER:
     case actionTypes.GET_RESCUE:
+    case actionTypes.GET_RESCUES:
     case actionTypes.CREATE_RAT:
     case actionTypes.UPDATE_RAT:
     case actionTypes.UPDATE_RESCUE:
       if (status === 'success') {
         return {
-          ...rats,
+          ...state,
           ...parseJSONAPIResponseForEntityType(payload, 'rats', true),
         }
       }
