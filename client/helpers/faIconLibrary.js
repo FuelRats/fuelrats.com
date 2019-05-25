@@ -13,6 +13,7 @@ export {
   faEye,
   faEyeSlash,
   faFolder,
+  faFolderOpen,
   faHandsHelping,
   faIdCardAlt,
   faInfoCircle,

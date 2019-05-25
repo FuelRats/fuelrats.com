@@ -1,5 +1,6 @@
 // Module imports
 import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 
@@ -15,7 +16,7 @@ import {
 } from '../../store/selectors'
 import { authenticated } from '../../components/AppLayout'
 import { formatAsEliteDateTime } from '../../helpers/formatTime'
-import { Link } from '../../routes'
+import { Link, Router } from '../../routes'
 import Component from '../../components/Component'
 import PageWrapper from '../../components/PageWrapper'
 import userHasPermission from '../../helpers/userHasPermission'
@@ -40,11 +41,34 @@ class Paperwork extends Component {
 
   state = {
     loading: !this.props.rescue,
+    deleteConfirm: false,
+    deleting: false,
   }
 
 
+  /***************************************************************************\
+    Private Methods
+  \***************************************************************************/
 
+  _handleDeleteClick = async () => {
+    if (this.state.deleteConfirm) {
+      this.setState({ deleting: true })
 
+      await this.props.deleteRescue(this.props.rescue.id)
+
+      const userIsAdmin = userHasPermission(this.props.currentUserGroups, 'isAdministrator')
+
+      Router.pushRoute(userIsAdmin ? 'admin rescues list' : '/')
+
+      return
+    }
+
+    this.setState({ deleteConfirm: true })
+  }
+
+  _handleDeleteCancel = () => {
+    this.setState({ deleteConfirm: false })
+  }
 
   /***************************************************************************\
     Public Methods
@@ -85,7 +109,11 @@ class Paperwork extends Component {
   }
 
   static async getInitialProps ({ query, store }) {
-    await actions.getRescue(query.id)(store.dispatch)
+    const state = store.getState()
+
+    if (!state.rescues[query.id]) {
+      await actions.getRescue(query.id)(store.dispatch)
+    }
   }
 
   renderQuotes = () => {
@@ -106,7 +134,6 @@ class Paperwork extends Component {
 
   renderRat = (rat, index) => {
     const { rescue } = this.props
-
     return (
       <li key={index} className="first-limpet">
         {rat.attributes.name}
@@ -136,9 +163,14 @@ class Paperwork extends Component {
 
     const {
       loading,
+      deleteConfirm,
+      deleting,
     } = this.state
 
-    const userCanEdit = this.userCanEdit()
+    const {
+      userCanDelete,
+      userCanEdit,
+    } = this
 
     // This makes 2 new variables called status and outcome, and sets them to the values of the outcome and status in the rescue object.
     let {
@@ -170,12 +202,50 @@ class Paperwork extends Component {
           <div className="page-content">
             <menu type="toolbar">
               <div className="primary">
-                {userCanEdit && (
-                  <Link route="paperwork edit" params={{ id: rescue.id }}>
-                    <a className="button">
-                        Edit
-                    </a>
-                  </Link>
+                {deleteConfirm && (
+                  <>
+                    {deleting ? (
+                      <span>Deleting... <FontAwesomeIcon icon="spinner" pulse fixedWidth /> </span>
+                    ) : (
+                      <span>Delete this rescue? (This cannot be undone!) </span>
+                    )}
+
+                    <button
+                      className="compact"
+                      disabled={deleting}
+                      onClick={this._handleDeleteClick}
+                      type="button">
+                      Yes
+                    </button>
+
+                    <button
+                      className="compact"
+                      disabled={deleting}
+                      onClick={this._handleDeleteCancel}
+                      type="button">
+                      No
+                    </button>
+                  </>
+                )}
+
+                {!deleteConfirm && (
+                  <>
+                    {userCanEdit && (
+                      <Link route="paperwork edit" params={{ id: rescue.id }}>
+                        <a className="button compact">
+                          Edit
+                        </a>
+                      </Link>
+                    )}
+                    {userCanDelete && (
+                      <button
+                        className="compact"
+                        onClick={this._handleDeleteClick}
+                        type="button">
+                            Delete
+                      </button>
+                    )}
+                  </>
                 )}
               </div>
 
@@ -273,7 +343,7 @@ class Paperwork extends Component {
     Getters
   \***************************************************************************/
 
-  userCanEdit = () => {
+  get userCanEdit () {
     const {
       rescue,
       currentUser,
@@ -305,6 +375,19 @@ class Paperwork extends Component {
     return false
   }
 
+  get userCanDelete () {
+    const {
+      currentUserGroups,
+    } = this.props
+
+
+    if (currentUserGroups.length && (userHasPermission(currentUserGroups, 'rescue.delete') || userHasPermission(currentUserGroups, 'isAdministrator'))) {
+      return true
+    }
+
+    return false
+  }
+
   static mapStateToProps = (state, ownProps) => {
     const { id: rescueId } = ownProps.query
 
@@ -316,7 +399,7 @@ class Paperwork extends Component {
     }
   }
 
-  static mapDispatchToProps = ['getRescue']
+  static mapDispatchToProps = ['getRescue', 'deleteRescue']
 }
 
 
