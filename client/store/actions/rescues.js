@@ -6,6 +6,12 @@ import actionTypes from '../actionTypes'
 
 
 
+export const deleteRescue = (rescueId) => createApiAction({
+  actionType: actionTypes.DELETE_RESCUE,
+  url: `/rescues/${rescueId}`,
+  method: 'delete',
+})
+
 export const getRescues = (params, opts) => createApiAction({
   actionType: actionTypes.GET_RESCUES,
   url: '/rescues',
