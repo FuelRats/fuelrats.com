@@ -25,7 +25,7 @@ const pageViewId = 'admin-rescue-list'
 
 
 
-@authenticated('isAdministrator')
+@authenticated('rescue.write')
 @connect
 class ListRescues extends React.Component {
   /***************************************************************************\
@@ -172,14 +172,6 @@ class ListRescues extends React.Component {
       </PageWrapper>
     )
   }
-
-
-
-
-
-  /***************************************************************************\
-    Getters
-  \***************************************************************************/
 
 
 
