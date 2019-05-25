@@ -8,7 +8,12 @@ import PropTypes from 'prop-types'
 
 // Component imports
 import { connect, actionStatus } from '../store'
-import { selectUser, selectRatById, selectShipsByRatId } from '../store/selectors'
+import {
+  selectRatById,
+  selectShipsByRatId,
+  selectUser,
+  selectUserDisplayRatId,
+} from '../store/selectors'
 import classNames from '../helpers/classNames'
 import CardControls from './CardControls'
 import DefaultRatButton from './RatCard/DefaultRatButton'
@@ -147,6 +152,7 @@ class RatCard extends React.Component {
 
   render () {
     const {
+      ratIsDisplayRat,
       userHasMultipleRats,
     } = this
 
@@ -162,6 +168,10 @@ class RatCard extends React.Component {
       shipsExpanded,
       submitting,
     } = this.state
+
+    if (!rat) {
+      return null
+    }
 
     const createdAt = moment(rat.attributes.createdAt).add(ELITE_GAME_YEAR_DESPARITY, 'years').format('DD MMM YYYY').toUpperCase()
 
@@ -224,7 +234,7 @@ class RatCard extends React.Component {
           */}
           <div className="rat-controls">
             <CardControls
-              canDelete={userHasMultipleRats}
+              canDelete={userHasMultipleRats && !ratIsDisplayRat}
               canSubmit={this.canSubmit}
               controlType="rat"
               deleteMode={deleteConfirm}
@@ -258,10 +268,13 @@ class RatCard extends React.Component {
     Getters
   \***************************************************************************/
 
+  get ratIsDisplayRat () {
+    return this.props.userDisplayRatId === this.props.rat.id
+  }
+
   get userHasMultipleRats () {
     return this.props.user.relationships.rats.data.length > 1
   }
-
 
   get canSubmit () {
     const {
@@ -285,6 +298,7 @@ class RatCard extends React.Component {
 
   static mapStateToProps = (state, props) => ({
     user: selectUser(state),
+    userDisplayRatId: selectUserDisplayRatId(state),
     rat: selectRatById(state, props),
     ships: selectShipsByRatId(state, props),
   })
