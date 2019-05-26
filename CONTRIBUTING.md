@@ -48,20 +48,20 @@ You can define any or all of these variables in the same command you use to star
 $ FRDC_API_URL="https://dev.api.fuelrats.com" PORT=3000 yarn run dev
 ```
 
-> Tip: Keep your `master` branch pointing at the original repository and make
+> Tip: Keep your `develop` branch pointing at the original repository and make
 > pull requests from branches on your fork. To do this, run:
 >
 > ```
-> git remote add upstream https://github.com//FuelRats/fuelrats.com.git
+> git remote add upstream https://github.com/FuelRats/fuelrats.com.git
 > git fetch upstream
-> git branch --set-upstream-to=upstream/master master
+> git branch --set-upstream-to=upstream/develop develop
 > ```
 >
 > This will add the original repository as a "remote" called "upstream,"
-> Then fetch the git information from that remote, then set your local `master`
-> branch to use the upstream master branch whenever you run `git pull`.
-> Then you can make all of your pull request branches based on this `master`
-> branch. Whenever you want to update your version of `master`, do a regular
+> Then fetch the git information from that remote, then set your local `develop`
+> branch to use the upstream develop branch whenever you run `git pull`.
+> Then you can make all of your pull request branches based on this `develop`
+> branch. Whenever you want to update your version of `develop`, do a regular
 > `git pull`.
 
 ## Add yourself as a contributor
