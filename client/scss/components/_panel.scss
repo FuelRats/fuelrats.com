@@ -6,12 +6,10 @@
     margin-bottom: 0;
   }
 
-  footer,
   header,
+  footer,
   .panel-header,
   .panel-footer {
-    background-color: $black;
-    color: $white;
     padding: 1rem;
     position: relative;
 
@@ -19,8 +17,9 @@
       display: none;
     }
 
-    input {
-      color: black;
+    &:not(.panel-content) {
+      background-color: $black;
+      color: $white;
     }
   }
 

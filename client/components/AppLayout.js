@@ -12,6 +12,11 @@ import React from 'react'
 
 // Component imports
 import { connect } from '../store'
+import {
+  selectAuthentication,
+  selectFlagByName,
+  selectUser,
+} from '../store/selectors'
 import { Router } from '../routes'
 import apiService from '../services/api'
 import Header from './Header'
@@ -198,7 +203,7 @@ class AppLayout extends React.Component {
               Item: Component,
               itemProps: pageProps,
             }}
-            keys={router.asPath}>
+            keys={router.pathname}>
             {({ Item, itemProps }) => (props) => (
               <TransitionContext.Provider value={props}>
                 <Item {...itemProps} />
@@ -233,11 +238,10 @@ class AppLayout extends React.Component {
 
   static mapDispatchToProps = ['getUser', 'logout', 'setFlag', 'updateLoggingInState']
 
-  static mapStateToProps = ({ authentication, flags, user }) => ({
-    loggedIn: authentication.loggedIn,
-    showLoginDialog: flags.showLoginDialog,
-    verifyError: authentication.verifyError,
-    user,
+  static mapStateToProps = (state) => ({
+    ...selectAuthentication(state),
+    showLoginDialog: selectFlagByName(state, { name: 'showLoginDialog' }),
+    user: selectUser(state),
   })
 }
 

@@ -33,6 +33,11 @@ const CarouselSlides = [
     text: 'CMDR MarathonDog',
     position: '68% 100%',
   },
+  {
+    id: 4,
+    text: 'CMDR NumberPi',
+    position: '100% 100%',
+  },
 ]
 
 @connect

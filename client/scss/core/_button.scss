@@ -74,7 +74,19 @@ input[type=button],
   }
 
   &.compact {
-    padding: .5rem 1rem;
+    padding: 0.5rem 1rem;
+  }
+
+  &.icon {
+    padding: 0;
+  }
+
+  &.square {
+    padding: 1rem;
+
+    &.compact {
+      padding: 0.5rem;
+    }
   }
 
   &.tall {
@@ -91,10 +103,23 @@ input[type=button],
     }
   }
 
+
+  &.inline {
+    --background-color: transparent;
+    --text-color: #{$black};
+    --text-color-hover: #{$red};
+    border: none;
+    padding: 0;
+  }
+
   &.green {
     --background-color: #{$green-darkened};
     --text-color: #{$white};
     --text-color-hover: #{$green-darkened};
+  }
+
+  &.white {
+    --text-color: #{$white};
   }
 
   &[disabled] {

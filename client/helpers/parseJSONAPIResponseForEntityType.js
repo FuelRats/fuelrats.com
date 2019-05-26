@@ -1,9 +1,11 @@
-const parseJSONAPIResponseForEntityType = (response, _types, asCollection) => {
-  let types = _types || []
+import isRequired from './isRequired'
 
-  if (!Array.isArray(types)) {
-    types = [_types]
-  }
+const parseJSONAPIResponseForEntityType = (
+  response = isRequired('response'),
+  _types = isRequired('types'),
+  asCollection = false
+) => {
+  const types = Array.isArray(_types) ? _types : [_types]
 
   return ([
     ...(Array.isArray(response.data) ? response.data : [response.data]),

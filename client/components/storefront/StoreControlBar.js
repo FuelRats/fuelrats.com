@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 // Component imports
 import { connect } from '../../store'
+import { selectStoreCart } from '../../store/selectors'
 import { Link } from '../../routes'
 import Component from '../Component'
 
@@ -74,7 +75,7 @@ class StoreControlBar extends Component {
   \***************************************************************************/
   static mapDispatchToProps = ['getStoreCart']
 
-  static mapStateToProps = (state) => ({ cart: state.storeCart })
+  static mapStateToProps = (state) => ({ cart: selectStoreCart(state) })
 }
 
 

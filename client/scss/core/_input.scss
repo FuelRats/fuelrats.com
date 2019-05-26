@@ -36,9 +36,12 @@
   &.dark {
     background: $black-lightened;
     color: $white;
-    border-width: 0 0 0.2rem;
-    border-color: transparent;
     box-shadow: none !important;
+    &:not(.inline) {
+      border-width: 0 0 0.2rem;
+      border-color: transparent;
+    }
+
 
     &[required] {
       border-color: $red;
@@ -47,6 +50,13 @@
         border-color: $green;
       }
     }
+  }
+
+  &.inline {
+    padding: 0.25rem;
+    background: transparent;
+    display: inline;
+    width: auto;
   }
 }
 

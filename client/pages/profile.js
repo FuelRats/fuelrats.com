@@ -25,7 +25,8 @@ class Profile extends React.Component {
   \***************************************************************************/
 
   state = {
-    showFirstLoginDialog: false,
+    activeTab: (this.props.query && this.props.query.tab) || 'overview',
+    showFirstLoginDialog: this.props.query.fl === '1',
   }
 
 
@@ -41,7 +42,10 @@ class Profile extends React.Component {
     Router.replaceRoute('profile')
   }
 
-
+  _handleTabClick = (newTab) => {
+    this.setState({ activeTab: newTab })
+    Router.replaceRoute('profile', { tab: newTab }, { shallow: true })
+  }
 
 
 
@@ -49,22 +53,22 @@ class Profile extends React.Component {
     Public Methods
   \***************************************************************************/
 
-  componentDidMount () {
-    if (this.props.query.fl === '1') {
-      this.setState({ showFirstLoginDialog: true })
-    }
-  }
-
   render () {
+    const {
+      activeTab,
+      showFirstLoginDialog,
+    } = this.state
     return (
       <PageWrapper title="Profile">
         <div className="page-content">
           <TabbedPanel
             name="User Tabs"
+            activeTab={activeTab}
+            onTabClick={this._handleTabClick}
             tabs={Profile.tabs} />
         </div>
 
-        {this.state.showFirstLoginDialog && (<FirstLoginDialog onClose={this._handleFLDClose} />)}
+        {showFirstLoginDialog && (<FirstLoginDialog onClose={this._handleFLDClose} />)}
 
       </PageWrapper>
     )
@@ -79,29 +83,20 @@ class Profile extends React.Component {
   \***************************************************************************/
 
   static get tabs () {
-    return [
-      {
-        default: true,
+    return {
+      overview: {
         component: (<UserOverview />),
         title: 'Overview',
       },
-      {
+      rats: {
         component: (<UserRatsPanel />),
         title: 'Rats',
       },
-      // {
-      //   component: (<UserStatsOverview />),
-      //   title: 'Stats',
-      // },
-      // {
-      //   component: (<div>Badge</div>),
-      //   title: 'Badge',
-      // },
-      {
+      settings: {
         component: (<UserSettings />),
         title: 'Settings',
       },
-    ]
+    }
   }
 }
 

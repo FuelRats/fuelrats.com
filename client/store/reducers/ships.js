@@ -13,32 +13,26 @@ export default function shipsReducer (state = initialState.ships, action) {
     status,
     type,
   } = action
-  const {
-    ships,
-    retrieving,
-    total,
-  } = state
 
   switch (type) {
     case actionTypes.GET_USER:
+    case actionTypes.GET_RAT:
+    case actionTypes.GET_RATS:
+    case actionTypes.UPDATE_RAT:
+    case actionTypes.GET_SHIP:
+    case actionTypes.GET_SHIPS:
+    case actionTypes.CREATE_SHIP:
+    case actionTypes.UPDATE_SHIP:
       switch (status) {
         case 'success':
           return {
             ...state,
-            ships: {
-              ...ships,
-              ...parseJSONAPIResponseForEntityType(payload, 'ships', true),
-            },
-            retrieving: false,
-            total: action.total,
+            ...parseJSONAPIResponseForEntityType(payload, 'ships', true),
           }
 
         default:
           return {
             ...state,
-            ships,
-            retrieving,
-            total,
           }
       }
 

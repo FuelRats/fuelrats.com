@@ -9,6 +9,7 @@ import React from 'react'
 import { actions, connect } from '../store'
 import Component from '../components/Component'
 import PageWrapper from '../components/PageWrapper'
+import { selectWordpressPageBySlug } from '../store/selectors'
 
 
 
@@ -66,7 +67,7 @@ class WordpressProxy extends Component {
   }
 
   static mapStateToProps = (state, ownProps) => ({
-    page: state.wordpress.page[ownProps.query.slug] || ownProps.query.page || null,
+    page: selectWordpressPageBySlug(state, { slug: ownProps.query.slug }) || ownProps.query.page || null,
   })
 }
 

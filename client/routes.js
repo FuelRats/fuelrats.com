@@ -17,7 +17,7 @@ routes
   .add('paperwork view', '/paperwork/:id/view', '/paperwork/view')
 
   // Profile
-  .add('profile', '/profile', '/profile')
+  .add('profile', '/profile/:tab(overview|rats|settings)?', '/profile')
 
   // Register
   .add('register', '/register', '/register')
