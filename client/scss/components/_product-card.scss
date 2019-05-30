@@ -1,25 +1,27 @@
 .product-cards {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+  grid-gap: 3rem 2rem;
+
 }
 
 .product-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-content: center;
-  align-items: center;
+  display: grid;
   width: 30rem;
   line-height: 1;
+  place-self: stretch stretch;
+  place-content: stretch stretch;
+  grid-template-rows: 260px 4.2rem 1fr 3.3rem;
 
-  &:not(:last-child) {
-    margin-right: 2rem;
-  }
+  .preview {
+    height: 260px;
+    width: 30rem;
+    text-align: center;
 
-  img {
-    padding: 2rem 2rem 0rem 2rem;
-    max-height: 260px;
-    max-width: 280px;
+      img {
+      max-height: 260px;
+      max-width: 280px;
+    }
   }
 
   p {
@@ -29,8 +31,9 @@
 
   .title {
     font-size: 2.2rem;
-    padding: 0 0 1rem 0;
+    padding: 1rem 0 1rem 0;
     line-height: 1;
+    text-align: center;
   }
 
   .controls {
@@ -38,14 +41,5 @@
     justify-content: space-evenly;
     width: 100%;
     align-items: center;
-
-    .labeled-input {
-      display: flex;
-      flex-direction: column;
-
-      &:not(:first-child) {
-        margin-left: 1rem;
-      }
-    }
   }
 }

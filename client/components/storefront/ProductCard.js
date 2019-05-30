@@ -65,7 +65,9 @@ class ProductCard extends Component {
     return (
       <div className="product-card">
         {images && images[0] && (
-          <img src={images[0]} alt="product preview" />
+          <div className="preview">
+            <img src={images[0]} alt="product preview" />
+          </div>
         )}
         <span className="title">
           {name}
