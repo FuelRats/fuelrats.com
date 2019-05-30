@@ -63,15 +63,13 @@ class ProductCard extends Component {
 
 
     return (
-      <div className="product-card">
+      <div className="product-card panel">
         {images && images[0] && (
-          <div className="preview">
-            <img src={images[0]} alt="product preview" />
-          </div>
+          <div className="preview" style={{ backgroundImage: `url('${images[0]}')` }} />
         )}
-        <span className="title">
+        <header className="title">
           {name}
-        </span>
+        </header>
         <p>{caption}</p>
         <div className="controls">
           {do {

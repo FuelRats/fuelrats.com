@@ -1,39 +1,35 @@
 .product-cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
-  grid-gap: 3rem 2rem;
-
+  grid-gap: 2rem;
 }
 
 .product-card {
   display: grid;
   width: 30rem;
   line-height: 1;
-  place-self: stretch stretch;
-  place-content: stretch stretch;
-  grid-template-rows: 260px 4.2rem 1fr 3.3rem;
+  place-self: stretch center;
+  grid-template-rows: 260px 4.2rem 1fr 4.3rem;
 
   .preview {
-    height: 260px;
     width: 30rem;
     text-align: center;
-
-      img {
-      max-height: 260px;
-      max-width: 280px;
-    }
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
   }
 
   p {
     text-align: center;
-    margin-bottom: 1rem;
+    padding: 1rem;
+    margin-bottom: 0;
   }
 
   .title {
     font-size: 2.2rem;
-    padding: 1rem 0 1rem 0;
     line-height: 1;
     text-align: center;
+    justify-content: center;
   }
 
   .controls {
@@ -41,5 +37,6 @@
     justify-content: space-evenly;
     width: 100%;
     align-items: center;
+    padding: 0 1rem 1rem 1rem;
   }
 }
