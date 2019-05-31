@@ -35,20 +35,20 @@ By contributing to this repository, you are expected to know and follow the rule
 
 By default, the website doesn't know much about connecting to the Fuel Rats API or to the Fuel Rats Wordpress. To remedy this, you'll need to set some environment variables. To make this as easy as possible, There is a enviornment variable template file named `.env.template` located in the root directory. Copy this file and rename it to `.env`, then fill in the appropriate values. Unsure of what values to set? Contact a project maintainer!
 
-> Tip: Keep your `master` branch pointing at the original repository and make
+> Tip: Keep your `develop` branch pointing at the original repository and make
 > pull requests from branches on your fork. To do this, run:
 >
 > ```
-> git remote add upstream https://github.com//FuelRats/fuelrats.com.git
+> git remote add upstream https://github.com/FuelRats/fuelrats.com.git
 > git fetch upstream
-> git branch --set-upstream-to=upstream/master master
+> git branch --set-upstream-to=upstream/develop develop
 > ```
 >
 > This will add the original repository as a "remote" called "upstream,"
-> Then fetch the git information from that remote, then set your local `master`
-> branch to use the upstream master branch whenever you run `git pull`.
-> Then you can make all of your pull request branches based on this `master`
-> branch. Whenever you want to update your version of `master`, do a regular
+> Then fetch the git information from that remote, then set your local `develop`
+> branch to use the upstream develop branch whenever you run `git pull`.
+> Then you can make all of your pull request branches based on this `develop`
+> branch. Whenever you want to update your version of `develop`, do a regular
 > `git pull`.
 
 ## Add yourself as a contributor
