@@ -4,7 +4,6 @@ import { Transition } from 'react-spring/renderprops.cjs'
 import getConfig from 'next/config'
 import hoistNonReactStatics from 'hoist-non-react-statics'
 import NextError from 'next/error'
-import NProgress from 'nprogress'
 import React from 'react'
 
 
@@ -21,6 +20,7 @@ import {
 import { Router } from '../routes'
 import apiService from '../services/api'
 import Header from './Header'
+import NProgress from './NProgress'
 import UserMenu from './UserMenu'
 import LoginDialog from './LoginDialog'
 import initUserSession from '../helpers/initUserSession'
@@ -30,21 +30,15 @@ import httpStatus from '../helpers/httpStatus'
 
 
 
-NProgress.configure({ showSpinner: false })
-Router.events.on('routeChangeStart', () => NProgress.start())
-Router.events.on('routeChangeError', () => NProgress.done())
-Router.events.on('routeChangeComplete', () => NProgress.done())
 
 const { publicRuntimeConfig } = getConfig()
 
 
+
+
+
 // Component Constants
 const STRIPE_API_PK = publicRuntimeConfig.apis.stripe.public
-
-
-
-
-
 const TransitionContext = React.createContext(null)
 
 
@@ -170,6 +164,10 @@ class AppLayout extends React.Component {
 
     return (
       <div role="application">
+
+        <NProgress
+          minimum={0.15}
+          showSpinner={false} />
 
         {renderLayout && (
         <>
