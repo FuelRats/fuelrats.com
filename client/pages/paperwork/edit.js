@@ -234,7 +234,7 @@ class Paperwork extends Component {
       return
     }
 
-    Router.pushRoute('paperwork view', { id: rescue.id })
+    Router.pushRoute('paperwork', { rescueId: rescue.id })
   }
 
   _setChanges = (changedFields) => this.setState((prevState, props) => ({
@@ -255,7 +255,7 @@ class Paperwork extends Component {
     const state = store.getState()
 
     if (!selectRescueById(state, query)) {
-      await actions.getRescue(query.id)(store.dispatch)
+      await actions.getRescue(query.rescueId)(store.dispatch)
     }
   }
 

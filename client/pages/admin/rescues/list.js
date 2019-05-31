@@ -114,7 +114,7 @@ class ListRescues extends React.Component {
     return (
       <div key={rescue.id} className="rescue-list-item">
         <span className="primary-info">
-          <Link route="paperwork view" params={{ id: rescue.id }}>
+          <Link route="paperwork" params={{ rescueId: rescue.id }}>
             <a><small>CMDR</small> {client} <small>in</small> {system}</a>
           </Link>
         </span>

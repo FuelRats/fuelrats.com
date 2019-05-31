@@ -118,8 +118,8 @@ class Paperwork extends Component {
   static async getInitialProps ({ query, store }) {
     const state = store.getState()
 
-    if (!state.rescues[query.id]) {
-      await actions.getRescue(query.id)(store.dispatch)
+    if (!selectRescueById(state, query)) {
+      await actions.getRescue(query.rescueId)(store.dispatch)
     }
   }
 
@@ -238,7 +238,7 @@ class Paperwork extends Component {
                 {!deleteConfirm && (
                   <>
                     {userCanEdit && (
-                      <Link route="paperwork edit" params={{ id: rescue.id }}>
+                      <Link route="paperwork edit" params={{ rescueId: rescue.id }}>
                         <a className="button compact">
                           Edit
                         </a>
