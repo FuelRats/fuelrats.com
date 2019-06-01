@@ -44,7 +44,9 @@ class TabbedPanel extends React.Component {
         name={key}
         onClick={this._handleTabClick}
         onKeyPress={this._handleTabClick}>
-        {tab.title}
+        <span className="tab-inner">
+          {tab.title}
+        </span>
       </li>
     )
   }
