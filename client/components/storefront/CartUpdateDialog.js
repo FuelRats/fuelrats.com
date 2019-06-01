@@ -127,7 +127,7 @@ class CartUpdateDialog extends Component {
         controls={updateComplete ? undefined : this.controls}
         title="Add to Cart"
         onClose={onClose}>
-        <div className="center-content">
+        <div className="center-content flex">
           {do {
             if (updateComplete) {
               <div>

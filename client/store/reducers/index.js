@@ -1,4 +1,9 @@
 import { combineReducers } from 'redux'
+
+
+
+
+
 import authentication from './authentication'
 import blogs from './blogs'
 import decals from './decals'
@@ -15,6 +20,7 @@ import rescuesOverTime from './rescuesOverTime'
 import ships from './ships'
 import skus from './skus'
 import orders from './orders'
+import pageViews from './pageViews'
 import products from './products'
 import storeCart from './storeCart'
 import wordpress from './wordpress'
@@ -40,6 +46,7 @@ export default combineReducers({
   ships,
   skus,
   orders,
+  pageViews,
   products,
   storeCart,
   wordpress,

@@ -20,23 +20,22 @@ export default function epicsReducer (state = initialState.epics, action) {
   switch (type) {
     case actionTypes.RETRIEVE_EPIC:
     case actionTypes.CREATE_EPIC:
-      switch (status) {
-        case 'success':
-          return {
-            ...state,
-            epics: {
-              ...epics,
-              ...parseJSONAPIResponseForEntityType(payload, 'epics', true),
-            },
-            retrieving: false,
-            total: action.total,
-          }
-
-        default:
-          return state
+      if (status === 'success') {
+        return {
+          ...state,
+          epics: {
+            ...epics,
+            ...parseJSONAPIResponseForEntityType(payload, 'epics', true),
+          },
+          retrieving: false,
+          total: action.total,
+        }
       }
+      break
 
     default:
-      return state
+      break
   }
+
+  return state
 }

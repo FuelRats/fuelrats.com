@@ -17,6 +17,11 @@ $margin: 2rem;
 
     div.primary {
       align-items: center;
+
+      button:not(:first-child),
+      .button:not(:first-child) {
+        margin-left: 1rem;
+      }
     }
 
     div.invalidity-explainer {
@@ -157,20 +162,20 @@ $margin: 2rem;
         text-transform: uppercase;
 
         &.pc {
-          color: $red;
+          color: change-color($red, $lightness: 66);
         }
 
         &.xb {
-          color: $xbox-green;
+          color: change-color($xbox-green, $lightness: 37);
         }
 
         &.ps {
-          color: lighten($playstation-blue, 10%);
+          color: change-color($playstation-blue, $lightness: 65);
         }
       }
 
       &.code-red {
-        color: darken($red, 20%);
+        color: change-color($red, $lightness: 66);
         text-transform: uppercase;
       }
     }

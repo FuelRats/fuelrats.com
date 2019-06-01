@@ -14,17 +14,14 @@ export default function blogsReducer (state = initialState.blogs, action) {
 
   switch (type) {
     case actionTypes.GET_WORDPRESS_POST:
-      switch (status) {
-        case 'success':
-          return {
-            ...state,
-            blogs: [payload],
-            totalPages: null,
-          }
-
-        default:
-          return state
+      if (status === 'success') {
+        return {
+          ...state,
+          blogs: [payload],
+          totalPages: null,
+        }
       }
+      break
 
     case actionTypes.GET_WORDPRESS_POSTS:
       switch (status) {
@@ -43,9 +40,9 @@ export default function blogsReducer (state = initialState.blogs, action) {
           }
 
         default:
-          return state
+          break
       }
-
+      break
 
     case actionTypes.GET_WORDPRESS_AUTHOR:
       if (status === 'success') {
@@ -57,7 +54,7 @@ export default function blogsReducer (state = initialState.blogs, action) {
           },
         }
       }
-      return state
+      break
 
     case actionTypes.GET_WORDPRESS_CATEGORY:
       if (status === 'success') {
@@ -69,9 +66,11 @@ export default function blogsReducer (state = initialState.blogs, action) {
           },
         }
       }
-      return state
+      break
 
     default:
-      return state
+      break
   }
+
+  return state
 }
