@@ -1,6 +1,5 @@
 // Module imports
 import React from 'react'
-import moment from 'moment'
 import { createSelector } from 'reselect'
 
 
@@ -24,14 +23,14 @@ import RatTagsInput from '../../components/RatTagsInput'
 import PageWrapper from '../../components/PageWrapper'
 import SystemTagsInput from '../../components/SystemTagsInput'
 import userHasPermission from '../../helpers/userHasPermission'
-
+import { formatAsEliteDateTime } from '../../helpers/formatTime'
 
 
 
 
 // Component constants
 const PAPERWORK_MAX_EDIT_TIME = 3600000
-const ELITE_GAME_YEAR_DESPARITY = 1286 // Years between IRL year and Elite universe year
+
 
 const selectFormattedRatsByRescueId = createSelector(
   selectRatsByRescueId,
@@ -253,8 +252,8 @@ class Paperwork extends Component {
   \***************************************************************************/
 
   static renderQuote = (quote, index) => {
-    const createdAt = moment(quote.createdAt).add(ELITE_GAME_YEAR_DESPARITY, 'years').format('DD MMM, YYYY HH:mm')
-    const updatedAt = moment(quote.updatedAt).add(ELITE_GAME_YEAR_DESPARITY, 'years').format('DD MMM, YYYY HH:mm')
+    const createdAt = formatAsEliteDateTime(quote.createdAt)
+    const updatedAt = formatAsEliteDateTime(quote.updatedAt)
     return (
       <li key={index}>
         <div className="times">
