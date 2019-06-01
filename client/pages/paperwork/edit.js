@@ -1,5 +1,6 @@
 // Module imports
 import React from 'react'
+import moment from 'moment'
 import { createSelector } from 'reselect'
 
 
@@ -30,7 +31,7 @@ import userHasPermission from '../../helpers/userHasPermission'
 
 // Component constants
 const PAPERWORK_MAX_EDIT_TIME = 3600000
-
+const ELITE_GAME_YEAR_DESPARITY = 1286 // Years between IRL year and Elite universe year
 
 const selectFormattedRatsByRescueId = createSelector(
   selectRatsByRescueId,
@@ -250,6 +251,44 @@ class Paperwork extends Component {
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
+
+  static renderQuote = (quote, index) => {
+    const createdAt = moment(quote.createdAt).add(ELITE_GAME_YEAR_DESPARITY, 'years').format('DD MMM, YYYY HH:mm')
+    const updatedAt = moment(quote.updatedAt).add(ELITE_GAME_YEAR_DESPARITY, 'years').format('DD MMM, YYYY HH:mm')
+    return (
+      <li key={index}>
+        <div className="times">
+          <div className="created" title="Created at">{createdAt}</div>
+          {(updatedAt !== createdAt) && (
+            <div className="updated" title="Updated at"><span className="label">Updated at </span>{updatedAt}</div>
+          )}
+        </div>
+        <span className="message">{quote.message}</span>
+        <div className="authors">
+          <div className="author" title="Created by">{quote.author}</div>
+          {(quote.author !== quote.lastAuthor) && (
+            <div className="last-author" title="Last updated by"><span className="label">Updated by </span>{quote.lastAuthor}</div>
+          )}
+        </div>
+      </li>
+    )
+  }
+
+  renderQuotes = () => {
+    const { rescue } = this.props
+
+    if (rescue.attributes.quotes) {
+      return (
+        <ol>
+          {rescue.attributes.quotes.map(Paperwork.renderQuote)}
+        </ol>
+      )
+    }
+
+    return (
+      <span>N/A</span>
+    )
+  }
 
   static async getInitialProps ({ query, store }) {
     await actions.getRescue(query.id)(store.dispatch)
@@ -475,17 +514,13 @@ class Paperwork extends Component {
 
               <div className="secondary" />
             </menu>
+
+            <div className="panel quotes">
+              <header>Quotes</header>
+              <div className="panel-content">{this.renderQuotes()}</div>
+            </div>
           </form>
         )}
-        <div>
-          <button
-            type="button"
-            className="inline link activate-secret"
-            onClick={() => this.setState({ userIsCool: true })}
-            title="Shhh! Don't tell anyone!">
-            Do you want to see something strange and mystical?
-          </button>
-        </div>
       </PageWrapper>
     )
   }
