@@ -61,21 +61,21 @@ class ClassName extends React.Component {
     return (
       <div className="profile-header">
         <div className="profile-user-avatar">
-          <div className="avatar large"><img alt="User's avatar" src={image} /></div>
-        </div>
-        <div className="profile-rat-display">
-          <span>
-            {displayRat.attributes.name}
-          </span>
+          <div className="avatar xl"><img alt="User's avatar" src={image} /></div>
         </div>
         <div className="profile-basic-info">
+          <div className="profile-rat-display">
+            <span>
+              {displayRat.attributes.name}
+            </span>
+          </div>
           <div className="profile-email-display">
             <span>
-              {email}
+              <strong>E-Mail:</strong> {email}
             </span>
           </div>
           <div className="profile-member-since">
-            <span>{moment(createdAt).add(ELITE_GAME_YEAR_DESPARITY, 'years').format('DD MMMM, YYYY')}</span>
+            <strong>Date joined: </strong><span>{moment(createdAt).add(ELITE_GAME_YEAR_DESPARITY, 'years').format('DD MMMM, YYYY')}</span>
           </div>
         </div>
         <div className="profile-user-badges">
