@@ -63,7 +63,6 @@ class Paperwork extends Component {
     submitting: false,
     error: null,
     changes: {},
-    userIsCool: false,
   }
 
 
@@ -305,7 +304,6 @@ class Paperwork extends Component {
       loading,
       submitting,
       error,
-      userIsCool,
     } = this.state
 
     const classes = ['page-content']
@@ -331,7 +329,7 @@ class Paperwork extends Component {
     const pwValidity = this.validate(fieldValues)
 
     return (
-      <PageWrapper title="Paperwork" darkThemeSafe={userIsCool}>
+      <PageWrapper title="Paperwork">
         {(error && !submitting) && (
           <div className="store-errors">
             <div className="store-error">
