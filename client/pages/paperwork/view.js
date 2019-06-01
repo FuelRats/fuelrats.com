@@ -1,6 +1,6 @@
 // Module imports
 import React from 'react'
-import moment from 'moment'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 
@@ -15,7 +15,8 @@ import {
   selectUserGroups,
 } from '../../store/selectors'
 import { authenticated } from '../../components/AppLayout'
-import { Link } from '../../routes'
+import { formatAsEliteDateTime } from '../../helpers/formatTime'
+import { Link, Router } from '../../routes'
 import Component from '../../components/Component'
 import PageWrapper from '../../components/PageWrapper'
 import userHasPermission from '../../helpers/userHasPermission'
@@ -26,7 +27,6 @@ import userHasPermission from '../../helpers/userHasPermission'
 
 // Component constants
 const PAPERWORK_MAX_EDIT_TIME = 3600000
-const ELITE_GAME_YEAR_DESPARITY = 1286 // Years between IRL year and Elite universe year
 
 
 
@@ -41,6 +41,36 @@ class Paperwork extends Component {
 
   state = {
     loading: !this.props.rescue,
+    deleteConfirm: false,
+    deleting: false,
+  }
+
+
+
+
+
+  /***************************************************************************\
+    Private Methods
+  \***************************************************************************/
+
+  _handleDeleteClick = async () => {
+    if (this.state.deleteConfirm) {
+      this.setState({ deleting: true })
+
+      await this.props.deleteRescue(this.props.rescue.id)
+
+      const userIsAdmin = userHasPermission(this.props.currentUserGroups, 'isAdministrator')
+
+      Router.pushRoute(userIsAdmin ? 'admin rescues list' : '/')
+
+      return
+    }
+
+    this.setState({ deleteConfirm: true })
+  }
+
+  _handleDeleteCancel = () => {
+    this.setState({ deleteConfirm: false })
   }
 
 
@@ -64,8 +94,8 @@ class Paperwork extends Component {
   }
 
   static renderQuote = (quote, index) => {
-    const createdAt = moment(quote.createdAt).add(ELITE_GAME_YEAR_DESPARITY, 'years').format('DD MMM, YYYY HH:mm')
-    const updatedAt = moment(quote.updatedAt).add(ELITE_GAME_YEAR_DESPARITY, 'years').format('DD MMM, YYYY HH:mm')
+    const createdAt = formatAsEliteDateTime(quote.createdAt)
+    const updatedAt = formatAsEliteDateTime(quote.updatedAt)
     return (
       <li key={index}>
         <div className="times">
@@ -86,7 +116,11 @@ class Paperwork extends Component {
   }
 
   static async getInitialProps ({ query, store }) {
-    await actions.getRescue(query.id)(store.dispatch)
+    const state = store.getState()
+
+    if (!selectRescueById(state, query)) {
+      await actions.getRescue(query.rescueId)(store.dispatch)
+    }
   }
 
   renderQuotes = () => {
@@ -107,7 +141,6 @@ class Paperwork extends Component {
 
   renderRat = (rat, index) => {
     const { rescue } = this.props
-
     return (
       <li key={index} className="first-limpet">
         {rat.attributes.name}
@@ -137,9 +170,14 @@ class Paperwork extends Component {
 
     const {
       loading,
+      deleteConfirm,
+      deleting,
     } = this.state
 
-    const userCanEdit = this.userCanEdit()
+    const {
+      userCanDelete,
+      userCanEdit,
+    } = this
 
     // This makes 2 new variables called status and outcome, and sets them to the values of the outcome and status in the rescue object.
     let {
@@ -171,12 +209,50 @@ class Paperwork extends Component {
           <div className="page-content">
             <menu type="toolbar">
               <div className="primary">
-                {userCanEdit && (
-                  <Link route="paperwork edit" params={{ id: rescue.id }}>
-                    <a className="button">
-                        Edit
-                    </a>
-                  </Link>
+                {deleteConfirm && (
+                  <>
+                    {deleting ? (
+                      <span>Deleting... <FontAwesomeIcon icon="spinner" pulse fixedWidth /> </span>
+                    ) : (
+                      <span>Delete this rescue? (This cannot be undone!) </span>
+                    )}
+
+                    <button
+                      className="compact"
+                      disabled={deleting}
+                      onClick={this._handleDeleteClick}
+                      type="button">
+                      Yes
+                    </button>
+
+                    <button
+                      className="compact"
+                      disabled={deleting}
+                      onClick={this._handleDeleteCancel}
+                      type="button">
+                      No
+                    </button>
+                  </>
+                )}
+
+                {!deleteConfirm && (
+                  <>
+                    {userCanEdit && (
+                      <Link route="paperwork edit" params={{ rescueId: rescue.id }}>
+                        <a className="button compact">
+                          Edit
+                        </a>
+                      </Link>
+                    )}
+                    {userCanDelete && (
+                      <button
+                        className="compact"
+                        onClick={this._handleDeleteClick}
+                        type="button">
+                            Delete
+                      </button>
+                    )}
+                  </>
                 )}
               </div>
 
@@ -237,9 +313,9 @@ class Paperwork extends Component {
                 </>
               )}
               <span className="label">Created</span>
-              <span className="date-created content">{moment(rescue.attributes.createdAt).add(ELITE_GAME_YEAR_DESPARITY, 'years').format('DD MMM, YYYY HH:mm')}</span>
+              <span className="date-created content">{formatAsEliteDateTime(rescue.attributes.createdAt)}</span>
               <span className="label">Updated</span>
-              <span className="date-updated content">{moment(rescue.attributes.updatedAt).add(ELITE_GAME_YEAR_DESPARITY, 'years').format('DD MMM, YYYY HH:mm')}</span>
+              <span className="date-updated content">{formatAsEliteDateTime(rescue.attributes.updatedAt)}</span>
               <span className="label">IRC Nick</span>
               <span className="irc-nick content">{rescue.attributes.data.IRCNick}</span>
               <span className="label">Language</span>
@@ -274,7 +350,7 @@ class Paperwork extends Component {
     Getters
   \***************************************************************************/
 
-  userCanEdit = () => {
+  get userCanEdit () {
     const {
       rescue,
       currentUser,
@@ -306,18 +382,35 @@ class Paperwork extends Component {
     return false
   }
 
-  static mapStateToProps = (state, ownProps) => {
-    const { id: rescueId } = ownProps.query
+  get userCanDelete () {
+    const {
+      currentUserGroups,
+    } = this.props
 
-    return {
-      rats: selectRatsByRescueId(state, { rescueId }) || [],
-      rescue: selectRescueById(state, { rescueId }),
-      currentUser: selectUser(state),
-      currentUserGroups: selectUserGroups(state),
+
+    if (currentUserGroups.length && (userHasPermission(currentUserGroups, 'rescue.delete') || userHasPermission(currentUserGroups, 'isAdministrator'))) {
+      return true
     }
+
+    return false
   }
 
-  static mapDispatchToProps = ['getRescue']
+
+
+
+
+  /***************************************************************************\
+    Redux Properties
+  \***************************************************************************/
+
+  static mapDispatchToProps = ['getRescue', 'deleteRescue']
+
+  static mapStateToProps = (state, { query }) => ({
+    rats: selectRatsByRescueId(state, query) || [],
+    rescue: selectRescueById(state, query),
+    currentUser: selectUser(state),
+    currentUserGroups: selectUserGroups(state),
+  })
 }
 
 

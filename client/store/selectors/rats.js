@@ -1,9 +1,9 @@
 import { createSelector } from 'reselect'
 import { selectRescueById } from './rescues'
 
-const selectRats = (state) => state.rats.rats
+const selectRats = (state) => state.rats
 
-const selectRatById = (state, { ratId }) => state.rats.rats[ratId]
+const selectRatById = (state, { ratId }) => state.rats[ratId]
 
 
 const selectRatsByRescueId = createSelector(

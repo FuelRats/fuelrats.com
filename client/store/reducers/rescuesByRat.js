@@ -37,6 +37,8 @@ export default function rescuesByRatReducer (state = initialState.rescuesByRat, 
       }
 
     default:
-      return state
+      break
   }
+
+  return state
 }

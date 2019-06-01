@@ -37,6 +37,8 @@ export default function rescuesOverTimeReducer (state = initialState.rescuesOver
       }
 
     default:
-      return state
+      break
   }
+
+  return state
 }

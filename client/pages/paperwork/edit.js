@@ -234,7 +234,7 @@ class Paperwork extends Component {
       return
     }
 
-    Router.pushRoute('paperwork view', { id: rescue.id })
+    Router.pushRoute('paperwork', { rescueId: rescue.id })
   }
 
   _setChanges = (changedFields) => this.setState((prevState, props) => ({
@@ -252,7 +252,11 @@ class Paperwork extends Component {
   \***************************************************************************/
 
   static async getInitialProps ({ query, store }) {
-    await actions.getRescue(query.id)(store.dispatch)
+    const state = store.getState()
+
+    if (!selectRescueById(state, query)) {
+      await actions.getRescue(query.rescueId)(store.dispatch)
+    }
   }
 
   render () {
@@ -641,18 +645,21 @@ class Paperwork extends Component {
   }
 
 
-  static mapStateToProps = (state, ownProps) => {
-    const { id: rescueId } = ownProps.query
 
-    return {
-      rats: selectFormattedRatsByRescueId(state, { rescueId }),
-      rescue: selectRescueById(state, { rescueId }),
-      currentUser: selectUser(state),
-      currentUserGroups: selectUserGroups(state),
-    }
-  }
+
+
+  /***************************************************************************\
+    Redux Properties
+  \***************************************************************************/
 
   static mapDispatchToProps = ['updateRescue', 'getRescue']
+
+  static mapStateToProps = (state, { query }) => ({
+    rats: selectFormattedRatsByRescueId(state, query),
+    rescue: selectRescueById(state, query),
+    currentUser: selectUser(state),
+    currentUserGroups: selectUserGroups(state),
+  })
 }
 
 

@@ -37,6 +37,9 @@ export default function rescuesBySystemReducer (state = initialState.rescuesBySy
       }
 
     default:
-      return state
+      break
   }
+
+
+  return state
 }

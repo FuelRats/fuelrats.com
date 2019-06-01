@@ -36,10 +36,7 @@ const initialState = {
 
   groups: {},
 
-  rats: {
-    rats: [],
-    retrieving: false,
-  },
+  rats: {},
 
   rescues: {},
 
@@ -66,6 +63,8 @@ const initialState = {
     hasMore: false,
     orders: {},
   },
+
+  pageViews: {},
 
   products: {
     hasMore: false,
