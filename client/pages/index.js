@@ -12,33 +12,28 @@ import PageWrapper from '../components/PageWrapper'
 import Carousel from '../components/Carousel'
 
 
-const CarouselSlides = [
-  {
-    id: 0,
+const CarouselSlides = {
+  0: {
     text: 'CMDR Highwaywarrior',
     position: '55% 25%',
   },
-  {
-    id: 1,
+  1: {
     text: 'CMDR Zibadian',
     position: '20% 50%',
   },
-  {
-    id: 2,
+  2: {
     text: 'CMDR Vanya Pavlovich',
     position: '70% 50%',
   },
-  {
-    id: 3,
+  3: {
     text: 'CMDR MarathonDog',
     position: '68% 100%',
   },
-  {
-    id: 4,
+  4: {
     text: 'CMDR NumberPi',
     position: '100% 100%',
   },
-]
+}
 
 @connect
 class Index extends React.Component {
@@ -55,8 +50,7 @@ class Index extends React.Component {
   render = () => (
     <PageWrapper title="Home" renderHeader={false}>
       <section className="hero">
-        <Carousel
-          slides={CarouselSlides} />
+        <Carousel slides={CarouselSlides} />
 
         <header>
           <h1>We Have Fuel. <wbr />You&nbsp;Don't.</h1>
