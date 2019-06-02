@@ -3,15 +3,13 @@
     border-color: $red;
     border-style: solid;
     border-bottom-width: 0.2rem;
-    margin: 0 -3rem 2rem -3rem;
-    transform: skewX(-10deg);
-    transform-origin: bottom;
+    margin: 0 -2rem 2rem -2rem;
 
     ul {
       display: flex;
       list-style: none;
       flex-shrink: 0;
-      margin-left: 3rem;
+      margin-left: 2rem;
     }
 
     li {
@@ -30,6 +28,8 @@
     padding: 0.5rem 2rem 0.7rem 2rem;
     transition: all 0.2s;
     margin-bottom: -0.2rem;
+    transform: skewX(-10deg);
+    transform-origin: bottom;
 
     &:not(:last-child) {
       margin-right: 0.4rem;
