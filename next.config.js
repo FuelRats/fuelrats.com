@@ -7,6 +7,7 @@ const path = require('path')
 const crypto = require('crypto')
 const webpack = require('webpack')
 const withSass = require('@zeit/next-sass')
+const withWorkers = require('@zeit/next-workers')
 
 
 
@@ -33,7 +34,8 @@ const DEV_BUILD_ID_LENGTH = 16
 
 
 
-module.exports = withSass({
+module.exports = withWorkers(withSass({
+  workerLoaderOptions: { inline: true },
   generateBuildId: () => (
     TRAVIS
       ? TRAVIS_COMMIT.toLowerCase()
@@ -90,4 +92,4 @@ module.exports = withSass({
       .map((dir) => glob.sync(dir))
       .reduce((acc, dir) => acc.concat(dir), []),
   },
-})
+}))

@@ -2,7 +2,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Transition, animated } from 'react-spring/renderprops.cjs'
-
+import ImageLoaderWorker from '../workers/image-loader.worker'
 
 
 
@@ -57,10 +57,14 @@ class Carousel extends React.Component {
 
   componentDidMount () {
     this.timer = setTimeout(this._setSlide, this.props.interval)
+    this.worker = new ImageLoaderWorker()
+    this.worker.postMessage('from Host')
+    this.worker.addEventListener('message', this.onWorkerMessage)
   }
 
   componentWillUnmount () {
     clearTimeout(this.timer)
+    this.worker.terminate()
   }
 
   renderSlide () {
