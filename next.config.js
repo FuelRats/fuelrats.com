@@ -12,7 +12,6 @@ const withWorkers = require('@zeit/next-workers')
 
 
 
-
 // Component constants
 const {
   ANALYZE,
@@ -26,6 +25,7 @@ const {
   TRAVIS_COMMIT,
   TRAVIS_COMMIT_RANGE,
 } = process.env
+
 const DEFAULT_PORT = 3000
 const COMMIT_HASH_LENGTH = 10
 const DEV_BUILD_ID_LENGTH = 16
@@ -35,13 +35,15 @@ const DEV_BUILD_ID_LENGTH = 16
 
 
 module.exports = withWorkers(withSass({
-  workerLoaderOptions: { inline: true },
   generateBuildId: () => (
     TRAVIS
       ? TRAVIS_COMMIT.toLowerCase()
       : `DEV_${crypto.randomBytes(DEV_BUILD_ID_LENGTH).toString('hex').toLowerCase()}`
   ),
   publicRuntimeConfig: {
+    local: {
+      publicUrl: FRDC_PUBLIC_URL || `http://localhost:${PORT || DEFAULT_PORT}`,
+    },
     apis: {
       fuelRats: {
         local: FRDC_PUBLIC_URL ? `${FRDC_PUBLIC_URL}/api` : `http://localhost:${PORT || DEFAULT_PORT}/api`,
@@ -92,4 +94,5 @@ module.exports = withWorkers(withSass({
       .map((dir) => glob.sync(dir))
       .reduce((acc, dir) => acc.concat(dir), []),
   },
+  workerLoaderOptions: { inline: true },
 }))
