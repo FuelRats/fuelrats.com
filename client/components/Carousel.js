@@ -1,11 +1,13 @@
 // Module imports
 import React from 'react'
 import PropTypes from 'prop-types'
+import getConfig from 'next/config'
 import { Transition, animated } from 'react-spring/renderprops.cjs'
 import ImageLoaderWorker from '../workers/image-loader.worker'
 
 
-
+const { publicRuntimeConfig } = getConfig()
+const { publicUrl } = publicRuntimeConfig.local
 
 class Carousel extends React.Component {
   /***************************************************************************\
@@ -14,6 +16,7 @@ class Carousel extends React.Component {
 
   state = {
     curSlide: Object.keys(this.props.slides)[0],
+    imgBlobs: {},
   }
 
   timer = null
@@ -25,6 +28,15 @@ class Carousel extends React.Component {
   /***************************************************************************\
     Private Methods
   \***************************************************************************/
+
+  _handleImageWorkerMessage = (event) => {
+    this.setState((state) => ({
+      imgBlobs: {
+        ...state.imgBlobs,
+        [event.data.id]: [event.data.payload],
+      },
+    }))
+  }
 
   _handleSlideButtonClick = (event) => {
     this._setSlide(event.target.name)
@@ -57,9 +69,10 @@ class Carousel extends React.Component {
 
   componentDidMount () {
     this.timer = setTimeout(this._setSlide, this.props.interval)
+    const imageUrls = Object.entries(this.props.slides).map(([id, slide]) => ([id, `${publicUrl}/static/images/${slide.imageName || `slide_${id}.jpg`}`]))
     this.worker = new ImageLoaderWorker()
-    this.worker.postMessage('from Host')
-    this.worker.addEventListener('message', this.onWorkerMessage)
+    this.worker.postMessage(imageUrls)
+    this.worker.addEventListener('message', this._handleImageWorkerMessage)
   }
 
   componentWillUnmount () {
@@ -71,6 +84,9 @@ class Carousel extends React.Component {
     const {
       slides,
     } = this.props
+    if (typeof this.state.imgBlobs[0] === 'undefined') {
+      return null
+    }
     return (
       <Transition
         native
@@ -82,7 +98,7 @@ class Carousel extends React.Component {
         leave={{ opacity: 0 }}
         config={{ tension: 280, friction: 85 }}>
         {
-          (curSlide) => (style) => {
+          (curSlide) => this.state.imgBlobs[curSlide] && ((style) => {
             const slide = slides[curSlide]
 
             return (
@@ -90,11 +106,11 @@ class Carousel extends React.Component {
                 className="carousel-slide"
                 style={{
                   ...style,
-                  backgroundImage: `url(/static/images/${slide.imageName || `slide_${curSlide}.jpg`})`,
+                  backgroundImage: `url(${this.state.imgBlobs[curSlide]})`,
                   backgroundPosition: slide.position || 'center',
                 }} />
             )
-          }
+          })
         }
       </Transition>
     )
