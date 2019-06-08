@@ -23,7 +23,7 @@ import RatTagsInput from '../../components/RatTagsInput'
 import PageWrapper from '../../components/PageWrapper'
 import SystemTagsInput from '../../components/SystemTagsInput'
 import userHasPermission from '../../helpers/userHasPermission'
-
+import { formatAsEliteDateTime } from '../../helpers/formatTime'
 
 
 
@@ -63,7 +63,6 @@ class Paperwork extends Component {
     submitting: false,
     error: null,
     changes: {},
-    userIsCool: false,
   }
 
 
@@ -251,6 +250,44 @@ class Paperwork extends Component {
     Public Methods
   \***************************************************************************/
 
+  static renderQuote = (quote, index) => {
+    const createdAt = formatAsEliteDateTime(quote.createdAt)
+    const updatedAt = formatAsEliteDateTime(quote.updatedAt)
+    return (
+      <li key={index}>
+        <div className="times">
+          <div className="created" title="Created at">{createdAt}</div>
+          {(updatedAt !== createdAt) && (
+            <div className="updated" title="Updated at"><span className="label">Updated at </span>{updatedAt}</div>
+          )}
+        </div>
+        <span className="message">{quote.message}</span>
+        <div className="authors">
+          <div className="author" title="Created by">{quote.author}</div>
+          {(quote.author !== quote.lastAuthor) && (
+            <div className="last-author" title="Last updated by"><span className="label">Updated by </span>{quote.lastAuthor}</div>
+          )}
+        </div>
+      </li>
+    )
+  }
+
+  renderQuotes = () => {
+    const { rescue } = this.props
+
+    if (rescue.attributes.quotes) {
+      return (
+        <ol>
+          {rescue.attributes.quotes.map(Paperwork.renderQuote)}
+        </ol>
+      )
+    }
+
+    return (
+      <span>N/A</span>
+    )
+  }
+
   static async getInitialProps ({ query, store }) {
     const state = store.getState()
 
@@ -267,7 +304,6 @@ class Paperwork extends Component {
       loading,
       submitting,
       error,
-      userIsCool,
     } = this.state
 
     const classes = ['page-content']
@@ -293,7 +329,7 @@ class Paperwork extends Component {
     const pwValidity = this.validate(fieldValues)
 
     return (
-      <PageWrapper title="Paperwork" darkThemeSafe={userIsCool}>
+      <PageWrapper title="Paperwork">
         {(error && !submitting) && (
           <div className="store-errors">
             <div className="store-error">
@@ -479,17 +515,13 @@ class Paperwork extends Component {
 
               <div className="secondary" />
             </menu>
+
+            <div className="panel quotes">
+              <header>Quotes</header>
+              <div className="panel-content">{this.renderQuotes()}</div>
+            </div>
           </form>
         )}
-        <div>
-          <button
-            type="button"
-            className="inline link activate-secret"
-            onClick={() => this.setState({ userIsCool: true })}
-            title="Shhh! Don't tell anyone!">
-            Do you want to see something strange and mystical?
-          </button>
-        </div>
       </PageWrapper>
     )
   }
