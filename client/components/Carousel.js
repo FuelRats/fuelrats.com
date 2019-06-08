@@ -3,9 +3,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getConfig from 'next/config'
 import { Transition, animated } from 'react-spring/renderprops.cjs'
+
+// Worker imports
 import ImageLoaderWorker from '../workers/image-loader.worker'
 
-
+// Component constants
 const { publicRuntimeConfig } = getConfig()
 const { publicUrl } = publicRuntimeConfig.local
 
@@ -71,8 +73,8 @@ class Carousel extends React.Component {
     this.timer = setTimeout(this._setSlide, this.props.interval)
     const imageUrls = Object.entries(this.props.slides).map(([id, slide]) => ([id, `${publicUrl}/static/images/${slide.imageName || `slide_${id}.jpg`}`]))
     this.worker = new ImageLoaderWorker()
-    this.worker.postMessage(imageUrls)
     this.worker.addEventListener('message', this._handleImageWorkerMessage)
+    this.worker.postMessage(imageUrls)
   }
 
   componentWillUnmount () {
@@ -84,9 +86,11 @@ class Carousel extends React.Component {
     const {
       slides,
     } = this.props
-    if (typeof this.state.imgBlobs[0] === 'undefined') {
-      return null
-    }
+
+    const {
+      imgBlobs,
+    } = this.state
+
     return (
       <Transition
         native
@@ -98,7 +102,7 @@ class Carousel extends React.Component {
         leave={{ opacity: 0 }}
         config={{ tension: 280, friction: 85 }}>
         {
-          (curSlide) => this.state.imgBlobs[curSlide] && ((style) => {
+          (curSlide) => imgBlobs[curSlide] && ((style) => {
             const slide = slides[curSlide]
 
             return (
@@ -106,7 +110,7 @@ class Carousel extends React.Component {
                 className="carousel-slide"
                 style={{
                   ...style,
-                  backgroundImage: `url(${this.state.imgBlobs[curSlide]})`,
+                  backgroundImage: `url(${imgBlobs[curSlide]})`,
                   backgroundPosition: slide.position || 'center',
                 }} />
             )

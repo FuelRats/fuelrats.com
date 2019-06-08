@@ -1,16 +1,16 @@
 /* eslint-disable no-restricted-globals */
 
 self.addEventListener('message', (event) => {
-  const imageURL = event.data
-  let response = {}
+  event.data.forEach(async ([id, url]) => {
+    try {
+      const blob = await fetch(url).then((res) => res.blob())
 
-  imageURL.forEach(async (imageData) => {
-    response = await fetch(imageData[1])
-    const blob = await response.blob()
-
-    self.postMessage({
-      id: imageData[0],
-      payload: URL.createObjectURL(blob),
-    })
+      self.postMessage({
+        id,
+        payload: URL.createObjectURL(blob),
+      })
+    } catch (error) {
+      self.postMessage(null)
+    }
   })
 })
