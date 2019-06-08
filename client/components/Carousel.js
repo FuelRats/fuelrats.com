@@ -1,102 +1,218 @@
 // Module imports
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import { useTransition, animated } from 'react-spring'
+import getConfig from 'next/config'
+import { Transition, animated } from 'react-spring/renderprops.cjs'
 
+// Worker imports
+import ImageLoaderWorker from '../workers/image-loader.worker'
 
+// Component constants
+const { publicRuntimeConfig } = getConfig()
+const { publicUrl } = publicRuntimeConfig.local
 
+class Carousel extends React.Component {
+  /***************************************************************************\
+    Class Properties
+  \***************************************************************************/
 
-
-const Carousel = ({ slides, interval, className }) => {
-  const [curSlide, setSlideState] = useState(0)
-  const [timeoutRef, setTimeoutRef] = useState(null)
-
-  // slide control logic
-  const setSlide = (slideId) => {
-    clearTimeout(timeoutRef)
-    setSlideState(typeof slideId === 'undefined' ? ((state) => (state + 1) % slides.length) : slideId)
-    setTimeoutRef(setTimeout(setSlide, interval))
+  state = {
+    curSlide: Object.keys(this.props.slides)[0],
+    imgBlobs: {},
   }
 
-  // start carousel timer
-  useEffect(() => {
-    setTimeoutRef(setTimeout(setSlide, interval))
-    return () => {
-      clearTimeout(timeoutRef)
+  timer = null
+
+
+
+
+
+  /***************************************************************************\
+    Private Methods
+  \***************************************************************************/
+
+  _handleImageWorkerMessage = (event) => {
+    this.setState((state) => ({
+      imgBlobs: {
+        ...state.imgBlobs,
+        [event.data.id]: [event.data.payload],
+      },
+    }))
+  }
+
+  _handleSlideButtonClick = (event) => {
+    this._setSlide(event.target.name)
+  }
+
+  _setSlide = (slideId) => {
+    clearTimeout(this.timer)
+    this.timer = setTimeout(this._setSlide, this.props.interval)
+
+    if (document.visibilityState === 'hidden') {
+      return
     }
-  }, [])
+
+    const slideKeys = Object.keys(this.props.slides)
+
+    this.setState((state) => ({
+      curSlide: typeof slideId === 'undefined'
+        ? slideKeys[(slideKeys.indexOf(state.curSlide) + 1) % slideKeys.length]
+        : slideId,
+    }))
+  }
 
 
-  // Build animated elements
-  const imageElement = useTransition(slides[curSlide], (item) => item.id, {
-    from: { opacity: 0 },
-    enter: { opacity: 1 },
-    leave: { opacity: 0 },
-    config: { tension: 280, friction: 85 },
-  }).map(({ item, key, props }) => (
-    <animated.div
-      className="carousel-slide"
-      key={key}
-      style={{
-        ...props,
-        backgroundImage: `url(/static/images/${item.imageName || `slide_${item.id}.jpg`})`,
-        backgroundPosition: item.position || 'center',
-      }} />
-  ))
 
-  const textElement = useTransition(slides[curSlide], (item) => item.id, {
-    from: { xPos: 100 },
-    enter: { xPos: 0 },
-    leave: { xPos: 100 },
-    config: { tension: 280, friction: 85 },
-  }).map(({ item, key, props: { xPos } }) => (
-    item.text
-      ? (
-        <animated.span
-          className="carousel-slide-text"
-          key={key}
-          style={{
-            transform: xPos.interpolate((value) => `translate3d(${value}%,0,0)`),
-          }}>
-          {item.text}
-        </animated.span>
-      )
-      : null
-  ))
 
-  return (
-    <div className={`carousel ${className}`}>
-      {imageElement}
-      {textElement}
 
-      <div className="carousel-slide-picker">
-        {slides.map((item) => (
-          <button
-            aria-label={`Image carousel slide ${item.id}`}
-            className={`circle-button${curSlide === item.id ? ' active' : ''}`}
-            key={item.id}
-            type="button"
-            onClick={() => setSlide(item.id)} />
-        ))}
+  /***************************************************************************\
+    Public Methods
+  \***************************************************************************/
+
+  componentDidMount () {
+    this.timer = setTimeout(this._setSlide, this.props.interval)
+    const imageUrls = Object.entries(this.props.slides).map(([id, slide]) => ([id, `${publicUrl}/static/images/${slide.imageName || `slide_${id}.jpg`}`]))
+    this.worker = new ImageLoaderWorker()
+    this.worker.addEventListener('message', this._handleImageWorkerMessage)
+    this.worker.postMessage(imageUrls)
+  }
+
+  componentWillUnmount () {
+    clearTimeout(this.timer)
+    this.worker.terminate()
+  }
+
+  renderSlide () {
+    const {
+      slides,
+    } = this.props
+
+    const {
+      imgBlobs,
+    } = this.state
+
+    return (
+      <Transition
+        native
+        reset
+        unique
+        items={this.state.curSlide}
+        from={{ opacity: 0 }}
+        enter={{ opacity: 1 }}
+        leave={{ opacity: 0 }}
+        config={{ tension: 280, friction: 85 }}>
+        {
+          (curSlide) => imgBlobs[curSlide] && ((style) => {
+            const slide = slides[curSlide]
+
+            return (
+              <animated.div
+                className="carousel-slide"
+                style={{
+                  ...style,
+                  backgroundImage: `url(${imgBlobs[curSlide]})`,
+                  backgroundPosition: slide.position || 'center',
+                }} />
+            )
+          })
+        }
+      </Transition>
+    )
+  }
+
+  renderSlideText () {
+    const {
+      slides,
+    } = this.props
+    return (
+      <Transition
+        native
+        reset
+        unique
+        items={this.state.curSlide}
+        from={{ xPos: 100 }}
+        enter={{ xPos: 0 }}
+        leave={{ xPos: 100 }}
+        config={{ tension: 280, friction: 85 }}>
+        {
+          (curSlide) => ({ xPos }) => {
+            const slide = slides[curSlide]
+
+            return (
+              slide.text
+                ? (
+                  <animated.span
+                    className="carousel-slide-text"
+                    style={{
+                      transform: xPos.interpolate((value) => `translate3d(${value}%,0,0)`),
+                    }}>
+                    {slide.text}
+                  </animated.span>
+                )
+                : null
+            )
+          }
+        }
+      </Transition>
+    )
+  }
+
+  render () {
+    const {
+      className,
+      slides,
+    } = this.props
+
+    const {
+      curSlide,
+    } = this.state
+
+
+
+    return (
+      <div className={`carousel ${className}`}>
+        {this.renderSlide()}
+        {this.renderSlideText()}
+        <div className="carousel-slide-picker">
+          {Object.keys(slides).map((slideId) => (
+            <button
+              aria-label={`Image carousel slide ${slideId}`}
+              className={`circle-button${curSlide === slideId ? ' active' : ''}`}
+              name={slideId}
+              key={slideId}
+              type="button"
+              onClick={this._handleSlideButtonClick} />
+          ))}
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
+
+
+
+
+
+  /***************************************************************************\
+    Prop Definitions
+  \***************************************************************************/
+
+  static defaultProps = {
+    className: '',
+    interval: 10000,
+  }
+
+  static propTypes = {
+    className: PropTypes.string,
+    interval: PropTypes.number,
+    slides: PropTypes.objectOf(PropTypes.shape({
+      imageName: PropTypes.string,
+      position: PropTypes.string,
+      text: PropTypes.any,
+    })).isRequired,
+  }
 }
 
-Carousel.defaultProps = {
-  className: '',
-  interval: 10000,
-}
 
-Carousel.propTypes = {
-  className: PropTypes.string,
-  interval: PropTypes.number,
-  slides: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    imageName: PropTypes.string,
-    position: PropTypes.string,
-    text: PropTypes.any,
-  })).isRequired,
-}
+
 
 export default Carousel
