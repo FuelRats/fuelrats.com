@@ -10,7 +10,10 @@ self.addEventListener('message', (event) => {
         payload: URL.createObjectURL(blob),
       })
     } catch (error) {
-      self.postMessage(null)
+      self.postMessage({
+        id,
+        payload: null,
+      })
     }
   })
 })
