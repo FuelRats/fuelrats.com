@@ -12,11 +12,12 @@ const ELITE_GAME_YEAR_DESPARITY = 1286 // Years between IRL year and Elite unive
 
 const formatAsEliteDateTime = (timestamp) => moment(timestamp).add(ELITE_GAME_YEAR_DESPARITY, 'years').format('DD MMM YYYY HH:mm').toUpperCase()
 
-
+const formatAsEliteDate = (timestamp) => moment(timestamp).add(ELITE_GAME_YEAR_DESPARITY, 'years').format('DD MMM YYYY').toUpperCase()
 
 
 
 export {
   // eslint-disable-next-line import/prefer-default-export
   formatAsEliteDateTime,
+  formatAsEliteDate,
 }
