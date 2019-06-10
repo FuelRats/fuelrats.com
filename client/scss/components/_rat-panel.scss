@@ -37,6 +37,14 @@
     display: flex;
     justify-content: space-between;
     position: relative;
+    align-items: center;
+
+    .rat-stats {
+      font-family: monospace;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
 
     .rat-ships-expander {
       position: absolute;
