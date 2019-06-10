@@ -14,15 +14,11 @@ import {
   selectUser,
   selectUserDisplayRatId,
 } from '../store/selectors'
+import { formatAsEliteDate } from '../helpers/formatTime'
 import classNames from '../helpers/classNames'
 import CardControls from './CardControls'
 import DefaultRatButton from './RatCard/DefaultRatButton'
 import InlineEditSpan from './InlineEditSpan'
-
-
-
-// Component Constants
-const ELITE_GAME_YEAR_DESPARITY = 1286 // Years between IRL year and Elite universe year
 
 
 
@@ -173,7 +169,7 @@ class RatCard extends React.Component {
       return null
     }
 
-    const createdAt = moment(rat.attributes.createdAt).add(ELITE_GAME_YEAR_DESPARITY, 'years').format('DD MMM YYYY').toUpperCase()
+    const createdAt = formatAsEliteDate(rat.attributes.createdAt)
 
     const classes = classNames(
       'panel',
