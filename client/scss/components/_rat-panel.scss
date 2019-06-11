@@ -1,5 +1,5 @@
 .rat-panel {
-  min-width: 36.5rem;
+  width: 36.5rem;
   position: relative;
   margin: 1rem;
 
@@ -38,12 +38,14 @@
     justify-content: space-between;
     position: relative;
     align-items: center;
+    white-space: nowrap;
 
     .rat-stats {
       font-family: monospace;
       display: flex;
       flex-direction: column;
       line-height: 1.2;
+      min-width: 0;
     }
 
     .rat-ships-expander {
@@ -60,12 +62,6 @@
         svg {
           transition: transform .2s ease;
         }
-      }
-    }
-
-    .rat-controls {
-      button {
-        margin-left: .4rem;
       }
     }
   }

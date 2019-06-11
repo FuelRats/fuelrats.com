@@ -6,10 +6,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 
+// Component imports
+import classNames from '../helpers/classNames'
+
+
+
+
+
 const CardControls = (props) => {
   const {
     canDelete,
     canSubmit,
+    deleteConfirmMessage,
     editMode,
     deleteMode,
     controlType,
@@ -31,9 +39,14 @@ const CardControls = (props) => {
     editModeCancelTitle = `No, don't delete ${controlType}`
   }
 
+  const classes = classNames(
+    'card-controls',
+    ['has-message', deleteMode],
+  )
+
   return (
-    <>
-      {deleteMode && (<small>Are you sure? </small>)}
+    <div className={classes}>
+      {deleteMode && (deleteConfirmMessage() || (<small>Are you sure? </small>))}
 
       {!(editMode || deleteMode) && (
         <>
@@ -78,11 +91,16 @@ const CardControls = (props) => {
           </button>
         </>
       )}
-    </>
+    </div>
   )
 }
 
-
+CardControls.defaultProps = {
+  canDelete: true,
+  deleteConfirmMessage: () => null,
+  deleteMode: false,
+  editMode: false,
+}
 
 
 
