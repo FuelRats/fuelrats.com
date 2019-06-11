@@ -43,7 +43,6 @@ routes
   .add('admin rescues list', '/admin/rescues', '/admin/rescues/list')
 
   // Statistics
-  .add('stats statistics', '/statistics', '/statistics')
   .add('stats leaderboard', '/leaderboard', '/leaderboard')
 
   // Storefront
