@@ -1,6 +1,5 @@
 // Module imports
 import React from 'react'
-import moment from 'moment'
 import PropTypes from 'prop-types'
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -13,16 +12,13 @@ import {
   selectShipsByRatId,
   selectUser,
   selectUserDisplayRatId,
+  selectPageViewMetaById,
 } from '../store/selectors'
+import { formatAsEliteDate } from '../helpers/formatTime'
 import classNames from '../helpers/classNames'
 import CardControls from './CardControls'
 import DefaultRatButton from './RatCard/DefaultRatButton'
 import InlineEditSpan from './InlineEditSpan'
-
-
-
-// Component Constants
-const ELITE_GAME_YEAR_DESPARITY = 1286 // Years between IRL year and Elite universe year
 
 
 
@@ -150,6 +146,36 @@ class RatCard extends React.Component {
     Public Methods
   \***************************************************************************/
 
+  componentDidMount () {
+    const {
+      ratId,
+      getRescues,
+      rescueCount,
+      rescueCountPageViewId,
+    } = this.props
+
+    if (!rescueCount) {
+      getRescues({
+        firstLimpetId: ratId,
+        limit: 1,
+      }, {
+        pageView: rescueCountPageViewId,
+      })
+    }
+  }
+
+  renderDeleteConfirmMessage = () => {
+    const {
+      rescueCount,
+    } = this.props
+
+    if (!rescueCount) {
+      return null
+    }
+
+    return (<small>This rat has {rescueCount} rescues. Are you sure?  </small>)
+  }
+
   render () {
     const {
       ratIsDisplayRat,
@@ -159,6 +185,7 @@ class RatCard extends React.Component {
     const {
       rat,
       // ships,
+      rescueCount,
     } = this.props
 
     const {
@@ -173,7 +200,7 @@ class RatCard extends React.Component {
       return null
     }
 
-    const createdAt = moment(rat.attributes.createdAt).add(ELITE_GAME_YEAR_DESPARITY, 'years').format('DD MMM YYYY').toUpperCase()
+    const createdAt = formatAsEliteDate(rat.attributes.createdAt)
 
     const classes = classNames(
       'panel',
@@ -216,7 +243,11 @@ class RatCard extends React.Component {
         </div>
         */}
         <footer className="panel-content">
-          <div className="rat-created-date">
+          <div className="rat-stats">
+            <small>
+              <span className="text-muted">Rescues: </span>
+              {typeof rescueCount === 'number' ? rescueCount : '...'}
+            </small>
             <small>
               <span className="text-muted">Created: </span>
               {createdAt}
@@ -232,18 +263,17 @@ class RatCard extends React.Component {
             </button>
           </div>
           */}
-          <div className="rat-controls">
-            <CardControls
-              canDelete={userHasMultipleRats && !ratIsDisplayRat}
-              canSubmit={this.canSubmit}
-              controlType="rat"
-              deleteMode={deleteConfirm}
-              editMode={editMode}
-              onCancelClick={this._handleCancel}
-              onDeleteClick={this._handleDelete}
-              onEditClick={this._handleEdit}
-              onSubmitClick={this._handleSubmit} />
-          </div>
+          <CardControls
+            canDelete={userHasMultipleRats && !ratIsDisplayRat}
+            canSubmit={this.canSubmit}
+            controlType="rat"
+            deleteConfirmMessage={this.renderDeleteConfirmMessage}
+            deleteMode={deleteConfirm}
+            editMode={editMode}
+            onCancelClick={this._handleCancel}
+            onDeleteClick={this._handleDelete}
+            onEditClick={this._handleEdit}
+            onSubmitClick={this._handleSubmit} />
         </footer>
       </div>
     )
@@ -294,14 +324,26 @@ class RatCard extends React.Component {
     Redux Properties
   \***************************************************************************/
 
-  static mapDispatchToProps = ['updateRat', 'deleteRat']
+  static mapDispatchToProps = [
+    'deleteRat',
+    'getRescues',
+    'updateRat',
+  ]
 
-  static mapStateToProps = (state, props) => ({
-    user: selectUser(state),
-    userDisplayRatId: selectUserDisplayRatId(state),
-    rat: selectRatById(state, props),
-    ships: selectShipsByRatId(state, props),
-  })
+
+  static mapStateToProps = (state, props) => {
+    const pageViewId = `ratcard-rescuecount-${props.ratId}`
+    const rescueCountPageViewMeta = selectPageViewMetaById(state, { pageViewId })
+
+    return {
+      user: selectUser(state),
+      userDisplayRatId: selectUserDisplayRatId(state),
+      rat: selectRatById(state, props),
+      ships: selectShipsByRatId(state, props),
+      rescueCount: rescueCountPageViewMeta && rescueCountPageViewMeta.total,
+      rescueCountPageViewId: pageViewId,
+    }
+  }
 
 
 
