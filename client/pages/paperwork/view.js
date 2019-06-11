@@ -1,6 +1,6 @@
 // Module imports
 import React from 'react'
-import moment from 'moment'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 
@@ -8,8 +8,15 @@ import moment from 'moment'
 
 // Component imports
 import { actions, connect } from '../../store'
+import {
+  selectRatsByRescueId,
+  selectRescueById,
+  selectUser,
+  selectUserGroups,
+} from '../../store/selectors'
 import { authenticated } from '../../components/AppLayout'
-import { Link } from '../../routes'
+import { formatAsEliteDateTime } from '../../helpers/formatTime'
+import { Link, Router } from '../../routes'
 import Component from '../../components/Component'
 import PageWrapper from '../../components/PageWrapper'
 import userHasPermission from '../../helpers/userHasPermission'
@@ -34,6 +41,36 @@ class Paperwork extends Component {
 
   state = {
     loading: !this.props.rescue,
+    deleteConfirm: false,
+    deleting: false,
+  }
+
+
+
+
+
+  /***************************************************************************\
+    Private Methods
+  \***************************************************************************/
+
+  _handleDeleteClick = async () => {
+    if (this.state.deleteConfirm) {
+      this.setState({ deleting: true })
+
+      await this.props.deleteRescue(this.props.rescue.id)
+
+      const userIsAdmin = userHasPermission(this.props.currentUserGroups, 'isAdministrator')
+
+      Router.pushRoute(userIsAdmin ? 'admin rescues list' : '/')
+
+      return
+    }
+
+    this.setState({ deleteConfirm: true })
+  }
+
+  _handleDeleteCancel = () => {
+    this.setState({ deleteConfirm: false })
   }
 
 
@@ -56,19 +93,34 @@ class Paperwork extends Component {
     }
   }
 
-  static renderQuote = (quote, index) => (
-    <li key={index}>
-      {quote.message}
-      {Boolean(quote.author) && (
-        <span>
-          - <em>${quote.author}</em>
-        </span>
-      )}
-    </li>
-  )
+  static renderQuote = (quote, index) => {
+    const createdAt = formatAsEliteDateTime(quote.createdAt)
+    const updatedAt = formatAsEliteDateTime(quote.updatedAt)
+    return (
+      <li key={index}>
+        <div className="times">
+          <div className="created" title="Created at">{createdAt}</div>
+          {(updatedAt !== createdAt) && (
+            <div className="updated" title="Updated at"><span className="label">Updated at </span>{updatedAt}</div>
+          )}
+        </div>
+        <span className="message">{quote.message}</span>
+        <div className="authors">
+          <div className="author" title="Created by">{quote.author}</div>
+          {(quote.author !== quote.lastAuthor) && (
+            <div className="last-author" title="Last updated by"><span className="label">Updated by </span>{quote.lastAuthor}</div>
+          )}
+        </div>
+      </li>
+    )
+  }
 
   static async getInitialProps ({ query, store }) {
-    await actions.getRescue(query.id)(store.dispatch)
+    const state = store.getState()
+
+    if (!selectRescueById(state, query)) {
+      await actions.getRescue(query.rescueId)(store.dispatch)
+    }
   }
 
   renderQuotes = () => {
@@ -89,12 +141,11 @@ class Paperwork extends Component {
 
   renderRat = (rat, index) => {
     const { rescue } = this.props
-
     return (
-      <li key={index}>
+      <li key={index} className="first-limpet">
         {rat.attributes.name}
         {(rat.id === rescue.attributes.firstLimpetId) && (
-          <span className="badge">First Limpet</span>
+          <span className="badge first-limpet">1st</span>
         )}
       </li>
     )
@@ -102,10 +153,12 @@ class Paperwork extends Component {
 
   renderRats = () => {
     const { rats } = this.props
+    const { rescue } = this.props
 
     return (
       <ul>
         {rats.map(this.renderRat)}
+        {rescue.attributes.unidentifiedRats.map((rat) => <li key={rat.id} className="unidentified">{rat}<span className="badge">UnID</span></li>)}
       </ul>
     )
   }
@@ -117,9 +170,27 @@ class Paperwork extends Component {
 
     const {
       loading,
+      deleteConfirm,
+      deleting,
     } = this.state
 
-    const userCanEdit = this.userCanEdit()
+    const {
+      userCanDelete,
+      userCanEdit,
+    } = this
+
+    // This makes 2 new variables called status and outcome, and sets them to the values of the outcome and status in the rescue object.
+    let {
+      status,
+      outcome,
+    } = rescue.attributes
+
+    if (status === 'inactive') {
+      status = 'open'
+      outcome = 'inactive'
+    } else if (status === 'open') {
+      outcome = 'active'
+    }
 
     return (
       <PageWrapper title="Paperwork">
@@ -138,70 +209,133 @@ class Paperwork extends Component {
           <div className="page-content">
             <menu type="toolbar">
               <div className="primary">
-                {userCanEdit && (
-                  <Link route="paperwork edit" params={{ id: rescue.id }}>
-                    <a className="button">
-                        Edit
-                    </a>
-                  </Link>
+                {deleteConfirm && (
+                  <>
+                    {deleting ? (
+                      <span>Deleting... <FontAwesomeIcon icon="spinner" pulse fixedWidth /> </span>
+                    ) : (
+                      <span>Delete this rescue? (This cannot be undone!) </span>
+                    )}
+
+                    <button
+                      className="compact"
+                      disabled={deleting}
+                      onClick={this._handleDeleteClick}
+                      type="button">
+                      Yes
+                    </button>
+
+                    <button
+                      className="compact"
+                      disabled={deleting}
+                      onClick={this._handleDeleteCancel}
+                      type="button">
+                      No
+                    </button>
+                  </>
+                )}
+
+                {!deleteConfirm && (
+                  <>
+                    {userCanEdit && (
+                      <Link route="paperwork edit" params={{ rescueId: rescue.id }}>
+                        <a className="button compact">
+                          Edit
+                        </a>
+                      </Link>
+                    )}
+                    {userCanDelete && (
+                      <button
+                        className="compact"
+                        onClick={this._handleDeleteClick}
+                        type="button">
+                            Delete
+                      </button>
+                    )}
+                  </>
                 )}
               </div>
 
               <div className="secondary" />
             </menu>
-            <table>
-              <tbody>
-                <tr>
-                  <th>Created</th>
-                  <td>{moment(rescue.attributes.createdAt).format('DD MMM, YYYY HH:mm')}</td>
-                </tr>
 
-                <tr>
-                  <th>Updated</th>
-                  <td>{moment(rescue.attributes.updatedAt).format('DD MMM, YYYY HH:mm')}</td>
-                </tr>
+            <header className="paperwork-header">
+              {(rescue.attributes.status !== 'closed') && (
+                <div className="board-index"><span>#{rescue.attributes.data.boardIndex}</span></div>
+              )}
+              <div className="title">
+                {(!rescue.attributes.title) && (
+                  <span>
+                    Rescue of
+                    <span className="CMDR-name"> {rescue.attributes.client}</span> in
+                    <span className="system"> {(rescue.attributes.system) || ('Unknown')}</span>
+                  </span>
+                )}
+                {(rescue.attributes.title) && (
+                  <span>
+                    Operation
+                    <span className="rescue-title"> {rescue.attributes.title}</span>
+                  </span>
+                )}
+              </div>
+            </header>
 
-                <tr>
-                  <th>Platform</th>
-                  <td>{rescue.attributes.platform}</td>
-                </tr>
+            <div className="rescue-tags">
+              <div className="tag status-group">
+                <span className={`status ${status}`}>{status}</span>
+                <span className="outcome">{outcome || 'unfiled'}</span>
+              </div>
 
-                <tr>
-                  <th>Status</th>
-                  <td>{rescue.attributes.status}</td>
-                </tr>
+              <div className={`tag platform ${rescue.attributes.platform || 'none'}`}>{rescue.attributes.platform || 'No Platform'}</div>
 
-                <tr>
-                  <th>Outcome</th>
-                  <td>{rescue.attributes.outcome}</td>
-                </tr>
+              {(rescue.attributes.codeRed) && (
+                <div className="tag code-red">CR</div>
+              )}
 
-                <tr>
-                  <th>Code Red</th>
-                  <td>{rescue.attributes.codeRed ? 'Yes' : 'No'}</td>
-                </tr>
+              {(rescue.attributes.data.markedForDeletion.marked) && (
+                <div className="md-group">
+                  <div className="marked-for-deletion">Marked for Deletion</div>
+                  <div className="md-reason">
+                    &quot;{rescue.attributes.data.markedForDeletion.reason}&quot;
+                    <div className="md-reporter"> -     {rescue.attributes.data.markedForDeletion.reporter}</div>
+                  </div>
+                </div>
+              )}
+            </div>
 
-                <tr>
-                  <th>Rats</th>
-                  <td>{this.renderRats()}</td>
-                </tr>
+            <div className="info">
+              {(rescue.attributes.title) && (
+                <>
+                  <span className="label">Client</span>
+                  <span className="CMDR-name"> {rescue.attributes.client}</span>
+                  <span className="label">System</span>
+                  <span className="system"> {(rescue.attributes.system) || ('Unknown')}</span>
+                </>
+              )}
+              <span className="label">Created</span>
+              <span className="date-created content">{formatAsEliteDateTime(rescue.attributes.createdAt)}</span>
+              <span className="label">Updated</span>
+              <span className="date-updated content">{formatAsEliteDateTime(rescue.attributes.updatedAt)}</span>
+              <span className="label">IRC Nick</span>
+              <span className="irc-nick content">{rescue.attributes.data.IRCNick}</span>
+              <span className="label">Language</span>
+              <span className="language content">{rescue.attributes.data.langID}</span>
+            </div>
 
-                <tr>
-                  <th>System</th>
-                  <td>{rescue.attributes.system}</td>
-                </tr>
+            <div className="panel rats">
+              <header>Rats</header>
+              <div className="panel-content">{this.renderRats()}</div>
+            </div>
 
-                <tr>
-                  <th>Quotes</th>
-                  <td>{this.renderQuotes()}</td>
-                </tr>
+            <div className="panel quotes">
+              <header>Quotes</header>
+              <div className="panel-content">{this.renderQuotes()}</div>
+            </div>
 
-                <tr>
-                  <th>Notes</th>
-                  <td>{rescue.attributes.notes}</td>
-                </tr>
-              </tbody>
-            </table>
+            <div className="panel notes">
+              <header>Notes</header>
+              <div className="panel-content">{rescue.attributes.notes}</div>
+            </div>
           </div>
         )}
       </PageWrapper>
@@ -216,7 +350,7 @@ class Paperwork extends Component {
     Getters
   \***************************************************************************/
 
-  userCanEdit = () => {
+  get userCanEdit () {
     const {
       rescue,
       currentUser,
@@ -248,44 +382,35 @@ class Paperwork extends Component {
     return false
   }
 
-  static mapStateToProps = (state, ownProps) => {
-    const { id: rescueId } = ownProps.query
-    let firstLimpet = []
-    let rats = []
-    let rescue = null
-
-    if (rescueId) {
-      rescue = state.rescues[rescueId]
-    }
-
-    if (rescue) {
-      if (rescue.relationships.firstLimpet.data) {
-        firstLimpet = Object.values(state.rats.rats).filter((rat) => rescue.relationships.firstLimpet.data.id === rat.id)
-      }
-
-      rats = Object.values(state.rats.rats)
-        .filter((rat) => rescue.relationships.rats.data.find(({ id }) => rat.id === id))
-        .map((rat) => ({
-          id: rat.id,
-          value: rat.attributes.name,
-          ...rat,
-        }))
-    }
-
-    const currentUser = state.user
-    const currentUserGroups = currentUser.relationships ? [...currentUser.relationships.groups.data].map((group) => state.groups[group.id]) : []
-
-
-    return {
-      firstLimpet,
-      rats,
-      rescue,
-      currentUser,
+  get userCanDelete () {
+    const {
       currentUserGroups,
+    } = this.props
+
+
+    if (currentUserGroups.length && (userHasPermission(currentUserGroups, 'rescue.delete') || userHasPermission(currentUserGroups, 'isAdministrator'))) {
+      return true
     }
+
+    return false
   }
 
-  static mapDispatchToProps = ['getRescue']
+
+
+
+
+  /***************************************************************************\
+    Redux Properties
+  \***************************************************************************/
+
+  static mapDispatchToProps = ['getRescue', 'deleteRescue']
+
+  static mapStateToProps = (state, { query }) => ({
+    rats: selectRatsByRescueId(state, query) || [],
+    rescue: selectRescueById(state, query),
+    currentUser: selectUser(state),
+    currentUserGroups: selectUserGroups(state),
+  })
 }
 
 

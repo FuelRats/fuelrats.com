@@ -1,4 +1,8 @@
 const userHasPermission = (groups, permission) => {
+  if (!Array.isArray(groups) || !groups.length) {
+    return false
+  }
+
   if (permission === 'isAdministrator') {
     return groups.some((group) => group.attributes.isAdministrator)
   }

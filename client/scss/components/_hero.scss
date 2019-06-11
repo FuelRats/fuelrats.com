@@ -1,10 +1,8 @@
 .hero {
-  @include dimmer-gradient(url(/static/images/slideshow_1.jpg));
-
   align-content: center;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-color: #0d1011;
+  position: relative;
+  overflow: hidden;
   color: $white;
   display: flex;
   font-family: Raleway, sans-serif;
@@ -15,12 +13,23 @@
   padding: 6rem;
   text-shadow: 0 0 0.2rem rgba($black, 0.5);
 
+  h1, h2 {
+    transition: font-size .2s ease;
+  }
+
   h1 {
     font-size: 5em;
   }
 
+  header {
+    z-index: 50;
+    text-shadow: 2px 2px 4px #000000aa;
+
+  }
+
   .call-to-action {
     margin-top: 5rem;
+    z-index: 50;
 
     .button {
       animation-delay: 0.5s;
@@ -31,6 +40,20 @@
       font-size: 1.5em;
       padding: 1rem 4rem;
       text-transform: uppercase;
+    }
+  }
+
+  @media only screen and (max-width: 1366px) {
+    h1 {
+      font-size: 4em;
+    }
+
+    h2 {
+      font-size: 2em;
+    }
+
+    .call-to-action .button {
+      font-size: 1.25em
     }
   }
 

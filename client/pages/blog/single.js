@@ -7,65 +7,28 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 // Component imports
-import { connect } from '../../store'
+import { actions, connect } from '../../store'
 import { Link } from '../../routes'
 import Component from '../../components/Component'
 import PageWrapper from '../../components/PageWrapper'
 import TextPlaceholder from '../../components/TextPlaceholder'
+import { selectBlogStatistics, selectBlogAuthors, selectBlogCategories, selectBlogById } from '../../store/selectors'
 
 
 @connect
 class Blog extends Component {
   /***************************************************************************\
-    Private Methods
-  \***************************************************************************/
-
-  async _retrieveBlog () {
-    const {
-      query,
-      retrieveBlog,
-    } = this.props
-
-    this.setState({ retrieving: true })
-
-    await retrieveBlog(query.id)
-
-    this.setState({
-      blog: this.props.blogs.find((blog) => (blog.id.toString() === query.id) || (blog.slug === query.id)),
-      retrieving: false,
-    })
-  }
-
-
-
-
-
-  /***************************************************************************\
     Public Methods
   \***************************************************************************/
 
-  componentDidMount () {
-    this._retrieveBlog()
-  }
 
-  constructor (props) {
-    super(props)
-
-    const blog = props.blogs.find((item) => item.id === props.id)
-
-    this.state = {
-      blog,
-      retrieving: Boolean(blog),
-    }
+  static async getInitialProps ({ query, store }) {
+    await actions.retrieveBlog(query.id)(store.dispatch)
   }
 
   render () {
     const {
       blog,
-      retrieving,
-    } = this.state
-
-    const {
       authors,
       categories,
     } = this.props
@@ -84,12 +47,7 @@ class Blog extends Component {
     /* eslint-disable react/no-danger */
     return (
       <PageWrapper title="Blog">
-
-        {retrieving && (
-          <article className="loading page-content" />
-        )}
-
-        {(!retrieving && blog) && (
+        {blog && (
           <article className="page-content">
             <header>
               <h2
@@ -164,7 +122,7 @@ class Blog extends Component {
           </article>
         )}
 
-        {(!retrieving && !blog) && (
+        {!blog && (
           <article className="error page-content" />
         )}
       </PageWrapper>
@@ -172,7 +130,12 @@ class Blog extends Component {
     /* eslint-enable */
   }
 
-  static mapStateToProps = (state) => state.blogs
+  static mapStateToProps = (state, ownProps) => ({
+    blog: selectBlogById(state, { blogId: ownProps.query.id }),
+    categories: selectBlogCategories(state),
+    authors: selectBlogAuthors(state),
+    ...selectBlogStatistics(state),
+  })
 
   static mapDispatchToProps = ['retrieveBlog']
 }

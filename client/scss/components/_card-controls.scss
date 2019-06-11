@@ -1,0 +1,13 @@
+.card-controls {
+  display: flex;
+  justify-content: flex-end;
+  background: white;
+
+  &.has-message {
+    box-shadow: 0 0 0.5rem 1rem white;
+  }
+
+  button {
+    margin-left: .4rem;
+  }
+}

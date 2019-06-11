@@ -7,6 +7,11 @@ import React from 'react'
 
 // Component imports
 import { actions, connect } from '../../store'
+import {
+  selectStoreCart,
+  selectProductsMeta,
+  selectProducts,
+} from '../../store/selectors'
 import { Link } from '../../routes'
 import Component from '../../components/Component'
 import PageWrapper from '../../components/PageWrapper'
@@ -169,6 +174,7 @@ class ListCart extends Component {
                     </span>
 
                     <input
+                      aria-label="Item quantity"
                       className="item-quantity"
                       disabled={submitting}
                       name={skuId}
@@ -236,9 +242,10 @@ class ListCart extends Component {
 
   static mapDispatchToProps = ['getStoreCart', 'updateCartItem', 'removeCartItem', 'updateOrder']
 
-  static mapStateToProps = (store) => ({
-    ...store.products,
-    cart: store.storeCart,
+  static mapStateToProps = (state) => ({
+    ...selectProductsMeta(state),
+    products: selectProducts(state),
+    cart: selectStoreCart(state),
   })
 }
 

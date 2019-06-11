@@ -52,7 +52,7 @@ app.prepare().then(() => {
   server.use(require('koa-logger')())
 
   // Add CSP
-  server.use(require('./middlewares/csp')(env.isDev))
+  server.use(require('./middlewares/csp')(env))
 
   // Add proxies
   require('./middlewares/proxy')(server, env)

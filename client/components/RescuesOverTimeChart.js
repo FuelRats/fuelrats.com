@@ -9,6 +9,7 @@ import moment from 'moment'
 
 // Component imports
 import { connect } from '../store'
+import { selectRescuesOverTimeLoading, selectRescuesOverTimeStatistics } from '../store/selectors'
 import Component from './Component'
 
 
@@ -252,17 +253,10 @@ class RescuesOverTimeChart extends Component {
 
   static mapDispatchToProps = ['getRescuesOverTimeStatistics']
 
-  static mapStateToProps = (state) => {
-    const {
-      loading,
-      statistics,
-    } = state.rescuesOverTime
-
-    return {
-      loading,
-      statistics,
-    }
-  }
+  static mapStateToProps = (state) => ({
+    loading: selectRescuesOverTimeLoading(state),
+    statistics: selectRescuesOverTimeStatistics(state),
+  })
 }
 
 

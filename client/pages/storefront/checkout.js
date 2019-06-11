@@ -13,6 +13,7 @@ import StoreControlBar from '../../components/storefront/StoreControlBar'
 import Component from '../../components/Component'
 import CheckoutForm from '../../components/storefront/CheckoutForm'
 import PageWrapper from '../../components/PageWrapper'
+import { selectStoreCart } from '../../store/selectors'
 
 
 
@@ -72,7 +73,7 @@ class Checkout extends Component {
 
   static mapDispatchToProps = ['getStoreCart']
 
-  static mapStateToProps = (store) => ({ cart: store.storeCart })
+  static mapStateToProps = (state) => ({ cart: selectStoreCart(state) })
 }
 
 

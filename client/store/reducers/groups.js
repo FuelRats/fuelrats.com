@@ -21,9 +21,11 @@ export default function groupsReducer (state = initialState.groups, action) {
           ...parseJSONAPIResponseForEntityType(payload, 'groups', true),
         }
       }
-      return { ...state }
+      break
 
     default:
-      return { ...state }
+      break
   }
+
+  return state
 }

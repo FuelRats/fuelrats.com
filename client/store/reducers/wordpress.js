@@ -15,24 +15,23 @@ export default function wordpressReducer (state = initialState.rescues, action) 
   switch (type) {
     case actionTypes.GET_WORDPRESS_PAGE:
     case actionTypes.GET_WORDPRESS_PAGES:
-      switch (status) {
-        case 'success':
-          return {
-            ...state,
-            page: {
-              ...state.page,
-              ...payload.reduce((accumulator, page) => ({
-                ...accumulator,
-                [page.slug]: page,
-              }), {}),
-            },
-          }
-
-        default:
-          return state
+      if (status === 'success') {
+        return {
+          ...state,
+          page: {
+            ...state.page,
+            ...payload.reduce((accumulator, page) => ({
+              ...accumulator,
+              [page.slug]: page,
+            }), {}),
+          },
+        }
       }
+      break
 
     default:
-      return state
+      break
   }
+
+  return state
 }

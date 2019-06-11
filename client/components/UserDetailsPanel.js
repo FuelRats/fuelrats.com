@@ -8,6 +8,7 @@ import React from 'react'
 
 // Component imports
 import { connect } from '../store'
+import { selectUser, selectUserAvatar } from '../store/selectors'
 
 
 
@@ -20,16 +21,15 @@ const ELITE_GAME_YEAR_DESPARITY = 1286 // Years between IRL year and Elite unive
 
 
 
-const UserDetailsPanel = (props) => {
-  let { attributes } = props
-
-  attributes = attributes || {}
+const UserDetailsPanel = ({ user, userAvatar }) => {
+  if (!user) {
+    return null
+  }
 
   const {
     createdAt,
     email,
-    image,
-  } = attributes
+  } = user.attributes
 
   return (
     <div className="panel user-details">
@@ -38,7 +38,7 @@ const UserDetailsPanel = (props) => {
       </header>
 
       <div className="panel-content">
-        <div className="avatar medium"><img alt="User's avatar" src={image} /></div>
+        <div className="avatar medium"><img alt="User's avatar" src={userAvatar} /></div>
 
         <label>Email:</label>
         <span>
@@ -56,7 +56,10 @@ const UserDetailsPanel = (props) => {
 
 
 
-UserDetailsPanel.mapStateToProps = (state) => state.user || {}
+UserDetailsPanel.mapStateToProps = (state) => ({
+  user: selectUser(state),
+  userAvatar: selectUserAvatar(state),
+})
 
 
 

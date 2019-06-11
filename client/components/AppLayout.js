@@ -1,20 +1,26 @@
 // Module imports
 import { StripeProvider } from 'react-stripe-elements'
+import { Transition } from 'react-spring/renderprops.cjs'
 import getConfig from 'next/config'
 import hoistNonReactStatics from 'hoist-non-react-statics'
 import NextError from 'next/error'
-import NProgress from 'nprogress'
 import React from 'react'
-
 
 
 
 
 // Component imports
 import { connect } from '../store'
+import {
+  selectAuthentication,
+  selectFlagByName,
+  selectUser,
+  selectUserGroups,
+} from '../store/selectors'
 import { Router } from '../routes'
 import apiService from '../services/api'
 import Header from './Header'
+import NProgress from './NProgress'
 import UserMenu from './UserMenu'
 import LoginDialog from './LoginDialog'
 import initUserSession from '../helpers/initUserSession'
@@ -24,16 +30,16 @@ import httpStatus from '../helpers/httpStatus'
 
 
 
-NProgress.configure({ showSpinner: false })
-Router.events.on('routeChangeStart', () => NProgress.start())
-Router.events.on('routeChangeError', () => NProgress.done())
-Router.events.on('routeChangeComplete', () => NProgress.done())
 
 const { publicRuntimeConfig } = getConfig()
 
 
+
+
+
 // Component Constants
 const STRIPE_API_PK = publicRuntimeConfig.apis.stripe.public
+const TransitionContext = React.createContext(null)
 
 
 
@@ -72,19 +78,8 @@ class AppLayout extends React.Component {
     }
 
     if (Component.ಠ_ಠ_REQUIRED_PERMISSION) {
-      const {
-        groups,
-        user,
-      } = store.getState()
-
-      let userGroups = []
-
-      if (user.relationships.groups.data) {
-        userGroups = user.relationships.groups.data.reduce((acc, group) => [
-          ...acc,
-          groups[group.id],
-        ], [])
-      }
+      const state = store.getState()
+      const userGroups = selectUserGroups(state)
 
       if (!userHasPermission(userGroups, Component.ಠ_ಠ_REQUIRED_PERMISSION)) {
         if (ctx.res) {
@@ -159,37 +154,63 @@ class AppLayout extends React.Component {
     const {
       Component,
       isServer,
+      loggedIn,
       pageProps,
       renderLayout,
+      router,
       showLoginDialog,
       statusCode,
       setFlag,
-      path,
     } = this.props
 
     return (
       <div role="application">
 
-        {renderLayout && (
-         <>
-           <Header
-             isServer={isServer}
-             path={path} />
+        <NProgress
+          minimum={0.15}
+          showSpinner={false} />
 
-           <UserMenu />
-         </>
+        {renderLayout && (
+        <>
+          <Header isServer={isServer} />
+          <UserMenu />
+        </>
         )}
 
-        {statusCode === httpStatus.OK
-          ? <Component {...pageProps} />
-          : (
-            <main className="fade-in page error-page">
-              <div className="page-content">
-                <NextError className="test" statusCode={statusCode} />
-              </div>
-            </main>
-          )
-        }
+        {statusCode === httpStatus.OK && (
+          <Transition
+            native
+            from={{ opacity: 0 }}
+            enter={{ opacity: 1 }}
+            leave={{ opacity: 0 }}
+            config={{
+              tension: 350,
+              friction: 12,
+              clamp: true,
+            }}
+            items={{
+              Page: Component,
+              props: pageProps,
+              shouldRender: !Component.ಠ_ಠ_AUTHENTICATION_REQUIRED || loggedIn,
+            }}
+            keys={router.pathname}>
+            {({ Page, props, shouldRender }) => (style) => (
+              <TransitionContext.Provider value={style}>
+                {shouldRender && (
+                  <Page {...props} />
+                )}
+              </TransitionContext.Provider>
+            )}
+          </Transition>
+        )}
+
+        {statusCode !== httpStatus.OK && (
+          <main className="page error-page">
+            <div className="page-content">
+              <NextError className="test" statusCode={statusCode} />
+            </div>
+          </main>
+        )}
 
         {showLoginDialog && (
           <LoginDialog onClose={() => setFlag('showLoginDialog', false)} />
@@ -209,18 +230,12 @@ class AppLayout extends React.Component {
 
   static mapDispatchToProps = ['getUser', 'logout', 'setFlag', 'updateLoggingInState']
 
-  static mapStateToProps = ({ authentication, flags, user }) => ({
-    loggedIn: authentication.loggedIn,
-    showLoginDialog: flags.showLoginDialog,
-    verifyError: authentication.verifyError,
-    user,
+  static mapStateToProps = (state) => ({
+    ...selectAuthentication(state),
+    showLoginDialog: selectFlagByName(state, { name: 'showLoginDialog' }),
+    user: selectUser(state),
   })
 }
-
-
-
-
-export default AppLayout
 
 
 
@@ -229,7 +244,7 @@ export default AppLayout
 /**
  * Decorator to mark a page as requiring user authentication.
  */
-export const authenticated = (_target) => {
+const authenticated = (_target) => {
   const requiredPermission = typeof _target === 'string' ? _target : null
 
   const setProperties = (target) => {
@@ -252,7 +267,7 @@ export const authenticated = (_target) => {
 /**
  * Decorator to wrap a page with stripe context
  */
-export const withStripe = (Component) => {
+const withStripe = (Component) => {
   class StripePage extends React.Component {
     state = {
       stripe: null,
@@ -280,4 +295,17 @@ export const withStripe = (Component) => {
   }
 
   return hoistNonReactStatics(StripePage, Component)
+}
+
+
+const {
+  Consumer: TransitionContextConsumer,
+} = TransitionContext
+
+
+export default AppLayout
+export {
+  authenticated,
+  withStripe,
+  TransitionContextConsumer,
 }

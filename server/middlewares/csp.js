@@ -1,5 +1,3 @@
-/* eslint-env node */
-
 // Module imports
 const buildCSP = require('content-security-policy-builder')
 const uuidv4 = require('uuid/v4')
@@ -24,24 +22,33 @@ const domainWhitelist = [
 
 
 
-module.exports = (isDev) => async (ctx, next) => {
+module.exports = ({ isDev, publicUrl }) => async (ctx, next) => {
   const nonce = uuidv4()
 
   ctx.res.nonce = nonce /* eslint-disable-line no-param-reassign */
 
   const policyString = buildCSP({
     directives: {
-      defaultSrc: ["'self'", ...domainWhitelist, 'wss://*.fuelrats.com'],
+      defaultSrc: ["'self'", ...domainWhitelist],
+      connectSrc: [
+        "'self'",
+        'wss://*.fuelrats.com',
+        ...(isDev
+          ? [
+            publicUrl,
+            'webpack://*',
+          ]
+          : []),
+      ],
       baseUri: ["'none'"],
       scriptSrc: [
         "'self'",
         `'nonce-${nonce}'`,
         "'strict-dynamic'",
-        "'unsafe-inline'",
         ...(isDev ? ["'unsafe-eval'"] : []),
       ],
       styleSrc: ["'self'", "'unsafe-inline'", ...domainWhitelist],
-      imgSrc: ["'self'", ...domainWhitelist, 'api.adorable.io', '*.wp.com'],
+      imgSrc: ["'self'", ...domainWhitelist, 'api.adorable.io', '*.wp.com', 'blob:'],
       mediaSrc: ["'self'"],
       objectSrc: ["'self'"],
       fontSrc: ["'self'", 'fonts.gstatic.com'],

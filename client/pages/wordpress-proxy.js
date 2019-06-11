@@ -9,6 +9,7 @@ import React from 'react'
 import { actions, connect } from '../store'
 import Component from '../components/Component'
 import PageWrapper from '../components/PageWrapper'
+import { selectWordpressPageBySlug } from '../store/selectors'
 
 
 
@@ -42,7 +43,7 @@ class WordpressProxy extends Component {
 
     /* eslint-disable react/no-danger */
     return (
-      <React.Fragment>
+      <>
         {Boolean(page) && (
           <PageWrapper
             className="wordpress-page"
@@ -60,13 +61,13 @@ class WordpressProxy extends Component {
             <article className="error page-content" />
           </PageWrapper>
         )}
-      </React.Fragment>
+      </>
     )
     /* eslint-enable */
   }
 
   static mapStateToProps = (state, ownProps) => ({
-    page: state.wordpress.page[ownProps.query.slug] || ownProps.query.page || null,
+    page: selectWordpressPageBySlug(state, { slug: ownProps.query.slug }) || ownProps.query.page || null,
   })
 }
 

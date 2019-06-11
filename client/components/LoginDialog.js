@@ -8,6 +8,7 @@ import PropTypes from 'prop-types'
 
 // Component imports
 import { connect } from '../store'
+import { selectAuthentication } from '../store/selectors'
 import { Router } from '../routes'
 import Dialog from './Dialog'
 import ValidatedFormInput from './ValidatedFormInput'
@@ -212,7 +213,7 @@ class LoginDialog extends React.Component {
 
   static mapDispatchToProps = ['login', 'getUser']
 
-  static mapStateToProps = (state) => state.authentication
+  static mapStateToProps = (state) => selectAuthentication(state)
 
 
 

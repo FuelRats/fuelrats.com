@@ -13,6 +13,7 @@ import Component from '../../components/Component'
 import PageWrapper from '../../components/PageWrapper'
 import ProductCard from '../../components/storefront/ProductCard'
 import productPriorityDecendingSort from '../../helpers/productPriorityDecendingSort'
+import { selectProductsMeta, selectProducts } from '../../store/selectors'
 
 
 
@@ -96,7 +97,10 @@ class ListProducts extends Component {
     }
   }
 
-  static mapStateToProps = (store) => store.products
+  static mapStateToProps = (state) => ({
+    ...selectProductsMeta(state),
+    products: selectProducts(state),
+  })
 }
 
 

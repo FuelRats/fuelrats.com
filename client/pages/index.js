@@ -9,9 +9,31 @@ import React from 'react'
 import { Link } from '../routes'
 import { connect } from '../store'
 import PageWrapper from '../components/PageWrapper'
+import Carousel from '../components/Carousel'
 
 
-
+const CarouselSlides = {
+  0: {
+    text: 'CMDR Highwaywarrior',
+    position: '55% 25%',
+  },
+  1: {
+    text: 'CMDR Zibadian',
+    position: '20% 50%',
+  },
+  2: {
+    text: 'CMDR Vanya Pavlovich',
+    position: '70% 50%',
+  },
+  3: {
+    text: 'CMDR MarathonDog',
+    position: '68% 100%',
+  },
+  4: {
+    text: 'CMDR NumberPi',
+    position: '100% 100%',
+  },
+}
 
 @connect
 class Index extends React.Component {
@@ -28,8 +50,10 @@ class Index extends React.Component {
   render = () => (
     <PageWrapper title="Home" renderHeader={false}>
       <section className="hero">
+        <Carousel slides={CarouselSlides} />
+
         <header>
-          <h1>We Have Fuel. You Don't.</h1>
+          <h1>We Have Fuel. <wbr />You&nbsp;Don't.</h1>
           <h2>Any Questions?</h2>
         </header>
 
@@ -38,6 +62,8 @@ class Index extends React.Component {
             <a className="button tall">Get Help</a>
           </Link>
         </footer>
+
+
       </section>
     </PageWrapper>
   )
@@ -50,3 +76,8 @@ class Index extends React.Component {
 
 
 export default Index
+
+
+/*
+
+ */

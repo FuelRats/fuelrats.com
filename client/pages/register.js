@@ -7,6 +7,7 @@ import React from 'react'
 
 // Component imports
 import { actions, connect } from '../store'
+import { selectWordpressPageBySlug } from '../store/selectors'
 import { Link } from '../routes'
 import Component from '../components/Component'
 import PageWrapper from '../components/PageWrapper'
@@ -51,11 +52,13 @@ class Register extends Component {
 
     this._bindMethods([
       'handleChange',
+      'handleTOSChange',
       'handleRadioOptionsChange',
       '_handleSubmit',
     ])
 
     this.state = {
+      checkedTOS: false,
       acceptTerms: true,
       acceptPrivacy: true,
       email: '',
@@ -89,6 +92,22 @@ class Register extends Component {
       [name]: value,
       ...(name === 'acceptTerms' ? { acceptPrivacy: value } : {}),
     })
+  }
+
+  handleTOSChange () {
+    const {
+      acceptTerms,
+      acceptPrivacy,
+      checkedTOS,
+    } = this.state
+
+    if (!acceptTerms && !acceptPrivacy && !checkedTOS) {
+      this.setState({ checkedTOS: true })
+    }
+
+    if (acceptTerms && acceptPrivacy) {
+      this.setState({ acceptPrivacy: false, acceptTerms: false, checkedTOS: false })
+    }
   }
 
   handleRadioOptionsChange ({ name, value }) {
@@ -138,6 +157,7 @@ class Register extends Component {
     } = this.props
 
     const {
+      checkedTOS,
       acceptTerms,
       acceptPrivacy,
       email,
@@ -163,6 +183,7 @@ class Register extends Component {
             </label>
 
             <input
+              aria-label="email"
               id="email"
               name="email"
               disabled={submitting}
@@ -204,6 +225,7 @@ class Register extends Component {
             </label>
 
             <input
+              aria-label="Base IRC Nickname"
               disabled={submitting}
               id="nickname"
               name="nickname"
@@ -224,10 +246,13 @@ class Register extends Component {
             </label>
 
             <input
+              aria-label="Commander name"
               disabled={submitting}
               id="ratName"
               name="ratName"
               onChange={this.handleChange}
+              minLength={1}
+              maxLength={18}
               pattern="^[\x00-\x7F]+$"
               placeholder="Surly Badger"
               ref={(_ratNameEl) => {
@@ -267,13 +292,14 @@ class Register extends Component {
           <fieldset data-name="Agreements">
             <span>
               <input
+                aria-label="Terms of"
                 className="large"
                 disabled={submitting}
                 id="acceptTerms"
                 name="acceptTerms"
                 type="checkbox"
                 checked={Boolean(acceptTerms && acceptPrivacy)}
-                onChange={this.handleChange} />
+                onChange={this.handleTOSChange} />
               <label htmlFor="acceptTerms">
                 {'I agree that I have read and agree to the  '}
                 <Link route="wordpress" params={{ slug: 'terms-of-service' }}>
@@ -303,7 +329,7 @@ class Register extends Component {
           </menu>
         </form>
 
-        { !acceptTerms && !acceptPrivacy && (
+        { checkedTOS && !acceptTerms && !acceptPrivacy && (
           <TermsDialog
             dialogContent={() => getWordpressPageElement(termsPage)}
             onClose={() => this.setState({ acceptTerms: true })}
@@ -311,7 +337,7 @@ class Register extends Component {
             checkboxLabel="I have read and agree to these Terms of Service" />
         )}
 
-        { acceptTerms && !acceptPrivacy && (
+        { checkedTOS && acceptTerms && !acceptPrivacy && (
           <TermsDialog
             dialogContent={() => getWordpressPageElement(privacyPage)}
             onClose={() => {
@@ -354,8 +380,8 @@ class Register extends Component {
   }
 
   static mapStateToProps = (state) => ({
-    termsPage: state.wordpress.page['terms-of-service'],
-    privacyPage: state.wordpress.page['privacy-policy'],
+    termsPage: selectWordpressPageBySlug(state, { slug: 'terms-of-service' }),
+    privacyPage: selectWordpressPageBySlug(state, { slug: 'privacy-policy' }),
   })
 
   static mapDispatchToProps = ['register', 'login']

@@ -186,6 +186,7 @@ class EpicNominate extends Component {
                 <label htmlFor="rescues">What is the ID of the rescue?</label>
 
                 <RescuesTagsInput
+                  aria-label="Rescue ID"
                   data-single
                   disabled={submitting}
                   id="rescues"
@@ -200,6 +201,7 @@ class EpicNominate extends Component {
                 <label htmlFor="rats">What is the rat's CMDR name?</label>
 
                 <RatTagsInput
+                  aria-label="Commander name"
                   data-single
                   disabled={submitting}
                   id="rats"
@@ -214,6 +216,7 @@ class EpicNominate extends Component {
               <label htmlFor="notes">What did the rat(s) do that makes them so epic?</label>
 
               <textarea
+                aria-label="epic nominee explaination"
                 disabled={submitting}
                 id="notes"
                 name="notes"

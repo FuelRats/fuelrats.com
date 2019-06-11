@@ -7,6 +7,7 @@ import React from 'react'
 
 // Component imports
 import { connect } from '../../store'
+import { selectStoreCart } from '../../store/selectors'
 import Dialog from '../Dialog'
 import Component from '../Component'
 import isInStock from '../../helpers/isInStock'
@@ -126,7 +127,7 @@ class CartUpdateDialog extends Component {
         controls={updateComplete ? undefined : this.controls}
         title="Add to Cart"
         onClose={onClose}>
-        <div className="center-content">
+        <div className="center-content flex">
           {do {
             if (updateComplete) {
               <div>
@@ -165,6 +166,7 @@ class CartUpdateDialog extends Component {
                   <div className="labeled-input">
                     <label htmlFor="quantitySelect">Quantity:</label>
                     <input
+                      aria-label="product quantity"
                       disabled={activeSKU && !isInStock(activeSKU.inventory)}
                       id="quantitySelect"
                       name="quantity"
@@ -252,7 +254,7 @@ class CartUpdateDialog extends Component {
 
   static mapDispatchToProps = ['updateCartItem', 'updateOrder']
 
-  static mapStateToProps = (state) => ({ cart: state.storeCart })
+  static mapStateToProps = (state) => ({ cart: selectStoreCart(state) })
 }
 
 

@@ -32,6 +32,9 @@ div.switch-container {
     transition: .2s cubic-bezier(0.19, 1, 0.22, 1);
     color: $black-lightened;
     border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   &.checked > .switch-handle {

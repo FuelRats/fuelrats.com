@@ -1,0 +1,94 @@
+.rat-panel {
+  width: 36.5rem;
+  position: relative;
+  margin: 1rem;
+
+  header {
+    overflow-y: hidden;
+    position: relative;
+
+    > div {
+      position: relative;
+    }
+
+    .display-rat-button {
+      position: relative;
+      top: -2px;
+      margin-right: .2rem;
+      --text-color: #{rgba($white, 0.4)};
+      --text-color-hover: #{rgba($white, 0.75)};
+
+      &[disabled] {
+        --background-color: transparent;
+        --background-color-hover: transparent;
+        --text-color: #{$white};
+        --text-color-hover: #{$white};
+      }
+    }
+
+    .rat-platform {
+      display: inline-block;
+      width: 22px;
+      text-align: center;
+    }
+  }
+
+  footer {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    align-items: center;
+    white-space: nowrap;
+
+    .rat-stats {
+      font-family: monospace;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+      min-width: 0;
+    }
+
+    .rat-ships-expander {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+
+      .ship-expand-button {
+        width: 48px;
+        svg {
+          transition: transform .2s ease;
+        }
+      }
+    }
+  }
+
+  &.expanded .ship-expand-button svg {
+    transform: rotate(180deg);
+  }
+
+  &.submitting:after {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    content: "Updating...";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: calc(100% - 2rem);
+    height: calc(100% - 2rem);
+    padding: 1rem;
+    background-color: rgba(26, 26, 26, 0.7);
+    color: white;
+    font-family: Raleway, sans-serif;
+    font-size: 1.1em;
+    text-shadow: 0px 0px 8px #1a1a1a;
+  }
+
+  &.submitting[data-loader-text]:after {
+    content: attr(data-loader-text)
+  }
+}

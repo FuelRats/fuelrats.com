@@ -9,6 +9,12 @@ import moment from 'moment'
 // Component imports
 import { Link } from '../../routes'
 import { connect } from '../../store'
+import {
+  selectBlogs,
+  selectBlogAuthors,
+  selectBlogCategories,
+  selectBlogStatistics,
+} from '../../store/selectors'
 import Component from '../../components/Component'
 import PageWrapper from '../../components/PageWrapper'
 import safeParseInt from '../../helpers/safeParseInt'
@@ -262,7 +268,12 @@ class Blogs extends Component {
     )
   }
 
-  static mapStateToProps = (state) => state.blogs
+  static mapStateToProps = (state) => ({
+    blogs: selectBlogs(state),
+    authors: selectBlogAuthors(state),
+    categories: selectBlogCategories(state),
+    ...selectBlogStatistics(state),
+  })
 
   static mapDispatchToProps = ['retrieveBlogs']
 }

@@ -3,6 +3,7 @@ import React from 'react'
 
 // Component imports
 import { connect } from '../store'
+import { selectAuthentication } from '../store/selectors'
 import { Link } from '../routes'
 import Component from './Component'
 
@@ -160,6 +161,7 @@ class Nav extends Component {
 
       renderedSubnavToggle = (
         <input
+          aria-hidden
           className="subnav-toggle"
           hidden
           id={key}
@@ -198,9 +200,7 @@ class Nav extends Component {
 
   static mapDispatchToProps = ['setFlag']
 
-  static mapStateToProps = (state) => ({
-    ...state.authentication,
-  })
+  static mapStateToProps = (state) => selectAuthentication(state)
 }
 
 

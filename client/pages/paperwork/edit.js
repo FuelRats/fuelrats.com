@@ -1,9 +1,19 @@
 // Module imports
 import React from 'react'
+import { createSelector } from 'reselect'
+
+
+
 
 
 // Component imports
 import { actions, connect } from '../../store'
+import {
+  selectRatsByRescueId,
+  selectRescueById,
+  selectUser,
+  selectUserGroups,
+} from '../../store/selectors'
 import { authenticated } from '../../components/AppLayout'
 import { Router } from '../../routes'
 import Component from '../../components/Component'
@@ -13,13 +23,29 @@ import RatTagsInput from '../../components/RatTagsInput'
 import PageWrapper from '../../components/PageWrapper'
 import SystemTagsInput from '../../components/SystemTagsInput'
 import userHasPermission from '../../helpers/userHasPermission'
-
+import { formatAsEliteDateTime } from '../../helpers/formatTime'
 
 
 
 
 // Component constants
 const PAPERWORK_MAX_EDIT_TIME = 3600000
+
+
+const selectFormattedRatsByRescueId = createSelector(
+  selectRatsByRescueId,
+  (rats) => (rats
+    ? rats
+      .map((rat) => ({
+        ...rat,
+        value: rat.attributes.name,
+      }))
+      .reduce((accumulator, rat) => ({
+        ...accumulator,
+        [rat.id]: rat,
+      }), {})
+    : [])
+)
 
 
 
@@ -37,7 +63,6 @@ class Paperwork extends Component {
     submitting: false,
     error: null,
     changes: {},
-    userIsCool: false,
   }
 
 
@@ -208,7 +233,7 @@ class Paperwork extends Component {
       return
     }
 
-    Router.pushRoute('paperwork view', { id: rescue.id })
+    Router.pushRoute('paperwork', { rescueId: rescue.id })
   }
 
   _setChanges = (changedFields) => this.setState((prevState, props) => ({
@@ -225,8 +250,50 @@ class Paperwork extends Component {
     Public Methods
   \***************************************************************************/
 
+  static renderQuote = (quote, index) => {
+    const createdAt = formatAsEliteDateTime(quote.createdAt)
+    const updatedAt = formatAsEliteDateTime(quote.updatedAt)
+    return (
+      <li key={index}>
+        <div className="times">
+          <div className="created" title="Created at">{createdAt}</div>
+          {(updatedAt !== createdAt) && (
+            <div className="updated" title="Updated at"><span className="label">Updated at </span>{updatedAt}</div>
+          )}
+        </div>
+        <span className="message">{quote.message}</span>
+        <div className="authors">
+          <div className="author" title="Created by">{quote.author}</div>
+          {(quote.author !== quote.lastAuthor) && (
+            <div className="last-author" title="Last updated by"><span className="label">Updated by </span>{quote.lastAuthor}</div>
+          )}
+        </div>
+      </li>
+    )
+  }
+
+  renderQuotes = () => {
+    const { rescue } = this.props
+
+    if (rescue.attributes.quotes) {
+      return (
+        <ol>
+          {rescue.attributes.quotes.map(Paperwork.renderQuote)}
+        </ol>
+      )
+    }
+
+    return (
+      <span>N/A</span>
+    )
+  }
+
   static async getInitialProps ({ query, store }) {
-    await actions.getRescue(query.id)(store.dispatch)
+    const state = store.getState()
+
+    if (!selectRescueById(state, query)) {
+      await actions.getRescue(query.rescueId)(store.dispatch)
+    }
   }
 
   render () {
@@ -237,7 +304,6 @@ class Paperwork extends Component {
       loading,
       submitting,
       error,
-      userIsCool,
     } = this.state
 
     const classes = ['page-content']
@@ -263,7 +329,7 @@ class Paperwork extends Component {
     const pwValidity = this.validate(fieldValues)
 
     return (
-      <PageWrapper title="Paperwork" darkThemeSafe={userIsCool}>
+      <PageWrapper title="Paperwork">
         {(error && !submitting) && (
           <div className="store-errors">
             <div className="store-error">
@@ -286,6 +352,27 @@ class Paperwork extends Component {
           <form
             className={classes.join(' ')}
             onSubmit={this._handleSubmit}>
+            <header className="paperwork-header">
+              {(rescue.attributes.status !== 'closed') && (
+                <div className="board-index"><span>#{rescue.attributes.data.boardIndex}</span></div>
+              )}
+              <div className="title">
+                {(!rescue.attributes.title) && (
+                  <span>
+                    Rescue of
+                    <span className="CMDR-name"> {rescue.attributes.client}</span> in
+                    <span className="system"> {(rescue.attributes.system) || ('Unknown')}</span>
+                  </span>
+                )}
+                {(rescue.attributes.title) && (
+                  <span>
+                    Operation
+                    <span className="rescue-title"> {rescue.attributes.title}</span>
+                  </span>
+                )}
+              </div>
+            </header>
+
             <fieldset>
               <label htmlFor="platform">What platform was the rescue on?</label>
 
@@ -367,6 +454,7 @@ class Paperwork extends Component {
               <label htmlFor="rats">Who was assigned to this rescue?</label>
 
               <RatTagsInput
+                aria-label="Assigned rats"
                 data-platform={platform}
                 disabled={submitting || loading}
                 name="rats"
@@ -393,6 +481,7 @@ class Paperwork extends Component {
               <label htmlFor="system">Where did it happen? <small>In what star system did the rescue took place? (put "n/a" if not applicable)</small></label>
 
               <SystemTagsInput
+                aira-label="Rescue system"
                 data-allownew
                 disabled={submitting || loading}
                 name="system"
@@ -405,6 +494,7 @@ class Paperwork extends Component {
               <label htmlFor="notes">Notes</label>
 
               <textarea
+                aria-label="case notes"
                 disabled={submitting || loading}
                 id="notes"
                 name="notes"
@@ -425,17 +515,13 @@ class Paperwork extends Component {
 
               <div className="secondary" />
             </menu>
+
+            <div className="panel quotes">
+              <header>Quotes</header>
+              <div className="panel-content">{this.renderQuotes()}</div>
+            </div>
           </form>
         )}
-        <div>
-          <button
-            type="button"
-            className="inline link activate-secret"
-            onClick={() => this.setState({ userIsCool: true })}
-            title="Shhh! Don't tell anyone!">
-            Do you want to see something strange and mystical?
-          </button>
-        </div>
       </PageWrapper>
     )
   }
@@ -591,46 +677,21 @@ class Paperwork extends Component {
   }
 
 
-  static mapStateToProps = (state, ownProps) => {
-    const { id: rescueId } = ownProps.query
-    let firstLimpetId = []
-    let rats = {}
-    let rescue = null
 
-    if (rescueId) {
-      rescue = state.rescues[rescueId]
-    }
 
-    if (rescue) {
-      if (rescue.relationships.firstLimpet.data) {
-        firstLimpetId = Object.values(state.rats.rats).filter((rat) => rescue.relationships.firstLimpet.data.id === rat.id)
-      }
 
-      rats = Object.values(state.rats.rats)
-        .filter((rat) => rescue.relationships.rats.data.find(({ id }) => rat.id === id))
-        .map((rat) => ({
-          ...rat,
-          value: rat.attributes.name,
-        }))
-        .reduce((accumulator, rat) => ({
-          ...accumulator,
-          [rat.id]: rat,
-        }), {})
-    }
-
-    const currentUser = state.user
-    const currentUserGroups = currentUser.relationships ? [...currentUser.relationships.groups.data].map((group) => state.groups[group.id]) : []
-
-    return {
-      firstLimpetId,
-      rats,
-      rescue,
-      currentUser,
-      currentUserGroups,
-    }
-  }
+  /***************************************************************************\
+    Redux Properties
+  \***************************************************************************/
 
   static mapDispatchToProps = ['updateRescue', 'getRescue']
+
+  static mapStateToProps = (state, { query }) => ({
+    rats: selectFormattedRatsByRescueId(state, query),
+    rescue: selectRescueById(state, query),
+    currentUser: selectUser(state),
+    currentUserGroups: selectUserGroups(state),
+  })
 }
 
 

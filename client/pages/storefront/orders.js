@@ -1,5 +1,6 @@
 // Module imports
 import React from 'react'
+import { createSelector } from 'reselect'
 import moment from 'moment'
 
 
@@ -14,6 +15,21 @@ import Component from '../../components/Component'
 import OrderStatusIndicator from '../../components/storefront/OrderStatusIndicator'
 import PageWrapper from '../../components/PageWrapper'
 import FulfillOrderDialog from '../../components/storefront/FulfillOrderDialog'
+import { selectOrders, selectSkus } from '../../store/selectors'
+
+
+
+
+
+// Component constants
+const selectFormattedOrders = createSelector(
+  selectOrders,
+  (orders) => [
+    ...Object.values(orders).filter((order) => order.attributes.status === 'paid').reverse(),
+    ...Object.values(orders).filter((order) => order.attributes.status === 'created'),
+  ]
+)
+
 
 
 
@@ -119,7 +135,9 @@ class ListOrders extends Component {
                       <ul>
                         {order.attributes.items.filter(({ type }) => (type === 'sku')).map((item) => {
                           const sku = skus[item.parent]
-                          const descriptors = Object.keys(sku.attributes.attributes).length ? Object.values(sku.attributes.attributes).join(', ') : null
+
+                          const descriptors = sku && Object.keys(sku.attributes.attributes).length ? Object.values(sku.attributes.attributes).join(', ') : null
+
                           return (
                             <li key={item.parent}>
                               {item.quantity}x {item.description} {descriptors && `(${descriptors})`}
@@ -169,18 +187,10 @@ class ListOrders extends Component {
 
   static mapDispatchToProps = ['getOrders', 'updateOrder']
 
-  static mapStateToProps = ({ orders: { orders }, skus }) => {
-    const paidOrders = Object.values(orders).filter((order) => order.attributes.status === 'paid').reverse()
-    const createdOrders = Object.values(orders).filter((order) => order.attributes.status === 'created')
-
-    return {
-      orders: [
-        ...paidOrders,
-        ...createdOrders,
-      ],
-      skus,
-    }
-  }
+  static mapStateToProps = (state) => ({
+    orders: selectFormattedOrders(state),
+    skus: selectSkus(state),
+  })
 }
 
 

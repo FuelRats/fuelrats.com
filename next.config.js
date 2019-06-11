@@ -7,7 +7,7 @@ const path = require('path')
 const crypto = require('crypto')
 const webpack = require('webpack')
 const withSass = require('@zeit/next-sass')
-
+const withWorkers = require('@zeit/next-workers')
 
 
 
@@ -25,6 +25,7 @@ const {
   TRAVIS_COMMIT,
   TRAVIS_COMMIT_RANGE,
 } = process.env
+
 const DEFAULT_PORT = 3000
 const COMMIT_HASH_LENGTH = 10
 const DEV_BUILD_ID_LENGTH = 16
@@ -33,13 +34,16 @@ const DEV_BUILD_ID_LENGTH = 16
 
 
 
-module.exports = withSass({
+module.exports = withWorkers(withSass({
   generateBuildId: () => (
     TRAVIS
       ? TRAVIS_COMMIT.toLowerCase()
       : `DEV_${crypto.randomBytes(DEV_BUILD_ID_LENGTH).toString('hex').toLowerCase()}`
   ),
   publicRuntimeConfig: {
+    local: {
+      publicUrl: FRDC_PUBLIC_URL || `http://localhost:${PORT || DEFAULT_PORT}`,
+    },
     apis: {
       fuelRats: {
         local: FRDC_PUBLIC_URL ? `${FRDC_PUBLIC_URL}/api` : `http://localhost:${PORT || DEFAULT_PORT}/api`,
@@ -90,4 +94,5 @@ module.exports = withSass({
       .map((dir) => glob.sync(dir))
       .reduce((acc, dir) => acc.concat(dir), []),
   },
-})
+  workerLoaderOptions: { inline: true },
+}))

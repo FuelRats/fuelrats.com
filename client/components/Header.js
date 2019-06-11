@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 // Component imports
 import { connect } from '../store'
+import { selectAuthentication } from '../store/selectors'
 import Nav from './Nav'
 import { Link } from '../routes'
 import BrandSvg from './svg/BrandSvg'
@@ -35,7 +36,10 @@ const Header = (props) => {
   return (
     <div id="header-container">
 
-      <input id="nav-control" type="checkbox" />
+      <input
+        aria-label="Navigation toggle"
+        id="nav-control"
+        type="checkbox" />
 
       <label title="Expand/Collapse Menu" htmlFor="nav-control" className="burger button tall secondary" id="burger">
         <FontAwesomeIcon icon="bars" />
@@ -183,14 +187,7 @@ const Header = (props) => {
 
 
 
-Header.mapStateToProps = (state) => {
-  const { loggedIn, loggingIn } = state.authentication
-
-  return {
-    loggedIn,
-    loggingIn,
-  }
-}
+Header.mapStateToProps = (state) => selectAuthentication(state)
 
 
 

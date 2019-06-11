@@ -50,5 +50,6 @@ export default function authenticationReducer (state = initialState.authenticati
     default:
       break
   }
+
   return state
 }
