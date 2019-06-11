@@ -36,7 +36,7 @@ const navItems = [
       {
         key: 'stats-statistics',
         title: 'General',
-        route: 'stats statistics',
+        href: 'https://grafana.fuelrats.com/d/H-iTUTPmz/public-statistics?refresh=1h&orgId=2',
       },
       {
         key: 'stats-leaderboard',
