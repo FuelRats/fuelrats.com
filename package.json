@@ -34,7 +34,6 @@
     "babel-loader": "8.0.6",
     "content-security-policy-builder": "^2.0.0",
     "cross-env": "^5.2.0",
-    "d3": "^5.9.1",
     "dotenv": "^8.0.0",
     "eslint": "^5.15.0",
     "eslint-config-airbnb": "^17.1.0",

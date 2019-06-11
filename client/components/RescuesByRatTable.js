@@ -8,7 +8,10 @@ import ReactTable from 'react-table'
 
 // Module imports
 import { connect } from '../store'
-import { selectRescuesByRatLoading, selectRescuesByRatStatistics } from '../store/selectors'
+import {
+  selectLeaderboard,
+  selectLeaderboardLoading,
+} from '../store/selectors'
 import Component from './Component'
 
 
@@ -17,23 +20,11 @@ import Component from './Component'
 @connect
 class RescuesByRatTable extends Component {
   /***************************************************************************\
-    Private Methods
-  \***************************************************************************/
-
-  _getRescuesByRatStatistics = async () => {
-    await this.props.getRescuesByRatStatistics()
-  }
-
-
-
-
-
-  /***************************************************************************\
     Public Methods
   \***************************************************************************/
 
   componentDidMount () {
-    this._getRescuesByRatStatistics()
+    this.props.getRatLeaderboard()
   }
 
   render () {
@@ -91,11 +82,11 @@ class RescuesByRatTable extends Component {
     return this._columns
   }
 
-  static mapDispatchToProps = ['getRescuesByRatStatistics']
+  static mapDispatchToProps = ['getRatLeaderboard']
 
   static mapStateToProps = (state) => ({
-    loading: selectRescuesByRatLoading(state),
-    statistics: selectRescuesByRatStatistics(state),
+    loading: selectLeaderboardLoading(state),
+    statistics: selectLeaderboard(state),
   })
 }
 
