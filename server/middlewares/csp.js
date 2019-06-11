@@ -29,7 +29,7 @@ module.exports = ({ isDev, publicUrl }) => async (ctx, next) => {
 
   const policyString = buildCSP({
     directives: {
-      defaultSrc: ["'self'", ...domainWhitelist],
+      defaultSrc: ["'self'", ...domainWhitelist, 'blob:'],
       connectSrc: [
         "'self'",
         'wss://*.fuelrats.com',
