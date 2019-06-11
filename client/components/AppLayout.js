@@ -154,6 +154,7 @@ class AppLayout extends React.Component {
     const {
       Component,
       isServer,
+      loggedIn,
       pageProps,
       renderLayout,
       router,
@@ -188,20 +189,23 @@ class AppLayout extends React.Component {
               clamp: true,
             }}
             items={{
-              Item: Component,
-              itemProps: pageProps,
+              Page: Component,
+              props: pageProps,
+              shouldRender: !Component.ಠ_ಠ_AUTHENTICATION_REQUIRED || loggedIn,
             }}
             keys={router.pathname}>
-            {({ Item, itemProps }) => (props) => (
-              <TransitionContext.Provider value={props}>
-                <Item {...itemProps} />
+            {({ Page, props, shouldRender }) => (style) => (
+              <TransitionContext.Provider value={style}>
+                {shouldRender && (
+                  <Page {...props} />
+                )}
               </TransitionContext.Provider>
             )}
           </Transition>
         )}
 
         {statusCode !== httpStatus.OK && (
-          <main className="fade-in page error-page">
+          <main className="page error-page">
             <div className="page-content">
               <NextError className="test" statusCode={statusCode} />
             </div>
