@@ -16,28 +16,27 @@ import Component from './Component'
 
 export default class PasswordField extends Component {
   /***************************************************************************\
-    Public Methods
+    Class Properties
   \***************************************************************************/
 
-  constructor (props) {
-    super(props)
-
-    this._bindMethods([
-      'handleChange',
-      'handleShowPasswordClick',
-    ])
-
-    this.state = {
-      focused: false,
-      password: '',
-      passwordStrength: 0,
-      passwordSuggestions: new Set(),
-      passwordWarnings: new Set(),
-      showPassword: false,
-    }
+  state = {
+    focused: false,
+    password: '',
+    passwordStrength: 0,
+    passwordSuggestions: new Set(),
+    passwordWarnings: new Set(),
+    showPassword: false,
   }
 
-  handleChange (event) {
+
+
+
+
+  /***************************************************************************\
+    Private Methods
+  \***************************************************************************/
+
+  _handleChange = (event) => {
     const {
       maxLength,
       minLength,
@@ -83,10 +82,18 @@ export default class PasswordField extends Component {
     }
   }
 
-  handleShowPasswordClick () {
+  _handleShowPasswordClick = () => {
     this.setState((state) => ({ showPassword: !state.showPassword }))
     this._el.focus()
   }
+
+
+
+
+
+  /***************************************************************************\
+    Public Methods
+  \***************************************************************************/
 
   render () {
     const {
@@ -115,7 +122,7 @@ export default class PasswordField extends Component {
           <input
             {...inputProps}
             onBlur={() => this.setState({ focused: false })}
-            onChange={this.handleChange}
+            onChange={this._handleChange}
             onFocus={() => this.setState({ focused: true })}
             ref={(_el) => {
               this._el = _el
@@ -126,7 +133,7 @@ export default class PasswordField extends Component {
           <button
             className={showPassword ? 'show' : 'hide'}
             disabled={disabled}
-            onClick={this.handleShowPasswordClick}
+            onClick={this._handleShowPasswordClick}
             tabIndex="-1"
             type="button">
             <FontAwesomeIcon icon={showPassword ? 'eye-slash' : 'eye'} fixedWidth />

@@ -14,7 +14,7 @@ import thunkMiddleware from 'redux-thunk'
 
 // Component imports
 import initialState from './initialState'
-import reducer from './reducers/index'
+import reducer from './reducers'
 import actionStatus from './actionStatus'
 
 
