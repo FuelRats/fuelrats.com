@@ -1,6 +1,6 @@
 // Module imports
 import React from 'react'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 
 
 
@@ -24,10 +24,10 @@ class RatShipLine extends React.Component {
     Class Properties
   \***************************************************************************/
 
-  state = {
-    editMode: false,
-    changes: {},
-  }
+  // state = {
+  //   editMode: false,
+  //   changes: {},
+  // }
 
 
 
@@ -77,9 +77,9 @@ class RatShipLine extends React.Component {
     Prop Definitions
   \***************************************************************************/
 
-  static propTypes = {
-    ship: PropTypes.object.isRequired,
-  }
+  // static propTypes = {
+  //   ship: PropTypes.object.isRequired,
+  // }
 }
 
 

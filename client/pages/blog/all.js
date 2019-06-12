@@ -35,6 +35,18 @@ const DEFAULT_PAGE = 1
 @connect
 class Blogs extends Component {
   /***************************************************************************\
+    Class Properties
+  \***************************************************************************/
+
+  state = {
+    retrieving: false,
+  }
+
+
+
+
+
+  /***************************************************************************\
     Private Methods
   \***************************************************************************/
 
@@ -151,14 +163,6 @@ class Blogs extends Component {
         category: nextCategory || null,
         page: nextPage,
       })
-    }
-  }
-
-  constructor (props) {
-    super(props)
-
-    this.state = {
-      retrieving: false,
     }
   }
 

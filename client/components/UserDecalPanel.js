@@ -26,6 +26,19 @@ const ELITE_GAME_YEAR_DESPARITY = 1286 // Years between IRL year and Elite unive
 @connect
 class UserDetailsPanel extends Component {
   /***************************************************************************\
+    Class Properties
+  \***************************************************************************/
+
+  state = {
+    checkingEligibility: true,
+    redeeming: false,
+  }
+
+
+
+
+
+  /***************************************************************************\
     Private Methods
   \***************************************************************************/
 
@@ -93,15 +106,6 @@ class UserDetailsPanel extends Component {
     }
 
     this.setState({ checkingEligibility: false })
-  }
-
-  constructor (props) {
-    super(props)
-
-    this.state = {
-      checkingEligibility: true,
-      redeeming: false,
-    }
   }
 
   render () {

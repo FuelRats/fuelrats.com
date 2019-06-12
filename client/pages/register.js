@@ -33,50 +33,31 @@ const getWordpressPageElement = (page) => (
 @connect
 class Register extends Component {
   /***************************************************************************\
-    Public Methods
+    Class Properties
   \***************************************************************************/
 
-  componentDidMount () {
-    this.setState({
-      acceptTerms: sessionStorage.getItem('register.acceptTerms'),
-      acceptPrivacy: sessionStorage.getItem('register.acceptTerms'),
-      email: sessionStorage.getItem('register.email') || '',
-      nickname: sessionStorage.getItem('register.nickname') || '',
-      ratName: sessionStorage.getItem('register.ratName') || '',
-      ratPlatform: sessionStorage.getItem('register.ratPlatform') || 'pc',
-    })
+  state = {
+    checkedTOS: false,
+    acceptTerms: true,
+    acceptPrivacy: true,
+    email: '',
+    nickname: '',
+    password: '',
+    ratName: '',
+    ratPlatform: 'pc',
+    recaptchaResponse: null,
+    submitting: false,
   }
 
-  constructor (props) {
-    super(props)
 
-    this._bindMethods([
-      'handleChange',
-      'handleTOSChange',
-      'handleRadioOptionsChange',
-      '_handleSubmit',
-    ])
 
-    this.state = {
-      checkedTOS: false,
-      acceptTerms: true,
-      acceptPrivacy: true,
-      email: '',
-      nickname: '',
-      password: '',
-      ratName: '',
-      ratPlatform: 'pc',
-      recaptchaResponse: null,
-      submitting: false,
-    }
-  }
 
-  static async getInitialProps ({ store }) {
-    await actions.getWordpressPage('terms-of-service')(store.dispatch)
-    await actions.getWordpressPage('privacy-policy')(store.dispatch)
-  }
 
-  handleChange ({ target }) {
+  /***************************************************************************\
+    Private Methods
+  \***************************************************************************/
+
+  _handleChange = ({ target }) => {
     const {
       name,
       type,
@@ -94,7 +75,7 @@ class Register extends Component {
     })
   }
 
-  handleTOSChange () {
+  _handleTOSChange = () => {
     const {
       acceptTerms,
       acceptPrivacy,
@@ -110,12 +91,12 @@ class Register extends Component {
     }
   }
 
-  handleRadioOptionsChange ({ name, value }) {
+  _handleRadioOptionsChange = ({ name, value }) => {
     sessionStorage.setItem(`register.${name}`, value)
     this.setState({ [name]: value })
   }
 
-  async _handleSubmit (event) {
+  _handleSubmit = async (event) => {
     event.preventDefault()
 
     const {
@@ -148,6 +129,30 @@ class Register extends Component {
     } else {
       this.setState({ submitting: false })
     }
+  }
+
+
+
+
+
+  /***************************************************************************\
+    Public Methods
+  \***************************************************************************/
+
+  static async getInitialProps ({ store }) {
+    await actions.getWordpressPage('terms-of-service')(store.dispatch)
+    await actions.getWordpressPage('privacy-policy')(store.dispatch)
+  }
+
+  componentDidMount () {
+    this.setState({
+      acceptTerms: sessionStorage.getItem('register.acceptTerms'),
+      acceptPrivacy: sessionStorage.getItem('register.acceptTerms'),
+      email: sessionStorage.getItem('register.email') || '',
+      nickname: sessionStorage.getItem('register.nickname') || '',
+      ratName: sessionStorage.getItem('register.ratName') || '',
+      ratPlatform: sessionStorage.getItem('register.ratPlatform') || 'pc',
+    })
   }
 
   render () {
@@ -187,7 +192,7 @@ class Register extends Component {
               id="email"
               name="email"
               disabled={submitting}
-              onChange={this.handleChange}
+              onChange={this._handleChange}
               placeholder="i.e. surly_badger@gmail.com"
               ref={(_emailEl) => {
                 this._emailEl = _emailEl
@@ -208,7 +213,7 @@ class Register extends Component {
               maxLength="42"
               minLength="5"
               name="password"
-              onChange={this.handleChange}
+              onChange={this._handleChange}
               pattern="^[^\s]{5,42}$"
               placeholder="Use a strong password to keep your account secure"
               ref={(_password) => {
@@ -229,7 +234,7 @@ class Register extends Component {
               disabled={submitting}
               id="nickname"
               name="nickname"
-              onChange={this.handleChange}
+              onChange={this._handleChange}
               pattern="^[A-z_\-\[\]\\^{}|`][A-z0-9_\-\[\]\\^{}|`]+$"
               placeholder="Surly_Badger"
               ref={(_nicknameEl) => {
@@ -250,7 +255,7 @@ class Register extends Component {
               disabled={submitting}
               id="ratName"
               name="ratName"
-              onChange={this.handleChange}
+              onChange={this._handleChange}
               minLength={1}
               maxLength={18}
               pattern="^[\x00-\x7F]+$"
@@ -272,7 +277,7 @@ class Register extends Component {
               name="ratPlatform"
               id="ratPlatform"
               value={ratPlatform}
-              onChange={this.handleRadioOptionsChange}
+              onChange={this._handleRadioOptionsChange}
               options={[
                 {
                   value: 'pc',
@@ -299,7 +304,7 @@ class Register extends Component {
                 name="acceptTerms"
                 type="checkbox"
                 checked={Boolean(acceptTerms && acceptPrivacy)}
-                onChange={this.handleTOSChange} />
+                onChange={this._handleTOSChange} />
               <label htmlFor="acceptTerms">
                 {'I agree that I have read and agree to the  '}
                 <Link route="wordpress" params={{ slug: 'terms-of-service' }}>
@@ -317,7 +322,7 @@ class Register extends Component {
           <menu type="toolbar">
             <div className="primary position-vertical">
               <button
-                disabled={submitting || !this.validate()}
+                disabled={submitting || !this.canRegister}
                 className="green"
                 title="Don't want to rescue people? You're in the wrong place."
                 type="submit">
@@ -352,7 +357,15 @@ class Register extends Component {
     )
   }
 
-  validate () {
+
+
+
+
+  /***************************************************************************\
+    Getters
+  \***************************************************************************/
+
+  get canRegister () {
     const {
       acceptTerms,
       acceptPrivacy,
@@ -379,12 +392,20 @@ class Register extends Component {
     return true
   }
 
+
+
+
+
+  /***************************************************************************\
+    Redux Properties
+  \***************************************************************************/
+
+  static mapDispatchToProps = ['register', 'login']
+
   static mapStateToProps = (state) => ({
     termsPage: selectWordpressPageBySlug(state, { slug: 'terms-of-service' }),
     privacyPage: selectWordpressPageBySlug(state, { slug: 'privacy-policy' }),
   })
-
-  static mapDispatchToProps = ['register', 'login']
 }
 
 

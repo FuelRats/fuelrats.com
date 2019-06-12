@@ -57,6 +57,7 @@ module.exports = (nextApp, koaServer) => {
   // Permanent Redirects
 
   router.get('/blogs', permanentRedirect('/blog'))
+  router.get('/statistics', permanentRedirect('https://grafana.fuelrats.com'))
   router.get('/get-help', permanentRedirect('/i-need-fuel'))
   router.get('/privacy', permanentRedirect('/privacy-policy'))
   router.get('/help', permanentRedirect('https://t.fuelr.at/help'))
