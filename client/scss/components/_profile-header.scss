@@ -1,0 +1,51 @@
+.profile-header {
+    background: $white;
+    display: grid;
+    width: 100%;
+    grid-template-areas:"avatar info"
+                        "avatar badges";
+    grid-template-rows: 1fr min-content;
+    grid-template-columns: min-content auto auto;
+    grid-column-gap: 2rem;
+    padding-bottom: 1rem;
+    float: left;
+
+    @media screen and (max-width: 450px) {
+        grid-template-areas:"avatar rat"
+                            "info   info"
+                            "badges   badges";
+        grid-template-rows: 1fr min-content;
+        grid-template-columns: min-content auto auto;
+
+        .profile-basic-info, .profile-user-badges {
+            padding: 0 1rem;
+        }
+
+    }
+
+    .profile-user-avatar {
+        // padding: 1rem;
+        grid-area: avatar;
+    }
+        .profile-rat-display {
+            grid-area: rat;
+            align-self: center;
+            font-size: 3rem;
+        }
+        .profile-basic-info {
+            grid-area: info;
+            align-self: center;
+            padding-bottom: 1rem;
+        }
+    .profile-user-badges {
+        height: min-content;
+        align-self: end;
+        grid-area: badges;
+
+        .badge {
+            font-size: 1.2rem;
+            background-color: #5d5b5b;
+            padding: 0 0.75rem;
+        }
+    }
+}

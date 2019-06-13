@@ -25,6 +25,11 @@
     width: 10rem;
   }
 
+  &.xl {
+    height: 17rem;
+    width: 17rem;
+  }
+
   &:empty:before {
     align-items: center;
     background: $white;
