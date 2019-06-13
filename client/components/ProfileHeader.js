@@ -1,6 +1,5 @@
 // Module imports
 import React from 'react'
-import moment from 'moment'
 // import PropTypes from 'prop-types'
 
 
@@ -8,14 +7,17 @@ import moment from 'moment'
 
 // Component imports
 import { connect } from '../store'
-import getDisplayRat from '../helpers/getDisplayRat'
-
+import { formatAsEliteDateTime } from '../helpers/formatTime'
+import {
+  selectUser,
+  selectUserDisplayRat,
+  selectUserAvatar,
+} from '../store/selectors'
 
 
 
 
 // Component Constants
-const ELITE_GAME_YEAR_DESPARITY = 1286 // Years between IRL year and Elite universe year
 
 
 
@@ -46,7 +48,11 @@ class ClassName extends React.Component {
   \***************************************************************************/
 
   render () {
-    const { displayRat } = this.props
+    const {
+      displayRat,
+      userAvatar,
+    } = this.props
+
     let { attributes } = this.props.user
 
     attributes = attributes || {}
@@ -54,28 +60,23 @@ class ClassName extends React.Component {
     const {
       createdAt,
       email,
-      image,
     } = attributes
 
     // console.log(this.props.user)
     return (
       <div className="profile-header">
-        <div className="profile-user-avatar">
-          <div className="avatar xl"><img alt="User's avatar" src={image} /></div>
+        <div className="user-avatar">
+          <div className="avatar xl"><img alt="User's avatar" src={userAvatar} /></div>
         </div>
         <div className="profile-basic-info">
-          <div className="profile-rat-display">
-            <span>
-              {displayRat.attributes.name}
-            </span>
+          <div className="rat-name">
+            {displayRat.attributes.name}
           </div>
-          <div className="profile-email-display">
-            <span>
-              <strong>E-Mail:</strong> {email}
-            </span>
+          <div className="email">
+            <span className="label">E-Mail:</span> <span>{email}</span>
           </div>
-          <div className="profile-member-since">
-            <strong>Date joined: </strong><span>{moment(createdAt).add(ELITE_GAME_YEAR_DESPARITY, 'years').format('DD MMMM, YYYY')}</span>
+          <div className="member-since">
+            <span className="label">Date joined: </span> <span>{formatAsEliteDateTime(createdAt)}</span>
           </div>
         </div>
         <div className="profile-user-badges">
@@ -106,8 +107,9 @@ class ClassName extends React.Component {
   static mapDispatchToProps = ['getUser']
 
   static mapStateToProps = (state) => ({
-    user: state.user,
-    displayRat: getDisplayRat(state.user, state.rats.rats),
+    user: selectUser(state),
+    userAvatar: selectUserAvatar(state),
+    displayRat: selectUserDisplayRat(state),
   })
 }
 
