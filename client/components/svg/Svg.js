@@ -9,7 +9,18 @@ const Svg = (props) => {
 
   return (
     <svg {...svgProps}>
-      <path fill="currentColor" {...pathProps} d={path} />
+      {
+        Array.isArray(path)
+          ? (path.map((pathPart, index) => (
+            <path
+              fill="currentColor"
+              {...(Array.isArray(pathProps) ? pathProps[index] : pathProps)}
+              d={pathPart}
+              key={pathPart} />
+          ))) : (
+            <path fill="currentColor" {...pathProps} d={path} />
+          )
+      }
     </svg>
   )
 }
