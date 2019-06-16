@@ -171,10 +171,10 @@ class AppLayout extends React.Component {
           showSpinner={false} />
 
         {renderLayout && (
-        <>
-          <Header isServer={isServer} />
-          <UserMenu />
-        </>
+          <>
+            <Header isServer={isServer} />
+            <UserMenu />
+          </>
         )}
 
         {statusCode === httpStatus.OK && (

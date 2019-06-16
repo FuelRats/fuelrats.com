@@ -1,3 +1,4 @@
+/* eslint-disable react/state-in-constructor */
 // Module imports
 import React from 'react'
 
