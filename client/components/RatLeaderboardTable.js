@@ -31,7 +31,7 @@ const caseInsensitiveFilter = (filter, row) => {
 
 
 @connect
-class RescuesByRatTable extends Component {
+class RatLeaderboardTable extends Component {
   /***************************************************************************\
     Class Properties
   \***************************************************************************/
@@ -67,7 +67,7 @@ class RescuesByRatTable extends Component {
     return (
       <section className="panel">
         <ReactTable
-          className="rescues-by-rat -striped"
+          className="rat-leaderboard -striped"
           columns={this.columns}
           data={statistics}
           defaultPageSize={20}
@@ -152,4 +152,4 @@ class RescuesByRatTable extends Component {
 
 
 
-export default RescuesByRatTable
+export default RatLeaderboardTable
