@@ -1,5 +1,36 @@
 .ReactTable.rescues-by-rat {
+  .rt-tbody .rt-td {
+    display: flex;
+    align-items: center;
+  }
+
+
   .name-header {
     text-align: left;
+  }
+
+  .rescues {
+    justify-content: center;
+  }
+
+  .badges .badge-list .achievement {
+    display: inline-block;
+    margin-right: 0.75rem;
+
+    &.code-red {
+      color: $red;
+    }
+
+    &.rescue-count {
+      color: $blue-darker;
+    }
+
+    &.crown {
+      color: $gold;
+    }
+
+    svg {
+      vertical-align: middle;
+    }
   }
 }
