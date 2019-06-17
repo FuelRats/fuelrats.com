@@ -47,9 +47,11 @@ const RescueAchievementIcon = ({ rescueCount, ...iconProps }) => {
 
 
   return Icon && (
-    <span title={`This rat has completed at least ${count} rescues!`}>
+    <div
+      className={`achievement rescue-count${count >= 500 ? ' crown' : ''}`}
+      title={`This rat has completed at least ${count} rescues!`}>
       <Icon {...iconProps} />
-    </span>
+    </div>
   )
 }
 
