@@ -45,6 +45,9 @@ routes
   // Statistics
   .add('stats leaderboard', '/leaderboard', '/leaderboard')
 
+  // Donations
+  .add('donate', '/donate', '/donate')
+
   // Storefront
   .add('store list', '/store/products/:page?', '/storefront/list')
   .add('store cart', '/store/cart', '/storefront/cart')

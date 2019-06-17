@@ -57,7 +57,7 @@ const navItems = [
       {
         key: 'donate',
         title: 'Donations',
-        href: 'https://donate.fuelrats.com/donate.php',
+        route: 'donate',
       },
     ],
   },
