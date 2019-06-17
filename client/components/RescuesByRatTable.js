@@ -98,6 +98,7 @@ class RescuesByRatTable extends Component {
           Header: 'Name',
           headerClassName: 'name-header',
           id: 'name',
+          minWidth: 125,
         },
         {
           accessor: 'attributes.rescueCount',
@@ -106,7 +107,8 @@ class RescuesByRatTable extends Component {
           headerClassName: 'rescues-header',
           id: 'rescues',
           filterable: false,
-          width: 150,
+          minWidth: 60,
+          maxWidth: 80,
         },
         {
           accessor: (datum) => datum,
@@ -114,8 +116,9 @@ class RescuesByRatTable extends Component {
           Header: 'Badges',
           headerClassName: 'badges-header',
           id: 'badges',
+          minWidth: 150,
+          maxWidth: 200,
           filterable: false,
-          width: 200,
           Cell: ({ value }) => {
             const {
               codeRed,
@@ -124,11 +127,11 @@ class RescuesByRatTable extends Component {
             } = value.attributes
 
             return (
-              <span className="svg-list">
+              <div className="badge-list">
                 <RescueAchievementIcon rescueCount={rescueCount} className="size-32 fixed" />
                 <CodeRedIcon codeRedCount={safeParseInt(codeRed)} className="size-32 fixed" />
                 <FirstYearIcon createdAt={createdAt} className="size-32 fixed" />
-              </span>
+              </div>
             )
           },
         },
