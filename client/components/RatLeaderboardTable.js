@@ -70,7 +70,7 @@ class RatLeaderboardTable extends Component {
           className="rat-leaderboard -striped"
           columns={this.columns}
           data={statistics}
-          defaultPageSize={20}
+          defaultPageSize={75}
           filterable
           sortable={false}
           resizable={false}
