@@ -1,6 +1,10 @@
 div.user-nicknames {
   header .controls button {
     margin-left: 0.5rem;
+
+    svg {
+      width: 1.1em;
+    }
   }
 
   .panel-content {

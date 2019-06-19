@@ -12,7 +12,8 @@ import AddNicknameForm from './AddNicknameForm'
 // import ConfirmActionButton from './ConfirmActionButton'
 import Component from './Component'
 
-
+// Component constants
+const MAXNICKS = 20 // Maximum IRC Nicknames allowed
 
 
 
@@ -38,18 +39,20 @@ class UserNicknamesPanel extends Component {
     const {
       user,
     } = this.props
+    const maxNicksReached = (user.attributes.nicknames.length === MAXNICKS)
 
     return (
       <div className="panel user-nicknames">
         <header>IRC Nicknames
           <div className="controls">
-            <span className="nickname-count">{user.attributes.nicknames.length}/20</span>
+            <span className="nickname-count">{user.attributes.nicknames.length}/{MAXNICKS}</span>
             <button
               aria-label="add nickname"
               className={`icon ${this.state.formOpen ? '' : 'green'}`}
               onClick={this._handleToggle}
-              title="Add new nickname"
-              type="button">
+              title={maxNicksReached ? 'You\'ve used all your nicknames' : 'Add new nickname'}
+              type="button"
+              disabled={maxNicksReached}>
               <FontAwesomeIcon icon={this.state.formOpen ? 'times' : 'plus'} fixedWidth />
             </button>
           </div>
