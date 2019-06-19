@@ -14,10 +14,13 @@ const formatAsEliteDateTime = (timestamp) => moment(timestamp).add(ELITE_GAME_YE
 
 const formatAsEliteDate = (timestamp) => moment(timestamp).add(ELITE_GAME_YEAR_DESPARITY, 'years').format('DD MMM YYYY').toUpperCase()
 
+const formatAsEliteDateLong = (timestamp) => moment(timestamp).add(ELITE_GAME_YEAR_DESPARITY, 'years').format('DD MMMM YYYY')
+
 
 
 export {
   // eslint-disable-next-line import/prefer-default-export
   formatAsEliteDateTime,
   formatAsEliteDate,
+  formatAsEliteDateLong,
 }

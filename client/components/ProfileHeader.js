@@ -7,7 +7,7 @@ import React from 'react'
 
 // Component imports
 import { connect } from '../store'
-import { formatAsEliteDateTime } from '../helpers/formatTime'
+import { formatAsEliteDateLong } from '../helpers/formatTime'
 import {
   selectUser,
   selectUserDisplayRat,
@@ -76,7 +76,7 @@ class ClassName extends React.Component {
             <span className="label">E-Mail:</span> <span>{email}</span>
           </div>
           <div className="member-since">
-            <span className="label">Date joined: </span> <span>{formatAsEliteDateTime(createdAt)}</span>
+            <span className="label">Date joined: </span> <span>{formatAsEliteDateLong(createdAt)}</span>
           </div>
         </div>
         <div className="profile-user-badges">
