@@ -1,6 +1,6 @@
 // Module imports
 import React from 'react'
-
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 
@@ -18,7 +18,7 @@ import Component from './Component'
 
 @connect
 class UserNicknamesPanel extends Component {
-  _deleteNickname = async (event) => {
+  _handleDeleteNickname = async (event) => {
     await this.props.deleteNickname(event.target.name)
     return 'Deleted!'
   }
@@ -44,8 +44,9 @@ class UserNicknamesPanel extends Component {
                       Re-enable after LDAP integration.
                   <ConfirmActionButton
                     name={nickname}
-                    onConfirm={this._deleteNickname}>
-                    Delete
+                    onConfirm={this._handleDeleteNickname}
+                    className="icon">
+                    <FontAwesomeIcon icon="trash" fixedWidth />
                   </ConfirmActionButton>
                   */}
                 </li>

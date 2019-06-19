@@ -8,10 +8,14 @@ div.user-nicknames {
       display: flex;
       justify-content: space-between; */
       align-items: center;
-      padding: 1rem;
+      padding: 0.5rem 1rem;
 
       &:nth-child(even) {
         background-color: $light-grey;
+      }
+
+      span {
+        word-break: break-word;
       }
     }
   }
