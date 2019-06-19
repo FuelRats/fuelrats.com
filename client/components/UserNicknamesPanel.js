@@ -1,11 +1,11 @@
 // Module imports
 import React from 'react'
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 
 
 // Component imports
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect } from '../store'
 import { selectUser } from '../store/selectors'
 import AddNicknameForm from './AddNicknameForm'
@@ -23,6 +23,17 @@ class UserNicknamesPanel extends Component {
     return 'Deleted!'
   }
 
+  state = {
+    formOpen: false,
+  }
+
+  _handleToggle = () => {
+    this.setState((state) => ({
+      ...state,
+      formOpen: !state.formOpen,
+    }))
+  }
+
   render () {
     const {
       user,
@@ -31,7 +42,17 @@ class UserNicknamesPanel extends Component {
     return (
       <div className="panel user-nicknames">
         <header>IRC Nicknames
-          <span className="nickname-count">{user.attributes.nicknames.length}/20</span>
+          <div className="controls">
+            <span className="nickname-count">{user.attributes.nicknames.length}/20</span>
+            <button
+              aria-label="add nickname"
+              className={`icon ${this.state.formOpen ? '' : 'green'}`}
+              onClick={this._handleToggle}
+              title="Add new nickname"
+              type="button">
+              <FontAwesomeIcon icon={this.state.formOpen ? 'times' : 'plus'} fixedWidth />
+            </button>
+          </div>
         </header>
 
         <div className="panel-content">
@@ -53,9 +74,11 @@ class UserNicknamesPanel extends Component {
               ))}
           </ul>
         </div>
-        <footer>
-          <AddNicknameForm />
-        </footer>
+        {(this.state.formOpen) && (
+          <footer>
+            <AddNicknameForm />
+          </footer>
+        )}
       </div>
     )
   }
