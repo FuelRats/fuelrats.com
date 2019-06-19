@@ -1,0 +1,10 @@
+.ReactTable {
+  .rt-thead.-filters .rt-th {
+    padding: 0 1rem 1rem 1rem;
+  }
+
+  .-pagination .-btn:not([disabled]):hover {
+    background: transparent;
+    color: $red;
+  }
+}
