@@ -30,7 +30,9 @@ class UserNicknamesPanel extends Component {
 
     return (
       <div className="panel user-nicknames">
-        <header>IRC Nicknames</header>
+        <header>IRC Nicknames
+          <span className="nickname-count">{user.attributes.nicknames.length}/20</span>
+        </header>
 
         <div className="panel-content">
           <ul>
