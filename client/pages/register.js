@@ -230,7 +230,7 @@ class Register extends Component {
               id="nickname"
               name="nickname"
               onChange={this.handleChange}
-              pattern="^[A-Za-z[\\\\\\]^_`{|}]{1}[-0-9A-Za-z[\\\\\\]^_`{|}]{0,29}$"
+              pattern="^[A-Za-z[\\\]^_`{|}]{1}[-0-9A-Za-z[\\\]^_`{|}]{0,29}$"
               placeholder="Surly_Badger"
               ref={(_nicknameEl) => {
                 this._nicknameEl = _nicknameEl
