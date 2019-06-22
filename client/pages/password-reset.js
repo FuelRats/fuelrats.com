@@ -8,6 +8,7 @@ import React from 'react'
 // Component imports
 import { connect } from '../store'
 import { Link } from '../routes'
+import { passwordPattern } from '../data/RegExpr'
 import Component from '../components/Component'
 import PageWrapper from '../components/PageWrapper'
 import PasswordField from '../components/PasswordField'
@@ -115,7 +116,7 @@ class PasswordReset extends Component {
                   id="password"
                   name="password"
                   onChange={(event) => this.setState({ password: event.target.value })}
-                  pattern="^[^\s]{5,42}$"
+                  pattern={passwordPattern}
                   placeholder="Use a strong password to keep your account secure"
                   ref={(_password) => {
                     this._password = _password

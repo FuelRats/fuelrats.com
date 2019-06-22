@@ -7,8 +7,10 @@ import React from 'react'
 
 // Component imports
 import { connect } from '../store'
+import { commanderPattern } from '../data/RegExpr'
 import Component from './Component'
 import ValidatedFormInput from './ValidatedFormInput'
+
 
 
 
@@ -79,7 +81,7 @@ class AddNicknameForm extends Component {
           name="add-nickname"
           onChange={this._handleChange}
           placeholder="Add a nickname..."
-          pattern="^[A-Za-z_\\`\[\]{}]{1}[A-Za-z0-9_\\`\[\]{}]{0,29}$"
+          pattern={commanderPattern}
           patternMessage="Nickname must start with a letter, contain no spaces, and is between 2-30 characters"
           type="text"
           value={nickname} />
