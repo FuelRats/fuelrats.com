@@ -49,7 +49,6 @@ class Page extends Component {
     const {
       children,
       className,
-      darkThemeSafe,
       description,
       title,
       noHeader,
@@ -59,8 +58,7 @@ class Page extends Component {
     const mainClasses = classnames(
       'page',
       [className, Boolean(className)],
-      title.toLowerCase().replace(/\s/gu, '-'),
-      ['--experiment-dark-mode', darkThemeSafe]
+      title.toLowerCase().replace(/\s/gu, '-')
     )
 
     return (
@@ -102,14 +100,12 @@ class Page extends Component {
   }
 
   static defaultProps = {
-    darkThemeSafe: false,
     description: 'The Fuel Rats are Elite: Dangerous\'s premier emergency refueling service. Fueling the galaxy, one ship at a time, since 3301.',
     displayTitle: (title) => (<h1>{title}</h1>),
     noHeader: false,
   }
 
   static propTypes = {
-    darkThemeSafe: PropTypes.bool,
     description: PropTypes.string,
     displayTitle: PropTypes.oneOfType([
       PropTypes.func,
