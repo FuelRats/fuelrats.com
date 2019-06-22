@@ -9,6 +9,11 @@ import React from 'react'
 import { actions, connect } from '../store'
 import { selectWordpressPageBySlug } from '../store/selectors'
 import { Link } from '../routes'
+import {
+  commanderPattern,
+  ircNickPattern,
+  passwordPattern,
+} from '../data/RegExpr'
 import Component from '../components/Component'
 import PageWrapper from '../components/PageWrapper'
 import PasswordField from '../components/PasswordField'
@@ -214,7 +219,7 @@ class Register extends Component {
               minLength="5"
               name="password"
               onChange={this._handleChange}
-              pattern="^[^\s]{5,42}$"
+              pattern={passwordPattern}
               placeholder="Use a strong password to keep your account secure"
               ref={(_password) => {
                 this._password = _password
@@ -235,7 +240,7 @@ class Register extends Component {
               id="nickname"
               name="nickname"
               onChange={this._handleChange}
-              pattern="^[A-z_\-\[\]\\^{}|`][A-z0-9_\-\[\]\\^{}|`]+$"
+              pattern={ircNickPattern}
               placeholder="Surly_Badger"
               ref={(_nicknameEl) => {
                 this._nicknameEl = _nicknameEl
@@ -258,7 +263,7 @@ class Register extends Component {
               onChange={this._handleChange}
               minLength={1}
               maxLength={18}
-              pattern="^[\x00-\x7F]+$"
+              pattern={commanderPattern}
               placeholder="Surly Badger"
               ref={(_ratNameEl) => {
                 this._ratNameEl = _ratNameEl
