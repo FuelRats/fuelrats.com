@@ -119,8 +119,6 @@ class AppLayout extends React.Component {
     }
 
     if (ctx.res) {
-      // eslint-disable-next-line no-magic-numbers
-      ctx.res.statusCode = 400;
       ({ statusCode } = ctx.res)
     }
 
