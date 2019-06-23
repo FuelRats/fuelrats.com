@@ -13,13 +13,13 @@ const TransitionContext = React.createContext(null)
 const PageLayout = ({ items, keys }) => (
   <Transition
     native
-    initial={{ opacity: 1 }}
+    initial
     from={{ opacity: 0 }}
     enter={{ opacity: 1 }}
     leave={{ opacity: 0 }}
     config={{
       tension: 350,
-      friction: 12,
+      friction: 25,
       clamp: true,
     }}
     items={items}
