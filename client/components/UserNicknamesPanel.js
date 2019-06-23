@@ -44,6 +44,11 @@ class UserNicknamesPanel extends Component {
     return (
       <div className="panel user-nicknames">
         <header>IRC Nicknames
+          {(this.state.formOpen) && (
+            <div className="add-nickname-float">
+              <AddNicknameForm />
+            </div>
+          )}
           <div className="controls">
             <span className="nickname-count">{user.attributes.nicknames.length}/{MAXNICKS}</span>
             <button
@@ -64,9 +69,7 @@ class UserNicknamesPanel extends Component {
               && user.attributes.nicknames.map((nickname) => (
                 <li key={nickname}>
                   <span>{nickname}</span>
-                  {/* Disabled due to problems with current implementation of IRC nick management.
-                      Re-enable after LDAP integration.
-                  <ConfirmActionButton
+                  {/* <ConfirmActionButton
                     name={nickname}
                     onConfirm={this._handleDeleteNickname}
                     className="icon">
@@ -77,11 +80,11 @@ class UserNicknamesPanel extends Component {
               ))}
           </ul>
         </div>
-        {(this.state.formOpen) && (
+        {/* (this.state.formOpen) && (
           <footer>
             <AddNicknameForm />
           </footer>
-        )}
+        ) */}
       </div>
     )
   }
