@@ -19,7 +19,11 @@ import Component from './Component'
 
 // Component constants
 // const ELITE_GAME_YEAR_DESPARITY = 1286 // Years between IRL year and Elite universe year
-
+const initialState = {
+  heckingEligibility: true,
+  redeeming: false,
+  decalsVisible: {},
+}
 
 
 /***********************************************/
@@ -32,8 +36,7 @@ class UserDetailsPanel extends Component {
   \***************************************************************************/
 
   state = {
-    checkingEligibility: true,
-    redeeming: false,
+    ...initialState,
   }
 
 
@@ -83,16 +86,17 @@ class UserDetailsPanel extends Component {
     this.setState({ checkingEligibility: false })
   }
 
-  // state = {
-  //   formOpen: false,
-  // }
-
-  // _handleToggle = () => {
-  //   this.setState((state) => ({
-  //     ...state,
-  //     formOpen: !state.formOpen,
-  //   }))
-  // }
+  _handleToggle = (event) => {
+    const decalID = event.target.name
+    console.log(event.target.name)
+    console.log(this.state.decalsVisible[decalID])
+    this.setState((state) => ({
+      decalsVisible: {
+        ...state.decalsVisible,
+        [decalID]: !state.decalsVisible[decalID],
+      },
+    }))
+  }
 
   renderNoDataText () {
     const {
@@ -127,12 +131,13 @@ class UserDetailsPanel extends Component {
         <button
           aria-label="Show decal code"
           className="icon decal-toggle"
+          name={decal.id}
           onClick={this._handleToggle}
           // title={maxNicksReached ? 'You\'ve used all your nicknames' : 'Add new nickname'}
           type="button">
-          <FontAwesomeIcon icon={this.state.formOpen ? 'eye-slash' : 'eye'} fixedWidth />
+          <FontAwesomeIcon icon={this.state.decalsVisible[decal.id] ? 'eye' : 'eye-slash'} fixedWidth />
         </button>
-        {decal.attributes.code}
+        {this.state.decalsVisible[decal.id] ? decal.attributes.code : `•••••-•••••-•••••-•••••-${decal.attributes.code.substring(24)}`}
       </div>
       <div className="decal-claimed-at" key={decal.id}>{formatAsEliteDate(decal.attributes.claimedAt)}</div>
     </>
@@ -142,11 +147,11 @@ class UserDetailsPanel extends Component {
     const { decals } = this.props
     console.log(decals)
 
-    if (decals === []) {
+    if (!decals.length) {
       return null
     }
 
-    return decals.map(this._renderDecalCode)
+    return decals.map(this.renderDecalCode)
   }
 
   render () {
@@ -159,6 +164,7 @@ class UserDetailsPanel extends Component {
     } = this.state
 
     const loadingText = checkingEligibility ? 'Checking decal eligibility...' : 'Redeeming decal codes...'
+
     // console.log(loadingText)
     return (
       // <ReactTable
@@ -175,8 +181,8 @@ class UserDetailsPanel extends Component {
       <div className="panel user-decals">
         <header>Decal</header>
         <div className="panel-content">
-          {(checkingEligibility || redeeming) ? (<div className="loading">{loadingText}</div>) : (this._renderDecalCodes(decals))}
-          {(decals.length) ? (this._renderNoDataText()) : ('')}
+          {(checkingEligibility || redeeming) ? (<div className="loading">{loadingText}</div>) : (this.renderDecalCodes(decals))}
+          {(decals.length) ? ('') : (this.renderNoDataText())}
         </div>
       </div>
     )
