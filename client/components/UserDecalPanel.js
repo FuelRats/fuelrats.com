@@ -91,11 +91,11 @@ class UserDetailsPanel extends Component {
 
     if (!checkingEligibility) {
       if (!eligible) {
-        return 'Sorry, you\'re not eligible for a decal.'
+        return <div className="no-decal">Sorry, you're not eligible for a decal.</div>
       }
 
       return (
-        <div className="redeem-decal">
+        <div className="redeem">
           <p>You're eligible for a decal but you haven't redeemed it yet.</p>
           <button
             onClick={() => this._redeemDecal()}

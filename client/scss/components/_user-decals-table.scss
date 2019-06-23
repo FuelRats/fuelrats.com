@@ -1,18 +1,15 @@
 .user-decals .panel-content {
   padding: 0;
 
+  .decal .code, .decal .claimed-at, .redeem, .loading, .no-decal {
+    padding: 0.5rem 1rem;
+  }
+
   .decal {
     display: flex;
 
-    .code, .claimed-at, .redeem, .loading {
-      padding: 0.5rem 1rem;
-    }
-
-    .code, .claimed-at {
-
-      &:nth-child(4n), &:nth-child(4n-1) {
-        background-color: $light-grey;
-      }
+    &:nth-child(2n) {
+      background-color: $light-grey;
     }
 
     .toggle {
@@ -31,10 +28,9 @@
     .claimed-at {
       flex: 0 1 auto;
     }
+  }
 
-    .redeem, .loading {
-      padding-bottom: 1rem;
-      flex: 1 0 auto;
-    }
+  .redeem, .loading {
+    padding-bottom: 1rem;
   }
 }
