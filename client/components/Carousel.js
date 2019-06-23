@@ -2,7 +2,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import getConfig from 'next/config'
-import { Transition, animated } from 'react-spring/renderprops.cjs'
+import { Transition, animated } from 'react-spring'
 
 // Worker imports
 import ImageLoaderWorker from '../workers/image-loader.worker'
@@ -94,7 +94,6 @@ class Carousel extends React.Component {
     return (
       <Transition
         native
-        reset
         unique
         items={this.state.curSlide}
         from={{ opacity: 0 }}
