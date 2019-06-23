@@ -36,6 +36,8 @@ const initialState = {
 
   groups: {},
 
+  images: {},
+
   leaderboard: {
     loading: false,
     statistics: [],
