@@ -11,6 +11,7 @@ import epics from './epics'
 import error from './error'
 import flags from './flags'
 import groups from './groups'
+import images from './images'
 import leaderboard from './leaderboard'
 import orders from './orders'
 import pageViews from './pageViews'
@@ -35,6 +36,7 @@ export default combineReducers({
   error,
   flags,
   groups,
+  images,
   leaderboard,
   orders,
   pageViews,
