@@ -1,54 +1,40 @@
-// .ReactTable.user-decals {
-//   .code,
-//   .claimedAt {
-//     text-align: left;
-//   }
-//
-//   .rt-noData {
-//     pointer-events: auto;
-//   }
-// }
-
 .user-decals .panel-content {
-  display: grid;
-  grid-template-columns: 1fr max-content;
-  align-content: center;
-  // row-gap: 0.5rem;
   padding: 0;
 
-  .decal-code, .decal-claimed-at, .redeem-decal, .loading {
-    padding: 0.5rem 1rem;
-  }
+  .decal {
+    display: flex;
 
-  .decal-code, .decal-claimed-at {
-    // min-width: 10px; // testing
-    // min-height: 10px; // testing
-    // border-bottom: 1px solid rgba($grey, 0.2);
-
-    &:nth-child(4n), &:nth-child(4n-1) {
-      background-color: $light-grey;
+    .code, .claimed-at, .redeem, .loading {
+      padding: 0.5rem 1rem;
     }
-  }
 
-  .decal-toggle {
-    // grid-column: 1 / span 1;
-    margin-right: 1rem;
-    
-    svg {
-      pointer-events: none;
+    .code, .claimed-at {
+
+      &:nth-child(4n), &:nth-child(4n-1) {
+        background-color: $light-grey;
+      }
     }
-  }
 
-  .decal-code {
-    grid-column: 1 / span 1;
-  }
+    .toggle {
+      margin-right: 1rem;
 
-  .decal-claimed-at {
-    grid-column: 2 / span 1;
-  }
+      svg {
+        pointer-events: none;
+      }
+    }
 
-  .redeem-decal, .loading {
-    grid-column: 1 / span 2;
-    padding-bottom: 1rem;
+    .code {
+      font-family: monospace;
+      flex: 1 0 auto;
+    }
+
+    .claimed-at {
+      flex: 0 1 auto;
+    }
+
+    .redeem, .loading {
+      padding-bottom: 1rem;
+      flex: 1 0 auto;
+    }
   }
 }

@@ -1,9 +1,7 @@
 // Module imports
-// import moment from 'moment'
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { formatAsEliteDate } from '../helpers/formatTime'
-// import ReactTable from 'react-table'
 
 
 
@@ -18,7 +16,6 @@ import Component from './Component'
 
 
 // Component constants
-// const ELITE_GAME_YEAR_DESPARITY = 1286 // Years between IRL year and Elite universe year
 const initialState = {
   heckingEligibility: true,
   redeeming: false,
@@ -26,9 +23,6 @@ const initialState = {
 }
 
 
-/***********************************************/
-/* DUE FOR REFACTORING. DO NOT MODIFY FURTHER. */
-/***********************************************/
 @connect
 class UserDetailsPanel extends Component {
   /***************************************************************************\
@@ -59,13 +53,15 @@ class UserDetailsPanel extends Component {
     })
   }
 
-  // static _renderClaimedAtRow (row) {
-  //   const rescue = row.original
-  //   // console.log(rescue)
-  //
-  //   return moment(rescue.claimedAt).add(ELITE_GAME_YEAR_DESPARITY, 'years').format('DD MMM, YYYY')
-  // }
-
+  _handleToggle = (event) => {
+    const decalID = event.target.name
+    this.setState((state) => ({
+      decalsVisible: {
+        ...state.decalsVisible,
+        [decalID]: !state.decalsVisible[decalID],
+      },
+    }))
+  }
 
 
 
@@ -84,18 +80,6 @@ class UserDetailsPanel extends Component {
     }
 
     this.setState({ checkingEligibility: false })
-  }
-
-  _handleToggle = (event) => {
-    const decalID = event.target.name
-    console.log(event.target.name)
-    console.log(this.state.decalsVisible[decalID])
-    this.setState((state) => ({
-      decalsVisible: {
-        ...state.decalsVisible,
-        [decalID]: !state.decalsVisible[decalID],
-      },
-    }))
   }
 
   renderNoDataText () {
@@ -126,26 +110,24 @@ class UserDetailsPanel extends Component {
   }
 
   renderDecalCode = (decal) => (
-    <>
-      <div className="decal-code" key={decal.id}>
+    <div className="decal" key={decal.id}>
+      <div className="code">
         <button
           aria-label="Show decal code"
-          className="icon decal-toggle"
+          className="icon toggle"
           name={decal.id}
           onClick={this._handleToggle}
-          // title={maxNicksReached ? 'You\'ve used all your nicknames' : 'Add new nickname'}
           type="button">
           <FontAwesomeIcon icon={this.state.decalsVisible[decal.id] ? 'eye' : 'eye-slash'} fixedWidth />
         </button>
         {this.state.decalsVisible[decal.id] ? decal.attributes.code : `•••••-•••••-•••••-•••••-${decal.attributes.code.substring(24)}`}
       </div>
-      <div className="decal-claimed-at" key={decal.id}>{formatAsEliteDate(decal.attributes.claimedAt)}</div>
-    </>
+      <div className="claimed-at">{formatAsEliteDate(decal.attributes.claimedAt)}</div>
+    </div>
   )
 
   renderDecalCodes = () => {
     const { decals } = this.props
-    console.log(decals)
 
     if (!decals.length) {
       return null
@@ -156,7 +138,6 @@ class UserDetailsPanel extends Component {
 
   render () {
     const { decals } = this.props
-    console.log(this)
 
     const {
       checkingEligibility,
@@ -165,19 +146,7 @@ class UserDetailsPanel extends Component {
 
     const loadingText = checkingEligibility ? 'Checking decal eligibility...' : 'Redeeming decal codes...'
 
-    // console.log(loadingText)
     return (
-      // <ReactTable
-      //   className="panel user-decals"
-      //   columns={this.columns}
-      //   data={decals}
-      //   defaultPageSize={10}
-      //   loading={checkingEligibility || redeeming}
-      //   loadingText={checkingEligibility ? 'Checking decal eligibility...' : 'Redeeming decal codes...'}
-      //   manual
-      //   minRows={3}
-      //   noDataText={this._renderNoDataText()}
-      //   showPagination={false} />
       <div className="panel user-decals">
         <header>Decal</header>
         <div className="panel-content">
@@ -195,31 +164,6 @@ class UserDetailsPanel extends Component {
   /***************************************************************************\
     Getters
   \***************************************************************************/
-
-  // get columns () {
-  //   return [
-  //     {
-  //       accessor: 'attributes.code',
-  //       className: 'code',
-  //       Header: 'Decal Code',
-  //       headerClassName: 'code',
-  //       id: 'code',
-  //       resizable: false,
-  //       sortable: false,
-  //     },
-  //     {
-  //       accessor: 'attributes.claimedAt',
-  //       Cell: this._renderClaimedAtRow,
-  //       className: 'claimedAt',
-  //       Header: 'Redeemed',
-  //       headerClassName: 'claimedAt',
-  //       id: 'claimedAt',
-  //       resizable: false,
-  //       sortable: true,
-  //       width: 120,
-  //     },
-  //   ]
-  // }
 
 
 
