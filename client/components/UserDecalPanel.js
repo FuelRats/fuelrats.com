@@ -63,7 +63,38 @@ class UserDetailsPanel extends Component {
   //   return moment(rescue.claimedAt).add(ELITE_GAME_YEAR_DESPARITY, 'years').format('DD MMM, YYYY')
   // }
 
-  _renderNoDataText () {
+
+
+
+  /***************************************************************************\
+    Public Methods
+  \***************************************************************************/
+
+  async componentDidMount () {
+    const {
+      checkDecalEligibility,
+      eligible,
+    } = this.props
+
+    if (!eligible) {
+      await checkDecalEligibility()
+    }
+
+    this.setState({ checkingEligibility: false })
+  }
+
+  // state = {
+  //   formOpen: false,
+  // }
+
+  // _handleToggle = () => {
+  //   this.setState((state) => ({
+  //     ...state,
+  //     formOpen: !state.formOpen,
+  //   }))
+  // }
+
+  renderNoDataText () {
     const {
       eligible,
     } = this.props
@@ -90,25 +121,24 @@ class UserDetailsPanel extends Component {
     return null
   }
 
-  _renderDecalCode = (decal, index) => (
+  renderDecalCode = (decal) => (
     <>
-      <div className="decal-code" key={`code${index}`}>
+      <div className="decal-code" key={decal.id}>
         <button
-          key={`toggle${index}`}
-          aria-label="toggle-decal"
+          aria-label="Show decal code"
           className="icon decal-toggle"
           onClick={this._handleToggle}
           // title={maxNicksReached ? 'You\'ve used all your nicknames' : 'Add new nickname'}
           type="button">
-          <FontAwesomeIcon icon={this.state.formOpen[index] ? 'eye-slash' : 'eye'} fixedWidth />
+          <FontAwesomeIcon icon={this.state.formOpen ? 'eye-slash' : 'eye'} fixedWidth />
         </button>
         {decal.attributes.code}
       </div>
-      <div className="decal-claimed-at" key={`claimedAt${index}`}>{formatAsEliteDate(decal.attributes.claimedAt)}</div>
+      <div className="decal-claimed-at" key={decal.id}>{formatAsEliteDate(decal.attributes.claimedAt)}</div>
     </>
   )
 
-  _renderDecalCodes = () => {
+  renderDecalCodes = () => {
     const { decals } = this.props
     console.log(decals)
 
@@ -116,41 +146,7 @@ class UserDetailsPanel extends Component {
       return null
     }
 
-    return (
-      decals.map(this._renderDecalCode)
-    )
-  }
-
-
-
-
-
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
-
-  async componentDidMount () {
-    const {
-      checkDecalEligibility,
-      eligible,
-    } = this.props
-
-    if (!eligible) {
-      await checkDecalEligibility()
-    }
-
-    this.setState({ checkingEligibility: false })
-  }
-
-  state = {
-    formOpen: false,
-  }
-
-  _handleToggle = () => {
-    this.setState((state) => ({
-      ...state,
-      formOpen: !state.formOpen,
-    }))
+    return decals.map(this._renderDecalCode)
   }
 
   render () {
@@ -180,7 +176,7 @@ class UserDetailsPanel extends Component {
         <header>Decal</header>
         <div className="panel-content">
           {(checkingEligibility || redeeming) ? (<div className="loading">{loadingText}</div>) : (this._renderDecalCodes(decals))}
-          {(decals === []) ? (this._renderNoDataText()) : ('')}
+          {(decals.length) ? (this._renderNoDataText()) : ('')}
         </div>
       </div>
     )
