@@ -50,7 +50,7 @@ class Index extends React.Component {
   render = () => (
     <PageWrapper title="Home" noHeader>
       <section className="hero">
-        <Carousel slides={CarouselSlides} />
+        <Carousel id="HomeImages" slides={CarouselSlides} />
 
         <header>
           <h1>We Have Fuel. <wbr />You&nbsp;Don't.</h1>
