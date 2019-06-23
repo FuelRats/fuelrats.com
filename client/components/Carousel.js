@@ -3,14 +3,51 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getConfig from 'next/config'
 import { Transition, animated } from 'react-spring'
+import { createSelector, createStructuredSelector } from 'reselect'
 
-// Worker imports
-import ImageLoaderWorker from '../workers/image-loader.worker'
+
+
+
+// Component imports
+import { connect } from '../store'
+import { selectImageById } from '../store/selectors'
+
+
+
 
 // Component constants
 const { publicRuntimeConfig } = getConfig()
 const { publicUrl } = publicRuntimeConfig.local
 
+
+
+
+const selectConnectedSlides = createSelector(
+  [
+    (state) => state,
+    (state, props) => props.slides,
+    (state, props) => props.id,
+  ],
+  (state, slides, compId) => Object.entries(slides).reduce((acc, [key, slide]) => {
+    const slideId = `${compId}-${key}`
+
+    return {
+      ...acc,
+      [slideId]: {
+        ...slide,
+        id: slideId,
+        url: `${publicUrl}/static/images/${slide.imageName || `slide_${key}.jpg`}`,
+        image: selectImageById(state, { imageId: slideId }),
+      },
+    }
+  }, {})
+)
+
+
+
+
+
+@connect
 class Carousel extends React.Component {
   /***************************************************************************\
     Class Properties
@@ -18,7 +55,6 @@ class Carousel extends React.Component {
 
   state = {
     curSlide: Object.keys(this.props.slides)[0],
-    imgBlobs: {},
   }
 
   timer = null
@@ -30,15 +66,6 @@ class Carousel extends React.Component {
   /***************************************************************************\
     Private Methods
   \***************************************************************************/
-
-  _handleImageWorkerMessage = (event) => {
-    this.setState((state) => ({
-      imgBlobs: {
-        ...state.imgBlobs,
-        [event.data.id]: [event.data.payload],
-      },
-    }))
-  }
 
   _handleSlideButtonClick = (event) => {
     this._setSlide(event.target.name)
@@ -71,86 +98,63 @@ class Carousel extends React.Component {
 
   componentDidMount () {
     this.timer = setTimeout(this._setSlide, this.props.interval)
-    const imageUrls = Object.entries(this.props.slides).map(([id, slide]) => ([id, `${publicUrl}/static/images/${slide.imageName || `slide_${id}.jpg`}`]))
-    this.worker = new ImageLoaderWorker()
-    this.worker.addEventListener('message', this._handleImageWorkerMessage)
-    this.worker.postMessage(imageUrls)
+
+    Object.values(this.props.slides).forEach((slide) => {
+      if (!slide.image) {
+        this.props.getImage(slide)
+      }
+    })
   }
 
   componentWillUnmount () {
     clearTimeout(this.timer)
-    this.worker.terminate()
   }
 
   renderSlide () {
-    const {
-      slides,
-    } = this.props
-
-    const {
-      imgBlobs,
-    } = this.state
-
     return (
       <Transition
-        native
-        unique
-        items={this.state.curSlide}
+        {...this.transitionProps}
+        initial={{ opacity: 1 }}
         from={{ opacity: 0 }}
         enter={{ opacity: 1 }}
-        leave={{ opacity: 0 }}
-        config={{ tension: 280, friction: 85 }}>
+        leave={{ opacity: 0 }}>
         {
-          (curSlide) => imgBlobs[curSlide] && ((style) => {
-            const slide = slides[curSlide]
-
-            return (
-              <animated.div
-                className="carousel-slide"
-                style={{
-                  ...style,
-                  backgroundImage: `url(${imgBlobs[curSlide]})`,
-                  backgroundPosition: slide.position || 'center',
-                }} />
-            )
-          })
+          (slide) => slide.image && ((style) => (
+            <animated.div
+              className="carousel-slide"
+              style={{
+                ...style,
+                backgroundImage: `url(${slide.image})`,
+                backgroundPosition: slide.position || 'center',
+              }} />
+          ))
         }
       </Transition>
     )
   }
 
   renderSlideText () {
-    const {
-      slides,
-    } = this.props
     return (
       <Transition
-        native
-        reset
-        unique
-        items={this.state.curSlide}
+        {...this.transitionProps}
+        initial={{ xPos: 0 }}
         from={{ xPos: 100 }}
         enter={{ xPos: 0 }}
-        leave={{ xPos: 100 }}
-        config={{ tension: 280, friction: 85 }}>
+        leave={{ xPos: 100 }}>
         {
-          (curSlide) => ({ xPos }) => {
-            const slide = slides[curSlide]
-
-            return (
-              slide.text
-                ? (
-                  <animated.span
-                    className="carousel-slide-text"
-                    style={{
-                      transform: xPos.interpolate((value) => `translate3d(${value}%,0,0)`),
-                    }}>
-                    {slide.text}
-                  </animated.span>
-                )
-                : null
-            )
-          }
+          (slide) => slide.image && (({ xPos }) => (
+            slide.text
+              ? (
+                <animated.span
+                  className="carousel-slide-text"
+                  style={{
+                    transform: xPos.interpolate((value) => `translate3d(${value}%,0,0)`),
+                  }}>
+                  {slide.text}
+                </animated.span>
+              )
+              : null
+          ))
         }
       </Transition>
     )
@@ -160,16 +164,15 @@ class Carousel extends React.Component {
     const {
       className,
       slides,
+      id,
     } = this.props
 
     const {
       curSlide,
     } = this.state
 
-
-
     return (
-      <div className={`carousel ${className}`}>
+      <div id={id} className={`carousel ${className}`}>
         {this.renderSlide()}
         {this.renderSlideText()}
         <div className="carousel-slide-picker">
@@ -192,6 +195,40 @@ class Carousel extends React.Component {
 
 
   /***************************************************************************\
+    Redux Properties
+  \***************************************************************************/
+
+  get transitionProps () {
+    const { slides } = this.props
+    const { curSlide } = this.state
+    return {
+      items: slides[curSlide],
+      keys: slides[curSlide].image ? curSlide : 'null',
+      native: true,
+      unique: true,
+      config: { tension: 280, friction: 85 },
+    }
+  }
+
+
+
+
+
+  /***************************************************************************\
+    Redux Properties
+  \***************************************************************************/
+
+  static mapDispatchToProps = ['getImage']
+
+  static mapStateToProps = createStructuredSelector({
+    slides: selectConnectedSlides,
+  })
+
+
+
+
+
+  /***************************************************************************\
     Prop Definitions
   \***************************************************************************/
 
@@ -202,6 +239,7 @@ class Carousel extends React.Component {
 
   static propTypes = {
     className: PropTypes.string,
+    id: PropTypes.string.isRequired,
     interval: PropTypes.number,
     slides: PropTypes.objectOf(PropTypes.shape({
       imageName: PropTypes.string,
@@ -210,6 +248,7 @@ class Carousel extends React.Component {
     })).isRequired,
   }
 }
+
 
 
 
