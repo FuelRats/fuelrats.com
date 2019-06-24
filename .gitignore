@@ -9,3 +9,4 @@ static/fonts/font-awesome
 logs/
 tsconfig.json
 package-lock.json
+*.code-workspace
