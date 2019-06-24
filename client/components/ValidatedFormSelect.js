@@ -68,7 +68,6 @@ class ValidatedFormSelect extends React.Component {
         {renderLabel && <label htmlFor={id}>{label}</label>}
         <div className="select-wrapper">
           <select
-            autoComplete="country-name"
             {...this.selectProps}
             className={classes}
             onChange={this._handleChange}>
