@@ -116,7 +116,6 @@ class ValidatedCurrencySelect extends React.Component {
     label: PropTypes.string.isRequired,
     name: PropTypes.string,
     onChange: PropTypes.func,
-    options: PropTypes.object.isRequired,
     renderLabel: PropTypes.bool,
     required: PropTypes.any,
   }
