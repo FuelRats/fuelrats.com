@@ -19,7 +19,6 @@ const formatAsEliteDateLong = (timestamp) => moment(timestamp).add(ELITE_GAME_YE
 
 
 export {
-  // eslint-disable-next-line import/prefer-default-export
   formatAsEliteDateTime,
   formatAsEliteDate,
   formatAsEliteDateLong,
