@@ -48,9 +48,7 @@ class AddNicknameForm extends Component {
 
     this.setState({ submitting: true })
 
-    /* eslint-disable no-alert */
     await addNickname(nickname, password)
-    /* eslint-enable */
 
     this.setState({
       nickname: '',
@@ -122,7 +120,7 @@ class AddNicknameForm extends Component {
     Redux Properties
   \***************************************************************************/
 
-  static mapDispatchToProps = ['addNickname', 'addNicknamePass']
+  static mapDispatchToProps = ['addNickname']
 
   static mapStateToProps = (state) => ({
     user: selectUser(state),
