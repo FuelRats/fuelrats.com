@@ -1,40 +1,24 @@
 @keyframes error-start {
   0% {
-    border-bottom-color: currentColor;
-    border-left-color: currentColor;
-    border-right-color: currentColor;
-    border-top-color: currentColor;
+    border-color: currentColor;
     transform: rotate(0deg);
   }
 
   100% {
-    border-bottom-color: transparent;
-    border-left-color: currentColor;
-    border-right-color: currentColor;
-    border-top-color: transparent;
+    border-color: transparent currentColor;
     transform: rotate(405deg);
   }
 }
-
 @keyframes error {
   0% {
-    border-bottom-color: transparent;
-    border-left-color: currentColor;
-    border-right-color: currentColor;
-    border-top-color: transparent;
+    border-color: transparent currentColor;
   }
 
   50% {
-    border-bottom-color: currentColor;
-    border-left-color: transparent;
-    border-right-color: transparent;
-    border-top-color: currentColor;
+    border-color: currentColor transparent;
   }
 
   100% {
-    border-bottom-color: transparent;
-    border-left-color: currentColor;
-    border-right-color: currentColor;
-    border-top-color: transparent;
+    border-color: transparent currentColor;
   }
 }

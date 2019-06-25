@@ -2,7 +2,7 @@
   flex-grow: 1;
 
   > li {
-    &:after {
+    &::after {
       border-top-color: $red;
       border-top-style: solid;
       border-top-width: 0.1rem;

@@ -14,7 +14,7 @@
     .display-rat-button {
       position: relative;
       top: -2px;
-      margin-right: .2rem;
+      margin-right: 0.2rem;
       --text-color: #{rgba($white, 0.4)};
       --text-color-hover: #{rgba($white, 0.75)};
 
@@ -59,8 +59,9 @@
 
       .ship-expand-button {
         width: 48px;
+
         svg {
-          transition: transform .2s ease;
+          transition: transform 0.2s ease;
         }
       }
     }
@@ -70,11 +71,11 @@
     transform: rotate(180deg);
   }
 
-  &.submitting:after {
+  &.submitting::after {
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
-    content: "Updating...";
+    content: 'Updating...';
     position: absolute;
     left: 0;
     top: 0;
@@ -85,10 +86,10 @@
     color: white;
     font-family: Raleway, sans-serif;
     font-size: 1.1em;
-    text-shadow: 0px 0px 8px #1a1a1a;
+    text-shadow: 0 0 8px #1A1A1A;
   }
 
-  &.submitting[data-loader-text]:after {
-    content: attr(data-loader-text)
+  &.submitting[data-loader-text]::after {
+    content: attr(data-loader-text);
   }
 }

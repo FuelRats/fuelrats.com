@@ -94,7 +94,7 @@ class Dialog extends Component {
           )}
         </div>
       ),
-      document.getElementById('dialog-container')
+      document.getElementById('DialogContainer')
     )
   }
 }

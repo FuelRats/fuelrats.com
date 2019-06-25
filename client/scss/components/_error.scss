@@ -1,8 +1,8 @@
 .error:empty {
   position: relative;
 
-  &:after,
-  &:before {
+  &::after,
+  &::before {
     align-content: center;
     align-items: center;
     border-radius: 100%;
@@ -20,7 +20,7 @@
     width: $loader-size;
   }
 
-  &:after {
+  &::after {
     animation-delay:
       0s,
       0.5s;
@@ -41,7 +41,7 @@
     content: '';
   }
 
-  &:before {
+  &::before {
     animation-duration: 0.5s;
     animation-name: spin;
     border-color: transparent;

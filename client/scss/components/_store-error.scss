@@ -2,7 +2,7 @@
   margin: 0 2rem 2rem;
   padding: 1rem;
   border: 1px solid $red;
-  background: rgba(255,127,127,.15);
+  background: rgba(255, 127, 127, 0.15);
   color: $red-darkened;
   line-height: 35px;
 
@@ -16,14 +16,13 @@
     margin-left: 1rem;
   }
 
-  &:before {
+  &::before {
     content: '⚠';
     float: left;
     color: $black;
     display: inline;
-    opacity: .75;
+    opacity: 0.75;
     font-size: 30px;
     font-weight: bold;
-
   }
 }

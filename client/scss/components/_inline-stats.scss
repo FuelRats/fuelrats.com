@@ -5,13 +5,13 @@
   .inline-stats-assists,
   .inline-stats-failures,
   .inline-stats-success-rate {
-    &:after {
+    &::after {
       color: $grey-lightened;
       content: '|';
       margin: 0 1rem;
     }
 
-    &:last-child:after {
+    &:last-child::after {
       display: none;
     }
   }

@@ -1,7 +1,6 @@
 .page.acknowledgements {
-
   .credit-section {
-    background: rgba(127,127,127, .1);
+    background: rgba(127, 127, 127, 0.1);
     padding: 1rem;
     margin-top: 2rem;
     display: flex;
@@ -15,7 +14,6 @@
     @media screen and (max-width: 1040px) {
       flex-direction: column;
     }
-
     @media screen and (max-width: 500px) {
       a {
         width: calc(100% - 4rem);
@@ -37,7 +35,6 @@
 
     &.atlassian-brand {
       background-image: url(/static/images/brandlogos/atlassian.png);
-
     }
 
     &.statuspage-brand {
@@ -54,7 +51,7 @@
     }
 
     &.onepass-brand {
-      background-image:  url(/static/images/brandlogos/onepassword.png);
+      background-image: url(/static/images/brandlogos/onepassword.png);
     }
   }
 
@@ -68,7 +65,7 @@
     > span {
       font-size: 1.25em;
       font-family: Raleway, sans-serif;
-      border-bottom: .1rem solid $black;
+      border-bottom: 0.1rem solid $black;
     }
 
     > ul {
@@ -76,8 +73,8 @@
       max-height: 550px;
       overflow-y: auto;
       overflow-x: hidden;
-      border: .1rem solid $black;
-      padding: .5rem 1rem;
+      border: 0.1rem solid $black;
+      padding: 0.5rem 1rem;
       margin: 1rem;
     }
   }

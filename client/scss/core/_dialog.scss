@@ -1,10 +1,9 @@
-[role=dialog] {
-  background-color: rgba($black, .99);
-  margin-top: 4rem;
+[role='dialog'] {
+  background-color: rgba($black, 0.99);
+  margin: 0 auto auto;
   border: none;
   display: flex;
   flex-direction: column;
-  margin: 0 auto auto auto;
   min-width: 60rem;
   overflow: hidden;
   pointer-events: initial;
@@ -12,11 +11,7 @@
   padding: 2rem;
 
   &.transparency {
-    background-color: rgba($black, .75);
-  }
-
-  &.center-title > header {
-    justify-content: center;
+    background-color: rgba($black, 0.75);
   }
 
   > header {
@@ -29,11 +24,15 @@
       padding: 1rem 2rem;
     }
 
-    [name=close] {
+    [name='close'] {
       border-radius: 0;
       margin-left: auto;
       padding: 1rem;
     }
+  }
+
+  &.center-title > header {
+    justify-content: center;
   }
 
   > .content {
@@ -52,17 +51,17 @@
   }
 
   &.no-pad > .content {
-    padding: 2rem 0 0 0;
+    padding: 2rem 0 0;
   }
 
   > footer {
     color: $white;
   }
 
-  menu[type=toolbar] {
+  menu[type='toolbar'] {
     display: flex;
     flex-shrink: 0;
-    padding: 2rem 0 0 0;
+    padding: 2rem 0 0;
 
     &.compact {
       padding: 0;

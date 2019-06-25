@@ -1,5 +1,4 @@
 .page.rescue-search {
-
   .searchControls {
     align-self: flex-end;
   }
@@ -12,11 +11,11 @@
   .rescue-list-item {
     display: flex;
     flex-direction: column;
-    padding: .5rem 0;
+    padding: 0.5rem 0;
     position: relative;
 
     &:not(:first-child) {
-      border-top: 1px solid #c4c4c4;
+      border-top: 1px solid #C4C4C4;
     }
 
     .primary-info {
@@ -32,7 +31,7 @@
         position: absolute;
         right: 0;
         top: 0;
-        opacity: .25;
+        opacity: 0.25;
         height: 100%;
         display: flex;
         align-items: center;

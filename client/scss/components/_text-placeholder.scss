@@ -1,16 +1,14 @@
-
-
 span.text-placeholder {
   background: $grey;
-  opacity: .4;
-  border-radius: .9em;
-  height: .9em;
+  opacity: 0.4;
+  border-radius: 0.9em;
+  height: 0.9em;
   display: table-caption;
 
   &.loading {
     animation-name: opacity-flutter;
     animation-duration: 1s;
-    animation-iteration-count: infinite
+    animation-iteration-count: infinite;
   }
 }
 

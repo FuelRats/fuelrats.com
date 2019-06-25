@@ -86,8 +86,8 @@ h1 {
  */
 
 mark {
-  background: #ff0;
-  color: #000;
+  background: #FFFF00;
+  color: #000000;
 }
 
 /**
@@ -178,8 +178,8 @@ html {
 }
 
 *,
-*:before,
-*:after {
+*::before,
+*::after {
   box-sizing: inherit;
 }
 

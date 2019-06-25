@@ -3,11 +3,11 @@
   top: 1.5rem;
   left: 2rem;
   cursor: pointer;
-  padding: .55rem 2rem;
+  padding: 0.55rem 2rem;
   min-width: 5.625rem;
   display: inline-block;
   z-index: 150;
-  transform: translateX(0rem);
+  transform: translateX(0);
 
   &:hover {
     background-color: $red;
@@ -15,9 +15,9 @@
 
   svg {
     transition:
-      opacity .2s,
-      max-width .2s,
-      max-height .2s;
+      opacity 0.2s,
+      max-width 0.2s,
+      max-height 0.2s;
   }
 }
 
@@ -45,8 +45,8 @@
   #nav-control {
     ~ header {
       right: 100%;
-      transform: translateX(0rem);
-      box-shadow: 0 0 4px 0 rgba($black, .4);
+      transform: translateX(0);
+      box-shadow: 0 0 4px 0 rgba($black, 0.4);
     }
 
     &:checked {
@@ -111,12 +111,12 @@
       }
 
       &.disabled {
-        opacity: .4;
+        opacity: 0.4;
         text-decoration: line-through;
         cursor: not-allowed;
       }
 
-      &:not(.disabled):before {
+      &:not(.disabled)::before {
         background-color: $red;
         bottom: 0;
         content: '';
@@ -132,13 +132,13 @@
       &:not(.disabled):hover {
         color: $white;
 
-        &:before {
+        &::before {
           width: 100%;
         }
       }
     }
 
-    label:after {
+    label::after {
       border-color: transparent;
       border-style: solid;
       border-width: 0.5rem;
@@ -167,13 +167,15 @@
         z-index: 5;
         box-shadow: 0 0 6px 0 $black-darkened;
 
-        &:before {
+        &::before {
           width: 100%;
         }
-        &:after {
+
+        &::after {
           transform: translateY(-50%) rotate(90deg);
         }
       }
+
       .subnav {
         box-shadow:
           inset 0 10px 6px -10px rgba($black-darkened, 0.5),
@@ -181,7 +183,7 @@
         transition-duration: 0.5s;
         max-height: 100vh;
 
-        a:hover:before {
+        a:hover::before {
           box-shadow: inset -10px 0 6px -10px rgba($black-darkened, 0.5);
         }
       }
@@ -216,13 +218,13 @@
 
     button,
     .button {
-      margin: 0 2rem 1rem 2rem;
+      margin: 0 2rem 1rem;
       width: calc(100% - 4rem);
     }
   }
 
   .about-actions {
-    margin: auto 2rem 0 2rem;
+    margin: auto 2rem 0;
 
     .button.link {
       text-align: left;
@@ -250,7 +252,7 @@
 
   .social-actions {
     display: flex;
-    margin: 0 2rem 1rem 2rem;
+    margin: 0 2rem 1rem;
     justify-content: space-between;
 
     a.button {
@@ -260,6 +262,7 @@
       &:focus {
         color: $white;
       }
+
       &:hover {
         color: $red;
       }

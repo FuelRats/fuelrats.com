@@ -25,7 +25,7 @@
     width: 10rem;
   }
 
-  &:empty:before {
+  &:empty::before {
     align-items: center;
     background: $white;
     color: $red;
