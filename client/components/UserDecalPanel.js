@@ -16,27 +16,11 @@ import Component from './Component'
 
 
 // Component constants
-const initialState = {
-  heckingEligibility: true,
-  redeeming: false,
-  decalsVisible: {},
-}
+
 
 
 @connect
 class UserDetailsPanel extends Component {
-  /***************************************************************************\
-    Class Properties
-  \***************************************************************************/
-
-  state = {
-    ...initialState,
-  }
-
-
-
-
-
   /***************************************************************************\
     Private Methods
   \***************************************************************************/
@@ -53,7 +37,7 @@ class UserDetailsPanel extends Component {
     })
   }
 
-  _handleToggle = (event) => {
+  _handleDecalVisibilityToggle = (event) => {
     const decalID = event.target.name
     this.setState((state) => ({
       decalsVisible: {
@@ -62,6 +46,8 @@ class UserDetailsPanel extends Component {
       },
     }))
   }
+
+
 
 
 
@@ -116,11 +102,13 @@ class UserDetailsPanel extends Component {
           aria-label="Show decal code"
           className="icon toggle"
           name={decal.id}
-          onClick={this._handleToggle}
+          onClick={this._handleDecalVisibilityToggle}
           type="button">
           <FontAwesomeIcon icon={this.state.decalsVisible[decal.id] ? 'eye' : 'eye-slash'} fixedWidth />
         </button>
-        {this.state.decalsVisible[decal.id] ? decal.attributes.code : `•••••-•••••-•••••-•••••-${decal.attributes.code.substring(24)}`}
+        {this.state.decalsVisible[decal.id]
+          ? decal.attributes.code
+          : `•••••-•••••-•••••-•••••-${decal.attributes.code.substring(24)}`}
       </div>
       <div className="claimed-at">{formatAsEliteDate(decal.attributes.claimedAt)}</div>
     </div>
@@ -129,11 +117,7 @@ class UserDetailsPanel extends Component {
   renderDecalCodes = () => {
     const { decals } = this.props
 
-    if (!decals.length) {
-      return null
-    }
-
-    return decals.map(this.renderDecalCode)
+    return Boolean(decals.length) && decals.map(this.renderDecalCode)
   }
 
   render () {
@@ -150,20 +134,14 @@ class UserDetailsPanel extends Component {
       <div className="panel user-decals">
         <header>Decal</header>
         <div className="panel-content">
-          {(checkingEligibility || redeeming) ? (<div className="loading">{loadingText}</div>) : (this.renderDecalCodes(decals))}
-          {(decals.length) ? ('') : (this.renderNoDataText())}
+          {(checkingEligibility || redeeming)
+            ? (<div className="loading">{loadingText}</div>)
+            : (this.renderDecalCodes(decals))}
+          {!decals.length && this.renderNoDataText()}
         </div>
       </div>
     )
   }
-
-
-
-
-
-  /***************************************************************************\
-    Getters
-  \***************************************************************************/
 
 
 
