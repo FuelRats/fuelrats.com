@@ -8,6 +8,13 @@
   transition-duration: 0.5s;
   transition-property: all;
 
+  .content {
+    max-height: 30vh;
+    transition-delay: 0.5s;
+    transition-duration: 0.5s;
+    transition-property: max-height;
+  }
+
   &.minimize {
     box-shadow: 0 0 1rem 0 rgba($grey, 0);
     min-width: 0;
@@ -35,12 +42,5 @@
         padding: 1rem;
       }
     }
-  }
-
-  .content {
-    max-height: 30vh;
-    transition-delay: 0.5s;
-    transition-duration: 0.5s;
-    transition-property: max-height;
   }
 }

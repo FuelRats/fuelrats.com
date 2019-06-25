@@ -1,13 +1,17 @@
 form.add-rat {
   display: flex;
+
   align-items: center;
+
   transition: padding 0.2s ease;
 
   &.form-open {
+    padding: 0.5rem;
+
+    border: 1px solid rgba(26, 26, 26, 0.2);
+
     background: #FFFFFFFF;
     box-shadow: 0 0 1rem rgba(26, 26, 26, 0.1);
-    border: 1px solid rgba(26, 26, 26, 0.2);
-    padding: 0.5rem;
   }
 
   .form-control {
@@ -35,6 +39,7 @@ form.add-rat {
 
     .form-control {
       display: flex;
+
       flex-direction: row;
       justify-content: center;
 

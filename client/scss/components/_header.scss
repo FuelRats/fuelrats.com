@@ -1,4 +1,4 @@
-#burger {
+#Burger {
   position: absolute;
   top: 1.5rem;
   left: 2rem;
@@ -21,13 +21,13 @@
   }
 }
 
-#header-container {
+#HeaderContainer {
   height: 100%;
   color: $white;
   background-color: $black;
 }
 
-#nav-control {
+#NavControl {
   display: none;
 
   ~ header {
@@ -42,7 +42,7 @@
 }
 
 @media only screen and (max-width: 768px) {
-  #nav-control {
+  #NavControl {
     ~ header {
       right: 100%;
       transform: translateX(0);
@@ -51,20 +51,18 @@
 
     &:checked {
       ~ header,
-      ~ #burger {
+      ~ #Burger {
         transform: translateX(21rem);
       }
     }
   }
 }
 
-[role=banner] {
+[role='banner'] {
   height: 100%;
   align-items: stretch;
   background: $black;
-  border-right-color: $red;
-  border-right-style: solid;
-  border-right-width: 0.5rem;
+  border-right: 0.5rem solid $red;
   display: flex;
   width: 21rem;
   flex-direction: column;

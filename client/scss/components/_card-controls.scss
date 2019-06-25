@@ -1,10 +1,10 @@
 .card-controls {
   display: flex;
   justify-content: flex-end;
-  background: white;
+  background: #FFFFFF;
 
   &.has-message {
-    box-shadow: 0 0 0.5rem 1rem white;
+    box-shadow: 0 0 0.5rem 1rem #FFFFFF;
   }
 
   button {

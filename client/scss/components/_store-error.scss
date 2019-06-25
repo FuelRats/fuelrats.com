@@ -6,12 +6,12 @@
   color: $red-darkened;
   line-height: 35px;
 
-  & * {
+  * {
     margin-left: 2.75rem;
     margin-bottom: 0;
   }
 
-  & p:first-child {
+  p:first-child {
     display: inline;
     margin-left: 1rem;
   }

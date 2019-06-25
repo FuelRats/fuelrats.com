@@ -33,6 +33,10 @@
     }
   }
 
+  &.expanded .ship-expand-button svg {
+    transform: rotate(180deg);
+  }
+
   footer {
     display: flex;
     justify-content: space-between;
@@ -67,10 +71,6 @@
     }
   }
 
-  &.expanded .ship-expand-button svg {
-    transform: rotate(180deg);
-  }
-
   &.submitting::after {
     display: flex;
     align-items: flex-end;
@@ -83,7 +83,7 @@
     height: calc(100% - 2rem);
     padding: 1rem;
     background-color: rgba(26, 26, 26, 0.7);
-    color: white;
+    color: #FFFFFF;
     font-family: Raleway, sans-serif;
     font-size: 1.1em;
     text-shadow: 0 0 8px #1A1A1A;

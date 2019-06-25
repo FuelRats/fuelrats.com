@@ -63,7 +63,8 @@ $pc-background-gradients:
   $pc-background-gradients: append($pc-background-gradients, $gradient, 'comma');
 }
 
-.badge {
+.badge,
+%badge {
   background-color: $red;
   color: $white;
   display: inline-block;
@@ -72,7 +73,7 @@ $pc-background-gradients:
   min-width: 1rem;
   padding: 0 0.5rem;
   text-align: center;
-  text-shadow: 0 0 1px black;
+  text-shadow: 0 0 1px #000000;
   vertical-align: middle;
   white-space: nowrap;
 
@@ -123,7 +124,7 @@ $pc-background-gradients:
 }
 
 .icon-badge {
-  @extend .badge;
+  @extend %badge;
   margin: 0;
   text-shadow: none;
   border-radius: 1rem;

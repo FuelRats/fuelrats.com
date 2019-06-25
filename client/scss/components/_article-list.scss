@@ -3,14 +3,14 @@
 
   > li {
     &::after {
-      border-top-color: $red;
-      border-top-style: solid;
-      border-top-width: 0.1rem;
-      content: '';
       display: block;
+
+      content: '';
+      width: 10rem;
       height: 0;
       margin: 2rem auto;
-      width: 10rem;
+
+      border-top: 0.1rem solid $red;
     }
   }
 }

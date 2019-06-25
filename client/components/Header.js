@@ -34,14 +34,14 @@ const Header = (props) => {
     loggingIn,
   } = props
   return (
-    <div id="header-container">
+    <div id="HeaderContainer">
 
       <input
         aria-label="Navigation toggle"
-        id="nav-control"
+        id="NavControl"
         type="checkbox" />
 
-      <label title="Expand/Collapse Menu" htmlFor="nav-control" className="burger button tall secondary" id="burger">
+      <label title="Expand/Collapse Menu" htmlFor="NavControl" className="burger button tall secondary" id="Burger">
         <FontAwesomeIcon icon="bars" />
       </label>
 

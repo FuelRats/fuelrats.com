@@ -1,6 +1,20 @@
 .rescues-over-time-chart {
   direction: rtl;
 
+  .failure {
+    fill: rgba($red, 1);
+  }
+
+  .success {
+    fill: rgba($green, 1);
+  }
+
+  .axis.y {
+    text {
+      text-anchor: end;
+    }
+  }
+
   .datum {
     &:hover {
       .failure,
@@ -16,20 +30,6 @@
       .success {
         fill: rgba($green, 0.5);
       }
-    }
-  }
-
-  .failure {
-    fill: rgba($red, 1);
-  }
-
-  .success {
-    fill: rgba($green, 1);
-  }
-
-  .axis.y {
-    text {
-      text-anchor: end;
     }
   }
 }

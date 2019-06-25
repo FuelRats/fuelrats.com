@@ -1,38 +1,45 @@
 .avatar {
-  align-content: stretch;
-  align-items: stretch;
-  background-color: $white;
-  border-color: $red;
-  border-radius: 50%;
-  border-style: solid;
-  border-width: 0.2rem;
   display: flex;
+
+  align-items: stretch;
+  align-content: stretch;
+
   flex-shrink: 0;
+
+  border: 0.2rem solid $red;
+  border-radius: 50%;
+
+  background-color: $white;
+
   overflow: hidden;
 
   &.small {
-    height: 4rem;
     width: 4rem;
+    height: 4rem;
   }
 
   &.medium {
-    height: 6.5rem;
     width: 6.5rem;
+    height: 6.5rem;
   }
 
   &.large {
-    height: 10rem;
     width: 10rem;
+    height: 10rem;
   }
 
   &:empty::before {
+    display: flex;
+
     align-items: center;
+    justify-content: center;
+
+    content: attr(data-letter);
+    width: 100%;
+
     background: $white;
     color: $red;
-    content: attr(data-letter);
-    display: flex;
+
     font-size: 2em;
-    justify-content: center;
-    width: 100%;
   }
 }

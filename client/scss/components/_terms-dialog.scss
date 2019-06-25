@@ -1,9 +1,9 @@
-div.terms-dialog[role=dialog] {
+div.terms-dialog[role='dialog'] {
   max-height: 100%;
 
   > .content {
     overflow: auto;
-    color: white;
+    color: #FFFFFF;
     padding: 2rem;
     margin: 2rem 0;
     background: rgba($white, 0.15);

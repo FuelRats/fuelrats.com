@@ -6,6 +6,13 @@
     overflow: hidden;
   }
 
+  svg {
+    padding: 0 4rem;
+    min-width: 5rem;
+    max-width: 20.5rem;
+    color: $white;
+  }
+
   &:hover {
     .brand-animation-wrapper {
       > svg {
@@ -16,12 +23,5 @@
         animation-iteration-count: infinite;
       }
     }
-  }
-
-  svg {
-    padding: 0 4rem;
-    min-width: 5rem;
-    max-width: 20.5rem;
-    color: $white;
   }
 }

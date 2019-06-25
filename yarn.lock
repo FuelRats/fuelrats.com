@@ -835,10 +835,10 @@
   dependencies:
     eslint-restricted-globals "^0.2.0"
 
-"@fuelrats/stylelint-config@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@fuelrats/stylelint-config/-/stylelint-config-0.1.0.tgz#e0c6f327c998cb3d46fa5057319369f9e5001411"
-  integrity sha512-umRAKW7Jw8bKKLbigUqrqfA9KEYH+gdPeNNGpoSNmEQjYDeLTH8q6crYWUOwXrHZ8IBqCwMAu1GrtqMOkqdpOQ==
+"@fuelrats/stylelint-config@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@fuelrats/stylelint-config/-/stylelint-config-0.3.0.tgz#313c44b80e26a2f1ee7c71ee21fe525487bf3f34"
+  integrity sha512-DDlXbuCpZchTw97Jm2FRXOKApGmvhcK9xtYBZPAw1CP7D0wc9TcCW57NqPQUUwGn6syrNbvVjuGSVEnIWR28TQ==
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
