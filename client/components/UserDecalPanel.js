@@ -15,12 +15,17 @@ import Component from './Component'
 
 
 
-// Component constants
-
-
-
 @connect
 class UserDetailsPanel extends Component {
+  state = {
+    checkingEligibility: true,
+    redeeming: false,
+    decalsVisible: {},
+  }
+
+
+
+
   /***************************************************************************\
     Private Methods
   \***************************************************************************/
