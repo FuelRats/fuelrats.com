@@ -19,27 +19,44 @@ const MAXNICKS = 20 // Maximum IRC Nicknames allowed
 
 @connect
 class UserNicknamesPanel extends Component {
-  _handleDeleteNickname = async (event) => {
-    await this.props.deleteNickname(event.target.name)
-    return 'Deleted!'
-  }
+  /***************************************************************************\
+    Class Properties
+  \***************************************************************************/
 
   state = {
     formOpen: false,
   }
 
-  _handleToggle = () => {
-    this.setState((state) => ({
-      ...state,
-      formOpen: !state.formOpen,
-    }))
+
+
+
+
+  /***************************************************************************\
+    Private Methods
+  \***************************************************************************/
+
+  _handleFormVisibilityToggle = () => {
+    this.setState((state) => ({ formOpen: !state.formOpen }))
   }
+
+  _handleDeleteNickname = async (event) => {
+    await this.props.deleteNickname(event.target.name)
+    return 'Deleted!'
+  }
+
+
+
+
+
+  /***************************************************************************\
+    Public Methods
+  \***************************************************************************/
 
   render () {
     const {
       user,
     } = this.props
-    const maxNicksReached = (user.attributes.nicknames.length === MAXNICKS)
+    const maxNicksReached = (user.attributes.nicknames.length >= MAXNICKS)
 
     return (
       <div className="panel user-nicknames">
@@ -54,7 +71,7 @@ class UserNicknamesPanel extends Component {
             <button
               aria-label="add nickname"
               className={`icon ${this.state.formOpen ? '' : 'green'}`}
-              onClick={this._handleToggle}
+              onClick={this._handleFormVisibilityToggle}
               title={maxNicksReached ? 'You\'ve used all your nicknames' : 'Add new nickname'}
               type="button"
               disabled={maxNicksReached}>
@@ -80,11 +97,6 @@ class UserNicknamesPanel extends Component {
               ))}
           </ul>
         </div>
-        {/* (this.state.formOpen) && (
-          <footer>
-            <AddNicknameForm />
-          </footer>
-        ) */}
       </div>
     )
   }
@@ -92,6 +104,9 @@ class UserNicknamesPanel extends Component {
 
 
 
+  /***************************************************************************\
+    Redux Properties
+  \***************************************************************************/
 
   static mapDispatchToProps = ['deleteNickname']
 
