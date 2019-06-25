@@ -9,7 +9,7 @@ module.exports = {
   },
   settings: {
     'import/ignore': [
-      '\.worker\.js$'
-    ]
-  }
+      '.worker.js$',
+    ],
+  },
 }
