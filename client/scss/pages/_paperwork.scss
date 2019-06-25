@@ -7,10 +7,10 @@ $margin: 2rem;
   }
 
   tr {
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #000000;
   }
 
-  menu[type=toolbar] {
+  menu[type='toolbar'] {
     width: 100%;
     padding: 0.5rem 2rem;
 
@@ -25,7 +25,7 @@ $margin: 2rem;
 
     div.invalidity-explainer {
       background-color: $red;
-      color: white;
+      color: #000000;
       padding: 0 2rem;
       display: inline-block;
       opacity: 0;
@@ -89,7 +89,7 @@ $margin: 2rem;
     transform: skewX(-10deg);
     margin-right: calc(#{$margin} + 0.5rem);
 
-    & > div {
+    > div {
       padding: 0.2em 0.4em;
 
       &.board-index {
@@ -105,12 +105,12 @@ $margin: 2rem;
         margin: 0.2rem 0.2rem  0.2rem 0.2em;
       }
 
-      & > span {
+      > span {
         transform: skewX(10deg);
         display: inline-block;
       }
 
-      .CMDR-name,
+      .cmdr-name,
       .system,
       .rescue-title {
         font-weight: bold;
@@ -223,7 +223,7 @@ $margin: 2rem;
       opacity: 0.5;
     }
 
-    .CMDR-name,
+    .cmdr-name,
     .system {
       font-weight: bold;
     }

@@ -34,24 +34,24 @@
     width: 400px;
 
     &.atlassian-brand {
-      background-image: url(/static/images/brandlogos/atlassian.png);
+      background-image: url('/static/images/brandlogos/atlassian.png');
     }
 
     &.statuspage-brand {
-      background-image: url(/static/images/brandlogos/statuspage.png);
+      background-image: url('/static/images/brandlogos/statuspage.png');
     }
 
     &.jetbrains-brand {
-      background-image: url(/static/images/brandlogos/jetbrains.png);
+      background-image: url('/static/images/brandlogos/jetbrains.png');
       background-size: 55%;
     }
 
     &.slack-brand {
-      background-image: url(/static/images/brandlogos/slack.png);
+      background-image: url('/static/images/brandlogos/slack.png');
     }
 
     &.onepass-brand {
-      background-image: url(/static/images/brandlogos/onepassword.png);
+      background-image: url('/static/images/brandlogos/onepassword.png');
     }
   }
 

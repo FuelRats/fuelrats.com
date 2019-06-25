@@ -360,7 +360,7 @@ class Paperwork extends Component {
                 {(!rescue.attributes.title) && (
                   <span>
                     Rescue of
-                    <span className="CMDR-name"> {rescue.attributes.client}</span> in
+                    <span className="cmdr-name"> {rescue.attributes.client}</span> in
                     <span className="system"> {(rescue.attributes.system) || ('Unknown')}</span>
                   </span>
                 )}

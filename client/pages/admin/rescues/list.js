@@ -144,7 +144,7 @@ class ListRescues extends React.Component {
     return (
       <PageWrapper title="Rescue Search">
         <div className="page-content">
-          <div className="searchControls">
+          <div className="search-controls">
             <button
               className="inline"
               onClick={this._handleRefreshClick}
