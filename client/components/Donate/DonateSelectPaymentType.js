@@ -3,20 +3,13 @@ import ValidatedCurrencySelect from '../ValidatedCurrencySelect'
 
 
 const INVALID_CURRENCY_MESSAGE = 'Currency is Required'
-const initialState = {
-  currency: '',
-  validity: {
-    currency: INVALID_CURRENCY_MESSAGE,
-  },
-}
 
 class DonateSelectPaymentType extends React.Component {
   state = {
-    ...initialState,
-  }
-
-  static noop () {
-    return null
+    currency: '',
+    validity: {
+      currency: INVALID_CURRENCY_MESSAGE,
+    },
   }
 
   _handleFieldChange = ({ target, valid, message }) => {
