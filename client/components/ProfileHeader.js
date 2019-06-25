@@ -1,9 +1,5 @@
 // Module imports
 import React from 'react'
-// import PropTypes from 'prop-types'
-
-
-
 
 // Component imports
 import { connect } from '../store'
@@ -13,14 +9,6 @@ import {
   selectUserDisplayRat,
   selectUserAvatar,
 } from '../store/selectors'
-
-
-
-
-// Component Constants
-
-
-
 
 
 @connect
@@ -38,7 +26,14 @@ class ClassName extends React.Component {
   /***************************************************************************\
     Private Methods
   \***************************************************************************/
-  _renderUserGroups = () => this.props.user.relationships.groups.data.map((item) => <li className={`badge ${item.id}`} key={item.id}>{item.id}</li>)
+  _renderUserGroups = () => (
+    this.props.user.relationships.groups.data && (
+      this.props.user.relationships.groups.data.map((item) => (
+        <li className={`badge ${item.id}`} key={item.id}>
+          {item.id}
+        </li>
+      ))))
+
 
 
 
@@ -53,9 +48,7 @@ class ClassName extends React.Component {
       userAvatar,
     } = this.props
 
-    let { attributes } = this.props.user
-
-    attributes = attributes || {}
+    const attributes = this.props.user.attributes || {}
 
     const {
       createdAt,
@@ -93,18 +86,8 @@ class ClassName extends React.Component {
 
 
   /***************************************************************************\
-    Getters
-  \***************************************************************************/
-
-
-
-
-
-  /***************************************************************************\
     Redux Properties
   \***************************************************************************/
-
-  static mapDispatchToProps = ['getUser']
 
   static mapStateToProps = (state) => ({
     user: selectUser(state),
