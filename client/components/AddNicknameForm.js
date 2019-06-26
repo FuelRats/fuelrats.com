@@ -6,9 +6,13 @@ import React from 'react'
 
 
 // Component imports
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect } from '../store'
+import { selectUser } from '../store/selectors'
+import { ircNickPattern } from '../data/RegExpr'
 import Component from './Component'
 import ValidatedFormInput from './ValidatedFormInput'
+
 
 
 
@@ -21,6 +25,7 @@ class AddNicknameForm extends Component {
 
   state = {
     nickname: '',
+    password: '',
     submitting: false,
   }
 
@@ -34,24 +39,26 @@ class AddNicknameForm extends Component {
 
   _handleSubmit = async (event) => {
     const { addNickname } = this.props
-    const { nickname } = this.state
+    const {
+      nickname,
+      password,
+    } = this.state
 
     event.preventDefault()
 
     this.setState({ submitting: true })
 
-    /* eslint-disable no-alert */
-    await addNickname(nickname, prompt('Please enter your IRC password (this may be different from your website password):'))
-    /* eslint-enable */
+    await addNickname(nickname, password)
 
     this.setState({
       nickname: '',
+      password: '',
       submitting: false,
     })
   }
 
   _handleChange = (event) => {
-    this.setState({ nickname: event.target.value })
+    this.setState({ [event.target.name]: event.target.value })
   }
 
 
@@ -65,28 +72,41 @@ class AddNicknameForm extends Component {
   render () {
     const {
       nickname,
+      password,
       submitting,
     } = this.state
 
     return (
       <form
-        className="row"
         onSubmit={this._handleSubmit}>
         <ValidatedFormInput
-          className="stretch-9"
+          className="dark"
           id="addNickname"
           label="Nickname"
-          name="add-nickname"
+          name="nickname"
           onChange={this._handleChange}
           placeholder="Add a nickname..."
-          pattern="^[A-Za-z[\\\]^_`{|}]{1}[-0-9A-Za-z[\\\]^_`{|}]{0,29}$"
-          patternMessage="Nickname must start with a letter, contain no spaces, and is between 2-30 characters"
+          pattern={ircNickPattern}
+          patternMessage="Nickname must start with a letter, contain no spaces, and be between 2-30 characters"
           type="text"
           value={nickname} />
+        <ValidatedFormInput
+          className="dark"
+          id="addNicknamePass"
+          label="NicknamePass"
+          name="password"
+          onChange={this._handleChange}
+          placeholder="IRC Password"
+          pattern="^$"
+          patternMessage="This is the password you use to identify with in IRC"
+          type="password"
+          value={password} />
         <button
-          disabled={!nickname || submitting}
+          aria-label="submit new nickname"
+          className="green icon"
+          disabled={!nickname || !password || submitting}
           type="submit">
-          Add
+          <FontAwesomeIcon icon="check" fixedWidth />
         </button>
       </form>
     )
@@ -101,6 +121,10 @@ class AddNicknameForm extends Component {
   \***************************************************************************/
 
   static mapDispatchToProps = ['addNickname']
+
+  static mapStateToProps = (state) => ({
+    user: selectUser(state),
+  })
 }
 
 

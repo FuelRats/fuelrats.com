@@ -1,3 +1,4 @@
+/* eslint-disable react/state-in-constructor */
 // Complete rewrite pending. We will ignore these errors for now.
 /* eslint-disable no-magic-numbers, no-negated-condition, prefer-rest-params, react/jsx-handler-names, no-restricted-syntax, no-return-assign, react/no-deprecated */
 

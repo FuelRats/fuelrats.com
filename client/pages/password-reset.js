@@ -8,6 +8,7 @@ import React from 'react'
 // Component imports
 import { connect } from '../store'
 import { Link } from '../routes'
+import { passwordPattern } from '../data/RegExpr'
 import Component from '../components/Component'
 import PageWrapper from '../components/PageWrapper'
 import PasswordField from '../components/PasswordField'
@@ -19,40 +20,27 @@ import PasswordField from '../components/PasswordField'
 @connect
 class PasswordReset extends Component {
   /***************************************************************************\
-    Public Methods
+    Class Properties
   \***************************************************************************/
 
-  async componentDidMount () {
-    const token = this.props.query.t
-    let tokenIsValid = false
-
-    if (token) {
-      const { status } = await this.props.validatePasswordResetToken(token)
-      tokenIsValid = status === 'success'
-    }
-
-    this.setState({
-      tokenIsValid,
-      validating: false,
-    })
+  state = {
+    password: '',
+    submitted: false,
+    submitting: false,
+    token: this.props.query.t,
+    tokenIsValid: false,
+    validating: true,
   }
 
-  constructor (props) {
-    super(props)
 
-    this._bindMethods(['_handleSubmit'])
 
-    this.state = {
-      password: '',
-      submitted: false,
-      submitting: false,
-      token: props.query.t,
-      tokenIsValid: false,
-      validating: true,
-    }
-  }
 
-  async _handleSubmit (event) {
+
+  /***************************************************************************\
+    Private Methods
+  \***************************************************************************/
+
+  _handleSubmit = async (event) => {
     const {
       password,
       token,
@@ -73,6 +61,29 @@ class PasswordReset extends Component {
     })
   }
 
+
+
+
+
+  /***************************************************************************\
+    Public Methods
+  \***************************************************************************/
+
+  async componentDidMount () {
+    const token = this.props.query.t
+    let tokenIsValid = false
+
+    if (token) {
+      const { status } = await this.props.validatePasswordResetToken(token)
+      tokenIsValid = status === 'success'
+    }
+
+    this.setState({
+      tokenIsValid,
+      validating: false,
+    })
+  }
+
   render () {
     const {
       password,
@@ -84,7 +95,6 @@ class PasswordReset extends Component {
 
     return (
       <PageWrapper title="Password Reset">
-
         <div className="page-content">
           {validating && (
             <span>Validating token...</span>
@@ -106,7 +116,7 @@ class PasswordReset extends Component {
                   id="password"
                   name="password"
                   onChange={(event) => this.setState({ password: event.target.value })}
-                  pattern="^[^\s]{5,42}$"
+                  pattern={passwordPattern}
                   placeholder="Use a strong password to keep your account secure"
                   ref={(_password) => {
                     this._password = _password
@@ -120,7 +130,7 @@ class PasswordReset extends Component {
               <menu type="toolbar">
                 <div className="primary">
                   <button
-                    disabled={submitting || !this.validate()}
+                    disabled={submitting || !this.canSubmit}
                     type="submit">
                     {submitting ? 'Submitting...' : 'Submit'}
                   </button>
@@ -145,7 +155,15 @@ class PasswordReset extends Component {
     )
   }
 
-  validate () {
+
+
+
+
+  /***************************************************************************\
+    Getters
+  \***************************************************************************/
+
+  get canSubmit () {
     if (!this._password) {
       return false
     }
@@ -156,6 +174,14 @@ class PasswordReset extends Component {
 
     return true
   }
+
+
+
+
+
+  /***************************************************************************\
+    Redux Properties
+  \***************************************************************************/
 
   static mapDispatchToProps = ['resetPassword', 'validatePasswordResetToken']
 }

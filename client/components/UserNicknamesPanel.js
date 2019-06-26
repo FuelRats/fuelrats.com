@@ -4,33 +4,81 @@ import React from 'react'
 
 
 
-
 // Component imports
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect } from '../store'
 import { selectUser } from '../store/selectors'
 import AddNicknameForm from './AddNicknameForm'
 // import ConfirmActionButton from './ConfirmActionButton'
 import Component from './Component'
 
-
+// Component constants
+const MAXNICKS = 16 // Maximum IRC Nicknames allowed
 
 
 
 @connect
 class UserNicknamesPanel extends Component {
-  _deleteNickname = async (event) => {
+  /***************************************************************************\
+    Class Properties
+  \***************************************************************************/
+
+  state = {
+    formOpen: false,
+  }
+
+
+
+
+
+  /***************************************************************************\
+    Private Methods
+  \***************************************************************************/
+
+  _handleFormVisibilityToggle = () => {
+    this.setState((state) => ({ formOpen: !state.formOpen }))
+  }
+
+  _handleDeleteNickname = async (event) => {
     await this.props.deleteNickname(event.target.name)
     return 'Deleted!'
   }
+
+
+
+
+
+  /***************************************************************************\
+    Public Methods
+  \***************************************************************************/
 
   render () {
     const {
       user,
     } = this.props
+    const maxNicksReached = (user.attributes.nicknames.length >= MAXNICKS)
 
     return (
       <div className="panel user-nicknames">
-        <header>IRC Nicknames</header>
+        <header>IRC Nicknames
+          {(this.state.formOpen) && (
+            <div className="add-nickname-float">
+              <AddNicknameForm />
+            </div>
+          )}
+          <div className="controls">
+            <span className="nickname-count">{user.attributes.nicknames.length}/{MAXNICKS}</span>
+            <button
+              aria-label="add nickname"
+              className={`icon ${this.state.formOpen ? '' : 'green'}`}
+              onClick={this._handleFormVisibilityToggle}
+              title={maxNicksReached ? 'You\'ve used all your nicknames' : 'Add new nickname'}
+              type="button"
+              disabled={maxNicksReached}>
+              <FontAwesomeIcon icon={this.state.formOpen ? 'times' : 'plus'} fixedWidth />
+            </button>
+          </div>
+        </header>
 
         <div className="panel-content">
           <ul>
@@ -38,21 +86,17 @@ class UserNicknamesPanel extends Component {
               && user.attributes.nicknames.map((nickname) => (
                 <li key={nickname}>
                   <span>{nickname}</span>
-                  {/* Disabled due to problems with current implementation of IRC nick management.
-                      Re-enable after LDAP integration.
-                  <ConfirmActionButton
+                  {/* <ConfirmActionButton
                     name={nickname}
-                    onConfirm={this._deleteNickname}>
-                    Delete
+                    onConfirm={this._handleDeleteNickname}
+                    className="icon">
+                    <FontAwesomeIcon icon="trash" fixedWidth />
                   </ConfirmActionButton>
                   */}
                 </li>
               ))}
           </ul>
         </div>
-        <footer>
-          <AddNicknameForm />
-        </footer>
       </div>
     )
   }
@@ -60,6 +104,9 @@ class UserNicknamesPanel extends Component {
 
 
 
+  /***************************************************************************\
+    Redux Properties
+  \***************************************************************************/
 
   static mapDispatchToProps = ['deleteNickname']
 

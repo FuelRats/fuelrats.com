@@ -1,17 +1,67 @@
 div.user-nicknames {
+  header {
+    button {
+      min-height: 23px;
+    }
+
+    .add-nickname-float {
+      position: absolute;
+      right: 0;
+      left: 0;
+      width: calc(100% - 3.5rem);
+      top: 0;
+      z-index: 1;
+      padding: 0.5rem 0 0.5rem 0.5rem;
+      background: #1a1a1a;
+
+      form {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+      }
+
+      fieldset {
+        padding: 0rem;
+        flex: 2 0;
+        margin-right: 0.5rem;
+      }
+
+      button[type=submit] {
+        flex: 0 0 auto;
+        margin-right: 0.2rem;
+      }
+    }
+
+    .controls {
+      position: relative;
+
+      button {
+        margin-left: 0.5rem;
+        z-index: 2;
+
+        // svg {
+        //   width: 1.1em;
+        // }
+      }
+    }
+  }
+
   .panel-content {
     padding: 0;
 
 
     ul > li {
-      /* Disabled until Delete nick feature is ready for use.
       display: flex;
-      justify-content: space-between; */
+      justify-content: space-between;
       align-items: center;
-      padding: 1rem;
+      padding: 0.5rem 1rem;
 
       &:nth-child(even) {
         background-color: $light-grey;
+      }
+
+      span {
+        word-break: break-word;
       }
     }
   }

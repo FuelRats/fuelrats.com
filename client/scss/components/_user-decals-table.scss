@@ -1,10 +1,36 @@
-.ReactTable.user-decals {
-  .code,
-  .claimedAt {
-    text-align: left;
+.user-decals .panel-content {
+  padding: 0;
+
+  .decal .code, .decal .claimed-at, .redeem, .loading, .no-decal {
+    padding: 0.5rem 1rem;
   }
 
-  .rt-noData {
-    pointer-events: auto;
+  .decal {
+    display: flex;
+
+    &:nth-child(2n) {
+      background-color: $light-grey;
+    }
+
+    .toggle {
+      margin-right: 1rem;
+
+      svg {
+        pointer-events: none;
+      }
+    }
+
+    .code {
+      font-family: monospace;
+      flex: 1 0 auto;
+    }
+
+    .claimed-at {
+      flex: 0 1 auto;
+    }
+  }
+
+  .redeem, .loading {
+    padding-bottom: 1rem;
   }
 }

@@ -1,9 +1,7 @@
 // Module imports
 import { StripeProvider } from 'react-stripe-elements'
-import { Transition } from 'react-spring/renderprops.cjs'
 import getConfig from 'next/config'
 import hoistNonReactStatics from 'hoist-non-react-statics'
-import NextError from 'next/error'
 import React from 'react'
 
 
@@ -19,14 +17,15 @@ import {
 } from '../store/selectors'
 import { Router } from '../routes'
 import apiService from '../services/api'
+import ErrorPage from '../pages/_error'
 import Header from './Header'
-import NProgress from './NProgress'
-import UserMenu from './UserMenu'
-import LoginDialog from './LoginDialog'
-import initUserSession from '../helpers/initUserSession'
-import userHasPermission from '../helpers/userHasPermission'
 import httpStatus from '../helpers/httpStatus'
-
+import initUserSession from '../helpers/initUserSession'
+import LoginDialog from './LoginDialog'
+import NProgress from './NProgress'
+import PageLayout from './AppLayout/PageLayout'
+import userHasPermission from '../helpers/userHasPermission'
+import UserMenu from './UserMenu'
 
 
 
@@ -39,7 +38,6 @@ const { publicRuntimeConfig } = getConfig()
 
 // Component Constants
 const STRIPE_API_PK = publicRuntimeConfig.apis.stripe.public
-const TransitionContext = React.createContext(null)
 
 
 
@@ -47,6 +45,16 @@ const TransitionContext = React.createContext(null)
 
 @connect
 class AppLayout extends React.Component {
+  /***************************************************************************\
+    Private Methods
+  \***************************************************************************/
+
+  _handleLoginDialogClose = () => this.props.setFlag('showLoginDialog', false)
+
+
+
+
+
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
@@ -83,7 +91,7 @@ class AppLayout extends React.Component {
 
       if (!userHasPermission(userGroups, Component.ಠ_ಠ_REQUIRED_PERMISSION)) {
         if (ctx.res) {
-          ctx.res.statusCode = 401
+          ctx.res.statusCode = httpStatus.UNAUTHORIZED
         } else {
           statusCode = httpStatus.UNAUTHORIZED
         }
@@ -110,10 +118,12 @@ class AppLayout extends React.Component {
       })
     }
 
-
-
     if (ctx.res) {
       ({ statusCode } = ctx.res)
+    }
+
+    if (statusCode !== httpStatus.OK) {
+      pageProps = await ErrorPage.getInitialProps(ctx)
     }
 
     return {
@@ -152,15 +162,9 @@ class AppLayout extends React.Component {
 
   render () {
     const {
-      Component,
-      isServer,
-      loggedIn,
-      pageProps,
       renderLayout,
-      router,
+      isServer,
       showLoginDialog,
-      statusCode,
-      setFlag,
     } = this.props
 
     return (
@@ -171,57 +175,57 @@ class AppLayout extends React.Component {
           showSpinner={false} />
 
         {renderLayout && (
-        <>
-          <Header isServer={isServer} />
-          <UserMenu />
-        </>
+          <>
+            <Header isServer={isServer} />
+            <UserMenu />
+          </>
         )}
 
-        {statusCode === httpStatus.OK && (
-          <Transition
-            native
-            from={{ opacity: 0 }}
-            enter={{ opacity: 1 }}
-            leave={{ opacity: 0 }}
-            config={{
-              tension: 350,
-              friction: 12,
-              clamp: true,
-            }}
-            items={{
-              Page: Component,
-              props: pageProps,
-              shouldRender: !Component.ಠ_ಠ_AUTHENTICATION_REQUIRED || loggedIn,
-            }}
-            keys={router.pathname}>
-            {({ Page, props, shouldRender }) => (style) => (
-              <TransitionContext.Provider value={style}>
-                {shouldRender && (
-                  <Page {...props} />
-                )}
-              </TransitionContext.Provider>
-            )}
-          </Transition>
-        )}
-
-        {statusCode !== httpStatus.OK && (
-          <main className="page error-page">
-            <div className="page-content">
-              <NextError className="test" statusCode={statusCode} />
-            </div>
-          </main>
-        )}
+        <PageLayout {...this.pageLayoutProps} />
 
         {showLoginDialog && (
-          <LoginDialog onClose={() => setFlag('showLoginDialog', false)} />
+          <LoginDialog onClose={this._handleLoginDialogClose} />
         )}
 
       </div>
     )
   }
 
+  /***************************************************************************\
+    Getters
+  \***************************************************************************/
 
+  get pageLayoutProps () {
+    const {
+      Component,
+      loggedIn,
+      pageProps,
+      router,
+      statusCode,
+    } = this.props
 
+    let pageItem = {
+      Page: Component,
+      pageProps,
+      shouldRender: !Component.ಠ_ಠ_AUTHENTICATION_REQUIRED || loggedIn,
+    }
+
+    let pageKey = router.asPath
+
+    if (statusCode !== httpStatus.OK) {
+      pageItem = {
+        Page: ErrorPage,
+        pageProps,
+        shouldRender: true,
+      }
+      pageKey = 'error'
+    }
+
+    return {
+      items: pageItem,
+      keys: pageKey,
+    }
+  }
 
 
   /***************************************************************************\
@@ -264,6 +268,10 @@ const authenticated = (_target) => {
   return setProperties(_target)
 }
 
+
+
+
+
 /**
  * Decorator to wrap a page with stripe context
  */
@@ -298,14 +306,11 @@ const withStripe = (Component) => {
 }
 
 
-const {
-  Consumer: TransitionContextConsumer,
-} = TransitionContext
+
 
 
 export default AppLayout
 export {
   authenticated,
   withStripe,
-  TransitionContextConsumer,
 }

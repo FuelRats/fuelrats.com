@@ -5,7 +5,7 @@ import initialState from '../initialState'
 
 
 
-export default function rescuesOverTimeReducer (state = initialState.rescuesOverTime, action) {
+export default function leaderboardReducer (state = initialState.leaderboard, action) {
   const {
     payload,
     status,
@@ -13,7 +13,7 @@ export default function rescuesOverTimeReducer (state = initialState.rescuesOver
   } = action
 
   switch (type) {
-    case actionTypes.GET_RESCUES_OVER_TIME:
+    case actionTypes.GET_RAT_LEADERBOARD:
       switch (status) {
         case 'success':
           return {

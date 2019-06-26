@@ -35,7 +35,7 @@ const NEXT_BUILD_ID = $NEXT_BUILD_ID
 
 
 const Version = () => (
-  <PageWrapper title="Version Information" renderHeader={false}>
+  <PageWrapper title="Version Information" noHeader>
     <div className="page-content">
       <span>
         <a className="button compact" href="/version/raw">Raw</a>

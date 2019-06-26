@@ -1,7 +1,7 @@
 /* eslint-disable react/no-multi-comp */
 
 // Module imports
-import { animated } from 'react-spring/renderprops.cjs'
+import { animated } from 'react-spring'
 import React from 'react'
 import NextHead from 'next/head'
 import PropTypes from 'prop-types'
@@ -11,7 +11,7 @@ import PropTypes from 'prop-types'
 
 
 // Component imports
-import { TransitionContextConsumer } from './AppLayout'
+import { TransitionContextConsumer } from './AppLayout/PageLayout'
 import Component from './Component'
 import classnames from '../helpers/classNames'
 
@@ -49,18 +49,16 @@ class Page extends Component {
     const {
       children,
       className,
-      darkThemeSafe,
       description,
       title,
-      renderHeader,
+      noHeader,
     } = this.props
 
-    const titleContent = renderHeader && this.displayTitle
+    const titleContent = !noHeader && this.displayTitle
     const mainClasses = classnames(
       'page',
       [className, Boolean(className)],
-      title.toLowerCase().replace(/\s/gu, '-'),
-      ['--experiment-dark-mode', darkThemeSafe]
+      title.toLowerCase().replace(/\s/gu, '-')
     )
 
     return (
@@ -74,7 +72,7 @@ class Page extends Component {
         <TransitionContextConsumer>
           {(style) => (
             <animated.main className={mainClasses} style={style}>
-              {renderHeader && (
+              {!noHeader && (
                 <header className="page-header">
                   {titleContent}
                 </header>
@@ -102,20 +100,18 @@ class Page extends Component {
   }
 
   static defaultProps = {
-    darkThemeSafe: false,
     description: 'The Fuel Rats are Elite: Dangerous\'s premier emergency refueling service. Fueling the galaxy, one ship at a time, since 3301.',
     displayTitle: (title) => (<h1>{title}</h1>),
-    renderHeader: true,
+    noHeader: false,
   }
 
   static propTypes = {
-    darkThemeSafe: PropTypes.bool,
     description: PropTypes.string,
     displayTitle: PropTypes.oneOfType([
       PropTypes.func,
       PropTypes.string,
     ]),
-    renderHeader: PropTypes.bool,
+    noHeader: PropTypes.bool,
     title: PropTypes.string.isRequired,
   }
 }

@@ -17,25 +17,25 @@ import PageWrapper from '../components/PageWrapper'
 @connect
 class ForgotPassword extends Component {
   /***************************************************************************\
-    Public Methods
+    Class Properties
   \***************************************************************************/
 
-  constructor (props) {
-    super(props)
-
-    this._bindMethods([
-      '_handleSubmit',
-    ])
-
-    this.state = {
-      email: '',
-      submitted: false,
-      submitting: false,
-      error: null,
-    }
+  state = {
+    email: '',
+    submitted: false,
+    submitting: false,
+    error: null,
   }
 
-  async _handleSubmit (event) {
+
+
+
+
+  /***************************************************************************\
+    Private Methods
+  \***************************************************************************/
+
+  _handleSubmit = async (event) => {
     event.preventDefault()
 
     const { email } = this.state
@@ -59,6 +59,14 @@ class ForgotPassword extends Component {
       })
     }
   }
+
+
+
+
+
+  /***************************************************************************\
+    Public Methods
+  \***************************************************************************/
 
   render () {
     const {
@@ -99,7 +107,7 @@ class ForgotPassword extends Component {
               <menu type="toolbar">
                 <div className="primary">
                   <button
-                    disabled={!email || submitting || !this.validate()}
+                    disabled={!email || submitting || !this.canSubmit}
                     type="submit">
                     {submitting ? 'Submitting...' : 'Send Email'}
                   </button>
@@ -125,7 +133,15 @@ class ForgotPassword extends Component {
     )
   }
 
-  validate () {
+
+
+
+
+  /***************************************************************************\
+    Getters
+  \***************************************************************************/
+
+  get canSubmit () {
     if (!this._emailEl) {
       return false
     }
@@ -136,6 +152,14 @@ class ForgotPassword extends Component {
 
     return true
   }
+
+
+
+
+
+  /***************************************************************************\
+    Redux Properties
+  \***************************************************************************/
 
   static mapDispatchToProps = ['sendPasswordResetEmail']
 }

@@ -98,3 +98,11 @@ input.large[type=checkbox] {
   height: 16px;
   vertical-align: middle;
 }
+
+
+
+.ReactTable .rt-thead.-filters input {
+  @extend %text-input;
+  color: $black;
+  border-radius: 0;
+}

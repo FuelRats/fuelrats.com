@@ -36,24 +36,16 @@ const initialState = {
 
   groups: {},
 
+  images: {},
+
+  leaderboard: {
+    loading: false,
+    statistics: [],
+  },
+
   rats: {},
 
   rescues: {},
-
-  rescuesByRat: {
-    loading: false,
-    statistics: [],
-  },
-
-  rescuesBySystem: {
-    loading: false,
-    statistics: [],
-  },
-
-  rescuesOverTime: {
-    loading: false,
-    statistics: [],
-  },
 
   ships: {},
 

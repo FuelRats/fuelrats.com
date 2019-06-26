@@ -15,6 +15,20 @@ import Dialog from './Dialog'
 
 class TermsDialog extends Component {
   /***************************************************************************\
+    Class Properties
+  \***************************************************************************/
+
+  state = {
+    content: null,
+    termsAgreed: false,
+    loading: true,
+  }
+
+
+
+
+
+  /***************************************************************************\
     Public Methods
   \***************************************************************************/
 
@@ -33,16 +47,6 @@ class TermsDialog extends Component {
       content,
       loading: false,
     })
-  }
-
-  constructor (props) {
-    super(props)
-
-    this.state = {
-      content: null,
-      termsAgreed: false,
-      loading: true,
-    }
   }
 
   render () {
@@ -80,6 +84,14 @@ class TermsDialog extends Component {
       </Dialog>
     )
   }
+
+
+
+
+
+  /***************************************************************************\
+    Getters
+  \***************************************************************************/
 
   get controls () {
     const {

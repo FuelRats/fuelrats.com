@@ -14,47 +14,14 @@ import thunkMiddleware from 'redux-thunk'
 
 // Component imports
 import initialState from './initialState'
-import reducer from './reducers/index'
+import reducer from './reducers'
 import actionStatus from './actionStatus'
 
 
 
-// Action imports
-import * as authenticationActions from './actions/authentication'
-import * as blogsActions from './actions/blogs'
-import * as decalsActions from './actions/decals'
-import * as epicActions from './actions/epics'
-import * as flagActions from './actions/flags'
-import * as ratsActions from './actions/rats'
-import * as rescuesActions from './actions/rescues'
-import * as rescuesByRatActions from './actions/rescuesByRat'
-import * as rescuesBySystemActions from './actions/rescuesBySystem'
-import * as rescuesOverTimeActions from './actions/rescuesOverTime'
-import * as storeCartActions from './actions/storeCart'
-import * as stripeActions from './actions/stripe'
-import * as userActions from './actions/user'
-import * as wordpressActions from './actions/wordpress'
 
 
-
-
-
-const actions = {
-  ...authenticationActions,
-  ...blogsActions,
-  ...decalsActions,
-  ...epicActions,
-  ...flagActions,
-  ...ratsActions,
-  ...rescuesActions,
-  ...rescuesByRatActions,
-  ...rescuesBySystemActions,
-  ...rescuesOverTimeActions,
-  ...storeCartActions,
-  ...stripeActions,
-  ...userActions,
-  ...wordpressActions,
-}
+import * as actions from './actions'
 
 
 

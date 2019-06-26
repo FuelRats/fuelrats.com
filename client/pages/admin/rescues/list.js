@@ -63,8 +63,8 @@ class ListRescues extends React.Component {
       async () => {
         await this.props.getRescues(
           this.state.client
-            ? { 'client[ilike]': `${this.state.client}%` }
-            : { 'status[ne]': 'closed' },
+            ? { 'client.ilike': `${this.state.client}%` }
+            : { 'status.ne': 'closed' },
           {
             pageView: pageViewId,
           }
