@@ -13,7 +13,7 @@ import AddNicknameForm from './AddNicknameForm'
 import Component from './Component'
 
 // Component constants
-const MAXNICKS = 20 // Maximum IRC Nicknames allowed
+const MAXNICKS = 16 // Maximum IRC Nicknames allowed
 
 
 
