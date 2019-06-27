@@ -97,8 +97,7 @@ class AddNicknameForm extends Component {
           name="password"
           onChange={this._handleChange}
           placeholder="IRC Password"
-          pattern="^$"
-          patternMessage="This is the password you use to identify with in IRC"
+          title="This is the password you use to identify with in IRC"
           type="password"
           value={password} />
         <button
