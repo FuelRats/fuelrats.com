@@ -1,3 +1,4 @@
+/* stylelint-disable selector-class-pattern */
 .ReactTable {
   .rt-thead.-filters .rt-th {
     padding: 0 1rem 1rem;
@@ -8,3 +9,4 @@
     color: $red;
   }
 }
+/* stylelint-enable selector-class-pattern */

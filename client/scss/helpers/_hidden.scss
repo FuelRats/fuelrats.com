@@ -1,6 +1,8 @@
+.hidden,
 [hidden],
 [data-hidden] {
   /* Disabled as hidden should never be able to be overridden */
   /* stylelint-disable declaration-no-important */
   display: none !important;
+  pointer-events: none;
 }
