@@ -28,9 +28,12 @@
     height: 10rem;
   }
 
-  &:empty::before {
-    display: flex;
+  &.xl {
+    height: 17rem;
+    width: 17rem;
+  }
 
+  &:empty::before {
     align-items: center;
     justify-content: center;
 
