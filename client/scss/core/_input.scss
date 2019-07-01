@@ -48,6 +48,7 @@
 
     &[required] {
       border-color: $red;
+      box-shadow: none;
 
       &:valid {
         border-color: $green;
