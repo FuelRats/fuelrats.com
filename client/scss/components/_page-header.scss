@@ -1,18 +1,30 @@
 .page-header {
-  align-self: flex-start;
-  background-color: $red;
-  color: $white;
-  flex-shrink: 0;
-  margin: 0;
-  margin-bottom: 2rem;
-  min-width: 0%;
-  max-width: 75%;
-  padding: 1rem 4rem;
   position: relative;
-  transition: min-width 0.2s;
   z-index: 10;
 
+  flex-shrink: 0;
+  align-self: flex-start;
+
+  min-width: 0%;
+  max-width: 75%;
+  margin: 0 0 2rem;
+  padding: 1rem 4rem;
+
+  background-color: $red;
+  color: $white;
+  transition: min-width 0.2s;
+
   &::after {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+
+    content: '';
+    width: 9rem;
+
     background-image:
       linear-gradient(
         to left,
@@ -26,22 +38,16 @@
         transparent 0.8rem,
         $red 0.8rem
       );
-    bottom: 0;
-    content: '';
-    display: block;
-    position: absolute;
-    width: 9rem;
-    right: 0;
+    transition: transform 0.2s;
+
     transform: skewX(-45deg) translateX(1rem);
     transform-origin: left bottom;
-    transition: transform 0.2s;
-    top: 0;
-    z-index: -1;
   }
 
   @media only screen and (max-width: 768px) {
-    max-width: 100%;
     min-width: 100%;
+    max-width: 100%;
+
     text-align: center;
 
     &::after {

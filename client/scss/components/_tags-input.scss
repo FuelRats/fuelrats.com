@@ -1,112 +1,18 @@
 // Base styles
 .tags-input {
-  align-content: stretch;
   display: inline-flex;
-  flex-wrap: wrap;
   position: relative;
-  border-color: $grey-lightened;
-  border-style: solid;
-  border-width: 0.1rem;
+
+  flex-wrap: wrap;
+  align-content: stretch;
+
+  border: 0.1rem solid $grey-lightened;
   transition-duration: 0.5s;
   transition-property: border-color, box-shadow;
 
-  input {
-    flex-grow: 1;
-
-    &:not(:focus) + .options {
-      display: none;
-    }
-
-    &::-webkit-search-cancel-button {
-      appearance: none;
-    }
-  }
-
-  button {
-    background-color: transparent;
-    background-image: none;
-    border: none;
-    color: inherit;
-    margin: 0;
-    margin-left: 0.5rem;
-    padding: 0 1rem;
-
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.3);
-      color: inherit;
-    }
-  }
-
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .options:empty {
-    display: none;
-  }
-
-  .loader,
-  .no-results,
-  .options {
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 100%;
-    background-color: $white;
-    border-color: $black;
-    border-style: solid;
-    border-width: 1px;
-    border-top-width: 0;
-    z-index: 1;
-  }
-
-  .loader,
-  .no-results {
-    padding: 1rem;
-  }
-
-  .return-prompt {
-    bottom: 0;
-    opacity: 0;
-    pointer-events: none;
-    position: absolute;
-    right: 0;
-    top: 0;
-    transition-duration: 0.2s;
-    transition-property: opacity;
-    align-items: center;
-    color: $grey;
-    display: flex;
-    padding-right: 1rem;
-  }
-
-  .option,
-  .tag {
-    &.focus {
-      background-color: rgba(#000000, 0.2);
-    }
-  }
-
-  .option {
-    cursor: pointer;
-    padding: 1rem;
-
-    &.focus {
-      background-color: $light-grey;
-    }
-  }
-
-  .tag {
-    align-items: center;
-    background-color: $light-grey;
-    margin: 0.5rem;
-    padding: 0;
-    padding-left: 0.5rem;
-  }
-
   &.focus {
     border-color: $grey;
+
     box-shadow: 0 0 0.5rem 0 rgba($green-lightened, 0.5);
 
     .return-prompt.show {
@@ -119,15 +25,6 @@
 
     &.focus {
       box-shadow: 0 0 0.5rem 0 rgba($red, 0.5);
-    }
-  }
-
-  input[type='search'] {
-    border: none;
-    width: auto;
-
-    &:focus {
-      box-shadow: none;
     }
   }
 
@@ -145,14 +42,131 @@
     }
 
     .tag {
-      flex-grow: 1;
       display: flex;
+
       justify-content: space-between;
+
+      flex-grow: 1;
+
       margin: 0;
 
       button {
         padding: 1rem;
       }
+    }
+  }
+
+  input {
+    flex-grow: 1;
+
+    &:not(:focus) + .options {
+      display: none;
+    }
+
+    &::-webkit-search-cancel-button {
+      appearance: none;
+    }
+  }
+
+  button {
+    margin: 0;
+    margin-left: 0.5rem;
+    padding: 0 1rem;
+
+    border: none;
+
+    color: inherit;
+    background-color: transparent;
+    background-image: none;
+
+    &:hover {
+      color: inherit;
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  .tags {
+    display: flex;
+
+    flex-wrap: wrap;
+  }
+
+  .options:empty {
+    display: none;
+  }
+
+  .loader,
+  .no-results,
+  .options {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    z-index: 1;
+
+    border: 1px solid $black;
+    border-top-width: 0;
+
+    background-color: $white;
+  }
+
+  .loader,
+  .no-results {
+    padding: 1rem;
+  }
+
+  .return-prompt {
+    display: flex;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+
+    align-items: center;
+
+    padding-right: 1rem;
+
+    color: $grey;
+    opacity: 0;
+    pointer-events: none;
+    transition-duration: 0.2s;
+    transition-property: opacity;
+  }
+
+  .option,
+  .tag {
+    &.focus {
+      background-color: rgba(#000000, 0.2);
+    }
+  }
+
+  .option {
+    padding: 1rem;
+
+    cursor: pointer;
+
+    &.focus {
+      background-color: $light-grey;
+    }
+  }
+
+  .tag {
+    align-items: center;
+
+    margin: 0.5rem;
+    padding: 0;
+    padding-left: 0.5rem;
+
+    background-color: $light-grey;
+  }
+
+  input[type='search'] {
+    width: auto;
+
+    border: none;
+
+    &:focus {
+      box-shadow: none;
     }
   }
 }

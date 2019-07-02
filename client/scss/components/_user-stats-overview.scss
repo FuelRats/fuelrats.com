@@ -1,5 +1,6 @@
 .user-stats-overview {
   display: grid;
+
   grid-template-columns: repeat(2, 1fr);
 
   .stat {
@@ -7,6 +8,7 @@
 
     data {
       display: block;
+
       font-size: 2em;
     }
   }

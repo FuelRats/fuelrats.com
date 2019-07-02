@@ -8,8 +8,9 @@
 
   header,
   .panel-header {
-    align-items: center;
     display: flex;
+
+    align-items: center;
     justify-content: space-between;
 
     menu {
@@ -18,16 +19,18 @@
   }
 
   .panel-content {
-    overflow: auto;
     padding: 1rem;
+
+    overflow: auto;
   }
 
   header,
   footer,
   .panel-header,
   .panel-footer {
-    padding: 1rem;
     position: relative;
+
+    padding: 1rem;
 
     &:empty {
       display: none;

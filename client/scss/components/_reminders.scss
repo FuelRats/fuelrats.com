@@ -1,23 +1,19 @@
 .reminders {
-  bottom: 2rem;
-  box-shadow: 0 0 1rem 0 rgba($grey, 0.4);
-  min-width: 30vw;
   position: absolute;
   right: 2rem;
+  bottom: 2rem;
+
+  min-width: 30vw;
+
+  box-shadow: 0 0 1rem 0 rgba($grey, 0.4);
   transition-delay: 0s;
   transition-duration: 0.5s;
   transition-property: all;
 
-  .content {
-    max-height: 30vh;
-    transition-delay: 0.5s;
-    transition-duration: 0.5s;
-    transition-property: max-height;
-  }
-
   &.minimize {
-    box-shadow: 0 0 1rem 0 rgba($grey, 0);
     min-width: 0;
+
+    box-shadow: 0 0 1rem 0 rgba($grey, 0);
     transition-delay: 0.5s;
 
     .content {
@@ -31,14 +27,23 @@
     transition-delay: 0s;
   }
 
+  .content {
+    max-height: 30vh;
+    transition-delay: 0.5s;
+    transition-duration: 0.5s;
+    transition-property: max-height;
+  }
+
   > ol {
     margin-bottom: 0;
 
     > li {
       a {
-        align-items: center;
         display: flex;
+
+        align-items: center;
         justify-content: space-between;
+
         padding: 1rem;
       }
     }
