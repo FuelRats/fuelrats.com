@@ -1,4 +1,11 @@
-ol, ul {
+ol,
+ul {
+  > li {
+    &.inaccessible {
+      text-decoration: line-through;
+    }
+  }
+
   &.columns {
     align-content: stretch;
     display: flex;
@@ -12,12 +19,6 @@ ol, ul {
     }
   }
 
-  > li {
-    &.inaccessible {
-      text-decoration: line-through;
-    }
-  }
-
   &.inline {
     display: flex;
     flex-wrap: wrap;
@@ -28,12 +29,12 @@ ol, ul {
 
     &.comma-separated {
       li {
-        &:after {
+        &::after {
           content: ', ';
           margin-right: 0.2rem;
         }
 
-        &:last-of-type:after {
+        &:last-of-type::after {
           content: '';
           margin-right: 0;
         }

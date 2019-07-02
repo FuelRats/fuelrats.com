@@ -3,8 +3,8 @@
   &.force {
     position: relative;
 
-    &:after,
-    &:before {
+    &::after,
+    &::before {
       align-content: center;
       align-items: center;
       color: $black;
@@ -13,7 +13,7 @@
       position: absolute;
     }
 
-    &:after {
+    &::after {
       animation-delay:
         0s,
         1s;
@@ -41,8 +41,8 @@
       z-index: 100;
     }
 
-    &:before {
-      background-color: rgba(white, 0.8);
+    &::before {
+      background-color: rgba(#FFFFFF, 0.8);
       border-color: transparent;
       content: 'Loading';
       bottom: 0;
@@ -52,8 +52,8 @@
       z-index: 100;
     }
 
-    &[data-loader-text]:before {
-      content: attr(data-loader-text)
+    &[data-loader-text]::before {
+      content: attr(data-loader-text);
     }
   }
 }

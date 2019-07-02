@@ -6,12 +6,12 @@
   li {
     display: inline;
 
-    &:after {
-      content: ', '
+    &::after {
+      content: ', ';
     }
 
-    &:last-child:after {
-      content: ''
+    &:last-child::after {
+      content: '';
     }
   }
 }

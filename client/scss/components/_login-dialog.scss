@@ -1,6 +1,6 @@
-div[role=dialog].login-dialog {
+div[role='dialog'].login-dialog {
   @media screen and (max-width: 768px) {
-    menu[type=toolbar] {
+    menu[type='toolbar'] {
       flex-direction: column-reverse;
 
       > .primary,

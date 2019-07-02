@@ -1,3 +1,4 @@
+/* stylelint-disable selector-id-pattern */
 #nprogress {
   .bar {
     background-color: $red;
@@ -9,3 +10,4 @@
       0 0 5px $red;
   }
 }
+/* stylelint-enable selector-id-pattern */

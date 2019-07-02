@@ -4,6 +4,11 @@
   display: inline-flex;
   flex-wrap: wrap;
   position: relative;
+  border-color: $grey-lightened;
+  border-style: solid;
+  border-width: 0.1rem;
+  transition-duration: 0.5s;
+  transition-property: border-color, box-shadow;
 
   input {
     flex-grow: 1;
@@ -13,102 +18,7 @@
     }
 
     &::-webkit-search-cancel-button {
-      -webkit-appearance: none;
-    }
-  }
-
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .options:empty {
-    display: none;
-  }
-
-  .option,
-  .tag {
-    &.focus {
-      background-color: rgba(black, 0.2);
-    }
-  }
-
-  .loader,
-  .no-results,
-  .options {
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 100%;
-  }
-
-  .return-prompt {
-    bottom: 0;
-    opacity: 0;
-    pointer-events: none;
-    position: absolute;
-    right: 0;
-    top: 0;
-    transition-duration: 0.2s;
-    transition-property: opacity;
-  }
-
-  &.focus {
-    .return-prompt.show {
-      opacity: 1;
-    }
-  }
-
-  &[data-single] {
-    .tags {
-      align-content: stretch;
-
-      &:not(:empty) {
-        width: 100%;
-
-        ~ * {
-          display: none;
-        }
-      }
-    }
-
-    .tag {
-      flex-grow: 1;
-    }
-  }
-}
-
-
-
-
-
-// Fuelrats styles
-.tags-input {
-  border-color: $grey-lightened;
-  border-style: solid;
-  border-width: 0.1rem;
-  transition-duration: 0.5s;
-  transition-property: border-color, box-shadow;
-
-  &.focus {
-    border-color: $grey;
-    box-shadow: 0 0 0.5rem 0 rgba($green-lightened, 0.5);
-  }
-
-  &[required]:not(.has-tags) {
-    border-color: $red-lightened;
-
-    &.focus {
-      box-shadow: 0 0 0.5rem 0 rgba($red, 0.5);
-    }
-  }
-
-  input[type=search] {
-    border: none;
-    width: auto;
-
-    &:focus {
-      box-shadow: none;
+      appearance: none;
     }
   }
 
@@ -127,34 +37,28 @@
     }
   }
 
-  .tags {}
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+  }
 
-  .tag {
-    align-items: center;
-    background-color: lightgrey;
-    margin: 0.5rem;
-    padding: 0;
-    padding-left: 0.5rem;
+  .options:empty {
+    display: none;
   }
 
   .loader,
   .no-results,
   .options {
-    background-color: white;
-    border-color: black;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background-color: $white;
+    border-color: $black;
     border-style: solid;
     border-width: 1px;
     border-top-width: 0;
     z-index: 1;
-  }
-
-  .option {
-    cursor: pointer;
-    padding: 1rem;
-
-    &.focus {
-      background-color: lightgrey;
-    }
   }
 
   .loader,
@@ -163,14 +67,85 @@
   }
 
   .return-prompt {
+    bottom: 0;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition-duration: 0.2s;
+    transition-property: opacity;
     align-items: center;
-    color: grey;
+    color: $grey;
     display: flex;
     padding-right: 1rem;
   }
 
+  .option,
+  .tag {
+    &.focus {
+      background-color: rgba(#000000, 0.2);
+    }
+  }
+
+  .option {
+    cursor: pointer;
+    padding: 1rem;
+
+    &.focus {
+      background-color: $light-grey;
+    }
+  }
+
+  .tag {
+    align-items: center;
+    background-color: $light-grey;
+    margin: 0.5rem;
+    padding: 0;
+    padding-left: 0.5rem;
+  }
+
+  &.focus {
+    border-color: $grey;
+    box-shadow: 0 0 0.5rem 0 rgba($green-lightened, 0.5);
+
+    .return-prompt.show {
+      opacity: 1;
+    }
+  }
+
+  &[required]:not(.has-tags) {
+    border-color: $red-lightened;
+
+    &.focus {
+      box-shadow: 0 0 0.5rem 0 rgba($red, 0.5);
+    }
+  }
+
+  input[type='search'] {
+    border: none;
+    width: auto;
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
   &[data-single] {
+    .tags {
+      align-content: stretch;
+
+      &:not(:empty) {
+        width: 100%;
+
+        ~ * {
+          display: none;
+        }
+      }
+    }
+
     .tag {
+      flex-grow: 1;
       display: flex;
       justify-content: space-between;
       margin: 0;

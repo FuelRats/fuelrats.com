@@ -1,6 +1,6 @@
 .hero {
   align-content: center;
-  background-color: #0d1011;
+  background-color: #0D1011;
   position: relative;
   overflow: hidden;
   color: $white;
@@ -13,8 +13,9 @@
   padding: 6rem;
   text-shadow: 0 0 0.2rem rgba($black, 0.5);
 
-  h1, h2 {
-    transition: font-size .2s ease;
+  h1,
+  h2 {
+    transition: font-size 0.2s ease;
   }
 
   h1 {
@@ -23,8 +24,7 @@
 
   header {
     z-index: 50;
-    text-shadow: 2px 2px 4px #000000aa;
-
+    text-shadow: 2px 2px 4px #000000AA;
   }
 
   .call-to-action {
@@ -53,10 +53,9 @@
     }
 
     .call-to-action .button {
-      font-size: 1.25em
+      font-size: 1.25em;
     }
   }
-
   @media only screen and (max-width: 768px) {
     h1 {
       font-size: 3em;
@@ -67,7 +66,7 @@
     }
 
     .call-to-action .button {
-      font-size: 1em
+      font-size: 1em;
     }
   }
 }

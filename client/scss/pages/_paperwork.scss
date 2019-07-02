@@ -2,16 +2,15 @@ $margin: 2rem;
 
 .page.paperwork {
   // overflow-x: hidden;
-
   th {
     white-space: nowrap;
   }
 
   tr {
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #000000;
   }
 
-  menu[type=toolbar] {
+  menu[type='toolbar'] {
     width: 100%;
     padding: 0.5rem 2rem;
 
@@ -26,13 +25,13 @@ $margin: 2rem;
 
     div.invalidity-explainer {
       background-color: $red;
-      color: white;
+      color: #000000;
       padding: 0 2rem;
       display: inline-block;
       opacity: 0;
       transition:
-        transform .2s,
-        opacity .2s;
+        transform 0.2s,
+        opacity 0.2s;
       transform: translateX(calc(50% + 9rem)) scaleX(0);
 
       &.show {
@@ -45,9 +44,9 @@ $margin: 2rem;
       }
     }
 
-    button[type="submit"] {
+    button[type='submit'] {
       transform: translateX(0%) scale(1);
-      transition: transform .2s;
+      transition: transform 0.2s;
 
       &[disabled] {
         transform: translateX(50%) scale(0);
@@ -86,11 +85,11 @@ $margin: 2rem;
     background-color: $red;
     font-size: 2em;
     line-height: normal;
-    color: rgba($white,0.5);
+    color: rgba($white, 0.5);
     transform: skewX(-10deg);
     margin-right: calc(#{$margin} + 0.5rem);
 
-    &>div {
+    > div {
       padding: 0.2em 0.4em;
 
       &.board-index {
@@ -106,12 +105,14 @@ $margin: 2rem;
         margin: 0.2rem 0.2rem  0.2rem 0.2em;
       }
 
-      &>span {
+      > span {
         transform: skewX(10deg);
         display: inline-block;
       }
 
-      .CMDR-name, .system, .rescue-title {
+      .cmdr-name,
+      .system,
+      .rescue-title {
         font-weight: bold;
         color: $white;
       }
@@ -138,7 +139,7 @@ $margin: 2rem;
     }
 
     .tag,
-    .tag.status-group>span {
+    .tag.status-group > span {
       padding: 0.4em 0.8em;
       display: inline-block;
     }
@@ -183,7 +184,8 @@ $margin: 2rem;
     .md-group {
       display: inline-flex;
 
-      .marked-for-deletion, .md-reason {
+      .marked-for-deletion,
+      .md-reason {
         padding: 0.4em 0.8em;
       }
 
@@ -209,6 +211,7 @@ $margin: 2rem;
     padding: 0.5em 1em;
     // margin: 0.5rem 0 1rem 0;
     order: 5;
+
     @media screen and (max-width: 768px) {
       order: 4;
       // margin-top: 0;
@@ -220,7 +223,8 @@ $margin: 2rem;
       opacity: 0.5;
     }
 
-    .CMDR-name, .system {
+    .cmdr-name,
+    .system {
       font-weight: bold;
     }
   }
@@ -249,7 +253,7 @@ $margin: 2rem;
           font-style: italic;
 
           .badge {
-            background: #b0a154;
+            background: #B0A154;
           }
         }
       }
@@ -305,6 +309,7 @@ $margin: 2rem;
 
           .last-author {
             margin-left: 1em;
+
             .label {
               opacity: 0.7;
               display: block;
@@ -315,12 +320,15 @@ $margin: 2rem;
 
         @media screen and (max-width: 1040px) {
           flex-flow: column nowrap;
-          .times, .authors {
+
+          .times,
+          .authors {
             .created,
             .updated,
             .author,
             .last-author {
               display: inline-block;
+
               .label {
                 display: inline;
               }
@@ -334,6 +342,4 @@ $margin: 2rem;
       white-space: pre-line;
     }
   }
-
-
 }

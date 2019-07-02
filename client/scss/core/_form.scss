@@ -1,16 +1,21 @@
 form {
   &.compact fieldset {
-    padding: .5rem 4rem;
+    padding: 0.5rem 4rem;
   }
 
   &.dialog fieldset {
-    padding: .5rem 2rem;
+    padding: 0.5rem 2rem;
+  }
+
+  .form-row {
+    display: flex;
+    flex-direction: row;
   }
 
   &.compact .form-row {
     fieldset,
     > div {
-      padding: .5rem;
+      padding: 0.5rem;
 
       &:first-child {
         padding-left: 4rem;
@@ -29,10 +34,5 @@ form {
         padding: 0.1rem 0.25rem;
       }
     }
-  }
-
-  .form-row {
-    display: flex;
-    flex-direction: row;
   }
 }

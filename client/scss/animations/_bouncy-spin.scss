@@ -1,8 +1,22 @@
 @keyframes bouncy-spin {
-  0% { transform: rotateZ(0deg); }
-  20%, 25% { transform: rotateZ(-30deg); }
-  50%, 60%, 100% { transform: rotateZ(1440deg); }
-  55% { transform: rotateZ(1435deg); }
+  0% {
+    transform: rotateZ(0deg);
+  }
+
+  20%,
+  25% {
+    transform: rotateZ(-30deg);
+  }
+
+  50%,
+  60%,
+  100% {
+    transform: rotateZ(1440deg);
+  }
+
+  55% {
+    transform: rotateZ(1435deg);
+  }
 }
 
 

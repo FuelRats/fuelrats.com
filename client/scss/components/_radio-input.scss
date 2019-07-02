@@ -3,13 +3,13 @@ div.radio-input {
     display: flex;
 
     li.option {
-      padding: 0rem 1.5rem;
+      padding: 0 1.5rem;
       text-align: center;
-      margin: 0 .2rem;
-      border: .2rem solid $red;
+      margin: 0 0.2rem;
+      border: 0.2rem solid $red;
       transform: skewX(-10deg);
       display: inline-block;
-      transition: all .2s;
+      transition: all 0.2s;
       cursor: pointer;
 
       &:hover,

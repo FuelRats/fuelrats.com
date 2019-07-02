@@ -8,7 +8,7 @@
 html,
 body,
 [data-reactroot],
-[role=application] {
+[role='application'] {
   height: 100%;
   margin: 0;
   overflow: hidden;
@@ -25,15 +25,16 @@ body {
   align-items: stretch;
   display: flex;
   flex-direction: column;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-size: 14px;
 
+  /* stylelint-disable selector-id-pattern */
   .next-wrapper,
   #__next {
     height: 100%;
     overflow: hidden;
   }
-
+  /* stylelint-enable selector-id-pattern */
   > div {
     flex-grow: 1;
 
@@ -42,7 +43,7 @@ body {
     }
   }
 
-  > #dialog-container {
+  > #DialogContainer {
     justify-content: center;
     border: none;
     display: flex;
@@ -60,7 +61,7 @@ body {
     }
 
     &:not(:empty) {
-      background: rgba($black-lightened, .8);
+      background: rgba($black-lightened, 0.8);
     }
   }
 }

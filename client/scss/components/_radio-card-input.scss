@@ -5,10 +5,10 @@ div.radio-card-input {
     li.radio-card {
       padding: 1rem 2rem;
       text-align: center;
-      margin: 0 .25rem;
+      margin: 0 0.25rem;
       box-shadow: 0 0 0.5rem 0 rgba($red-lightened, 0);
-      border: .1rem solid $grey-lightened;
-      transition: all .2s;
+      border: 0.1rem solid $grey-lightened;
+      transition: all 0.2s;
       cursor: pointer;
 
 
@@ -16,8 +16,8 @@ div.radio-card-input {
         &:hover,
         &.selected {
           border-color: $red;
-
         }
+
         &.selected {
           box-shadow: 0 0 0.5rem 0 rgba($red-lightened, 0.5);
         }

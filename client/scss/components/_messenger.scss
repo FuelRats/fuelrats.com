@@ -8,21 +8,23 @@ ul.messenger {
       &.messenger-last {
         .messenger-message {
           box-shadow:
-            inset 0px 1px $black,
-            inset 48px 0px 0px #292929;
+            inset 0 1px $black,
+            inset 48px 0 0 #292929;
 
           &.alert-error {
-            .messenger-message-inner:before {
+            .messenger-message-inner::before {
               background-color: $red;
             }
           }
+
           &.alert-info {
-            .messenger-message-inner:before {
+            .messenger-message-inner::before {
               background-color: $blue;
             }
           }
+
           &.alert-success {
-            .messenger-message-inner:before {
+            .messenger-message-inner::before {
               background-color: $green;
             }
           }

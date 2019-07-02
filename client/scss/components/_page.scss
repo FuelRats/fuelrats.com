@@ -9,14 +9,9 @@ main.page {
   flex-direction: column;
   flex-grow: 1;
   margin-left: 21rem;
-  transition: margin .2s;
+  transition: margin 0.2s;
 
   @media only screen and (max-width: 769px) {
     margin-left: 0;
-  }
-
-  &.hidden {
-    opacity: 0 !important;
-    pointer-events: none;
   }
 }

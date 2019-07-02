@@ -1,8 +1,8 @@
 input.inline-editor {
-  box-shadow: 0 -8px 8px 2px $white !important;
+  box-shadow: 0 -8px 8px 2px $white;
   margin-left: -3.5px;
 
   &.dark {
-    box-shadow: 0 -8px 8px 2px $black !important;
+    box-shadow: 0 -8px 8px 2px $black;
   }
 }

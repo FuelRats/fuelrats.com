@@ -10,19 +10,21 @@ select {
   appearance: none;
 
   &:not(:valid) {
-    color: #999;
+    color: #999999;
   }
 
   option {
-    color: #000;
-    &[value=""] {
+    color: #000000;
+
+    &[value=''] {
       display: none;
-      color: #999;
+      color: #999999;
     }
   }
 
   &.required {
     border-color: $red-lightened;
+
     &:focus {
       border-color: $red;
       box-shadow: 0 0 0.5rem 0 rgba($red, 0.5);
@@ -30,6 +32,7 @@ select {
 
     &:valid {
       border-color: $green-lightened;
+
       &:focus {
         border-color: $green;
         box-shadow: 0 0 0.5rem 0 rgba($green, 0.5);
@@ -44,7 +47,7 @@ div.select-wrapper {
 
   &::after {
     content: '▼';
-    color: #999;
+    color: #999999;
     font-size: 1rem;
     line-height: 2;
     top: 0;

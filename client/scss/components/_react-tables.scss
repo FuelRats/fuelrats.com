@@ -1,3 +1,4 @@
+/* stylelint-disable selector-class-pattern */
 .ReactTable {
   border: none;
 
@@ -28,7 +29,7 @@
   .rt-tr.clickable {
     background-color: rgba($light-grey, 0);
     cursor: pointer;
-    transition-duration: 50ms;
+    transition-duration: 0.05s;
     transition-property: background-color;
 
     &:hover {
@@ -46,3 +47,4 @@
     }
   }
 }
+/* stylelint-enable selector-class-pattern */

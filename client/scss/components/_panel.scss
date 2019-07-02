@@ -7,6 +7,22 @@
   }
 
   header,
+  .panel-header {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+
+    menu {
+      padding: 0;
+    }
+  }
+
+  .panel-content {
+    overflow: auto;
+    padding: 1rem;
+  }
+
+  header,
   footer,
   .panel-header,
   .panel-footer {
@@ -21,24 +37,5 @@
       background-color: $black;
       color: $white;
     }
-  }
-
-  header,
-  .panel-header {
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
-
-    menu {
-      padding: 0;
-    }
-  }
-
-  footer,
-  .panel-footer {}
-
-  .panel-content {
-    overflow: auto;
-    padding: 1rem;
   }
 }

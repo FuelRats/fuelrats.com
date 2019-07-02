@@ -11,7 +11,7 @@ div.switch-container {
     position: absolute;
     width: calc(100% - 0.8rem);
     height: calc(100% - 0.4rem);
-    margin: .2rem .4rem;
+    margin: 0.2rem 0.4rem;
     border-radius: 1.2rem;
   }
 
@@ -29,7 +29,7 @@ div.switch-container {
     height: 2.2rem;
     width: 2.2rem;
     background: $red;
-    transition: .2s cubic-bezier(0.19, 1, 0.22, 1);
+    transition: 0.2s cubic-bezier(0.19, 1, 0.22, 1);
     color: $black-lightened;
     border-radius: 50%;
     display: flex;
@@ -50,7 +50,7 @@ div.switch-container {
     position: absolute;
     white-space: nowrap;
     height: 100%;
-    left: calc(100% + .5rem);
+    left: calc(100% + 0.5rem);
     line-height: 2rem;
     color: $grey;
     user-select: none;

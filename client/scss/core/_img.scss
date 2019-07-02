@@ -2,7 +2,7 @@ img {
   height: auto;
   max-width: 100%;
 
-  &:after{
-    content: 'Loading...'
+  &::after {
+    content: 'Loading...';
   }
 }

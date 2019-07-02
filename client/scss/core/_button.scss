@@ -1,6 +1,7 @@
 @mixin link-button {
-  background: none;
   border: none;
+
+  background: none;
 
   &.inline {
     color: $red;
@@ -20,10 +21,12 @@
 }
 
 
+/* stylelint-disable selector-class-pattern */
 button,
-input[type=button],
+input[type='button'],
 .ReactTable .-pagination .-btn,
 .button {
+  /* stylelint-enable selector-class-pattern */
   --text-color: #{$white};
   --text-color-hover: #{$red};
   --background-color: #{$red};
@@ -65,10 +68,9 @@ input[type=button],
   &.link {
     @media screen and (max-width: 768px) {
       &:not(.mobile-button) {
-        @include link-button()
+        @include link-button();
       }
     }
-
     @media screen and (min-width: 769px) {
       @include link-button();
     }

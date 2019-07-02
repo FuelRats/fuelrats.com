@@ -19,6 +19,7 @@
 
   &[required] {
     border-color: $red-lightened;
+
     &:focus {
       border-color: $red;
       box-shadow: 0 0 0.5rem 0 rgba($red, 0.5);
@@ -26,6 +27,7 @@
 
     &:valid {
       border-color: $green-lightened;
+
       &:focus {
         border-color: $green;
         box-shadow: 0 0 0.5rem 0 rgba($green, 0.5);
@@ -36,7 +38,8 @@
   &.dark {
     background: $black-lightened;
     color: $white;
-    box-shadow: none !important;
+    box-shadow: none;
+
     &:not(.inline) {
       border-width: 0 0 0.2rem;
       border-color: transparent;
@@ -45,6 +48,7 @@
 
     &[required] {
       border-color: $red;
+      box-shadow: none;
 
       &:valid {
         border-color: $green;
@@ -61,24 +65,24 @@
 }
 
 input {
-  &[type=date],
-  &[type=datetime],
-  &[type=datetime-local],
-  &[type=email],
-  &[type=month],
-  &[type=number],
-  &[type=password],
-  &[type=search],
-  &[type=tel],
-  &[type=text],
-  &[type=time],
-  &[type=url],
-  &[type=week] {
+  &[type='date'],
+  &[type='datetime'],
+  &[type='datetime-local'],
+  &[type='email'],
+  &[type='month'],
+  &[type='number'],
+  &[type='password'],
+  &[type='search'],
+  &[type='tel'],
+  &[type='text'],
+  &[type='time'],
+  &[type='url'],
+  &[type='week'] {
     @extend %text-input;
   }
 
-  &[type=checkbox],
-  &[type=radio] {
+  &[type='checkbox'],
+  &[type='radio'] {
     &[hidden]:checked + label.button {
       background-color: transparent;
       color: $red;
@@ -93,14 +97,14 @@ textarea {
 }
 
 
-input.large[type=checkbox] {
+input.large[type='checkbox'] {
   width: 16px;
   height: 16px;
   vertical-align: middle;
 }
 
 
-
+/* stylelint-disable-next-line selector-class-pattern */
 .ReactTable .rt-thead.-filters input {
   @extend %text-input;
   color: $black;

@@ -4,7 +4,7 @@
   right: 2rem;
   top: 1.5rem;
   z-index: 100;
-  transition: top .2s;
+  transition: top 0.2s;
 
   &.logged-in,
   &.logging-in {
@@ -73,7 +73,7 @@
         z-index: 1;
       }
 
-      &:before {
+      &::before {
         background-color: $red;
         bottom: 0;
         content: '';
@@ -89,14 +89,13 @@
       &:hover {
         color: $white;
 
-        &:before {
+        &::before {
           width: 100%;
         }
-
       }
     }
 
-    &:not(:last-child) a:before {
+    &:not(:last-child) a::before {
       right: initial;
       left: 0%;
     }
@@ -108,7 +107,7 @@
 
   .avatar {
     order: 2;
-    transition: border-color .2s;
+    transition: border-color 0.2s;
     z-index: 5;
   }
 
@@ -119,7 +118,7 @@
     background-color: $grey-darkened;
     border-color: $red-darkened;
 
-    &:empty:before {
+    &:empty::before {
       color: $red-darkened;
       background: $grey-darkened;
     }

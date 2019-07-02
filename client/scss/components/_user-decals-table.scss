@@ -1,7 +1,11 @@
 .user-decals .panel-content {
   padding: 0;
 
-  .decal .code, .decal .claimed-at, .redeem, .loading, .no-decal {
+  .decal .code,
+  .decal .claimed-at,
+  .redeem,
+  .loading,
+  .no-decal {
     padding: 0.5rem 1rem;
   }
 
@@ -30,7 +34,8 @@
     }
   }
 
-  .redeem, .loading {
+  .redeem,
+  .loading {
     padding-bottom: 1rem;
   }
 }
