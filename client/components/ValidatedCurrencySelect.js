@@ -64,7 +64,7 @@ class ValidatedCurrencySelect extends React.Component {
     )
 
     return (
-      <fieldset>
+      <div>
         {renderLabel && <label htmlFor={id}>{label}</label>}
         <div className="select-wrapper">
           <select
@@ -81,7 +81,7 @@ class ValidatedCurrencySelect extends React.Component {
             ))}
           </select>
         </div>
-      </fieldset>
+      </div>
     )
   }
 
