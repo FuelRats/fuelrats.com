@@ -8,7 +8,7 @@ class DonatePaymentType extends React.Component {
 
   render () {
     return (
-      <div>Your selected payment type is {this.props.type}</div>
+      <div>Your selected payment type is {this.props.type}, {this.props.currency}, {this.props.amount}</div>
     )
   }
 }
