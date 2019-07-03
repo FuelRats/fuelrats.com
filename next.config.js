@@ -79,12 +79,14 @@ module.exports = withWorkers(withSass({
       $NODE_VERSION: JSON.stringify(process.version),
     }))
 
-    config.module.rules.unshift({
-      enforce: 'pre',
-      exclude: /node_modules/u,
-      loader: 'eslint-loader',
-      test: /\.js$/u,
-    })
+    if (data.dev) {
+      config.module.rules.unshift({
+        enforce: 'pre',
+        exclude: /node_modules/u,
+        loader: 'eslint-loader',
+        test: /\.js$/u,
+      })
+    }
 
     return config
   },
