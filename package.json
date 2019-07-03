@@ -9,6 +9,7 @@
     "analyze": "cross-env ANALYZE=1 next build",
     "build": "next build client",
     "dev": "node --inspect server/server.js",
+    "eslint": "eslint . --cache",
     "stylelint": "stylelint \"client/scss/**/*.scss\" --cache",
     "postinstall": "npm rebuild node-sass"
   },
