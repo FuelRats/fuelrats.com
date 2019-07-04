@@ -1,0 +1,16 @@
+.page.donate {
+  .donationAmount {
+    .options {
+      flex-direction: row;
+      .radio-card {
+        display: block;
+        width: 100%;
+      }
+    }
+  }
+
+  .donationType {
+    display: flex;
+    flex-direction: column;
+  }
+}
