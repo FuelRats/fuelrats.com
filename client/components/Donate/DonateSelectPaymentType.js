@@ -1,7 +1,5 @@
 import React from 'react'
 
-
-
 import ValidatedCurrencySelect from '../ValidatedCurrencySelect'
 import RadioCardInput from '../RadioCardInput'
 
@@ -33,10 +31,7 @@ class DonateSelectPaymentType extends React.Component {
 
   _handleFieldChange = ({ target, valid, message }) => {
     this.setState(({ validity }) => {
-      const {
-        name,
-        value,
-      } = target
+      const { name, value } = target
       const required = typeof validity[name] !== 'undefined'
 
       return {
@@ -65,22 +60,13 @@ class DonateSelectPaymentType extends React.Component {
       <div className="">
         <h5>I want to donate</h5>
         <div>
-          <RadioCardInput
-            value={amount}
-            onChange={this._handleAmountChange}
-            options={
-            VALID_AMOUNTS
-            }>
+          <RadioCardInput value={amount} className="donationAmount" onChange={this._handleAmountChange} options={VALID_AMOUNTS}>
             {({ value }) => (
               <>
-                <span>
-                  {value}
-                </span>
+                <span>{value}</span>
               </>
             )}
           </RadioCardInput>
-        </div>
-        <div>
           <ValidatedCurrencySelect
             className="currency-input"
             disabled={this.props.submitting}
@@ -93,11 +79,11 @@ class DonateSelectPaymentType extends React.Component {
             value={currency} />
         </div>
         <h5>with my</h5>
-        <div>
-          <button type="button" onClick={() => this.props.onTypeClick('card', currency)}>
+        <div className="donationType">
+          <button type="button" onClick={() => this.props.onTypeClick('card', currency, amount)}>
             Credit card!
           </button>
-          <button type="button" onClick={() => this.props.onTypeClick('aplgogl', currency)}>
+          <button type="button" onClick={() => this.props.onTypeClick('aplgogl', currency, amount)}>
             Apple / Google Pay!
           </button>
         </div>
