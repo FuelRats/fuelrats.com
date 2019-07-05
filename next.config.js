@@ -1,7 +1,6 @@
 /* eslint-env node */
 
 // Module imports
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const glob = require('glob')
 const path = require('path')
 const crypto = require('crypto')
@@ -14,7 +13,6 @@ const withWorkers = require('@zeit/next-workers')
 
 // Component constants
 const {
-  ANALYZE,
   BUILD_VCS_BRANCH,
   BUILD_VCS_NUMBER,
   FRDC_API_URL,
@@ -57,14 +55,6 @@ module.exports = withWorkers(withSass({
     },
   },
   webpack: (config, data) => {
-    if (ANALYZE) {
-      config.plugins.push(new BundleAnalyzerPlugin({
-        analyzerMode: 'server',
-        analyzerPort: 8888,
-        openAnalyzer: true,
-      }))
-    }
-
     config.plugins.push(new webpack.DefinePlugin({
       $IS_DEVELOPMENT: JSON.stringify(data.dev),
       $IS_STAGING: JSON.stringify(['develop', 'beta'].includes(BUILD_VCS_BRANCH)),
