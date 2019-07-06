@@ -27,7 +27,7 @@ master)
 
 *)
   echo "Current branch is not configured for auto-deploy. skipping deployment..."
-  exit 0
+  exit 1
   ;;
 esac
 
