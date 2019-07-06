@@ -12,7 +12,7 @@ div.user-nicknames {
       top: 0;
       z-index: 1;
       padding: 0.5rem 0 0.5rem 0.5rem;
-      background: #1a1a1a;
+      background: #1A1A1A;
 
       form {
         display: flex;
@@ -21,12 +21,12 @@ div.user-nicknames {
       }
 
       fieldset {
-        padding: 0rem;
+        padding: 0;
         flex: 2 0;
         margin-right: 0.5rem;
       }
 
-      button[type=submit] {
+      button[type='submit'] {
         flex: 0 0 auto;
         margin-right: 0.2rem;
       }

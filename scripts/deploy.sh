@@ -1,9 +1,12 @@
 #!/bin/bash
 
+# Variables
+
 DEPLOY_DIR="trash"
 SERVICE_NAME=""
 
-case $TRAVIS_BRANCH in
+# Find deploy target and service name
+case $1 in
 develop)
   DEPLOY_DIR="dev.fuelrats.com"
   SERVICE_NAME="fr-web_dev"
@@ -24,12 +27,12 @@ master)
 
 *)
   echo "Current branch is not configured for auto-deploy. skipping deployment..."
-  exit 0
+  exit 1
   ;;
 esac
 
 # Move built project files to server
-rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/ travis-deployment@emmental.fuelrats.com:/var/www/$DEPLOY_DIR/
+rsync -r --delete-after ./dist fuelrats@emmental.fuelrats.com:/var/www/$DEPLOY_DIR/
 
 # restart service
-ssh -t travis-deployment@emmental.fuelrats.com "sudo systemctl restart $SERVICE_NAME.service"
+ssh -t fuelrats@emmental.fuelrats.com "sudo systemctl restart $SERVICE_NAME.service"

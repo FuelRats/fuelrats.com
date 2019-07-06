@@ -8,7 +8,7 @@ import actionTypes from '../actionTypes'
 
 
 // Component constants
-const isDev = $IS_DEVELOPMENT || $IS_STAGING
+const IS_DEV_OR_STAGING = $IS_DEVELOPMENT || $IS_STAGING
 const ignoredTypes = [
 
   // This pops up on every 404 page due to how our fallback system works.
@@ -25,7 +25,7 @@ export default function errorReducer (state = initialState.error, action) {
       console.error('ACTION ERR:', action)
     }
 
-    if (isDev) {
+    if (IS_DEV_OR_STAGING) {
       return {
         ...state,
         errors: [
