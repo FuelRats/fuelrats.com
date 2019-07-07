@@ -44,9 +44,7 @@ class StoreControlBar extends Component {
               <FontAwesomeIcon icon="arrow-left" size="2x" />
             </a>
           </Link>
-        )
-
-        }
+        )}
         {Boolean(totalItems) && (
           <Link route="store checkout">
             <a

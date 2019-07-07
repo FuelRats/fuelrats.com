@@ -164,9 +164,7 @@ class ListRescues extends React.Component {
               value={this.state.client} />
           </div>
           <div className="rescue-list flex column">
-            {
-              rescues.map(ListRescues.renderListItem)
-            }
+            {rescues.map(ListRescues.renderListItem)}
           </div>
         </div>
       </PageWrapper>
