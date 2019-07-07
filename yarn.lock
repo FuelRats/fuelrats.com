@@ -859,17 +859,17 @@
     humps "^2.0.1"
     prop-types "^15.5.10"
 
-"@fuelrats/eslint-config-react@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@fuelrats/eslint-config-react/-/eslint-config-react-1.0.0.tgz#4061cf667fd038ac4c5431c82bf0b41762f4f08b"
-  integrity sha512-xvARXVKhZSO/Fg+zfT/7DiOqvZZTN5zmxFrjhBThbdQI2sbS+hFsOKUlnhgL9CGmib+bzXodF731H9u8Ud+3Mw==
+"@fuelrats/eslint-config-react@1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@fuelrats/eslint-config-react/-/eslint-config-react-1.0.5.tgz#173f43d2f5708e6e2ca33ea6f4047f7ce9a92c14"
+  integrity sha512-DjiFxliGpAf1lZyMo4zC3ScWxPt8QvS4w1ektlTRPBF5IxFQZddwGX94JTrxa/J/jfoa7XC2lV2ASvdfmfdODw==
   dependencies:
-    "@fuelrats/eslint-config" "^1.0.0"
+    "@fuelrats/eslint-config" "^1.0.1"
 
-"@fuelrats/eslint-config@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@fuelrats/eslint-config/-/eslint-config-1.0.0.tgz#4147557b401d4bc1323ada59a5cfb234b813187c"
-  integrity sha512-i2voBSh1eX4yu5mMcXVvhq+N7uQNOJx/OyUABWI/5wmZpDTVAUPmmdqATKQ57GFjCDy/BjI254Xc/JDEs8q9vQ==
+"@fuelrats/eslint-config@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@fuelrats/eslint-config/-/eslint-config-1.0.1.tgz#61bbfbe746bd933612ef552748b105f4ac398a32"
+  integrity sha512-zErru4pOUBWueNEfMwtg31TqzC94k0S0+8rZQRHaiyZmCGveyVhUPJzcdYEPTUUEjHtNtwyC1RUCOVhmpTxnzw==
   dependencies:
     eslint-restricted-globals "^0.2.0"
 

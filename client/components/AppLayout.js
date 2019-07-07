@@ -91,6 +91,7 @@ class AppLayout extends React.Component {
 
       if (!userHasPermission(userGroups, Component.ಠ_ಠ_REQUIRED_PERMISSION)) {
         if (ctx.res) {
+          /* eslint-disable-next-line require-atomic-updates */// This is fine
           ctx.res.statusCode = httpStatus.UNAUTHORIZED
         } else {
           statusCode = httpStatus.UNAUTHORIZED

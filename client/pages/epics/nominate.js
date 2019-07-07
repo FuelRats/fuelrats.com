@@ -181,7 +181,7 @@ class EpicNominate extends Component {
                 ]} />
             </fieldset>
 
-            { epicType === 'epicRescue' && (
+            {epicType === 'epicRescue' && (
               <fieldset>
                 <label htmlFor="rescues">What is the ID of the rescue?</label>
 
@@ -196,7 +196,7 @@ class EpicNominate extends Component {
               </fieldset>
             )}
 
-            { epicType === 'epicPlayer' && (
+            {epicType === 'epicPlayer' && (
               <fieldset>
                 <label htmlFor="rats">What is the rat's CMDR name?</label>
 

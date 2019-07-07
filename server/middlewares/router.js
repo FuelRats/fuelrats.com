@@ -98,8 +98,8 @@ module.exports = (nextApp, koaServer) => {
 
   const nextRoutesHandler = routes.getRequestHandler(nextApp)
   router.get('*', async (ctx) => {
-    await nextRoutesHandler(ctx.req, ctx.res)
     ctx.respond = false
+    await nextRoutesHandler(ctx.req, ctx.res)
   })
 
 

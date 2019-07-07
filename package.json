@@ -13,7 +13,7 @@
     "postinstall": "npm rebuild node-sass"
   },
   "devDependencies": {
-    "@fuelrats/eslint-config-react": "1.0.0",
+    "@fuelrats/eslint-config-react": "1.0.5",
     "@fuelrats/stylelint-config": "^0.4.0",
     "all-contributors-cli": "^6.7.0",
     "babel-eslint": "^10.0.2",
