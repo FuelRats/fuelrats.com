@@ -1,12 +1,16 @@
 .user-overview-tab {
-  align-items: flex-start;
   display: flex;
+
   flex-wrap: wrap;
+
+  align-items: flex-start;
+
   margin: -1rem;
 
   .panel {
-    margin: 1rem;
     flex-grow: 1;
+
     min-width: 40rem;
+    margin: 1rem;
   }
 }

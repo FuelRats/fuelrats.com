@@ -1,9 +1,11 @@
 fieldset {
-  align-items: stretch;
   display: flex;
+
   flex-direction: column;
-  padding: 2rem;
+  align-items: stretch;
+
   width: 100%;
+  padding: 2rem;
 
   &:last-child {
     margin-bottom: 0;

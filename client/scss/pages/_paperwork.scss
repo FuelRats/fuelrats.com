@@ -24,18 +24,22 @@ $margin: 2rem;
     }
 
     div.invalidity-explainer {
-      background-color: $red;
-      color: #000000;
-      padding: 0 2rem;
       display: inline-block;
+
+      padding: 0 2rem;
+
+      color: #000000;
+      background-color: $red;
       opacity: 0;
       transition:
         transform 0.2s,
         opacity 0.2s;
+
       transform: translateX(calc(50% + 9rem)) scaleX(0);
 
       &.show {
         opacity: 1;
+
         transform: translateX(9rem) scaleX(1);
       }
 
@@ -45,8 +49,9 @@ $margin: 2rem;
     }
 
     button[type='submit'] {
-      transform: translateX(0%) scale(1);
       transition: transform 0.2s;
+
+      transform: translateX(0%) scale(1);
 
       &[disabled] {
         transform: translateX(50%) scale(0);
@@ -56,6 +61,7 @@ $margin: 2rem;
 
   .page-content {
     display: flex;
+
     flex-flow: row wrap;
     align-content: flex-start;
   }
@@ -73,21 +79,28 @@ $margin: 2rem;
   :not(form) header.paperwork-header {
     // For view (but nopt edit) paperwork
     order: 1;
+
     margin-left: calc(#{$margin} + 0.5rem);
   }
 
   header.paperwork-header {
-    width: 100%;
-    flex: 1 1 auto;
     display: flex;
+
     flex-flow: row nowrap;
     align-items: center;
+
+    flex: 1 1 auto;
+
+    width: 100%;
+    margin-right: calc(#{$margin} + 0.5rem);
+
+    color: rgba($white, 0.5);
     background-color: $red;
+
     font-size: 2em;
     line-height: normal;
-    color: rgba($white, 0.5);
+
     transform: skewX(-10deg);
-    margin-right: calc(#{$margin} + 0.5rem);
 
     > div {
       padding: 0.2em 0.4em;
@@ -95,10 +108,12 @@ $margin: 2rem;
       &.board-index {
         flex: 0 0 auto;
         align-self: flex-start;
+
         margin: 0.2rem;
-        font-weight: bold;
         // background: $white;
         color: $white;
+
+        font-weight: bold;
       }
 
       &.title {
@@ -106,54 +121,64 @@ $margin: 2rem;
       }
 
       > span {
-        transform: skewX(10deg);
         display: inline-block;
+
+        transform: skewX(10deg);
       }
 
       .cmdr-name,
       .system,
       .rescue-title {
-        font-weight: bold;
         color: $white;
+
+        font-weight: bold;
       }
     }
   }
 
   .rescue-tags {
-    line-height: normal;
+    order: 3;
+    flex: 1 1 auto;
+
+    width: 100%;
     margin-top: 0;
     margin-bottom: 0;
+
     color: $white;
-    width: 100%;
-    flex: 1 1 auto;
-    order: 3;
-    font-size: 0.9em;
     opacity: 0.9;
+
+    font-size: 0.9em;
     font-weight: bold;
+    line-height: normal;
 
     .md-group,
     .tag {
-      background: $black;
       margin: 0 0.5rem 0.5rem 0;
+
       border: 0.2rem solid $black;
+
+      background: $black;
     }
 
     .tag,
     .tag.status-group > span {
-      padding: 0.4em 0.8em;
       display: inline-block;
+
+      padding: 0.4em 0.8em;
     }
 
     .tag {
       display: inline-block;
+
       text-transform: capitalize;
 
       &.status-group {
         padding: 0;
 
         .outcome {
-          background: $white;
           color: $black;
+          background: $white;
+
           font-weight: normal;
         }
       }
@@ -177,6 +202,7 @@ $margin: 2rem;
 
       &.code-red {
         color: change-color($red, $lightness: 66);
+
         text-transform: uppercase;
       }
     }
@@ -190,10 +216,12 @@ $margin: 2rem;
       }
 
       .md-reason {
-        background: $white;
-        color: $black;
-        font-weight: normal;
         flex: 0 1 auto;
+
+        color: $black;
+        background: $white;
+
+        font-weight: normal;
       }
 
       .md-reporter {
@@ -203,23 +231,20 @@ $margin: 2rem;
   }
 
   .info {
-    flex: 0 0 auto;
-    align-self: flex-start;
     display: grid;
+
     grid-template-columns: min-content auto;
     grid-column-gap: 1em;
-    padding: 0.5em 1em;
     // margin: 0.5rem 0 1rem 0;
     order: 5;
+    flex: 0 0 auto;
+    align-self: flex-start;
 
-    @media screen and (max-width: 768px) {
-      order: 4;
-      // margin-top: 0;
-      width: 100%;
-    }
+    padding: 0.5em 1em;
 
     .label {
       grid-column: 1;
+
       opacity: 0.5;
     }
 
@@ -227,27 +252,34 @@ $margin: 2rem;
     .system {
       font-weight: bold;
     }
+
+    @media screen and (max-width: 768px) {
+      order: 4;
+      // margin-top: 0;
+      width: 100%;
+    }
   }
 
   .panel {
-    width: 100%;
-    flex: 1 1 auto;
     order: 6;
+    flex: 1 1 auto;
+
+    width: 100%;
 
     &.rats {
-      width: auto;
-      flex: 1 0 auto;
       order: 4;
+      flex: 1 0 auto;
+
+      width: auto;
+    }
+
+    &.notes .panel-content {
+      white-space: pre-line;
     }
 
     .panel-content {
       ul li {
         margin-bottom: 0.5em;
-
-        .badge {
-          margin-left: 0.5em;
-          font-style: normal;
-        }
 
         &.unidentified {
           font-style: italic;
@@ -256,24 +288,35 @@ $margin: 2rem;
             background: #B0A154;
           }
         }
+
+        .badge {
+          margin-left: 0.5em;
+
+          font-style: normal;
+        }
       }
 
       ol li {
         display: flex;
+
         flex-flow: row nowrap;
-        justify-content: space-between;
         align-items: baseline;
+        justify-content: space-between;
+
         margin-bottom: 0.5em;
 
         &:not(:last-of-type) {
           padding-bottom: 0.5em;
+
           border-bottom: 0.1rem solid rgba(70, 70, 70, 0.05);
         }
 
         .times,
         .authors {
           flex: 0 0 auto;
+
           opacity: 0.5;
+
           font-size: 0.8em;
           line-height: normal;
 
@@ -291,9 +334,11 @@ $margin: 2rem;
 
           .updated {
             .label {
-              opacity: 0.7;
               display: block;
+
               margin-top: 0.3em;
+
+              opacity: 0.7;
             }
           }
         }
@@ -303,17 +348,21 @@ $margin: 2rem;
         }
 
         .authors {
-          margin-left: 1em;
           align-self: flex-end;
+
+          margin-left: 1em;
+
           text-align: right;
 
           .last-author {
             margin-left: 1em;
 
             .label {
-              opacity: 0.7;
               display: block;
+
               margin-top: 0.3em;
+
+              opacity: 0.7;
             }
           }
         }
@@ -336,10 +385,6 @@ $margin: 2rem;
           }
         }
       }
-    }
-
-    &.notes .panel-content {
-      white-space: pre-line;
     }
   }
 }

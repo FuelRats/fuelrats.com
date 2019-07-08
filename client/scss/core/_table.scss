@@ -1,6 +1,7 @@
 th {
-  font-weight: bold;
   padding-right: 1rem;
+
+  font-weight: bold;
 }
 
 
@@ -19,16 +20,16 @@ table {
   }
 
   &.padded {
-    th,
-    td {
-      padding: 1rem;
-    }
-
     &.compact {
       th,
       td {
         padding: 0.5rem;
       }
+    }
+
+    th,
+    td {
+      padding: 1rem;
     }
   }
 

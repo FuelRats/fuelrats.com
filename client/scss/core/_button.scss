@@ -4,10 +4,13 @@
   background: none;
 
   &.inline {
-    color: $red;
-    text-decoration: underline;
-    padding: 0;
     display: inline;
+
+    padding: 0;
+
+    color: $red;
+
+    text-decoration: underline;
 
     &:hover {
       color: inherit;
@@ -15,8 +18,9 @@
   }
 
   &:hover {
-    background-color: none;
     border: none;
+
+    background-color: none;
   }
 }
 
@@ -31,25 +35,32 @@ input[type='button'],
   --text-color-hover: #{$red};
   --background-color: #{$red};
   --background-color-hover: transparent;
-  background-color: var(--background-color);
+
+  display: inline-block;
+
+  flex-shrink: 0;
+
+  margin: 0;
+  padding: 1rem 2rem;
+
+  border-width: 0.2rem;
+  border-style: solid;
   border-color: var(--background-color);
   border-radius: 0;
-  border-style: solid;
-  border-width: 0.2rem;
+
+  outline: none;
+  background-color: var(--background-color);
   color: var(--text-color);
-  cursor: pointer;
-  display: inline-block;
-  flex-shrink: 0;
+  transition: all 0.2s;
+
   font-family: inherit;
   font-size: inherit;
-  margin: 0;
-  outline: none;
-  overflow: hidden;
-  padding: 1rem 2rem;
   text-align: center;
   text-decoration: none;
-  transition: all 0.2s;
   line-height: normal;
+
+  overflow: hidden;
+  cursor: pointer;
 
   &:hover {
     background-color: var(--background-color-hover);
@@ -111,8 +122,9 @@ input[type='button'],
     --background-color: transparent;
     --text-color: #{$black};
     --text-color-hover: #{$red};
-    border: none;
     padding: 0;
+
+    border: none;
   }
 
   &.green {

@@ -1,19 +1,23 @@
 %text-input {
-  border-color: $grey-lightened;
-  border-style: solid;
+  width: 100%;
+  padding: 1rem;
+
   border-width: 0.1rem;
-  box-shadow: 0 0 0.5rem 0 rgba($grey, 0);
+  border-style: solid;
+  border-color: $grey-lightened;
+
   color: inherit;
-  font-family: inherit;
-  font-size: inherit;
+  box-shadow: 0 0 0.5rem 0 rgba($grey, 0);
   outline: none;
+
+  font-size: inherit;
+  font-family: inherit;
   transition-duration: 0.5s;
   transition-property: border-color, box-shadow;
-  padding: 1rem;
-  width: 100%;
 
   &:focus {
     border-color: $grey;
+
     box-shadow: 0 0 0.5rem 0 rgba($grey, 0.5);
   }
 
@@ -22,6 +26,7 @@
 
     &:focus {
       border-color: $red;
+
       box-shadow: 0 0 0.5rem 0 rgba($red, 0.5);
     }
 
@@ -30,14 +35,15 @@
 
       &:focus {
         border-color: $green;
+
         box-shadow: 0 0 0.5rem 0 rgba($green, 0.5);
       }
     }
   }
 
   &.dark {
-    background: $black-lightened;
     color: $white;
+    background: $black-lightened;
     box-shadow: none;
 
     &:not(.inline) {
@@ -48,6 +54,7 @@
 
     &[required] {
       border-color: $red;
+
       box-shadow: none;
 
       &:valid {
@@ -57,10 +64,12 @@
   }
 
   &.inline {
-    padding: 0.25rem;
-    background: transparent;
     display: inline;
+
     width: auto;
+    padding: 0.25rem;
+
+    background: transparent;
   }
 }
 
@@ -107,6 +116,8 @@ input.large[type='checkbox'] {
 /* stylelint-disable-next-line selector-class-pattern */
 .ReactTable .rt-thead.-filters input {
   @extend %text-input;
-  color: $black;
+
   border-radius: 0;
+
+  color: $black;
 }

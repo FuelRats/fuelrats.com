@@ -1,23 +1,39 @@
 [role='dialog'] {
-  background-color: rgba($black, 0.99);
-  margin: 0 auto auto;
-  border: none;
   display: flex;
+  z-index: 401;
+
   flex-direction: column;
+
   min-width: 60rem;
+  margin: 0 auto auto;
+  padding: 2rem;
+
+  border: none;
+
+  background-color: rgba($black, 0.99);
+
   overflow: hidden;
   pointer-events: initial;
-  z-index: 401;
-  padding: 2rem;
 
   &.transparency {
     background-color: rgba($black, 0.75);
   }
 
+  &.center-title > header {
+    justify-content: center;
+  }
+
+  &.no-pad > .content {
+    padding: 2rem 0 0;
+  }
+
   > header {
-    align-items: stretch;
     display: flex;
+
+    align-items: stretch;
+
     flex-shrink: 0;
+
     color: $white;
 
     h2 {
@@ -25,19 +41,18 @@
     }
 
     [name='close'] {
-      border-radius: 0;
       margin-left: auto;
       padding: 1rem;
-    }
-  }
 
-  &.center-title > header {
-    justify-content: center;
+      border-radius: 0;
+    }
   }
 
   > .content {
     flex-shrink: 1;
+
     padding: 2rem;
+
     color: $white;
 
     input {
@@ -45,13 +60,10 @@
     }
 
     > .center-content {
-      text-align: center;
       justify-content: center;
-    }
-  }
 
-  &.no-pad > .content {
-    padding: 2rem 0 0;
+      text-align: center;
+    }
   }
 
   > footer {
@@ -60,7 +72,9 @@
 
   menu[type='toolbar'] {
     display: flex;
+
     flex-shrink: 0;
+
     padding: 2rem 0 0;
 
     &.compact {
@@ -70,12 +84,14 @@
     > .primary,
     > .secondary {
       display: flex;
+
       align-items: baseline;
     }
 
     > .primary {
-      margin-left: auto;
       order: 2;
+
+      margin-left: auto;
 
       > *:not(:first-child) {
         margin-left: 1rem;
@@ -83,8 +99,9 @@
     }
 
     > .secondary {
-      margin-right: auto;
       order: 1;
+
+      margin-right: auto;
 
       > *:not(:last-child) {
         margin-right: 1rem;

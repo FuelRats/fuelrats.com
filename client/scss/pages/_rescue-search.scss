@@ -5,44 +5,52 @@
 
   .rescue-list {
     justify-content: flex-start;
+
     padding: 0 2rem;
   }
 
   .rescue-list-item {
     display: flex;
-    flex-direction: column;
-    padding: 0.5rem 0;
     position: relative;
+
+    flex-direction: column;
+
+    padding: 0.5rem 0;
 
     &:not(:first-child) {
       border-top: 1px solid #C4C4C4;
     }
 
     .primary-info {
-      font-size: 1em;
       z-index: 2;
+
+      font-size: 1em;
     }
 
     .secondary-info {
       margin-top: -1.25rem;
 
       .status-icon {
-        z-index: 5;
-        position: absolute;
-        right: 0;
-        top: 0;
-        opacity: 0.25;
-        height: 100%;
         display: flex;
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 5;
+
         align-items: center;
+
+        height: 100%;
+
+        opacity: 0.25;
       }
     }
   }
 
   @media only screen and (min-width: 1251px) {
     .page-content {
-      min-width: 1000px;
       align-self: center;
+
+      min-width: 1000px;
     }
   }
 }

@@ -1,25 +1,20 @@
 select {
+  appearance: none;
+
+  width: 100%;
   padding: 1rem;
+
   border: 0.1rem solid $grey-lightened;
-  font-family: inherit;
-  font-size: inherit;
+
   outline: none;
+
+  font-size: inherit;
+  font-family: inherit;
   transition-duration: 0.5s;
   transition-property: border-color, box-shadow;
-  width: 100%;
-  appearance: none;
 
   &:not(:valid) {
     color: #999999;
-  }
-
-  option {
-    color: #000000;
-
-    &[value=''] {
-      display: none;
-      color: #999999;
-    }
   }
 
   &.required {
@@ -27,6 +22,7 @@ select {
 
     &:focus {
       border-color: $red;
+
       box-shadow: 0 0 0.5rem 0 rgba($red, 0.5);
     }
 
@@ -35,8 +31,19 @@ select {
 
       &:focus {
         border-color: $green;
+
         box-shadow: 0 0 0.5rem 0 rgba($green, 0.5);
       }
+    }
+  }
+
+  option {
+    color: #000000;
+
+    &[value=''] {
+      display: none;
+
+      color: #999999;
     }
   }
 }
@@ -46,14 +53,17 @@ div.select-wrapper {
   position: relative;
 
   &::after {
-    content: '▼';
-    color: #999999;
-    font-size: 1rem;
-    line-height: 2;
+    position: absolute;
     top: 0;
     right: 0;
+
+    content: '▼';
     padding: 1rem;
-    position: absolute;
+
+    color: #999999;
+
+    font-size: 1rem;
+    line-height: 2;
     pointer-events: none;
   }
 }

@@ -7,12 +7,16 @@ form {
     padding: 0.5rem 2rem;
   }
 
-  .form-row {
-    display: flex;
-    flex-direction: row;
-  }
-
   &.compact .form-row {
+    &.submit-row {
+      padding: 0.4rem 0;
+
+      fieldset,
+      > div {
+        padding: 0.1rem 0.25rem;
+      }
+    }
+
     fieldset,
     > div {
       padding: 0.5rem;
@@ -25,14 +29,11 @@ form {
         padding-right: 4rem;
       }
     }
+  }
 
-    &.submit-row {
-      padding: 0.4rem 0;
+  .form-row {
+    display: flex;
 
-      fieldset,
-      > div {
-        padding: 0.1rem 0.25rem;
-      }
-    }
+    flex-direction: row;
   }
 }
