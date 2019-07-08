@@ -127,6 +127,8 @@ $pc-background-gradients:
 }
 
 .icon-badge {
+  @extend %badge;
+
   position: absolute;
   top: 0;
   right: 0;
@@ -143,6 +145,4 @@ $pc-background-gradients:
     background-color: $grey-lightened;
     color: $black;
   }
-
-  @extend %badge;
 }
