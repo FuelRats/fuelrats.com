@@ -1,13 +1,21 @@
 .profile-header {
   display: grid;
-
   grid-template:
     'avatar info' 1fr
     'avatar badges' min-content
     / min-content auto;
   grid-column-gap: 2rem;
-
   margin-bottom: 3rem;
+
+  @media screen and (max-width: 768px) {
+    grid-template-areas:
+      'avatar avatar'
+      'info   info'
+      'badges badges';
+    justify-content: center;
+    justify-items: center;
+    text-align: center;
+  }
 
   .user-avatar {
     grid-area: avatar;
@@ -16,7 +24,6 @@
   .profile-basic-info {
     grid-area: info;
     align-self: center;
-
     padding-bottom: 1rem;
 
     > div .label {
@@ -29,28 +36,14 @@
   }
 
   .profile-user-badges {
-    grid-area: badges;
-    align-self: end;
-
     height: min-content;
+    align-self: end;
+    grid-area: badges;
 
     .badge {
-      padding: 0 0.75rem;
-
-      background-color: #878787;
-
       font-size: 1.2rem;
+      background-color: #878787;
+      padding: 0 0.75rem;
     }
-  }
-
-  @media screen and (max-width: 768px) {
-    grid-template-areas:
-      'avatar avatar'
-      'info   info'
-      'badges badges';
-    justify-items: center;
-    justify-content: center;
-
-    text-align: center;
   }
 }

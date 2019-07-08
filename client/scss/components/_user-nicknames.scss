@@ -6,33 +6,28 @@ div.user-nicknames {
 
     .add-nickname-float {
       position: absolute;
-      top: 0;
       right: 0;
       left: 0;
-      z-index: 1;
-
       width: calc(100% - 3.5rem);
+      top: 0;
+      z-index: 1;
       padding: 0.5rem 0 0.5rem 0.5rem;
-
       background: #1A1A1A;
 
       form {
         display: flex;
-
         flex-flow: row nowrap;
         align-items: center;
       }
 
       fieldset {
-        flex: 2 0;
-
-        margin-right: 0.5rem;
         padding: 0;
+        flex: 2 0;
+        margin-right: 0.5rem;
       }
 
       button[type='submit'] {
         flex: 0 0 auto;
-
         margin-right: 0.2rem;
       }
     }
@@ -41,10 +36,9 @@ div.user-nicknames {
       position: relative;
 
       button {
+        margin-left: 0.5rem;
         z-index: 2;
 
-
-        margin-left: 0.5rem;
         // svg {
         //   width: 1.1em;
         // }
@@ -58,10 +52,8 @@ div.user-nicknames {
 
     ul > li {
       display: flex;
-
-      align-items: center;
       justify-content: space-between;
-
+      align-items: center;
       padding: 0.5rem 1rem;
 
       &:nth-child(even) {
@@ -76,9 +68,8 @@ div.user-nicknames {
 
   footer form.row {
     .validated-form-input {
-      margin-right: 1rem;
       padding: 0;
-
+      margin-right: 1rem;
       color: $black;
 
       input {

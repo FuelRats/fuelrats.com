@@ -339,7 +339,7 @@ class Register extends Component {
           </menu>
         </form>
 
-        { checkedTOS && !acceptTerms && !acceptPrivacy && (
+        {checkedTOS && !acceptTerms && !acceptPrivacy && (
           <TermsDialog
             dialogContent={() => getWordpressPageElement(termsPage)}
             onClose={() => this.setState({ acceptTerms: true })}
@@ -347,7 +347,7 @@ class Register extends Component {
             checkboxLabel="I have read and agree to these Terms of Service" />
         )}
 
-        { checkedTOS && acceptTerms && !acceptPrivacy && (
+        {checkedTOS && acceptTerms && !acceptPrivacy && (
           <TermsDialog
             dialogContent={() => getWordpressPageElement(privacyPage)}
             onClose={() => {
