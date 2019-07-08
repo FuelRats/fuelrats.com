@@ -1,12 +1,16 @@
 .page-content {
   display: flex;
+
   flex-direction: column;
+
   flex-grow: 1;
   flex-shrink: 0;
+
   margin: 2rem;
   //  overflow: auto;
   section {
     flex-shrink: 0;
+
     margin-bottom: 2rem;
 
     + aside {

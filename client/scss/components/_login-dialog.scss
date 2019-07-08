@@ -5,23 +5,24 @@ div[role='dialog'].login-dialog {
 
       > .primary,
       > .secondary {
-        margin: initial;
         flex-direction: column-reverse;
         align-items: center;
+
         width: 100%;
+        margin: initial;
+
+        &:not(:first-child) {
+          margin-bottom: 1rem;
+        }
 
         button,
         .button {
-          margin: 0;
           min-width: 80%;
+          margin: 0;
 
           &:not(:first-child) {
             margin-bottom: 2rem;
           }
-        }
-
-        &:not(:first-child) {
-          margin-bottom: 1rem;
         }
       }
     }

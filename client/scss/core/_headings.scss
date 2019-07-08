@@ -5,11 +5,13 @@ h4,
 h5,
 h6 {
   flex-shrink: 0;
+
   font-weight: bold;
   line-height: 1.5;
 
   small {
     color: $grey-lightened;
+
     font-size: 0.7em;
   }
 }

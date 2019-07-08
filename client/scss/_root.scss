@@ -9,11 +9,12 @@ html,
 body,
 [data-reactroot],
 [role='application'] {
+  width: 100vw;
   height: 100%;
   margin: 0;
-  overflow: hidden;
   padding: 0;
-  width: 100vw;
+
+  overflow: hidden;
 }
 
 html {
@@ -21,10 +22,12 @@ html {
 }
 
 body {
-  align-content: stretch;
-  align-items: stretch;
   display: flex;
+
   flex-direction: column;
+  align-items: stretch;
+  align-content: stretch;
+
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
 
@@ -32,6 +35,7 @@ body {
   .next-wrapper,
   #__next {
     height: 100%;
+
     overflow: hidden;
   }
   /* stylelint-enable selector-id-pattern */
@@ -44,17 +48,21 @@ body {
   }
 
   > #DialogContainer {
-    justify-content: center;
-    border: none;
     display: flex;
-    height: 100vh;
-    left: 0;
-    overflow: auto;
-    padding: 10vh 10vw;
     position: fixed;
     top: 0;
-    width: 100vw;
+    left: 0;
     z-index: 401;
+
+    justify-content: center;
+
+    width: 100vw;
+    height: 100vh;
+    padding: 10vh 10vw;
+
+    border: none;
+
+    overflow: auto;
 
     &:empty {
       pointer-events: none;

@@ -1,14 +1,17 @@
 dl {
   display: flex;
+
   flex-wrap: wrap;
 
   dt,
   dd {
-    border-top: 1px solid $black;
     flex-grow: 1;
     flex-shrink: 0;
-    padding-bottom: 1rem;
+
     padding-top: 1rem;
+    padding-bottom: 1rem;
+
+    border-top: 1px solid $black;
   }
 
   dt {
@@ -16,9 +19,11 @@ dl {
   }
 
   dd {
-    align-items: center;
     display: flex;
+
+    align-items: center;
     justify-content: space-between;
+
     width: 80%;
 
     + dd {

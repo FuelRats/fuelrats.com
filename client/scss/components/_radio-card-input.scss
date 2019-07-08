@@ -3,12 +3,16 @@ div.radio-card-input {
     display: flex;
 
     li.radio-card {
-      padding: 1rem 2rem;
-      text-align: center;
       margin: 0 0.25rem;
-      box-shadow: 0 0 0.5rem 0 rgba($red-lightened, 0);
+      padding: 1rem 2rem;
+
       border: 0.1rem solid $grey-lightened;
+
+      box-shadow: 0 0 0.5rem 0 rgba($red-lightened, 0);
       transition: all 0.2s;
+
+      text-align: center;
+
       cursor: pointer;
 
 
@@ -24,13 +28,15 @@ div.radio-card-input {
       }
 
       &.disabled {
-        background-color: $grey;
         border-color: $grey;
+
+        background-color: $grey;
         color: $grey-lightened;
       }
 
       div.card-content {
         display: flex;
+
         flex-direction: column;
 
         .title {

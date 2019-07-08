@@ -1,33 +1,38 @@
 .tooltip {
-  background-color: $black;
-  border-radius: 0.25rem;
-  color: $white;
-  margin-left: 0.5rem;
-  opacity: 0;
-  padding: 0.5rem 2rem;
-  pointer-events: none;
   position: absolute;
+
+  margin-left: 0.5rem;
+  padding: 0.5rem 2rem;
+
+  border-radius: 0.25rem;
+
+  background-color: $black;
+  color: $white;
+  opacity: 0;
   transition-duration: 0.2s;
   transition-property: left, opacity, top;
+
   white-space: nowrap;
+  pointer-events: none;
 
   &::before {
-    border-color: transparent;
-    border-style: solid;
-    border-width: 0.5rem;
-    border-left-width: 0;
-    border-right-color: $black;
-    content: '';
     display: block;
     position: absolute;
-    right: 100%;
     top: 0.5rem;
+    right: 100%;
+
+    content: '';
+
+    border: 0.5rem solid transparent;
+    border-right-color: $black;
+    border-left-width: 0;
   }
 
   header {
-    font-size: 1.2em;
-    font-weight: bold;
     margin-bottom: 1rem;
     padding: 0;
+
+    font-size: 1.2em;
+    font-weight: bold;
   }
 }

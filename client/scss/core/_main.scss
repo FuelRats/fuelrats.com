@@ -1,7 +1,10 @@
 main {
-  align-content: stretch;
   display: flex;
+
   flex-direction: column;
+  align-content: stretch;
+
   flex-grow: 1;
+
   overflow: auto;
 }

@@ -1,17 +1,20 @@
 .page.i-need-fuel {
   .buttons {
-    align-items: flex-start;
-    flex-direction: column;
     display: flex;
+
+    flex-direction: column;
+    align-items: flex-start;
     justify-content: space-between;
 
     .call-to-action {
-      font-size: 2.5em;
       padding: 1rem 4rem;
+
+      font-size: 2.5em;
     }
 
     div {
       display: flex;
+
       flex-direction: column;
     }
 

@@ -1,45 +1,55 @@
 .coin {
-  flex-shrink: 0;
-  margin: 1rem;
   position: relative;
-  transform: rotateY(0deg);
-  transform-style: preserve-3d;
+
+  flex-shrink: 0;
+
+  margin: 1rem;
+
   transition: transform 1s;
 
+  transform: rotateY(0deg);
+  transform-style: preserve-3d;
+
+  &:hover {
+    transform: rotateY(900deg);
+  }
+
   &.small {
-    height: 4rem;
     width: 4rem;
+    height: 4rem;
   }
 
   &.medium {
-    height: 6.5rem;
     width: 6.5rem;
+    height: 6.5rem;
   }
 
   &.large {
-    height: 10rem;
     width: 10rem;
+    height: 10rem;
   }
 
   .back,
   .front {
-    align-content: stretch;
-    align-items: stretch;
-    backface-visibility: hidden;
-    background-color: $white;
-    border-color: $red;
-    border-style: solid;
-    border-width: 0.2rem;
-    border-radius: 50%;
-    bottom: 0;
     display: flex;
-    flex-grow: 0;
-    flex-shrink: 0;
-    left: 0;
-    overflow: hidden;
     position: absolute;
-    right: 0;
     top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    align-items: stretch;
+    align-content: stretch;
+
+    flex: 0 0;
+
+    border-width: 0.2rem solid $red;
+    border-radius: 50%;
+
+    background-color: $white;
+    backface-visibility: hidden;
+
+    overflow: hidden;
   }
 
   .front {
@@ -49,9 +59,5 @@
 
   .back {
     transform: rotateY(180deg);
-  }
-
-  &:hover {
-    transform: rotateY(900deg);
   }
 }

@@ -1,6 +1,7 @@
 .tweets {
-  list-style: none;
   padding: 0;
+
+  list-style: none;
 
   > li {
     animation-delay: 0s;
@@ -13,71 +14,82 @@
 }
 
 .tweet {
+  display: flex;
+
+  margin-bottom: 2rem;
+
   animation-duration: 1s;
   animation-fill-mode: both;
   animation-iteration-count: 1;
   animation-name:
     fade-in,
     slide-in-from-left;
-  display: flex;
-  margin-bottom: 2rem;
+
   overflow: hidden;
   transform-style: preserve-3d;
 
   div {
-    background-color: $white;
-    border-color: $black;
-    border-radius: 0.4rem;
-    border-style: solid;
-    border-width: 0.2rem;
-    padding: 1rem;
     position: relative;
+
+    padding: 1rem;
+
+    border: 0.2rem solid $black;
+    border-radius: 0.4rem;
+
+    background-color: $white;
 
     &::after,
     &::before {
-      border-color: transparent;
-      border-style: solid;
-      border-left-width: 0;
-      content: '';
       position: absolute;
       right: 100%;
+
+      content: '';
+
+      border-style: solid;
+      border-color: transparent;
+      border-left-width: 0;
     }
 
     &::after {
-      border-width: 1rem;
-      border-right-color: $white;
       top: 1.2rem;
       z-index: 2;
+
+      border-width: 1rem;
+      border-right-color: $white;
     }
 
     &::before {
-      border-width: 1.3rem;
-      border-right-color: $black;
       top: 0.9rem;
       z-index: 1;
+
+      border-width: 1.3rem;
+      border-right-color: $black;
     }
   }
 
   header {
     flex-shrink: 0;
+
     margin-right: 2rem;
 
     img {
-      border-color: $black;
-      border-style: solid;
-      border-radius: 100%;
-      border-width: 0.2rem;
-      height: 4.8rem;
       width: 4.8rem;
+      height: 4.8rem;
+
+      border: 0.2rem solid $black;
+      border-radius: 100%;
     }
   }
 
   .media-list {
     display: flex;
+
     flex-wrap: wrap;
-    list-style: none;
+
     margin: 0;
     padding: 0;
+
+    list-style: none;
 
     &:empty {
       margin: 0;
@@ -106,14 +118,16 @@
   }
 
   p {
-    margin: 0;
     max-width: 100%;
+    margin: 0;
+
     overflow-x: auto;
   }
 
   footer {
     ul {
       display: flex;
+
       margin-bottom: 0;
     }
 

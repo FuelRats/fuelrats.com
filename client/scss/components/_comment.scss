@@ -5,12 +5,15 @@
 
   small {
     flex-grow: 1;
+
     margin: 0;
   }
 
   header {
-    align-items: center;
     display: flex;
+
+    align-items: center;
+
     margin: 0;
   }
 
@@ -19,8 +22,8 @@
   p,
   small,
   ul {
-    margin-left: 0;
     margin-right: 0;
+    margin-left: 0;
   }
 
   .content {

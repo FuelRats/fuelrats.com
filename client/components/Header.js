@@ -1,4 +1,4 @@
-/* globals $IS_DEVELOPMENT:false, $IS_STAGING:false, $BUILD_COMMIT:false, $BUILD_COMMIT_RANGE:false */
+/* globals $IS_DEVELOPMENT:false, $IS_STAGING:false, $BUILD_COMMIT:false, $BUILD_COMMIT_SHORT:false */
 
 // Module imports
 import React from 'react'
@@ -20,10 +20,9 @@ import BrandSvg from './svg/BrandSvg'
 
 
 // Component constants
-const isDevOrStaging = $IS_DEVELOPMENT || $IS_STAGING
-const buildCommit = $BUILD_COMMIT
-const buildCommitRange = $BUILD_COMMIT_RANGE
-
+const IS_DEV_OR_STAGING = $IS_DEVELOPMENT || $IS_STAGING
+const BUILD_COMMIT = $BUILD_COMMIT
+const BUILD_COMMIT_SHORT = $BUILD_COMMIT_SHORT
 
 
 
@@ -86,15 +85,15 @@ const Header = (props) => {
             </Link>
           </li>
 
-          {isDevOrStaging && (
+          {IS_DEV_OR_STAGING && (
             <li>
               <a
                 className="button link"
-                href={`https://www.github.com/fuelrats/fuelrats.com/${buildCommitRange ? `compare/${buildCommitRange}` : ''}`}
+                href={`https://www.github.com/fuelrats/fuelrats.com${BUILD_COMMIT ? `/commit/${BUILD_COMMIT}` : ''}`}
                 target="_blank"
                 rel="noopener noreferrer">
                 <FontAwesomeIcon icon="code-branch" fixedWidth />
-                {buildCommit}
+                {BUILD_COMMIT_SHORT}
               </a>
             </li>
           )}
