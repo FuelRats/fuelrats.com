@@ -873,10 +873,10 @@
   dependencies:
     eslint-restricted-globals "^0.2.0"
 
-"@fuelrats/stylelint-config@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@fuelrats/stylelint-config/-/stylelint-config-0.4.0.tgz#6d4e0c5f452155e18c3e1d6cb59cf76710486e97"
-  integrity sha512-4JcliEKCjcMMVuaR12Sgzx5r07tsvtq3QwgCiz9+WZ6kyZ35JCF/f8j4/A2l6mHFcCYt6I6FY9hUAIu6Gv3xRQ==
+"@fuelrats/stylelint-config@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@fuelrats/stylelint-config/-/stylelint-config-0.7.0.tgz#085b7586d34dd1cf7e2fa292d07c1fc8695e4de6"
+  integrity sha512-1BsjLy+r/mzz0k/TYjzalvgUWXomAu20IuSotuuPFU+akn+8UmS5LE8k6glS3hSlrsALLNMlXPUE3WAxb74JIw==
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"

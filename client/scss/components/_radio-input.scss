@@ -3,13 +3,18 @@ div.radio-input {
     display: flex;
 
     li.option {
-      padding: 0 1.5rem;
-      text-align: center;
-      margin: 0 0.2rem;
-      border: 0.2rem solid $red;
-      transform: skewX(-10deg);
       display: inline-block;
+
+      margin: 0 0.2rem;
+      padding: 0 1.5rem;
+
+      border: 0.2rem solid $red;
+
       transition: all 0.2s;
+
+      text-align: center;
+
+      transform: skewX(-10deg);
       cursor: pointer;
 
       &:hover,
@@ -19,14 +24,16 @@ div.radio-input {
       }
 
       &.disabled {
-        background-color: $grey;
         border-color: $grey;
+
+        background-color: $grey;
         color: $white;
       }
 
       div.option-content {
-        transform: skewX(10deg);
         display: inline-block;
+
+        transform: skewX(10deg);
       }
     }
   }

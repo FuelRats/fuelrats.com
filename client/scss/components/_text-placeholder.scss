@@ -1,9 +1,12 @@
 span.text-placeholder {
+  display: table-caption;
+
+  height: 0.9em;
+
+  border-radius: 0.9em;
+
   background: $grey;
   opacity: 0.4;
-  border-radius: 0.9em;
-  height: 0.9em;
-  display: table-caption;
 
   &.loading {
     animation-name: opacity-flutter;

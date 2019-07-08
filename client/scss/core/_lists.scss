@@ -1,31 +1,25 @@
 ol,
 ul {
-  > li {
-    &.inaccessible {
-      text-decoration: line-through;
-    }
-  }
-
   &.columns {
-    align-content: stretch;
     display: flex;
+
     flex-wrap: wrap;
+    align-content: stretch;
 
     > li {
       display: block;
+
       flex-grow: 1;
       flex-shrink: 0;
+
       min-width: 50%;
     }
   }
 
   &.inline {
     display: flex;
-    flex-wrap: wrap;
 
-    li {
-      white-space: nowrap;
-    }
+    flex-wrap: wrap;
 
     &.comma-separated {
       li {
@@ -39,6 +33,16 @@ ul {
           margin-right: 0;
         }
       }
+    }
+
+    li {
+      white-space: nowrap;
+    }
+  }
+
+  > li {
+    &.inaccessible {
+      text-decoration: line-through;
     }
   }
 }

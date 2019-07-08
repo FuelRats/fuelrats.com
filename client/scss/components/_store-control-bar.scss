@@ -1,13 +1,16 @@
 .store-control-bar {
-  background: $grey-lightened;
-  padding: 0.5rem 1rem;
-  margin: 0 -2rem;
-  top: -4rem;
-  position: relative;
   display: flex;
+  position: relative;
+  top: -4rem;
+
   flex-direction: row;
-  justify-content: flex-end;
   align-items: center;
+  justify-content: flex-end;
+
+  margin: 0 -2rem;
+  padding: 0.5rem 1rem;
+
+  background: $grey-lightened;
 
   > *:not(:last-child) {
     margin-right: 1rem;
@@ -19,8 +22,9 @@
   }
 
   .cart-button {
-    position: relative;
     display: block;
+    position: relative;
+
     padding-top: 5px;
   }
 }

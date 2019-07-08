@@ -65,13 +65,16 @@ $pc-background-gradients:
 
 .badge,
 %badge {
+  display: inline-block;
+
+  min-width: 1rem;
+  margin-right: 1rem;
+  padding: 0 0.5rem;
+
   background-color: $red;
   color: $white;
-  display: inline-block;
+
   font-size: 0.7em;
-  margin-right: 1rem;
-  min-width: 1rem;
-  padding: 0 0.5rem;
   text-align: center;
   text-shadow: 0 0 1px #000000;
   vertical-align: middle;
@@ -125,12 +128,16 @@ $pc-background-gradients:
 
 .icon-badge {
   @extend %badge;
-  margin: 0;
-  text-shadow: none;
-  border-radius: 1rem;
+
   position: absolute;
   top: 0;
   right: 0;
+
+  margin: 0;
+
+  border-radius: 1rem;
+
+  text-shadow: none;
   font-size: 1.75 rem;
   line-height: 1.75;
 

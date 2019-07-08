@@ -1,17 +1,6 @@
 .brand {
   margin: 2rem 0;
 
-  .brand-animation-wrapper {
-    overflow: hidden;
-  }
-
-  svg {
-    padding: 0 4rem;
-    min-width: 5rem;
-    max-width: 20.5rem;
-    color: $white;
-  }
-
   &:hover {
     .brand-animation-wrapper {
       > svg {
@@ -22,5 +11,17 @@
         animation-iteration-count: infinite;
       }
     }
+  }
+
+  .brand-animation-wrapper {
+    overflow: hidden;
+  }
+
+  svg {
+    min-width: 5rem;
+    max-width: 20.5rem;
+    padding: 0 4rem;
+
+    color: $white;
   }
 }

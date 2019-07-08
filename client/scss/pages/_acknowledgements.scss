@@ -1,11 +1,14 @@
 .page.acknowledgements {
   .credit-section {
-    background: rgba(127, 127, 127, 0.1);
-    padding: 1rem;
-    margin-top: 2rem;
     display: flex;
+
     flex-direction: row;
     align-items: center;
+
+    margin-top: 2rem;
+    padding: 1rem;
+
+    background: rgba(127, 127, 127, 0.1);
 
     p {
       margin-left: 2em;
@@ -26,12 +29,14 @@
   }
 
   .brand-image {
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
     flex-shrink: 0;
-    height: 125px;
+
     width: 400px;
+    height: 125px;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
 
     &.atlassian-brand {
       background-image: url('/static/images/brandlogos/atlassian.png');
@@ -57,25 +62,30 @@
 
   .dependency-list {
     display: flex;
-    width: 100%;
-    align-items: center;
+
     flex-direction: column;
+    align-items: center;
+
+    width: 100%;
     margin-top: 2rem;
 
     > span {
+      border-bottom: 0.1rem solid $black;
+
       font-size: 1.25em;
       font-family: Raleway, sans-serif;
-      border-bottom: 0.1rem solid $black;
     }
 
     > ul {
       min-width: 450px;
       max-height: 550px;
-      overflow-y: auto;
-      overflow-x: hidden;
-      border: 0.1rem solid $black;
-      padding: 0.5rem 1rem;
       margin: 1rem;
+      padding: 0.5rem 1rem;
+
+      border: 0.1rem solid $black;
+
+      overflow-x: hidden;
+      overflow-y: auto;
     }
   }
 }
