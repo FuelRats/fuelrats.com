@@ -5,7 +5,6 @@
   flex-direction: column;
 
   min-width: 60rem;
-  margin: 0 auto auto;
   padding: 2rem;
 
   border: none;
@@ -14,10 +13,6 @@
 
   overflow: hidden;
   pointer-events: initial;
-
-  &.transparency {
-    background-color: rgba($black, 0.75);
-  }
 
   &.center-title > header {
     justify-content: center;
@@ -34,6 +29,8 @@
 
     flex-shrink: 0;
 
+    padding-bottom: 2rem;
+
     color: $white;
 
     h2 {
@@ -48,10 +45,8 @@
     }
   }
 
-  > .content {
+  > .modal-content {
     flex-shrink: 1;
-
-    padding: 2rem;
 
     color: $white;
 
