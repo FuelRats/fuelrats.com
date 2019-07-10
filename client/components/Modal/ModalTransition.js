@@ -4,15 +4,19 @@ import { useTransition } from 'react-spring'
 
 
 
-const ModalTransition = ({ children, isOpen, ...transitionOpts }) => useTransition(isOpen, null, {
-  from: { opacity: 0 },
-  enter: { opacity: 1 },
-  leave: { opacity: 0 },
+const useModalTransition = (isOpen, key, transitionOpts) => useTransition(isOpen, key, {
+  from: { pos: -100 },
+  enter: { pos: 0 },
+  leave: { pos: -100 },
+  config: {
+    tension: 350,
+  },
+  unique: true,
   ...transitionOpts,
-}).map(children)
+})
 
 
 
 
 
-export default ModalTransition
+export default useModalTransition

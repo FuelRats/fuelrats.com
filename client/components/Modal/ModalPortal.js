@@ -15,7 +15,7 @@ const modalRoot = typeof document === 'undefined'
 
 
 
-const ModalPortal = ({ children }) => {
+const ModalPortal = ({ children, isOpen }) => {
   const portalRoot = useMemo(() => modalRoot && document.createElement('div'), [])
 
   useEffect(() => {
@@ -29,6 +29,16 @@ const ModalPortal = ({ children }) => {
       }
     }
   }, [portalRoot])
+
+  useEffect(() => {
+    if (portalRoot) {
+      if (isOpen) {
+        portalRoot.classList.add('open')
+      } else {
+        portalRoot.classList.remove('open')
+      }
+    }
+  }, [isOpen, portalRoot])
 
   return portalRoot && createPortal(children, portalRoot)
 }
