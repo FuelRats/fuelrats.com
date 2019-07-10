@@ -7,16 +7,19 @@ import PropTypes from 'prop-types'
 
 
 // Component imports
+import { asModal, ModalContent } from './Modal'
 import { connect } from '../store'
 import { selectAuthentication } from '../store/selectors'
 import { Router } from '../routes'
-import Dialog from './Dialog'
 import ValidatedFormInput from './ValidatedFormInput'
 import Switch from './Switch'
 
 
 
-
+@asModal({
+  className: 'login-dialog no-pad',
+  title: 'Login',
+})
 @connect
 class LoginDialog extends React.Component {
   /***************************************************************************\
@@ -106,84 +109,79 @@ class LoginDialog extends React.Component {
     } = this.state
 
     return (
-      <Dialog
-        className="login-dialog no-pad"
-        title="Login"
-        onClose={this.props.onClose}>
-        <form className="dialog" onSubmit={this._handleSubmit}>
-          {error && !this.props.loggingIn && (
-            <div className="store-errors">
-              <div className="store-error">
-                Invalid email or password.
-              </div>
+      <ModalContent as="form" className="dialog" onSubmit={this._handleSubmit}>
+        {error && !this.props.loggingIn && (
+          <div className="store-errors">
+            <div className="store-error">
+              Invalid email or password.
             </div>
-          )}
+          </div>
+        )}
 
-          <ValidatedFormInput
-            aria-label="Fuel rats account e-mail"
-            autoComplete="username"
-            className="email dark"
-            disabled={this.props.loggingIn}
-            id="email"
-            inputRef={this.emailInput}
-            label="Email"
-            name="email"
-            onChange={this._handleChange}
-            required
-            type="email"
-            value={email} />
+        <ValidatedFormInput
+          aria-label="Fuel rats account e-mail"
+          autoComplete="username"
+          className="email dark"
+          disabled={this.props.loggingIn}
+          id="email"
+          inputRef={this.emailInput}
+          label="Email"
+          name="email"
+          onChange={this._handleChange}
+          required
+          type="email"
+          value={email} />
 
-          <ValidatedFormInput
-            aria-label="Fuel rats account password"
-            autoComplete="current-password"
-            className="password dark"
-            disabled={this.props.loggingIn}
-            id="password"
-            label="Password"
-            name="password"
-            onChange={this._handleChange}
-            pattern="^.{5,42}$"
-            required
-            type="password"
-            value={password} />
-          <fieldset>
-            <div className="switch-form-container">
-              <Switch
-                aria-label="Remember me on this computer"
-                disabled={this.props.loggingIn}
-                id="remember"
-                label="Remember me"
-                name="remember"
-                onChange={this._handleSwitchChange}
-                checked={remember} />
-            </div>
-          </fieldset>
+        <ValidatedFormInput
+          aria-label="Fuel rats account password"
+          autoComplete="current-password"
+          className="password dark"
+          disabled={this.props.loggingIn}
+          id="password"
+          label="Password"
+          name="password"
+          onChange={this._handleChange}
+          pattern="^.{5,42}$"
+          required
+          type="password"
+          value={password} />
+        <fieldset>
+          <div className="switch-form-container">
+            <Switch
+              aria-label="Remember me on this computer"
+              disabled={this.props.loggingIn}
+              id="remember"
+              label="Remember me"
+              name="remember"
+              onChange={this._handleSwitchChange}
+              checked={remember} />
+          </div>
+        </fieldset>
 
-          <menu type="toolbar">
-            <div className="secondary">
-              <button
-                className="secondary"
-                onClick={() => {
-                  this.props.onClose()
-                  Router.push('/register')
-                }}
-                type="button">
-                Become a Rat
-              </button>
-            </div>
+        <menu type="toolbar">
+          <div className="secondary">
+            <button
+              className="secondary"
+              onClick={() => {
+                this.props.onClose()
+                Router.push('/register')
+              }}
+              type="button">
+              Become a Rat
+            </button>
+          </div>
 
-            <div className="primary">
-              <a className="button link secondary mobile-button" href="/forgot-password">Forgot password?</a>
-              <button
-                className="green"
-                disabled={!this.isValid}
-                type="submit">
-                {this.props.loggingIn ? 'Submitting...' : 'Login'}
-              </button>
-            </div>
-          </menu>
-        </form>
-      </Dialog>
+          <div className="primary">
+            <a className="button link secondary mobile-button" href="/forgot-password">Forgot password?</a>
+            <button
+              className="green"
+              disabled={!this.isValid}
+              type="submit">
+              {this.props.loggingIn ? 'Submitting...' : 'Login'}
+            </button>
+          </div>
+        </menu>
+      </ModalContent>
     )
   }
 

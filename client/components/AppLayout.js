@@ -21,7 +21,7 @@ import ErrorPage from '../pages/_error'
 import Header from './Header'
 import httpStatus from '../helpers/httpStatus'
 import initUserSession from '../helpers/initUserSession'
-import LoginDialog from './LoginDialog'
+import LoginModal from './LoginModal'
 import NProgress from './NProgress'
 import PageLayout from './AppLayout/PageLayout'
 import userHasPermission from '../helpers/userHasPermission'
@@ -165,7 +165,6 @@ class AppLayout extends React.Component {
     const {
       renderLayout,
       isServer,
-      showLoginDialog,
     } = this.props
 
     return (
@@ -184,10 +183,7 @@ class AppLayout extends React.Component {
 
         <PageLayout {...this.pageLayoutProps} />
 
-        {showLoginDialog && (
-          <LoginDialog onClose={this._handleLoginDialogClose} />
-        )}
-
+        <LoginModal {...this.loginModalProps} />
       </div>
     )
   }
@@ -195,6 +191,13 @@ class AppLayout extends React.Component {
   /***************************************************************************\
     Getters
   \***************************************************************************/
+
+  get loginModalProps () {
+    return {
+      isOpen: this.props.showLoginModal,
+      onClose: this._handleLoginDialogClose,
+    }
+  }
 
   get pageLayoutProps () {
     const {
@@ -237,7 +240,7 @@ class AppLayout extends React.Component {
 
   static mapStateToProps = (state) => ({
     ...selectAuthentication(state),
-    showLoginDialog: selectFlagByName(state, { name: 'showLoginDialog' }),
+    showLoginModal: selectFlagByName(state, { name: 'showLoginDialog' }),
     user: selectUser(state),
   })
 }
