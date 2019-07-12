@@ -9,7 +9,7 @@ import React from 'react'
 // Component imports
 import { connect } from '../../store'
 import { selectStoreCart } from '../../store/selectors'
-import Dialog from '../Dialog'
+import asModal, { ModalContent, ModalFooter } from '../Modal'
 import Component from '../Component'
 import isInStock from '../../helpers/isInStock'
 import getMoney from '../../helpers/getMoney'
@@ -19,14 +19,17 @@ import getMoney from '../../helpers/getMoney'
 
 
 // Component constants
-const CONFIRMATION_DISPLAY_TIME = 1000
+const CONFIRMATION_DISPLAY_TIME = 1250
 
 
 
 
-
+@asModal({
+  className: 'cart-update-dialog',
+  title: 'Add to Cart',
+})
 @connect
-class CartUpdateDialog extends Component {
+class CartUpdateModal extends Component {
   /***************************************************************************\
     Private Methods
   \***************************************************************************/
@@ -102,10 +105,59 @@ class CartUpdateDialog extends Component {
     }
   }
 
+  renderFooter () {
+    const {
+      cart,
+      product,
+    } = this.props
+    const {
+      activeSKU: aSKU,
+      quantity,
+    } = this.state
+
+    const activeSKU = aSKU === '' ? null : product.attributes.skus[aSKU]
+
+    return (
+      <ModalFooter>
+        <div className="secondary" />
+        <div className="primary">
+          <span key="ItemTotal">
+            {
+              activeSKU && quantity > 0
+                ? `${quantity} @ ${getMoney(activeSKU.price)}${quantity > 1 ? ` = ${getMoney(activeSKU.price * quantity)}` : ''}`
+                : getMoney(0)
+            }
+          </span>
+          <button
+            disabled={
+              !activeSKU
+              || !isInStock(activeSKU.inventory)
+              || (cart[aSKU] && cart[aSKU] === quantity)
+              || (!cart[aSKU] && quantity < 1)
+            }
+            key="UpdateButton"
+            onClick={this._handleSubmit}
+            type="button">
+            {do {
+              if (cart[aSKU]) {
+                if (quantity < 1) {
+                  'Remove'
+                } else {
+                  'Update'
+                }
+              } else {
+                'Add'
+              }
+            }}
+          </button>
+        </div>
+      </ModalFooter>
+    )
+  }
+
   render () {
     const {
       product,
-      onClose,
     } = this.props
 
     const {
@@ -123,16 +175,12 @@ class CartUpdateDialog extends Component {
     const activeSKU = this.state.activeSKU ? skus[this.state.activeSKU] : null
 
     return (
-      <Dialog
-        className="cart-update-dialog"
-        controls={updateComplete ? undefined : this.controls}
-        title="Add to Cart"
-        onClose={onClose}>
-        <div className="center-content flex">
+      <>
+        <ModalContent className="center flex">
           {do {
             if (updateComplete) {
               <div>
-                <h1>{product.attributes.name} Updated!</h1>
+                <h2>{product.attributes.name} Updated!</h2>
               </div>
             } else {
               <div className="product-card cart-view">
@@ -181,68 +229,10 @@ class CartUpdateDialog extends Component {
               </div>
             }
           }}
-        </div>
-      </Dialog>
+        </ModalContent>
+        {this.renderFooter()}
+      </>
     )
-  }
-
-
-
-
-
-  /***************************************************************************\
-    Getters
-  \***************************************************************************/
-
-  get controls () {
-    const {
-      cart,
-      product,
-    } = this.props
-    const {
-      activeSKU: aSKU,
-      quantity,
-    } = this.state
-
-    const activeSKU = aSKU === '' ? null : product.attributes.skus[aSKU]
-
-    return {
-      primary: [
-        (
-          <span key="ItemTotal">
-            {
-              activeSKU && quantity > 0
-                ? `${quantity} @ ${getMoney(activeSKU.price)}${quantity > 1 ? ` = ${getMoney(activeSKU.price * quantity)}` : ''}`
-                : getMoney(0)
-            }
-          </span>
-        ),
-        (
-          <button
-            disabled={
-              !activeSKU
-              || !isInStock(activeSKU.inventory)
-              || (cart[aSKU] && cart[aSKU] === quantity)
-              || (!cart[aSKU] && quantity < 1)
-            }
-            key="UpdateButton"
-            onClick={this._handleSubmit}
-            type="button">
-            {do {
-              if (cart[aSKU]) {
-                if (quantity < 1) {
-                  'Remove'
-                } else {
-                  'Update'
-                }
-              } else {
-                'Add'
-              }
-            }}
-          </button>
-        ),
-      ],
-    }
   }
 
 
@@ -262,4 +252,4 @@ class CartUpdateDialog extends Component {
 
 
 
-export default CartUpdateDialog
+export default CartUpdateModal
