@@ -69,11 +69,11 @@ const Modal = (props) => {
           key={key}
           role="dialog"
           style={{
-            transform: style.pos.interpolate((value) => `translate3d(0,${value}vh,0)`),
+            transform: style.pos.to((value) => (value ? `translate3d(0,${value}vh,0)` : undefined)),
           }}>
 
           <ModalHeader
-            hideClode={hideClose}
+            hideClose={hideClose}
             onClose={onClose}
             title={title} />
 
@@ -122,9 +122,9 @@ const asModal = (opts) => (Component) => (props) => (
 
 
 
-export default Modal
+export default asModal
 export { default as ModalContent } from './Modal/ModalContent'
+export { default as ModalFooter } from './Modal/ModalFooter'
 export {
   Modal,
-  asModal,
 }
