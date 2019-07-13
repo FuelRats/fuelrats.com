@@ -14,7 +14,7 @@ import UserOverview from '../components/UserOverview'
 import ProfileHeader from '../components/ProfileHeader'
 import UserRatsPanel from '../components/UserRatsPanel'
 import UserSettings from '../components/UserSettings'
-import FirstLoginDialog from '../components/FirstLoginDialog'
+import FirstLoginModal from '../components/FirstLoginModal'
 
 
 
@@ -70,8 +70,9 @@ class Profile extends React.Component {
             tabs={Profile.tabs} />
         </div>
 
-        {showFirstLoginDialog && (<FirstLoginDialog onClose={this._handleFLDClose} />)}
-
+        <FirstLoginModal
+          isOpen={showFirstLoginDialog}
+          onClose={this._handleFLDClose} />
       </PageWrapper>
     )
   }
