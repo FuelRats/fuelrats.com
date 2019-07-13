@@ -7,12 +7,14 @@ import PropTypes from 'prop-types'
 
 
 // Component imports
-import { asModal, ModalContent } from './Modal'
 import { connect } from '../store'
 import { selectAuthentication } from '../store/selectors'
 import { Router } from '../routes'
-import ValidatedFormInput from './ValidatedFormInput'
+import asModal, { ModalContent, ModalFooter } from './Modal'
 import Switch from './Switch'
+import ValidatedFormInput from './ValidatedFormInput'
+
+
 
 
 
@@ -21,7 +23,7 @@ import Switch from './Switch'
   title: 'Login',
 })
 @connect
-class LoginDialog extends React.Component {
+class LoginModal extends React.Component {
   /***************************************************************************\
     Class Properties
   \***************************************************************************/
@@ -86,6 +88,11 @@ class LoginDialog extends React.Component {
         error: true,
       })
     }
+  }
+
+  _handleRegisterClick = () => {
+    this.props.onClose()
+    Router.push('/register')
   }
 
 
@@ -157,15 +164,11 @@ class LoginDialog extends React.Component {
               checked={remember} />
           </div>
         </fieldset>
-
-        <menu type="toolbar">
+        <ModalFooter>
           <div className="secondary">
             <button
               className="secondary"
-              onClick={() => {
-                this.props.onClose()
-                Router.push('/register')
-              }}
+              onClick={this._handleRegisterClick}
               type="button">
               Become a Rat
             </button>
@@ -180,7 +183,7 @@ class LoginDialog extends React.Component {
               {this.props.loggingIn ? 'Submitting...' : 'Login'}
             </button>
           </div>
-        </menu>
+        </ModalFooter>
       </ModalContent>
     )
   }
@@ -233,4 +236,4 @@ class LoginDialog extends React.Component {
 
 
 
-export default LoginDialog
+export default LoginModal
