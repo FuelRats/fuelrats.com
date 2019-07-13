@@ -1,7 +1,7 @@
 // Module Imports
 import React, { useEffect, useCallback } from 'react'
-import { animated } from 'react-spring'
-import PropTypes from 'prop-types'
+import { animated, useTransition } from 'react-spring'
+import hoistNonReactStatics from 'hoist-non-react-statics'
 
 
 
@@ -11,23 +11,63 @@ import PropTypes from 'prop-types'
 import classNames from '../helpers/classNames'
 import ModalHeader from './Modal/ModalHeader'
 import ModalPortal from './Modal/ModalPortal'
-import useModalTransition from './Modal/ModalTransition'
 
 
 
 
 
-const Modal = (props) => {
+const renderModal = ({ item, key, props: style }) => {
   const {
     as,
-    children,
     className,
     hideClose,
     isOpen,
     onClose,
-    onSafeUnmount,
     title,
-    transitionProps,
+  } = item
+
+  const {
+    Component: InnerModal,
+    children: innerModalChildren,
+    props: innerModalProps,
+  } = item.children
+
+  const RootElement = animated[as]
+
+  const rootClasses = classNames(
+    'modal',
+    [className, className]
+  )
+
+  return isOpen && (
+    <RootElement
+      className={rootClasses}
+      key={key}
+      role="dialog"
+      style={{ transform: style.pos.to((value) => (value ? `translate3d(0,${value}vh,0)` : undefined)) }}>
+
+      <ModalHeader
+        hideClose={hideClose}
+        onClose={onClose}
+        title={title} />
+
+      <InnerModal {...innerModalProps}>
+        {innerModalChildren}
+      </InnerModal>
+    </RootElement>
+  )
+}
+
+
+
+
+
+const OuterModal = (props) => {
+  const {
+    hideClose,
+    isOpen,
+    onClose,
+    onSafeUnmount,
   } = props
 
 
@@ -49,74 +89,39 @@ const Modal = (props) => {
     }
   }, [handleGlobalKeyDown, hideClose, isOpen])
 
-  const modalTransition = useModalTransition(isOpen, isOpen, {
+  const modalTransition = useTransition(props, JSON.stringify(props), {
+    from: { pos: -100 },
+    enter: { pos: 0 },
+    leave: { pos: -100 },
     onDestroyed: onSafeUnmount,
-    ...transitionProps,
+    unique: true,
+    config: {
+      tension: 350,
+    },
   })
-
-  const RootElement = animated[as]
-
-  const rootClasses = classNames(
-    'modal',
-    [className, className]
-  )
 
   return (
     <ModalPortal isOpen={isOpen}>
-      {modalTransition.map(({ item, key, props: style }) => item && (
-        <RootElement
-          className={rootClasses}
-          key={key}
-          role="dialog"
-          style={{
-            transform: style.pos.to((value) => (value ? `translate3d(0,${value}vh,0)` : undefined)),
-          }}>
-
-          <ModalHeader
-            hideClose={hideClose}
-            onClose={onClose}
-            title={title} />
-
-          {children}
-        </RootElement>
-      ))}
+      {modalTransition.map(renderModal)}
     </ModalPortal>
   )
 }
 
-
-
-
-
-Modal.defaultProps = {
+OuterModal.defaultProps = {
   as: 'div',
-  hideClose: false,
-  isOpen: false,
-  onClose: () => undefined,
-  onSafeUnmount: () => undefined,
-  title: null,
-  transitionProps: undefined,
-}
-
-Modal.propTypes = {
-  as: PropTypes.oneOf(Object.keys(animated)),
-  hideClose: PropTypes.any,
-  isOpen: PropTypes.any,
-  onClose: PropTypes.func,
-  onSafeUnmount: PropTypes.func,
-  title: PropTypes.string,
-  transitionProps: PropTypes.object,
 }
 
 
 
 
 
-const asModal = (opts) => (Component) => (props) => (
-  <Modal {...props} {...opts}>
-    <Component {...props} />
-  </Modal>
-)
+const asModal = (options) => (Component) => hoistNonReactStatics(({ children, ...props }) => (
+  <OuterModal
+    {...props}
+    {...options}>
+    {{ Component, children, props }}
+  </OuterModal>
+), Component)
 
 
 
@@ -125,6 +130,3 @@ const asModal = (opts) => (Component) => (props) => (
 export default asModal
 export { default as ModalContent } from './Modal/ModalContent'
 export { default as ModalFooter } from './Modal/ModalFooter'
-export {
-  Modal,
-}

@@ -6,13 +6,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 const ModalHeader = ({ hideClose, onClose, title }) => (title || !hideClose) && (
-  <header>
+  <header className="modal-header">
     {title && (<h3>{title}</h3>)}
 
     {!hideClose && (
       <button
-        className="danger"
-        name="close"
+        className="danger button-close"
         type="button"
         onClick={onClose}>
         <FontAwesomeIcon icon="times" fixedWidth />
