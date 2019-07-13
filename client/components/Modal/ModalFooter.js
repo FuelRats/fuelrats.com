@@ -1,6 +1,11 @@
+// Module imports
 import React from 'react'
 
 
+
+
+
+// Component imports
 import classNames from '../../helpers/classNames'
 
 

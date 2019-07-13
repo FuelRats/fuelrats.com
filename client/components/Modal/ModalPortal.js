@@ -1,4 +1,4 @@
-// Module Imports
+// Module imports
 import { useMemo, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 
@@ -6,7 +6,7 @@ import { createPortal } from 'react-dom'
 
 
 
-// Component Constants
+// Component constants
 const modalRoot = typeof document === 'undefined'
   ? null
   : document.getElementById('ModalContainer')

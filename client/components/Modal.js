@@ -1,4 +1,4 @@
-// Module Imports
+// Module imports
 import React, { useEffect, useCallback } from 'react'
 import { animated, useTransition } from 'react-spring'
 import hoistNonReactStatics from 'hoist-non-react-statics'
@@ -7,7 +7,7 @@ import hoistNonReactStatics from 'hoist-non-react-statics'
 
 
 
-// Component Imports
+// Component imports
 import classNames from '../helpers/classNames'
 import ModalHeader from './Modal/ModalHeader'
 import ModalPortal from './Modal/ModalPortal'
