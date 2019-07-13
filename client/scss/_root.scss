@@ -47,29 +47,40 @@ body {
     }
   }
 
-  > #DialogContainer {
-    display: flex;
+  > #ModalContainer {
     position: fixed;
     top: 0;
     left: 0;
     z-index: 401;
 
-    justify-content: center;
+    overflow: visible;
 
-    width: 100vw;
-    height: 100vh;
-    padding: 10vh 10vw;
+    > div {
+      display: flex;
+      position: fixed;
+      top: 0;
+      left: 0;
 
-    border: none;
+      align-items: flex-start;
+      justify-content: center;
 
-    overflow: auto;
+      width: 100vw;
+      height: 100vh;
+      padding: 10vh 10vw;
 
-    &:empty {
-      pointer-events: none;
-    }
+      border: none;
 
-    &:not(:empty) {
-      background: rgba($black-lightened, 0.8);
+      transition: background 0.25s ease;
+
+      overflow: auto;
+
+      &:not(.open) {
+        pointer-events: none;
+      }
+
+      &.open {
+        background: rgba($black, 0.75);
+      }
     }
   }
 }

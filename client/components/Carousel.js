@@ -148,7 +148,7 @@ class Carousel extends React.Component {
                 <animated.span
                   className="carousel-slide-text"
                   style={{
-                    transform: xPos.interpolate((value) => `translate3d(${value}%,0,0)`),
+                    transform: xPos.to((value) => (value ? `translate3d(${value}%,0,0)` : undefined)),
                   }}>
                   {slide.text}
                 </animated.span>

@@ -1,13 +1,18 @@
-div.terms-dialog[role='dialog'] {
+.terms-dialog[role='dialog'] {
   max-height: 100%;
 
-  > .content {
-    margin: 2rem 0;
+  > .modal-content {
+    display: block;
+
     padding: 2rem;
 
     color: #FFFFFF;
     background: rgba($white, 0.15);
 
     overflow: auto;
+
+    pre {
+      background-color: rgba(0, 0, 0, 0.15);
+    }
   }
 }

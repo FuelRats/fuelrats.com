@@ -5,34 +5,27 @@
   flex-direction: column;
 
   min-width: 60rem;
-  margin: 0 auto auto;
   padding: 2rem;
 
   border: none;
 
-  background-color: rgba($black, 0.99);
+  background-color: rgba($black, 0.98);
 
   overflow: hidden;
   pointer-events: initial;
 
-  &.transparency {
-    background-color: rgba($black, 0.75);
-  }
-
-  &.center-title > header {
+  &.center-title > .modal-header {
     justify-content: center;
   }
 
-  &.no-pad > .content {
-    padding: 2rem 0 0;
-  }
-
-  > header {
+  > .modal-header {
     display: flex;
 
     align-items: stretch;
 
     flex-shrink: 0;
+
+    padding-bottom: 2rem;
 
     color: $white;
 
@@ -40,7 +33,7 @@
       padding: 1rem 2rem;
     }
 
-    [name='close'] {
+    .button-close {
       margin-left: auto;
       padding: 1rem;
 
@@ -48,25 +41,31 @@
     }
   }
 
-  > .content {
+  > .modal-content {
     flex-shrink: 1;
 
-    padding: 2rem;
+    padding: 0 2rem;
 
     color: $white;
 
-    input {
-      color: $black;
+    &.no-pad {
+      padding: 0;
     }
 
-    > .center-content {
+    &.center {
       justify-content: center;
 
       text-align: center;
     }
+
+    input {
+      color: $black;
+    }
   }
 
-  > footer {
+  .modal-footer {
+    padding: 2rem 0 0;
+
     color: $white;
   }
 
@@ -75,11 +74,7 @@
 
     flex-shrink: 0;
 
-    padding: 2rem 0 0;
-
-    &.compact {
-      padding: 0;
-    }
+    padding: 0;
 
     > .primary,
     > .secondary {

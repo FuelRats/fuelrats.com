@@ -14,7 +14,7 @@ import { authenticated } from '../../components/AppLayout'
 import Component from '../../components/Component'
 import OrderStatusIndicator from '../../components/storefront/OrderStatusIndicator'
 import PageWrapper from '../../components/PageWrapper'
-import FulfillOrderDialog from '../../components/storefront/FulfillOrderDialog'
+import FulfillOrderModal from '../../components/storefront/FulfillOrderModal'
 import { selectOrders, selectSkus } from '../../store/selectors'
 
 
@@ -176,11 +176,10 @@ class ListOrders extends Component {
             </table>
           </div>
         </PageWrapper>
-        {showFullfillDialog && (
-          <FulfillOrderDialog
-            onClose={this._handleFullfillDialogComplete}
-            orderId={activeOrder} />
-        )}
+        <FulfillOrderModal
+          isOpen={showFullfillDialog}
+          onClose={this._handleFullfillDialogComplete}
+          orderId={activeOrder} />
       </>
     )
   }

@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 
 // Component imports
 import { connect } from '../../store'
-import Dialog from '../Dialog'
+import asModal, { ModalContent, ModalFooter } from '../Modal'
 import Component from '../Component'
 import ValidatedFormInput from '../ValidatedFormInput'
 
@@ -18,9 +18,12 @@ import ValidatedFormInput from '../ValidatedFormInput'
 // Component constants
 const INVALID_CARRIER = 'Carrier is Required'
 
-
+@asModal({
+  className: 'cart-update-dialog',
+  title: 'Update Order',
+})
 @connect
-class CartUpdateDialog extends Component {
+class FulfillOrderModal extends Component {
   /***************************************************************************\
     Class Properties
   \***************************************************************************/
@@ -92,22 +95,14 @@ class CartUpdateDialog extends Component {
 
   render () {
     const {
-      onClose,
-    } = this.props
-
-    const {
       error,
       carrier,
       trackingNumber,
     } = this.state
 
     return (
-      <Dialog
-        className="cart-update-dialog"
-        controls={this.controls}
-        title="Update Order"
-        onClose={onClose}>
-        <div className="center-content">
+      <>
+        <ModalContent className="center">
           {error && !this.props.loggingIn && (
             <div className="store-errors">
               <div className="store-error">
@@ -129,8 +124,20 @@ class CartUpdateDialog extends Component {
             name="trackingNumber"
             onChange={this._handleChange}
             value={trackingNumber} />
-        </div>
-      </Dialog>
+        </ModalContent>
+        <ModalFooter>
+          <div className="secondary" />
+          <div className="primary">
+            <button
+              disabled={!this.isValid}
+              key="UpdateButton"
+              onClick={this._handleSubmit}
+              type="button">
+                Update
+            </button>
+          </div>
+        </ModalFooter>
+      </>
     )
   }
 
@@ -141,23 +148,6 @@ class CartUpdateDialog extends Component {
   /***************************************************************************\
     Getters
   \***************************************************************************/
-
-  get controls () {
-    return {
-      primary: [
-        (
-          <button
-            disabled={!this.isValid}
-            key="UpdateButton"
-            onClick={this._handleSubmit}
-            type="button">
-            Update
-          </button>
-        ),
-      ],
-    }
-  }
-
 
   get isValid () {
     const {
@@ -199,4 +189,4 @@ class CartUpdateDialog extends Component {
 }
 
 
-export default CartUpdateDialog
+export default FulfillOrderModal
