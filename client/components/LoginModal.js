@@ -19,7 +19,7 @@ import ValidatedFormInput from './ValidatedFormInput'
 
 
 @asModal({
-  className: 'login-dialog no-pad',
+  className: 'login-dialog',
   title: 'Login',
 })
 @connect
@@ -116,7 +116,7 @@ class LoginModal extends React.Component {
     } = this.state
 
     return (
-      <ModalContent as="form" className="dialog" onSubmit={this._handleSubmit}>
+      <ModalContent as="form" className="dialog no-pad" onSubmit={this._handleSubmit}>
         {error && !this.props.loggingIn && (
           <div className="store-errors">
             <div className="store-error">
