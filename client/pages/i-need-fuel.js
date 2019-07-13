@@ -94,7 +94,7 @@ class INeedFuel extends Component {
                     <a>Terms of Service</a>
                   </Link>
                   {' and '}
-                  <Link route="wordpress" params={{ slug: 'terms-of-service' }}>
+                  <Link route="wordpress" params={{ slug: 'privacy-policy' }}>
                     <a>Privacy Policy</a>
                   </Link>
                   {'.'}
