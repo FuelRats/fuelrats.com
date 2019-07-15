@@ -1,15 +1,19 @@
 .tabbed-panel {
   .tabs {
-    border-color: $red;
+    margin: 0 -2rem 2rem;
+
     border-style: solid;
+    border-color: $red;
     border-bottom-width: 0.2rem;
-    margin: 0 -2rem 2rem -2rem;
 
     ul {
       display: flex;
-      list-style: none;
+
       flex-shrink: 0;
+
       margin-left: 2rem;
+
+      list-style: none;
     }
 
     li {
@@ -18,18 +22,19 @@
   }
 
   .tab {
-    background-color: $red;
-    border-color: $red;
-    border-style: solid;
-    border-width: 0.2rem;
-    border-bottom-width: 0;
-    color: white;
-    cursor: pointer;
-    padding: 0.5rem 2rem 0.7rem 2rem;
-    transition: all 0.2s;
     margin-bottom: -0.2rem;
+    padding: 0.5rem 2rem 0.7rem;
+
+    border: 0.2rem solid $red;
+    border-bottom-width: 0;
+
+    background-color: $red;
+    color: #FFFFFF;
+    transition: all 0.2s;
+
     transform: skewX(-10deg);
     transform-origin: bottom;
+    cursor: pointer;
 
     &:not(:last-child) {
       margin-right: 0.4rem;
@@ -42,8 +47,9 @@
     }
 
     .tab-inner {
-      transform: skewX(10deg);
       display: inline-block;
+
+      transform: skewX(10deg);
       pointer-events: none;
     }
   }

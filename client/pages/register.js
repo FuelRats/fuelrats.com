@@ -7,7 +7,6 @@ import React from 'react'
 
 // Component imports
 import { actions, connect } from '../store'
-import { selectWordpressPageBySlug } from '../store/selectors'
 import { Link } from '../routes'
 import {
   commanderPattern,
@@ -18,18 +17,7 @@ import Component from '../components/Component'
 import PageWrapper from '../components/PageWrapper'
 import PasswordField from '../components/PasswordField'
 import RadioOptionsInput from '../components/RadioOptionsInput'
-import TermsDialog from '../components/TermsDialog'
-
-
-
-
-
-// Component constants
-/* eslint-disable react/no-danger */
-const getWordpressPageElement = (page) => (
-  <div dangerouslySetInnerHTML={{ __html: page.content.rendered.replace(/<ul>/giu, '<ul class="bulleted">').replace(/<ol>/giu, '<ol class="numbered">') }} />
-)
-/* eslint-enable react/no-danger */
+import WordpressTermsModal from '../components/TermsModal'
 
 
 
@@ -162,11 +150,6 @@ class Register extends Component {
 
   render () {
     const {
-      termsPage,
-      privacyPage,
-    } = this.props
-
-    const {
       checkedTOS,
       acceptTerms,
       acceptPrivacy,
@@ -180,7 +163,7 @@ class Register extends Component {
     return (
       <PageWrapper
         displayTitle="Become a Rat"
-        title="register">
+        title="Register">
         <form
           className={`${submitting ? 'loading force' : ''}`}
           data-loader-text="Submitting"
@@ -316,7 +299,7 @@ class Register extends Component {
                   <a>Terms of Service</a>
                 </Link>
                 {' and '}
-                <Link route="wordpress" params={{ slug: 'terms-of-service' }}>
+                <Link route="wordpress" params={{ slug: 'privacy-policy' }}>
                   <a>Privacy Policy</a>
                 </Link>
                 {', and that I am 13 years of age or older.'}
@@ -339,24 +322,23 @@ class Register extends Component {
           </menu>
         </form>
 
-        { checkedTOS && !acceptTerms && !acceptPrivacy && (
-          <TermsDialog
-            dialogContent={() => getWordpressPageElement(termsPage)}
-            onClose={() => this.setState({ acceptTerms: true })}
-            title="Terms of Service"
-            checkboxLabel="I have read and agree to these Terms of Service" />
-        )}
 
-        { checkedTOS && acceptTerms && !acceptPrivacy && (
-          <TermsDialog
-            dialogContent={() => getWordpressPageElement(privacyPage)}
-            onClose={() => {
-              this.setState({ acceptPrivacy: true })
-              sessionStorage.setItem('register.acceptTerms', true)
-            }}
-            title="Privacy Policy"
-            checkboxLabel="I have read and agree to this Privacy Policy" />
-        )}
+        <WordpressTermsModal
+          isOpen={checkedTOS && !acceptTerms && !acceptPrivacy}
+          onClose={() => this.setState({ acceptTerms: true })}
+          title="Terms of Service"
+          slug="terms-of-service"
+          checkboxLabel="I have read and agree to these Terms of Service" />
+
+        <WordpressTermsModal
+          isOpen={checkedTOS && acceptTerms && !acceptPrivacy}
+          onClose={() => {
+            this.setState({ acceptPrivacy: true })
+            sessionStorage.setItem('register.acceptTerms', true)
+          }}
+          title="Privacy Policy"
+          slug="privacy-policy"
+          checkboxLabel="I have read and agree to this Privacy Policy" />
 
       </PageWrapper>
     )
@@ -406,11 +388,6 @@ class Register extends Component {
   \***************************************************************************/
 
   static mapDispatchToProps = ['register', 'login']
-
-  static mapStateToProps = (state) => ({
-    termsPage: selectWordpressPageBySlug(state, { slug: 'terms-of-service' }),
-    privacyPage: selectWordpressPageBySlug(state, { slug: 'privacy-policy' }),
-  })
 }
 
 

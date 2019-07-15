@@ -1,20 +1,27 @@
 .hero {
-  align-content: center;
-  background-color: #0d1011;
-  position: relative;
-  overflow: hidden;
-  color: $white;
   display: flex;
-  font-family: Raleway, sans-serif;
+  position: relative;
+
   flex-direction: column;
-  flex-shrink: 0;
-  height: 100%;
+  align-content: center;
   justify-content: center;
+
+  flex-shrink: 0;
+
+  height: 100%;
   padding: 6rem;
+
+  background-color: #0D1011;
+  color: $white;
+
+  font-family: Raleway, sans-serif;
   text-shadow: 0 0 0.2rem rgba($black, 0.5);
 
-  h1, h2 {
-    transition: font-size .2s ease;
+  overflow: hidden;
+
+  h1,
+  h2 {
+    transition: font-size 0.2s ease;
   }
 
   h1 {
@@ -23,22 +30,25 @@
 
   header {
     z-index: 50;
-    text-shadow: 2px 2px 4px #000000aa;
 
+    text-shadow: 2px 2px 4px #000000AA;
   }
 
   .call-to-action {
-    margin-top: 5rem;
     z-index: 50;
 
+    margin-top: 5rem;
+
     .button {
+      padding: 1rem 4rem;
+
+      box-shadow: 0 0 1rem 0 $black;
       animation-delay: 0.5s;
       animation-duration: 0.5s;
       animation-name: wiggle;
-      box-shadow: 0 0 1rem 0 $black;
+
       font-weight: bold;
       font-size: 1.5em;
-      padding: 1rem 4rem;
       text-transform: uppercase;
     }
   }
@@ -53,10 +63,9 @@
     }
 
     .call-to-action .button {
-      font-size: 1.25em
+      font-size: 1.25em;
     }
   }
-
   @media only screen and (max-width: 768px) {
     h1 {
       font-size: 3em;
@@ -67,7 +76,7 @@
     }
 
     .call-to-action .button {
-      font-size: 1em
+      font-size: 1em;
     }
   }
 }

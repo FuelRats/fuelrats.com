@@ -3,8 +3,10 @@
 
   .rat-cards-container {
     display: flex;
+
     flex-wrap: wrap;
     justify-content: flex-start;
+
     margin: -1rem;
   }
 
@@ -12,20 +14,18 @@
   @media only screen and (min-width: 769px) {
     .add-rat-form-container {
       position: absolute;
+      top: 0;
       right: -2px;
-      top: 0px;
       z-index: 50;
     }
+
     .rat-cards-container {
       margin-right: 34px;
     }
   }
-
   @media only screen and (max-width: 768px) {
     .rat-cards-container {
       justify-content: center;
     }
   }
-
-
 }

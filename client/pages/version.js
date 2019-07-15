@@ -1,9 +1,8 @@
 /* globals
      $BUILD_BRANCH:false
-     $BUILD_COMMIT_HASH:false
-     $BUILD_COMMIT_RANGE:false
+     $BUILD_COMMIT:false
      $BUILD_DATE:false
-     $BUILD_ID:false
+     $BUILD_URL:false
      $NODE_VERSION:false
      $NEXT_BUILD_ID:false
 */
@@ -24,10 +23,9 @@ import PageWrapper from '../components/PageWrapper'
 
 // Component Constants
 const BUILD_BRANCH = $BUILD_BRANCH
-const BUILD_COMMIT_HASH = $BUILD_COMMIT_HASH
-const BUILD_COMMIT_RANGE = $BUILD_COMMIT_RANGE
+const BUILD_COMMIT = $BUILD_COMMIT
 const BUILD_DATE = $BUILD_DATE
-const BUILD_ID = $BUILD_ID
+const BUILD_URL = $BUILD_URL
 const NODE_VERSION = $NODE_VERSION
 const NEXT_BUILD_ID = $NEXT_BUILD_ID
 
@@ -49,7 +47,7 @@ const Version = () => (
         </span>
         <span>
           {'Built On: '}
-          <a target="_blank" rel="noopener noreferrer" href={`https://travis-ci.org/FuelRats/fuelrats.com/builds${BUILD_ID ? `/${BUILD_ID}` : ''}`}>
+          <a target="_blank" rel="noopener noreferrer" href={BUILD_URL}>
             <time dateTime={BUILD_DATE}>{moment.utc(BUILD_DATE).format('MMMM Do YYYY, hh:mm z')}</time>
           </a>
         </span>
@@ -61,8 +59,8 @@ const Version = () => (
         </span>
         <span>
           {'Commit: '}
-          <a target="_blank" rel="noopener noreferrer" href={`https://github.com/FuelRats/fuelrats.com${BUILD_COMMIT_RANGE ? `/compare/${BUILD_COMMIT_RANGE}` : ''}`}>
-            {BUILD_COMMIT_HASH || 'null'}
+          <a target="_blank" rel="noopener noreferrer" href={`https://github.com/FuelRats/fuelrats.com/commit/${BUILD_COMMIT}`}>
+            {BUILD_COMMIT || 'null'}
           </a>
         </span>
         <span>
@@ -87,7 +85,7 @@ Version.getInitialProps = ({ query, res }) => {
           version: `v${version}`,
           buildDate: BUILD_DATE,
           buildBranch: BUILD_BRANCH || 'develop',
-          buildCommit: BUILD_COMMIT_HASH || null,
+          buildCommit: BUILD_COMMIT || null,
           nodeVersion: NODE_VERSION,
         },
       },

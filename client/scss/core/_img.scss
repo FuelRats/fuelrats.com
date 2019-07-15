@@ -1,8 +1,8 @@
 img {
-  height: auto;
   max-width: 100%;
+  height: auto;
 
-  &:after{
-    content: 'Loading...'
+  &::after {
+    content: 'Loading...';
   }
 }

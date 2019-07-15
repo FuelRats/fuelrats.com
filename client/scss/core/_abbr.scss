@@ -1,6 +1,5 @@
 abbr {
-  border-bottom-color: $black;
-  border-bottom-style: dotted;
-  border-bottom-width: 1px;
+  border-bottom: 1px dotted $black;
+
   cursor: help;
 }

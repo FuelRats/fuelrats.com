@@ -5,15 +5,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 
+
+
 // Component imports
 import { connect } from '../../store'
 import { selectUserId, selectUserDisplayRatId } from '../../store/selectors'
-
-
-
-
-
-// Component Constants
 
 
 

@@ -1,29 +1,35 @@
 .store-error {
   margin: 0 2rem 2rem;
   padding: 1rem;
+
   border: 1px solid $red;
-  background: rgba(255,127,127,.15);
+
+  background: rgba(255, 127, 127, 0.15);
   color: $red-darkened;
+
   line-height: 35px;
 
-  & * {
-    margin-left: 2.75rem;
-    margin-bottom: 0;
-  }
-
-  & p:first-child {
+  &::before {
     display: inline;
-    margin-left: 1rem;
-  }
-
-  &:before {
-    content: '⚠';
     float: left;
+
+    content: '⚠';
+
     color: $black;
-    display: inline;
-    opacity: .75;
+    opacity: 0.75;
+
     font-size: 30px;
     font-weight: bold;
+  }
 
+  * {
+    margin-bottom: 0;
+    margin-left: 2.75rem;
+  }
+
+  p:first-child {
+    display: inline;
+
+    margin-left: 1rem;
   }
 }

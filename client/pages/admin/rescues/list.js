@@ -144,7 +144,7 @@ class ListRescues extends React.Component {
     return (
       <PageWrapper title="Rescue Search">
         <div className="page-content">
-          <div className="searchControls">
+          <div className="search-controls">
             <button
               className="inline"
               onClick={this._handleRefreshClick}
@@ -164,9 +164,7 @@ class ListRescues extends React.Component {
               value={this.state.client} />
           </div>
           <div className="rescue-list flex column">
-            {
-              rescues.map(ListRescues.renderListItem)
-            }
+            {rescues.map(ListRescues.renderListItem)}
           </div>
         </div>
       </PageWrapper>

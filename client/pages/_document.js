@@ -69,7 +69,7 @@ class FuelRatsWebsite extends Document {
 
           <NextScript nonce={nonce} />
 
-          <div id="dialog-container" />
+          <div id="ModalContainer" />
 
           <div id="alert-container" />
         </body>

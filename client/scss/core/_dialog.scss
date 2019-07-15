@@ -1,82 +1,92 @@
-[role=dialog] {
-  background-color: rgba($black, .99);
-  margin-top: 4rem;
-  border: none;
+[role='dialog'] {
   display: flex;
-  flex-direction: column;
-  margin: 0 auto auto auto;
-  min-width: 60rem;
-  overflow: hidden;
-  pointer-events: initial;
   z-index: 401;
+
+  flex-direction: column;
+
+  min-width: 60rem;
   padding: 2rem;
 
-  &.transparency {
-    background-color: rgba($black, .75);
-  }
+  border: none;
 
-  &.center-title > header {
+  background-color: rgba($black, 0.98);
+
+  overflow: hidden;
+  pointer-events: initial;
+
+  &.center-title > .modal-header {
     justify-content: center;
   }
 
-  > header {
-    align-items: stretch;
+  > .modal-header {
     display: flex;
+
+    align-items: stretch;
+
     flex-shrink: 0;
+
+    padding-bottom: 2rem;
+
     color: $white;
 
     h2 {
       padding: 1rem 2rem;
     }
 
-    [name=close] {
-      border-radius: 0;
+    .button-close {
       margin-left: auto;
       padding: 1rem;
+
+      border-radius: 0;
     }
   }
 
-  > .content {
+  > .modal-content {
     flex-shrink: 1;
-    padding: 2rem;
+
+    padding: 0 2rem;
+
     color: $white;
+
+    &.no-pad {
+      padding: 0;
+    }
+
+    &.center {
+      justify-content: center;
+
+      text-align: center;
+    }
 
     input {
       color: $black;
     }
-
-    > .center-content {
-      text-align: center;
-      justify-content: center;
-    }
   }
 
-  &.no-pad > .content {
-    padding: 2rem 0 0 0;
-  }
+  .modal-footer {
+    padding: 2rem 0 0;
 
-  > footer {
     color: $white;
   }
 
-  menu[type=toolbar] {
+  menu[type='toolbar'] {
     display: flex;
-    flex-shrink: 0;
-    padding: 2rem 0 0 0;
 
-    &.compact {
-      padding: 0;
-    }
+    flex-shrink: 0;
+
+    padding: 0;
 
     > .primary,
     > .secondary {
       display: flex;
+
       align-items: baseline;
     }
 
     > .primary {
-      margin-left: auto;
       order: 2;
+
+      margin-left: auto;
 
       > *:not(:first-child) {
         margin-left: 1rem;
@@ -84,8 +94,9 @@
     }
 
     > .secondary {
-      margin-right: auto;
       order: 1;
+
+      margin-right: auto;
 
       > *:not(:last-child) {
         margin-right: 1rem;

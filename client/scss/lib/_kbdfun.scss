@@ -9,91 +9,92 @@ License: MIT
 
 Copyright (c) 2012 Matthias Kretschmann
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 */
 /*  Le kbd
 ---------------------- */
+
 kbd {
-  color: #444444;
-  font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
-  font-weight: normal;
-  font-style: normal;
-  text-align: center;
-  line-height: 1em;
-  text-shadow: 0 1px 0 #fff;
   display: inline;
-  padding: .3em .55em;
-  -webkit-border-radius: 6px;
-  -moz-border-radius: 6px;
+
+  padding: 0.3em 0.55em;
+
+  border: 1px solid #BBBBBB;
   border-radius: 6px;
-  -moz-background-clip: padding;
-  -webkit-background-clip: padding-box;
+
+  color: #444444;
   background-clip: padding-box;
-  border: 1px solid #bbb;
-  background-color: #f7f7f7;
-  background-image: -moz-linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(rgba(0, 0, 0, 0.1)), to(rgba(0, 0, 0, 0)));
-  background-image: -webkit-linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
-  background-image: -o-linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+  background-color: #F7F7F7;
   background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
   background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1a000000', endColorstr='#00000000', GradientType=0);
-  box-shadow: 0px 2px 0 #bbbbbb, 0 3px 1px #999999, 0 3px 0 #bbbbbb, inset 0 1px 1px #ffffff, inset 0 -1px 3px #cccccc;
+  box-shadow: 0 2px 0 #BBBBBB, 0 3px 1px #999999, 0 3px 0 #BBBBBB, inset 0 1px 1px #FFFFFF, inset 0 -1px 3px #CCCCCC;
+
+  font-style: normal;
+  font-weight: normal;
+  font-family: 'Lucida Grande', Lucida, Verdana, sans-serif;
+  text-align: center;
+  text-shadow: 0 1px 0 #FFFFFF;
+  line-height: 1em;
+  filter: progid:dximagetransform.microsoft.gradient(startColorstr='#1a000000', endColorstr='#00000000', GradientType=0);
 }
+
 kbd.dark {
-  color: #eeeeee;
-  text-shadow: 0 -1px 0 #000000;
-  border-color: #000;
-  background-color: #4d4c4c;
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(rgba(0, 0, 0, 0.5)), color-stop(80%, rgba(0, 0, 0, 0)), to(rgba(0, 0, 0, 0)));
-  background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0) 80%, rgba(0, 0, 0, 0));
-  background-image: -moz-linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0) 80%, rgba(0, 0, 0, 0));
-  background-image: -o-linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0) 80%, rgba(0, 0, 0, 0));
+  border-color: #000000;
+
+  color: #EEEEEE;
+  background-color: #4D4C4C;
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0) 80%, rgba(0, 0, 0, 0));
   background-repeat: no-repeat;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#80000000', endColorstr='#00000000', GradientType=0);
-  box-shadow: 0px 2px 0 #000000, 0 3px 1px #999999, inset 0 1px 1px #aaaaaa, inset 0 -1px 3px #272727;
+  box-shadow: 0 2px 0 #000000, 0 3px 1px #999999, inset 0 1px 1px #AAAAAA, inset 0 -1px 3px #272727;
+
+  text-shadow: 0 -1px 0 #000000;
+  filter: progid:dximagetransform.microsoft.gradient(startColorstr='#80000000', endColorstr='#00000000', GradientType=0);
 }
+
 kbd.ios {
-  font-family: Helvetica, "Helvetica Neue", Arial, sans-serif;
-  color: #000;
   border-color: rgba(0, 0, 0, 0.6);
   border-top-color: rgba(0, 0, 0, 0.4);
-  background-color: #b7b7bc;
-  background-image: -moz-linear-gradient(to bottom, #efeff0, #b7b7bc);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#efeff0), to(#b7b7bc));
-  background-image: -webkit-linear-gradient(to bottom, #efeff0, #b7b7bc);
-  background-image: -o-linear-gradient(to bottom, #efeff0, #b7b7bc);
-  background-image: linear-gradient(to bottom, #efeff0, #b7b7bc);
+
+  color: #000000;
+  background-color: #B7B7BC;
+  background-image: linear-gradient(to bottom, #EFEFF0, #B7B7BC);
   background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffefeff0', endColorstr='#ffb7b7bc', GradientType=0);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6), 0 2px 3px rgba(0, 0, 0, 0.1), inset 0 1px 0 #ffffff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6), 0 2px 3px rgba(0, 0, 0, 0.1), inset 0 1px 0 #FFFFFF;
+
+  font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+  filter: progid:dximagetransform.microsoft.gradient(startColorstr='#ffefeff0', endColorstr='#ffb7b7bc', GradientType=0);
 }
+
 kbd.android {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: #ffffff;
-  text-shadow: none;
-  padding: .3em;
+  padding: 0.3em;
+
   border: 1px solid rgba(0, 0, 0, 0.05);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
   border-radius: 3px;
-  -moz-background-clip: padding;
-  -webkit-background-clip: padding-box;
+
+  color: #FFFFFF;
+  background: #5E5E5E;
   background-clip: padding-box;
-  background: #5e5e5e;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3), 0 1px 0 #444444, inset 0 1px 0 #868686;
+
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  text-shadow: none;
 }
+
 kbd.android.dark {
   background: #222222;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.7), 0 1px 0 #444444, inset 0 1px 0 #505050;
 }
+
 kbd.android.color {
-  background: #083c5b;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.7), 0 1px 0 #444444, inset 0 1px 0 #36647b;
+  background: #083C5B;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.7), 0 1px 0 #444444, inset 0 1px 0 #36647B;
 }

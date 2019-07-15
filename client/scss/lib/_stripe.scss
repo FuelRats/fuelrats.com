@@ -1,10 +1,13 @@
-div.StripeElement {
-  border: 0.1rem solid $red-lightened;
+/* stylelint-disable selector-class-pattern */
+.StripeElement {
   padding: 1.111rem 1rem;
+
+  border: 0.1rem solid $red-lightened;
+
+  color: $red;
   box-shadow: 0 0 0.5rem 0 rgba($red, 0);
   transition-duration: 0.5s;
   transition-property: border-color, box-shadow;
-  color: red;
 
   &.StripeElement--focus {
     box-shadow: 0 0 0.5rem 0 rgba($red, 0.5);
@@ -18,3 +21,4 @@ div.StripeElement {
     }
   }
 }
+/* stylelint-enable selector-class-pattern */

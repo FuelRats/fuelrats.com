@@ -1,7 +1,10 @@
 menu {
   display: flex;
-  flex-shrink: 0;
+
   justify-content: space-between;
+
+  flex-shrink: 0;
+
   margin: 0;
   padding: 2rem 4rem;
 
@@ -10,11 +13,13 @@ menu {
     .primary,
     .secondary {
       display: flex;
+
       flex-shrink: 0;
     }
 
     .page {
       align-items: center;
+
       order: 2;
     }
 

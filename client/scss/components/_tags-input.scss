@@ -1,61 +1,30 @@
 // Base styles
 .tags-input {
-  align-content: stretch;
   display: inline-flex;
-  flex-wrap: wrap;
   position: relative;
 
-  input {
-    flex-grow: 1;
+  flex-wrap: wrap;
+  align-content: stretch;
 
-    &:not(:focus) + .options {
-      display: none;
-    }
-
-    &::-webkit-search-cancel-button {
-      -webkit-appearance: none;
-    }
-  }
-
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .options:empty {
-    display: none;
-  }
-
-  .option,
-  .tag {
-    &.focus {
-      background-color: rgba(black, 0.2);
-    }
-  }
-
-  .loader,
-  .no-results,
-  .options {
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 100%;
-  }
-
-  .return-prompt {
-    bottom: 0;
-    opacity: 0;
-    pointer-events: none;
-    position: absolute;
-    right: 0;
-    top: 0;
-    transition-duration: 0.2s;
-    transition-property: opacity;
-  }
+  border: 0.1rem solid $grey-lightened;
+  transition-duration: 0.5s;
+  transition-property: border-color, box-shadow;
 
   &.focus {
+    border-color: $grey;
+
+    box-shadow: 0 0 0.5rem 0 rgba($green-lightened, 0.5);
+
     .return-prompt.show {
       opacity: 1;
+    }
+  }
+
+  &[required]:not(.has-tags) {
+    border-color: $red-lightened;
+
+    &.focus {
+      box-shadow: 0 0 0.5rem 0 rgba($red, 0.5);
     }
   }
 
@@ -73,88 +42,72 @@
     }
 
     .tag {
+      display: flex;
+
+      justify-content: space-between;
+
       flex-grow: 1;
-    }
-  }
-}
 
+      margin: 0;
 
-
-
-
-// Fuelrats styles
-.tags-input {
-  border-color: $grey-lightened;
-  border-style: solid;
-  border-width: 0.1rem;
-  transition-duration: 0.5s;
-  transition-property: border-color, box-shadow;
-
-  &.focus {
-    border-color: $grey;
-    box-shadow: 0 0 0.5rem 0 rgba($green-lightened, 0.5);
-  }
-
-  &[required]:not(.has-tags) {
-    border-color: $red-lightened;
-
-    &.focus {
-      box-shadow: 0 0 0.5rem 0 rgba($red, 0.5);
+      button {
+        padding: 1rem;
+      }
     }
   }
 
-  input[type=search] {
-    border: none;
-    width: auto;
+  input {
+    flex-grow: 1;
 
-    &:focus {
-      box-shadow: none;
+    &:not(:focus) + .options {
+      display: none;
+    }
+
+    &::-webkit-search-cancel-button {
+      appearance: none;
     }
   }
 
   button {
-    background-color: transparent;
-    background-image: none;
-    border: none;
-    color: inherit;
     margin: 0;
     margin-left: 0.5rem;
     padding: 0 1rem;
 
+    border: none;
+
+    color: inherit;
+    background-color: transparent;
+    background-image: none;
+
     &:hover {
-      background-color: rgba(0, 0, 0, 0.3);
       color: inherit;
+      background-color: rgba(0, 0, 0, 0.3);
     }
   }
 
-  .tags {}
+  .tags {
+    display: flex;
 
-  .tag {
-    align-items: center;
-    background-color: lightgrey;
-    margin: 0.5rem;
-    padding: 0;
-    padding-left: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .options:empty {
+    display: none;
   }
 
   .loader,
   .no-results,
   .options {
-    background-color: white;
-    border-color: black;
-    border-style: solid;
-    border-width: 1px;
-    border-top-width: 0;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
     z-index: 1;
-  }
 
-  .option {
-    cursor: pointer;
-    padding: 1rem;
+    border: 1px solid $black;
+    border-top-width: 0;
 
-    &.focus {
-      background-color: lightgrey;
-    }
+    background-color: $white;
   }
 
   .loader,
@@ -163,21 +116,57 @@
   }
 
   .return-prompt {
-    align-items: center;
-    color: grey;
     display: flex;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+
+    align-items: center;
+
     padding-right: 1rem;
+
+    color: $grey;
+    opacity: 0;
+    pointer-events: none;
+    transition-duration: 0.2s;
+    transition-property: opacity;
   }
 
-  &[data-single] {
-    .tag {
-      display: flex;
-      justify-content: space-between;
-      margin: 0;
+  .option,
+  .tag {
+    &.focus {
+      background-color: rgba(#000000, 0.2);
+    }
+  }
 
-      button {
-        padding: 1rem;
-      }
+  .option {
+    padding: 1rem;
+
+    cursor: pointer;
+
+    &.focus {
+      background-color: $light-grey;
+    }
+  }
+
+  .tag {
+    align-items: center;
+
+    margin: 0.5rem;
+    padding: 0;
+    padding-left: 0.5rem;
+
+    background-color: $light-grey;
+  }
+
+  input[type='search'] {
+    width: auto;
+
+    border: none;
+
+    &:focus {
+      box-shadow: none;
     }
   }
 }

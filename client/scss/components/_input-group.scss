@@ -1,16 +1,19 @@
 .input-group {
-  border-color: $grey-lightened;
-  border-style: solid;
-  border-width: 0.1rem;
+  display: flex;
+
+  width: 100%;
+
+  border: 0.1rem solid $grey-lightened;
+
   box-shadow: 0 0 0.5rem 0 rgba($red, 0);
   color: inherit;
-  display: flex;
+  outline: none;
+
   font-family: inherit;
   font-size: inherit;
-  outline: none;
+
   transition-duration: 0.5s;
   transition-property: border-color, box-shadow;
-  width: 100%;
 
   > {
     input[type] {
@@ -19,12 +22,15 @@
 
     button,
     .button {
-      align-items: center;
-      border-bottom: none;
-      border-top: none;
       display: flex;
-      padding-bottom: 0;
+
+      align-items: center;
+
       padding-top: 0;
+      padding-bottom: 0;
+
+      border-top: none;
+      border-bottom: none;
     }
   }
 }

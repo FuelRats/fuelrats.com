@@ -1,7 +1,8 @@
 ul {
   &.bulleted {
-    list-style-type: square;
     margin-bottom: 2rem;
     padding-left: 3rem;
+
+    list-style-type: square;
   }
 }

@@ -1,9 +1,12 @@
 pre {
-  background-color: $light-grey;
-  box-sizing: initial;
   flex-shrink: 0;
-  font-family: 'Source Code Pro', monospace;
+
   margin-bottom: 2rem;
   padding: 2rem;
+
+  background-color: $light-grey;
+
+  font-family: 'Source Code Pro', monospace;
   white-space: pre-wrap;
+  box-sizing: initial;
 }

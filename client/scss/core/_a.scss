@@ -1,7 +1,9 @@
 a {
   color: $red;
-  text-decoration: none;
   transition: all 0.2s;
+
+  text-decoration: none;
+
 
   &:focus,
   &:hover {
