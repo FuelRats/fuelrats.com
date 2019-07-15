@@ -18,6 +18,10 @@
   color: $yellow;
 }
 
+.text-center {
+  text-align: center;
+}
+
 .text-right {
   text-align: right;
 }
@@ -30,6 +34,9 @@
   padding-right: 1rem;
 }
 
+.text-space-bottom {
+  padding-bottom: 3rem;
+}
 
 .text-mono {
   font-family: 'Operator Mono', 'SF Mono', 'Fira Code', 'Source Code Pro', Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Consolas, monospace, sans-serif;
