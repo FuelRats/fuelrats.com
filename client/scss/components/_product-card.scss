@@ -1,42 +1,53 @@
 .product-cards {
   display: grid;
+
   grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
   grid-gap: 2rem;
 }
 
 .product-card {
   display: grid;
-  width: 30rem;
-  line-height: 1;
-  place-self: stretch center;
+
   grid-template-rows: 260px 4.2rem 1fr 4.3rem;
+
+  place-self: stretch center;
+
+  width: 30rem;
+
+  line-height: 1;
 
   .preview {
     width: 30rem;
-    text-align: center;
+
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+
+    text-align: center;
   }
 
   p {
-    text-align: center;
-    padding: 1rem;
     margin-bottom: 0;
+    padding: 1rem;
+
+    text-align: center;
   }
 
   .title {
+    justify-content: center;
+
     font-size: 2.2rem;
     line-height: 1;
     text-align: center;
-    justify-content: center;
   }
 
   .controls {
     display: flex;
-    justify-content: space-evenly;
-    width: 100%;
+
     align-items: center;
-    padding: 0 1rem 1rem 1rem;
+    justify-content: space-evenly;
+
+    width: 100%;
+    padding: 0 1rem 1rem;
   }
 }

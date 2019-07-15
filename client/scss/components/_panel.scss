@@ -7,11 +7,30 @@
   }
 
   header,
+  .panel-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    menu {
+      padding: 0;
+    }
+  }
+
+  .panel-content {
+    padding: 1rem;
+
+    overflow: auto;
+  }
+
+  header,
   footer,
   .panel-header,
   .panel-footer {
-    padding: 1rem;
     position: relative;
+
+    padding: 1rem;
 
     &:empty {
       display: none;
@@ -21,24 +40,5 @@
       background-color: $black;
       color: $white;
     }
-  }
-
-  header,
-  .panel-header {
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
-
-    menu {
-      padding: 0;
-    }
-  }
-
-  footer,
-  .panel-footer {}
-
-  .panel-content {
-    overflow: auto;
-    padding: 1rem;
   }
 }

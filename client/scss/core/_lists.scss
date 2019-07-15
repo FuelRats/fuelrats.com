@@ -1,43 +1,48 @@
-ol, ul {
+ol,
+ul {
   &.columns {
-    align-content: stretch;
     display: flex;
+
     flex-wrap: wrap;
+    align-content: stretch;
 
     > li {
       display: block;
+
       flex-grow: 1;
       flex-shrink: 0;
+
       min-width: 50%;
+    }
+  }
+
+  &.inline {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    &.comma-separated {
+      li {
+        &::after {
+          content: ', ';
+          margin-right: 0.2rem;
+        }
+
+        &:last-of-type::after {
+          content: '';
+          margin-right: 0;
+        }
+      }
+    }
+
+    li {
+      white-space: nowrap;
     }
   }
 
   > li {
     &.inaccessible {
       text-decoration: line-through;
-    }
-  }
-
-  &.inline {
-    display: flex;
-    flex-wrap: wrap;
-
-    li {
-      white-space: nowrap;
-    }
-
-    &.comma-separated {
-      li {
-        &:after {
-          content: ', ';
-          margin-right: 0.2rem;
-        }
-
-        &:last-of-type:after {
-          content: '';
-          margin-right: 0;
-        }
-      }
     }
   }
 }

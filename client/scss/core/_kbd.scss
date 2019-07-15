@@ -1,11 +1,12 @@
 kbd {
-  box-shadow:
-          0   1px   0   #bbbbbb,
-          0   2px   1px #999999,
-          0   2px   0   #bbbbbb,
-    inset 0   1px   1px #ffffff,
-    inset 0   -1px  3px #cccccc;
   padding: 0.3rem 0.5rem;
+
+  box-shadow:
+    0   1px   0   #BBBBBB,
+    0   2px   1px #999999,
+    0   2px   0   #BBBBBB,
+    inset 0   1px   1px #FFFFFF,
+    inset 0   -1px  3px #CCCCCC;
 
   + kbd {
     margin-left: 0.2rem;

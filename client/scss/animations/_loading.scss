@@ -1,52 +1,30 @@
 @keyframes loading-start {
   0% {
-    border-bottom-color: currentColor;
-    border-left-color: currentColor;
-    border-right-color: currentColor;
-    border-top-color: currentColor;
+    border-color: currentColor;
   }
 
   100% {
-    border-bottom-color: currentColor;
-    border-left-color: currentColor;
-    border-right-color: currentColor;
-    border-top-color: transparent;
+    border-color: transparent currentColor currentColor;
   }
 }
-
 @keyframes loading {
   0% {
-    border-bottom-color: currentColor;
-    border-left-color: currentColor;
-    border-right-color: currentColor;
-    border-top-color: transparent;
+    border-color: transparent currentColor currentColor;
   }
 
   25% {
-    border-bottom-color: currentColor;
-    border-left-color: currentColor;
-    border-right-color: transparent;
-    border-top-color: currentColor;
+    border-color: currentColor transparent currentColor currentColor;
   }
 
   50% {
-    border-bottom-color: transparent;
-    border-left-color: currentColor;
-    border-right-color: currentColor;
-    border-top-color: currentColor;
+    border-bottom-color: currentColor currentColor transparent currentColor;
   }
 
   75% {
-    border-bottom-color: currentColor;
-    border-left-color: transparent;
-    border-right-color: currentColor;
-    border-top-color: currentColor;
+    border-color: currentColor currentColor currentColor transparent;
   }
 
   100% {
-    border-bottom-color: currentColor;
-    border-left-color: currentColor;
-    border-right-color: currentColor;
-    border-top-color: transparent;
+    border-color: transparent currentColor currentColor;
   }
 }

@@ -1,11 +1,15 @@
 .order-status-indicator {
-  align-items: center;
   display: inline-flex;
-  vertical-align: text-top;
+
+  align-items: center;
+
   margin: 0 1rem;
 
-  [data-icon=arrow-right] {
-    font-size: 0.5em;
+  vertical-align: text-top;
+
+  [data-icon='arrow-right'] {
     margin: 0 1rem;
+
+    font-size: 0.5em;
   }
 }

@@ -1,10 +1,5 @@
 .brand {
-  -ms-flex-negative: 0;
   margin: 2rem 0;
-
-  .brand-animation-wrapper {
-    overflow: hidden;
-  }
 
   &:hover {
     .brand-animation-wrapper {
@@ -18,10 +13,15 @@
     }
   }
 
+  .brand-animation-wrapper {
+    overflow: hidden;
+  }
+
   svg {
-    padding: 0 4rem;
     min-width: 5rem;
     max-width: 20.5rem;
+    padding: 0 4rem;
+
     color: $white;
   }
 }

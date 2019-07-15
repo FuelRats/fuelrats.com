@@ -112,7 +112,17 @@
         "content",
         "design"
       ]
+    },
+    {
+      "login": "noctilucent-dev",
+      "name": "Nathan",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/52113097?v=4",
+      "profile": "https://github.com/noctilucent-dev",
+      "contributions": [
+        "code"
+      ]
     }
   ],
-  "repoType": "github"
+  "repoType": "github",
+  "commitConvention": "none"
 }

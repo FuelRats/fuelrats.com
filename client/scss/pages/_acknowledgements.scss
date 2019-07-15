@@ -1,12 +1,14 @@
 .page.acknowledgements {
-
   .credit-section {
-    background: rgba(127,127,127, .1);
-    padding: 1rem;
-    margin-top: 2rem;
     display: flex;
+
     flex-direction: row;
     align-items: center;
+
+    margin-top: 2rem;
+    padding: 1rem;
+
+    background: rgba(127, 127, 127, 0.1);
 
     p {
       margin-left: 2em;
@@ -15,7 +17,6 @@
     @media screen and (max-width: 1040px) {
       flex-direction: column;
     }
-
     @media screen and (max-width: 500px) {
       a {
         width: calc(100% - 4rem);
@@ -28,57 +29,63 @@
   }
 
   .brand-image {
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
     flex-shrink: 0;
-    height: 125px;
+
     width: 400px;
+    height: 125px;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
 
     &.atlassian-brand {
-      background-image: url(/static/images/brandlogos/atlassian.png);
-
+      background-image: url('/static/images/brandlogos/atlassian.png');
     }
 
     &.statuspage-brand {
-      background-image: url(/static/images/brandlogos/statuspage.png);
+      background-image: url('/static/images/brandlogos/statuspage.png');
     }
 
     &.jetbrains-brand {
-      background-image: url(/static/images/brandlogos/jetbrains.png);
+      background-image: url('/static/images/brandlogos/jetbrains.png');
       background-size: 55%;
     }
 
     &.slack-brand {
-      background-image: url(/static/images/brandlogos/slack.png);
+      background-image: url('/static/images/brandlogos/slack.png');
     }
 
     &.onepass-brand {
-      background-image:  url(/static/images/brandlogos/onepassword.png);
+      background-image: url('/static/images/brandlogos/onepassword.png');
     }
   }
 
   .dependency-list {
     display: flex;
-    width: 100%;
-    align-items: center;
+
     flex-direction: column;
+    align-items: center;
+
+    width: 100%;
     margin-top: 2rem;
 
     > span {
+      border-bottom: 0.1rem solid $black;
+
       font-size: 1.25em;
       font-family: Raleway, sans-serif;
-      border-bottom: .1rem solid $black;
     }
 
     > ul {
       min-width: 450px;
       max-height: 550px;
-      overflow-y: auto;
-      overflow-x: hidden;
-      border: .1rem solid $black;
-      padding: .5rem 1rem;
       margin: 1rem;
+      padding: 0.5rem 1rem;
+
+      border: 0.1rem solid $black;
+
+      overflow-x: hidden;
+      overflow-y: auto;
     }
   }
 }

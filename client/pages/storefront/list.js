@@ -8,7 +8,7 @@ import React from 'react'
 // Component imports
 import { actions, connect } from '../../store'
 // import StoreControlBar from '../../components/storefront/StoreControlBar'
-import CartUpdateDialog from '../../components/storefront/CartUpdateDialog'
+import CartUpdateModal from '../../components/storefront/CartUpdateModal'
 import Component from '../../components/Component'
 import PageWrapper from '../../components/PageWrapper'
 import ProductCard from '../../components/storefront/ProductCard'
@@ -91,11 +91,10 @@ class ListProducts extends Component {
             </div>
           </div>
         </PageWrapper>
-        {showDialog && activeProduct && (
-          <CartUpdateDialog
-            product={activeProduct}
-            onClose={this._handleCartUpdateDialogClose} />
-        )}
+        <CartUpdateModal
+          isOpen={showDialog && activeProduct}
+          product={activeProduct}
+          onClose={this._handleCartUpdateDialogClose} />
       </>
     )
   }

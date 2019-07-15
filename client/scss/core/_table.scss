@@ -1,3 +1,16 @@
+th {
+  padding-right: 1rem;
+
+  font-weight: bold;
+}
+
+
+th,
+td {
+  text-align: left;
+  vertical-align: middle;
+}
+
 table {
   max-width: 100%;
   table-layout: fixed;
@@ -7,14 +20,16 @@ table {
   }
 
   &.padded {
-    th, td {
-      padding: 1rem;
+    &.compact {
+      th,
+      td {
+        padding: 0.5rem;
+      }
     }
 
-    &.compact {
-      th, td {
-        padding: .5rem;
-      }
+    th,
+    td {
+      padding: 1rem;
     }
   }
 
@@ -28,16 +43,6 @@ table {
 thead {
   background-color: $black;
   color: $white;
-}
-
-th, td {
-  text-align: left;
-  vertical-align: middle;
-}
-
-th {
-  font-weight: bold;
-  padding-right: 1rem;
 }
 
 td.total {

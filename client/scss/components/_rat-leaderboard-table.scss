@@ -1,6 +1,7 @@
-.ReactTable.rat-leaderboard {
+.rat-leaderboard {
   .rt-tbody .rt-td {
     display: flex;
+
     align-items: center;
   }
 
@@ -15,6 +16,7 @@
 
   .badges .badge-list .achievement {
     display: inline-block;
+
     margin-right: 0.75rem;
 
     &.code-red {

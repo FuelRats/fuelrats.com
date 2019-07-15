@@ -1,11 +1,13 @@
 address {
   display: grid;
+
+  grid-template-columns: repeat(4, max-content);
   grid-template-areas:
     'name name name name'
     'line1 line1 line1 line1'
     'line2 line2 line2 line2'
     'city state country zip';
-  grid-template-columns: repeat(4, max-content);
+
 
   .name {
     grid-area: name;
@@ -23,7 +25,9 @@ address {
     }
   }
 
-  .city, .state, .country {
+  .city,
+  .state,
+  .country {
     margin-right: 0.2em;
   }
 

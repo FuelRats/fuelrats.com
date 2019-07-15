@@ -1,15 +1,19 @@
 .page.your-cart {
   .cart-items {
     display: flex;
+
     flex-direction: column;
-    justify-content: flex-start;
     align-content: flex-start;
+    justify-content: flex-start;
+
     max-width: 70rem;
 
     .cart-item {
       display: flex;
+
       flex-direction: row;
       align-items: center;
+
       padding: 1rem 0;
 
       &:not(:first-child) {
@@ -17,16 +21,17 @@
       }
 
       > * {
-        margin-right: .5rem;
+        margin-right: 0.5rem;
       }
 
       .item-name {
-        margin-left: 1rem;
         margin-right: auto;
+        margin-left: 1rem;
+
         font-size: 1.1em;
 
         .subscript {
-          font-size: .7em;
+          font-size: 0.7em;
         }
       }
 
@@ -39,6 +44,7 @@
       .item-name-key {
         margin-right: auto;
       }
+
       .item-quantity-key {
         margin-right: 16rem;
       }
