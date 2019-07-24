@@ -4,8 +4,13 @@ import httpStatus from '../../helpers/httpStatus'
 
 
 
-
-const createAxiosResponseAction = (type, response) => {
+/**
+ * Converts an axios reponse to object to a dispatchable action object.
+ *
+ * @param {!String} type Redux action type string.
+ * @param {!Object} response Axios response object.
+ */
+const axiosAction = (type, response) => {
   const {
     config,
     data,
@@ -42,4 +47,4 @@ const createAxiosResponseAction = (type, response) => {
 
 
 
-export default createAxiosResponseAction
+export default axiosAction
