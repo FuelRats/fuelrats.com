@@ -16,7 +16,7 @@ import {
   selectUserGroups,
 } from '../store/selectors'
 import { Router } from '../routes'
-import apiService from '../services/api'
+import frApi from '../services/fuelrats'
 import ErrorPage from '../pages/_error'
 import Header from './Header'
 import httpStatus from '../helpers/httpStatus'
@@ -146,7 +146,7 @@ class AppLayout extends React.Component {
     if (this.props.verifyError) {
       this.props.logout(true)
     } else if (this.props.accessToken) {
-      apiService().defaults.headers.common.Authorization = `Bearer ${this.props.accessToken}`
+      frApi.defaults.headers.common.Authorization = `Bearer ${this.props.accessToken}`
     }
   }
 
