@@ -78,13 +78,9 @@ class DonateSelectPaymentType extends React.Component {
             required
             value={currency} />
         </div>
-        <h5>with my</h5>
         <div className="donationType">
           <button type="button" onClick={() => this.props.onTypeClick('card', currency, amount)}>
-            Credit card!
-          </button>
-          <button type="button" onClick={() => this.props.onTypeClick('aplgogl', currency, amount)}>
-            Apple / Google Pay!
+            Donate
           </button>
         </div>
       </div>
