@@ -22,4 +22,8 @@ module.exports = {
   wordpress: {
     url: process.env.FRDC_WORDPRESS_URL || 'https://wordpress.fuelrats.com',
   },
+  stripe: {
+    publicKey: process.env.FRDC_STRIPE_API_PK,
+    secretKey: process.env.FRDC_STRIPE_API_SK,
+  },
 }
