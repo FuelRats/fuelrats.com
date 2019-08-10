@@ -92,14 +92,14 @@ class Blogs extends Component {
     )
   }
 
-  async _retrieveBlogs (options = {}) {
+  async _getBlogs (options = {}) {
     let {
       author,
       category,
     } = this.props
     const {
       page,
-      retrieveBlogs,
+      getBlogs,
     } = this.props
 
     const wpOptions = {}
@@ -121,7 +121,7 @@ class Blogs extends Component {
       retrieving: true,
     })
 
-    await retrieveBlogs(wpOptions)
+    await getBlogs(wpOptions)
 
     this.setState({
       retrieving: false,
@@ -137,7 +137,7 @@ class Blogs extends Component {
   \***************************************************************************/
 
   componentDidMount () {
-    this._retrieveBlogs()
+    this._getBlogs()
   }
 
   UNSAFE_componentWillReceiveProps (nextProps) {
@@ -158,7 +158,7 @@ class Blogs extends Component {
     const pageMatches = page === nextPage
 
     if (!authorMatches || !categoryMatches || !pageMatches) {
-      this._retrieveBlogs({
+      this._getBlogs({
         author: nextAuthor || null,
         category: nextCategory || null,
         page: nextPage,
@@ -208,7 +208,7 @@ class Blogs extends Component {
                   <article>
                     <header>
                       <h3 className="title">
-                        <Link as={`/blog/${id}`} href={`/blog/single?id=${id}`}>
+                        <Link route="blog view" params={{ blogId: id }}>
                           <a dangerouslySetInnerHTML={{ __html: blog.title.rendered }} />
                         </Link>
                       </h3>
@@ -222,8 +222,7 @@ class Blogs extends Component {
 
                       <span className="author">
                         <FontAwesomeIcon icon="user" fixedWidth />
-
-                        <Link as={`/blog/author/${author.id}`} href={`/blog/all?author=${author.id}`}>
+                        <Link route="blog list author" params={{ author: author.id }}>
                           <a>{author.name}</a>
                         </Link>
                       </span>
@@ -246,7 +245,7 @@ class Blogs extends Component {
 
                             return (
                               <li key={category.id}>
-                                <Link as={`/blog/category/${category.id}`} href={`/blog/all?category=${category.id}`}>
+                                <Link route="blog list category" params={{ category: category.id }}>
                                   <a title={description}>{name}</a>
                                 </Link>
                               </li>
@@ -279,7 +278,7 @@ class Blogs extends Component {
     ...selectBlogStatistics(state),
   })
 
-  static mapDispatchToProps = ['retrieveBlogs']
+  static mapDispatchToProps = ['getBlogs']
 }
 
 
