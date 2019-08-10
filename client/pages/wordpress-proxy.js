@@ -6,7 +6,7 @@ import React from 'react'
 
 
 // Component imports
-import { actions, connect } from '../store'
+import { actions, connect, actionStatus } from '../store'
 import Component from '../components/Component'
 import PageWrapper from '../components/PageWrapper'
 import { selectWordpressPageBySlug } from '../store/selectors'
@@ -25,7 +25,7 @@ class WordpressProxy extends Component {
     if (!store.getState().wordpress.page[slug]) {
       const { status } = await actions.getWordpressPage(slug)(store.dispatch)
 
-      if (status === 'error' && res) {
+      if (status === actionStatus.ERROR && res) {
         res.statusCode = 404
       }
     }
