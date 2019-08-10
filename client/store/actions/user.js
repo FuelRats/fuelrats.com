@@ -1,52 +1,69 @@
 // Component imports
-import { createApiAction } from '../actionCreators'
+import { frApiRequest } from './services'
 import actionTypes from '../actionTypes'
 
 
 
 
 
-export const addNickname = (nickname, password) => createApiAction({
-  actionType: actionTypes.ADD_NICKNAME,
-  url: '/nicknames',
-  method: 'post',
-  data: {
-    nickname,
-    password,
+const addNickname = (nickname, password) => frApiRequest(
+  actionTypes.ADD_NICKNAME,
+  {
+    url: '/nicknames',
+    method: 'post',
+    data: {
+      nickname,
+      password,
+    },
   },
-  postDispatch: {
+  {
     nickname,
+  }
+)
+
+
+
+
+
+const deleteNickname = (nickname) => frApiRequest(
+  actionTypes.DELETE_NICKNAME,
+  {
+    url: `/nicknames/${nickname}`,
+    method: 'delete',
   },
-})
-
-
-
-
-
-export const deleteNickname = (nickname) => createApiAction({
-  actionType: actionTypes.DELETE_NICKNAME,
-  url: `/nicknames/${nickname}`,
-  method: 'delete',
-  postDispatch: {
+  {
     nickname,
-  },
-})
+  }
+)
 
 
 
 
-export const getUser = () => createApiAction({
-  actionType: actionTypes.GET_USER,
-  url: '/profile',
-})
+const getUser = () => frApiRequest(
+  actionTypes.GET_USER,
+  { url: '/profile' }
+)
 
 
 
 
 
-export const updateUser = (userId, data) => createApiAction({
-  actionType: actionTypes.UPDATE_USER,
-  url: `/users/${userId}`,
-  method: 'put',
-  data,
-})
+const updateUser = (userId, data) => frApiRequest(
+  actionTypes.UPDATE_USER,
+  {
+    url: `/users/${userId}`,
+    method: 'put',
+    data,
+  }
+)
+
+
+
+
+
+export {
+  addNickname,
+  deleteNickname,
+  getUser,
+  updateUser,
+}

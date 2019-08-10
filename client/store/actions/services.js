@@ -2,6 +2,9 @@ import actionStatus from '../actionStatus'
 import httpStatus from '../../helpers/httpStatus'
 
 
+import frApi from '../../services/fuelrats'
+import wpApi from '../../services/wordpress'
+
 
 
 /**
@@ -10,7 +13,7 @@ import httpStatus from '../../helpers/httpStatus'
  * @param {!String} type Redux action type string.
  * @param {!Object} response Axios response object.
  */
-const axiosAction = (type, response) => {
+const createAxiosAction = (type, response) => {
   const {
     config,
     data,
@@ -47,4 +50,32 @@ const axiosAction = (type, response) => {
 
 
 
-export default axiosAction
+
+
+const axiosRequest = (service) => (type, config, restAction) => async (dispatch) => {
+  const response = await service.request(config)
+  const action = createAxiosAction(type, response)
+
+  return dispatch(
+    restAction
+      ? {
+        ...action,
+        ...restAction,
+      }
+      : action
+  )
+}
+
+const frApiRequest = axiosRequest(frApi)
+
+const wpApiRequest = axiosRequest(wpApi)
+
+
+
+
+
+export {
+  createAxiosAction,
+  frApiRequest,
+  wpApiRequest,
+}
