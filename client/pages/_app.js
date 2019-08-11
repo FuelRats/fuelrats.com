@@ -18,7 +18,7 @@ import AppLayout from '../components/AppLayout'
 
 
 // Style imports
-import '../scss/app.scss' /* eslint-disable-line import/no-unassigned-import */// import required to initiate css loading
+import '../scss/app.scss'
 
 
 

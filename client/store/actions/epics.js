@@ -1,22 +1,24 @@
 // Component imports
-import { createApiAction } from '../actionCreators'
+import { frApiRequest } from './services'
 import actionTypes from '../actionTypes'
 
 
 
 
-export const retrieveEpic = (epicId) => createApiAction({
-  actionType: actionTypes.RETRIEVE_EPIC,
-  url: `/epics/${epicId}`,
-})
+export const getEpic = (epicId) => frApiRequest(
+  actionTypes.GET_EPIC,
+  { url: `/epics/${epicId}` }
+)
 
 
 
 
 
-export const createEpic = (data) => createApiAction({
-  actionType: actionTypes.CREATE_EPIC,
-  url: '/epics',
-  method: 'post',
-  data,
-})
+export const createEpic = (data) => frApiRequest(
+  actionTypes.CREATE_EPIC,
+  {
+    url: '/epics',
+    method: 'post',
+    data,
+  }
+)

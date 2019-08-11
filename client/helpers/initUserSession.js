@@ -7,7 +7,7 @@ import cookies from 'next-cookies'
 
 // Component imports
 import { getActionCreators } from '../store'
-import apiService from '../services/api'
+import frApi from '../services/fuelrats'
 
 
 
@@ -36,7 +36,7 @@ const initUserSession = async (ctx) => {
   let verified = loggedIn && user.attributes && !verifyError
 
   if (accessToken) {
-    apiService().defaults.headers.common.Authorization = `Bearer ${accessToken}`
+    frApi.defaults.headers.common.Authorization = `Bearer ${accessToken}`
 
     if (!verified) {
       const { payload, status } = await getUser()

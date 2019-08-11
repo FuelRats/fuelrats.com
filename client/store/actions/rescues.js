@@ -1,83 +1,62 @@
 // Component imports
-import { createApiAction, actionSeries } from '../actionCreators'
+import { frApiRequest } from './services'
 import actionTypes from '../actionTypes'
 
 
 
 
 
-export const deleteRescue = (rescueId) => createApiAction({
-  actionType: actionTypes.DELETE_RESCUE,
-  url: `/rescues/${rescueId}`,
-  method: 'delete',
-})
+const deleteRescue = (rescueId) => frApiRequest(
+  actionTypes.DELETE_RESCUE,
+  {
+    url: `/rescues/${rescueId}`,
+    method: 'delete',
+  }
+)
 
-export const getRescues = (params, opts) => createApiAction({
-  actionType: actionTypes.GET_RESCUES,
-  url: '/rescues',
-  params,
-  postDispatch: {
+const getRescues = (params, opts) => frApiRequest(
+  actionTypes.GET_RESCUES,
+  {
+    url: '/rescues',
+    params,
+  },
+  {
     pageView: opts.pageView && {
       id: opts.pageView,
       type: 'rescues',
     },
-  },
-})
-
-export const getRescue = (rescueId) => createApiAction({
-  actionType: actionTypes.GET_RESCUE,
-  url: `/rescues/${rescueId}`,
-})
-
-export const updateRescueDetails = (rescueId, rescue) => createApiAction({
-  actionType: actionTypes.UPDATE_RESCUE,
-  url: `/rescues/${rescueId}`,
-  method: 'put',
-  data: rescue,
-})
-
-export const updateRescueRatsAssigned = (rescueId, data) => createApiAction({
-  actionType: actionTypes.UPDATE_RESCUE_RATS_ASSIGNED,
-  url: `/rescues/assign/${rescueId}`,
-  method: 'put',
-  data,
-})
-
-export const updateRescueRatsRemoved = (rescueId, data) => createApiAction({
-  actionType: actionTypes.UPDATE_RESCUE_RATS_REMOVED,
-  url: `/rescues/unassign/${rescueId}`,
-  method: 'put',
-  data,
-})
-
-export const updateRescue = (rescueId, changes) => {
-  const {
-    ratsAdded,
-    ratsRemoved,
-    ...attributeChanges
-  } = changes
-
-  const actions = []
-
-  if (ratsAdded && ratsAdded.length) {
-    actions.push(updateRescueRatsAssigned(rescueId, ratsAdded))
   }
+)
 
-  if (ratsRemoved && ratsRemoved.length) {
-    actions.push(updateRescueRatsRemoved(rescueId, ratsRemoved))
+const getRescue = (rescueId) => frApiRequest(
+  actionTypes.GET_RESCUE,
+  { url: `/rescues/${rescueId}` }
+)
+
+const updateRescue = (rescueId, data) => frApiRequest(
+  actionTypes.UPDATE_RESCUE,
+  {
+    url: `/rescues/${rescueId}`,
+    method: 'put',
+    data,
   }
+)
 
-  if (Object.keys(attributeChanges).length) {
-    actions.push(updateRescueDetails(rescueId, attributeChanges))
+const updateRescueRats = (rescueId, data) => frApiRequest(
+  actionTypes.UPDATE_RESCUE_RATS,
+  {
+    url: `/rescues/${rescueId}/rats`,
+    method: 'patch',
+    data,
   }
+)
 
-  if (!actions.length) {
-    return () => ({
-      payload: null,
-      status: 'error',
-      type: actionTypes.UPDATE_RESCUE,
-    })
-  }
 
-  return actionSeries(actions, false, true)
+
+export {
+  deleteRescue,
+  getRescues,
+  getRescue,
+  updateRescue,
+  updateRescueRats,
 }

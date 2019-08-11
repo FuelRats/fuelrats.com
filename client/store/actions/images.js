@@ -16,7 +16,7 @@ const getImage = (payload) => (dispatch) => {
 const disposeImage = ({ id, url }) => (dispatch) => {
   window.URL.revokeObjectURL(url)
 
-  dispatch({
+  return dispatch({
     type: actionTypes.DISPOSE_IMAGE,
     status: 'success',
     payload: id,

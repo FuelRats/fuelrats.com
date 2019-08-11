@@ -44,16 +44,16 @@ class Authorize extends Component {
       response_type: responseType,
     } = query
 
-    const { payload, status } = await actions.getClientOAuthPage(query)(store.dispatch)
+    const { payload, response, status } = await actions.getClientOAuthPage(query)(store.dispatch)
 
     if (status === 'success') {
       const {
         client,
         ...oauthProps
-      } = payload.data
+      } = payload
 
-      if (res && payload.headers['set-cookie']) {
-        res.setHeader('set-cookie', payload.headers['set-cookie'])
+      if (res && response.headers['set-cookie']) {
+        res.setHeader('set-cookie', response.headers['set-cookie'])
       }
 
       setLayoutProps({

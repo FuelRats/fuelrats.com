@@ -6,10 +6,11 @@ import Cookies from 'js-cookie'
 
 
 // Component imports
-import { createApiAction } from '../actionCreators'
+import { frApiRequest, createAxiosAction } from './services'
 import { Router } from '../../routes'
 import actionTypes from '../actionTypes'
-import apiService from '../../services/api'
+import frApi from '../../services/fuelrats'
+import httpStatus from '../../helpers/httpStatus'
 
 
 
@@ -22,45 +23,46 @@ const SESSION_TOKEN_LENGTH = 365 // days
 
 
 
-export const changePassword = (currentPassword, newPassword) => createApiAction({
-  actionType: actionTypes.CHANGE_PASSWORD,
-  url: '/users/setpassword',
-  method: 'put',
-  data: {
-    password: currentPassword,
-    new: newPassword,
-  },
-})
+export const changePassword = (currentPassword, newPassword) => frApiRequest(
+  actionTypes.CHANGE_PASSWORD,
+  {
+    url: '/users/setpassword',
+    method: 'put',
+    data: {
+      password: currentPassword,
+      new: newPassword,
+    },
+  }
+)
 
 
 
 
 
-export const login = ({
-  email,
-  password,
-  route,
-  routeParams,
-  remember,
-}) => createApiAction({
-  actionType: actionTypes.LOGIN,
-  url: '/oauth2/token',
-  method: 'post',
-  data: {
-    grant_type: 'password', /* eslint-disable-line camelcase */ // name required by api
+export const login = (options) => async (dispatch) => {
+  const {
     password,
-    username: email,
-  },
-  onSuccess: (response) => {
+    email,
+    route,
+    routeParams,
+    remember,
+  } = options
+
+  const response = await frApi.request({
+    url: '/oauth2/token',
+    method: 'post',
+    data: {
+      grant_type: 'password', /* eslint-disable-line camelcase */ // name required by api
+      password,
+      username: email,
+    },
+  })
+
+  if (httpStatus.isSuccess(response.status)) {
     const token = response.data.access_token
 
     Cookies.set('access_token', token, { expires: remember ? SESSION_TOKEN_LENGTH : null })
-    apiService().defaults.headers.common.Authorization = `Bearer ${token}`
-  },
-  onComplete: ({ status }) => {
-    if (status === 'error') {
-      return
-    }
+    frApi.defaults.headers.common.Authorization = `Bearer ${token}`
 
     /* eslint-disable no-restricted-globals */
     if (location && location.search) {
@@ -79,21 +81,30 @@ export const login = ({
       Router.pushRoute(route, routeParams)
     }
     /* eslint-enable no-restricted-globals */
-  },
-})
+  }
+
+  return dispatch(createAxiosAction(actionTypes.LOGIN, response))
+}
 
 
-export const getClientOAuthPage = (params) => createApiAction({
-  actionType: actionTypes.GET_CLIENT_AUTHORIZATION_PAGE,
-  url: '/oauth2/authorize',
-  onSuccess: (res) => res,
-  params,
-})
+
+
+
+export const getClientOAuthPage = (params) => frApiRequest(
+  actionTypes.GET_CLIENT_AUTHORIZATION_PAGE,
+  {
+    url: '/oauth2/authorize',
+    params,
+  }
+)
+
+
+
 
 
 export const logout = (fromVerification) => (dispatch) => {
   Cookies.remove('access_token')
-  delete apiService().defaults.headers.common.Authorization
+  delete frApi.defaults.headers.common.Authorization
 
   const result = dispatch({
     payload: {
@@ -110,54 +121,63 @@ export const logout = (fromVerification) => (dispatch) => {
 
 
 
-export const register = ({ recaptcha, ...data }) => createApiAction({
-  actionType: actionTypes.REGISTER,
-  url: '/register',
-  method: 'post',
-  data: {
-    ...data,
-    'g-recaptcha-response': recaptcha,
-  },
-})
+export const register = ({ recaptcha, ...data }) => frApiRequest(
+  actionTypes.REGISTER,
+  {
+    url: '/register',
+    method: 'post',
+    data: {
+      ...data,
+      'g-recaptcha-response': recaptcha,
+    },
+  }
+)
 
 
 
 
 
-export const resetPassword = ({ password, token }) => createApiAction({
-  actionType: actionTypes.RESET_PASSWORD,
-  method: 'post',
-  url: `/reset/${token}`,
-  data: {
-    password,
-  },
-})
+export const resetPassword = ({ password, token }) => frApiRequest(
+  actionTypes.RESET_PASSWORD,
+  {
+    url: `/reset/${token}`,
+    method: 'post',
+    data: {
+      password,
+    },
+  }
+)
 
 
 
 
 
-export const sendPasswordResetEmail = (email) => createApiAction({
-  actionType: actionTypes.SEND_PASSWORD_RESET_EMAIL,
-  url: '/reset',
-  method: 'post',
-  data: {
-    email,
-  },
-})
+export const sendPasswordResetEmail = (email) => frApiRequest(
+  actionTypes.SEND_PASSWORD_RESET_EMAIL,
+  {
+    url: '/reset',
+    method: 'post',
+    data: {
+      email,
+    },
+  }
+)
+
+
+
 
 
 export const updateLoggingInState = (success) => (dispatch) => dispatch({
+  type: actionTypes.LOGIN,
   payload: null,
   status: success ? 'success' : 'noToken',
-  type: actionTypes.LOGIN,
 })
 
 
 
 
 
-export const validatePasswordResetToken = (token) => createApiAction({
-  actionType: actionTypes.VALIDATE_PASSWORD_RESET_TOKEN,
-  url: `/reset/${token}`,
-})
+export const validatePasswordResetToken = (token) => frApiRequest(
+  actionTypes.VALIDATE_PASSWORD_RESET_TOKEN,
+  { url: `/reset/${token}` }
+)

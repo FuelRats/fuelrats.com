@@ -15,6 +15,9 @@ import TextPlaceholder from '../../components/TextPlaceholder'
 import { selectBlogStatistics, selectBlogAuthors, selectBlogCategories, selectBlogById } from '../../store/selectors'
 
 
+
+
+
 @connect
 class Blog extends Component {
   /***************************************************************************\
@@ -23,7 +26,7 @@ class Blog extends Component {
 
 
   static async getInitialProps ({ query, store }) {
-    await actions.retrieveBlog(query.id)(store.dispatch)
+    await actions.getBlog(query.blogId)(store.dispatch)
   }
 
   render () {
@@ -131,13 +134,11 @@ class Blog extends Component {
   }
 
   static mapStateToProps = (state, ownProps) => ({
-    blog: selectBlogById(state, { blogId: ownProps.query.id }),
+    blog: selectBlogById(state, ownProps.query),
     categories: selectBlogCategories(state),
     authors: selectBlogAuthors(state),
     ...selectBlogStatistics(state),
   })
-
-  static mapDispatchToProps = ['retrieveBlog']
 }
 
 

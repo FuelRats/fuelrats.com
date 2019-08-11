@@ -1,40 +1,48 @@
 // Component imports
-import { createApiAction } from '../actionCreators'
+import { frApiRequest } from './services'
 import actionTypes from '../actionTypes'
 
 
 
 
-const getShip = (shipId) => createApiAction({
-  actionType: actionTypes.GET_SHIP,
-  url: `/ships/${shipId}`,
-})
+const getShip = (shipId) => frApiRequest(
+  actionTypes.GET_SHIP,
+  { url: `/ships/${shipId}` }
+)
 
-const getShips = (params) => createApiAction({
-  actionType: actionTypes.GET_SHIPS,
-  url: '/ships',
-  params,
-})
+const getShips = (params) => frApiRequest(
+  actionTypes.GET_SHIPS,
+  {
+    url: '/ships',
+    params,
+  }
+)
 
-const createShip = (data) => createApiAction({
-  actionType: actionTypes.CREATE_SHIP,
-  url: '/ships',
-  method: 'post',
-  data,
-})
+const createShip = (data) => frApiRequest(
+  actionTypes.CREATE_SHIP,
+  {
+    url: '/ships',
+    method: 'post',
+    data,
+  }
+)
 
-const deleteShip = (shipId) => createApiAction({
-  actionType: actionTypes.DELETE_SHIP,
-  url: `/ships/${shipId}`,
-  method: 'delete',
-})
+const deleteShip = (shipId) => frApiRequest(
+  actionTypes.DELETE_SHIP,
+  {
+    url: `/ships/${shipId}`,
+    method: 'delete',
+  }
+)
 
-const updateShip = (shipId, data) => createApiAction({
-  actionType: actionTypes.UPDATE_SHIP,
-  url: `/ships/${shipId}`,
-  method: 'put',
-  data,
-})
+const updateShip = (shipId, data) => frApiRequest(
+  actionTypes.UPDATE_SHIP,
+  {
+    url: `/ships/${shipId}`,
+    method: 'put',
+    data,
+  }
+)
 
 
 

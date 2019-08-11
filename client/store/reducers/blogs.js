@@ -12,6 +12,8 @@ export default function blogsReducer (state = initialState.blogs, action) {
     type,
   } = action
 
+
+
   switch (type) {
     case actionTypes.GET_WORDPRESS_POST:
       if (status === 'success') {
@@ -35,8 +37,8 @@ export default function blogsReducer (state = initialState.blogs, action) {
         case 'success':
           return {
             ...state,
-            blogs: [...payload.blogs],
-            totalPages: payload.totalPages,
+            blogs: [...payload],
+            totalPages: parseInt(action.response.headers['x-wp-totalpages'], 10),
           }
 
         default:

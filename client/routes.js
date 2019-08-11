@@ -37,7 +37,7 @@ routes
   .add('blog list page', '/blog/page/:page', '/blog/all')
   .add('blog list', '/blog', '/blog/all')
 
-  .add('blog view', '/blog/:id', '/blog/single')
+  .add('blog view', '/blog/:blogId', '/blog/single')
 
   // Administration
   .add('admin rescues list', '/admin/rescues', '/admin/rescues/list')

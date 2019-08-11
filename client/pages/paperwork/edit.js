@@ -100,8 +100,7 @@ class Paperwork extends Component {
 
     if (attribute === 'platform' && value !== this.props.rescue) {
       changes.firstLimpetId = null
-      changes.ratsAdded = {}
-      changes.ratsRemoved = { ...this.props.rats }
+      changes.rats = {}
     }
 
     this._setChanges({
@@ -148,82 +147,48 @@ class Paperwork extends Component {
     this._setChanges({ system: newValue })
   }
 
-  _handleRatsAdd = (value) => {
-    const {
-      ratsAdded,
-      ratsRemoved,
-    } = this.state.changes
-
-    // See if the rat was previously removed so we don't add them twice.
-    const ratWasRemoved = ratsRemoved && ratsRemoved[value.id]
-
-    if (ratWasRemoved) {
-      const newRatsRemoved = { ...ratsRemoved }
-      delete newRatsRemoved[value.id]
-      this._setChanges({ ratsRemoved: newRatsRemoved })
-    } else {
-      this._setChanges({
-        ratsAdded: {
-          ...(ratsAdded || {}),
-          [value.id]: value,
-        },
-      })
-    }
+  _handleRatsChange = (value) => {
+    this._setChanges({ rats: value })
   }
 
-  _handleRatsRemove = (value) => {
-    const {
-      ratsAdded,
-      ratsRemoved,
-      firstLimpetId,
-    } = this.state.changes
-    const newChanges = {}
-
-    // Remove the rat from ratsAdded if they are new additions to the assigned list.
-    const ratWasAdded = ratsAdded && ratsAdded[value.id]
-
-    if (ratWasAdded) {
-      const newRatsAdded = { ...ratsAdded }
-      delete newRatsAdded[value.id]
-      newChanges.ratsAdded = newRatsAdded
-    } else {
-      newChanges.ratsRemoved = {
-        ...(ratsRemoved || {}),
-        [value.id]: value,
-      }
+  _handleRatsRemove = (rat) => {
+    const firstLimpetId = (this.state.changes.firstLimpetId && this.state.changes.firstLimpetId[0].id) || this.props.rescue.attributes.firstLimpetId
+    if (rat.id === firstLimpetId) {
+      this._handleFirstLimpetChange([])
     }
-
-    if (value.id === firstLimpetId || value.id === this.props.rescue.attributes.firstLimpetId) {
-      newChanges.firstLimpetId = null
-    }
-
-    this._setChanges(newChanges)
   }
 
   _handleSubmit = async (event) => {
     event.preventDefault()
 
     const { rescue } = this.props
-    const changes = { ...this.state.changes }
+    const {
+      rats,
+      ...changes
+    } = this.state.changes
 
     if (!rescue.attributes.outcome && !changes.outcome) {
       return
     }
 
-    if (changes.ratsAdded && Object.values(changes.ratsAdded).length) {
-      changes.ratsAdded = Object.keys(changes.ratsAdded)
+    if (changes.firstLimpetId) {
+      if (changes.firstLimpetId.length && changes.firstLimpetId[0].id !== rescue.attributes.firstLimpetId) {
+        changes.firstLimpetId = changes.firstLimpetId[0].id
+      } else {
+        changes.firstLimpetId = undefined
+      }
     }
 
-    if (changes.ratsRemoved && Object.values(changes.ratsRemoved).length) {
-      changes.ratsRemoved = Object.keys(changes.ratsRemoved)
+    if (changes.system) {
+      if (changes.system.length && changes.system[0].value !== rescue.attributes.system) {
+        changes.system = changes.system[0].value.toUpperCase()
+      } else {
+        changes.system = undefined
+      }
     }
 
-    if (changes.firstLimpetId && changes.firstLimpetId.length && changes.firstLimpetId[0].id !== rescue.attributes.firstLimpetId) {
-      changes.firstLimpetId = changes.firstLimpetId[0].id
-    }
-
-    if (changes.system && changes.system.length && changes.system[0].value !== rescue.attributes.system) {
-      changes.system = changes.system[0].value.toUpperCase()
+    if (rats) {
+      await this.props.updateRescueRats(rescue.id, rats.map(({ id, type }) => ({ id, type })))
     }
 
     const { status } = await this.props.updateRescue(rescue.id, changes)
@@ -236,12 +201,12 @@ class Paperwork extends Component {
     Router.pushRoute('paperwork', { rescueId: rescue.id })
   }
 
-  _setChanges = (changedFields) => this.setState((prevState, props) => ({
+  _setChanges = (changedFields) => this.setState((prevState) => ({
     changes: {
       ...prevState.changes,
       ...Object.entries(changedFields).reduce((acc, [key, value]) => ({
         ...acc,
-        [key]: value === props.rescue.attributes[key] ? undefined : value,
+        [key]: this.props.rescue.attributes[key] === value ? undefined : value,
       }), {}),
     },
   }))
@@ -458,7 +423,7 @@ class Paperwork extends Component {
                 data-platform={platform}
                 disabled={submitting || loading}
                 name="rats"
-                onAdd={this._handleRatsAdd}
+                onChange={this._handleRatsChange}
                 onRemove={this._handleRatsRemove}
                 value={rats}
                 valueProp={ratNameTemplate} />
@@ -607,23 +572,14 @@ class Paperwork extends Component {
   }
 
   getFieldValues () {
-    const { rescue, rats: assignedRats } = this.props
+    const { rescue, rats } = this.props
     const { changes } = this.state
 
     const isDefined = (value, fallback) => (typeof value === 'undefined' ? fallback : value)
     const getValue = (value) => isDefined(changes[value], rescue.attributes[value])
 
 
-    const rats = {
-      ...assignedRats,
-      ...(changes.ratsAdded || {}),
-    }
 
-    if (changes.ratsRemoved) {
-      Object.keys(changes.ratsRemoved).forEach((removedRat) => {
-        delete rats[removedRat]
-      })
-    }
 
     return {
       codeRed: getValue('codeRed'),
@@ -631,7 +587,7 @@ class Paperwork extends Component {
       notes: getValue('notes'),
       outcome: getValue('outcome'),
       platform: getValue('platform'),
-      rats: Object.values(rats),
+      rats: Object.values(isDefined(changes.rats, rats)),
       system: isDefined(changes.system, { value: rescue.attributes.system && rescue.attributes.system.toUpperCase() }),
     }
   }
@@ -684,7 +640,7 @@ class Paperwork extends Component {
     Redux Properties
   \***************************************************************************/
 
-  static mapDispatchToProps = ['updateRescue', 'getRescue']
+  static mapDispatchToProps = ['updateRescue', 'updateRescueRats', 'getRescue']
 
   static mapStateToProps = (state, { query }) => ({
     rats: selectFormattedRatsByRescueId(state, query),

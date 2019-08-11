@@ -18,7 +18,7 @@ export default function epicsReducer (state = initialState.epics, action) {
   } = state
 
   switch (type) {
-    case actionTypes.RETRIEVE_EPIC:
+    case actionTypes.GET_EPIC:
     case actionTypes.CREATE_EPIC:
       if (status === 'success') {
         return {

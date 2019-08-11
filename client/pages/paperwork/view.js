@@ -93,11 +93,11 @@ class Paperwork extends Component {
     }
   }
 
-  static renderQuote = (quote, index) => {
+  static renderQuote = (quote) => {
     const createdAt = formatAsEliteDateTime(quote.createdAt)
     const updatedAt = formatAsEliteDateTime(quote.updatedAt)
     return (
-      <li key={index}>
+      <li key={quote.createdAt}>
         <div className="times">
           <div className="created" title="Created at">{createdAt}</div>
           {(updatedAt !== createdAt) && (
@@ -139,10 +139,10 @@ class Paperwork extends Component {
     )
   }
 
-  renderRat = (rat, index) => {
+  renderRat = (rat) => {
     const { rescue } = this.props
     return (
-      <li key={index} className="first-limpet">
+      <li key={rat.id} className="first-limpet">
         {rat.attributes.name}
         {(rat.id === rescue.attributes.firstLimpetId) && (
           <span className="badge first-limpet">1st</span>
@@ -158,7 +158,7 @@ class Paperwork extends Component {
     return (
       <ul>
         {rats.map(this.renderRat)}
-        {rescue.attributes.unidentifiedRats.map((rat) => <li key={rat.id} className="unidentified">{rat}<span className="badge">UnID</span></li>)}
+        {rescue.attributes.unidentifiedRats.map((rat) => <li key={rat} className="unidentified">{rat}<span className="badge">UnID</span></li>)}
       </ul>
     )
   }

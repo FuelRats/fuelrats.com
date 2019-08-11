@@ -47,7 +47,7 @@ export default class TagsInputComponent extends React.Component {
 
 
   addTag (tag) {
-    const { onAdd } = this.props
+    const { onAdd, onChange } = this.props
 
     if (!this.state.allowDuplicates) {
       const isDuplicate = this.state.tags.findIndex((searchTag) => this.getValue(searchTag) === this.getValue(tag)) !== -1
@@ -63,25 +63,19 @@ export default class TagsInputComponent extends React.Component {
         ...prevState.tags,
         tag,
       ],
-    }))
+    }), () => {
+      if (onAdd) {
+        onAdd(tag)
+      }
 
-    if (onAdd) {
-      onAdd(tag)
-    }
+      if (onChange) {
+        onChange(this.state.tags)
+      }
+    })
 
     this.input.value = ''
 
-    this.log('groupCollapsed', 'adding tag')
-    this.log(tag)
-    this.log('groupEnd')
-
     return true
-  }
-
-  componentDidUpdate (prevProps, prevState) {
-    if (this.props.onChange && (prevState.tags !== this.state.tags)) {
-      this.props.onChange(this.state.tags)
-    }
   }
 
   componentWillReceiveProps (nextProps) {
@@ -329,23 +323,6 @@ export default class TagsInputComponent extends React.Component {
     this.setState({ selectedOption })
   }
 
-  log () {
-    // Default to using console.log
-    let type = 'log'
-
-    if (this.props.debug) {
-      // Check to see if the first argument passed is a console function. If so,
-      // remove it from the arguments and use it instead of log
-      if (Object.keys(console).indexOf(arguments[0]) !== -1) {
-        type = [].shift.call(arguments)
-      }
-
-      /* eslint-disable no-console */
-      console[type].apply(this, arguments)
-      /* eslint-enable no-console */
-    }
-  }
-
   onBlur (event) {
     this.setState({ newFocus: true })
     event.target.parentNode.classList.remove('focus')
@@ -408,15 +385,15 @@ export default class TagsInputComponent extends React.Component {
 
     return { tags }
   }, () => {
-    const { onRemove } = this.props
+    const { onChange, onRemove } = this.props
 
     if (onRemove) {
       onRemove(tag)
     }
 
-    this.log('groupCollapsed', 'removing tag')
-    this.log('value:', tag)
-    this.log('groupEnd')
+    if (onChange) {
+      onChange(this.state.tags)
+    }
   })
 
   render () {
@@ -575,12 +552,9 @@ export default class TagsInputComponent extends React.Component {
     return this.getValue(original)
   }
 
-  search (query) {
-    if (query) {
-      this.log('groupCollapsed', 'search')
-      this.log(query ? `query:${query}` : 'no query')
-      this.log('groupEnd')
-    }
+  // eslint-disable-next-line class-methods-use-this
+  search () {
+    /* To be implemented by extending classes. we just silently return here. */
   }
 
   shouldCaptureKeybind () {
@@ -620,10 +594,6 @@ export default class TagsInputComponent extends React.Component {
     })
 
     this.setState(newState)
-
-    this.log('groupCollapsed', 'updating options')
-    this.log('options:', options)
-    this.log('groupEnd')
   }
 
 
