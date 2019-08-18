@@ -1,9 +1,5 @@
 const routes = require('next-routes')()
 
-
-
-
-
 // 'NAME', 'ROUTE', 'PATH'
 // Ordered in general page group priority. Priority is determined by general amount of use of the set of pages.
 routes
@@ -56,6 +52,9 @@ routes
   .add('about acknowledgements', '/acknowledgements', '/acknowledgements')
   .add('about version', '/version/:raw(raw)?', '/version')
 
+  // Verify
+  .add('verify', '/verify', '/verify')
+
   // Epics
   .add('epic nominate', '/epic/nominate', '/epics/nominate')
 
@@ -64,9 +63,5 @@ routes
 
   // Wordpress
   .add('wordpress', '/:slug+', '/wordpress-proxy')
-
-
-
-
 
 module.exports = routes

@@ -13,6 +13,9 @@ const actionTypes = [
   'DELETE_RESCUE',
   'DELETE_SHIP',
   'DISPOSE_IMAGE',
+  'VERIFY_EMAIL',
+  'VERIFY_SESSION',
+  'VERIFY_RESET',
   'GET_CART',
   'GET_CLIENT_AUTHORIZATION_PAGE',
   'GET_EPIC',
@@ -52,13 +55,12 @@ const actionTypes = [
   'UPDATE_STRIPE_ORDER',
   'UPDATE_USER',
   'VALIDATE_PASSWORD_RESET_TOKEN',
-].reduce((acc, actionType) => ({
-  ...acc,
-  [actionType]: actionType,
-}), {})
-
-
-
-
+].reduce(
+  (acc, actionType) => ({
+    ...acc,
+    [actionType]: actionType,
+  }),
+  {}
+)
 
 export default actionTypes
