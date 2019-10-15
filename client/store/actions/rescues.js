@@ -1,5 +1,6 @@
 // Component imports
 import { frApiRequest } from './services'
+import { getPageViewPartial } from './partials'
 import actionTypes from '../actionTypes'
 
 
@@ -20,12 +21,7 @@ const getRescues = (params, opts) => frApiRequest(
     url: '/rescues',
     params,
   },
-  {
-    pageView: opts.pageView && {
-      id: opts.pageView,
-      type: 'rescues',
-    },
-  }
+  getPageViewPartial('rescues', opts.pageView)
 )
 
 const getRescue = (rescueId) => frApiRequest(
