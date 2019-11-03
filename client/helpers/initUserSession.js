@@ -19,11 +19,11 @@ const initUserSession = async (ctx) => {
   const { store } = ctx
   const state = store.getState()
   const {
-    getUser,
+    getCurrentUserProfile,
     logout,
     updateLoggingInState,
   } = getActionCreators([
-    'getUser',
+    'getCurrentUserProfile',
     'logout',
     'updateLoggingInState',
   ], store.dispatch)
@@ -37,7 +37,7 @@ const initUserSession = async (ctx) => {
     frApi.defaults.headers.common.Authorization = `Bearer ${accessToken}`
 
     if (!verified) {
-      const { payload, status } = await getUser()
+      const { payload, status } = await getCurrentUserProfile()
 
       if (status === 'error' && payload && Array.isArray(payload.errors)) {
         const errMsg = payload.errors[0] && payload.errors[0].status

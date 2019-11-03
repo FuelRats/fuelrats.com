@@ -81,7 +81,7 @@ class LoginModal extends React.Component {
     })
 
     if (status === 'success') {
-      this.props.getUser()
+      this.props.getCurrentUserProfile()
       this.props.onClose()
     } else {
       this.setState({
@@ -212,7 +212,7 @@ class LoginModal extends React.Component {
     Redux Properties
   \***************************************************************************/
 
-  static mapDispatchToProps = ['login', 'getUser']
+  static mapDispatchToProps = ['login', 'getCurrentUserProfile']
 
   static mapStateToProps = (state) => selectAuthentication(state)
 
@@ -225,7 +225,7 @@ class LoginModal extends React.Component {
   \***************************************************************************/
 
   static propTypes = {
-    getUser: PropTypes.func.isRequired,
+    getCurrentUserProfile: PropTypes.func.isRequired,
     loggingIn: PropTypes.bool.isRequired,
     login: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,

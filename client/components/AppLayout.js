@@ -237,7 +237,7 @@ class AppLayout extends React.Component {
     Redux Properties
   \***************************************************************************/
 
-  static mapDispatchToProps = ['getUser', 'logout', 'setFlag', 'updateLoggingInState']
+  static mapDispatchToProps = ['getCurrentUserProfile', 'logout', 'setFlag', 'updateLoggingInState']
 
   static mapStateToProps = (state) => ({
     ...selectAuthentication(state),
