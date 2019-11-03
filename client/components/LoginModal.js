@@ -118,6 +118,8 @@ class LoginModal extends React.Component {
       remember,
     } = this.state
 
+    const isFirefox = Boolean(userAgent.match(/firefox/giu))
+
     return (
       <ModalContent as="form" className="dialog no-pad" onSubmit={this._handleSubmit}>
         {error && !this.props.loggingIn && (
@@ -133,7 +135,7 @@ class LoginModal extends React.Component {
           autoComplete="username"
           className="email dark"
           disabled={this.props.loggingIn}
-          doubleValidate={userAgent.match(/firefox/giu)}
+          doubleValidate={isFirefox}
           id="email"
           inputRef={this.emailInput}
           label="Email"
@@ -148,7 +150,7 @@ class LoginModal extends React.Component {
           autoComplete="current-password"
           className="password dark"
           disabled={this.props.loggingIn}
-          doubleValidate={userAgent.match(/firefox/giu)}
+          doubleValidate={isFirefox}
           id="password"
           label="Password"
           name="password"
