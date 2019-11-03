@@ -68,6 +68,8 @@ class ValidatedFormInput extends React.Component {
       onChange,
     } = this.props
     onChange(this._checkValidity(target))
+
+    // Workaround so that we don't get invalid input states when we shouldn't.. because firefox can't update things in the correct order I guess.
     if (doubleValidate) {
       setTimeout(() => {
         onChange(this._checkValidity(target))
