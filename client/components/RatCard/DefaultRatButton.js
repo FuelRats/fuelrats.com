@@ -9,7 +9,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 // Component imports
 import { connect } from '../../store'
-import { selectUserId, selectUserDisplayRatId } from '../../store/selectors'
+import {
+  selectUser,
+  selectUserDisplayRatId,
+  withCurrentUser,
+} from '../../store/selectors'
 
 
 
@@ -101,8 +105,8 @@ class ClassName extends React.Component {
   static mapDispatchToProps = ['updateUser']
 
   static mapStateToProps = (state) => ({
-    userId: selectUserId(state),
-    displayRatId: selectUserDisplayRatId(state),
+    userId: withCurrentUser(selectUser)(state).id,
+    displayRatId: withCurrentUser(selectUserDisplayRatId)(state),
   })
 
 

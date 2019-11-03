@@ -8,6 +8,7 @@ import cookies from 'next-cookies'
 // Component imports
 import { getActionCreators } from '../store'
 import frApi from '../services/fuelrats'
+import { selectAuthentication, selectUser, withCurrentUser } from '../store/selectors'
 
 
 
@@ -16,30 +17,27 @@ import frApi from '../services/fuelrats'
 const initUserSession = async (ctx) => {
   const { access_token: accessToken } = cookies(ctx)
   const { store } = ctx
+  const state = store.getState()
   const {
-    authentication: {
-      loggedIn,
-      verifyError,
-    },
-    user,
-  } = store.getState()
-  const {
-    getUser,
+    getCurrentUserProfile,
     logout,
     updateLoggingInState,
   } = getActionCreators([
-    'getUser',
+    'getCurrentUserProfile',
     'logout',
     'updateLoggingInState',
   ], store.dispatch)
 
-  let verified = loggedIn && user.attributes && !verifyError
+  const user = withCurrentUser(selectUser)(state)
+  const authentication = selectAuthentication(state)
+
+  let verified = authentication.loggedIn && user && !authentication.verifyError
 
   if (accessToken) {
     frApi.defaults.headers.common.Authorization = `Bearer ${accessToken}`
 
     if (!verified) {
-      const { payload, status } = await getUser()
+      const { payload, status } = await getCurrentUserProfile()
 
       if (status === 'error' && payload && Array.isArray(payload.errors)) {
         const errMsg = payload.errors[0] && payload.errors[0].status

@@ -1,51 +1,84 @@
 import { combineReducers } from 'redux'
+import getConfig from 'next/config'
 
+import chainReducers from '../utility/chainReducers'
+import initialState from '../initialState'
+import withDefaultReducers from '../utility/withDefaultReducers'
 
-
-
-
+import createJSONAPIResourceReducer from './APIResource'
 import authentication from './authentication'
 import blogs from './blogs'
-import decals from './decals'
 import epics from './epics'
 import error from './error'
 import flags from './flags'
-import groups from './groups'
 import images from './images'
 import leaderboard from './leaderboard'
-import orders from './orders'
 import pageViews from './pageViews'
 import products from './products'
-import rats from './rats'
-import rescues from './rescues'
-import ships from './ships'
 import skus from './skus'
 import storeCart from './storeCart'
-import user from './user'
+import users from './users'
 import wordpress from './wordpress'
 
 
 
 
 
-export default combineReducers({
-  authentication,
-  blogs,
-  decals,
-  epics,
-  error,
-  flags,
-  groups,
-  images,
-  leaderboard,
-  orders,
-  pageViews,
-  products,
-  rats,
-  rescues,
-  ships,
-  skus,
-  storeCart,
-  user,
-  wordpress,
+const { publicRuntimeConfig } = getConfig()
+const localApiUrl = publicRuntimeConfig.apis.fuelRats.local
+
+
+
+
+
+const apiResourceReducer = createJSONAPIResourceReducer(localApiUrl, initialState, {
+  decals: 'decals',
+  groups: 'groups',
+  order: 'orders',
+  rats: {
+    target: 'rats',
+    dependencies: [{
+      type: 'users',
+      idAttribute: 'userId',
+    }],
+  },
+  rescues: 'rescues',
+  ships: {
+    target: 'ships',
+    dependencies: [{
+      type: 'rats',
+      idAttribute: 'ratId',
+    }],
+  },
+  users: 'users',
+  profiles: {
+    target: 'users',
+    resourceReducer: (resource) => ({ ...resource, type: 'users' }),
+  },
 })
+
+
+
+
+
+export default chainReducers(
+  initialState,
+  [
+    apiResourceReducer,
+    withDefaultReducers(combineReducers)(initialState, {
+      authentication,
+      blogs,
+      epics,
+      error,
+      flags,
+      images,
+      leaderboard,
+      pageViews,
+      products,
+      skus,
+      storeCart,
+      users,
+      wordpress,
+    }),
+  ]
+)
