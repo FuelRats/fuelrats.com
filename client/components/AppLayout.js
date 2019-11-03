@@ -127,10 +127,18 @@ class AppLayout extends React.Component {
       pageProps = await ErrorPage.getInitialProps(ctx)
     }
 
+    let userAgent = ''
+    if (ctx.req && ctx.req.headers['user-agent']) {
+      userAgent = ctx.req.headers['user-agent'].toLowerCase()
+    } else if (typeof window !== 'undefined') {
+      userAgent = window.navigator.userAgent.toLowerCase()
+    }
+
     return {
       ...layoutProps,
       accessToken,
       statusCode,
+      userAgent,
       pageProps: {
         asPath,
         isServer,
@@ -195,6 +203,7 @@ class AppLayout extends React.Component {
   get loginModalProps () {
     return {
       isOpen: this.props.showLoginModal,
+      userAgent: this.props.userAgent,
       onClose: this._handleLoginDialogClose,
     }
   }
