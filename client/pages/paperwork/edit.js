@@ -589,7 +589,7 @@ class Paperwork extends Component {
       outcome: getValue('outcome'),
       platform: getValue('platform'),
       rats: Object.values(isDefined(changes.rats, rats)),
-      system: isDefined(changes.system, { value: rescue.attributes.system && rescue.attributes.system.toUpperCase() }),
+      system: isDefined(changes.system, rescue.attributes.system ? { value: rescue.attributes.system.toUpperCase() } : null),
     }
   }
 

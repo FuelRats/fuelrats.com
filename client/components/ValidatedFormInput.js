@@ -23,11 +23,11 @@ class ValidatedFormInput extends React.Component {
     Private Methods
   \***************************************************************************/
 
-  _handleChange = ({ target }) => {
+
+  _checkValidity = (target) => {
     const {
       invalidMessage,
       label,
-      onChange,
       pattern,
       patternMessage,
       required,
@@ -39,7 +39,7 @@ class ValidatedFormInput extends React.Component {
     let valid = true
     let message = null
 
-    if (!target.checkValidity()) {
+    if (!target.validity.valid) {
       valid = false
       message = invalidMessage || `${label} is invalid`
     }
@@ -55,12 +55,26 @@ class ValidatedFormInput extends React.Component {
     }
 
     this.setState({ errorMessage: message })
-
-    onChange({
+    return ({
       target,
       valid,
       message,
     })
+  }
+
+  _handleChange = ({ target }) => {
+    const {
+      doubleValidate,
+      onChange,
+    } = this.props
+    onChange(this._checkValidity(target))
+
+    // Workaround so that we don't get invalid input states when we shouldn't.. because firefox can't update things in the correct order I guess.
+    if (doubleValidate) {
+      setTimeout(() => {
+        onChange(this._checkValidity(target))
+      }, 1)
+    }
   }
 
 
@@ -103,6 +117,7 @@ class ValidatedFormInput extends React.Component {
   get inputProps () {
     const inputProps = { ...this.props }
 
+    delete inputProps.doubleValidate
     delete inputProps.invalidMessage
     delete inputProps.label
     delete inputProps.renderLabel
@@ -123,6 +138,7 @@ class ValidatedFormInput extends React.Component {
 
 
   static defaultProps = {
+    doubleValidate: false,
     invalidMessage: null,
     name: null,
     onChange: () => ({}),
@@ -133,6 +149,7 @@ class ValidatedFormInput extends React.Component {
   }
 
   static propTypes = {
+    doubleValidate: PropTypes.bool,
     id: PropTypes.string.isRequired,
     invalidMessage: PropTypes.string,
     label: PropTypes.string.isRequired,
