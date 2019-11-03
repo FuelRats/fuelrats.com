@@ -41,10 +41,10 @@ module.exports = (nextApp, koaServer) => {
   \***************************************************************************/
 
   // Root dir static file mappings
-  router.get('/browserconfig.xml', sendFile('/client/static/browserconfig.xml'))
-  router.get('/sitemap.xml', sendFile('/client/static/sitemap.xml'))
-  router.get('/manifest.json', sendFile('/client/static/manifest.json'))
-  router.get('/favicon.ico', sendFile('/client/static/favicon/favicon.ico'))
+  router.get('/browserconfig.xml', sendFile('/client/public/static/browserconfig.xml'))
+  router.get('/sitemap.xml', sendFile('/client/public/static/sitemap.xml'))
+  router.get('/manifest.json', sendFile('/client/public/static/manifest.json'))
+  router.get('/favicon.ico', sendFile('/client/public/static/favicon/favicon.ico'))
 
 
 

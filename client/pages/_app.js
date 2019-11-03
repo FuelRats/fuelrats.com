@@ -1,7 +1,7 @@
 // Module imports
 import { library as faLibrary, config as faConfig } from '@fortawesome/fontawesome-svg-core'
 import { Provider } from 'react-redux'
-import App, { Container } from 'next/app'
+import App from 'next/app'
 import React from 'react'
 import withRedux from 'next-redux-wrapper'
 import LocalForage from 'localforage'
@@ -53,11 +53,9 @@ class FuelRatsApp extends App {
     } = this.props
 
     return (
-      <Container>
-        <Provider store={store}>
-          <AppLayout {...layoutProps} />
-        </Provider>
-      </Container>
+      <Provider store={store}>
+        <AppLayout {...layoutProps} />
+      </Provider>
     )
   }
 }
