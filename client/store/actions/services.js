@@ -33,7 +33,7 @@ const createAxiosAction = (type, response) => {
     payload: data,
     request: {
       url: config.url,
-      baseUrl: config.baseUrl,
+      baseUrl: config.baseURL,
       method: config.method,
       data: requestBody,
     },

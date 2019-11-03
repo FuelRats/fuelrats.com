@@ -1,7 +1,7 @@
 // Component imports
 import { frApiRequest } from './services'
+import { getResourceDeletePartial } from './partials'
 import actionTypes from '../actionTypes'
-
 
 
 
@@ -35,9 +35,7 @@ const deleteRat = (ratId) => frApiRequest(
     url: `/rats/${ratId}`,
     method: 'delete',
   },
-  {
-    ratId,
-  }
+  getResourceDeletePartial('rats', ratId)
 )
 
 const updateRat = (ratId, data) => frApiRequest(

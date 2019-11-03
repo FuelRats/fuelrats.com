@@ -7,7 +7,10 @@ import React from 'react'
 // Component imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect } from '../store'
-import { selectUser } from '../store/selectors'
+import {
+  selectUser,
+  withCurrentUser,
+} from '../store/selectors'
 import AddNicknameForm from './AddNicknameForm'
 // import ConfirmActionButton from './ConfirmActionButton'
 import Component from './Component'
@@ -111,7 +114,7 @@ class UserNicknamesPanel extends Component {
   static mapDispatchToProps = ['deleteNickname']
 
   static mapStateToProps = (state) => ({
-    user: selectUser(state),
+    user: withCurrentUser(selectUser)(state),
   })
 }
 

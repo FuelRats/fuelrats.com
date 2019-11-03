@@ -5,6 +5,7 @@ const initialState = {
     loggingOut: false,
     registering: false,
     verifyError: null,
+    userId: null,
   },
 
   blogs: {
@@ -65,12 +66,7 @@ const initialState = {
 
   storeCart: {},
 
-  user: {
-    attributes: null,
-    id: null,
-    relationships: null,
-    retrieving: false,
-  },
+  users: {},
 
   wordpress: {
     page: {},

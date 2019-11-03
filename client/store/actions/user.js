@@ -6,7 +6,7 @@ import actionTypes from '../actionTypes'
 
 
 
-const addNickname = (nickname, password) => frApiRequest(
+const addNickname = (userId, nickname, password) => frApiRequest(
   actionTypes.ADD_NICKNAME,
   {
     url: '/nicknames',
@@ -18,6 +18,7 @@ const addNickname = (nickname, password) => frApiRequest(
   },
   {
     nickname,
+    userId,
   }
 )
 
@@ -39,8 +40,8 @@ const deleteNickname = (nickname) => frApiRequest(
 
 
 
-const getUser = () => frApiRequest(
-  actionTypes.GET_USER,
+const getCurrentUserProfile = () => frApiRequest(
+  actionTypes.GET_PROFILE,
   { url: '/profile' }
 )
 
@@ -64,6 +65,6 @@ const updateUser = (userId, data) => frApiRequest(
 export {
   addNickname,
   deleteNickname,
-  getUser,
+  getCurrentUserProfile,
   updateUser,
 }

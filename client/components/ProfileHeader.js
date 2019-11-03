@@ -8,6 +8,7 @@ import {
   selectUser,
   selectUserDisplayRat,
   selectUserAvatar,
+  withCurrentUser,
 } from '../store/selectors'
 
 
@@ -55,7 +56,6 @@ class ClassName extends React.Component {
       email,
     } = attributes
 
-    // console.log(this.props.user)
     return (
       <div className="profile-header">
         <div className="user-avatar">
@@ -90,9 +90,9 @@ class ClassName extends React.Component {
   \***************************************************************************/
 
   static mapStateToProps = (state) => ({
-    user: selectUser(state),
-    userAvatar: selectUserAvatar(state),
-    displayRat: selectUserDisplayRat(state),
+    user: withCurrentUser(selectUser)(state),
+    userAvatar: withCurrentUser(selectUserAvatar)(state),
+    displayRat: withCurrentUser(selectUserDisplayRat)(state),
   })
 }
 

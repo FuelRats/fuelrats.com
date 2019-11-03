@@ -13,7 +13,7 @@ export default function authenticationReducer (state = initialState.authenticati
   } = action
 
   switch (type) {
-    case actionTypes.GET_USER:
+    case actionTypes.GET_PROFILE:
     case actionTypes.LOGIN:
       switch (status) {
         case 'error':
@@ -29,6 +29,7 @@ export default function authenticationReducer (state = initialState.authenticati
             ...state,
             loggedIn: true,
             loggingIn: false,
+            userId: type === actionTypes.GET_PROFILE ? payload.data.id : state.userId,
           }
 
         default:
@@ -42,7 +43,9 @@ export default function authenticationReducer (state = initialState.authenticati
       if (status === 'success') {
         return {
           ...state,
+          loggingIn: false,
           loggedIn: false,
+          userId: null,
           verifyError: payload && payload.origin && payload.origin === 'verify',
         }
       }
