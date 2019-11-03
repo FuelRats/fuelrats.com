@@ -109,6 +109,9 @@ class LoginModal extends React.Component {
 
   render () {
     const {
+      userAgent,
+    } = this.props
+    const {
       email,
       error,
       password,
@@ -130,6 +133,7 @@ class LoginModal extends React.Component {
           autoComplete="username"
           className="email dark"
           disabled={this.props.loggingIn}
+          doubleValidate={userAgent.match(/firefox/giu)}
           id="email"
           inputRef={this.emailInput}
           label="Email"
@@ -144,6 +148,7 @@ class LoginModal extends React.Component {
           autoComplete="current-password"
           className="password dark"
           disabled={this.props.loggingIn}
+          doubleValidate={userAgent.match(/firefox/giu)}
           id="password"
           label="Password"
           name="password"
@@ -229,6 +234,7 @@ class LoginModal extends React.Component {
     loggingIn: PropTypes.bool.isRequired,
     login: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
+    userAgent: PropTypes.string.isRequired,
   }
 }
 
