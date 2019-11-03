@@ -8,7 +8,7 @@ import React from 'react'
 // Component imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect } from '../store'
-import { selectUser } from '../store/selectors'
+import { selectUser, withCurrentUser } from '../store/selectors'
 import { ircNickPattern } from '../data/RegExpr'
 import Component from './Component'
 import ValidatedFormInput from './ValidatedFormInput'
@@ -38,7 +38,10 @@ class AddNicknameForm extends Component {
   \***************************************************************************/
 
   _handleSubmit = async (event) => {
-    const { addNickname } = this.props
+    const {
+      addNickname,
+      user,
+    } = this.props
     const {
       nickname,
       password,
@@ -48,7 +51,7 @@ class AddNicknameForm extends Component {
 
     this.setState({ submitting: true })
 
-    await addNickname(nickname, password)
+    await addNickname(user.id, nickname, password)
 
     this.setState({
       nickname: '',
@@ -122,7 +125,7 @@ class AddNicknameForm extends Component {
   static mapDispatchToProps = ['addNickname']
 
   static mapStateToProps = (state) => ({
-    user: selectUser(state),
+    user: withCurrentUser(selectUser)(state),
   })
 }
 

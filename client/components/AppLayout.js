@@ -14,6 +14,7 @@ import {
   selectFlagByName,
   selectUser,
   selectUserGroups,
+  withCurrentUser,
 } from '../store/selectors'
 import { Router } from '../routes'
 import frApi from '../services/fuelrats'
@@ -87,7 +88,7 @@ class AppLayout extends React.Component {
 
     if (Component.ಠ_ಠ_REQUIRED_PERMISSION) {
       const state = store.getState()
-      const userGroups = selectUserGroups(state)
+      const userGroups = withCurrentUser(selectUserGroups)(state)
 
       if (!userHasPermission(userGroups, Component.ಠ_ಠ_REQUIRED_PERMISSION)) {
         if (ctx.res) {
@@ -241,7 +242,7 @@ class AppLayout extends React.Component {
   static mapStateToProps = (state) => ({
     ...selectAuthentication(state),
     showLoginModal: selectFlagByName(state, { name: 'showLoginDialog' }),
-    user: selectUser(state),
+    user: withCurrentUser(selectUser)(state),
   })
 }
 

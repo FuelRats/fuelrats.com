@@ -13,6 +13,7 @@ import {
   selectRescueById,
   selectUser,
   selectUserGroups,
+  withCurrentUser,
 } from '../../store/selectors'
 import { authenticated } from '../../components/AppLayout'
 import { Router } from '../../routes'
@@ -645,8 +646,8 @@ class Paperwork extends Component {
   static mapStateToProps = (state, { query }) => ({
     rats: selectFormattedRatsByRescueId(state, query),
     rescue: selectRescueById(state, query),
-    currentUser: selectUser(state),
-    currentUserGroups: selectUserGroups(state),
+    currentUser: withCurrentUser(selectUser)(state),
+    currentUserGroups: withCurrentUser(selectUserGroups)(state),
   })
 }
 
