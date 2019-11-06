@@ -123,7 +123,7 @@ class AddRatForm extends Component {
     const classes = classNames(
       'add-rat',
       'compact',
-      ['form-open', formOpen]
+      ['form-open', formOpen],
     )
 
     return (

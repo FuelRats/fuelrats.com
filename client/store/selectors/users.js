@@ -31,7 +31,7 @@ const selectUserRats = createSelector(
       return user.relationships.rats.data.map(({ id }) => rats[id])
     }
     return null
-  }
+  },
 )
 
 
@@ -61,7 +61,7 @@ const selectUserGroups = createSelector(
       return user.relationships.groups.data.map(({ id }) => groups[id])
     }
     return []
-  }
+  },
 )
 
 

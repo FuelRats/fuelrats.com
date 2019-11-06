@@ -40,7 +40,7 @@ const selectConnectedSlides = createSelector(
         image: selectImageById(state, { imageId: slideId }),
       },
     }
-  }, {})
+  }, {}),
 )
 
 

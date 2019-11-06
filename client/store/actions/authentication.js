@@ -32,7 +32,7 @@ export const changePassword = (currentPassword, newPassword) => frApiRequest(
       password: currentPassword,
       new: newPassword,
     },
-  }
+  },
 )
 
 
@@ -95,7 +95,7 @@ export const getClientOAuthPage = (params) => frApiRequest(
   {
     url: '/oauth2/authorize',
     params,
-  }
+  },
 )
 
 
@@ -130,7 +130,7 @@ export const register = ({ recaptcha, ...data }) => frApiRequest(
       ...data,
       'g-recaptcha-response': recaptcha,
     },
-  }
+  },
 )
 
 
@@ -145,7 +145,7 @@ export const resetPassword = ({ password, token }) => frApiRequest(
     data: {
       password,
     },
-  }
+  },
 )
 
 
@@ -160,7 +160,7 @@ export const sendPasswordResetEmail = (email) => frApiRequest(
     data: {
       email,
     },
-  }
+  },
 )
 
 
@@ -179,5 +179,5 @@ export const updateLoggingInState = (success) => (dispatch) => dispatch({
 
 export const validatePasswordResetToken = (token) => frApiRequest(
   actionTypes.VALIDATE_PASSWORD_RESET_TOKEN,
-  { url: `/reset/${token}` }
+  { url: `/reset/${token}` },
 )

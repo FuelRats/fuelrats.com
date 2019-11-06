@@ -12,7 +12,7 @@ const deleteRescue = (rescueId) => frApiRequest(
   {
     url: `/rescues/${rescueId}`,
     method: 'delete',
-  }
+  },
 )
 
 const getRescues = (params, opts) => frApiRequest(
@@ -21,12 +21,12 @@ const getRescues = (params, opts) => frApiRequest(
     url: '/rescues',
     params,
   },
-  getPageViewPartial('rescues', opts.pageView)
+  getPageViewPartial('rescues', opts.pageView),
 )
 
 const getRescue = (rescueId) => frApiRequest(
   actionTypes.GET_RESCUE,
-  { url: `/rescues/${rescueId}` }
+  { url: `/rescues/${rescueId}` },
 )
 
 const updateRescue = (rescueId, data) => frApiRequest(
@@ -35,7 +35,7 @@ const updateRescue = (rescueId, data) => frApiRequest(
     url: `/rescues/${rescueId}`,
     method: 'put',
     data,
-  }
+  },
 )
 
 const updateRescueRats = (rescueId, data) => frApiRequest(
@@ -44,7 +44,7 @@ const updateRescueRats = (rescueId, data) => frApiRequest(
     url: `/rescues/${rescueId}/rats`,
     method: 'patch',
     data,
-  }
+  },
 )
 
 

@@ -7,7 +7,7 @@ import actionTypes from '../actionTypes'
 
 const getShip = (shipId) => frApiRequest(
   actionTypes.GET_SHIP,
-  { url: `/ships/${shipId}` }
+  { url: `/ships/${shipId}` },
 )
 
 const getShips = (params) => frApiRequest(
@@ -15,7 +15,7 @@ const getShips = (params) => frApiRequest(
   {
     url: '/ships',
     params,
-  }
+  },
 )
 
 const createShip = (data) => frApiRequest(
@@ -24,7 +24,7 @@ const createShip = (data) => frApiRequest(
     url: '/ships',
     method: 'post',
     data,
-  }
+  },
 )
 
 const deleteShip = (shipId) => frApiRequest(
@@ -32,7 +32,7 @@ const deleteShip = (shipId) => frApiRequest(
   {
     url: `/ships/${shipId}`,
     method: 'delete',
-  }
+  },
 )
 
 const updateShip = (shipId, data) => frApiRequest(
@@ -41,7 +41,7 @@ const updateShip = (shipId, data) => frApiRequest(
     url: `/ships/${shipId}`,
     method: 'put',
     data,
-  }
+  },
 )
 
 

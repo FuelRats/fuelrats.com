@@ -27,7 +27,7 @@ const selectFormattedOrders = createSelector(
   (orders) => [
     ...Object.values(orders).filter((order) => order.attributes.status === 'paid').reverse(),
     ...Object.values(orders).filter((order) => order.attributes.status === 'created'),
-  ]
+  ],
 )
 
 

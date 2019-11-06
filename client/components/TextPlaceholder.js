@@ -16,7 +16,7 @@ import classNames from '../helpers/classNames'
 const TextPlaceholder = ({ size, loading }) => {
   const classes = classNames(
     'text-placeholder',
-    ['loading', Boolean(loading)]
+    ['loading', Boolean(loading)],
   )
   return (
     <span className="text-placeholder-wrapper">

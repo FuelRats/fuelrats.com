@@ -67,11 +67,11 @@ class ListRescues extends React.Component {
             : { 'status.ne': 'closed' },
           {
             pageView: pageViewId,
-          }
+          },
         )
 
         this.setState({ loading: false })
-      }
+      },
     )
   }, viewUpdateDebounceTime, { maxWait: viewUpdateMaxWaitTime })
 

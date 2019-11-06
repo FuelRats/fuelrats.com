@@ -78,7 +78,7 @@ export default class TagsInputComponent extends React.Component {
     return true
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     const {
       options,
       value,
@@ -111,7 +111,7 @@ export default class TagsInputComponent extends React.Component {
     this.setState(newState)
   }
 
-  componentWillUpdate (nextProps, nextState) {
+  UNSAFE_componentWillUpdate (nextProps, nextState) {
     const newNextState = { ...nextState }
 
     if (this.state.tags !== nextState.tags) {

@@ -62,7 +62,7 @@ const axiosRequest = (service) => (type, config, restAction) => async (dispatch)
         ...action,
         ...restAction,
       }
-      : action
+      : action,
   )
 }
 

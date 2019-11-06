@@ -98,7 +98,7 @@ class ValidatedFormInput extends React.Component {
 
     const tooltipClasses = classNames(
       'tooltiptext',
-      ['should-display', value && errorMessage]
+      ['should-display', value && errorMessage],
     )
 
     return (

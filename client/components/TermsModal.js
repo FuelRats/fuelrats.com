@@ -122,7 +122,7 @@ class WordpressTermsModal extends React.Component {
 
     const classes = classNames(
       ['loading', loading],
-      ['error', !loading && !page]
+      ['error', !loading && !page],
     )
 
     return (

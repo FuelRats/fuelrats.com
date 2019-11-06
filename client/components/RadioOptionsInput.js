@@ -93,7 +93,7 @@ export default class RadioOptionsInput extends Component {
     const classes = classNames(
       'radio-input',
       className,
-      ['disabled', disabled]
+      ['disabled', disabled],
     )
 
     const divProps = { ...this.props }
@@ -127,7 +127,7 @@ export default class RadioOptionsInput extends Component {
       className,
       `${className}-${value}`,
       ['disabled', disabled],
-      ['selected', !disabled && this.getCurrentValue() === value]
+      ['selected', !disabled && this.getCurrentValue() === value],
     )
 
     const liParams = { ...option }

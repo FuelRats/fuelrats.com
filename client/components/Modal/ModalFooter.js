@@ -20,7 +20,7 @@ const ModalFooter = (props) => {
 
   const classes = classNames(
     'modal-footer',
-    [className, className]
+    [className, className],
   )
 
   return (

@@ -49,7 +49,7 @@ const connectDecorator = (target) => {
         [actionName]: actions[actionName],
       }
       ), {}),
-      dispatch
+      dispatch,
     )
   }
 
@@ -57,7 +57,7 @@ const connectDecorator = (target) => {
     mapStateToProps || (() => ({})),
     mapDispatchToProps || {},
     mergeProps,
-    reduxOptions
+    reduxOptions,
   )(target)
 }
 

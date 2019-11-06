@@ -45,7 +45,7 @@ const selectFormattedRatsByRescueId = createSelector(
         ...accumulator,
         [rat.id]: rat,
       }), {})
-    : [])
+    : []),
 )
 
 

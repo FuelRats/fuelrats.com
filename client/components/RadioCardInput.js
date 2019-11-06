@@ -103,7 +103,7 @@ class RadioCardInput extends Component {
     const classes = classNames(
       'radio-card-input',
       className,
-      ['disabled', disabled]
+      ['disabled', disabled],
     )
 
     const divProps = { ...this.props }
@@ -139,7 +139,7 @@ class RadioCardInput extends Component {
       'radio-card',
       className,
       ['disabled', disabled],
-      ['selected', !disabled && this.getCurrentValue() === key]
+      ['selected', !disabled && this.getCurrentValue() === key],
     )
 
     const liParams = { ...option }
