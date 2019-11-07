@@ -8,7 +8,12 @@ const selectRatById = (state, { ratId }) => state.rats[ratId]
 
 const selectRatsByRescueId = createSelector(
   [selectRats, selectRescueById],
-  (rats, rescue) => rescue.relationships.rats.data && rescue.relationships.rats.data.length && rescue.relationships.rats.data.map((ratRef) => rats[ratRef.id]),
+  (rats, rescue) => {
+    if (rats && rescue && rescue.relationships.rats.data && rescue.relationships.rats.data.length) {
+      return rescue.relationships.rats.data.map((ratRef) => rats[ratRef.id])
+    }
+    return null
+  },
 )
 
 
