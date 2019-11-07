@@ -216,6 +216,18 @@ class Paperwork extends Component {
     Public Methods
   \***************************************************************************/
 
+  async componentDidMount () {
+    const { id, rescue } = this.props
+
+    if (id && !rescue) {
+      await this.props.getRescue(id)
+    }
+
+    if (this.state.loading) {
+      this.setState({ loading: false })
+    }
+  }
+
   static renderQuote = (quote, index) => {
     const createdAt = formatAsEliteDateTime(quote.createdAt)
     const updatedAt = formatAsEliteDateTime(quote.updatedAt)
@@ -262,14 +274,14 @@ class Paperwork extends Component {
     }
   }
 
-  render () {
+  renderRescueEditForm = () => {
     const {
       rescue,
     } = this.props
+
     const {
       loading,
       submitting,
-      error,
     } = this.state
 
     const classes = ['page-content']
@@ -295,6 +307,193 @@ class Paperwork extends Component {
     const pwValidity = this.validate(fieldValues)
 
     return (
+      <form
+        className={classes.join(' ')}
+        onSubmit={this._handleSubmit}>
+        <header className="paperwork-header">
+          {(rescue.attributes.status !== 'closed') && (
+            <div className="board-index"><span>#{rescue.attributes.data.boardIndex}</span></div>
+          )}
+          <div className="title">
+            {(!rescue.attributes.title) && (
+              <span>
+                    Rescue of
+                <span className="cmdr-name"> {rescue.attributes.client}</span> in
+                <span className="system"> {(rescue.attributes.system) || ('Unknown')}</span>
+              </span>
+            )}
+            {(rescue.attributes.title) && (
+              <span>
+                    Operation
+                <span className="rescue-title"> {rescue.attributes.title}</span>
+              </span>
+            )}
+          </div>
+        </header>
+
+        <fieldset>
+          <label htmlFor="platform">What platform was the rescue on?</label>
+
+          <RadioOptionsInput
+            disabled={submitting || loading}
+            className="platform"
+            name="platform"
+            id="platform"
+            value={platform}
+            onChange={this._handleRadioOptionsChange}
+            options={[
+              {
+                value: 'pc',
+                displayValue: 'PC',
+              },
+              {
+                value: 'xb',
+                displayValue: 'Xbox',
+              },
+              {
+                value: 'ps',
+                displayValue: 'PS4',
+              },
+            ]} />
+        </fieldset>
+
+        <fieldset>
+          <label htmlFor="outcome-success">Was the rescue successful?</label>
+
+          <RadioOptionsInput
+            disabled={submitting || loading}
+            className="outcome"
+            name="outcome"
+            id="outcome"
+            value={outcome}
+            onChange={this._handleRadioOptionsChange}
+            options={[
+              {
+                value: 'success',
+                displayValue: 'Yes',
+              },
+              {
+                value: 'failure',
+                displayValue: 'No',
+              },
+              {
+                value: 'invalid',
+                displayValue: 'Invalid',
+              },
+              {
+                value: 'other',
+                displayValue: 'Other',
+              },
+            ]} />
+        </fieldset>
+
+        <fieldset>
+          <label htmlFor="codeRed-yes">Was it a code red?</label>
+          <RadioOptionsInput
+            disabled={submitting || loading}
+            className="codeRed"
+            name="codeRed"
+            id="codeRed"
+            value={`${codeRed}`}
+            onChange={this._handleRadioOptionsChange}
+            options={[
+              {
+                value: 'true',
+                displayValue: 'Yes',
+              },
+              {
+                value: 'false',
+                displayValue: 'No',
+              },
+            ]} />
+        </fieldset>
+
+        <fieldset>
+          <label htmlFor="rats">Who was assigned to this rescue?</label>
+
+          <RatTagsInput
+            aria-label="Assigned rats"
+            data-platform={platform}
+            disabled={submitting || loading}
+            name="rats"
+            onChange={this._handleRatsChange}
+            onRemove={this._handleRatsRemove}
+            value={rats}
+            valueProp={ratNameTemplate} />
+        </fieldset>
+
+        <fieldset>
+          <label htmlFor="firstLimpetId">Who fired the first limpet?</label>
+
+          <FirstLimpetInput
+            data-single
+            disabled={submitting || loading}
+            name="firstLimpetId"
+            onChange={this._handleFirstLimpetChange}
+            options={rats}
+            value={firstLimpetId}
+            valueProp={ratNameTemplate} />
+        </fieldset>
+
+        <fieldset>
+          <label htmlFor="system">Where did it happen? <small>In what star system did the rescue took place? (put "n/a" if not applicable)</small></label>
+
+          <SystemTagsInput
+            aira-label="Rescue system"
+            data-allownew
+            disabled={submitting || loading}
+            name="system"
+            onChange={this._handleSystemChange}
+            data-single
+            value={system} />
+        </fieldset>
+
+        <fieldset>
+          <label htmlFor="notes">Notes</label>
+
+          <textarea
+            aria-label="case notes"
+            disabled={submitting || loading}
+            id="notes"
+            name="notes"
+            onChange={this._handleNotesChange}
+            value={notes} />
+        </fieldset>
+
+        <menu type="toolbar">
+          <div className="primary">
+            <div className={`invalidity-explainer ${pwValidity.noChange ? 'no-change' : ''} ${pwValidity.valid ? '' : 'show'}`}>{pwValidity.reason}</div>
+            <button
+              disabled={submitting || loading || !pwValidity.valid}
+              className="green"
+              type="submit">
+              {submitting ? 'Submitting...' : 'Submit'}
+            </button>
+          </div>
+
+          <div className="secondary" />
+        </menu>
+
+        <div className="panel quotes">
+          <header>Quotes</header>
+          <div className="panel-content">{this.renderQuotes()}</div>
+        </div>
+      </form>
+    )
+  }
+
+  render () {
+    const {
+      rescue,
+    } = this.props
+
+    const {
+      loading,
+      submitting,
+      error,
+    } = this.state
+
+    return (
       <PageWrapper title="Paperwork">
         {(error && !submitting) && (
           <div className="store-errors">
@@ -314,180 +513,7 @@ class Paperwork extends Component {
           </div>
         )}
 
-        {(!loading && rescue) && (
-          <form
-            className={classes.join(' ')}
-            onSubmit={this._handleSubmit}>
-            <header className="paperwork-header">
-              {(rescue.attributes.status !== 'closed') && (
-                <div className="board-index"><span>#{rescue.attributes.data.boardIndex}</span></div>
-              )}
-              <div className="title">
-                {(!rescue.attributes.title) && (
-                  <span>
-                    Rescue of
-                    <span className="cmdr-name"> {rescue.attributes.client}</span> in
-                    <span className="system"> {(rescue.attributes.system) || ('Unknown')}</span>
-                  </span>
-                )}
-                {(rescue.attributes.title) && (
-                  <span>
-                    Operation
-                    <span className="rescue-title"> {rescue.attributes.title}</span>
-                  </span>
-                )}
-              </div>
-            </header>
-
-            <fieldset>
-              <label htmlFor="platform">What platform was the rescue on?</label>
-
-              <RadioOptionsInput
-                disabled={submitting || loading}
-                className="platform"
-                name="platform"
-                id="platform"
-                value={platform}
-                onChange={this._handleRadioOptionsChange}
-                options={[
-                  {
-                    value: 'pc',
-                    displayValue: 'PC',
-                  },
-                  {
-                    value: 'xb',
-                    displayValue: 'Xbox',
-                  },
-                  {
-                    value: 'ps',
-                    displayValue: 'PS4',
-                  },
-                ]} />
-            </fieldset>
-
-            <fieldset>
-              <label htmlFor="outcome-success">Was the rescue successful?</label>
-
-              <RadioOptionsInput
-                disabled={submitting || loading}
-                className="outcome"
-                name="outcome"
-                id="outcome"
-                value={outcome}
-                onChange={this._handleRadioOptionsChange}
-                options={[
-                  {
-                    value: 'success',
-                    displayValue: 'Yes',
-                  },
-                  {
-                    value: 'failure',
-                    displayValue: 'No',
-                  },
-                  {
-                    value: 'invalid',
-                    displayValue: 'Invalid',
-                  },
-                  {
-                    value: 'other',
-                    displayValue: 'Other',
-                  },
-                ]} />
-            </fieldset>
-
-            <fieldset>
-              <label htmlFor="codeRed-yes">Was it a code red?</label>
-              <RadioOptionsInput
-                disabled={submitting || loading}
-                className="codeRed"
-                name="codeRed"
-                id="codeRed"
-                value={`${codeRed}`}
-                onChange={this._handleRadioOptionsChange}
-                options={[
-                  {
-                    value: 'true',
-                    displayValue: 'Yes',
-                  },
-                  {
-                    value: 'false',
-                    displayValue: 'No',
-                  },
-                ]} />
-            </fieldset>
-
-            <fieldset>
-              <label htmlFor="rats">Who was assigned to this rescue?</label>
-
-              <RatTagsInput
-                aria-label="Assigned rats"
-                data-platform={platform}
-                disabled={submitting || loading}
-                name="rats"
-                onChange={this._handleRatsChange}
-                onRemove={this._handleRatsRemove}
-                value={rats}
-                valueProp={ratNameTemplate} />
-            </fieldset>
-
-            <fieldset>
-              <label htmlFor="firstLimpetId">Who fired the first limpet?</label>
-
-              <FirstLimpetInput
-                data-single
-                disabled={submitting || loading}
-                name="firstLimpetId"
-                onChange={this._handleFirstLimpetChange}
-                options={rats}
-                value={firstLimpetId}
-                valueProp={ratNameTemplate} />
-            </fieldset>
-
-            <fieldset>
-              <label htmlFor="system">Where did it happen? <small>In what star system did the rescue took place? (put "n/a" if not applicable)</small></label>
-
-              <SystemTagsInput
-                aira-label="Rescue system"
-                data-allownew
-                disabled={submitting || loading}
-                name="system"
-                onChange={this._handleSystemChange}
-                data-single
-                value={system} />
-            </fieldset>
-
-            <fieldset>
-              <label htmlFor="notes">Notes</label>
-
-              <textarea
-                aria-label="case notes"
-                disabled={submitting || loading}
-                id="notes"
-                name="notes"
-                onChange={this._handleNotesChange}
-                value={notes} />
-            </fieldset>
-
-            <menu type="toolbar">
-              <div className="primary">
-                <div className={`invalidity-explainer ${pwValidity.noChange ? 'no-change' : ''} ${pwValidity.valid ? '' : 'show'}`}>{pwValidity.reason}</div>
-                <button
-                  disabled={submitting || loading || !pwValidity.valid}
-                  className="green"
-                  type="submit">
-                  {submitting ? 'Submitting...' : 'Submit'}
-                </button>
-              </div>
-
-              <div className="secondary" />
-            </menu>
-
-            <div className="panel quotes">
-              <header>Quotes</header>
-              <div className="panel-content">{this.renderQuotes()}</div>
-            </div>
-          </form>
-        )}
+        {(!loading && rescue) && this.renderRescueEditForm()}
       </PageWrapper>
     )
   }
