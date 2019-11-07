@@ -11,7 +11,7 @@ import wpApi from '../../services/wordpress'
 
 export const getAuthor = (authorId) => wpApiRequest(
   actionTypes.GET_WORDPRESS_AUTHOR,
-  { url: `/users/${authorId}` }
+  { url: `/users/${authorId}` },
 )
 
 
@@ -20,7 +20,7 @@ export const getAuthor = (authorId) => wpApiRequest(
 
 export const getCategory = (categoryId) => wpApiRequest(
   actionTypes.GET_WORDPRESS_CATEGORY,
-  { url: `/categories/${categoryId}` }
+  { url: `/categories/${categoryId}` },
 )
 
 

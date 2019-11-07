@@ -10,13 +10,13 @@ const getRats = (params) => frApiRequest(
   {
     url: '/rats',
     params,
-  }
+  },
 )
 
 
 const getRat = (id) => frApiRequest(
   actionTypes.GET_RAT,
-  { url: `/rats/${id}` }
+  { url: `/rats/${id}` },
 )
 
 
@@ -26,7 +26,7 @@ const createRat = (data) => frApiRequest(
     url: '/rats',
     method: 'post',
     data,
-  }
+  },
 )
 
 const deleteRat = (ratId) => frApiRequest(
@@ -35,7 +35,7 @@ const deleteRat = (ratId) => frApiRequest(
     url: `/rats/${ratId}`,
     method: 'delete',
   },
-  getResourceDeletePartial('rats', ratId)
+  getResourceDeletePartial('rats', ratId),
 )
 
 const updateRat = (ratId, data) => frApiRequest(
@@ -44,7 +44,7 @@ const updateRat = (ratId, data) => frApiRequest(
     url: `/rats/${ratId}`,
     method: 'put',
     data,
-  }
+  },
 )
 
 

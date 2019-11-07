@@ -49,12 +49,11 @@ class Checkout extends Component {
     //   cart,
     // } = this.props
     return (
-      <>
-        <PageWrapper title="Your Cart">
-          <div className="page-content">
-            <h4> We said the store was closed. Why are you here? </h4>
-          </div>
-          {/* <div className="page-content">
+      <PageWrapper title="Your Cart">
+        <div className="page-content">
+          <h4> We said the store was closed. Why are you here? </h4>
+        </div>
+        {/* <div className="page-content">
             <StoreControlBar
               backRoute={Object.keys(cart).length ? 'store cart' : 'store list'}
               backTitle={Object.keys(cart).length ? 'Return to Cart' : 'Return to Store'} />
@@ -62,8 +61,7 @@ class Checkout extends Component {
               <CheckoutForm />
             </Elements>
           </div> */}
-        </PageWrapper>
-      </>
+      </PageWrapper>
     )
   }
 

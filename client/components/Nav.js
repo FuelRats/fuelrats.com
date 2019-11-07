@@ -34,6 +34,7 @@ const navItems = [
     title: 'Rat Stats',
     subnav: [
       {
+        external: true,
         key: 'stats-statistics',
         title: 'General',
         href: 'https://grafana.fuelrats.com/d/H-iTUTPmz/public-statistics?refresh=1h&orgId=2',
@@ -55,6 +56,7 @@ const navItems = [
         route: 'store list',
       },
       {
+        external: true,
         key: 'donate',
         title: 'Donations',
         href: 'https://donate.fuelrats.com/donate.php',
@@ -67,11 +69,13 @@ const navItems = [
     condition: (props) => props.loggedIn,
     subnav: [
       {
+        external: true,
         key: 'confluence',
         title: 'Knowledge Base',
         href: 'https://confluence.fuelrats.com/display/FRKB/Fuel+Rats+Knowledge+Base',
       },
       {
+        external: true,
         key: 'support-desk',
         title: 'Support Desk',
         href: 'https://t.fuelr.at/help',
@@ -169,6 +173,10 @@ class Nav extends Component {
           onChange={this._handleSubnavChange}
           name="subnav"
           type="checkbox" />
+      )
+    } else if (item.external) {
+      renderedItemTitle = (
+        <a href={item.href} className={item.disabled ? 'disabled' : ''}><span>{renderedItemTitle}</span></a>
       )
     } else {
       renderedItemTitle = (

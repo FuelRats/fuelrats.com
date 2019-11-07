@@ -34,7 +34,7 @@ class TabbedPanel extends React.Component {
     const { activeTab } = this.props
     const classes = classNames(
       'tab',
-      ['active', key === activeTab]
+      ['active', key === activeTab],
     )
 
     return (

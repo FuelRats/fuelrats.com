@@ -8,7 +8,7 @@ import actionTypes from '../actionTypes'
 
 const getProduct = (id) => frApiRequest(
   actionTypes.GET_STRIPE_PRODUCT,
-  { url: `/products/${id}` }
+  { url: `/products/${id}` },
 )
 
 const getProducts = (params) => frApiRequest(
@@ -20,7 +20,7 @@ const getProducts = (params) => frApiRequest(
       type: 'good',
       ...params,
     },
-  }
+  },
 )
 
 
@@ -33,12 +33,12 @@ const createOrder = (data) => frApiRequest(
     url: '/orders',
     method: 'post',
     data,
-  }
+  },
 )
 
 const getOrder = (id) => frApiRequest(
   actionTypes.GET_STRIPE_ORDER,
-  { url: `/orders/${id}` }
+  { url: `/orders/${id}` },
 )
 
 const getOrders = (params) => frApiRequest(
@@ -46,7 +46,7 @@ const getOrders = (params) => frApiRequest(
   {
     url: '/orders',
     params,
-  }
+  },
 )
 
 const payOrder = (id, data) => frApiRequest(
@@ -55,7 +55,7 @@ const payOrder = (id, data) => frApiRequest(
     url: `/orders/${id}/pay`,
     method: 'put',
     data,
-  }
+  },
 )
 
 const updateOrder = (id, data) => frApiRequest(
@@ -64,7 +64,7 @@ const updateOrder = (id, data) => frApiRequest(
     url: `/orders/${id}`,
     method: 'put',
     data,
-  }
+  },
 )
 
 

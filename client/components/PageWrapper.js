@@ -58,7 +58,7 @@ class Page extends Component {
     const mainClasses = classnames(
       'page',
       [className, Boolean(className)],
-      title.toLowerCase().replace(/\s/gu, '-')
+      title.toLowerCase().replace(/\s/gu, '-'),
     )
 
     return (

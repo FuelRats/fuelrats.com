@@ -142,73 +142,72 @@ class ListCart extends Component {
     } = this.state
 
     return (
-      <>
-        <PageWrapper title="Your Cart">
-          <div className="page-content">
-            <StoreControlBar backRoute="store list" backTooltip="Return to Products" />
-            <div className="cart-items">
-              <div className="cart-item key">
-                <span className="item-name-key">Item</span>
-                <span className="item-quantity-key">Quantity</span>
-              </div>
-              {Object.entries(cart).map(([skuId, quantity]) => {
-                const product = Object.values(products).find((datum) => datum.attributes.skus && datum.attributes.skus[skuId])
-                const sku = product.attributes.skus[skuId]
-                const {
-                  name,
-                } = product.attributes
-                const {
-                  attributes,
-                  inventory,
-                  price,
-                } = sku
+      <PageWrapper title="Your Cart">
+        <div className="page-content">
+          <StoreControlBar backRoute="store list" backTooltip="Return to Products" />
+          <div className="cart-items">
+            <div className="cart-item key">
+              <span className="item-name-key">Item</span>
+              <span className="item-quantity-key">Quantity</span>
+            </div>
+            {Object.entries(cart).map(([skuId, quantity]) => {
+              const product = Object.values(products).find((datum) => datum.attributes.skus && datum.attributes.skus[skuId])
+              const sku = product.attributes.skus[skuId]
+              const {
+                name,
+              } = product.attributes
+              const {
+                attributes,
+                inventory,
+                price,
+              } = sku
 
-                const descriptors = (sku && Object.keys(attributes).length) ? Object.values(attributes).join(', ') : null
+              const descriptors = (sku && Object.keys(attributes).length) ? Object.values(attributes).join(', ') : null
 
-                return (
-                  <div key={skuId} className="cart-item">
-                    <span className="item-name">
-                      <font className="name-quantity">{quantity}</font>
-                      <font className="subscript">X</font>
-                      {` ${name}`} {descriptors && `(${descriptors})`} {getMoney(price * quantity)}
-                    </span>
+              return (
+                <div key={skuId} className="cart-item">
+                  <span className="item-name">
+                    <font className="name-quantity">{quantity}</font>
+                    <font className="subscript">X</font>
+                    {` ${name}`} {descriptors && `(${descriptors})`} {getMoney(price * quantity)}
+                  </span>
 
-                    <input
-                      aria-label="Item quantity"
-                      className="item-quantity"
-                      disabled={submitting}
-                      name={skuId}
-                      onChange={this._handleQuantityChange}
-                      type="number"
-                      min={0}
-                      max={inventory.quantity}
-                      value={this.state.quantity[skuId] || 0} />
+                  <input
+                    aria-label="Item quantity"
+                    className="item-quantity"
+                    disabled={submitting}
+                    name={skuId}
+                    onChange={this._handleQuantityChange}
+                    type="number"
+                    min={0}
+                    max={inventory.quantity}
+                    value={this.state.quantity[skuId] || 0} />
 
-                    <button
-                      className="compact"
-                      disabled={submitting}
-                      name={skuId}
-                      onClick={this._handleSKUUpdate}
-                      type="button">
+                  <button
+                    className="compact"
+                    disabled={submitting}
+                    name={skuId}
+                    onClick={this._handleSKUUpdate}
+                    type="button">
                       Update
-                    </button>
+                  </button>
 
-                    <button
-                      className="compact"
-                      disabled={submitting}
-                      name={skuId}
-                      onClick={this._handleSKURemove}
-                      type="button">
+                  <button
+                    className="compact"
+                    disabled={submitting}
+                    name={skuId}
+                    onClick={this._handleSKURemove}
+                    type="button">
                       x
-                    </button>
-                  </div>
-                )
-              })}
-              <div className="cart-item key">
-                <span className="item-name-key this-exists-to-set-margins-cuz-clapton-is-lazy" />
-                <span className="item-total-key">
-                  {'SubTotal: '}
-                  {
+                  </button>
+                </div>
+              )
+            })}
+            <div className="cart-item key">
+              <span className="item-name-key this-exists-to-set-margins-cuz-clapton-is-lazy" />
+              <span className="item-total-key">
+                {'SubTotal: '}
+                {
                     getMoney(Object.entries(cart).reduce((acc, [skuId, quantity]) => {
                       const product = Object.values(products).find((datum) => datum.attributes.skus && datum.attributes.skus[skuId])
                       const sku = product.attributes.skus[skuId]
@@ -216,19 +215,18 @@ class ListCart extends Component {
                       return acc + (sku.price * quantity)
                     }, 0))
                   }
-                </span>
-                {Boolean(Object.keys(cart).length) && (
-                  <Link route="store checkout">
-                    <a className="button compact" disabled={submitting}>
+              </span>
+              {Boolean(Object.keys(cart).length) && (
+                <Link route="store checkout">
+                  <a className="button compact" disabled={submitting}>
                       Checkout
-                    </a>
-                  </Link>
-                )}
-              </div>
+                  </a>
+                </Link>
+              )}
             </div>
           </div>
-        </PageWrapper>
-      </>
+        </div>
+      </PageWrapper>
     )
   }
 

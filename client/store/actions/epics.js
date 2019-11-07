@@ -7,7 +7,7 @@ import actionTypes from '../actionTypes'
 
 export const getEpic = (epicId) => frApiRequest(
   actionTypes.GET_EPIC,
-  { url: `/epics/${epicId}` }
+  { url: `/epics/${epicId}` },
 )
 
 
@@ -20,5 +20,5 @@ export const createEpic = (data) => frApiRequest(
     url: '/epics',
     method: 'post',
     data,
-  }
+  },
 )

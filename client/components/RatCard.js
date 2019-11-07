@@ -63,7 +63,7 @@ class RatCard extends React.Component {
   _handleNameChange = ({ target: { value } }) => {
     this.setChanges(
       (state, props) => ({ name: value === props.rat.attributes.name ? undefined : value }), // changes
-      (state, props) => ({ name: value && value !== props.rat.attributes.name }) // validity
+      (state, props) => ({ name: value && value !== props.rat.attributes.name }), // validity
     )
   }
 
@@ -208,7 +208,7 @@ class RatCard extends React.Component {
       'rat-panel',
       ['expanded', shipsExpanded],
       ['editing', editMode],
-      ['submitting', submitting]
+      ['submitting', submitting],
     )
 
     const cmdrNameValue = typeof changes.name === 'string' ? changes.name : rat.attributes.name

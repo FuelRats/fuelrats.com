@@ -24,7 +24,7 @@ const selectShipsByRatId = createSelector(
     }
 
     return rat.relationships.ships.data.map(({ id }) => ships[id])
-  }
+  },
 )
 
 

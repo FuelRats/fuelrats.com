@@ -36,7 +36,7 @@ const renderModal = ({ item, key, props: style }) => {
 
   const rootClasses = classNames(
     'modal',
-    [className, className]
+    [className, className],
   )
 
   return isOpen && (

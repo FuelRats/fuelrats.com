@@ -19,7 +19,7 @@ const addNickname = (userId, nickname, password) => frApiRequest(
   {
     nickname,
     userId,
-  }
+  },
 )
 
 
@@ -34,7 +34,7 @@ const deleteNickname = (nickname) => frApiRequest(
   },
   {
     nickname,
-  }
+  },
 )
 
 
@@ -42,7 +42,7 @@ const deleteNickname = (nickname) => frApiRequest(
 
 const getCurrentUserProfile = () => frApiRequest(
   actionTypes.GET_PROFILE,
-  { url: '/profile' }
+  { url: '/profile' },
 )
 
 
@@ -55,7 +55,7 @@ const updateUser = (userId, data) => frApiRequest(
     url: `/users/${userId}`,
     method: 'put',
     data,
-  }
+  },
 )
 
 

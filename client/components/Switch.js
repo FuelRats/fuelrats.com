@@ -32,7 +32,7 @@ class SwitchInput extends React.Component {
       'switch-container',
       ['checked', checked],
       ['disabled', disabled],
-      [className, className]
+      [className, className],
     )
     return (
       <div

@@ -27,9 +27,11 @@ By contributing to this repository, you are expected to know and follow the rule
 
 1. Fork and clone the repo
 1. Setup environment variables (detailed in ["Some things you'll need"](#some-things-youll-need))
-1. `$ yarn install` or `$ npm install` to install dependencies
-1. `$ yarn run dev` or `$ npm run dev` to start up the dev server
+1. `$ yarn install` to install dependencies
+1. `$ yarn run dev` to start up the dev server
 1. Create a branch for your PR
+
+> NPM is no longer supported due to exotic dependency versioning, which only works with yarn.
 
 ### Some things you'll need
 
