@@ -8,7 +8,7 @@ import cookies from 'next-cookies'
 // Component imports
 import { getActionCreators } from '../store'
 import frApi from '../services/fuelrats'
-import { selectAuthentication, selectUser, withCurrentUser } from '../store/selectors'
+import { selectAuthentication, selectUser, withCurrentUserId } from '../store/selectors'
 
 
 
@@ -28,7 +28,7 @@ const initUserSession = async (ctx) => {
     'updateLoggingInState',
   ], store.dispatch)
 
-  const user = withCurrentUser(selectUser)(state)
+  const user = withCurrentUserId(selectUser)(state)
   const authentication = selectAuthentication(state)
 
   let verified = authentication.loggedIn && user && !authentication.verifyError

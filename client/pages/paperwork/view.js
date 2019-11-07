@@ -13,7 +13,7 @@ import {
   selectRescueById,
   selectUser,
   selectUserGroups,
-  withCurrentUser,
+  withCurrentUserId,
 } from '../../store/selectors'
 import { authenticated } from '../../components/AppLayout'
 import { formatAsEliteDateTime } from '../../helpers/formatTime'
@@ -426,8 +426,8 @@ class Paperwork extends Component {
   static mapStateToProps = (state, { query }) => ({
     rats: selectRatsByRescueId(state, query) || [],
     rescue: selectRescueById(state, query),
-    currentUser: withCurrentUser(selectUser)(state),
-    currentUserGroups: withCurrentUser(selectUserGroups)(state),
+    currentUser: withCurrentUserId(selectUser)(state),
+    currentUserGroups: withCurrentUserId(selectUserGroups)(state),
   })
 }
 

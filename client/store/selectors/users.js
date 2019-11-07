@@ -65,7 +65,7 @@ const selectUserGroups = createSelector(
 )
 
 
-const withCurrentUser = (selector) => (state) => selector(state, { userId: state.authentication.userId })
+const withCurrentUserId = (selector) => (state) => selector(state, { userId: state.authentication.userId })
 
 
 
@@ -78,5 +78,5 @@ export {
   selectUserDisplayRat,
   selectUserDisplayRatId,
   selectUserGroups,
-  withCurrentUser,
+  withCurrentUserId,
 }

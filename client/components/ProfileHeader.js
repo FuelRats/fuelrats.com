@@ -8,7 +8,7 @@ import {
   selectUser,
   selectUserDisplayRat,
   selectUserAvatar,
-  withCurrentUser,
+  withCurrentUserId,
 } from '../store/selectors'
 
 
@@ -90,9 +90,9 @@ class ClassName extends React.Component {
   \***************************************************************************/
 
   static mapStateToProps = (state) => ({
-    user: withCurrentUser(selectUser)(state),
-    userAvatar: withCurrentUser(selectUserAvatar)(state),
-    displayRat: withCurrentUser(selectUserDisplayRat)(state),
+    user: withCurrentUserId(selectUser)(state),
+    userAvatar: withCurrentUserId(selectUserAvatar)(state),
+    displayRat: withCurrentUserId(selectUserDisplayRat)(state),
   })
 }
 

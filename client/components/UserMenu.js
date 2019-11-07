@@ -12,7 +12,7 @@ import {
   selectUser,
   selectUserAvatar,
   selectUserGroups,
-  withCurrentUser,
+  withCurrentUserId,
 } from '../store/selectors'
 import { Link } from '../routes'
 import AdminUserMenuNav from './AdminUserMenuNav'
@@ -116,9 +116,9 @@ UserMenu.mapDispatchToProps = ['logout', 'setFlag']
 
 UserMenu.mapStateToProps = (state) => ({
   ...selectAuthentication(state),
-  user: withCurrentUser(selectUser)(state),
-  userAvatar: withCurrentUser(selectUserAvatar)(state),
-  showAdmin: userHasPermission(withCurrentUser(selectUserGroups)(state), 'isAdministrator'),
+  user: withCurrentUserId(selectUser)(state),
+  userAvatar: withCurrentUserId(selectUserAvatar)(state),
+  showAdmin: userHasPermission(withCurrentUserId(selectUserGroups)(state), 'isAdministrator'),
 })
 
 

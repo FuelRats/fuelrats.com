@@ -13,7 +13,7 @@ import {
   selectUser,
   selectUserDisplayRatId,
   selectPageViewMetaById,
-  withCurrentUser,
+  withCurrentUserId,
 } from '../store/selectors'
 import { formatAsEliteDate } from '../helpers/formatTime'
 import classNames from '../helpers/classNames'
@@ -337,8 +337,8 @@ class RatCard extends React.Component {
     const rescueCountPageViewMeta = selectPageViewMetaById(state, { pageViewId })
 
     return {
-      user: withCurrentUser(selectUser)(state),
-      userDisplayRatId: withCurrentUser(selectUserDisplayRatId)(state),
+      user: withCurrentUserId(selectUser)(state),
+      userDisplayRatId: withCurrentUserId(selectUserDisplayRatId)(state),
       rat: selectRatById(state, props),
       ships: selectShipsByRatId(state, props),
       rescueCount: rescueCountPageViewMeta && rescueCountPageViewMeta.total,
