@@ -164,13 +164,13 @@ class Paperwork extends Component {
     )
   }
 
-  render () {
+  renderRescue = () => {
     const {
       rescue,
     } = this.props
 
+
     const {
-      loading,
       deleteConfirm,
       deleting,
     } = this.state
@@ -179,6 +179,7 @@ class Paperwork extends Component {
       userCanDelete,
       userCanEdit,
     } = this
+
 
     // This makes 2 new variables called status and outcome, and sets them to the values of the outcome and status in the rescue object.
     let {
@@ -192,6 +193,150 @@ class Paperwork extends Component {
     } else if (status === 'open') {
       outcome = 'active'
     }
+
+    return (
+      <>
+        <menu type="toolbar">
+          <div className="primary">
+            {deleteConfirm && (
+              <>
+                {deleting ? (
+                  <span>Deleting... <FontAwesomeIcon icon="spinner" pulse fixedWidth /> </span>
+                ) : (
+                  <span>Delete this rescue? (This cannot be undone!) </span>
+                )}
+
+                <button
+                  className="compact"
+                  disabled={deleting}
+                  onClick={this._handleDeleteClick}
+                  type="button">
+                      Yes
+                </button>
+
+                <button
+                  className="compact"
+                  disabled={deleting}
+                  onClick={this._handleDeleteCancel}
+                  type="button">
+                      No
+                </button>
+              </>
+            )}
+
+            {!deleteConfirm && (
+              <>
+                {userCanEdit && (
+                  <Link route="paperwork edit" params={{ rescueId: rescue.id }}>
+                    <a className="button compact">
+                          Edit
+                    </a>
+                  </Link>
+                )}
+                {userCanDelete && (
+                  <button
+                    className="compact"
+                    onClick={this._handleDeleteClick}
+                    type="button">
+                            Delete
+                  </button>
+                )}
+              </>
+            )}
+          </div>
+
+          <div className="secondary" />
+        </menu>
+
+        <header className="paperwork-header">
+          {(rescue.attributes.status !== 'closed') && (
+            <div className="board-index"><span>#{rescue.attributes.data.boardIndex}</span></div>
+          )}
+          <div className="title">
+            {(!rescue.attributes.title) && (
+              <span>
+                    Rescue of
+                <span className="cmdr-name"> {rescue.attributes.client}</span> in
+                <span className="system"> {(rescue.attributes.system) || ('Unknown')}</span>
+              </span>
+            )}
+            {(rescue.attributes.title) && (
+              <span>
+                    Operation
+                <span className="rescue-title"> {rescue.attributes.title}</span>
+              </span>
+            )}
+          </div>
+        </header>
+
+        <div className="rescue-tags">
+          <div className="tag status-group">
+            <span className={`status ${status}`}>{status}</span>
+            <span className="outcome">{outcome || 'unfiled'}</span>
+          </div>
+
+          <div className={`tag platform ${rescue.attributes.platform || 'none'}`}>{rescue.attributes.platform || 'No Platform'}</div>
+
+          {(rescue.attributes.codeRed) && (
+            <div className="tag code-red">CR</div>
+          )}
+
+          {(rescue.attributes.data.markedForDeletion.marked) && (
+            <div className="md-group">
+              <div className="marked-for-deletion">Marked for Deletion</div>
+              <div className="md-reason">
+                    &quot;{rescue.attributes.data.markedForDeletion.reason}&quot;
+                <div className="md-reporter"> -     {rescue.attributes.data.markedForDeletion.reporter}</div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="info">
+          {(rescue.attributes.title) && (
+            <>
+              <span className="label">Client</span>
+              <span className="cmdr-name"> {rescue.attributes.client}</span>
+              <span className="label">System</span>
+              <span className="system"> {(rescue.attributes.system) || ('Unknown')}</span>
+            </>
+          )}
+          <span className="label">Created</span>
+          <span className="date-created content">{formatAsEliteDateTime(rescue.attributes.createdAt)}</span>
+          <span className="label">Updated</span>
+          <span className="date-updated content">{formatAsEliteDateTime(rescue.attributes.updatedAt)}</span>
+          <span className="label">IRC Nick</span>
+          <span className="irc-nick content">{rescue.attributes.data.IRCNick}</span>
+          <span className="label">Language</span>
+          <span className="language content">{rescue.attributes.data.langID}</span>
+        </div>
+
+        <div className="panel rats">
+          <header>Rats</header>
+          <div className="panel-content">{this.renderRats()}</div>
+        </div>
+
+        <div className="panel quotes">
+          <header>Quotes</header>
+          <div className="panel-content">{this.renderQuotes()}</div>
+        </div>
+
+        <div className="panel notes">
+          <header>Notes</header>
+          <div className="panel-content">{rescue.attributes.notes}</div>
+        </div>
+      </>
+    )
+  }
+
+  render () {
+    const {
+      rescue,
+    } = this.props
+
+    const {
+      loading,
+    } = this.state
 
     return (
       <PageWrapper title="Paperwork">
@@ -208,135 +353,7 @@ class Paperwork extends Component {
 
         {(!loading && rescue) && (
           <div className="page-content">
-            <menu type="toolbar">
-              <div className="primary">
-                {deleteConfirm && (
-                  <>
-                    {deleting ? (
-                      <span>Deleting... <FontAwesomeIcon icon="spinner" pulse fixedWidth /> </span>
-                    ) : (
-                      <span>Delete this rescue? (This cannot be undone!) </span>
-                    )}
-
-                    <button
-                      className="compact"
-                      disabled={deleting}
-                      onClick={this._handleDeleteClick}
-                      type="button">
-                      Yes
-                    </button>
-
-                    <button
-                      className="compact"
-                      disabled={deleting}
-                      onClick={this._handleDeleteCancel}
-                      type="button">
-                      No
-                    </button>
-                  </>
-                )}
-
-                {!deleteConfirm && (
-                  <>
-                    {userCanEdit && (
-                      <Link route="paperwork edit" params={{ rescueId: rescue.id }}>
-                        <a className="button compact">
-                          Edit
-                        </a>
-                      </Link>
-                    )}
-                    {userCanDelete && (
-                      <button
-                        className="compact"
-                        onClick={this._handleDeleteClick}
-                        type="button">
-                            Delete
-                      </button>
-                    )}
-                  </>
-                )}
-              </div>
-
-              <div className="secondary" />
-            </menu>
-
-            <header className="paperwork-header">
-              {(rescue.attributes.status !== 'closed') && (
-                <div className="board-index"><span>#{rescue.attributes.data.boardIndex}</span></div>
-              )}
-              <div className="title">
-                {(!rescue.attributes.title) && (
-                  <span>
-                    Rescue of
-                    <span className="cmdr-name"> {rescue.attributes.client}</span> in
-                    <span className="system"> {(rescue.attributes.system) || ('Unknown')}</span>
-                  </span>
-                )}
-                {(rescue.attributes.title) && (
-                  <span>
-                    Operation
-                    <span className="rescue-title"> {rescue.attributes.title}</span>
-                  </span>
-                )}
-              </div>
-            </header>
-
-            <div className="rescue-tags">
-              <div className="tag status-group">
-                <span className={`status ${status}`}>{status}</span>
-                <span className="outcome">{outcome || 'unfiled'}</span>
-              </div>
-
-              <div className={`tag platform ${rescue.attributes.platform || 'none'}`}>{rescue.attributes.platform || 'No Platform'}</div>
-
-              {(rescue.attributes.codeRed) && (
-                <div className="tag code-red">CR</div>
-              )}
-
-              {(rescue.attributes.data.markedForDeletion.marked) && (
-                <div className="md-group">
-                  <div className="marked-for-deletion">Marked for Deletion</div>
-                  <div className="md-reason">
-                    &quot;{rescue.attributes.data.markedForDeletion.reason}&quot;
-                    <div className="md-reporter"> -     {rescue.attributes.data.markedForDeletion.reporter}</div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <div className="info">
-              {(rescue.attributes.title) && (
-                <>
-                  <span className="label">Client</span>
-                  <span className="cmdr-name"> {rescue.attributes.client}</span>
-                  <span className="label">System</span>
-                  <span className="system"> {(rescue.attributes.system) || ('Unknown')}</span>
-                </>
-              )}
-              <span className="label">Created</span>
-              <span className="date-created content">{formatAsEliteDateTime(rescue.attributes.createdAt)}</span>
-              <span className="label">Updated</span>
-              <span className="date-updated content">{formatAsEliteDateTime(rescue.attributes.updatedAt)}</span>
-              <span className="label">IRC Nick</span>
-              <span className="irc-nick content">{rescue.attributes.data.IRCNick}</span>
-              <span className="label">Language</span>
-              <span className="language content">{rescue.attributes.data.langID}</span>
-            </div>
-
-            <div className="panel rats">
-              <header>Rats</header>
-              <div className="panel-content">{this.renderRats()}</div>
-            </div>
-
-            <div className="panel quotes">
-              <header>Quotes</header>
-              <div className="panel-content">{this.renderQuotes()}</div>
-            </div>
-
-            <div className="panel notes">
-              <header>Notes</header>
-              <div className="panel-content">{rescue.attributes.notes}</div>
-            </div>
+            {this.renderRescue()}
           </div>
         )}
       </PageWrapper>
