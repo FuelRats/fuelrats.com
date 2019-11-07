@@ -48,6 +48,12 @@ const initialState = {
 
   rescues: {},
 
+  session: {
+    loggedIn: false,
+    verifyError: null,
+    userId: null,
+  },
+
   ships: {},
 
   skus: {},
