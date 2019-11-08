@@ -13,7 +13,7 @@ import {
 
 
 @connect
-class ClassName extends React.Component {
+class ProfileHeader extends React.Component {
   /***************************************************************************\
     Class Properties
   \***************************************************************************/
@@ -100,4 +100,4 @@ class ClassName extends React.Component {
 
 
 
-export default ClassName
+export default ProfileHeader
