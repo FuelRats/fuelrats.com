@@ -40,7 +40,7 @@ const deleteNickname = (nickname) => frApiRequest(
 
 
 
-const getCurrentUserProfile = () => frApiRequest(
+const getUserProfile = () => frApiRequest(
   actionTypes.GET_PROFILE,
   { url: '/profile' },
 )
@@ -65,6 +65,6 @@ const updateUser = (userId, data) => frApiRequest(
 export {
   addNickname,
   deleteNickname,
-  getCurrentUserProfile,
+  getUserProfile,
   updateUser,
 }

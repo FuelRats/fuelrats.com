@@ -6,7 +6,7 @@ import JsCookie from 'js-cookie'
 
 
 // Component imports
-import { frApiRequest } from './services'
+import { getUserProfile } from './user'
 import {
   selectSession,
   selectUser,
@@ -31,12 +31,6 @@ export const logout = (delayLogout) => (dispatch) => {
     delayLogout,
   })
 }
-
-export const getUserProfile = () => frApiRequest(
-  actionTypes.GET_PROFILE,
-  { url: '/profile' },
-)
-
 
 export const initUserSession = (ctx) => async (dispatch, getState) => {
   const state = getState()
