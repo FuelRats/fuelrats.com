@@ -1,13 +1,4 @@
 const initialState = {
-  authentication: {
-    loggedIn: false,
-    loggingIn: true,
-    loggingOut: false,
-    registering: false,
-    verifyError: null,
-    userId: null,
-  },
-
   blogs: {
     authors: {},
     blogs: [],

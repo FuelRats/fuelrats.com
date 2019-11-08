@@ -6,7 +6,6 @@ import initialState from '../initialState'
 import withDefaultReducers from '../utility/withDefaultReducers'
 
 import createJSONAPIResourceReducer from './APIResource'
-import authentication from './authentication'
 import blogs from './blogs'
 import epics from './epics'
 import error from './error'
@@ -15,6 +14,7 @@ import images from './images'
 import leaderboard from './leaderboard'
 import pageViews from './pageViews'
 import products from './products'
+import session from './session'
 import skus from './skus'
 import storeCart from './storeCart'
 import users from './users'
@@ -66,7 +66,6 @@ export default chainReducers(
   [
     apiResourceReducer,
     withDefaultReducers(combineReducers)(initialState, {
-      authentication,
       blogs,
       epics,
       error,
@@ -75,6 +74,7 @@ export default chainReducers(
       leaderboard,
       pageViews,
       products,
+      session,
       skus,
       storeCart,
       users,

@@ -1,4 +1,3 @@
-export * from './authentication'
 export * from './blogs'
 export * from './flags'
 export * from './groups'
