@@ -36,9 +36,7 @@ class Authorize extends Component {
     Public Methods
   \***************************************************************************/
 
-  static async getInitialProps ({
-    accessToken, query, res, store,
-  }, setLayoutProps) {
+  static async getInitialProps ({ query, res, store }, setLayoutProps) {
     const {
       client_id: clientId,
       response_type: responseType,
@@ -65,7 +63,6 @@ class Authorize extends Component {
         responseType,
         clientName: client.data.attributes.name,
         redirectUri: client.data.attributes.redirectUri,
-        token: accessToken,
         ...oauthProps,
       }
     }
@@ -81,6 +78,7 @@ class Authorize extends Component {
 
   render () {
     const {
+      accessToken,
       clientId,
       clientName,
       preAuthorized,
@@ -88,7 +86,6 @@ class Authorize extends Component {
       responseType,
       scope,
       scopes,
-      token,
       transactionId,
     } = this.props
     const { submitting } = this.state
@@ -111,7 +108,7 @@ class Authorize extends Component {
               </ul>
 
               <form
-                action={`/api/oauth2/authorize?bearer=${token}`}
+                action={`/api/oauth2/authorize?bearer=${accessToken}`}
                 method="post"
                 ref={this._formRef}>
 
