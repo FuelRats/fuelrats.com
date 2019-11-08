@@ -1,6 +1,9 @@
 const selectSession = (state) => state.session
 
-const withCurrentUserId = (selector) => (state) => selector(state, { userId: state.session.userId })
+const withCurrentUserId = (selector) => (state, props) => selector(state, {
+  ...props,
+  userId: state.session.userId,
+})
 
 export {
   selectSession,
