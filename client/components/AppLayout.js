@@ -8,20 +8,18 @@ import React from 'react'
 
 
 // Component imports
-import { connect } from '../store'
+import { connect, getActionCreators } from '../store'
 import {
-  selectAuthentication,
   selectFlagByName,
+  selectSession,
   selectUser,
   selectUserGroups,
   withCurrentUserId,
 } from '../store/selectors'
 import { Router } from '../routes'
-import frApi from '../services/fuelrats'
 import ErrorPage from '../pages/_error'
 import Header from './Header'
-import httpStatus from '../helpers/httpStatus'
-import initUserSession from '../helpers/initUserSession'
+import HttpStatus from '../helpers/httpStatus'
 import LoginModal from './LoginModal'
 import NProgress from './NProgress'
 import PageLayout from './AppLayout/PageLayout'
@@ -52,7 +50,9 @@ class AppLayout extends React.Component {
 
   _handleLoginDialogClose = () => this.props.setFlag('showLoginDialog', false)
 
-
+  _handlePageChange = () => {
+    this.props.notifyPageChange(this.props.pageProps.asPath)
+  }
 
 
 
@@ -69,12 +69,14 @@ class AppLayout extends React.Component {
       store,
     } = ctx
 
-    let statusCode = httpStatus.OK
-    const accessToken = await initUserSession(ctx)
+    let statusCode = (res && res.statusCode) || HttpStatus.OK
 
-    if (!accessToken && Component.ಠ_ಠ_AUTHENTICATION_REQUIRED) {
+    const { initUserSession } = getActionCreators(['initUserSession'], store.dispatch)
+    const { error, accessToken } = await initUserSession(ctx)
+
+    if ((error || !accessToken) && Component.ಠ_ಠ_AUTHENTICATION_REQUIRED) {
       if (res) {
-        res.writeHead(httpStatus.FOUND, {
+        res.writeHead(HttpStatus.FOUND, {
           Location: `/?authenticate=true&destination=${encodeURIComponent(asPath)}`,
         })
         res.end()
@@ -82,20 +84,18 @@ class AppLayout extends React.Component {
       } else {
         Router.replace(`/?authenticate=true&destination=${encodeURIComponent(asPath)}`)
       }
-
-      return null
     }
 
-    if (Component.ಠ_ಠ_REQUIRED_PERMISSION) {
+    if (!error && accessToken && Component.ಠ_ಠ_REQUIRED_PERMISSION) {
       const state = store.getState()
       const userGroups = withCurrentUserId(selectUserGroups)(state)
 
       if (!userHasPermission(userGroups, Component.ಠ_ಠ_REQUIRED_PERMISSION)) {
         if (ctx.res) {
           /* eslint-disable-next-line require-atomic-updates */// This is fine
-          ctx.res.statusCode = httpStatus.UNAUTHORIZED
+          ctx.res.statusCode = HttpStatus.UNAUTHORIZED
         } else {
-          statusCode = httpStatus.UNAUTHORIZED
+          statusCode = HttpStatus.UNAUTHORIZED
         }
       }
     }
@@ -105,8 +105,6 @@ class AppLayout extends React.Component {
     let layoutProps = {
       renderLayout: true,
     }
-
-
 
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps({
@@ -124,7 +122,7 @@ class AppLayout extends React.Component {
       ({ statusCode } = ctx.res)
     }
 
-    if (statusCode !== httpStatus.OK) {
+    if (statusCode !== HttpStatus.OK) {
       pageProps = await ErrorPage.getInitialProps(ctx)
     }
 
@@ -138,6 +136,7 @@ class AppLayout extends React.Component {
     return {
       ...layoutProps,
       accessToken,
+      authenticatedPage: Component.ಠ_ಠ_AUTHENTICATION_REQUIRED,
       statusCode,
       userAgent,
       pageProps: {
@@ -149,29 +148,9 @@ class AppLayout extends React.Component {
     }
   }
 
-  constructor (props) {
-    super(props)
-
-    if (this.props.verifyError) {
-      this.props.logout(true)
-    } else if (this.props.accessToken) {
-      frApi.defaults.headers.common.Authorization = `Bearer ${this.props.accessToken}`
-    }
-  }
-
-  componentDidUpdate (prevProps) {
-    const {
-      loggedIn,
-      Component,
-    } = this.props
-
-    if (!loggedIn && prevProps.loggedIn && Component.ಠ_ಠ_AUTHENTICATION_REQUIRED) {
-      Router.push('/')
-    }
-  }
-
   render () {
     const {
+      authenticatedPage,
       renderLayout,
       isServer,
     } = this.props
@@ -186,7 +165,7 @@ class AppLayout extends React.Component {
         {renderLayout && (
           <>
             <Header isServer={isServer} />
-            <UserMenu />
+            <UserMenu authenticatedPage={authenticatedPage} />
           </>
         )}
 
@@ -226,7 +205,7 @@ class AppLayout extends React.Component {
 
     let pageKey = router.asPath
 
-    if (statusCode !== httpStatus.OK) {
+    if (statusCode !== HttpStatus.OK) {
       pageItem = {
         Page: ErrorPage,
         pageProps,
@@ -238,6 +217,7 @@ class AppLayout extends React.Component {
     return {
       items: pageItem,
       keys: pageKey,
+      onDestroyed: this._handlePageChange,
     }
   }
 
@@ -246,10 +226,10 @@ class AppLayout extends React.Component {
     Redux Properties
   \***************************************************************************/
 
-  static mapDispatchToProps = ['getCurrentUserProfile', 'logout', 'setFlag', 'updateLoggingInState']
+  static mapDispatchToProps = ['setFlag', 'notifyPageChange']
 
   static mapStateToProps = (state) => ({
-    ...selectAuthentication(state),
+    ...selectSession(state),
     showLoginModal: selectFlagByName(state, { name: 'showLoginDialog' }),
     user: withCurrentUserId(selectUser)(state),
   })

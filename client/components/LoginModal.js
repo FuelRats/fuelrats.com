@@ -8,7 +8,6 @@ import PropTypes from 'prop-types'
 
 // Component imports
 import { connect } from '../store'
-import { selectAuthentication } from '../store/selectors'
 import { Router } from '../routes'
 import asModal, { ModalContent, ModalFooter } from './Modal'
 import Switch from './Switch'
@@ -30,6 +29,7 @@ class LoginModal extends React.Component {
 
   state = {
     email: '',
+    loggingIn: false,
     password: '',
     remember: false,
     error: false,
@@ -74,6 +74,8 @@ class LoginModal extends React.Component {
   _handleSubmit = async (event) => {
     event.preventDefault()
 
+    this.setState({ loggingIn: true })
+
     const { status } = await this.props.login({
       email: this.state.email,
       password: this.state.password,
@@ -81,10 +83,12 @@ class LoginModal extends React.Component {
     })
 
     if (status === 'success') {
-      this.props.getCurrentUserProfile()
+      this.props.getUserProfile()
       this.props.onClose()
+      this.setState({ loggingIn: false })
     } else {
       this.setState({
+        loggingIn: false,
         error: true,
       })
     }
@@ -114,6 +118,7 @@ class LoginModal extends React.Component {
     const {
       email,
       error,
+      loggingIn,
       password,
       remember,
     } = this.state
@@ -122,7 +127,7 @@ class LoginModal extends React.Component {
 
     return (
       <ModalContent as="form" className="dialog no-pad" onSubmit={this._handleSubmit}>
-        {error && !this.props.loggingIn && (
+        {error && !loggingIn && (
           <div className="store-errors">
             <div className="store-error">
               Invalid email or password.
@@ -134,7 +139,7 @@ class LoginModal extends React.Component {
           aria-label="Fuel rats account e-mail"
           autoComplete="username"
           className="email dark"
-          disabled={this.props.loggingIn}
+          disabled={loggingIn}
           doubleValidate={isFirefox}
           id="email"
           inputRef={this.emailInput}
@@ -149,7 +154,7 @@ class LoginModal extends React.Component {
           aria-label="Fuel rats account password"
           autoComplete="current-password"
           className="password dark"
-          disabled={this.props.loggingIn}
+          disabled={loggingIn}
           doubleValidate={isFirefox}
           id="password"
           label="Password"
@@ -163,7 +168,7 @@ class LoginModal extends React.Component {
           <div className="switch-form-container">
             <Switch
               aria-label="Remember me on this computer"
-              disabled={this.props.loggingIn}
+              disabled={loggingIn}
               id="remember"
               label="Remember me"
               name="remember"
@@ -187,7 +192,7 @@ class LoginModal extends React.Component {
               className="green"
               disabled={!this.isValid}
               type="submit">
-              {this.props.loggingIn ? 'Submitting...' : 'Login'}
+              {loggingIn ? 'Submitting...' : 'Login'}
             </button>
           </div>
         </ModalFooter>
@@ -204,7 +209,7 @@ class LoginModal extends React.Component {
   \***************************************************************************/
 
   get isValid () {
-    if (this.props.loggingIn) {
+    if (this.state.loggingIn) {
       return false
     }
 
@@ -219,9 +224,7 @@ class LoginModal extends React.Component {
     Redux Properties
   \***************************************************************************/
 
-  static mapDispatchToProps = ['login', 'getCurrentUserProfile']
-
-  static mapStateToProps = (state) => selectAuthentication(state)
+  static mapDispatchToProps = ['login', 'getUserProfile']
 
 
 
@@ -232,8 +235,7 @@ class LoginModal extends React.Component {
   \***************************************************************************/
 
   static propTypes = {
-    getCurrentUserProfile: PropTypes.func.isRequired,
-    loggingIn: PropTypes.bool.isRequired,
+    getUserProfile: PropTypes.func.isRequired,
     login: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
     userAgent: PropTypes.string.isRequired,

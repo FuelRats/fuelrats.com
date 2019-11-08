@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 // Component imports
 import { connect } from '../store'
-import { selectAuthentication } from '../store/selectors'
+import { selectSession } from '../store/selectors'
 import Nav from './Nav'
 import { Link } from '../routes'
 import BrandSvg from './svg/BrandSvg'
@@ -30,7 +30,7 @@ const BUILD_COMMIT_SHORT = $BUILD_COMMIT_SHORT
 const Header = (props) => {
   const {
     loggedIn,
-    loggingIn,
+    userId,
   } = props
   return (
     <div id="HeaderContainer">
@@ -168,7 +168,7 @@ const Header = (props) => {
             </a>
           </Link>
 
-          {!loggedIn && !loggingIn && (
+          {!loggedIn && !userId && (
             <Link href="/register">
               <a className="button secondary">
                 Become a Rat
@@ -186,7 +186,7 @@ const Header = (props) => {
 
 
 
-Header.mapStateToProps = (state) => selectAuthentication(state)
+Header.mapStateToProps = (state) => selectSession(state)
 
 
 

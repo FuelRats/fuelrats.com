@@ -41,7 +41,8 @@ const initialState = {
 
   session: {
     loggedIn: false,
-    verifyError: null,
+    loggingOut: false,
+    error: null,
     userId: null,
   },
 
