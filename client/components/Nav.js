@@ -3,7 +3,7 @@ import React from 'react'
 
 // Component imports
 import { connect } from '../store'
-import { selectAuthentication } from '../store/selectors'
+import { selectSession } from '../store/selectors'
 import { Link } from '../routes'
 import Component from './Component'
 
@@ -208,7 +208,7 @@ class Nav extends Component {
 
   static mapDispatchToProps = ['setFlag']
 
-  static mapStateToProps = (state) => selectAuthentication(state)
+  static mapStateToProps = (state) => selectSession(state)
 }
 
 

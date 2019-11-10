@@ -6,9 +6,8 @@ import React from 'react'
 
 
 // Component imports
-import { authenticated } from '../components/AppLayout'
+import { PageWrapper, authenticated } from '../components/AppLayout'
 import { Router } from '../routes'
-import PageWrapper from '../components/PageWrapper'
 import TabbedPanel from '../components/TabbedPanel'
 import UserOverview from '../components/UserOverview'
 import ProfileHeader from '../components/ProfileHeader'

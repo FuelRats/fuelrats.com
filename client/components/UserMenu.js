@@ -8,34 +8,32 @@ import React from 'react'
 // Component imports
 import { connect } from '../store'
 import {
-  selectAuthentication,
+  selectSession,
   selectUser,
   selectUserAvatar,
   selectUserGroups,
-  withCurrentUser,
+  withCurrentUserId,
 } from '../store/selectors'
 import { Link } from '../routes'
 import AdminUserMenuNav from './AdminUserMenuNav'
 import userHasPermission from '../helpers/userHasPermission'
 
-
-
-
 const UserMenu = (props) => {
   const {
+    authenticatedPage,
     loggedIn,
-    loggingIn,
     logout,
     user,
     userAvatar,
+    userId,
     showAdmin,
   } = props
 
   return (
-    <div className={`user-menu ${loggedIn ? 'logged-in' : ''} ${loggingIn ? 'logging-in' : ''}`}>
-      {Boolean(loggedIn || loggingIn) && (
+    <div className={`user-menu ${loggedIn ? 'logged-in' : ''} ${loggedIn && !userId ? 'logging-in' : ''}`}>
+      {Boolean(loggedIn) && (
         <div className="avatar medium">
-          {Boolean(!loggingIn && user) && (
+          {Boolean(user) && (
             <img alt="Your avatar" src={userAvatar} />
           )}
         </div>
@@ -58,11 +56,13 @@ const UserMenu = (props) => {
               </li>
 
               <li>
-                <a
-                  href="#"
-                  onClick={logout}>
-                  <span>Logout</span>
-                </a>
+                <Link route="home">
+                  <button
+                    onClick={() => logout(authenticatedPage)}
+                    type="button">
+                    <span>Logout</span>
+                  </button>
+                </Link>
               </li>
             </ul>
           </nav>
@@ -96,7 +96,7 @@ const UserMenu = (props) => {
         </menu>
       )}
 
-      {!loggedIn && !loggingIn && (
+      {!loggedIn && (
         <button
           className="login"
           onClick={() => props.setFlag('showLoginDialog', true)}
@@ -115,10 +115,10 @@ const UserMenu = (props) => {
 UserMenu.mapDispatchToProps = ['logout', 'setFlag']
 
 UserMenu.mapStateToProps = (state) => ({
-  ...selectAuthentication(state),
-  user: withCurrentUser(selectUser)(state),
-  userAvatar: withCurrentUser(selectUserAvatar)(state),
-  showAdmin: userHasPermission(withCurrentUser(selectUserGroups)(state), 'isAdministrator'),
+  ...selectSession(state),
+  user: withCurrentUserId(selectUser)(state),
+  userAvatar: withCurrentUserId(selectUserAvatar)(state),
+  showAdmin: userHasPermission(withCurrentUserId(selectUserGroups)(state), 'isAdministrator'),
 })
 
 

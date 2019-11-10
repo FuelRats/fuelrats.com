@@ -6,20 +6,20 @@ import PropTypes from 'prop-types'
 
 
 // Component imports
-import { connect, actionStatus } from '../store'
+import { connect, actionStatus } from '../../store'
 import {
   selectRatById,
   selectShipsByRatId,
   selectUser,
   selectUserDisplayRatId,
   selectPageViewMetaById,
-  withCurrentUser,
-} from '../store/selectors'
-import { formatAsEliteDate } from '../helpers/formatTime'
-import classNames from '../helpers/classNames'
-import CardControls from './CardControls'
-import DefaultRatButton from './RatCard/DefaultRatButton'
-import InlineEditSpan from './InlineEditSpan'
+  withCurrentUserId,
+} from '../../store/selectors'
+import { formatAsEliteDate } from '../../helpers/formatTime'
+import classNames from '../../helpers/classNames'
+import CardControls from '../CardControls'
+import DefaultRatButton from './DefaultRatButton'
+import InlineEditSpan from '../InlineEditSpan'
 
 
 
@@ -337,8 +337,8 @@ class RatCard extends React.Component {
     const rescueCountPageViewMeta = selectPageViewMetaById(state, { pageViewId })
 
     return {
-      user: withCurrentUser(selectUser)(state),
-      userDisplayRatId: withCurrentUser(selectUserDisplayRatId)(state),
+      user: withCurrentUserId(selectUser)(state),
+      userDisplayRatId: withCurrentUserId(selectUserDisplayRatId)(state),
       rat: selectRatById(state, props),
       ships: selectShipsByRatId(state, props),
       rescueCount: rescueCountPageViewMeta && rescueCountPageViewMeta.total,

@@ -8,12 +8,12 @@ import {
   selectUser,
   selectUserDisplayRat,
   selectUserAvatar,
-  withCurrentUser,
+  withCurrentUserId,
 } from '../store/selectors'
 
 
 @connect
-class ClassName extends React.Component {
+class ProfileHeader extends React.Component {
   /***************************************************************************\
     Class Properties
   \***************************************************************************/
@@ -90,9 +90,9 @@ class ClassName extends React.Component {
   \***************************************************************************/
 
   static mapStateToProps = (state) => ({
-    user: withCurrentUser(selectUser)(state),
-    userAvatar: withCurrentUser(selectUserAvatar)(state),
-    displayRat: withCurrentUser(selectUserDisplayRat)(state),
+    user: withCurrentUserId(selectUser)(state),
+    userAvatar: withCurrentUserId(selectUserAvatar)(state),
+    displayRat: withCurrentUserId(selectUserDisplayRat)(state),
   })
 }
 
@@ -100,4 +100,4 @@ class ClassName extends React.Component {
 
 
 
-export default ClassName
+export default ProfileHeader

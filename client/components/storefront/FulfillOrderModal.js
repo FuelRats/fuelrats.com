@@ -103,7 +103,7 @@ class FulfillOrderModal extends Component {
     return (
       <>
         <ModalContent className="center">
-          {error && !this.props.loggingIn && (
+          {error && !this.props.loggedIn && (
             <div className="store-errors">
               <div className="store-error">
                 {error}

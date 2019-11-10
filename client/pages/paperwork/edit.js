@@ -13,15 +13,14 @@ import {
   selectRescueById,
   selectUser,
   selectUserGroups,
-  withCurrentUser,
+  withCurrentUserId,
 } from '../../store/selectors'
-import { authenticated } from '../../components/AppLayout'
+import { PageWrapper, authenticated } from '../../components/AppLayout'
 import { Router } from '../../routes'
 import Component from '../../components/Component'
 import FirstLimpetInput from '../../components/FirstLimpetInput'
 import RadioOptionsInput from '../../components/RadioOptionsInput'
 import RatTagsInput from '../../components/RatTagsInput'
-import PageWrapper from '../../components/PageWrapper'
 import SystemTagsInput from '../../components/SystemTagsInput'
 import userHasPermission from '../../helpers/userHasPermission'
 import { formatAsEliteDateTime } from '../../helpers/formatTime'
@@ -672,8 +671,8 @@ class Paperwork extends Component {
   static mapStateToProps = (state, { query }) => ({
     rats: selectFormattedRatsByRescueId(state, query),
     rescue: selectRescueById(state, query),
-    currentUser: withCurrentUser(selectUser)(state),
-    currentUserGroups: withCurrentUser(selectUserGroups)(state),
+    currentUser: withCurrentUserId(selectUser)(state),
+    currentUserGroups: withCurrentUserId(selectUserGroups)(state),
   })
 }
 

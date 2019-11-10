@@ -14,7 +14,7 @@ import {
   passwordPattern,
 } from '../data/RegExpr'
 import Component from '../components/Component'
-import PageWrapper from '../components/PageWrapper'
+import { PageWrapper } from '../components/AppLayout'
 import PasswordField from '../components/PasswordField'
 import RadioOptionsInput from '../components/RadioOptionsInput'
 import WordpressTermsModal from '../components/TermsModal'

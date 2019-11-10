@@ -1,13 +1,4 @@
 const initialState = {
-  authentication: {
-    loggedIn: false,
-    loggingIn: true,
-    loggingOut: false,
-    registering: false,
-    verifyError: null,
-    userId: null,
-  },
-
   blogs: {
     authors: {},
     blogs: [],
@@ -47,6 +38,13 @@ const initialState = {
   rats: {},
 
   rescues: {},
+
+  session: {
+    loggedIn: false,
+    loggingOut: false,
+    error: null,
+    userId: null,
+  },
 
   ships: {},
 

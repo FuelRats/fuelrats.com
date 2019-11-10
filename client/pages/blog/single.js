@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { actions, connect } from '../../store'
 import { Link } from '../../routes'
 import Component from '../../components/Component'
-import PageWrapper from '../../components/PageWrapper'
+import { PageWrapper } from '../../components/AppLayout'
 import TextPlaceholder from '../../components/TextPlaceholder'
 import { selectBlogStatistics, selectBlogAuthors, selectBlogCategories, selectBlogById } from '../../store/selectors'
 

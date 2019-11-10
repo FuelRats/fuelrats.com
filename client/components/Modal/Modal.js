@@ -8,9 +8,9 @@ import hoistNonReactStatics from 'hoist-non-react-statics'
 
 
 // Component imports
-import classNames from '../helpers/classNames'
-import ModalHeader from './Modal/ModalHeader'
-import ModalPortal from './Modal/ModalPortal'
+import classNames from '../../helpers/classNames'
+import ModalHeader from './ModalHeader'
+import ModalPortal from './ModalPortal'
 
 
 
@@ -128,5 +128,3 @@ const asModal = (options) => (Component) => hoistNonReactStatics(({ children, ..
 
 
 export default asModal
-export { default as ModalContent } from './Modal/ModalContent'
-export { default as ModalFooter } from './Modal/ModalFooter'

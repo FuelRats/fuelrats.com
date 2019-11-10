@@ -102,25 +102,6 @@ export const getClientOAuthPage = (params) => frApiRequest(
 
 
 
-export const logout = (fromVerification) => (dispatch) => {
-  Cookies.remove('access_token')
-  delete frApi.defaults.headers.common.Authorization
-
-  const result = dispatch({
-    payload: {
-      origin: fromVerification ? 'verify' : 'user',
-    },
-    status: 'success',
-    type: actionTypes.LOGOUT,
-  })
-
-  return result
-}
-
-
-
-
-
 export const register = ({ recaptcha, ...data }) => frApiRequest(
   actionTypes.REGISTER,
   {

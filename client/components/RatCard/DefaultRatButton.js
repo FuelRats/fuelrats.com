@@ -12,7 +12,7 @@ import { connect } from '../../store'
 import {
   selectUser,
   selectUserDisplayRatId,
-  withCurrentUser,
+  withCurrentUserId,
 } from '../../store/selectors'
 
 
@@ -105,8 +105,8 @@ class ClassName extends React.Component {
   static mapDispatchToProps = ['updateUser']
 
   static mapStateToProps = (state) => ({
-    userId: withCurrentUser(selectUser)(state).id,
-    displayRatId: withCurrentUser(selectUserDisplayRatId)(state),
+    userId: withCurrentUserId(selectUser)(state).id,
+    displayRatId: withCurrentUserId(selectUserDisplayRatId)(state),
   })
 
 

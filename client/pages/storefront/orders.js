@@ -10,10 +10,9 @@ import moment from 'moment'
 // Component imports
 import { actions, connect } from '../../store'
 // import { Link } from '../../routes'
-import { authenticated } from '../../components/AppLayout'
+import { PageWrapper, authenticated } from '../../components/AppLayout'
 import Component from '../../components/Component'
 import OrderStatusIndicator from '../../components/storefront/OrderStatusIndicator'
-import PageWrapper from '../../components/PageWrapper'
 import FulfillOrderModal from '../../components/storefront/FulfillOrderModal'
 import { selectOrders, selectSkus } from '../../store/selectors'
 

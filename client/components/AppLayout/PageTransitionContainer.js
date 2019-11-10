@@ -7,7 +7,7 @@ import { useTransition } from 'react-spring'
 const TransitionContext = React.createContext(null)
 
 
-const PageLayout = ({ items, keys, ...transitionProps }) => useTransition(items, keys, {
+const PageTransitionContainer = ({ items, keys, ...transitionProps }) => useTransition(items, keys, {
   initial: true,
   from: { opacity: 0 },
   enter: { opacity: 1 },
@@ -39,7 +39,7 @@ const {
   Consumer: TransitionContextConsumer,
 } = TransitionContext
 
-export default PageLayout
+export default PageTransitionContainer
 export {
   TransitionContextConsumer,
 }

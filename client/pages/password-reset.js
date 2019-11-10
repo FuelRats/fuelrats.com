@@ -6,11 +6,11 @@ import React from 'react'
 
 
 // Component imports
+import { PageWrapper } from '../components/AppLayout'
 import { connect } from '../store'
 import { Link } from '../routes'
 import { passwordPattern } from '../data/RegExpr'
 import Component from '../components/Component'
-import PageWrapper from '../components/PageWrapper'
 import PasswordField from '../components/PasswordField'
 
 

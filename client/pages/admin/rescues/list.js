@@ -12,8 +12,8 @@ import { connect, actions } from '../../../store'
 import { Link } from '../../../routes'
 import { selectPageViewDataById, selectPageViewMetaById } from '../../../store/selectors'
 import { formatAsEliteDateTime } from '../../../helpers/formatTime'
-import { authenticated } from '../../../components/AppLayout'
-import PageWrapper from '../../../components/PageWrapper'
+import { PageWrapper, authenticated } from '../../../components/AppLayout'
+
 
 
 

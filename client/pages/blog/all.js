@@ -15,8 +15,8 @@ import {
   selectBlogCategories,
   selectBlogStatistics,
 } from '../../store/selectors'
+import { PageWrapper } from '../../components/AppLayout'
 import Component from '../../components/Component'
-import PageWrapper from '../../components/PageWrapper'
 import safeParseInt from '../../helpers/safeParseInt'
 import TextPlaceholder from '../../components/TextPlaceholder'
 
