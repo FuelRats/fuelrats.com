@@ -11,9 +11,9 @@ import PropTypes from 'prop-types'
 
 
 // Component imports
-import { TransitionContextConsumer } from './AppLayout/PageLayout'
-import Component from './Component'
-import classnames from '../helpers/classNames'
+import { TransitionContextConsumer } from './PageTransitionContainer'
+import Component from '../Component'
+import classnames from '../../helpers/classNames'
 
 
 

@@ -6,7 +6,7 @@ import React from 'react'
 
 
 // Component imports
-import PageWrapper from '../components/PageWrapper'
+import { PageWrapper } from '../components/AppLayout'
 
 
 

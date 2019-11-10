@@ -8,23 +8,23 @@ import React from 'react'
 
 
 // Component imports
-import { connect, getActionCreators } from '../store'
+import { connect, getActionCreators } from '../../store'
 import {
   selectFlagByName,
   selectSession,
   selectUser,
   selectUserGroups,
   withCurrentUserId,
-} from '../store/selectors'
-import { Router } from '../routes'
-import ErrorPage from '../pages/_error'
-import Header from './Header'
-import HttpStatus from '../helpers/httpStatus'
-import LoginModal from './LoginModal'
-import NProgress from './NProgress'
-import PageLayout from './AppLayout/PageLayout'
-import userHasPermission from '../helpers/userHasPermission'
-import UserMenu from './UserMenu'
+} from '../../store/selectors'
+import { Router } from '../../routes'
+import ErrorPage from '../../pages/_error'
+import Header from '../Header'
+import HttpStatus from '../../helpers/httpStatus'
+import LoginModal from '../LoginModal'
+import NProgress from '../NProgress'
+import PageTransitionContainer from './PageTransitionContainer'
+import userHasPermission from '../../helpers/userHasPermission'
+import UserMenu from '../UserMenu'
 
 
 
@@ -169,7 +169,7 @@ class AppLayout extends React.Component {
           </>
         )}
 
-        <PageLayout {...this.pageLayoutProps} />
+        <PageTransitionContainer {...this.pageLayoutProps} />
 
         <LoginModal {...this.loginModalProps} />
       </div>

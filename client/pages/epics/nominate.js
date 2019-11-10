@@ -6,11 +6,10 @@ import React from 'react'
 
 
 // Component imports
-import { authenticated } from '../../components/AppLayout'
+import { PageWrapper, authenticated } from '../../components/AppLayout'
 import { connect } from '../../store'
 import Component from '../../components/Component'
 import classNames from '../../helpers/classNames'
-import PageWrapper from '../../components/PageWrapper'
 import RadioOptionsInput from '../../components/RadioOptionsInput'
 import RescuesTagsInput from '../../components/RescuesTagsInput'
 import RatTagsInput from '../../components/RatTagsInput'

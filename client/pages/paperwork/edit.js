@@ -15,13 +15,12 @@ import {
   selectUserGroups,
   withCurrentUserId,
 } from '../../store/selectors'
-import { authenticated } from '../../components/AppLayout'
+import { PageWrapper, authenticated } from '../../components/AppLayout'
 import { Router } from '../../routes'
 import Component from '../../components/Component'
 import FirstLimpetInput from '../../components/FirstLimpetInput'
 import RadioOptionsInput from '../../components/RadioOptionsInput'
 import RatTagsInput from '../../components/RatTagsInput'
-import PageWrapper from '../../components/PageWrapper'
 import SystemTagsInput from '../../components/SystemTagsInput'
 import userHasPermission from '../../helpers/userHasPermission'
 import { formatAsEliteDateTime } from '../../helpers/formatTime'

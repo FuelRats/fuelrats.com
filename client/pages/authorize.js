@@ -6,10 +6,9 @@ import React from 'react'
 
 
 // Component imports
-import { authenticated } from '../components/AppLayout'
+import { PageWrapper, authenticated } from '../components/AppLayout'
 import { actions } from '../store'
 import Component from '../components/Component'
-import PageWrapper from '../components/PageWrapper'
 import HiddenFormData from '../components/HiddenFormData'
 
 

@@ -16,7 +16,7 @@ import moment from 'moment'
 
 // Component imports
 import { version } from '../../package.json'
-import PageWrapper from '../components/PageWrapper'
+import { PageWrapper } from '../components/AppLayout'
 
 
 

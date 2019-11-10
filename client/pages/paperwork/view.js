@@ -15,11 +15,10 @@ import {
   selectUserGroups,
   withCurrentUserId,
 } from '../../store/selectors'
-import { authenticated } from '../../components/AppLayout'
+import { PageWrapper, authenticated } from '../../components/AppLayout'
 import { formatAsEliteDateTime } from '../../helpers/formatTime'
 import { Link, Router } from '../../routes'
 import Component from '../../components/Component'
-import PageWrapper from '../../components/PageWrapper'
 import userHasPermission from '../../helpers/userHasPermission'
 
 
