@@ -5,12 +5,12 @@ svg {
 
   @each $size in $svg-sizes {
     &.size-#{$size} {
-      max-width: #{$size}px;
-      max-height: #{$size}px;
+      max-width: $size * 1px;
+      max-height: $size * 1px;
 
       &.fixed {
-        min-width: #{$size}px;
-        min-height: #{$size}px;
+        min-width: $size * 1px;
+        min-height: $size * 1px;
       }
     }
   }
