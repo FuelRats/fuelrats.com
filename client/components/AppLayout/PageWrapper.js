@@ -11,7 +11,7 @@ import PropTypes from 'prop-types'
 
 
 // Component imports
-import { TransitionContextConsumer } from './PageTransitionContainer'
+import { TransitionConsumer } from './PageTransitionContainer'
 import Component from '../Component'
 import classnames from '../../helpers/classNames'
 
@@ -69,7 +69,7 @@ class Page extends Component {
           <meta name="description" content={description} />
           <meta property="og:description" content={description} />
         </NextHead>
-        <TransitionContextConsumer>
+        <TransitionConsumer>
           {(style) => (
             <animated.main className={mainClasses} style={style}>
               {!noHeader && (
@@ -80,7 +80,7 @@ class Page extends Component {
               {children}
             </animated.main>
           )}
-        </TransitionContextConsumer>
+        </TransitionConsumer>
       </>
     )
   }
