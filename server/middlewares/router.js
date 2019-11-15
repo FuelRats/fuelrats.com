@@ -6,13 +6,6 @@ const send = require('koa-send')
 
 
 
-// Component imports
-const routes = require('../../client/routes')
-
-
-
-
-
 // Component constants
 const DAY_CHAR_LENGTH = 2
 const MONTH_CHAR_LENGTH = 2
@@ -96,10 +89,10 @@ module.exports = (nextApp, koaServer) => {
     Next-Routes passthrough
   \***************************************************************************/
 
-  const nextRoutesHandler = routes.getRequestHandler(nextApp)
+  const nextRequestHandler = nextApp.getRequestHandler()
   router.get('*', async (ctx) => {
     ctx.respond = false
-    await nextRoutesHandler(ctx.req, ctx.res)
+    await nextRequestHandler(ctx.req, ctx.res)
   })
 
 
