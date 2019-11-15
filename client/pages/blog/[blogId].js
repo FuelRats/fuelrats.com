@@ -67,7 +67,7 @@ class Blog extends Component {
               <span className="author">
                 <FontAwesomeIcon icon="user" fixedWidth />
 
-                <Link as={`/blog/author/${author.id}`} href={`/blog/all?author=${author.id}`}>
+                <Link route="blog list" params={{ author: author.id }}>
                   <a>{author.name}</a>
                 </Link>
               </span>
@@ -85,7 +85,7 @@ class Blog extends Component {
 
                     return (
                       <li key={category.id}>
-                        <Link as={`/blog/category/${category.id}`} href={`/blog/all?category=${category.id}`}>
+                        <Link route="blog list" params={{ category: category.id }}>
                           <a title={category.description}>{category.name}</a>
                         </Link>
                       </li>

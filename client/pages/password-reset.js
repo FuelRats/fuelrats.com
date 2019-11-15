@@ -147,7 +147,7 @@ class PasswordReset extends Component {
                 <h3>Invalid Token</h3>
               </header>
 
-              <p>Your token is invalid, which probably just means it expired. <Link href="/forgot-password"><a>Click here</a></Link> to try resetting your password again.</p>
+              <p>Your token is invalid, which probably just means it expired. <Link route="auth forgot-pass"><a>Click here</a></Link> to try resetting your password again.</p>
             </div>
           )}
         </div>

@@ -58,24 +58,12 @@ class Blogs extends Component {
       totalPages,
     } = this.props
 
-    let route = [
-      '/blog',
-    ]
-
-    if (author) {
-      route.push(`/author/${category}`)
-    } else if (category) {
-      route.push(`/category/${category}`)
-    }
-
-    route = route.join('')
-
     return (
       <menu
         type="toolbar">
         <div className="secondary">
           {(page > 1) && (
-            <Link route={page - 1 > 1 ? `${route}/page/${page - 1}` : route}>
+            <Link route="blog list" params={{ author, category, page: Math.max(1, page - 1) }}>
               <a className="button">Previous Page</a>
             </Link>
           )}
@@ -83,7 +71,7 @@ class Blogs extends Component {
 
         <div className="primary">
           {(page < totalPages) && (
-            <Link route={`${route}/page/${page + 1}`}>
+            <Link route="blog list" params={{ author, category, page: Math.min(page + 1, totalPages) }}>
               <a className="button">Next Page</a>
             </Link>
           )}
@@ -222,7 +210,7 @@ class Blogs extends Component {
 
                       <span className="author">
                         <FontAwesomeIcon icon="user" fixedWidth />
-                        <Link route="blog list author" params={{ author: author.id }}>
+                        <Link route="blog list" params={{ author: author.id }}>
                           <a>{author.name}</a>
                         </Link>
                       </span>
@@ -245,7 +233,7 @@ class Blogs extends Component {
 
                             return (
                               <li key={category.id}>
-                                <Link route="blog list category" params={{ category: category.id }}>
+                                <Link route="blog list" params={{ category: category.id }}>
                                   <a title={description}>{name}</a>
                                 </Link>
                               </li>

@@ -6,14 +6,14 @@ import React from 'react'
 
 
 // Component imports
-import { PageWrapper, authenticated } from '../components/AppLayout'
-import { Router } from '../routes'
-import TabbedPanel from '../components/TabbedPanel'
-import UserOverview from '../components/UserOverview'
-import ProfileHeader from '../components/ProfileHeader'
-import UserRatsPanel from '../components/UserRatsPanel'
-import UserSettings from '../components/UserSettings'
-import FirstLoginModal from '../components/FirstLoginModal'
+import { PageWrapper, authenticated } from '../../components/AppLayout'
+import { Router } from '../../routes'
+import TabbedPanel from '../../components/TabbedPanel'
+import UserOverview from '../../components/UserOverview'
+import ProfileHeader from '../../components/ProfileHeader'
+import UserRatsPanel from '../../components/UserRatsPanel'
+import UserSettings from '../../components/UserSettings'
+import FirstLoginModal from '../../components/FirstLoginModal'
 
 
 
