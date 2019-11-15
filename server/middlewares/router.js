@@ -49,12 +49,13 @@ module.exports = (nextApp, koaServer) => {
 
   // Permanent Redirects
 
-  router.get('/blogs', permanentRedirect('/blog'))
-  router.get('/statistics', permanentRedirect('https://grafana.fuelrats.com'))
-  router.get('/get-help', permanentRedirect('/i-need-fuel'))
-  router.get('/privacy', permanentRedirect('/privacy-policy'))
-  router.get('/help', permanentRedirect('https://t.fuelr.at/help'))
-  router.get('/fuel-rats-lexicon', permanentRedirect('https://confluence.fuelrats.com/pages/viewpage.action?pageId=3637257'))
+  router.get('/blogs', permanentRedirect('/blog')) // Old blog used to exist at /blogs
+  router.get('/fuel-rats-lexicon', permanentRedirect('https://confluence.fuelrats.com/pages/viewpage.action?pageId=3637257')) // Lexicon used to be local
+  router.get('/get-help', permanentRedirect('/i-need-fuel')) // get-help was used at launch of the website, but has since been changed back.
+  router.get('/help', permanentRedirect('https://t.fuelr.at/help')) // People often type this one manually into their URL bar to get to the helpdesk
+  router.get('/privacy', permanentRedirect('/privacy-policy')) // Common endpoint for privacy policies
+  router.get('/statistics', permanentRedirect('https://grafana.fuelrats.com')) // statistics page is no longer on the website
+  router.get('/profile', permanentRedirect('/profile/overview')) // Profile page requires a tab name in the path
 
 
 

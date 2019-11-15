@@ -10,10 +10,7 @@ module.exports = routes()
   .add('paperwork edit', '/paperwork/[rescueId]/edit', ({ rescueId }) => `/paperwork/${rescueId}/edit`)
 
   // Profile
-  .add('profile', ({ tab }) => ({
-    href: `/profile/${tab ? '[tab]' : 'index'}`,
-    as: `/profile${tab ? `/${tab}` : ''}`,
-  }))
+  .add('profile', '/profile/[tab]', ({ tab }) => `/profile/${tab || 'overview'}`)
 
   // Register
   .add('register', '/register')
