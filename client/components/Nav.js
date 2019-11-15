@@ -22,7 +22,7 @@ const navItems = [
       {
         key: 'blog-art',
         title: 'Stories, Art, & Toons',
-        route: 'blog list category',
+        route: 'blog list',
         params: {
           category: '138',
         },

@@ -46,7 +46,7 @@ const Header = (props) => {
 
       <header role="banner">
 
-        <Link href="/">
+        <Link route="home">
           <a className="brand" title="Home">
             <div className="brand-animation-wrapper">
               <BrandSvg />
@@ -162,14 +162,14 @@ const Header = (props) => {
 
         <div className="join-actions">
 
-          <Link href="/i-need-fuel">
+          <Link route="rescue-landing">
             <a className="button">
               Get Help
             </a>
           </Link>
 
           {!loggedIn && !userId && (
-            <Link href="/register">
+            <Link route="register">
               <a className="button secondary">
                 Become a Rat
               </a>
