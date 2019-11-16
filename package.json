@@ -7,10 +7,21 @@
   "scripts": {
     "add-contributor": "all-contributors add",
     "build": "next build client",
-    "dev": "node --inspect server/server.js",
+    "dev": "nodemon --inspect server/server.js",
     "eslint": "eslint .",
     "stylelint": "stylelint \"client/scss/**/*.scss\"",
     "postinstall": "npm rebuild node-sass"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "./server",
+      ".babelrc",
+      "next.config.js",
+      "package.json",
+      "postcss.config.js",
+      "yarn.lock"
+    ],
+    "delay": "2500"
   },
   "devDependencies": {
     "@fuelrats/eslint-config-react": "1.1.4",
@@ -68,6 +79,7 @@
     "next-redux-wrapper": "4.0.1",
     "next-routes": "^1.4.2",
     "node-sass": "4.13.0",
+    "nodemon": "^1.19.4",
     "nprogress": "^0.2.0",
     "postcss-easy-import": "^3.0.0",
     "prop-types": "^15.7.2",
