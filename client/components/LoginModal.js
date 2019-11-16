@@ -96,7 +96,7 @@ class LoginModal extends React.Component {
 
   _handleRegisterClick = () => {
     this.props.onClose()
-    Router.push('/register')
+    Router.pushRoute('register')
   }
 
 

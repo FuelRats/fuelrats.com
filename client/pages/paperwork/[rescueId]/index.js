@@ -7,19 +7,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 // Component imports
-import { actions, connect } from '../../store'
+import { actions, connect } from '../../../store'
 import {
   selectRatsByRescueId,
   selectRescueById,
   selectUser,
   selectUserGroups,
   withCurrentUserId,
-} from '../../store/selectors'
-import { PageWrapper, authenticated } from '../../components/AppLayout'
-import { formatAsEliteDateTime } from '../../helpers/formatTime'
-import { Link, Router } from '../../routes'
-import Component from '../../components/Component'
-import userHasPermission from '../../helpers/userHasPermission'
+} from '../../../store/selectors'
+import { PageWrapper, authenticated } from '../../../components/AppLayout'
+import { formatAsEliteDateTime } from '../../../helpers/formatTime'
+import { Link, Router } from '../../../routes'
+import Component from '../../../components/Component'
+import userHasPermission from '../../../helpers/userHasPermission'
 
 
 
@@ -59,9 +59,9 @@ class Paperwork extends Component {
 
       await this.props.deleteRescue(this.props.rescue.id)
 
-      const userIsAdmin = userHasPermission(this.props.currentUserGroups, 'isAdministrator')
+      const userCanViewRescueSearch = userHasPermission(this.props.currentUserGroups, 'rescue.write')
 
-      Router.pushRoute(userIsAdmin ? 'admin rescues list' : '/')
+      Router.pushRoute(userCanViewRescueSearch ? 'admin rescues list' : '/')
 
       return
     }
@@ -228,7 +228,7 @@ class Paperwork extends Component {
                 {userCanEdit && (
                   <Link route="paperwork edit" params={{ rescueId: rescue.id }}>
                     <a className="button compact">
-                          Edit
+                      Edit
                     </a>
                   </Link>
                 )}

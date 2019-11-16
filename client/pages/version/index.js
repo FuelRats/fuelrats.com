@@ -15,8 +15,8 @@ import moment from 'moment'
 
 
 // Component imports
-import { version } from '../../package.json'
-import { PageWrapper } from '../components/AppLayout'
+import { version } from '../../../package.json'
+import { PageWrapper } from '../../components/AppLayout'
 
 
 
@@ -74,8 +74,8 @@ const Version = () => (
   </PageWrapper>
 )
 
-Version.getInitialProps = ({ query, res }) => {
-  if (query.raw === 'raw') {
+Version.getInitialProps = ({ asPath, res }) => {
+  if (asPath.includes('/raw')) {
     res.setHeader('Content-Type', 'application/vnd.api+json')
     res.end(JSON.stringify({
       data: {

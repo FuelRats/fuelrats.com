@@ -57,11 +57,11 @@ const UserMenu = (props) => {
 
               <li>
                 <Link route="home">
-                  <button
+                  <a
                     onClick={() => logout(authenticatedPage)}
-                    type="button">
+                    href="#">
                     <span>Logout</span>
-                  </button>
+                  </a>
                 </Link>
               </li>
             </ul>

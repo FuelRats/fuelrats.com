@@ -6,14 +6,14 @@ import React from 'react'
 
 
 // Component imports
-import { PageWrapper, authenticated } from '../components/AppLayout'
-import { Router } from '../routes'
-import TabbedPanel from '../components/TabbedPanel'
-import UserOverview from '../components/UserOverview'
-import ProfileHeader from '../components/ProfileHeader'
-import UserRatsPanel from '../components/UserRatsPanel'
-import UserSettings from '../components/UserSettings'
-import FirstLoginModal from '../components/FirstLoginModal'
+import { PageWrapper, authenticated } from '../../components/AppLayout'
+import { Router } from '../../routes'
+import TabbedPanel from '../../components/TabbedPanel'
+import UserOverview from '../../components/UserOverview'
+import ProfileHeader from '../../components/ProfileHeader'
+import UserRatsPanel from '../../components/UserRatsPanel'
+import UserSettings from '../../components/UserSettings'
+import FirstLoginModal from '../../components/FirstLoginModal'
 
 
 
@@ -25,7 +25,6 @@ class Profile extends React.Component {
   \***************************************************************************/
 
   state = {
-    activeTab: (this.props.query && this.props.query.tab) || 'overview',
     showFirstLoginDialog: this.props.query.fl === '1',
   }
 
@@ -39,12 +38,11 @@ class Profile extends React.Component {
 
   _handleFLDClose = () => {
     this.setState({ showFirstLoginDialog: false })
-    Router.replaceRoute('profile')
+    Router.replaceRoute('profile', { tab: this.props.query.tab }, { shallow: true })
   }
 
   _handleTabClick = (newTab) => {
-    this.setState({ activeTab: newTab })
-    Router.replaceRoute('profile', { tab: newTab }, { shallow: true })
+    Router.replaceRoute('profile', { tab: newTab })
   }
 
 
@@ -55,16 +53,19 @@ class Profile extends React.Component {
 
   render () {
     const {
-      activeTab,
       showFirstLoginDialog,
     } = this.state
+    const {
+      tab,
+    } = this.props.query
+
     return (
       <PageWrapper title="Profile">
         <div className="page-content">
           <ProfileHeader />
           <TabbedPanel
             name="User Tabs"
-            activeTab={activeTab}
+            activeTab={tab || 'overview'}
             onTabClick={this._handleTabClick}
             tabs={Profile.tabs} />
         </div>

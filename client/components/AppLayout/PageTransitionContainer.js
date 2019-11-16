@@ -9,7 +9,7 @@ const TransitionContext = React.createContext(null)
 
 const PageTransitionContainer = ({ items, keys, ...transitionProps }) => useTransition(items, keys, {
   initial: true,
-  from: { opacity: 0 },
+  from: { opacity: 1 },
   enter: { opacity: 1 },
   leave: { opacity: 0 },
   config: {
@@ -36,10 +36,10 @@ const PageTransitionContainer = ({ items, keys, ...transitionProps }) => useTran
 
 
 const {
-  Consumer: TransitionContextConsumer,
+  Consumer: TransitionConsumer,
 } = TransitionContext
 
 export default PageTransitionContainer
 export {
-  TransitionContextConsumer,
+  TransitionConsumer,
 }
