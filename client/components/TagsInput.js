@@ -437,6 +437,7 @@ export default class TagsInputComponent extends React.Component {
         <input
           aria-label={ariaLabel}
           autoComplete="off"
+          disabled={this.props.disabled}
           name={name}
           onBlur={this.onBlur}
           onFocus={TagsInputComponent.onFocus}

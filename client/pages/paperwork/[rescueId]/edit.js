@@ -103,6 +103,10 @@ class Paperwork extends Component {
       changes.rats = {}
     }
 
+    if (attribute === 'outcome' && value !== 'success') {
+      changes.firstLimpetId = null
+    }
+
     this._setChanges({
       ...changes,
       [attribute]: value,
@@ -426,7 +430,7 @@ class Paperwork extends Component {
 
           <FirstLimpetInput
             data-single
-            disabled={submitting || loading}
+            disabled={submitting || loading || (outcome !== 'success')}
             name="firstLimpetId"
             onChange={this._handleFirstLimpetChange}
             options={rats}
