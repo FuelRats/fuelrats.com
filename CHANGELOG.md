@@ -1,9 +1,11 @@
-# [Unreleased] - Now 6% less convoluted
+# fuelrats.com Changelog
 
-## ✨ Added
+## [Unreleased] - Now 6% less convoluted
+
+### ✨ Added
 * Allow `<TagsInput />` component to be disabled.
 
-## ⚡ Changed
+### ⚡ Changed
 * Disable & Clear first limpet field when outcome is not set to success.
 * Rework action creators to use a new action compositing system instead of a convoluted mess of a master function.
 * Simplify how rats are added/removed to rescues.
@@ -13,51 +15,51 @@
 * Replace `next-routes` with Next.js Dynamic Routes + new named route library.
 * Adjust page transitions so they run a bit smoother between pages.
 
-## 🐛 Fixed
+### 🐛 Fixed
 * Double check login form validity on Firefox. (This fixes firefox autofill)
 * Prevent double onChange events in `<TagsInput />`
 * Fix crash on paperwork pages when rescue ID does not exist.
 
-## ⚙ Tasks
+### ⚙ Tasks
 * Add THIS changelog file. :)
 * Upgrade to Next.js 9
     * Various adjustments made to site behavior due to changes in Next.
 
 
 
-# [2.8.0]
+## [2.8.0]
 
-## ⚡ Changed
+### ⚡ Changed
 * Version page no longer links to github commit comparison as that information is not easily accessible via teamcity :(
 * Rewrite modals so they have transitions.. and work better.
 * Disable storefront while our quartermaster is away.
 
-## 🐛 Fixed
+### 🐛 Fixed
 * Fix Privacy Policy links on `/register` and `/i-need-help`. Thanks @noctilucent-dev
 
-## ⚙ Tasks
+### ⚙ Tasks
 * Move website CI to our own teamcity instance. woo!
 * We added stylelint to our tool chain, so our css is more betterer.
 
 
 
-# [2.7.3]
+## [2.7.3]
 
-## 🐛 Fixed
+### 🐛 Fixed
 * Fix nickname password input.. we broke it.. oops..
 
 
 
 
 
-# [2.7.2]
+## [2.7.2]
 
-## ✨ Added
+### ✨ Added
 * Add rat honors to leaderboard
 * Add local pagination and rat name filtering to leaderboard
 * New redesigned profile front page (that looks amazing)
 
-## ⚡ Changed
+### ⚡ Changed
 * Remove old statistics page and everything related to them. Link to public grafana board instead.
 * Clean up Regex patterns/match stuff
 * Clean up `<AppLayout />`, Move page transition to it's own component (`<PageLayout />`)
@@ -65,7 +67,7 @@
 * Move `ImageLoaderWorker` to global state.
 * Change how carousel handles slide data so it plays nice with images loaded via global worker
 
-## 🐛 Fixed
+### 🐛 Fixed
 * Fix CSP for edge and older firefox versions.
 * Fix authorize page being hidden when preAuthorized
 * Fix SSR rendering breaking on pages (react-spring bug fixed in v9)
@@ -74,18 +76,18 @@
 
 
 
-# [2.7.1]
+## [2.7.1]
 
-## 🐛 Fixed
+### 🐛 Fixed
 * Fix nickname input styles.
 
 
 
 
 
-# [2.7.0]
+## [2.7.0]
 
-## ✨ Added
+### ✨ Added
 * Front page slideshow/carousel
     * With image loading web worker logic by @EladKarni
 * New rat manager so you can create, rename, and delete rats at will. (ship manager coming soon!)
@@ -93,7 +95,7 @@
 * Global state selectors to simplify redux state mapping.
 * Page url parameter for profile page tabs.
 
-## ⚡ Changed
+### ⚡ Changed
 * Redesigned paperwork view page.
     * This is also @314numberpi's first major contribution as our latest tech rat! Welcome to the team.
 * Redesign store products page slightly so it's nicer to interact with.
@@ -109,50 +111,50 @@
 * unmount page from app if user logs out while on authenticated page.
 
 
-## 🐛 Fixed
+### 🐛 Fixed
 * Fix up SCSS styles to comply with node-sass
 * Fix store order listing page breaking when products/skus no longer exist
 * Various other small bugfixes and overall improvments
 
-## ⚙ Tasks
+### ⚙ Tasks
 * Upgrade to Next 8
 * Better project documentation
 * Update project code style
 
 
-# [2.6.3]
+## [2.6.3]
 
-## ⚡ Changed
+### ⚡ Changed
 * Clean up helper functions
 
-## 🐛 Fixed
+### 🐛 Fixed
 * Fix bug preventing proper registration flow
 
-## ⚙ Tasks
+### ⚙ Tasks
 * Update various dependencies
 
 
 
 
 
-# [2.6.2]
+## [2.6.2]
 
-## ⚡ Changed
+### ⚡ Changed
 * Hide layout on authorize page when the user is pre-authorized
     * this is to ease the feeling of being "tossed around" when going through the oAuth flow
 * Add "hidden" version information page
 * Prefix all DefinePlugin globals
 
-## 🐛 Fixed
+### 🐛 Fixed
 * Fix login dialog min password length requirements
 
 
 
 
 
-# [2.6.1]
+## [2.6.1]
 
-## 🐛 Fixed
+### 🐛 Fixed
 * Fix rat global state filters
 * Fix style-src CSP
 
@@ -161,20 +163,20 @@
 
 
 
-# [2.6.0] - New server update!
+## [2.6.0] - New server update!
 
-## ✨ Added
+### ✨ Added
 * Add dark input fields
 * Implement said dank (yes) input fields on the login dialog
 * Implement opt-in login session saving
 
-## ⚡ Changed
+### ⚡ Changed
 * expose dispatch and getState to the onComplete event handler for action creator templates.
 
-## 🐛 Fixed
+### 🐛 Fixed
 * Fix nav styling
 
-## ⚙ Tasks
+### ⚙ Tasks
 * Fully transition to the new @fuelrats/eslint-config-react package
 * Restructure project files
 
@@ -182,21 +184,21 @@
 
 
 
-# [2.5.2]
+## [2.5.2]
 
-## ⚡ Changed
+### ⚡ Changed
 * Adjust code style to comply with updated ESLint stuff.
 
-## ⚙ Tasks
+### ⚙ Tasks
 * Update ESLint stuff.
 
 
 
 
 
-# [2.5.1]
+## [2.5.1]
 
-## ⚡ Changed
+### ⚡ Changed
 * Move billing info from shipping info stage to order summary page
 * Handle cases where the user changes their cart mid-order
 * Introduce `sortPriority` metadata field for store products, letting us determine the view order.
@@ -218,15 +220,15 @@
 
 
 
-# [2.5.0]
+## [2.5.0]
 
-## ✨ Added
+### ✨ Added
 * Storefront + accompanying management pages
 * Page locking by API permission feature. AppLayout will display a 401 error page if the current user lacks a specified permission
 * Rewritten blog loading logic makes the blog 350% more bearable to load
 * Automagically authorize requesting clients if the user has previously accepted access
 
-## ⚡ Changed
+### ⚡ Changed
 * make various CSS changes to lower space usage in certain cases
 * make LoginDialog more mobile friendly
 * reword buttons on i-need-fuel __again__ so things are even easier to interpret
@@ -242,12 +244,12 @@
 * rewrite getActionOptions in ActionCreators to make it easier to read and perhaps a bit faster
 * remove uglify step in `next.config.js` as next already does that for us on production builds
 
-## 🐛 Fixed
+### 🐛 Fixed
 * Fix authorize page scope list so that accessible client scopes actually display as accessible scopes
 * Fix bug in the blog page where removing a filter without reloading the page fully results in the filter staying on
 * Properly display next/error page when response code is set to an error value
 
-## ⚙ Tasks
+### ⚙ Tasks
 * Migrate to NextJS 7
 * Migrate to ESlint 5
 * Update ESLint rules, and code to reflect changes in enforced rules.
@@ -256,26 +258,26 @@
 
 
 
-# [2.4.3]
+## [2.4.3]
 
-## ⚡ Changed
+### ⚡ Changed
 * update rat kiwi link
 
-## 🐛 Fixed
+### 🐛 Fixed
 * Properly display inaccessible oAuth scopes
 
 
 
 
 
-# [2.4.2] - Small (large?) Bits and Bobs
+## [2.4.2] - Small (large?) Bits and Bobs
 
-## ✨ Added
+### ✨ Added
 * Add "rat links" nav section for logged in rats.
 * Add code for deleting nicks, however due to various problems with our current method of nick management, this has been left disabled until we have transitioned to LDAP / Atheme
 * Add a first-time welcome message which links new users to the new rat documents.
 
-## ⚡ Changed
+### ⚡ Changed
 * Move register button to below the "get help" button
 * Continue making register page more clear that it isn't for clients... because people don't get it.
 * Remove subnav state tracking from global state since the sidebar is now a persistent element
@@ -287,19 +289,19 @@
     * A few were disabled because even airbnb went back on the specific rules due to how silly they were.
     * Others are generally better for efficiency and play better with the soon-to-be async nature of react.
 
-## 🐛 Fixed
+### 🐛 Fixed
 * Fix ADD_NICKNAME and CREATE_RAT reducers so they actually update lists properly.
 
 
 
 
 
-# [2.4.1]
+## [2.4.1]
 
-## ⚡ Changed
+### ⚡ Changed
 * Remove some unused code
 
-## 🐛 Fixed
+### 🐛 Fixed
 * Fix ToS title typo
 * Fix authentication redirects
 * Remove debug output that shouldn't have been left in
@@ -309,35 +311,35 @@
 
 
 
-# [2.4.0]
+## [2.4.0]
 
-## ✨ Added
+### ✨ Added
 * Attempt to display wordpress page of the same slug when the page does not exist on the website.
 * other fun things
 
-## ⚡ Changed
+### ⚡ Changed
 * Rewrite Page component to a wrapper child element.
 
 
 
 
 
-# [2.3.2]
+## [2.3.2]
 
-## 🐛 Fixed
+### 🐛 Fixed
 * Fix oauth page error caused by sending the wrong args to function
 
 
 
 
 
-# [2.3.1]
+## [2.3.1]
 
-## ⚡ Changed
+### ⚡ Changed
 * Only show rats with rescues on the leaderboard
 
 
-## 🐛 Fixed
+### 🐛 Fixed
 * Fix favicon meta
 * properly provide browserconfig, sitemap, and manifest files.
 
@@ -345,16 +347,16 @@
 
 
 
-# [2.3.0]
+## [2.3.0]
 
-## ✨ Added
+### ✨ Added
 * Add paperwork edit button
 * Add paperwork error messages
 * Add social media icons
 * Add merch link (rushed release due to this)
 * Easter Egg
 
-## ⚡ Changed
+### ⚡ Changed
 * Redo paperwork component
 * Upgrade to next 6
 * Introduce server-side data fetching, starting with paperwork
@@ -363,12 +365,12 @@
 
 
 
-# [2.2.0] - The GDPR Update
+## [2.2.0] - The GDPR Update
 
-## ✨ Added
+### ✨ Added
 * New Privacy Policy
 
-## ⚡ Changed
+### ⚡ Changed
 * Update registration process to be GDPR Compliant
 * Reworked nav layout
 * Rewrite dialogs to support a more responsive layout
@@ -379,27 +381,27 @@
 
 
 
-# [2.1.9]
+## [2.1.9]
 
-## 🐛 Fixed
+### 🐛 Fixed
 * Fix errors that occur during password resets and registration
 
 
 
 
 
-# [2.1.8] -
+## [2.1.8] -
 
-## ✨ Added
+### ✨ Added
 * Donation page
 
 
 
 
 
-# [2.1.7]
+## [2.1.7]
 
-## ✨ Added
+### ✨ Added
 * Add link directly to the blog's art category
 * Implement `next-routes` for better routing
 * Better error display and handling for certain cases
@@ -407,7 +409,7 @@
 * Add epic resource handling
 * Add epic submission page (disabled for now)
 
-## ⚡ Changed
+### ⚡ Changed
 * Always submit rescue system as a capitalized system name
 * Prefer token cookies over LocalForage
 
@@ -415,9 +417,9 @@
 
 
 
-# [2.1.6]
+## [2.1.6]
 
-## ⚡ Changed
+### ⚡ Changed
 * Change all instances of the word "Login" to "Rat Login"
 * Change all instances of the word "Register" to "Become a Rat"
     * Both of these changes were made in interest of removing confusion for clients
@@ -426,30 +428,30 @@
 
 
 
-# [2.1.5]
+## [2.1.5]
 
-## ✨ Added
+### ✨ Added
 * Introduce acknowledgements page to credit those who have helped us so much
 
 
 
 
 
-# [2.1.4]
+## [2.1.4]
 
-## 🐛 Fixed
+### 🐛 Fixed
 * Correctly set CR and system fields in paperwork
 
 
 
 
 
-# [2.1.3]
+## [2.1.3]
 
-## ⚡ Changed
+### ⚡ Changed
 * Swap to new TravisCI webhook
 
-## 🐛 Fixed
+### 🐛 Fixed
 * Fix Routing error caused by trailing slashes in paths
 * Send correct oAuth decision to API when denying oAuth authorization
 
@@ -457,59 +459,51 @@
 
 
 
-# [2.1.2]
+## [2.1.2]
 
-## ✨ Added
+### ✨ Added
 * Restore IRC nick registration
 * IRC notifications to #rattech for Travis builds
 
-## 🐛 Fixed
+### 🐛 Fixed
 * Fix hero display on small screens
 
 
 
 
 
-# [2.1.1]
+## [2.1.1]
 
-## ⚡ Changed
+### ⚡ Changed
 * Temporarily disable nickname registration
 
 
 
 
 
-# [2.1.0]
+## [2.1.0]
 
-## ✨ Added
+### ✨ Added
 * OAuth page
 * IRC Nickname registration
 
 
 
 
-# [2.0.1]
+## [2.0.1]
 
-## ✨ Added
+### ✨ Added
 * Password field suggestions and warnings
 
 
-## ⚡ Changed
+### ⚡ Changed
 * Made  - Thanks @Spansh
 
 
 
 
-# [2.0.0]
+## [2.0.0]
 * Initial Release
-
-
-
-
-
-
-
-# Changelog documentation
 
 
 
