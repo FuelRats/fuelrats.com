@@ -3,27 +3,27 @@
 ## [Unreleased] - Now 6% less convoluted
 
 ### ✨ Added
-* Allow `<TagsInput />` component to be disabled.
+* Allow `<TagsInput />` component to be disabled
 
 ### ⚡ Changed
-* Disable & Clear first limpet field when outcome is not set to success.
-* Rework action creators to use a new action compositing system instead of a convoluted mess of a master function.
-* Simplify how rats are added/removed to rescues.
-* Rework Redux store so that API resources are processed using a significantly more efficient master reducer.
-* Add handling for user resource.
-* Rewrite and simplify session handling.
-* Replace `next-routes` with Next.js Dynamic Routes + new named route library.
-* Adjust page transitions so they run a bit smoother between pages.
+* Disable & Clear first limpet field when outcome is not set to success
+* Rework action creators to use a new action compositing system instead of a convoluted mess of a master function
+* Simplify how rats are added/removed to rescues
+* Rework Redux store so that API resources are processed using a significantly more efficient master reducer
+* Add handling for user resource
+* Rewrite and simplify session handling
+* Replace `next-routes` with Next.js Dynamic Routes + new named route library
+* Adjust page transitions so they run a bit smoother between pages
 
 ### 🐛 Fixed
 * Double check login form validity on Firefox. (This fixes firefox autofill)
 * Prevent double onChange events in `<TagsInput />`
-* Fix crash on paperwork pages when rescue ID does not exist.
+* Fix crash on paperwork pages when rescue ID does not exist
 
 ### ⚙ Tasks
 * Add THIS changelog file. :)
 * Upgrade to Next.js 9
-    * Various adjustments made to site behavior due to changes in Next.
+    * Various adjustments made to site behavior due to changes in Next
 
 
 
@@ -31,22 +31,22 @@
 
 ### ⚡ Changed
 * Version page no longer links to github commit comparison as that information is not easily accessible via teamcity :(
-* Rewrite modals so they have transitions.. and work better.
-* Disable storefront while our quartermaster is away.
+* Rewrite modals so they have transitions.. and work better
+* Disable storefront while our quartermaster is away
 
 ### 🐛 Fixed
 * Fix Privacy Policy links on `/register` and `/i-need-help`. Thanks @noctilucent-dev
 
 ### ⚙ Tasks
 * Move website CI to our own teamcity instance. woo!
-* We added stylelint to our tool chain, so our css is more betterer.
+* We added stylelint to our tool chain, so our css is more betterer
 
 
 
 ## [2.7.3]
 
 ### 🐛 Fixed
-* Fix nickname password input.. we broke it.. oops..
+* Fix nickname password input.. we broke it.. oops...
 
 
 
@@ -60,15 +60,15 @@
 * New redesigned profile front page (that looks amazing)
 
 ### ⚡ Changed
-* Remove old statistics page and everything related to them. Link to public grafana board instead.
+* Remove old statistics page and everything related to them. Link to public grafana board instead
 * Clean up Regex patterns/match stuff
 * Clean up `<AppLayout />`, Move page transition to it's own component (`<PageLayout />`)
-* Define custom next `_error` page instead of shoehorning our own in for no good reason.
-* Move `ImageLoaderWorker` to global state.
+* Define custom next `_error` page instead of shoehorning our own in for no good reason
+* Move `ImageLoaderWorker` to global state
 * Change how carousel handles slide data so it plays nice with images loaded via global worker
 
 ### 🐛 Fixed
-* Fix CSP for edge and older firefox versions.
+* Fix CSP for edge and older firefox versions
 * Fix authorize page being hidden when preAuthorized
 * Fix SSR rendering breaking on pages (react-spring bug fixed in v9)
 
@@ -79,7 +79,7 @@
 ## [2.7.1]
 
 ### 🐛 Fixed
-* Fix nickname input styles.
+* Fix nickname input styles
 
 
 
@@ -92,14 +92,14 @@
     * With image loading web worker logic by @EladKarni
 * New rat manager so you can create, rename, and delete rats at will. (ship manager coming soon!)
 * Rescue list/search page for overseer+
-* Global state selectors to simplify redux state mapping.
-* Page url parameter for profile page tabs.
+* Global state selectors to simplify redux state mapping
+* Page url parameter for profile page tabs
 
 ### ⚡ Changed
-* Redesigned paperwork view page.
-    * This is also @314numberpi's first major contribution as our latest tech rat! Welcome to the team.
-* Redesign store products page slightly so it's nicer to interact with.
-* Add rescue header and quotes to paperwork edit form.
+* Redesigned paperwork view page
+    * This is also @314numberpi's first major contribution as our latest tech rat! Welcome to the team
+* Redesign store products page slightly so it's nicer to interact with
+* Add rescue header and quotes to paperwork edit form
 * Add simple page transitions. Now you're playing with (`react-spring`) power!
 * Improved switch toggle by adding icons to better illustrate state
     * This has the added effect of also making the switch color-blind friendly
@@ -108,7 +108,7 @@
 * Automatically trim whitespace for IRC nicks and CMDR names - Thanks @EladKarni!
 * Update TabbedPanel tab appearance
 * removed an easter egg. (but it's okay since it was removed to make way for a real implementation of what the easter egg did.)
-* unmount page from app if user logs out while on authenticated page.
+* unmount page from app if user logs out while on authenticated page
 
 
 ### 🐛 Fixed
@@ -171,7 +171,7 @@
 * Implement opt-in login session saving
 
 ### ⚡ Changed
-* expose dispatch and getState to the onComplete event handler for action creator templates.
+* expose dispatch and getState to the onComplete event handler for action creator templates
 
 ### 🐛 Fixed
 * Fix nav styling
@@ -187,10 +187,10 @@
 ## [2.5.2]
 
 ### ⚡ Changed
-* Adjust code style to comply with updated ESLint stuff.
+* Adjust code style to comply with updated ESLint stuff
 
 ### ⚙ Tasks
-* Update ESLint stuff.
+* Update ESLint stuff
 
 
 
@@ -201,7 +201,7 @@
 ### ⚡ Changed
 * Move billing info from shipping info stage to order summary page
 * Handle cases where the user changes their cart mid-order
-* Introduce `sortPriority` metadata field for store products, letting us determine the view order.
+* Introduce `sortPriority` metadata field for store products, letting us determine the view order
 * Clean up currency string formation by defining a helper function to do it for us. (Get Money ( ͡° ͜ʖ ͡°))
 * Hide attribute descriptors if no attributes for a product exist
 * Make it more clear that our billing form is secured through stripe
@@ -209,11 +209,11 @@
 * Remove packages which are no longer used
 * Remove all i18n stuff as we have since decided not to translate the website
 * Rename instances of `store` subdirectories to `storefront`. This is to avoid confusion between the redux store and the stripe storefront
-* Clean up server modules, and only disable certain eslint rules instead of simply turning off eslint entirely for certain modules.
+* Clean up server modules, and only disable certain eslint rules instead of simply turning off eslint entirely for certain modules
 * Clean up getActionOptions even further, and rename to buildActionOptions
-* Forward dispatch and getState functions to action response handlers.
-* define an actionStatus enum type.
-  * this is currently only being used in the actionCreators file, however the plan is to convert all string comparisons to enum comparisons so eventually we can turn the strings into symbols.
+* Forward dispatch and getState functions to action response handlers
+* define an actionStatus enum type
+  * this is currently only being used in the actionCreators file, however the plan is to convert all string comparisons to enum comparisons so eventually we can turn the strings into symbols
 * rewrite blog retrieval logic AGAIN so we can fully remove isomorphic-fetch from the project
 
 
@@ -237,7 +237,7 @@
 * Improve performance of statistics page by increasing the minimum rescue count to 50 for the rescues by system display
 * preload authorize page data so we can remove a loading screen
 * No longer assume administrators always have all permissions on the API
-* Add 1Password to acknowledgements page.
+* Add 1Password to acknowledgements page
 * Add a list of dependencies to the acknowledgements page
 * Clean up `<AppLayout />` and move user initialization to it's own helper module
 * Use dectorators for page flagging and the connect helper function to make our lives a little easier
@@ -252,7 +252,7 @@
 ### ⚙ Tasks
 * Migrate to NextJS 7
 * Migrate to ESlint 5
-* Update ESLint rules, and code to reflect changes in enforced rules.
+* Update ESLint rules, and code to reflect changes in enforced rules
 
 
 
@@ -273,24 +273,24 @@
 ## [2.4.2] - Small (large?) Bits and Bobs
 
 ### ✨ Added
-* Add "rat links" nav section for logged in rats.
+* Add "rat links" nav section for logged in rats
 * Add code for deleting nicks, however due to various problems with our current method of nick management, this has been left disabled until we have transitioned to LDAP / Atheme
-* Add a first-time welcome message which links new users to the new rat documents.
+* Add a first-time welcome message which links new users to the new rat documents
 
 ### ⚡ Changed
 * Move register button to below the "get help" button
-* Continue making register page more clear that it isn't for clients... because people don't get it.
+* Continue making register page more clear that it isn't for clients... because people don't get it
 * Remove subnav state tracking from global state since the sidebar is now a persistent element
 * Fix eslint to allow react fragment shorthand syntax <>...</>
-* Prevent PS4 browser users from raising a r-sig, provide additional instructions on how.
+* Prevent PS4 browser users from raising a r-sig, provide additional instructions on how
     * kiwi client does not work on PS4 browser
     * It's better to have them move to a phone or computer
-* Rewrite various bits of code to keep in line with new rules enforced by airbnb style guides.
-    * A few were disabled because even airbnb went back on the specific rules due to how silly they were.
-    * Others are generally better for efficiency and play better with the soon-to-be async nature of react.
+* Rewrite various bits of code to keep in line with new rules enforced by airbnb style guides
+    * A few were disabled because even airbnb went back on the specific rules due to how silly they were
+    * Others are generally better for efficiency and play better with the soon-to-be async nature of react
 
 ### 🐛 Fixed
-* Fix ADD_NICKNAME and CREATE_RAT reducers so they actually update lists properly.
+* Fix ADD_NICKNAME and CREATE_RAT reducers so they actually update lists properly
 
 
 
@@ -314,11 +314,11 @@
 ## [2.4.0]
 
 ### ✨ Added
-* Attempt to display wordpress page of the same slug when the page does not exist on the website.
+* Attempt to display wordpress page of the same slug when the page does not exist on the website
 * other fun things
 
 ### ⚡ Changed
-* Rewrite Page component to a wrapper child element.
+* Rewrite Page component to a wrapper child element
 
 
 
@@ -341,7 +341,7 @@
 
 ### 🐛 Fixed
 * Fix favicon meta
-* properly provide browserconfig, sitemap, and manifest files.
+* properly provide browserconfig, sitemap, and manifest files
 
 
 
