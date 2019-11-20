@@ -25,7 +25,7 @@ import NProgress from '../NProgress'
 import PageTransitionContainer from './PageTransitionContainer'
 import userHasPermission from '../../helpers/userHasPermission'
 import UserMenu from '../UserMenu'
-
+import frApi from '../../services/fuelrats'
 
 
 
@@ -145,6 +145,14 @@ class AppLayout extends React.Component {
         query,
         ...pageProps,
       },
+    }
+  }
+
+  constructor (props, ...rest) {
+    super(props, ...rest)
+
+    if (props.accessToken) {
+      frApi.defaults.headers.common.Authorization = `Bearer ${props.accessToken}`
     }
   }
 
