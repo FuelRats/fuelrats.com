@@ -370,7 +370,7 @@ class Paperwork extends Component {
               className="inline"
               target="_blank"
               rel="noopener noreferrer"
-              href="https://confluence.fuelrats.com/pages/viewpage.action?pageId=2687182"
+              href="https://t.fuelr.at/caseguide"
               title="How to file cases - Fuel Rats Confluence">
               <small> (How do I choose?)</small>
             </a>
