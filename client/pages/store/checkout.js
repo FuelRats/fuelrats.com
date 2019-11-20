@@ -9,9 +9,7 @@ import React from 'react'
 // Component imports
 import { actions, connect } from '../../store'
 import { PageWrapper, withStripe } from '../../components/AppLayout'
-// import StoreControlBar from '../../components/storefront/StoreControlBar'
 import Component from '../../components/Component'
-// import CheckoutForm from '../../components/storefront/CheckoutForm'
 import { selectStoreCart } from '../../store/selectors'
 
 
@@ -44,22 +42,11 @@ class Checkout extends Component {
   }
 
   render () {
-    // const {
-    //   cart,
-    // } = this.props
     return (
       <PageWrapper title="Your Cart">
         <div className="page-content">
           <h4> We said the store was closed. Why are you here? </h4>
         </div>
-        {/* <div className="page-content">
-            <StoreControlBar
-              backRoute={Object.keys(cart).length ? 'store cart' : 'store list'}
-              backTitle={Object.keys(cart).length ? 'Return to Cart' : 'Return to Store'} />
-            <Elements>
-              <CheckoutForm />
-            </Elements>
-          </div> */}
       </PageWrapper>
     )
   }

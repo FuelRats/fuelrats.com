@@ -19,7 +19,7 @@ import { PageWrapper, authenticated } from '../../../components/AppLayout'
 import { Router } from '../../../routes'
 import Component from '../../../components/Component'
 import FirstLimpetInput from '../../../components/FirstLimpetInput'
-import RadioOptionsInput from '../../../components/RadioOptionsInput'
+import RadioInput from '../../../components/RadioInput'
 import RatTagsInput from '../../../components/RatTagsInput'
 import SystemTagsInput from '../../../components/SystemTagsInput'
 import userHasPermission from '../../../helpers/userHasPermission'
@@ -86,9 +86,9 @@ class Paperwork extends Component {
 
   _handleNotesChange = (event) => this._setChanges({ notes: event.target.value })
 
-  _handleRadioOptionsChange = (option) => {
-    const attribute = option.name
-    let { value } = option
+  _handleRadioInputChange = ({ target }) => {
+    const attribute = target.name
+    let { value } = target
 
     if (value === 'true') {
       value = true
@@ -337,76 +337,95 @@ class Paperwork extends Component {
         <fieldset>
           <label htmlFor="platform">What platform was the rescue on?</label>
 
-          <RadioOptionsInput
+          <RadioInput
             disabled={submitting || loading}
             className="platform"
             name="platform"
             id="platform"
             value={platform}
-            onChange={this._handleRadioOptionsChange}
+            onChange={this._handleRadioInputChange}
             options={[
               {
                 value: 'pc',
-                displayValue: 'PC',
+                label: 'PC',
+                title: 'Personal Computational Device',
               },
               {
                 value: 'xb',
-                displayValue: 'Xbox',
+                label: 'Xbox',
+                title: 'Xbox One',
               },
               {
                 value: 'ps',
-                displayValue: 'PS4',
+                label: 'PS4',
+                title: 'Playstation 4',
               },
             ]} />
         </fieldset>
 
         <fieldset>
-          <label htmlFor="outcome-success">Was the rescue successful?</label>
+          <label htmlFor="outcome-success">
+            Was the rescue successful?
+            <a
+              className="inline"
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://t.fuelr.at/caseguide"
+              title="How to file cases - Fuel Rats Confluence">
+              <small> (How do I choose?)</small>
+            </a>
+          </label>
 
-          <RadioOptionsInput
+          <RadioInput
             disabled={submitting || loading}
             className="outcome"
             name="outcome"
             id="outcome"
             value={outcome}
-            onChange={this._handleRadioOptionsChange}
+            onChange={this._handleRadioInputChange}
             options={[
               {
                 value: 'success',
-                displayValue: 'Yes',
+                label: 'Yes',
+                title: 'Fuel was successfully delivered to the client.',
               },
               {
                 value: 'failure',
-                displayValue: 'No',
+                label: 'No',
+                title: 'Fuel wasn\'t successfully delivered to the client. (Explain why)',
               },
               {
                 value: 'invalid',
-                displayValue: 'Invalid',
+                label: 'Invalid',
+                title: 'Fuel wasn\'t delievered because the request was illegitimate. (Cats / Trolling)',
               },
               {
                 value: 'other',
-                displayValue: 'Other',
+                label: 'Other',
+                title: 'Fuel wasn\'t delievered because the client was able to get out of trouble without it. (Explain)',
               },
             ]} />
         </fieldset>
 
         <fieldset>
           <label htmlFor="codeRed-yes">Was it a code red?</label>
-          <RadioOptionsInput
+          <RadioInput
             disabled={submitting || loading}
             className="codeRed"
             name="codeRed"
             id="codeRed"
             value={`${codeRed}`}
-            onChange={this._handleRadioOptionsChange}
+            onChange={this._handleRadioInputChange}
             options={[
               {
                 value: 'true',
-                displayValue: 'Yes',
+                label: 'Yes',
+                title: '$#!7 was on fire, yo.',
               },
               {
                 value: 'false',
-                displayValue: 'No',
+                label: 'No',
+                title: 'The client did not experience any undue stress.',
               },
             ]} />
         </fieldset>
@@ -588,6 +607,10 @@ class Paperwork extends Component {
 
     if (values.outcome === 'success' && !values.firstLimpetId) {
       return 'Successful rescues must have a first limpet rat.'
+    }
+
+    if (values.outcome === 'failure' && !values.notes.replace(/\s/gu, '')) {
+      return 'Invalid cases must have notes explaining why the rescue is invalid.'
     }
 
     return null
