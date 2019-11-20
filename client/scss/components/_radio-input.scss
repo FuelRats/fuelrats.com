@@ -1,11 +1,36 @@
-div.radio-input {
-  ul.options {
-    display: flex;
+.radio-input {
+  display: flex;
 
-    li.option {
+  .option {
+    display: inline-block;
+
+    margin: 0 0.2rem;
+
+
+    &:hover,
+    &.checked {
+      .option-label {
+        background-color: $red;
+        color: $white;
+      }
+    }
+
+    &.disabled {
+      .option-label {
+        border-color: $grey;
+
+        background-color: $grey;
+        color: $white;
+      }
+    }
+
+    .option-input {
+      display: none;
+    }
+
+    .option-label {
       display: inline-block;
 
-      margin: 0 0.2rem;
       padding: 0 1.5rem;
 
       border: 0.2rem solid $red;
@@ -17,20 +42,7 @@ div.radio-input {
       transform: skewX(-10deg);
       cursor: pointer;
 
-      &:hover,
-      &.selected {
-        background-color: $red;
-        color: $white;
-      }
-
-      &.disabled {
-        border-color: $grey;
-
-        background-color: $grey;
-        color: $white;
-      }
-
-      div.option-content {
+      .option-label-text {
         display: inline-block;
 
         transform: skewX(10deg);

@@ -10,7 +10,7 @@ import { PageWrapper, authenticated } from '../../components/AppLayout'
 import { connect } from '../../store'
 import Component from '../../components/Component'
 import classNames from '../../helpers/classNames'
-import RadioOptionsInput from '../../components/RadioOptionsInput'
+import RadioInput from '../../components/RadioInput'
 import RescuesTagsInput from '../../components/RescuesTagsInput'
 import RatTagsInput from '../../components/RatTagsInput'
 
@@ -43,14 +43,12 @@ class EpicNominate extends Component {
     Public Methods
   \***************************************************************************/
 
-  handleEpicTypeChange = (newValue) => {
-    if (this.state.epicType !== newValue.value) {
-      this.setState({
-        epicType: newValue.value,
-        rats: [],
-        rescue: [],
-      })
-    }
+  handleEpicTypeChange = ({ target }) => {
+    this.setState({
+      epicType: target.value,
+      rats: [],
+      rescue: [],
+    })
   }
 
 
@@ -159,7 +157,7 @@ class EpicNominate extends Component {
             <fieldset>
               <label htmlFor="epic-type">Who are you nominating for an epic today?</label>
 
-              <RadioOptionsInput
+              <RadioInput
                 className="epic-type"
                 name="epic-type"
                 id="epic-type"
@@ -169,12 +167,12 @@ class EpicNominate extends Component {
                 options={[
                   {
                     value: 'epicRescue',
-                    displayValue: 'A rat, or group of rats, who performed an epic rescue.',
+                    label: 'A rat, or group of rats, who performed an epic rescue.',
                     title: 'This option nominates all rats assigned to a rescue for an epic laurel.',
                   },
                   {
                     value: 'epicPlayer',
-                    displayValue: 'A rat who has done something awesome!',
+                    label: 'A rat who has done something awesome!',
                     title: 'This option nominates an individual rat for an epic laurel.',
                   },
                 ]} />
