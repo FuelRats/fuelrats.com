@@ -23,14 +23,17 @@
     button,
     .button {
       display: flex;
+      position: absolute;
+      right: 0;
 
       align-items: center;
 
+      height: 100%;
       padding-top: 0;
       padding-bottom: 0;
 
-      border-top: none;
-      border-bottom: none;
+      border-top: 0;
+      border-bottom: 0;
     }
   }
 }
