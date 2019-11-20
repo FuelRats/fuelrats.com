@@ -6,23 +6,28 @@
 * Allow `<TagsInput />` component to be disabled
 * Add flavor text to radio options on Paperwork page
 * Add link to "How to file cases" confluence article to paperwork edit page
+* Add change password modal to profile page
+* Add handling for API resource type "Users"
 
 ### ⚡ Changed
 * Disable & Clear first limpet field when outcome is not set to success
 * Rework action creators to use a new action compositing system instead of a convoluted mess of a master function
 * Simplify how rats are added/removed to rescues
 * Rework Redux store so that API resources are processed using a significantly more efficient master reducer
-* Add handling for user resource
 * Rewrite and simplify session handling
 * Replace `next-routes` with Next.js Dynamic Routes + new named route library
 * Adjust page transitions so they run a bit smoother between pages
 * Rewrite `<RadioOptionsInput />` so it doesn't have to use deprecated lifecycle methods \o/
 * Removed old checkout code to make way for new stuff later on
+* Convert change password form into a modal
+* Remove profile settings tab
+* Various adjustments to input style
 
 ### 🐛 Fixed
 * Double check login form validity on Firefox. (This fixes firefox autofill)
 * Prevent double onChange events in `<TagsInput />`
 * Fix crash on paperwork pages when rescue ID does not exist
+* Fix inconsistency in line-height property between application and modals
 
 ### ⚙ Tasks
 * Add THIS changelog file. :)

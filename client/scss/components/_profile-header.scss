@@ -2,9 +2,9 @@
   display: grid;
 
   grid-template:
-    'avatar info' 1fr
-    'avatar badges' min-content
-    / min-content auto;
+    'avatar info controls' 1fr
+    'avatar badges controls' min-content
+    / min-content auto max-content;
   grid-column-gap: 2rem;
 
   margin-bottom: 3rem;
@@ -43,14 +43,40 @@
     }
   }
 
+  .profile-controls {
+    display: flex;
+
+    flex-direction: column;
+    justify-content: flex-end;
+
+    grid-area: controls;
+
+    button,
+    .button {
+      margin-top: 1rem;
+    }
+  }
+
   @media screen and (max-width: 768px) {
     grid-template-areas:
       'avatar avatar'
       'info   info'
-      'badges badges';
+      'badges badges'
+      'controls controls';
     justify-items: center;
     justify-content: center;
 
     text-align: center;
+
+    .profile-controls {
+      flex-direction: row;
+
+      button,
+      .button {
+        &:not(:last-child) {
+          margin-right: 1rem;
+        }
+      }
+    }
   }
 }
