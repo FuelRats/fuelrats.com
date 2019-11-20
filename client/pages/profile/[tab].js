@@ -12,7 +12,6 @@ import TabbedPanel from '../../components/TabbedPanel'
 import UserOverview from '../../components/UserOverview'
 import ProfileHeader from '../../components/ProfileHeader'
 import UserRatsPanel from '../../components/UserRatsPanel'
-import UserSettings from '../../components/UserSettings'
 import FirstLoginModal from '../../components/FirstLoginModal'
 
 
@@ -26,6 +25,7 @@ class Profile extends React.Component {
 
   state = {
     showFirstLoginDialog: this.props.query.fl === '1',
+
   }
 
 
@@ -33,7 +33,7 @@ class Profile extends React.Component {
 
 
   /***************************************************************************\
-    Public Methods
+    Private Methods
   \***************************************************************************/
 
   _handleFLDClose = () => {
@@ -47,9 +47,17 @@ class Profile extends React.Component {
 
 
 
+
+
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
+
+  static getInitialProps ({ res, query }) {
+    if (!this.tabs[query.tab]) {
+      res.statusCode = 404
+    }
+  }
 
   render () {
     const {
@@ -73,6 +81,7 @@ class Profile extends React.Component {
         <FirstLoginModal
           isOpen={showFirstLoginDialog}
           onClose={this._handleFLDClose} />
+
       </PageWrapper>
     )
   }
@@ -94,10 +103,6 @@ class Profile extends React.Component {
       rats: {
         component: (<UserRatsPanel />),
         title: 'Rats',
-      },
-      settings: {
-        component: (<UserSettings />),
-        title: 'Settings',
       },
     }
   }
