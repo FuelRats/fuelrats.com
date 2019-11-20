@@ -9,7 +9,7 @@ import zxcvbn from 'zxcvbn'
 
 // Component imports
 import Component from './Component'
-
+import classNames from '../helpers/classNames'
 
 
 
@@ -36,13 +36,13 @@ export default class PasswordField extends Component {
     Private Methods
   \***************************************************************************/
 
-  _handleChange = (event) => {
+  _handleChange = ({ target }) => {
     const {
       maxLength,
       minLength,
       onChange,
     } = this.props
-    const { value } = event.target
+    const { value } = target
 
     this.setState((state) => {
       const newState = { ...state }
@@ -52,11 +52,11 @@ export default class PasswordField extends Component {
       newState.passwordSuggestions.clear()
 
       if (minLength && (value.length < minLength)) {
-        newState.passwordWarnings.add(`Password must be at least ${minLength} characters`)
+        newState.passwordWarnings.add(`Password must be at least ${minLength} characters.`)
       }
 
       if (maxLength && (value.length > maxLength)) {
-        newState.passwordWarnings.add(`Password must be no longer than ${maxLength} characters`)
+        newState.passwordWarnings.add(`Password must be no longer than ${maxLength} characters.`)
       }
 
       if (passwordEvaluation.feedback.warning) {
@@ -78,7 +78,10 @@ export default class PasswordField extends Component {
     }
 
     if (onChange) {
-      onChange(event)
+      onChange({
+        target,
+        validity: this.validity,
+      })
     }
   }
 
@@ -104,9 +107,17 @@ export default class PasswordField extends Component {
     } = this.state
     const {
       disabled,
+      className,
       showStrength,
       showSuggestions,
     } = this.props
+
+    const classes = classNames(
+      'password-group',
+      ['show-strength', showStrength],
+      ['show-suggestions', showSuggestions],
+      className,
+    )
 
     const inputProps = { ...this.props }
 
@@ -116,7 +127,7 @@ export default class PasswordField extends Component {
 
     return (
       <div
-        className="password-group"
+        className={classes}
         data-focused={focused}>
         <div className="input-group">
           <input
@@ -143,7 +154,6 @@ export default class PasswordField extends Component {
         {showStrength && (
           <meter
             className="password-strength-meter"
-            hidden={!password}
             high="3"
             low="2"
             max="4"

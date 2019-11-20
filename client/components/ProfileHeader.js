@@ -10,6 +10,10 @@ import {
   selectUserAvatar,
   withCurrentUserId,
 } from '../store/selectors'
+import ChangePasswordModal from './ChangePasswordModal'
+
+
+
 
 
 @connect
@@ -18,7 +22,9 @@ class ProfileHeader extends React.Component {
     Class Properties
   \***************************************************************************/
 
-  state = {}
+  state = {
+    showChangePassword: false,
+  }
 
 
 
@@ -35,7 +41,9 @@ class ProfileHeader extends React.Component {
         </li>
       ))))
 
-
+  _handleToggleChangePassword = () => {
+    this.setState((state) => ({ showChangePassword: !state.showChangePassword }))
+  }
 
 
 
@@ -44,6 +52,9 @@ class ProfileHeader extends React.Component {
   \***************************************************************************/
 
   render () {
+    const {
+      showChangePassword,
+    } = this.state
     const {
       displayRat,
       userAvatar,
@@ -57,27 +68,39 @@ class ProfileHeader extends React.Component {
     } = attributes
 
     return (
-      <div className="profile-header">
-        <div className="user-avatar">
-          <div className="avatar xl"><img alt="User's avatar" src={userAvatar} /></div>
-        </div>
-        <div className="profile-basic-info">
-          <div className="rat-name">
-            {displayRat.attributes.name}
+      <>
+        <div className="profile-header">
+          <div className="user-avatar">
+            <div className="avatar xl"><img alt="User's avatar" src={userAvatar} /></div>
           </div>
-          <div className="email">
-            <span className="label">E-Mail:</span> <span>{email}</span>
+          <div className="profile-basic-info">
+            <div className="rat-name">
+              {displayRat.attributes.name}
+            </div>
+            <div className="email">
+              <span className="label">E-Mail:</span> <span>{email}</span>
+            </div>
+            <div className="member-since">
+              <span className="label">Date joined: </span> <span>{formatAsEliteDateLong(createdAt)}</span>
+            </div>
           </div>
-          <div className="member-since">
-            <span className="label">Date joined: </span> <span>{formatAsEliteDateLong(createdAt)}</span>
+          <div className="profile-user-badges">
+            <ul>
+              {this._renderUserGroups()}
+            </ul>
+          </div>
+          <div className="profile-controls">
+            <button
+              onClick={this._handleToggleChangePassword}
+              type="button">
+              Change Password
+            </button>
           </div>
         </div>
-        <div className="profile-user-badges">
-          <ul>
-            {this._renderUserGroups()}
-          </ul>
-        </div>
-      </div>
+        <ChangePasswordModal
+          isOpen={showChangePassword}
+          onClose={this._handleToggleChangePassword} />
+      </>
     )
   }
 
