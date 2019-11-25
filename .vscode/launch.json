@@ -5,14 +5,18 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Next: Server",
       "type": "node",
-      "request": "attach",
-      "name": "Next: Attach Server",
+      "request": "launch",
+      "envFile": "${workspaceFolder}/.env",
+      "program": "${workspaceFolder}/server/server.js",
+      "protocol": "inspector",
+      "console": "integratedTerminal",
     },
     {
+      "name": "Next: Chrome",
       "type": "chrome",
       "request": "launch",
-      "name": "Next: Chrome",
       "url": "${config:debug.developurl}",
       "webRoot": "${workspaceFolder}"
     }
@@ -20,7 +24,7 @@
   "compounds": [
     {
       "name": "Next: Full",
-      "configurations": ["Next: Chrome", "Next: Attach Server"]
+      "configurations": ["Next: Chrome", "Next: Server"]
     }
   ]
 }
