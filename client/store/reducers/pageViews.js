@@ -23,15 +23,13 @@ const dataReducer = ({ data }, { reducer }) => {
 
 
 const pageViewsReducer = produce((draftState, action) => {
-  const { pageView } = action
+  const { pageView, payload } = action
 
   if (action.status === actionStatus.SUCCESS && pageView) {
-    const { meta, type } = pageView
-
     draftState[pageView.id] = {
       data: dataReducer(action.payload, pageView),
-      meta,
-      type,
+      meta: payload.meta,
+      type: pageView.type,
     }
   }
 }, initialState.pageViews)
