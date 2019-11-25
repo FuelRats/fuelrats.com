@@ -1,3 +1,9 @@
+import { produce } from 'immer'
+
+
+
+
+
 import actionTypes from '../actionTypes'
 import initialState from '../initialState'
 import actionStatus from '../actionStatus'
@@ -6,7 +12,7 @@ import actionStatus from '../actionStatus'
 
 
 
-export default function sessionReducer (state = initialState.session, action) {
+const sessionReducer = produce((draftState, action) => {
   const {
     payload,
     status,
@@ -15,49 +21,34 @@ export default function sessionReducer (state = initialState.session, action) {
 
   switch (type) {
     case actionTypes.INIT_SESSION:
-      return {
-        ...state,
-        loggedIn: Boolean(action.accessToken && !action.error),
-        error: action.error,
-      }
+      draftState.loggedIn = Boolean(action.accessToken && !action.error)
+      draftState.error = action.error
+      break
 
     case actionTypes.GET_PROFILE:
       if (status === actionStatus.SUCCESS) {
-        return {
-          ...state,
-          userId: payload.data.id,
-        }
+        draftState.userId = payload.data.id
       }
       break
 
     case actionTypes.LOGIN:
       if (status === actionStatus.SUCCESS) {
-        return {
-          ...state,
-          loggedIn: true,
-        }
+        draftState.loggedIn = true
       }
       break
 
     case actionTypes.LOGOUT:
       if (status === actionStatus.SUCCESS) {
         if (action.delayLogout) {
-          return {
-            ...state,
-            loggingOut: true,
-          }
+          draftState.loggingOut = true
         }
-        return {
-          ...initialState.session,
-        }
+        return initialState.session
       }
       break
 
     case actionTypes.PAGE_CHANGE:
-      if (status === actionStatus.SUCCESS && state.loggingOut) {
-        return {
-          ...initialState.session,
-        }
+      if (status === actionStatus.SUCCESS && draftState.loggingOut) {
+        return initialState.session
       }
       break
 
@@ -66,5 +57,11 @@ export default function sessionReducer (state = initialState.session, action) {
       break
   }
 
-  return state
-}
+  return draftState
+}, initialState.session)
+
+
+
+
+
+export default sessionReducer

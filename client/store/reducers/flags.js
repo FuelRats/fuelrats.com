@@ -1,3 +1,9 @@
+import { produce } from 'immer'
+
+
+
+
+
 import actionTypes from '../actionTypes'
 import initialState from '../initialState'
 
@@ -5,7 +11,7 @@ import initialState from '../initialState'
 
 
 
-export default function flagsReducer (state = initialState.flags, action) {
+const flagsReducer = produce((draftState, action) => {
   const {
     payload,
     status,
@@ -16,7 +22,7 @@ export default function flagsReducer (state = initialState.flags, action) {
     case actionTypes.SET_FLAG:
       if (status === 'success') {
         return {
-          ...state,
+          ...draftState,
           ...payload,
         }
       }
@@ -26,5 +32,10 @@ export default function flagsReducer (state = initialState.flags, action) {
       break
   }
 
-  return state
-}
+  return draftState
+}, initialState.flags)
+
+
+
+
+export default flagsReducer

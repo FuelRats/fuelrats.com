@@ -1,3 +1,9 @@
+import { produce } from 'immer'
+
+
+
+
+
 import initialState from '../initialState'
 import actionStatus from '../actionStatus'
 
@@ -5,11 +11,10 @@ import actionStatus from '../actionStatus'
 
 
 
-const dataReducer = (data, opts) => {
-  if (opts.reducer) {
-    return opts.reducer(data)
+const dataReducer = ({ data }, { reducer }) => {
+  if (reducer) {
+    return reducer(data)
   }
-
   return data.map((item) => item.id)
 }
 
@@ -17,26 +22,22 @@ const dataReducer = (data, opts) => {
 
 
 
-export default function pageViewsReducer (state = initialState.pageViews, action) {
-  const {
-    payload,
-    status,
-    pageView,
-  } = action
+const pageViewsReducer = produce((draftState, action) => {
+  const { pageView } = action
 
+  if (action.status === actionStatus.SUCCESS && pageView) {
+    const { meta, type } = pageView
 
-
-  if (status === actionStatus.SUCCESS && pageView) {
-    return {
-      ...state,
-      [pageView.id]: {
-        type: pageView.type,
-        data: dataReducer(payload.data, pageView),
-        meta: { ...payload.meta },
-      },
+    draftState[pageView.id] = {
+      data: dataReducer(action.payload, pageView),
+      meta,
+      type,
     }
   }
+}, initialState.pageViews)
 
 
-  return state
-}
+
+
+
+export default pageViewsReducer

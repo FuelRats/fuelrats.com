@@ -1,3 +1,9 @@
+import { produce } from 'immer'
+
+
+
+
+
 import actionTypes from '../actionTypes'
 import initialState from '../initialState'
 
@@ -5,7 +11,7 @@ import initialState from '../initialState'
 
 
 
-export default function usersReducer (state = initialState.users, action) {
+const usersReducer = produce((draftState, action) => {
   const {
     nickname,
     userId,
@@ -13,30 +19,20 @@ export default function usersReducer (state = initialState.users, action) {
     type,
   } = action
 
-
-
   switch (type) {
     case actionTypes.ADD_NICKNAME:
       if (status === 'success') {
-        return {
-          ...state,
-          [userId]: {
-            ...state[userId],
-            attributes: {
-              ...state[userId].attributes,
-              nicknames: [
-                ...state[userId].attributes.nicknames,
-                nickname,
-              ],
-            },
-          },
-        }
+        draftState[userId].attributes.nicknames.push(nickname)
       }
       break
 
     default:
       break
   }
+}, initialState.users)
 
-  return state
-}
+
+
+
+
+export default usersReducer

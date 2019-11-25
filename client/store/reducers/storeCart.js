@@ -1,3 +1,9 @@
+import { produce } from 'immer'
+
+
+
+
+
 import actionTypes from '../actionTypes'
 import initialState from '../initialState'
 
@@ -5,10 +11,9 @@ import initialState from '../initialState'
 
 
 
-export default function storeCartReducer (state = initialState.storeCart, action) {
+const storeCartReducer = produce((draftState, action) => {
   const {
     payload,
-    status,
     type,
   } = action
 
@@ -17,14 +22,16 @@ export default function storeCartReducer (state = initialState.storeCart, action
     case actionTypes.DELETE_CART_ITEM:
     case actionTypes.GET_CART:
     case actionTypes.UPDATE_CART_ITEM:
-      if (status === 'success') {
-        return payload
-      }
-      break
+      return payload
 
     default:
       break
   }
 
-  return state
-}
+  return draftState
+}, initialState.storeCart)
+
+
+
+
+export default storeCartReducer

@@ -1,3 +1,5 @@
+import { produce } from 'immer'
+
 import actionTypes from '../actionTypes'
 import initialState from '../initialState'
 
@@ -5,7 +7,7 @@ import initialState from '../initialState'
 
 
 
-export default function leaderboardReducer (state = initialState.leaderboard, action) {
+const leaderboardReducer = produce((draftState, action) => {
   const {
     payload,
     status,
@@ -16,29 +18,28 @@ export default function leaderboardReducer (state = initialState.leaderboard, ac
     case actionTypes.GET_RAT_LEADERBOARD:
       switch (status) {
         case 'success':
-          return {
-            ...state,
-            loading: false,
-            statistics: payload.data,
-          }
+          draftState.loading = false
+          draftState.statistics = payload.data
+          break
 
         case 'error':
-          return {
-            ...state,
-            loading: false,
-            statistics: [],
-          }
+          draftState.loading = false
+          draftState.statistics = []
+          break
 
         default:
-          return {
-            ...state,
-            loading: true,
-          }
+          draftState.loading = true
+          break
       }
+      break
 
     default:
       break
   }
+}, initialState.leaderboard)
 
-  return state
-}
+
+
+
+
+export default leaderboardReducer

@@ -1,27 +1,36 @@
+import { produce } from 'immer'
+
+
+
+
+
 import actionTypes from '../actionTypes'
 import initialState from '../initialState'
 
-import parseJSONAPIResponseForEntityType from '../../helpers/parseJSONAPIResponseForEntityType'
 
 
 
-const skuPresenter = ({
-  id,
-  object,
-  package_dimensions: packageDimensions,
-  ...attributes
-}) => ({
-  id,
-  type: object,
-  attributes: {
-    ...attributes,
-    packageDimensions,
-  },
-})
+
+const skuPresenter = (sku) => {
+  const {
+    id,
+    object,
+    package_dimensions: packageDimensions,
+    ...attributes
+  } = sku
+
+  return {
+    id,
+    type: object,
+    attributes: {
+      ...attributes,
+      packageDimensions,
+    },
+  }
+}
 
 
-
-export default function skusReducer (state = initialState.skus, action) {
+const skusReducer = produce((draftState, action) => {
   const {
     payload,
     status,
@@ -32,22 +41,24 @@ export default function skusReducer (state = initialState.skus, action) {
     case actionTypes.GET_STRIPE_PRODUCTS:
     case actionTypes.GET_STRIPE_PRODUCT:
       if (status === 'success') {
-        return {
-          ...state,
-          ...parseJSONAPIResponseForEntityType(payload, 'products').reduce((acc, product) => ({
-            ...acc,
-            ...product.attributes.skus.map(skuPresenter).reduce((skuacc, sku) => ({
-              ...skuacc,
-              [sku.id]: sku,
-            }), {}),
-          }), {}),
-        }
+        const products = Array.isArray(payload.data)
+          ? payload.data
+          : [payload.data]
+
+        products.forEach((product) => {
+          product.attributes.skus.forEach((sku) => {
+            draftState[sku.id] = skuPresenter(sku)
+          })
+        })
       }
       break
 
     default:
       break
   }
+}, initialState.skus)
 
-  return state
-}
+
+
+
+export default skusReducer
