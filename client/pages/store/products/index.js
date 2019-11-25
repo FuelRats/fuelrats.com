@@ -85,7 +85,7 @@ class ListProducts extends Component {
               {Object.values(this.props.products).sort(productPriorityDecendingSort).map((product) => (
                 <ProductCard
                   key={product.id}
-                  product={product}
+                  productId={product.id}
                   onCartButtonClick={this._handleCartButtonClick} />
               ))}
             </div>
