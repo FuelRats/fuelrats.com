@@ -67,7 +67,7 @@ const initialState = {
   users: {},
 
   wordpress: {
-    page: {},
+    pages: {},
   },
 }
 
