@@ -28,10 +28,13 @@ const createJSONAPIResourceReducer = (sourceIdent, initialState, resourceTypes) 
   })
 
   const createResource = withResourceType((draftState, resource, resourceType) => {
-    const { id, type } = resource
+    updateResource(draftState, resource, resourceType)
+
+
     const { target, dependencies } = resourceType
 
     if (dependencies) {
+      const { id, type } = resource
       dependencies.forEach((dependency) => {
         const dependentObjId = draftState[target][id].attributes[dependency.idAttribute]
         const dependentObj = draftState[dependency.type][dependentObjId]
@@ -40,8 +43,6 @@ const createJSONAPIResourceReducer = (sourceIdent, initialState, resourceTypes) 
         }
       })
     }
-
-    updateResource(draftState, resource, resourceType)
   })
 
   const deleteResource = withResourceType((draftState, resource, resourceType) => {
@@ -67,7 +68,8 @@ const createJSONAPIResourceReducer = (sourceIdent, initialState, resourceTypes) 
       request,
       payload,
     } = action
-    if (request && request.baseUrl === sourceIdent && response.status === httpStatus.OK) { // Check if this action is a result of a HTTP request we care about
+
+    if (request && request.baseUrl === sourceIdent && httpStatus.isSuccess(response.status)) { // Check if this action is a result of a HTTP request we care about
       if (payload && payload.data) { // Double check that the payload contains processible data
         const { data } = payload
 
