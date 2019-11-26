@@ -53,7 +53,7 @@ export const getBlog = (id) => async (dispatch, getState) => {
     }))
   }
 
-  return dispatch(createAxiosAction(actionTypes.wordpress.readPost, response))
+  return dispatch(createAxiosAction(actionTypes.wordpress.posts.read, response))
 }
 
 
@@ -86,5 +86,5 @@ export const getBlogs = (params) => async (dispatch, getState) => {
     })
   }
 
-  return dispatch(createAxiosAction(actionTypes.wordpress.searchPosts, response))
+  return dispatch(createAxiosAction(actionTypes.wordpress.posts.search, response))
 }
