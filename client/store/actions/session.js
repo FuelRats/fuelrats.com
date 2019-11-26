@@ -27,7 +27,7 @@ export const logout = (delayLogout) => (dispatch) => {
 
   return dispatch({
     status: 'success',
-    type: actionTypes.LOGOUT,
+    type: actionTypes.session.logout,
     delayLogout,
   })
 }
