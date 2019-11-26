@@ -5,12 +5,11 @@ import React from 'react'
 // Component imports
 import { Link } from '../routes'
 import { PageWrapper } from '../components/AppLayout'
-import Component from '../components/Component'
 
 
 
 
-class INeedFuel extends Component {
+class INeedFuel extends React.Component {
   static getInitialProps (ctx) {
     let userAgent = ''
 

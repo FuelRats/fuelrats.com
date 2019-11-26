@@ -17,7 +17,6 @@ import {
 } from '../../../store/selectors'
 import { PageWrapper, authenticated } from '../../../components/AppLayout'
 import { Router } from '../../../routes'
-import Component from '../../../components/Component'
 import FirstLimpetInput from '../../../components/FirstLimpetInput'
 import RadioInput from '../../../components/RadioInput'
 import RatTagsInput from '../../../components/RatTagsInput'
@@ -53,7 +52,7 @@ const selectFormattedRatsByRescueId = createSelector(
 
 @authenticated
 @connect
-class Paperwork extends Component {
+class Paperwork extends React.Component {
   /***************************************************************************\
     Properties
   \***************************************************************************/

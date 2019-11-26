@@ -8,7 +8,6 @@ import React from 'react'
 // Component imports
 import { PageWrapper, authenticated } from '../../components/AppLayout'
 import { connect } from '../../store'
-import Component from '../../components/Component'
 import classNames from '../../helpers/classNames'
 import RadioInput from '../../components/RadioInput'
 import RescuesTagsInput from '../../components/RescuesTagsInput'
@@ -20,7 +19,7 @@ import RatTagsInput from '../../components/RatTagsInput'
 
 @authenticated
 @connect
-class EpicNominate extends Component {
+class EpicNominate extends React.Component {
   /***************************************************************************\
     Class Properties
   \***************************************************************************/

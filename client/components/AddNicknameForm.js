@@ -10,7 +10,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect } from '../store'
 import { selectUser, withCurrentUserId } from '../store/selectors'
 import { ircNickPattern } from '../data/RegExpr'
-import Component from './Component'
 import ValidatedFormInput from './ValidatedFormInput'
 
 
@@ -18,7 +17,7 @@ import ValidatedFormInput from './ValidatedFormInput'
 
 
 @connect
-class AddNicknameForm extends Component {
+class AddNicknameForm extends React.Component {
   /***************************************************************************\
     Class Properties
   \***************************************************************************/

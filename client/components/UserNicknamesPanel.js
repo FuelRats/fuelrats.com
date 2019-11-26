@@ -13,7 +13,6 @@ import {
 } from '../store/selectors'
 import AddNicknameForm from './AddNicknameForm'
 // import ConfirmActionButton from './ConfirmActionButton'
-import Component from './Component'
 
 // Component constants
 const MAXNICKS = 16 // Maximum IRC Nicknames allowed
@@ -21,7 +20,7 @@ const MAXNICKS = 16 // Maximum IRC Nicknames allowed
 
 
 @connect
-class UserNicknamesPanel extends Component {
+class UserNicknamesPanel extends React.Component {
   /***************************************************************************\
     Class Properties
   \***************************************************************************/

@@ -13,7 +13,6 @@ import {
   ircNickPattern,
   passwordPattern,
 } from '../data/RegExpr'
-import Component from '../components/Component'
 import { PageWrapper } from '../components/AppLayout'
 import PasswordField from '../components/PasswordField'
 import RadioInput from '../components/RadioInput'
@@ -24,7 +23,7 @@ import WordpressTermsModal from '../components/TermsModal'
 
 
 @connect
-class Register extends Component {
+class Register extends React.Component {
   /***************************************************************************\
     Class Properties
   \***************************************************************************/

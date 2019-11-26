@@ -7,14 +7,13 @@ import React from 'react'
 
 // Component imports
 import { actions, connect, actionStatus } from '../store'
-import Component from '../components/Component'
 import { PageWrapper } from '../components/AppLayout'
 import { selectWordpressPageBySlug } from '../store/selectors'
 
 
 
 @connect
-class WordpressProxy extends Component {
+class WordpressProxy extends React.Component {
   /***************************************************************************\
     Public Methods
   \***************************************************************************/

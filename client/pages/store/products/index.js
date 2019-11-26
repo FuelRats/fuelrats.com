@@ -9,7 +9,6 @@ import React from 'react'
 import { actions, connect } from '../../../store'
 // import StoreControlBar from '../../components/storefront/StoreControlBar'
 import CartUpdateModal from '../../../components/storefront/CartUpdateModal'
-import Component from '../../../components/Component'
 import { PageWrapper } from '../../../components/AppLayout'
 import ProductCard from '../../../components/storefront/ProductCard'
 import productPriorityDecendingSort from '../../../helpers/productPriorityDecendingSort'
@@ -20,7 +19,7 @@ import { selectProductsMeta, selectProducts } from '../../../store/selectors'
 
 
 @connect
-class ListProducts extends Component {
+class ListProducts extends React.Component {
   /***************************************************************************\
     Class Properties
   \***************************************************************************/

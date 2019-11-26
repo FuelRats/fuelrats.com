@@ -9,7 +9,6 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect } from '../store'
 import { selectUser, withCurrentUserId } from '../store/selectors'
-import Component from './Component'
 import classNames from '../helpers/classNames'
 import ValidatedFormInput from './ValidatedFormInput'
 import ValidatedFormSelect from './ValidatedFormSelect'
@@ -35,7 +34,7 @@ const initialState = {
 
 
 @connect
-class AddRatForm extends Component {
+class AddRatForm extends React.Component {
   /***************************************************************************\
     Class Properties
   \***************************************************************************/

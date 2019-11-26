@@ -1,11 +1,18 @@
 // Module imports
 import React from 'react'
 
+
+
+
+
 // Component imports
 import { connect } from '../store'
 import { selectSession } from '../store/selectors'
 import { Link } from '../routes'
-import Component from './Component'
+
+
+
+
 
 // Constants
 const allowedLinkKeys = ['href', 'params', 'route']
@@ -85,7 +92,7 @@ const navItems = [
 ]
 
 @connect
-class Nav extends Component {
+class Nav extends React.Component {
   /***************************************************************************\
     Class Properties
   \***************************************************************************/

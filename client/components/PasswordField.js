@@ -8,13 +8,12 @@ import zxcvbn from 'zxcvbn'
 
 
 // Component imports
-import Component from './Component'
 import classNames from '../helpers/classNames'
 
 
 
 
-export default class PasswordField extends Component {
+export default class PasswordField extends React.Component {
   /***************************************************************************\
     Class Properties
   \***************************************************************************/

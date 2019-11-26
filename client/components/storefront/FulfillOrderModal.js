@@ -8,7 +8,6 @@ import PropTypes from 'prop-types'
 // Component imports
 import { connect } from '../../store'
 import asModal, { ModalContent, ModalFooter } from '../Modal'
-import Component from '../Component'
 import ValidatedFormInput from '../ValidatedFormInput'
 
 
@@ -23,7 +22,7 @@ const INVALID_CARRIER = 'Carrier is Required'
   title: 'Update Order',
 })
 @connect
-class FulfillOrderModal extends Component {
+class FulfillOrderModal extends React.Component {
   /***************************************************************************\
     Class Properties
   \***************************************************************************/

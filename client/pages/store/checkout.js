@@ -9,7 +9,6 @@ import React from 'react'
 // Component imports
 import { actions, connect } from '../../store'
 import { PageWrapper, withStripe } from '../../components/AppLayout'
-import Component from '../../components/Component'
 import { selectStoreCart } from '../../store/selectors'
 
 
@@ -18,7 +17,7 @@ import { selectStoreCart } from '../../store/selectors'
 
 @connect
 @withStripe
-class Checkout extends Component {
+class Checkout extends React.Component {
   /***************************************************************************\
     Public Methods
   \***************************************************************************/

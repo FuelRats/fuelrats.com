@@ -12,7 +12,6 @@ import PropTypes from 'prop-types'
 
 // Component imports
 import { TransitionConsumer } from './PageTransitionContainer'
-import Component from '../Component'
 import classnames from '../../helpers/classNames'
 
 
@@ -26,7 +25,7 @@ const MAX_DESCR_LENGTH = 300
 
 
 
-class Page extends Component {
+class Page extends React.Component {
   constructor (props) {
     super(props)
 

@@ -18,7 +18,6 @@ import {
 import { PageWrapper, authenticated } from '../../../components/AppLayout'
 import { formatAsEliteDateTime } from '../../../helpers/formatTime'
 import { Link, Router } from '../../../routes'
-import Component from '../../../components/Component'
 import userHasPermission from '../../../helpers/userHasPermission'
 
 
@@ -34,7 +33,7 @@ const PAPERWORK_MAX_EDIT_TIME = 3600000
 
 @authenticated
 @connect
-class Paperwork extends Component {
+class Paperwork extends React.Component {
   /***************************************************************************\
     Properties
   \***************************************************************************/

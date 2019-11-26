@@ -9,7 +9,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // Component imports
 import { actions, connect } from '../../store'
 import { Link } from '../../routes'
-import Component from '../../components/Component'
 import { PageWrapper } from '../../components/AppLayout'
 import TextPlaceholder from '../../components/TextPlaceholder'
 import { selectBlogStatistics, selectBlogAuthors, selectBlogCategories, selectBlogById } from '../../store/selectors'
@@ -19,7 +18,7 @@ import { selectBlogStatistics, selectBlogAuthors, selectBlogCategories, selectBl
 
 
 @connect
-class Blog extends Component {
+class Blog extends React.Component {
   /***************************************************************************\
     Public Methods
   \***************************************************************************/

@@ -8,7 +8,6 @@ import React from 'react'
 // Component imports
 import { PageWrapper, authenticated } from '../components/AppLayout'
 import { actions } from '../store'
-import Component from '../components/Component'
 import HiddenFormData from '../components/HiddenFormData'
 
 
@@ -16,7 +15,7 @@ import HiddenFormData from '../components/HiddenFormData'
 
 
 @authenticated
-class Authorize extends Component {
+class Authorize extends React.Component {
   /***************************************************************************\
     Properties
   \***************************************************************************/

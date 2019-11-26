@@ -16,7 +16,6 @@ import {
   selectBlogStatistics,
 } from '../../store/selectors'
 import { PageWrapper } from '../../components/AppLayout'
-import Component from '../../components/Component'
 import safeParseInt from '../../helpers/safeParseInt'
 import TextPlaceholder from '../../components/TextPlaceholder'
 
@@ -33,7 +32,7 @@ const DEFAULT_PAGE = 1
 
 
 @connect
-class Blogs extends Component {
+class Blogs extends React.Component {
   /***************************************************************************\
     Class Properties
   \***************************************************************************/
