@@ -19,7 +19,7 @@ const flagsReducer = produce((draftState, action) => {
   } = action
 
   switch (type) {
-    case actionTypes.SET_FLAG:
+    case actionTypes.session.setFlag:
       if (status === 'success') {
         return {
           ...draftState,

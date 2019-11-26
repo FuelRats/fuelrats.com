@@ -39,8 +39,8 @@ const productsReducer = produce((draftState, action) => {
   } = action
 
   switch (type) {
-    case actionTypes.GET_STRIPE_PRODUCTS:
-    case actionTypes.GET_STRIPE_PRODUCT:
+    case actionTypes.stripe.products.read:
+    case actionTypes.stripe.products.search:
       if (status === 'success') {
         const products = Array.isArray(payload.data)
           ? payload.data

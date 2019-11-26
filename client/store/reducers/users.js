@@ -20,7 +20,7 @@ const usersReducer = produce((draftState, action) => {
   } = action
 
   switch (type) {
-    case actionTypes.ADD_NICKNAME:
+    case actionTypes.nicknames.create:
       if (status === 'success') {
         draftState[userId].attributes.nicknames.push(nickname)
       }

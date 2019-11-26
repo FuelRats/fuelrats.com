@@ -6,7 +6,7 @@ import actionTypes from '../actionTypes'
 
 
 const getRats = (params) => frApiRequest(
-  actionTypes.GET_RATS,
+  actionTypes.rats.search,
   {
     url: '/rats',
     params,
@@ -15,13 +15,13 @@ const getRats = (params) => frApiRequest(
 
 
 const getRat = (id) => frApiRequest(
-  actionTypes.GET_RAT,
+  actionTypes.rats.read,
   { url: `/rats/${id}` },
 )
 
 
 const createRat = (data) => frApiRequest(
-  actionTypes.CREATE_RAT,
+  actionTypes.rats.create,
   {
     url: '/rats',
     method: 'post',
@@ -30,7 +30,7 @@ const createRat = (data) => frApiRequest(
 )
 
 const deleteRat = (ratId) => frApiRequest(
-  actionTypes.DELETE_RAT,
+  actionTypes.rats.delete,
   {
     url: `/rats/${ratId}`,
     method: 'delete',
@@ -39,7 +39,7 @@ const deleteRat = (ratId) => frApiRequest(
 )
 
 const updateRat = (ratId, data) => frApiRequest(
-  actionTypes.UPDATE_RAT,
+  actionTypes.rats.update,
   {
     url: `/rats/${ratId}`,
     method: 'put',

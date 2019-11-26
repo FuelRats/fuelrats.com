@@ -8,7 +8,7 @@ import actionTypes from '../actionTypes'
 
 
 const deleteRescue = (rescueId) => frApiRequest(
-  actionTypes.DELETE_RESCUE,
+  actionTypes.rescue.delete,
   {
     url: `/rescues/${rescueId}`,
     method: 'delete',
@@ -16,7 +16,7 @@ const deleteRescue = (rescueId) => frApiRequest(
 )
 
 const getRescues = (params, opts) => frApiRequest(
-  actionTypes.GET_RESCUES,
+  actionTypes.rescue.search,
   {
     url: '/rescues',
     params,
@@ -25,12 +25,12 @@ const getRescues = (params, opts) => frApiRequest(
 )
 
 const getRescue = (rescueId) => frApiRequest(
-  actionTypes.GET_RESCUE,
+  actionTypes.rescue.read,
   { url: `/rescues/${rescueId}` },
 )
 
 const updateRescue = (rescueId, data) => frApiRequest(
-  actionTypes.UPDATE_RESCUE,
+  actionTypes.rescue.update,
   {
     url: `/rescues/${rescueId}`,
     method: 'put',
@@ -39,7 +39,7 @@ const updateRescue = (rescueId, data) => frApiRequest(
 )
 
 const updateRescueRats = (rescueId, data) => frApiRequest(
-  actionTypes.UPDATE_RESCUE_RATS,
+  actionTypes.rescue.patchRats,
   {
     url: `/rescues/${rescueId}/rats`,
     method: 'patch',

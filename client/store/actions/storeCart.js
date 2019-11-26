@@ -22,7 +22,7 @@ const getStoreCart = () => async (dispatch) => {
   const cart = await localForage.getItem(STORE_CART) || { ...initialState.storeCart }
 
   return dispatch({
-    type: actionTypes.GET_CART,
+    type: actionTypes.stripe.cart.read,
     payload: cart,
     status: actionStatus.SUCCESS,
   })
@@ -40,7 +40,7 @@ const updateCartItem = ({ id, quantity }) => async (dispatch) => {
   await localForage.setItem(STORE_CART, cart)
 
   return dispatch({
-    type: actionTypes.UPDATE_CART_ITEM,
+    type: actionTypes.stripe.cart.updateItem,
     payload: {
       id,
       quantity,
@@ -57,7 +57,7 @@ const removeCartItem = ({ id }) => async (dispatch) => {
   await localForage.setItem(STORE_CART, cart)
 
   return dispatch({
-    type: actionTypes.DELETE_CART_ITEM,
+    type: actionTypes.stripe.cart.deleteItem,
     payload: { id },
     status: actionStatus.SUCCESS,
   })
@@ -67,7 +67,7 @@ const clearCart = () => async (dispatch) => {
   await localForage.setItem(STORE_CART, { ...initialState.storeCart })
 
   return dispatch({
-    type: actionTypes.CLEAR_CART,
+    type: actionTypes.stripe.cart.clear,
     status: actionStatus.SUCCESS,
   })
 }

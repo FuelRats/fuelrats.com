@@ -2,6 +2,9 @@ import actionStatus from '../actionStatus'
 import httpStatus from '../../helpers/httpStatus'
 
 
+
+import isRequired from '../../helpers/isRequired'
+
 import frApi from '../../services/fuelrats'
 import wpApi from '../../services/wordpress'
 
@@ -52,7 +55,7 @@ const createAxiosAction = (type, response) => {
 
 
 
-const axiosRequest = (service) => (type, config, restAction) => async (dispatch) => {
+const axiosRequest = (service) => (type = isRequired('type'), config, restAction) => async (dispatch) => {
   const response = await service.request(config)
   const action = createAxiosAction(type, response)
 

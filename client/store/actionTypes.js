@@ -1,66 +1,188 @@
-const actionTypes = [
-  'ADD_NICKNAME',
-  'CHANGE_PASSWORD',
-  'CHECK_DECAL_ELIGIBILITY',
-  'CLEAR_CART',
-  'CREATE_RAT',
-  'CREATE_EPICS',
-  'CREATE_SHIP',
-  'CREATE_STRIPE_ORDER',
-  'DELETE_CART_ITEM',
-  'DELETE_NICKNAME',
-  'DELETE_RAT',
-  'DELETE_RESCUE',
-  'DELETE_SHIP',
-  'DISPOSE_IMAGE',
-  'GET_CART',
-  'GET_CLIENT_AUTHORIZATION_PAGE',
-  'GET_EPIC',
-  'GET_IMAGE',
-  'GET_PROFILE',
-  'GET_RAT',
-  'GET_RAT_LEADERBOARD',
-  'GET_RATS',
-  'GET_RESCUE',
-  'GET_RESCUES',
-  'GET_SHIP',
-  'GET_SHIPS',
-  'GET_STRIPE_ORDER',
-  'GET_STRIPE_ORDERS',
-  'GET_STRIPE_PRODUCT',
-  'GET_STRIPE_PRODUCTS',
-  'GET_USER',
-  'GET_WORDPRESS_AUTHOR',
-  'GET_WORDPRESS_POST',
-  'GET_WORDPRESS_POSTS',
-  'GET_WORDPRESS_CATEGORY',
-  'GET_WORDPRESS_PAGE',
-  'GET_WORDPRESS_PAGES',
-  'INIT_SESSION',
-  'LOGIN',
-  'LOGOUT',
-  'PAGE_CHANGE',
-  'PAY_STRIPE_ORDER',
-  'REDEEM_DECAL',
-  'REGISTER',
-  'RESET_PASSWORD',
-  'SEND_PASSWORD_RESET_EMAIL',
-  'SET_FLAG',
-  'UPDATE_CART_ITEM',
-  'UPDATE_RESCUE',
-  'UPDATE_RESCUE_RATS',
-  'UPDATE_RAT',
-  'UPDATE_SHIP',
-  'UPDATE_STRIPE_ORDER',
-  'UPDATE_USER',
-  'VALIDATE_PASSWORD_RESET_TOKEN',
-].reduce((acc, actionType) => ({
-  ...acc,
-  [actionType]: actionType,
-}), {})
+/* eslint-disable max-classes-per-file */// I know what I'm doing. shut up.
 
 
 
 
 
-export default actionTypes
+import enumerable from '../helpers/enum'
+
+
+
+
+
+const readable = (target) => {
+  target.read = undefined
+  target.search = undefined
+  return target
+}
+
+
+const writable = (target) => {
+  target.create = undefined
+  target.delete = undefined
+  target.update = undefined
+  return readable(target)
+}
+
+
+
+
+
+@enumerable
+@writable
+class Decals {
+  static redeem
+}
+
+@enumerable
+@writable
+class Epics {}
+
+@enumerable
+@readable
+class Leaderboard {}
+
+@enumerable
+@writable
+class Nicknames {}
+
+@enumerable
+@writable
+class Rats {}
+
+@enumerable
+@writable
+class Rescues {
+  static patchRats
+}
+@enumerable
+@writable
+class Ships {}
+
+@enumerable
+@writable
+class Users {}
+
+
+
+
+
+@enumerable
+class Images {
+  static read
+  static dispose
+}
+
+
+@enumerable
+class Password {
+  static reset
+  static requestReset
+  static update
+  static validateReset
+}
+
+@enumerable
+class Session {
+  static password = Password
+
+  static login
+  static logout
+  static register
+
+  static initialize
+
+  static read
+  static readClientOAuthPage
+
+  static pageChange
+  static setFlag
+}
+
+
+
+
+
+@enumerable
+class StripeCart {
+  static clear
+  static deleteItem
+  static read
+  static updateItem
+}
+
+@enumerable
+@writable
+class StripeOrders {
+  static pay
+}
+
+@enumerable
+@readable
+class StripeProducts {}
+
+@enumerable
+class Stripe {
+  static cart = StripeCart
+  static orders = StripeOrders
+  static products = StripeProducts
+}
+
+
+
+@enumerable
+@readable
+class Authors {}
+
+@enumerable
+@readable
+class Categories {}
+
+@enumerable
+@readable
+class Pages {}
+
+@enumerable
+@readable
+class Posts {}
+
+
+@enumerable
+class Wordpress {
+  static authors = Authors
+  static categories = Categories
+  static pages = Pages
+  static posts = Posts
+}
+
+
+
+
+
+@enumerable
+class ActionTypes {
+  // API Resources
+  static decals = Decals
+  static epics = Epics
+  static leaderboard = Leaderboard
+  static nicknames = Nicknames
+  static rats = Rats
+  static rescues = Rescues
+  static ships = Ships
+  static users = Users
+
+
+  // Special
+  static images = Images
+  static session = Session
+
+
+  // Services
+  static stripe = Stripe
+  static wordpress = Wordpress
+}
+
+
+
+
+export default ActionTypes

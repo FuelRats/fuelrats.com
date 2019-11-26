@@ -20,24 +20,24 @@ const sessionReducer = produce((draftState, action) => {
   } = action
 
   switch (type) {
-    case actionTypes.INIT_SESSION:
+    case actionTypes.session.initialize:
       draftState.loggedIn = Boolean(action.accessToken && !action.error)
       draftState.error = action.error
       break
 
-    case actionTypes.GET_PROFILE:
+    case actionTypes.session.read:
       if (status === actionStatus.SUCCESS) {
         draftState.userId = payload.data.id
       }
       break
 
-    case actionTypes.LOGIN:
+    case actionTypes.session.login:
       if (status === actionStatus.SUCCESS) {
         draftState.loggedIn = true
       }
       break
 
-    case actionTypes.LOGOUT:
+    case actionTypes.session.logout:
       if (status === actionStatus.SUCCESS) {
         if (action.delayLogout) {
           draftState.loggingOut = true
@@ -46,7 +46,7 @@ const sessionReducer = produce((draftState, action) => {
       }
       break
 
-    case actionTypes.PAGE_CHANGE:
+    case actionTypes.session.pageChange:
       if (status === actionStatus.SUCCESS && draftState.loggingOut) {
         return initialState.session
       }

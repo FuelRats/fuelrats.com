@@ -19,8 +19,8 @@ const wordpressReducer = produce((draftState, action) => {
   } = action
 
   switch (type) {
-    case actionTypes.GET_WORDPRESS_PAGE:
-    case actionTypes.GET_WORDPRESS_PAGES:
+    case actionTypes.wordpress.pages.read:
+    case actionTypes.wordpress.pages.search:
       if (status === 'success') {
         payload.forEach((page) => {
           draftState.pages[page.slug] = page

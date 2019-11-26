@@ -8,6 +8,6 @@ import actionTypes from '../actionTypes'
 
 // eslint-disable-next-line import/prefer-default-export
 export const getRatLeaderboard = () => frApiRequest(
-  actionTypes.GET_RAT_LEADERBOARD,
+  actionTypes.leaderboard.read,
   { url: '/statistics/rats' },
 )

@@ -15,7 +15,7 @@ const leaderboardReducer = produce((draftState, action) => {
   } = action
 
   switch (type) {
-    case actionTypes.GET_RAT_LEADERBOARD:
+    case actionTypes.leaderboard.read:
       switch (status) {
         case 'success':
           draftState.loading = false

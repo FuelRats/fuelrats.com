@@ -18,14 +18,26 @@ const blogsReducer = produce((draftState, action) => {
   } = action
 
   switch (type) {
-    case actionTypes.GET_WORDPRESS_POST:
+    case actionTypes.wordpress.authors.read:
+      if (status === 'success') {
+        draftState.authors[payload.id] = { ...payload }
+      }
+      break
+
+    case actionTypes.wordpress.categories.read:
+      if (status === 'success') {
+        draftState.categories[payload.id] = { ...payload }
+      }
+      break
+
+    case actionTypes.wordpress.posts.read:
       if (status === 'success') {
         draftState.blogs.push(payload)
         draftState.totalPages = null
       }
       break
 
-    case actionTypes.GET_WORDPRESS_POSTS:
+    case actionTypes.wordpress.posts.search:
       switch (status) {
         case 'error':
           draftState.blogs = []
@@ -39,18 +51,6 @@ const blogsReducer = produce((draftState, action) => {
 
         default:
           break
-      }
-      break
-
-    case actionTypes.GET_WORDPRESS_AUTHOR:
-      if (status === 'success') {
-        draftState.authors[payload.id] = { ...payload }
-      }
-      break
-
-    case actionTypes.GET_WORDPRESS_CATEGORY:
-      if (status === 'success') {
-        draftState.categories[payload.id] = { ...payload }
       }
       break
 

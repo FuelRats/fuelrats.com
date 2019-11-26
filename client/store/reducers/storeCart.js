@@ -17,15 +17,8 @@ const storeCartReducer = produce((draftState, action) => {
     type,
   } = action
 
-  switch (type) {
-    case actionTypes.CLEAR_CART:
-    case actionTypes.DELETE_CART_ITEM:
-    case actionTypes.GET_CART:
-    case actionTypes.UPDATE_CART_ITEM:
-      return payload
-
-    default:
-      break
+  if (Object.values(actionTypes.stripe.cart).includes(type)) {
+    return payload
   }
 
   return draftState

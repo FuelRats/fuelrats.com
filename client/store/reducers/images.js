@@ -20,15 +20,16 @@ const imageReducer = produce((draftState, action) => {
   } = action
 
   switch (type) {
-    case actionTypes.GET_IMAGE:
+    case actionTypes.images.dispose:
       if (status === 'success') {
-        draftState[id] = payload
+        delete draftState[id]
       }
       break
 
-    case actionTypes.DISPOSE_IMAGE:
+
+    case actionTypes.images.read:
       if (status === 'success') {
-        delete draftState[id]
+        draftState[id] = payload
       }
       break
 

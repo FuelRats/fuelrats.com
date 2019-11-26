@@ -32,6 +32,10 @@ export const logout = (delayLogout) => (dispatch) => {
   })
 }
 
+
+
+
+
 export const initUserSession = (ctx) => async (dispatch, getState) => {
   const state = getState()
   const user = withCurrentUserId(selectUser)(state)
@@ -56,9 +60,19 @@ export const initUserSession = (ctx) => async (dispatch, getState) => {
   }
 
   return dispatch({
-    type: actionTypes.INIT_SESSION,
+    type: actionTypes.session.initialize,
     status: error ? actionStatus.ERROR : actionStatus.SUCCESS,
     error,
     accessToken,
   })
 }
+
+
+
+
+
+export const notifyPageChange = (path) => (dispatch) => dispatch({
+  type: actionTypes.session.pageChange,
+  status: actionStatus.SUCCESS,
+  path,
+})
