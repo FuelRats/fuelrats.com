@@ -41,30 +41,37 @@ export const initUserSession = (ctx) => async (dispatch, getState) => {
   const user = withCurrentUserId(selectUser)(state)
   const session = selectSession(state)
 
-  let { access_token: accessToken } = nextCookies(ctx)
-  let error = null
+  const { access_token: accessToken } = nextCookies(ctx)
 
-  if (accessToken) {
-    frApi.defaults.headers.common.Authorization = `Bearer ${accessToken}`
-
-    if (!user && !session.error) {
-      const profileReq = await getUserProfile()(dispatch)
-
-      error = HttpStatus.isSuccess(profileReq.response.status) ? null : profileReq.response.status
-
-      if (error === HttpStatus.UNAUTHORIZED) {
-        logout()(dispatch)
-        accessToken = null
-      }
-    }
+  const result = {
+    type: actionTypes.session.initialize,
+    status: actionStatus.SUCCESS,
+    error: null,
+    accessToken,
   }
 
-  return dispatch({
-    type: actionTypes.session.initialize,
-    status: error ? actionStatus.ERROR : actionStatus.SUCCESS,
-    error,
-    accessToken,
-  })
+  if (!session.loggedIn) {
+    if (accessToken) {
+      frApi.defaults.headers.common.Authorization = `Bearer ${accessToken}`
+
+      if (!user && !session.error) {
+        const profileReq = await getUserProfile()(dispatch)
+
+        if (!HttpStatus.isSuccess(profileReq.response.status)) {
+          result.error = profileReq.response.status
+          result.status = actionStatus.ERROR
+
+          if (profileReq.response.status === HttpStatus.UNAUTHORIZED) {
+            logout()(dispatch)
+            result.accessToken = null
+          }
+        }
+      }
+    }
+
+    dispatch(result)
+  }
+  return result
 }
 
 
