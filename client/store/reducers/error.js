@@ -16,7 +16,7 @@ const IS_DEV_OR_STAGING = $IS_DEVELOPMENT || $IS_STAGING
 const ignoredTypes = [
   // This pops up on every 404 page due to how our fallback system works.
   // It's not generally helpful to log
-  actionTypes.GET_WORDPRESS_PAGE,
+  actionTypes.wordpress.pages.read,
 ]
 
 
