@@ -21,7 +21,7 @@ class WordpressProxy extends React.Component {
   static async getInitialProps ({ query, store, res }) {
     const { slug } = query
 
-    if (!store.getState().wordpress.page[slug]) {
+    if (!selectWordpressPageBySlug(store.getState(), { slug })) {
       const { status } = await actions.getWordpressPage(slug)(store.dispatch)
 
       if (status === actionStatus.ERROR && res) {
