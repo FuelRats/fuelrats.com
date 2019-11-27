@@ -48,4 +48,4 @@ Check out our [list of contributors][contributors]!
 [irc]: https://kiwi.fuelrats.com:7778/
 [prs]: CONTRIBUTING.md
 [prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
-[TCCI-badge]: https://teamcity.fuelrats.com/app/rest/builds/buildType:(id:FuelratsCom_NextJsBuild)/statusIcon
+[TCCI-badge]: https://img.shields.io/teamcity/build/s/FuelratsCom_NextJsBuild?server=https%3A%2F%2Fteamcity.fuelrats.com&style=flat-square
