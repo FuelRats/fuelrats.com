@@ -1101,10 +1101,12 @@
   dependencies:
     eslint-restricted-globals "^0.2.0"
 
-"@fuelrats/next-named-routes@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@fuelrats/next-named-routes/-/next-named-routes-1.0.0.tgz#4b885482c6ce78056fb638e5d7fb0a636483be9a"
-  integrity sha512-EcC7nnJclw4a83HQyzNrj5eFNYMXZfqD4fXBa60LY+d6+9AhGe67j72Y4UCSUi/7tXsbQEoYXZUK6itsgHkN+A==
+"@fuelrats/next-named-routes@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@fuelrats/next-named-routes/-/next-named-routes-1.1.0.tgz#ecd5b5514db3e053396a56821a506f3d2887076f"
+  integrity sha512-oCOjW04VuZsMGbPKe7HvuVt7EBECnei7YCN9p56snmdk4k7X64oRKQ2iMyvR/9vBzAJrLNWdPZUOgbrwkCPrsw==
+  dependencies:
+    hoist-non-react-statics "^3.3.1"
 
 "@fuelrats/stylelint-config@^0.8.1":
   version "0.8.1"
@@ -4133,7 +4135,7 @@ hmac-drbg@^1.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.1"
 
-hoist-non-react-statics@^3.3.0:
+hoist-non-react-statics@^3.3.0, hoist-non-react-statics@^3.3.1:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.1.tgz#101685d3aff3b23ea213163f6e8e12f4f111e19f"
   integrity sha512-wbg3bpgA/ZqWrZuMOeJi8+SKMhr7X9TesL/rXMjTzh0p0JUBo3II8DHboYbuIXWRlttrUFxwcu/5kygrCw8fJw==
