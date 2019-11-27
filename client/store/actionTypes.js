@@ -132,27 +132,27 @@ class Stripe {
 
 @enumerable
 @readable
-class Authors {}
+class WordpressAuthors {}
 
 @enumerable
 @readable
-class Categories {}
+class WordpressCategories {}
 
 @enumerable
 @readable
-class Pages {}
+class WordpressPages {}
 
 @enumerable
 @readable
-class Posts {}
+class WordpressPosts {}
 
 
 @enumerable
 class Wordpress {
-  static authors = Authors
-  static categories = Categories
-  static pages = Pages
-  static posts = Posts
+  static authors = WordpressAuthors
+  static categories = WordpressCategories
+  static pages = WordpressPages
+  static posts = WordpressPosts
 }
 
 
