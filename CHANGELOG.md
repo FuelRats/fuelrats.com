@@ -24,6 +24,7 @@
 * Various adjustments to input style
 * Rewrite redux reducers using the `immer` library
 * Rewrite action type names to follow redux style guide.
+* Remove remaining usages of our `React.Component` wrapper class.
 
 ### 🐛 Fixed
 * Double check login form validity on Firefox. (This fixes firefox autofill)
@@ -37,6 +38,7 @@
     * Various adjustments made to site behavior due to changes in Next
 * Stop linting styles in JS files
 * Add tools for better redux debugging
+* Update README badges.
 
 
 ## [2.8.0]
