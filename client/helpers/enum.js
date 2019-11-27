@@ -3,13 +3,18 @@
  * From https://github.com/FuelRats/api.fuelrats.com/blob/v3.0/src/classes/Enum.js
  * @param {Object} target
  */
-export default function enumerable (target) {
+
+
+
+
+
+const customEnumerable = (nameFunc) => (target) => {
   const keys = []
 
   Reflect.ownKeys(target).forEach((key) => {
     if (Reflect.has(target, key)) {
       if (typeof target[key] === 'undefined') {
-        target[key] = `${target.prototype.constructor.name}/${key.toString()}`.toLowerCase()
+        target[key] = nameFunc(target, key)
       }
 
       keys.push(key)
@@ -24,4 +29,13 @@ export default function enumerable (target) {
   Object.freeze(target)
 
   return target
+}
+
+
+
+
+
+export default customEnumerable((target, key) => Symbol(key.toString))
+export {
+  customEnumerable,
 }
