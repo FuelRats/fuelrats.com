@@ -1,6 +1,6 @@
 # Fuelrats.com
 
-[![Fuelrats.com build status on Travis CI][travisci-badge]][travisci]
+![Fuelrats.com build status on TeamCity][TCCI-badge]
 [![Fuelrats.com dependencies on David DM][daviddm-badge]][daviddm]
 
 
@@ -48,5 +48,4 @@ Check out our [list of contributors][contributors]!
 [irc]: https://kiwi.fuelrats.com:7778/
 [prs]: CONTRIBUTING.md
 [prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
-[travisci]: https://travis-ci.org/FuelRats/fuelrats.com
-[travisci-badge]: https://img.shields.io/travis/FuelRats/fuelrats.com/develop.svg?style=flat-square
+[TCCI-badge]: https://teamcity.fuelrats.com/app/rest/builds/buildType:(id:FuelratsCom_NextJsBuild)/statusIcon
