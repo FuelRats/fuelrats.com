@@ -4,77 +4,80 @@
 
 
 
-import enumerable from '../helpers/enum'
+import { customEnumerable } from '../helpers/enum'
 
+/**
+ *  Decorator which turns a class into an enumerable with values that are usable as redux action types.
+ */
+const actionType = customEnumerable((target, key) => `${target.prototype.constructor.name}/${key.toString()}`.toLowerCase())
 
-
-
-
-const readable = (target) => {
+/**
+ * Adds read properties to the class, then defines it as an actionType domain.
+ *
+ * @param {Object} target
+ */
+const readableActionType = (target) => {
   target.read = undefined
   target.search = undefined
-  return target
+  return actionType(target)
 }
 
-
-const writable = (target) => {
+/**
+ * Adds read and write properties to the class, then defines it as an actionType domain class.
+ *
+ * @param {Object} target
+ */
+const writableActionType = (target) => {
   target.create = undefined
   target.delete = undefined
   target.update = undefined
-  return readable(target)
+  return readableActionType(target)
 }
 
 
 
 
 
-@enumerable
-@writable
+@writableActionType
 class Decals {
   static redeem
 }
 
-@enumerable
-@writable
+@writableActionType
 class Epics {}
 
-@enumerable
-@readable
+@readableActionType
 class Leaderboard {}
 
-@enumerable
-@writable
+@writableActionType
 class Nicknames {}
 
-@enumerable
-@writable
+@writableActionType
 class Rats {}
 
-@enumerable
-@writable
+@writableActionType
 class Rescues {
   static patchRats
 }
-@enumerable
-@writable
+
+@writableActionType
 class Ships {}
 
-@enumerable
-@writable
+@writableActionType
 class Users {}
 
 
 
 
 
-@enumerable
+@actionType
 class Images {
   static read
   static dispose
 }
 
 
-@enumerable
+@actionType
 class Password {
   static reset
   static requestReset
@@ -82,7 +85,7 @@ class Password {
   static validateReset
 }
 
-@enumerable
+@actionType
 class Session {
   static password = Password
 
@@ -103,7 +106,7 @@ class Session {
 
 
 
-@enumerable
+@actionType
 class StripeCart {
   static clear
   static deleteItem
@@ -111,17 +114,15 @@ class StripeCart {
   static updateItem
 }
 
-@enumerable
-@writable
+@writableActionType
 class StripeOrders {
   static pay
 }
 
-@enumerable
-@readable
+@readableActionType
 class StripeProducts {}
 
-@enumerable
+@actionType
 class Stripe {
   static cart = StripeCart
   static orders = StripeOrders
@@ -130,24 +131,20 @@ class Stripe {
 
 
 
-@enumerable
-@readable
+@readableActionType
 class WordpressAuthors {}
 
-@enumerable
-@readable
+@readableActionType
 class WordpressCategories {}
 
-@enumerable
-@readable
+@readableActionType
 class WordpressPages {}
 
-@enumerable
-@readable
+@readableActionType
 class WordpressPosts {}
 
 
-@enumerable
+@actionType
 class Wordpress {
   static authors = WordpressAuthors
   static categories = WordpressCategories
@@ -159,7 +156,7 @@ class Wordpress {
 
 
 
-@enumerable
+@actionType
 class ActionTypes {
   // API Resources
   static decals = Decals
