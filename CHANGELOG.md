@@ -265,7 +265,7 @@
 * Migrate to NextJS 7
 * Migrate to ESlint 5
 * Update ESLint rules, and code to reflect changes in enforced rules
-
+* Add `<React.StrictMode />` to the app root so we can identify problematic components.
 
 
 
