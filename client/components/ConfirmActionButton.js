@@ -7,14 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 
-// Component imports
-import Component from './Component'
-
-
-
-
-
-class ConfirmActionButton extends Component {
+class ConfirmActionButton extends React.Component {
   /***************************************************************************\
     Class Properties
   \***************************************************************************/

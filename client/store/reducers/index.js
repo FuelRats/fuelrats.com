@@ -7,7 +7,6 @@ import withDefaultReducers from '../utility/withDefaultReducers'
 
 import createJSONAPIResourceReducer from './APIResource'
 import blogs from './blogs'
-import epics from './epics'
 import error from './error'
 import flags from './flags'
 import images from './images'
@@ -33,6 +32,7 @@ const localApiUrl = publicRuntimeConfig.apis.fuelRats.local
 
 const apiResourceReducer = createJSONAPIResourceReducer(localApiUrl, initialState, {
   decals: 'decals',
+  epics: 'epics',
   groups: 'groups',
   order: 'orders',
   rats: {
@@ -67,7 +67,6 @@ export default chainReducers(
     apiResourceReducer,
     withDefaultReducers(combineReducers)(initialState, {
       blogs,
-      epics,
       error,
       flags,
       images,

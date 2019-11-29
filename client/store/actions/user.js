@@ -7,7 +7,7 @@ import actionTypes from '../actionTypes'
 
 
 const addNickname = (userId, nickname, password) => frApiRequest(
-  actionTypes.ADD_NICKNAME,
+  actionTypes.nicknames.create,
   {
     url: '/nicknames',
     method: 'post',
@@ -27,7 +27,7 @@ const addNickname = (userId, nickname, password) => frApiRequest(
 
 
 const deleteNickname = (nickname) => frApiRequest(
-  actionTypes.DELETE_NICKNAME,
+  actionTypes.nicknames.delete,
   {
     url: `/nicknames/${nickname}`,
     method: 'delete',
@@ -41,7 +41,7 @@ const deleteNickname = (nickname) => frApiRequest(
 
 
 const getUserProfile = () => frApiRequest(
-  actionTypes.GET_PROFILE,
+  actionTypes.session.read,
   { url: '/profile' },
 )
 
@@ -50,7 +50,7 @@ const getUserProfile = () => frApiRequest(
 
 
 const updateUser = (userId, data) => frApiRequest(
-  actionTypes.UPDATE_USER,
+  actionTypes.users.update,
   {
     url: `/users/${userId}`,
     method: 'put',

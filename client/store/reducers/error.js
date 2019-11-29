@@ -1,4 +1,8 @@
 /* globals $IS_DEVELOPMENT:false, $IS_STAGING:false */
+// Module imports
+import { produce } from 'immer'
+
+
 
 // Component imports
 import initialState from '../initialState'
@@ -10,31 +14,26 @@ import actionTypes from '../actionTypes'
 // Component constants
 const IS_DEV_OR_STAGING = $IS_DEVELOPMENT || $IS_STAGING
 const ignoredTypes = [
-
   // This pops up on every 404 page due to how our fallback system works.
   // It's not generally helpful to log
-  actionTypes.GET_WORDPRESS_PAGE,
+  actionTypes.wordpress.pages.read,
 ]
 
 
 
 
-export default function errorReducer (state = initialState.error, action) {
+const errorReducer = produce((draftState, action) => {
   if (action.status && action.status === 'error') {
     if (!ignoredTypes.includes(action.type)) {
       console.error('ACTION ERR:', action)
     }
 
     if (IS_DEV_OR_STAGING) {
-      return {
-        ...state,
-        errors: [
-          ...state.errors,
-          action,
-        ],
-        hasError: true,
-      }
+      draftState.errors.push(action)
+      draftState.hasError = true
     }
   }
-  return state
-}
+}, initialState.error)
+
+
+export default errorReducer

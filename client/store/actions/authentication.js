@@ -24,7 +24,7 @@ const SESSION_TOKEN_LENGTH = 365 // days
 
 
 export const changePassword = (currentPassword, newPassword) => frApiRequest(
-  actionTypes.CHANGE_PASSWORD,
+  actionTypes.session.password.update,
   {
     url: '/users/setpassword',
     method: 'put',
@@ -83,7 +83,7 @@ export const login = (options) => async (dispatch) => {
     /* eslint-enable no-restricted-globals */
   }
 
-  return dispatch(createAxiosAction(actionTypes.LOGIN, response))
+  return dispatch(createAxiosAction(actionTypes.session.login, response))
 }
 
 
@@ -91,7 +91,7 @@ export const login = (options) => async (dispatch) => {
 
 
 export const getClientOAuthPage = (params) => frApiRequest(
-  actionTypes.GET_CLIENT_AUTHORIZATION_PAGE,
+  actionTypes.session.getClientOAuthPage,
   {
     url: '/oauth2/authorize',
     params,
@@ -103,7 +103,7 @@ export const getClientOAuthPage = (params) => frApiRequest(
 
 
 export const register = ({ recaptcha, ...data }) => frApiRequest(
-  actionTypes.REGISTER,
+  actionTypes.session.register,
   {
     url: '/register',
     method: 'post',
@@ -119,7 +119,7 @@ export const register = ({ recaptcha, ...data }) => frApiRequest(
 
 
 export const resetPassword = ({ password, token }) => frApiRequest(
-  actionTypes.RESET_PASSWORD,
+  actionTypes.session.password.reset,
   {
     url: `/reset/${token}`,
     method: 'post',
@@ -134,7 +134,7 @@ export const resetPassword = ({ password, token }) => frApiRequest(
 
 
 export const sendPasswordResetEmail = (email) => frApiRequest(
-  actionTypes.SEND_PASSWORD_RESET_EMAIL,
+  actionTypes.session.password.requestReset,
   {
     url: '/reset',
     method: 'post',
@@ -148,17 +148,7 @@ export const sendPasswordResetEmail = (email) => frApiRequest(
 
 
 
-export const updateLoggingInState = (success) => (dispatch) => dispatch({
-  type: actionTypes.LOGIN,
-  payload: null,
-  status: success ? 'success' : 'noToken',
-})
-
-
-
-
-
 export const validatePasswordResetToken = (token) => frApiRequest(
-  actionTypes.VALIDATE_PASSWORD_RESET_TOKEN,
+  actionTypes.session.password.validateReset,
   { url: `/reset/${token}` },
 )

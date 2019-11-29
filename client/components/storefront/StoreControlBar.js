@@ -6,13 +6,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect } from '../../store'
 import { selectStoreCart } from '../../store/selectors'
 import { Link } from '../../routes'
-import Component from '../Component'
 
 
 
 
 @connect
-class StoreControlBar extends Component {
+class StoreControlBar extends React.Component {
   /***************************************************************************\
     Public Methods
   \***************************************************************************/

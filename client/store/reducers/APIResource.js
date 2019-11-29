@@ -1,165 +1,110 @@
-import actionStatus from '../actionStatus'
+import { produce } from 'immer'
+
+
+
+
+
+import httpStatus from '../../helpers/httpStatus'
 
 
 
 
 
 const createJSONAPIResourceReducer = (sourceIdent, initialState, resourceTypes) => {
-  const updateResourcesReducer = (state, { payload }) => {
-    let hasChanged = false
-    let nextState = { ...state }
+  const withResourceType = (reducerFunc) => (draftState, resource) => {
+    let resourceType = resourceTypes[resource.type]
+    if (resourceType) {
+      if (typeof resourceType === 'string') {
+        resourceType = { target: resourceType }
+      }
 
-    const resources = [
-      ...(Array.isArray(payload.data) ? payload.data : [payload.data]),
-      ...(payload.included || []),
-    ]
+      reducerFunc(draftState, resource, resourceType)
+    }
+  }
 
-    nextState = resources.reduce((acc, resource) => {
-      const {
-        type,
-        id,
-      } = resource
+  const updateResource = withResourceType((draftState, resource, resourceType) => {
+    const { target, resourceReducer } = resourceType
+    draftState[target][resource.id] = resourceReducer ? resourceReducer(resource) : resource
+  })
 
-      const resourceType = resourceTypes[type]
+  const createResource = withResourceType((draftState, resource, resourceType) => {
+    updateResource(draftState, resource, resourceType)
 
-      if (resourceType) {
-        const targetKey = resourceType.target || resourceType
-        hasChanged = true
-        return {
-          ...acc,
-          [targetKey]: {
-            ...acc[targetKey],
-            [id]: resourceType.resourceReducer ? resourceType.resourceReducer(resource) : { ...resource },
-          },
+
+    const { target, dependencies } = resourceType
+
+    if (dependencies) {
+      const { id, type } = resource
+      dependencies.forEach((dependency) => {
+        const dependentObjId = draftState[target][id].attributes[dependency.idAttribute]
+        const dependentObj = draftState[dependency.type][dependentObjId]
+        if (dependentObj) {
+          dependentObj.relationships[target].data.push({ id, type })
         }
-      }
-      return acc
-    }, nextState)
+      })
+    }
+  })
 
-    return hasChanged ? nextState : state
-  }
+  const deleteResource = withResourceType((draftState, resource, resourceType) => {
+    const { id } = resource
+    const { target, dependencies } = resourceType
 
-  const postResourceReducer = (state, action) => {
-    let hasChanged = false
-    let nextState = { ...state }
-
-    const {
-      attributes,
-      id,
-      type,
-    } = action.payload.data
-
-    const resourceType = resourceTypes[type]
-    if (resourceType) {
-      const targetKey = resourceType.target
-      const dependencies = resourceType.dependencies || null
-
-      if (dependencies) {
-        nextState = dependencies.reduce((acc, dependency) => {
-          const dependencyId = attributes[dependency.idAttribute]
-          const dependentObj = nextState[dependency.type][dependencyId]
-
-          if (dependentObj) {
-            hasChanged = true
-
-            return {
-              ...acc,
-              [dependency.type]: {
-                ...acc[dependency.type],
-                [dependencyId]: {
-                  ...dependentObj,
-                  relationships: {
-                    ...dependentObj.relationships,
-                    [targetKey]: {
-                      data: [
-                        ...dependentObj.relationships[targetKey].data,
-                        {
-                          id,
-                          type,
-                        },
-                      ],
-                    },
-                  },
-                },
-              },
-            }
-          }
-
-          return acc
-        }, nextState)
-      }
+    if (dependencies) {
+      dependencies.forEach((dependency) => {
+        const dependentObjId = draftState[target][id].attributes[dependency.idAttribute]
+        const dependentObj = draftState[dependency.type][dependentObjId]
+        if (dependentObj) {
+          dependentObj.relationships[target].data = dependentObj.relationships[target].data.filter((curValue) => curValue.id !== id)
+        }
+      })
     }
 
-    return updateResourcesReducer(hasChanged ? nextState : state, action)
-  }
+    delete draftState[target][id]
+  })
 
-  const deleteResourceReducer = (state, { payload }) => {
-    let hasChanged = false
-    let nextState = { ...state }
-
+  return produce((draftState, action) => {
     const {
-      id,
-      type,
-    } = payload.data
-
-    const resourceType = resourceTypes[type]
-
-    if (resourceType) {
-      const targetKey = resourceType.target || resourceType
-      const { dependencies } = resourceType
-
-      if (dependencies) {
-        nextState = dependencies.reduce((acc, dependency) => {
-          const dependencyId = nextState[targetKey][id].attributes[dependency.idAttribute]
-          const dependentObj = nextState[dependency.type][dependencyId]
-          if (dependentObj) {
-            return {
-              ...acc,
-              [dependency.type]: {
-                ...acc[dependency.type],
-                [dependencyId]: {
-                  ...dependentObj,
-                  relationships: {
-                    ...dependentObj.relationships,
-                    [targetKey]: {
-                      data: dependentObj.relationships[targetKey].data.filter((curValue) => curValue.id !== id),
-                    },
-                  },
-                },
-              },
-            }
-          }
-          return acc
-        }, nextState)
-      }
-
-      delete nextState[targetKey][id]
-      hasChanged = true
-    }
-
-    return hasChanged ? nextState : state
-  }
-
-  return (state = initialState, action) => {
-    const {
+      response,
       request,
-      status,
+      payload,
     } = action
 
-    if (request && request.baseUrl === sourceIdent && status === actionStatus.SUCCESS && action.payload && action.payload.data) {
-      switch (request.method) {
-        case 'delete':
-          return deleteResourceReducer(state, action)
+    if (request && request.baseUrl === sourceIdent && httpStatus.isSuccess(response.status)) { // Check if this action is a result of a HTTP request we care about
+      if (payload && payload.data) { // Double check that the payload contains processible data
+        const { data } = payload
 
-        case 'post':
-          return postResourceReducer(state, action)
+        if (Array.isArray(data)) {
+          data.forEach((resource) => {
+            updateResource(draftState, resource)
+          })
+        } else {
+          switch (request.method) {
+            case 'post':
+              createResource(draftState, data)
+              break
 
-        default:
-          return updateResourcesReducer(state, action)
+            case 'delete':
+              deleteResource(draftState, data)
+              break
+
+            case 'put':
+            case 'get':
+              updateResource(draftState, data)
+              break
+
+            default:
+              break
+          }
+        }
+
+        if (payload.included) {
+          payload.included.forEach((resource) => {
+            updateResource(draftState, resource)
+          })
+        }
       }
     }
-    return state
-  }
+  }, initialState)
 }
 
 

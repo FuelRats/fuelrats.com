@@ -7,12 +7,12 @@ import actionTypes from '../actionTypes'
 
 
 const getProduct = (id) => frApiRequest(
-  actionTypes.GET_STRIPE_PRODUCT,
+  actionTypes.stripe.products.read,
   { url: `/products/${id}` },
 )
 
 const getProducts = (params) => frApiRequest(
-  actionTypes.GET_STRIPE_PRODUCTS,
+  actionTypes.stripe.products.search,
   {
     url: '/products',
     params: {
@@ -28,7 +28,7 @@ const getProducts = (params) => frApiRequest(
 
 
 const createOrder = (data) => frApiRequest(
-  actionTypes.CREATE_STRIPE_ORDER,
+  actionTypes.stripe.orders.create,
   {
     url: '/orders',
     method: 'post',
@@ -37,12 +37,12 @@ const createOrder = (data) => frApiRequest(
 )
 
 const getOrder = (id) => frApiRequest(
-  actionTypes.GET_STRIPE_ORDER,
+  actionTypes.stripe.orders.read,
   { url: `/orders/${id}` },
 )
 
 const getOrders = (params) => frApiRequest(
-  actionTypes.GET_STRIPE_ORDERS,
+  actionTypes.stripe.orders.search,
   {
     url: '/orders',
     params,
@@ -50,7 +50,7 @@ const getOrders = (params) => frApiRequest(
 )
 
 const payOrder = (id, data) => frApiRequest(
-  actionTypes.PAY_STRIPE_ORDER,
+  actionTypes.stripe.orders.pay,
   {
     url: `/orders/${id}/pay`,
     method: 'put',
@@ -59,7 +59,7 @@ const payOrder = (id, data) => frApiRequest(
 )
 
 const updateOrder = (id, data) => frApiRequest(
-  actionTypes.UPDATE_STRIPE_ORDER,
+  actionTypes.stripe.orders.update,
   {
     url: `/orders/${id}`,
     method: 'put',

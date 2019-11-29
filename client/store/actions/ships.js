@@ -6,12 +6,12 @@ import actionTypes from '../actionTypes'
 
 
 const getShip = (shipId) => frApiRequest(
-  actionTypes.GET_SHIP,
+  actionTypes.ships.read,
   { url: `/ships/${shipId}` },
 )
 
 const getShips = (params) => frApiRequest(
-  actionTypes.GET_SHIPS,
+  actionTypes.ships.search,
   {
     url: '/ships',
     params,
@@ -19,7 +19,7 @@ const getShips = (params) => frApiRequest(
 )
 
 const createShip = (data) => frApiRequest(
-  actionTypes.CREATE_SHIP,
+  actionTypes.ships.create,
   {
     url: '/ships',
     method: 'post',
@@ -28,7 +28,7 @@ const createShip = (data) => frApiRequest(
 )
 
 const deleteShip = (shipId) => frApiRequest(
-  actionTypes.DELETE_SHIP,
+  actionTypes.ships.delete,
   {
     url: `/ships/${shipId}`,
     method: 'delete',
@@ -36,7 +36,7 @@ const deleteShip = (shipId) => frApiRequest(
 )
 
 const updateShip = (shipId, data) => frApiRequest(
-  actionTypes.UPDATE_SHIP,
+  actionTypes.ships.update,
   {
     url: `/ships/${shipId}`,
     method: 'put',

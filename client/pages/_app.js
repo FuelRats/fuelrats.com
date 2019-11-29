@@ -53,9 +53,11 @@ class FuelRatsApp extends App {
     } = this.props
 
     return (
-      <Provider store={store}>
-        <AppLayout {...layoutProps} />
-      </Provider>
+      <React.StrictMode>
+        <Provider store={store}>
+          <AppLayout {...layoutProps} />
+        </Provider>
+      </React.StrictMode>
     )
   }
 }

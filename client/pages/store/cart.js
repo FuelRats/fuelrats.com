@@ -13,7 +13,6 @@ import {
   selectProducts,
 } from '../../store/selectors'
 import { Link } from '../../routes'
-import Component from '../../components/Component'
 import { PageWrapper } from '../../components/AppLayout'
 import StoreControlBar from '../../components/storefront/StoreControlBar'
 import getMoney from '../../helpers/getMoney'
@@ -23,7 +22,7 @@ import getMoney from '../../helpers/getMoney'
 
 
 @connect
-class ListCart extends Component {
+class ListCart extends React.Component {
   /***************************************************************************\
     Class Properties
   \***************************************************************************/

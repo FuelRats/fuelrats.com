@@ -10,7 +10,6 @@ import { PageWrapper } from '../components/AppLayout'
 import { connect } from '../store'
 import { Link } from '../routes'
 import { passwordPattern } from '../data/RegExpr'
-import Component from '../components/Component'
 import PasswordField from '../components/PasswordField'
 
 
@@ -18,7 +17,7 @@ import PasswordField from '../components/PasswordField'
 
 
 @connect
-class PasswordReset extends Component {
+class PasswordReset extends React.Component {
   /***************************************************************************\
     Class Properties
   \***************************************************************************/

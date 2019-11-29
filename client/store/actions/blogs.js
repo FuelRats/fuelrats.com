@@ -10,7 +10,7 @@ import wpApi from '../../services/wordpress'
 
 
 export const getAuthor = (authorId) => wpApiRequest(
-  actionTypes.GET_WORDPRESS_AUTHOR,
+  actionTypes.wordpress.authors.read,
   { url: `/users/${authorId}` },
 )
 
@@ -19,7 +19,7 @@ export const getAuthor = (authorId) => wpApiRequest(
 
 
 export const getCategory = (categoryId) => wpApiRequest(
-  actionTypes.GET_WORDPRESS_CATEGORY,
+  actionTypes.wordpress.categories.read,
   { url: `/categories/${categoryId}` },
 )
 
@@ -53,7 +53,7 @@ export const getBlog = (id) => async (dispatch, getState) => {
     }))
   }
 
-  return dispatch(createAxiosAction(actionTypes.GET_WORDPRESS_POST, response))
+  return dispatch(createAxiosAction(actionTypes.wordpress.posts.read, response))
 }
 
 
@@ -86,5 +86,5 @@ export const getBlogs = (params) => async (dispatch, getState) => {
     })
   }
 
-  return dispatch(createAxiosAction(actionTypes.GET_WORDPRESS_POSTS, response))
+  return dispatch(createAxiosAction(actionTypes.wordpress.posts.search, response))
 }

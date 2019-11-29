@@ -11,7 +11,6 @@ import moment from 'moment'
 import { actions, connect } from '../../store'
 // import { Link } from '../../routes'
 import { PageWrapper, authenticated } from '../../components/AppLayout'
-import Component from '../../components/Component'
 import OrderStatusIndicator from '../../components/storefront/OrderStatusIndicator'
 import FulfillOrderModal from '../../components/storefront/FulfillOrderModal'
 import { selectOrders, selectSkus } from '../../store/selectors'
@@ -35,7 +34,7 @@ const selectFormattedOrders = createSelector(
 
 @authenticated('order.read')
 @connect
-class ListOrders extends Component {
+class ListOrders extends React.Component {
   /***************************************************************************\
     Class Properties
   \***************************************************************************/

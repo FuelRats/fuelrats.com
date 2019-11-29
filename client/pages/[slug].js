@@ -7,14 +7,13 @@ import React from 'react'
 
 // Component imports
 import { actions, connect, actionStatus } from '../store'
-import Component from '../components/Component'
 import { PageWrapper } from '../components/AppLayout'
 import { selectWordpressPageBySlug } from '../store/selectors'
 
 
 
 @connect
-class WordpressProxy extends Component {
+class WordpressProxy extends React.Component {
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
@@ -22,7 +21,7 @@ class WordpressProxy extends Component {
   static async getInitialProps ({ query, store, res }) {
     const { slug } = query
 
-    if (!store.getState().wordpress.page[slug]) {
+    if (!selectWordpressPageBySlug(store.getState(), { slug })) {
       const { status } = await actions.getWordpressPage(slug)(store.dispatch)
 
       if (status === actionStatus.ERROR && res) {

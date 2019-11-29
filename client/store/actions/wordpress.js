@@ -18,7 +18,7 @@ export const getWordpressPage = (slug) => async (dispatch) => {
   })
 
   return dispatch({
-    ...createAxiosAction(actionTypes.GET_WORDPRESS_PAGE, response),
+    ...createAxiosAction(actionTypes.wordpress.pages.read, response),
     status: response.data && response.data.length ? actionStatus.SUCCESS : actionStatus.ERROR,
   })
 }

@@ -22,6 +22,9 @@
 * Convert change password form into a modal
 * Remove profile settings tab
 * Various adjustments to input style
+* Rewrite redux reducers using the `immer` library
+* Rewrite action type names to follow redux style guide.
+* Remove remaining usages of our `React.Component` wrapper class.
 
 ### 🐛 Fixed
 * Double check login form validity on Firefox. (This fixes firefox autofill)
@@ -33,8 +36,9 @@
 * Add THIS changelog file. :)
 * Upgrade to Next.js 9
     * Various adjustments made to site behavior due to changes in Next
-* Stop linting styles in JS files.
-
+* Stop linting styles in JS files
+* Add tools for better redux debugging
+* Update README badges.
 
 
 ## [2.8.0]
@@ -263,7 +267,7 @@
 * Migrate to NextJS 7
 * Migrate to ESlint 5
 * Update ESLint rules, and code to reflect changes in enforced rules
-
+* Add `<React.StrictMode />` to the app root so we can identify problematic components.
 
 
 

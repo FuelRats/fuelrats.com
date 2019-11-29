@@ -1,3 +1,4 @@
+/* globals $IS_DEVELOPMENT:false */
 // Module imports
 import {
   bindActionCreators,
@@ -27,7 +28,22 @@ import * as actions from './actions'
 
 
 
-const initStore = (state = initialState) => createStore(reducer, state, composeWithDevTools(applyMiddleware(thunkMiddleware)))
+const middlewares = $IS_DEVELOPMENT
+  ? composeWithDevTools(
+    applyMiddleware(
+      require('redux-immutable-state-invariant').default(),
+      thunkMiddleware,
+    ),
+  )
+  : applyMiddleware(
+    thunkMiddleware,
+  )
+
+
+
+
+
+const initStore = (state = initialState) => createStore(reducer, state, middlewares)
 
 
 

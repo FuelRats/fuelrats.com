@@ -7,15 +7,16 @@ import PropTypes from 'prop-types'
 
 
 // Component imports
-import Component from '../Component'
+import { connect } from '../../store'
 import skuIsInStock from '../../helpers/isInStock'
 import getMoney from '../../helpers/getMoney'
+import { selectProductById, selectSkusByProductId } from '../../store/selectors'
 
 
 
 
-
-class ProductCard extends Component {
+@connect
+class ProductCard extends React.Component {
   /***************************************************************************\
     Private Methods
   \***************************************************************************/
@@ -35,6 +36,7 @@ class ProductCard extends Component {
 
     const {
       product,
+      productSkus,
     } = this.props
 
     const {
@@ -42,15 +44,14 @@ class ProductCard extends Component {
       name,
       caption,
       url,
-      skus,
       metadata,
     } = product.attributes
 
 
     let priceRange = ''
 
-    if (Object.keys(skus).length) {
-      const priceList = Object.values(skus).map((sku) => sku.price)
+    if (productSkus.length) {
+      const priceList = productSkus.map((sku) => sku.attributes.price)
       const minPrice = Math.min(...priceList)
       const maxPrice = Math.max(...priceList)
 
@@ -106,16 +107,25 @@ class ProductCard extends Component {
   \***************************************************************************/
 
   get isInStock () {
-    const { skus } = this.props.product.attributes
+    const { productSkus } = this.props
 
-    if (Object.keys(skus).length) {
-      return Object.values(skus).some((sku) => skuIsInStock(sku.inventory))
+    if (productSkus.length) {
+      return productSkus.some((sku) => skuIsInStock(sku.attributes.inventory))
     }
 
     return false
   }
 
 
+
+  /***************************************************************************\
+    Redux Properties
+  \***************************************************************************/
+
+  static mapStateToProps = (state, props) => ({
+    product: selectProductById(state, props),
+    productSkus: selectSkusByProductId(state, props),
+  })
 
 
 
@@ -126,6 +136,9 @@ class ProductCard extends Component {
   static propTypes = {
     onCartButtonClick: PropTypes.func.isRequired,
     product: PropTypes.object.isRequired,
+    /* eslint-disable-next-line react/no-unused-prop-types */// productId is used by mSTP
+    productId: PropTypes.string.isRequired,
+    productSkus: PropTypes.array.isRequired,
   }
 }
 

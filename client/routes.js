@@ -2,11 +2,11 @@ const routes = require('@fuelrats/next-named-routes')
 
 module.exports = routes()
   // Front Page
-  .add('home', '/index', '/')
+  .add('home', '/')
   .add('rescue-landing', '/i-need-fuel')
 
   // Paperwork
-  .add('paperwork', '/paperwork/[rescueId]/index', ({ rescueId }) => `/paperwork/${rescueId}`)
+  .add('paperwork', '/paperwork/[rescueId]', ({ rescueId }) => `/paperwork/${rescueId}`)
   .add('paperwork edit', '/paperwork/[rescueId]/edit', ({ rescueId }) => `/paperwork/${rescueId}/edit`)
 
   // Profile
@@ -48,7 +48,7 @@ module.exports = routes()
   .add('blog view', '/blog/[blogId]', ({ blogId }) => `/blog/${blogId}`)
 
   // Administration
-  .add('admin rescues list', '/admin/rescues/index', '/admin/rescues')
+  .add('admin rescues list', '/admin/rescues')
 
   // Statistics
   .add('stats leaderboard', '/leaderboard')

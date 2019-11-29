@@ -11,7 +11,6 @@ import asModal, { ModalContent, ModalFooter } from './Modal'
 import {
   passwordPattern,
 } from '../data/RegExpr'
-import Component from './Component'
 import PasswordField from './PasswordField'
 import HttpStatus from '../helpers/httpStatus'
 
@@ -21,7 +20,7 @@ import HttpStatus from '../helpers/httpStatus'
   title: 'Change Password',
 })
 @connect
-class ChangePasswordModal extends Component {
+class ChangePasswordModal extends React.Component {
   /***************************************************************************\
     Class Properties
   \***************************************************************************/
