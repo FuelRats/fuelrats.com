@@ -11,12 +11,10 @@ import {
   selectSession,
   selectUser,
   selectUserAvatar,
-  selectUserGroups,
   withCurrentUserId,
 } from '../store/selectors'
 import { Link } from '../routes'
 import AdminUserMenuNav from './AdminUserMenuNav'
-import userHasPermission from '../helpers/userHasPermission'
 
 const UserMenu = (props) => {
   const {
@@ -26,7 +24,6 @@ const UserMenu = (props) => {
     user,
     userAvatar,
     userId,
-    showAdmin,
   } = props
 
   return (
@@ -52,13 +49,19 @@ const UserMenu = (props) => {
             <ul>
               <li>
                 <Link route="profile">
-                  <a><span>My Profile</span></a>
+                  <a><span>Profile</span></a>
                 </Link>
               </li>
 
               <li>
-                <Link route="stats leaderboard">
-                  <a><span>Leaderboard</span></a>
+                <Link route="profile" params={{ tab: 'rats' }}>
+                  <a><span>My Rats</span></a>
+                </Link>
+              </li>
+
+              <li>
+                <Link href="/">
+                  <a><span>My Rescues</span></a>
                 </Link>
               </li>
 
@@ -74,32 +77,7 @@ const UserMenu = (props) => {
             </ul>
           </nav>
 
-          {showAdmin && (
-            <AdminUserMenuNav />
-          )}
-
-          {/* <div
-            className="stats"
-            hidden>
-            <header>My Stats</header>
-
-            <table>
-              <tbody>
-                <tr>
-                  <th>Rescues</th>
-                  <td>648</td>
-                </tr>
-                <tr>
-                  <th>Assists</th>
-                  <td>537</td>
-                </tr>
-                <tr>
-                  <th>Favorite Ship</th>
-                  <td>Asp Explorer</td>
-                </tr>
-              </tbody>
-            </table>
-          </div> */}
+          <AdminUserMenuNav />
         </menu>
       )}
 
@@ -125,7 +103,6 @@ UserMenu.mapStateToProps = (state) => ({
   ...selectSession(state),
   user: withCurrentUserId(selectUser)(state),
   userAvatar: withCurrentUserId(selectUserAvatar)(state),
-  showAdmin: userHasPermission(withCurrentUserId(selectUserGroups)(state), 'isAdministrator'),
 })
 
 
