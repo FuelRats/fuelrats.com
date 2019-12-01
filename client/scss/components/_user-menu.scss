@@ -1,4 +1,4 @@
-$user-menu-width: 21rem;
+$user-menu-width-mobile: 21rem;
 
 .user-menu {
   display: flex;
@@ -29,7 +29,7 @@ $user-menu-width: 21rem;
   }
 
   header {
-    margin-top: 1rem;
+    margin-top: 0.5rem;
 
     color: $grey;
 
@@ -49,11 +49,6 @@ $user-menu-width: 21rem;
     order: 1;
     flex-shrink: 0;
 
-    // max-width: 0;
-    // max-height: 1rem;
-    // margin-top: 3.25rem;
-    // margin-right: -2rem;
-    width: $user-menu-width;
     padding: 0;
 
     border-width: 0.2rem;
@@ -68,15 +63,8 @@ $user-menu-width: 21rem;
     overflow: auto;
 
     > * {
-      // flex-grow: 1;
       flex-shrink: 0;
-      // min-width: 10rem;
-      // max-width: 20vw;
       padding: 2rem 1rem;
-    }
-
-    nav.admin {
-      // background: $light-grey;
     }
 
     @media not screen and (max-width: 768px) {
@@ -112,7 +100,7 @@ $user-menu-width: 21rem;
       display: block;
       position: relative;
 
-      padding: 1rem;
+      padding: 0.5rem 2rem;
 
       color: $white;
 
@@ -205,11 +193,12 @@ $user-menu-width: 21rem;
   #UserMenuControl {
     &:checked {
       ~ menu {
-        transform: translateX(-$user-menu-width);
+        transform: translateX(-$user-menu-width-mobile);
+        width: $user-menu-width-mobile;
       }
 
       ~ #UserMenuToggle {
-        transform: translateX(calc(-1 * (#{$user-menu-width} / 4)));
+        transform: translateX(calc(-1 * (#{$user-menu-width-mobile} / 4)));
       }
     }
 
@@ -229,6 +218,13 @@ $user-menu-width: 21rem;
       box-shadow: 0 0 4px 0 rgba($black, 0.4);
 
       transform: translateX(0);
+
+      nav a {
+        padding: 1rem;
+      }
     }
+  }
+  .user-menu header {
+    margin-top: 1rem;
   }
 }
