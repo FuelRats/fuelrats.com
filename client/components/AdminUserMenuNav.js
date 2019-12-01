@@ -19,7 +19,7 @@ const AdminUserMenuNav = () => (
     <ul className="">
       <li>
         <Link route="admin rescues list">
-          <a>Rescues</a>
+          <a><span>Rescues</span></a>
         </Link>
       </li>
       {/*

@@ -32,11 +32,18 @@ const UserMenu = (props) => {
   return (
     <div className={`user-menu ${loggedIn ? 'logged-in' : ''} ${loggedIn && !userId ? 'logging-in' : ''}`}>
       {Boolean(loggedIn) && (
-        <div className="avatar medium">
-          {Boolean(user) && (
-            <img alt="Your avatar" src={userAvatar} />
-          )}
-        </div>
+        <>
+          <input
+            aria-label="User menu toggle"
+            id="UserMenuControl"
+            type="checkbox" />
+
+          <label className="avatar medium" htmlFor="UserMenuControl" id="UserMenuToggle">
+            {Boolean(user) && (
+              <img alt="Your avatar" src={userAvatar} />
+            )}
+          </label>
+        </>
       )}
 
       {(loggedIn && user) && (
