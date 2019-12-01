@@ -1,10 +1,13 @@
 $user-menu-width-mobile: 21rem;
+$mobile-max-width: 768px;
+$avatar-width: 6.5rem;
+$avatar-margin: 2rem;
 
 .user-menu {
   display: flex;
   position: absolute;
   top: 1.5rem;
-  right: 2rem;
+  right: $avatar-margin;
   z-index: 100;
 
   transition: top 0.2s;
@@ -64,15 +67,16 @@ $user-menu-width-mobile: 21rem;
 
     > * {
       flex-shrink: 0;
+
       padding: 2rem 1rem;
     }
 
-    @media not screen and (max-width: 768px) {
-      right: 5.5rem;
+    @media not screen and (max-width: $mobile-max-width) {
+      right: calc(#{$avatar-width / 2 + #{$avatar-margin}});
 
       max-width: 0;
       max-height: 1rem;
-      margin-top: 3.25rem;
+      margin-top: calc(#{$avatar-width / 2});
 
       transition-delay:
         0s,
@@ -123,6 +127,18 @@ $user-menu-width-mobile: 21rem;
         transition: all 0.2s;
       }
 
+      span {
+        position: relative;
+        z-index: 1;
+      }
+    }
+
+    .logout a {
+      color: $red;
+    }
+
+    .logout a,
+    a {
       &:focus,
       &:hover {
         color: $white;
@@ -130,11 +146,6 @@ $user-menu-width-mobile: 21rem;
         &::before {
           width: 100%;
         }
-      }
-
-      span {
-        position: relative;
-        z-index: 1;
       }
     }
   }
@@ -149,9 +160,10 @@ $user-menu-width-mobile: 21rem;
     order: 2;
 
     transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
   }
 
-  @media not screen and (max-width: 768px) {
+  @media not screen and (max-width: $mobile-max-width) {
     #UserMenuControl:checked {
       ~ menu {
         max-width: 100vw;
@@ -163,7 +175,7 @@ $user-menu-width-mobile: 21rem;
       }
     }
   }
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: $mobile-max-width) {
     &:not(.logged-in) > button.login {
       border-color: $black-lightened;
 
@@ -177,11 +189,6 @@ $user-menu-width-mobile: 21rem;
         color: $white;
       }
     }
-
-    .avatar,
-    menu {
-      border-color: $black-lightened;
-    }
   }
 }
 
@@ -189,16 +196,17 @@ $user-menu-width-mobile: 21rem;
   display: none;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: $mobile-max-width) {
   #UserMenuControl {
     &:checked {
       ~ menu {
-        transform: translateX(-$user-menu-width-mobile);
         width: $user-menu-width-mobile;
+
+        transform: translateX(-$user-menu-width-mobile);
       }
 
       ~ #UserMenuToggle {
-        transform: translateX(calc(-1 * (#{$user-menu-width-mobile} / 4)));
+        transform: translateX(calc(-1 * (#{$user-menu-width-mobile} / 2 - #{$avatar-width} / 2 - #{$avatar-margin})));
       }
     }
 
@@ -207,7 +215,7 @@ $user-menu-width-mobile: 21rem;
       bottom: 0;
       left: 100%;
 
-      padding-top: 7.5rem;
+      padding-top: calc(#{$avatar-width} + 1rem);
 
       border-top: 0;
       border-right: 0;
@@ -224,6 +232,7 @@ $user-menu-width-mobile: 21rem;
       }
     }
   }
+
   .user-menu header {
     margin-top: 1rem;
   }

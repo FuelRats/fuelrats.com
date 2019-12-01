@@ -65,7 +65,7 @@ const UserMenu = (props) => {
                 </Link>
               </li>
 
-              <li>
+              <li className="logout">
                 <Link route="home">
                   <a
                     onClick={() => logout(authenticatedPage)}
