@@ -25,6 +25,7 @@
 * Rewrite redux reducers using the `immer` library
 * Rewrite action type names to follow redux style guide.
 * Remove remaining usages of our `React.Component` wrapper class.
+* Rewrite user menu to be more extensible and mobile friendly.
 
 ### 🐛 Fixed
 * Double check login form validity on Firefox. (This fixes firefox autofill)
