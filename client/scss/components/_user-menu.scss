@@ -210,6 +210,10 @@ $avatar-margin: 2rem;
       }
     }
 
+    &:not(:checked) ~ #UserMenuToggle {
+      border-color: $black-lightened;
+    }
+
     ~ menu {
       top: 0;
       bottom: 0;
