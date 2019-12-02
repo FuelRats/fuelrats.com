@@ -98,13 +98,6 @@ const UserMenu = (props) => {
       title: 'My Rescues',
       route: 'home',
     },
-    {
-      key: 'logout',
-      title: 'Logout',
-      route: 'home',
-      action: () => logout(authenticatedPage),
-      className: 'logout',
-    },
   ]
 
   const adminItems = [
@@ -118,6 +111,16 @@ const UserMenu = (props) => {
       key: 'admin-users',
       title: 'Users',
       permission: showUserList,
+    },
+  ]
+
+  const actions = [
+    {
+      key: 'logout',
+      title: 'Logout',
+      route: 'home',
+      action: () => logout(authenticatedPage),
+      className: 'logout',
     },
   ]
 
@@ -142,6 +145,7 @@ const UserMenu = (props) => {
         <menu>
           {renderNav({ items: userItems })}
           {renderNav({ header: 'Admin', items: adminItems })}
+          {renderNav({ items: actions })}
         </menu>
       )}
 
