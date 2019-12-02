@@ -17,13 +17,57 @@ import {
 import { Link } from '../routes'
 import userHasPermission from '../helpers/userHasPermission'
 
+const NavItem = ({ item }) => {
+  const {
+    action,
+    className,
+    route,
+    routeParams,
+    permission = true,
+    title,
+  } = item
+
+  if (permission) {
+    return (
+      <li className={className}>
+        <Link route={route} params={routeParams}>
+          <a {...(action && { href: '#', onClick: action })}>
+            <span>{title}</span>
+          </a>
+        </Link>
+      </li>
+    )
+  }
+
+  return null
+}
+
+const Nav = (nav) => {
+  const {
+    header,
+    items,
+  } = nav
+
+  const permitted = items.filter(({ permission = true }) => permission).length > 0
+
+  if (permitted) {
+    return (
+      <nav>
+        {permitted && header && (<header>{header}</header>)}
+        <ul>
+          {permitted && items.map((item) => (<NavItem key={item.key} item={item} />))}
+        </ul>
+      </nav>
+    )
+  }
+
+  return null
+}
+
 const UserMenu = (props) => {
   const {
     showRescueList,
     showUserList,
-  } = props
-
-  const {
     authenticatedPage,
     loggedIn,
     logout,
@@ -31,55 +75,6 @@ const UserMenu = (props) => {
     userAvatar,
     userId,
   } = props
-
-  const renderNavItem = (item) => {
-    const {
-      action,
-      className,
-      key,
-      route,
-      routeParams,
-      permission,
-      title,
-    } = item
-
-    if (typeof (permission) === 'undefined' || permission) {
-      return (
-        <li className={className} key={key}>
-          <Link route={route} params={routeParams}>
-            <a {...(action && { href: '#', onClick: action })}>
-              <span>{title}</span>
-            </a>
-          </Link>
-        </li>
-      )
-    }
-
-    return null
-  }
-
-  const renderNav = (nav) => {
-    const {
-      header,
-      items,
-    } = nav
-
-    const permissions = items.map((item) => item.permission)
-    const permitted = permissions.includes(true) || permissions.includes(undefined)
-
-    if (permitted) {
-      return (
-        <nav>
-          {permitted && (<header>{header}</header>)}
-          <ul>
-            {permitted && items.map(renderNavItem)}
-          </ul>
-        </nav>
-      )
-    }
-
-    return null
-  }
 
   const userItems = [
     {
@@ -143,9 +138,9 @@ const UserMenu = (props) => {
 
       {(loggedIn && user) && (
         <menu>
-          {renderNav({ items: userItems })}
-          {renderNav({ header: 'Admin', items: adminItems })}
-          {renderNav({ items: actions })}
+          <Nav items={userItems} />
+          <Nav header="Admin" items={adminItems} />
+          <Nav items={actions} />
         </menu>
       )}
 
