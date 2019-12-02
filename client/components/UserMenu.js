@@ -15,7 +15,6 @@ import {
   withCurrentUserId,
 } from '../store/selectors'
 import { Link } from '../routes'
-// import AdminUserMenuNav from './AdminUserMenuNav'
 import userHasPermission from '../helpers/userHasPermission'
 
 const UserMenu = (props) => {

@@ -72,7 +72,7 @@ $avatar-margin: 2rem;
     }
 
     @media not screen and (max-width: $mobile-max-width) {
-      right: calc(#{$avatar-width / 2 + #{$avatar-margin}});
+      right: calc(#{$avatar-width} / 2 + #{$avatar-margin});
 
       max-width: 0;
       max-height: 1rem;
@@ -160,6 +160,7 @@ $avatar-margin: 2rem;
     order: 2;
 
     transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+
     cursor: pointer;
   }
 
