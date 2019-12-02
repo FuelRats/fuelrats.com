@@ -15,84 +15,132 @@ import {
   withCurrentUserId,
 } from '../store/selectors'
 import { Link } from '../routes'
-import AdminUserMenuNav from './AdminUserMenuNav'
 import userHasPermission from '../helpers/userHasPermission'
+
+const NavItem = ({ item }) => {
+  const {
+    action,
+    className,
+    route,
+    routeParams,
+    permission = true,
+    title,
+  } = item
+
+  if (permission) {
+    return (
+      <li className={className}>
+        <Link route={route} params={routeParams}>
+          <a {...(action && { href: '#', onClick: action })}>
+            <span>{title}</span>
+          </a>
+        </Link>
+      </li>
+    )
+  }
+
+  return null
+}
+
+const Nav = (nav) => {
+  const {
+    header,
+    items,
+  } = nav
+
+  const permitted = items.filter(({ permission = true }) => permission).length > 0
+
+  if (permitted) {
+    return (
+      <nav>
+        {permitted && header && (<header>{header}</header>)}
+        <ul>
+          {permitted && items.map((item) => (<NavItem key={item.key} item={item} />))}
+        </ul>
+      </nav>
+    )
+  }
+
+  return null
+}
 
 const UserMenu = (props) => {
   const {
+    showRescueList,
+    showUserList,
     authenticatedPage,
     loggedIn,
     logout,
     user,
     userAvatar,
     userId,
-    showAdmin,
   } = props
+
+  const userItems = [
+    {
+      key: 'profile',
+      title: 'Profile',
+      route: 'profile',
+    },
+    {
+      key: 'my-rats',
+      title: 'My Rats',
+      route: 'profile',
+      routeParams: { tab: 'rats' },
+    },
+    {
+      key: 'my-rescues',
+      title: 'My Rescues',
+      route: 'home',
+    },
+  ]
+
+  const adminItems = [
+    {
+      key: 'admin-rescues-list',
+      title: 'Rescues',
+      route: 'admin rescues list',
+      permission: showRescueList,
+    },
+    {
+      key: 'admin-users',
+      title: 'Users',
+      permission: showUserList,
+    },
+  ]
+
+  const actions = [
+    {
+      key: 'logout',
+      title: 'Logout',
+      route: 'home',
+      action: () => logout(authenticatedPage),
+      className: 'logout',
+    },
+  ]
 
   return (
     <div className={`user-menu ${loggedIn ? 'logged-in' : ''} ${loggedIn && !userId ? 'logging-in' : ''}`}>
       {Boolean(loggedIn) && (
-        <div className="avatar medium">
-          {Boolean(user) && (
-            <img alt="Your avatar" src={userAvatar} />
-          )}
-        </div>
+        <>
+          <input
+            aria-label="User menu toggle"
+            id="UserMenuControl"
+            type="checkbox" />
+
+          <label className="avatar medium" htmlFor="UserMenuControl" id="UserMenuToggle">
+            {Boolean(user) && (
+              <img alt="Your avatar" src={userAvatar} />
+            )}
+          </label>
+        </>
       )}
 
       {(loggedIn && user) && (
         <menu>
-          <nav className="user">
-            <ul>
-              <li>
-                <Link route="profile">
-                  <a><span>My Profile</span></a>
-                </Link>
-              </li>
-
-              <li>
-                <Link route="stats leaderboard">
-                  <a><span>Leaderboard</span></a>
-                </Link>
-              </li>
-
-              <li>
-                <Link route="home">
-                  <a
-                    onClick={() => logout(authenticatedPage)}
-                    href="#">
-                    <span>Logout</span>
-                  </a>
-                </Link>
-              </li>
-            </ul>
-          </nav>
-
-          {showAdmin && (
-            <AdminUserMenuNav />
-          )}
-
-          {/* <div
-            className="stats"
-            hidden>
-            <header>My Stats</header>
-
-            <table>
-              <tbody>
-                <tr>
-                  <th>Rescues</th>
-                  <td>648</td>
-                </tr>
-                <tr>
-                  <th>Assists</th>
-                  <td>537</td>
-                </tr>
-                <tr>
-                  <th>Favorite Ship</th>
-                  <td>Asp Explorer</td>
-                </tr>
-              </tbody>
-            </table>
-          </div> */}
+          <Nav items={userItems} />
+          <Nav header="Admin" items={adminItems} />
+          <Nav items={actions} />
         </menu>
       )}
 
@@ -118,7 +166,9 @@ UserMenu.mapStateToProps = (state) => ({
   ...selectSession(state),
   user: withCurrentUserId(selectUser)(state),
   userAvatar: withCurrentUserId(selectUserAvatar)(state),
-  showAdmin: userHasPermission(withCurrentUserId(selectUserGroups)(state), 'isAdministrator'),
+  showRescueList: userHasPermission(withCurrentUserId(selectUserGroups)(state), 'rescue.write'),
+  // showUserList: userHasPermission(withCurrentUserId(selectUserGroups)(state), 'user.write'),
+  showUserList: false, // Until route exists
 })
 
 
