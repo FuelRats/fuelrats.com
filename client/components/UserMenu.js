@@ -11,12 +11,19 @@ import {
   selectSession,
   selectUser,
   selectUserAvatar,
+  selectUserGroups,
   withCurrentUserId,
 } from '../store/selectors'
 import { Link } from '../routes'
-import AdminUserMenuNav from './AdminUserMenuNav'
+// import AdminUserMenuNav from './AdminUserMenuNav'
+import userHasPermission from '../helpers/userHasPermission'
 
 const UserMenu = (props) => {
+  const {
+    showRescueList,
+    showUserList,
+  } = props
+
   const {
     authenticatedPage,
     loggedIn,
@@ -25,6 +32,95 @@ const UserMenu = (props) => {
     userAvatar,
     userId,
   } = props
+
+  const renderNavItem = (item) => {
+    const {
+      action,
+      className,
+      key,
+      route,
+      routeParams,
+      permission,
+      title,
+    } = item
+
+    if (typeof (permission) === 'undefined' || permission) {
+      return (
+        <li className={className} key={key}>
+          <Link route={route} params={routeParams}>
+            <a {...(action && { href: '#', onClick: action })}>
+              <span>{title}</span>
+            </a>
+          </Link>
+        </li>
+      )
+    }
+
+    return null
+  }
+
+  const renderNav = (nav) => {
+    const {
+      header,
+      items,
+    } = nav
+
+    const permissions = items.map((item) => item.permission)
+    const permitted = permissions.includes(true) || permissions.includes(undefined)
+
+    if (permitted) {
+      return (
+        <nav>
+          {permitted && (<header>{header}</header>)}
+          <ul>
+            {permitted && items.map(renderNavItem)}
+          </ul>
+        </nav>
+      )
+    }
+
+    return null
+  }
+
+  const userItems = [
+    {
+      key: 'profile',
+      title: 'Profile',
+      route: 'profile',
+    },
+    {
+      key: 'my-rats',
+      title: 'My Rats',
+      route: 'profile',
+      routeParams: { tab: 'rats' },
+    },
+    {
+      key: 'my-rescues',
+      title: 'My Rescues',
+      route: 'home',
+    },
+    {
+      key: 'logout',
+      title: 'Logout',
+      route: 'home',
+      action: () => logout(authenticatedPage),
+      className: 'logout',
+    },
+  ]
+
+  const adminItems = [
+    {
+      key: 'admin-rescues-list',
+      title: 'Rescues',
+      route: 'admin rescues list',
+      permission: showRescueList,
+    },
+    {
+      key: 'admin-users',
+      title: 'Users',
+      permission: showUserList,
+    },
+  ]
 
   return (
     <div className={`user-menu ${loggedIn ? 'logged-in' : ''} ${loggedIn && !userId ? 'logging-in' : ''}`}>
@@ -45,39 +141,8 @@ const UserMenu = (props) => {
 
       {(loggedIn && user) && (
         <menu>
-          <nav className="user">
-            <ul>
-              <li>
-                <Link route="profile">
-                  <a><span>Profile</span></a>
-                </Link>
-              </li>
-
-              <li>
-                <Link route="profile" params={{ tab: 'rats' }}>
-                  <a><span>My Rats</span></a>
-                </Link>
-              </li>
-
-              <li>
-                <Link href="/">
-                  <a><span>My Rescues</span></a>
-                </Link>
-              </li>
-
-              <li className="logout">
-                <Link route="home">
-                  <a
-                    onClick={() => logout(authenticatedPage)}
-                    href="#">
-                    <span>Logout</span>
-                  </a>
-                </Link>
-              </li>
-            </ul>
-          </nav>
-
-          <AdminUserMenuNav />
+          {renderNav({ items: userItems })}
+          {renderNav({ header: 'Admin', items: adminItems })}
         </menu>
       )}
 
@@ -103,6 +168,9 @@ UserMenu.mapStateToProps = (state) => ({
   ...selectSession(state),
   user: withCurrentUserId(selectUser)(state),
   userAvatar: withCurrentUserId(selectUserAvatar)(state),
+  showRescueList: userHasPermission(withCurrentUserId(selectUserGroups)(state), 'rescue.write'),
+  // showUserList: userHasPermission(withCurrentUserId(selectUserGroups)(state), 'user.write'),
+  showUserList: false, // Until route exists
 })
 
 
