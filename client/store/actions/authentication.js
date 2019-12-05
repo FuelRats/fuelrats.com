@@ -24,7 +24,7 @@ const SESSION_TOKEN_LENGTH = 365 // days
 
 
 export const changePassword = (currentPassword, newPassword) => frApiRequest(
-  actionTypes.session.password.update,
+  actionTypes.passwords.update,
   {
     url: '/users/setpassword',
     method: 'put',
@@ -91,7 +91,7 @@ export const login = (options) => async (dispatch) => {
 
 
 export const getClientOAuthPage = (params) => frApiRequest(
-  actionTypes.session.getClientOAuthPage,
+  actionTypes.session.readClientOAuthPage,
   {
     url: '/oauth2/authorize',
     params,
@@ -119,7 +119,7 @@ export const register = ({ recaptcha, ...data }) => frApiRequest(
 
 
 export const resetPassword = ({ password, token }) => frApiRequest(
-  actionTypes.session.password.reset,
+  actionTypes.passwords.reset,
   {
     url: `/reset/${token}`,
     method: 'post',
@@ -134,7 +134,7 @@ export const resetPassword = ({ password, token }) => frApiRequest(
 
 
 export const sendPasswordResetEmail = (email) => frApiRequest(
-  actionTypes.session.password.requestReset,
+  actionTypes.passwords.requestReset,
   {
     url: '/reset',
     method: 'post',
@@ -149,6 +149,6 @@ export const sendPasswordResetEmail = (email) => frApiRequest(
 
 
 export const validatePasswordResetToken = (token) => frApiRequest(
-  actionTypes.session.password.validateReset,
+  actionTypes.passwords.validateReset,
   { url: `/reset/${token}` },
 )

@@ -1,185 +1,176 @@
 /* eslint-disable max-classes-per-file */// I know what I'm doing. shut up.
 
-
-
-
-
-import { customEnumerable } from '../helpers/enum'
-
-/**
- *  Decorator which turns a class into an enumerable with values that are usable as redux action types.
- */
-const actionType = customEnumerable((target, key) => `${target.prototype.constructor.name}/${key.toString()}`.toLowerCase())
-
-/**
- * Adds read properties to the class, then defines it as an actionType domain.
- *
- * @param {Object} target
- */
-const readableActionType = (target) => {
-  target.read = undefined
-  target.search = undefined
-  return actionType(target)
-}
-
-/**
- * Adds read and write properties to the class, then defines it as an actionType domain class.
- *
- * @param {Object} target
- */
-const writableActionType = (target) => {
-  target.create = undefined
-  target.delete = undefined
-  target.update = undefined
-  return readableActionType(target)
+const decals = {
+  read: 'decals/read',
+  redeem: 'decals/redeem',
 }
 
 
-
-
-
-@writableActionType
-class Decals {
-  static redeem
-}
-
-@writableActionType
-class Epics {}
-
-@readableActionType
-class Leaderboard {}
-
-@writableActionType
-class Nicknames {}
-
-@writableActionType
-class Rats {}
-
-@writableActionType
-class Rescues {
-  static patchRats
-}
-
-@writableActionType
-class Ships {}
-
-@writableActionType
-class Users {}
-
-
-
-
-
-@actionType
-class Images {
-  static read
-  static dispose
+const epics = {
+  read: 'epics/read',
+  create: 'epics/create',
 }
 
 
-@actionType
-class Password {
-  static reset
-  static requestReset
-  static update
-  static validateReset
+const leaderboard = {
+  read: 'leaderboard/read',
 }
 
-@actionType
-class Session {
-  static password = Password
 
-  static login
-  static logout
-  static register
+const nicknames = {
+  create: 'nicknames/create',
+}
 
-  static initialize
 
-  static read
-  static readClientOAuthPage
+const rats = {
+  read: 'rats/read',
+  search: 'rats/search',
+  create: 'rats/create',
+  delete: 'rats/delete',
+  update: 'rats/update',
+}
 
-  static pageChange
-  static setFlag
+
+const rescues = {
+  read: 'rescues/read',
+  search: 'rescues/search',
+  create: 'rescues/create',
+  delete: 'rescues/delete',
+  update: 'rescues/update',
+  patchRats: 'rescues/patchRats',
+}
+
+
+const ships = {
+  read: 'ships/read',
+  search: 'ships/search',
+  create: 'ships/create',
+  delete: 'ships/delete',
+  update: 'ships/update',
+}
+
+
+const users = {
+  update: 'users/update',
 }
 
 
 
 
 
-@actionType
-class StripeCart {
-  static clear
-  static deleteItem
-  static read
-  static updateItem
-}
-
-@writableActionType
-class StripeOrders {
-  static pay
-}
-
-@readableActionType
-class StripeProducts {}
-
-@actionType
-class Stripe {
-  static cart = StripeCart
-  static orders = StripeOrders
-  static products = StripeProducts
-}
-
-
-
-@readableActionType
-class WordpressAuthors {}
-
-@readableActionType
-class WordpressCategories {}
-
-@readableActionType
-class WordpressPages {}
-
-@readableActionType
-class WordpressPosts {}
-
-
-@actionType
-class Wordpress {
-  static authors = WordpressAuthors
-  static categories = WordpressCategories
-  static pages = WordpressPages
-  static posts = WordpressPosts
+const images = {
+  read: 'images/read',
+  dispose: 'images/dispose',
 }
 
 
 
 
 
-@actionType
-class ActionTypes {
+const passwords = {
+  reset: 'passwords/reset',
+  requestReset: 'passwords/requestReset',
+  update: 'passwords/update',
+  validateReset: 'passwords/validateReset',
+}
+
+
+const session = {
+  login: 'session/login',
+  logout: 'session/logout',
+  register: 'session/register',
+  initialize: 'session/initialize',
+  read: 'session/read',
+  readClientOAuthPage: 'session/readClientOAuthPage',
+  pageChange: 'session/pageChange',
+  setFlag: 'session/setFlag',
+}
+
+
+
+
+
+const stripe = {
+  cart: {
+    clear: 'stripeCart/clear',
+    deleteItem: 'stripeCart/deleteItem',
+    read: 'stripeCart/read',
+    updateItem: 'stripeCart/updateItem',
+  },
+  orders: {
+    create: 'stripeOrders/create',
+    pay: 'stripeOrders/pay',
+    read: 'stripeOrders/read',
+    search: 'stripeOrders/search',
+    update: 'stripeOrders/update',
+  },
+  products: {
+    read: 'stripeProducts/read',
+    search: 'stripeProducts/search',
+  },
+}
+
+
+
+
+
+const wordpress = {
+  authors: {
+    read: 'wordpressAuthors/read',
+  },
+  categories: {
+    read: 'wordpressCategories/read',
+  },
+  pages: {
+    read: 'wordpressPages/read',
+  },
+  posts: {
+    read: 'wordpressPosts/read',
+    search: 'wordpressPosts/search',
+  },
+}
+
+
+
+
+
+const actionTypes = {
   // API Resources
-  static decals = Decals
-  static epics = Epics
-  static leaderboard = Leaderboard
-  static nicknames = Nicknames
-  static rats = Rats
-  static rescues = Rescues
-  static ships = Ships
-  static users = Users
-
+  decals,
+  epics,
+  leaderboard,
+  nicknames,
+  passwords,
+  rats,
+  rescues,
+  ships,
+  users,
 
   // Special
-  static images = Images
-  static session = Session
-
+  images,
+  session,
 
   // Services
-  static stripe = Stripe
-  static wordpress = Wordpress
+  stripe,
+  wordpress,
 }
 
 
 
 
-export default ActionTypes
+
+export default actionTypes
+
+
+
+/* Template:
+
+const domain = {
+  create: 'domain/create',
+  delete: 'domain/delete',
+  read: 'domain/read',
+  search: 'domain/search',
+  update: 'domain/update',
+}
+
+*/

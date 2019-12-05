@@ -28,22 +28,18 @@ import * as actions from './actions'
 
 
 
-const middlewares = $IS_DEVELOPMENT
-  ? composeWithDevTools(
-    applyMiddleware(
-      require('redux-immutable-state-invariant').default(),
-      thunkMiddleware,
-    ),
-  )
-  : applyMiddleware(
-    thunkMiddleware,
-  )
+const middlewares = [thunkMiddleware]
+
+if ($IS_DEVELOPMENT) {
+  /* eslint-disable-next-line global-require */// Dev mode conditional import
+  middlewares.unshift(require('redux-immutable-state-invariant').default())
+}
 
 
 
 
 
-const initStore = (state = initialState) => createStore(reducer, state, middlewares)
+const initStore = (state = initialState) => createStore(reducer, state, composeWithDevTools(applyMiddleware(...middlewares)))
 
 
 
