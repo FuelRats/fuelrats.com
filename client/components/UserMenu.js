@@ -139,7 +139,7 @@ const UserMenu = (props) => {
       {(loggedIn && user) && (
         <menu>
           <Nav items={userItems} />
-          <Nav header="Admin" items={adminItems} />
+          <Nav header="Tools" items={adminItems} />
           <Nav items={actions} />
         </menu>
       )}
