@@ -2,6 +2,7 @@ $user-menu-width-mobile: 21rem;
 $mobile-max-width: 768px;
 $avatar-width: 6.5rem;
 $avatar-margin: 2rem;
+$user-menu-border-width-mobile: 5px;
 
 .user-menu {
   display: flex;
@@ -80,9 +81,9 @@ $avatar-margin: 2rem;
       margin-top: calc(#{$avatar-width / 2});
 
       transition-duration:
-        0.2s,
-        0.2s,
-        0.2s;
+        0.3s,
+        0.3s,
+        0.3s;
       transition-property:
         border-color,
         max-height,
@@ -93,9 +94,11 @@ $avatar-margin: 2rem;
   nav {
     padding: 1rem 0;
 
-    border-bottom: 1px solid $black-lightened;
-
     background-color: $black;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid $black-lightened;
+    }
 
     a {
       display: block;
@@ -206,13 +209,11 @@ $avatar-margin: 2rem;
   #UserMenuControl {
     &:checked {
       ~ menu {
-        width: $user-menu-width-mobile;
-
         transform: translateX(-$user-menu-width-mobile);
       }
 
       ~ #UserMenuToggle {
-        transform: translateX(calc(-1 * (#{$user-menu-width-mobile} / 2 - #{$avatar-width} / 2 - #{$avatar-margin})));
+        transform: translateX(calc(-1 * ((#{$user-menu-width-mobile} / 2) - (#{$avatar-width} / 2) - #{$avatar-margin} - (#{$user-menu-border-width-mobile} / 2))));
       }
     }
 
@@ -225,12 +226,13 @@ $avatar-margin: 2rem;
       bottom: 0;
       left: 100%;
 
+      width: $user-menu-width-mobile;
       padding-top: calc(#{$avatar-width} + 1rem);
 
       border-top: 0;
       border-right: 0;
       border-bottom: 0;
-      border-left: 5px solid $red;
+      border-left: $user-menu-border-width-mobile solid $red;
 
 
       box-shadow: 0 0 4px 0 rgba($black, 0.4);
