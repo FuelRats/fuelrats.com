@@ -165,9 +165,8 @@ $user-menu-border-width-mobile: 5px;
   }
 
   .avatar:hover,
-  .avatar:focus,
-  #UserMenuControl:checked ~ .avatar {
-    box-shadow: 0 0 0 2px $red;
+  .avatar:focus {
+    border-width: 0.4rem;
   }
 
   .avatar:active {
