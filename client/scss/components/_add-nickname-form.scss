@@ -1,0 +1,37 @@
+.add-nickname-form {
+  display: flex;
+  position: relative;
+
+  flex-flow: row nowrap;
+  align-items: center;
+
+  height: 100%;
+
+  fieldset {
+    flex: 2 0;
+
+    margin-right: 0.5rem;
+    padding: 0;
+  }
+
+  button[type='submit'] {
+    flex: 0 0 auto;
+
+    margin-right: 0.2rem;
+  }
+
+  .info-bubble {
+    pointer-events: none;
+
+    position: absolute;
+    top: 5rem;
+    left: 3rem;
+
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  #AddNickname:focus ~ #NickRegisterReminder {
+    opacity: 1;
+  }
+}
