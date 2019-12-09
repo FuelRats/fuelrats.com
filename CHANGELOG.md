@@ -8,6 +8,7 @@
 * Add link to "How to file cases" confluence article to paperwork edit page
 * Add change password modal to profile page
 * Add handling for API resource type "Users"
+* Add reminder that nicknames which are active on irc cannot be registered
 
 ### ⚡ Changed
 * Disable & Clear first limpet field when outcome is not set to success

@@ -47,12 +47,13 @@
     box-shadow: none;
 
     &:not(.inline) {
-      border-width: 0 0 0.3rem;
+      border-width: 0;
       border-color: transparent;
     }
 
 
     &[required] {
+      border-width: 0 0 0.3rem;
       border-color: $red;
 
       box-shadow: none;

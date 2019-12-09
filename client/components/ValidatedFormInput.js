@@ -90,6 +90,8 @@ class ValidatedFormInput extends React.Component {
       errorMessage,
     } = this.state
     const {
+      as: Element,
+      children,
       id,
       label,
       value,
@@ -102,14 +104,15 @@ class ValidatedFormInput extends React.Component {
     )
 
     return (
-      <fieldset className="validated-form-input">
+      <Element className="validated-form-input">
         {renderLabel && <label htmlFor={id}>{label}</label>}
         <input
           placeholder={renderLabel ? undefined : label}
           {...this.inputProps}
           onChange={this._handleChange} />
         <div className={tooltipClasses}>{this.state.errorMessage}</div>
-      </fieldset>
+        {children}
+      </Element>
     )
   }
 
@@ -117,6 +120,8 @@ class ValidatedFormInput extends React.Component {
   get inputProps () {
     const inputProps = { ...this.props }
 
+    delete inputProps.as
+    delete inputProps.children
     delete inputProps.doubleValidate
     delete inputProps.invalidMessage
     delete inputProps.label
@@ -138,6 +143,7 @@ class ValidatedFormInput extends React.Component {
 
 
   static defaultProps = {
+    as: 'fieldset',
     doubleValidate: false,
     invalidMessage: null,
     name: null,
@@ -149,6 +155,7 @@ class ValidatedFormInput extends React.Component {
   }
 
   static propTypes = {
+    as: PropTypes.elementType,
     doubleValidate: PropTypes.bool,
     id: PropTypes.string.isRequired,
     invalidMessage: PropTypes.string,
