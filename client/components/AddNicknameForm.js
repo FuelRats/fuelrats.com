@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect } from '../store'
 import { selectUser, withCurrentUserId } from '../store/selectors'
 import { ircNickPattern } from '../data/RegExpr'
+import InfoBubble from './InfoBubble'
 import ValidatedFormInput from './ValidatedFormInput'
 
 
@@ -80,10 +81,11 @@ class AddNicknameForm extends React.Component {
 
     return (
       <form
+        className="add-nickname-form"
         onSubmit={this._handleSubmit}>
         <ValidatedFormInput
           className="dark"
-          id="addNickname"
+          id="AddNickname"
           label="Nickname"
           name="nickname"
           onChange={this._handleChange}
@@ -91,10 +93,17 @@ class AddNicknameForm extends React.Component {
           pattern={ircNickPattern}
           patternMessage="Nickname must start with a letter, contain no spaces, and be between 2-30 characters"
           type="text"
-          value={nickname} />
+          value={nickname}>
+          <InfoBubble id="NickRegisterReminder" header="reminder">
+            You cannot register a nick that's in use on IRC. Switch to a temporary one before registering!
+          </InfoBubble>
+        </ValidatedFormInput>
+
+
+
         <ValidatedFormInput
           className="dark"
-          id="addNicknamePass"
+          id="AddNicknamePass"
           label="NicknamePass"
           name="password"
           onChange={this._handleChange}
@@ -102,6 +111,7 @@ class AddNicknameForm extends React.Component {
           title="This is the password you use to identify with in IRC"
           type="password"
           value={password} />
+
         <button
           aria-label="submit new nickname"
           className="green icon"
