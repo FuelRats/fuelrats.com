@@ -128,7 +128,7 @@ const UserMenu = (props) => {
             id="UserMenuControl"
             type="checkbox" />
 
-          <label className="avatar medium" htmlFor="UserMenuControl" id="UserMenuToggle">
+          <label className="avatar medium" htmlFor="UserMenuControl" id="UserMenuToggle" title="Expand/Collapse User Menu">
             {Boolean(user) && (
               <img alt="Your avatar" src={userAvatar} />
             )}
@@ -139,7 +139,7 @@ const UserMenu = (props) => {
       {(loggedIn && user) && (
         <menu>
           <Nav items={userItems} />
-          <Nav header="Admin" items={adminItems} />
+          <Nav header="Tools" items={adminItems} />
           <Nav items={actions} />
         </menu>
       )}
