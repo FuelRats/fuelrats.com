@@ -46,6 +46,12 @@ const Version = () => (
           </a>
         </span>
         <span>
+          {'Node Version: '}
+          <a target="_blank" rel="noopener noreferrer" href={`https://github.com/nodejs/node/releases/tag/${NODE_VERSION}`}>
+            {NODE_VERSION}
+          </a>
+        </span>
+        <span>
           {'Built On: '}
           <a target="_blank" rel="noopener noreferrer" href={BUILD_URL}>
             <time dateTime={BUILD_DATE}>{moment.utc(BUILD_DATE).format('MMMM Do YYYY, hh:mm z')}</time>
@@ -63,12 +69,6 @@ const Version = () => (
             {BUILD_COMMIT || 'null'}
           </a>
         </span>
-        <span>
-          {'Node Version: '}
-          <a target="_blank" rel="noopener noreferrer" href={`https://github.com/nodejs/node/releases/tag/${NODE_VERSION}`}>
-            {NODE_VERSION}
-          </a>
-        </span>
       </div>
     </div>
   </PageWrapper>
@@ -80,13 +80,12 @@ Version.getInitialProps = ({ asPath, res }) => {
     res.end(JSON.stringify({
       data: {
         id: NEXT_BUILD_ID,
-        type: 'frWebMetadata',
+        type: 'frWebBuilds',
         attributes: {
+          branch: BUILD_BRANCH || 'develop',
+          builtOn: BUILD_DATE,
+          commit: BUILD_COMMIT || null,
           version: `v${version}`,
-          buildDate: BUILD_DATE,
-          buildBranch: BUILD_BRANCH || 'develop',
-          buildCommit: BUILD_COMMIT || null,
-          nodeVersion: NODE_VERSION,
         },
       },
 
