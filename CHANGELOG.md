@@ -46,6 +46,7 @@
 * Remove remaining usages of our `React.Component` wrapper class.
 * Rewrite user menu to be more extensible and mobile friendly.
 * Restructure version page a bit for consistency.
+* Remove teespring link from webstore
 
 ### 🐛 Fixed
 * Double check login form validity on Firefox. (This fixes firefox autofill)
