@@ -11,8 +11,8 @@ import { actions, connect } from '../../../store'
 import {
   selectRatsByRescueId,
   selectRescueById,
-  selectUser,
-  selectUserGroups,
+  selectUserById,
+  selectGroupsByUserId,
   withCurrentUserId,
 } from '../../../store/selectors'
 import { PageWrapper, authenticated } from '../../../components/AppLayout'
@@ -424,8 +424,8 @@ class Paperwork extends React.Component {
   static mapStateToProps = (state, { query }) => ({
     rats: selectRatsByRescueId(state, query) || [],
     rescue: selectRescueById(state, query),
-    currentUser: withCurrentUserId(selectUser)(state),
-    currentUserGroups: withCurrentUserId(selectUserGroups)(state),
+    currentUser: withCurrentUserId(selectUserById)(state),
+    currentUserGroups: withCurrentUserId(selectGroupsByUserId)(state),
   })
 }
 

@@ -8,7 +8,7 @@ import React from 'react'
 // Component imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect } from '../store'
-import { selectUser, withCurrentUserId } from '../store/selectors'
+import { selectUserById, withCurrentUserId } from '../store/selectors'
 import { ircNickPattern } from '../data/RegExpr'
 import InfoBubble from './InfoBubble'
 import ValidatedFormInput from './ValidatedFormInput'
@@ -134,7 +134,7 @@ class AddNicknameForm extends React.Component {
   static mapDispatchToProps = ['addNickname']
 
   static mapStateToProps = (state) => ({
-    user: withCurrentUserId(selectUser)(state),
+    user: withCurrentUserId(selectUserById)(state),
   })
 }
 

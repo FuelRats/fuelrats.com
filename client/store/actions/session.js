@@ -9,7 +9,7 @@ import JsCookie from 'js-cookie'
 import { getUserProfile } from './user'
 import {
   selectSession,
-  selectUser,
+  selectUserById,
   withCurrentUserId,
 } from '../selectors'
 import actionStatus from '../actionStatus'
@@ -38,7 +38,7 @@ export const logout = (delayLogout) => (dispatch) => {
 
 export const initUserSession = (ctx) => async (dispatch, getState) => {
   const state = getState()
-  const user = withCurrentUserId(selectUser)(state)
+  const user = withCurrentUserId(selectUserById)(state)
   const session = selectSession(state)
 
   const { access_token: accessToken } = nextCookies(ctx)

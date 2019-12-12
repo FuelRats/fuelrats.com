@@ -9,8 +9,8 @@ import React, { useCallback, useEffect, useRef } from 'react'
 import { connect } from '../../store'
 import {
   selectSession,
-  selectUser,
-  selectUserAvatar,
+  selectUserById,
+  selectAvatarByUserId,
   withCurrentUserId,
 } from '../../store/selectors'
 import NavSection from './NavSection'
@@ -130,8 +130,8 @@ UserMenu.mapDispatchToProps = ['logout', 'setFlag']
 
 UserMenu.mapStateToProps = (state) => ({
   ...selectSession(state),
-  user: withCurrentUserId(selectUser)(state),
-  userAvatar: withCurrentUserId(selectUserAvatar)(state),
+  user: withCurrentUserId(selectUserById)(state),
+  userAvatar: withCurrentUserId(selectAvatarByUserId)(state),
 })
 
 

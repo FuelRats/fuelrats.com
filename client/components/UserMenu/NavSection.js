@@ -7,7 +7,7 @@ import { createSelector } from 'reselect'
 
 // Component imports
 import { connect } from '../../store'
-import { withCurrentUserId, selectUserGroups } from '../../store/selectors'
+import { withCurrentUserId, selectGroupsByUserId } from '../../store/selectors'
 import userHasPermission from '../../helpers/userHasPermission'
 import NavItem from './NavItem'
 
@@ -42,7 +42,7 @@ const NavSection = (props) => {
 NavSection.mapStateToProps = createSelector(
   [
     (state, ownProps) => ownProps.items,
-    withCurrentUserId(selectUserGroups),
+    withCurrentUserId(selectGroupsByUserId),
   ],
   (items, userGroups) => {
     let permitted = true

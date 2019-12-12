@@ -95,7 +95,7 @@ Say we want to get all of the rats belonging to the user. We would do so like th
 
 const selectUser = (state) => state.user
 
-const selectUserRats = createSelector(
+const selectRatsByUserId = createSelector(
   [selectUser, selectRats],
   (user, rats) => user.relationships.rats.data.map((ratRef) => rats[ratRef.id])
 )
@@ -132,7 +132,7 @@ selectUser
 selectRats
 
 // selects the user's rats.
-selectUserRats
+selectRatsByUserId
 
 // selects a rat's ships.
 selectShipsByRatId

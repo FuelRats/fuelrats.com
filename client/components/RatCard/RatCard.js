@@ -10,8 +10,8 @@ import { connect, actionStatus } from '../../store'
 import {
   selectRatById,
   selectShipsByRatId,
-  selectUser,
-  selectUserDisplayRatId,
+  selectUserById,
+  selectDisplayRatIdByUserId,
   selectPageViewMetaById,
   withCurrentUserId,
 } from '../../store/selectors'
@@ -337,8 +337,8 @@ class RatCard extends React.Component {
     const rescueCountPageViewMeta = selectPageViewMetaById(state, { pageViewId })
 
     return {
-      user: withCurrentUserId(selectUser)(state),
-      userDisplayRatId: withCurrentUserId(selectUserDisplayRatId)(state),
+      user: withCurrentUserId(selectUserById)(state),
+      userDisplayRatId: withCurrentUserId(selectDisplayRatIdByUserId)(state),
       rat: selectRatById(state, props),
       ships: selectShipsByRatId(state, props),
       rescueCount: rescueCountPageViewMeta && rescueCountPageViewMeta.total,

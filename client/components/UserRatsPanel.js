@@ -7,7 +7,7 @@ import React from 'react'
 // Component imports
 import { connect } from '../store'
 import {
-  selectUser,
+  selectUserById,
   withCurrentUserId,
 } from '../store/selectors'
 import RatCard from './RatCard'
@@ -39,7 +39,7 @@ const UserRatsPanel = ({ user }) => {
 
 
 UserRatsPanel.mapStateToProps = (state) => ({
-  user: withCurrentUserId(selectUser)(state),
+  user: withCurrentUserId(selectUserById)(state),
 })
 
 

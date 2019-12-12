@@ -5,9 +5,9 @@ import React from 'react'
 import { connect } from '../store'
 import { formatAsEliteDateLong } from '../helpers/formatTime'
 import {
-  selectUser,
-  selectUserDisplayRat,
-  selectUserAvatar,
+  selectUserById,
+  selectDisplayRatByUserId,
+  selectAvatarByUserId,
   withCurrentUserId,
 } from '../store/selectors'
 import ChangePasswordModal from './ChangePasswordModal'
@@ -113,9 +113,9 @@ class ProfileHeader extends React.Component {
   \***************************************************************************/
 
   static mapStateToProps = (state) => ({
-    user: withCurrentUserId(selectUser)(state),
-    userAvatar: withCurrentUserId(selectUserAvatar)(state),
-    displayRat: withCurrentUserId(selectUserDisplayRat)(state),
+    user: withCurrentUserId(selectUserById)(state),
+    userAvatar: withCurrentUserId(selectAvatarByUserId)(state),
+    displayRat: withCurrentUserId(selectDisplayRatByUserId)(state),
   })
 }
 
