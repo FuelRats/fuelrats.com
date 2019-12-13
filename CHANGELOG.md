@@ -53,6 +53,7 @@
 * Prevent double onChange events in `<TagsInput />`
 * Fix crash on paperwork pages when rescue ID does not exist
 * Fix inconsistency in line-height property between application and modals
+* Prevent a null value in rescue data causing an error
 
 ### ⚙ Tasks
 * Add THIS changelog file. :)
