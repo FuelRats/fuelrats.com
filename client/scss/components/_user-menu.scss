@@ -16,7 +16,7 @@ $user-menu-border-width-mobile: 0.5rem;
 
   &.logged-in,
   &.logging-in {
-    top: 0.5rem;
+    top: #{$avatar-top-margin};
   }
 
   &.logging-in .avatar {
@@ -175,8 +175,8 @@ $user-menu-border-width-mobile: 0.5rem;
   @media not screen and (max-width: $mobile-max-width) {
     #UserMenuControl:checked {
       ~ menu {
-        top: #{($avatar-size / 2) + $avatar-top-margin + 0.5rem};
-        right: #{($avatar-size / 2) + $avatar-right-margin + 0.5rem};
+        top: #{($avatar-size / 2) + 1rem};
+        right: #{($avatar-size / 2) + 2.5rem};
 
         max-width: 16rem;
         max-height: 35rem;
