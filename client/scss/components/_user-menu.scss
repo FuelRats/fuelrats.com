@@ -1,14 +1,15 @@
 $user-menu-width-mobile: 21rem;
 $mobile-max-width: 768px;
-$avatar-width: 6.5rem;
-$avatar-margin: 2rem;
-$user-menu-border-width-mobile: 5px;
+$avatar-size: 6.5rem;
+$avatar-top-margin: 0.5rem;
+$avatar-right-margin: 2rem;
+$user-menu-border-width-mobile: 0.5rem;
 
 .user-menu {
   display: flex;
   position: absolute;
   top: 1.5rem;
-  right: $avatar-margin;
+  right: $avatar-right-margin;
   z-index: 100;
 
   transition: top 0.2s;
@@ -74,8 +75,8 @@ $user-menu-border-width-mobile: 5px;
     }
 
     @media not screen and (max-width: $mobile-max-width) {
-      top: 1.75rem;
-      right: 3.25rem;
+      top: #{$avatar-top-margin + (($avatar-size - 4rem) / 2)};
+      right: #{$avatar-right-margin + (($avatar-size - 4rem) / 2)};
 
       max-width: 4rem;
       max-height: 4rem;
@@ -174,8 +175,8 @@ $user-menu-border-width-mobile: 5px;
   @media not screen and (max-width: $mobile-max-width) {
     #UserMenuControl:checked {
       ~ menu {
-        top: #{($avatar-width / 2) + 1rem};
-        right: #{($avatar-width / 2) + 2.5rem};
+        top: #{($avatar-size / 2) + 1rem};
+        right: #{($avatar-size / 2) + 2.5rem};
 
         max-width: 16rem;
         max-height: 35rem;
@@ -211,7 +212,7 @@ $user-menu-border-width-mobile: 5px;
       }
 
       ~ #UserMenuToggle {
-        $umt-mobile-translate: translateX(calc(-1 * ((#{$user-menu-width-mobile} / 2) - (#{$avatar-width} / 2) - #{$avatar-margin} - (#{$user-menu-border-width-mobile} / 2))));
+        $umt-mobile-translate: translateX(#{-1 * (($user-menu-width-mobile / 2) - ($avatar-size / 2) - $avatar-right-margin - ($user-menu-border-width-mobile / 2))});
         transform: $umt-mobile-translate;
 
         &:active {
@@ -231,7 +232,7 @@ $user-menu-border-width-mobile: 5px;
       left: 100%;
 
       width: $user-menu-width-mobile;
-      padding-top: calc(#{$avatar-width} + 1rem);
+      padding-top: #{$avatar-size + 1rem};
 
       border-top: 0;
       border-right: 0;
