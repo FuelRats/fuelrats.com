@@ -247,7 +247,7 @@ class Paperwork extends React.Component {
         </menu>
 
         <header className="paperwork-header">
-          {(rescue.attributes.status !== 'closed') && (rescue.attributes.data !== null) && (
+          {(rescue.attributes.status !== 'closed') && (rescue.attributes.data) && (
             <div className="board-index"><span>#{rescue.attributes.data.boardIndex}</span></div>
           )}
           <div className="title">
@@ -279,7 +279,7 @@ class Paperwork extends React.Component {
             <div className="tag code-red">CR</div>
           )}
 
-          {(rescue.attributes.data !== null) && (rescue.attributes.data.markedForDeletion.marked) && (
+          {(rescue.attributes.data) && (rescue.attributes.data.markedForDeletion.marked) && (
             <div className="md-group">
               <div className="marked-for-deletion">Marked for Deletion</div>
               <div className="md-reason">
@@ -303,7 +303,7 @@ class Paperwork extends React.Component {
           <span className="date-created content">{formatAsEliteDateTime(rescue.attributes.createdAt)}</span>
           <span className="label">Updated</span>
           <span className="date-updated content">{formatAsEliteDateTime(rescue.attributes.updatedAt)}</span>
-          {(rescue.attributes.data !== null) && (
+          {Boolean(rescue.attributes.data) && (
             <>
               <span className="label">IRC Nick</span>
               <span className="irc-nick content">{rescue.attributes.data.IRCNick}</span>
