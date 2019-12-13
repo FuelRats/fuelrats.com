@@ -7,7 +7,7 @@ import React from 'react'
 
 // Component imports
 import { connect } from '../store'
-import { selectUserDisplayRat, withCurrentUserId } from '../store/selectors'
+import { selectDisplayRatByUserId, withCurrentUserId } from '../store/selectors'
 import asModal, { ModalContent, ModalFooter } from './Modal'
 
 
@@ -31,7 +31,7 @@ const FirstLoginModal = () => (
 )
 
 FirstLoginModal.mapStateToProps = (state) => ({
-  displayRat: withCurrentUserId(selectUserDisplayRat)(state),
+  displayRat: withCurrentUserId(selectDisplayRatByUserId)(state),
 })
 
 

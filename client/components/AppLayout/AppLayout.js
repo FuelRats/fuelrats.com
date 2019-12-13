@@ -12,8 +12,8 @@ import { connect, getActionCreators } from '../../store'
 import {
   selectFlagByName,
   selectSession,
-  selectUser,
-  selectUserGroups,
+  selectUserById,
+  selectGroupsByUserId,
   withCurrentUserId,
 } from '../../store/selectors'
 import { Router } from '../../routes'
@@ -88,7 +88,7 @@ class AppLayout extends React.Component {
 
     if (!error && accessToken && Component.ಠ_ಠ_REQUIRED_PERMISSION) {
       const state = store.getState()
-      const userGroups = withCurrentUserId(selectUserGroups)(state)
+      const userGroups = withCurrentUserId(selectGroupsByUserId)(state)
 
       if (!userHasPermission(userGroups, Component.ಠ_ಠ_REQUIRED_PERMISSION)) {
         if (ctx.res) {
@@ -239,7 +239,7 @@ class AppLayout extends React.Component {
   static mapStateToProps = (state) => ({
     ...selectSession(state),
     showLoginModal: selectFlagByName(state, { name: 'showLoginDialog' }),
-    user: withCurrentUserId(selectUser)(state),
+    user: withCurrentUserId(selectUserById)(state),
   })
 }
 

@@ -1,6 +1,24 @@
 # fuelrats.com Changelog
 
-## [Unreleased] - Now 6% less convoluted
+
+
+
+
+## [Unreleased]
+
+### ✨ Added
+
+### ⚡ Changed
+
+### 🐛 Fixed
+
+### ⚙ Tasks
+
+
+
+
+
+## [2.9.0] - Now 6% less convoluted
 
 ### ✨ Added
 * Allow `<TagsInput />` component to be disabled
@@ -27,6 +45,8 @@
 * Rewrite action type names to follow redux style guide.
 * Remove remaining usages of our `React.Component` wrapper class.
 * Rewrite user menu to be more extensible and mobile friendly.
+* Restructure version page a bit for consistency.
+* Remove teespring link from webstore
 
 ### 🐛 Fixed
 * Double check login form validity on Firefox. (This fixes firefox autofill)
@@ -44,6 +64,9 @@
 * Update README badges.
 
 
+
+
+
 ## [2.8.0]
 
 ### ⚡ Changed
@@ -57,6 +80,8 @@
 ### ⚙ Tasks
 * Move website CI to our own teamcity instance. woo!
 * We added stylelint to our tool chain, so our css is more betterer
+
+
 
 
 
@@ -127,7 +152,6 @@
 * removed an easter egg. (but it's okay since it was removed to make way for a real implementation of what the easter egg did.)
 * unmount page from app if user logs out while on authenticated page
 
-
 ### 🐛 Fixed
 * Fix up SCSS styles to comply with node-sass
 * Fix store order listing page breaking when products/skus no longer exist
@@ -137,6 +161,9 @@
 * Upgrade to Next 8
 * Better project documentation
 * Update project code style
+
+
+
 
 
 ## [2.6.3]
@@ -174,7 +201,6 @@
 ### 🐛 Fixed
 * Fix rat global state filters
 * Fix style-src CSP
-
 
 
 
@@ -275,6 +301,7 @@
 
 
 
+
 ## [2.4.3]
 
 ### ⚡ Changed
@@ -354,7 +381,6 @@
 
 ### ⚡ Changed
 * Only show rats with rescues on the leaderboard
-
 
 ### 🐛 Fixed
 * Fix favicon meta
@@ -507,14 +533,15 @@
 
 
 
+
 ## [2.0.1]
 
 ### ✨ Added
 * Password field suggestions and warnings
 
-
 ### ⚡ Changed
 * Made  - Thanks @Spansh
+
 
 
 
@@ -526,7 +553,8 @@
 
 
 
-[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.8.0...HEAD
+[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.9.0...HEAD
+[2.9.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.8.0...v2.9.0
 [2.8.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.7.3...v2.8.0
 [2.7.3]: https://github.com/FuelRats/fuelrats.com/compare/v2.7.2...v2.7.3
 [2.7.2]: https://github.com/FuelRats/fuelrats.com/compare/v2.7.1...v2.7.2

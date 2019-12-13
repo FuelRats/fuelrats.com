@@ -71,12 +71,6 @@ class ListProducts extends React.Component {
           <div className="page-content">
             <h4 className="text-center">
               Due to an extended leave of our quartermaster, merch from this store is temporarily unavailable.
-              <br />
-              <br />
-              Those with outstanding orders will have their orders fulfilled by the end of July. Apologies for the inconvenience.
-              <br />
-              <br />
-              You can still buy our shirts on <a href="https://teespring.com/stores/fuelrats">Teespring</a>!
             </h4>
           </div>
           <div className="page-content force-disabled">
