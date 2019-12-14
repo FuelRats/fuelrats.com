@@ -7,6 +7,7 @@ import withDefaultReducers from '../utility/withDefaultReducers'
 
 import createJSONAPIResourceReducer from './APIResource'
 import blogs from './blogs'
+import decals from './decals'
 import error from './error'
 import flags from './flags'
 import images from './images'
@@ -67,6 +68,7 @@ export default chainReducers(
     apiResourceReducer,
     withDefaultReducers(combineReducers)(initialState, {
       blogs,
+      decals,
       error,
       flags,
       images,
