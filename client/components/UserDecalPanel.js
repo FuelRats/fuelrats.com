@@ -9,6 +9,12 @@ import { formatAsEliteDate } from '../helpers/formatTime'
 
 // Module imports
 import { connect } from '../store'
+import {
+  selectDecalEligibility,
+  selectDecalsByUserId,
+  withCurrentUserId,
+} from '../store/selectors'
+
 
 
 
@@ -156,7 +162,10 @@ class UserDetailsPanel extends React.Component {
 
   static mapDispatchToProps = ['checkDecalEligibility', 'redeemDecal']
 
-  static mapStateToProps = (state) => state.decals
+  static mapStateToProps = (state) => ({
+    decals: withCurrentUserId(selectDecalsByUserId)(state),
+    eligible: selectDecalEligibility(state),
+  })
 }
 
 

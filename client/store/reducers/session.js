@@ -41,8 +41,9 @@ const sessionReducer = produce((draftState, action) => {
       if (status === actionStatus.SUCCESS) {
         if (action.delayLogout) {
           draftState.loggingOut = true
+        } else {
+          return initialState.session
         }
-        return initialState.session
       }
       break
 
@@ -57,7 +58,7 @@ const sessionReducer = produce((draftState, action) => {
       break
   }
 
-  return draftState
+  return undefined
 }, initialState.session)
 
 

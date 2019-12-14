@@ -358,7 +358,7 @@ class Register extends React.Component {
       acceptPrivacy,
       nickname,
       password,
-      platform,
+      ratPlatform,
     } = this.state
 
     if (!this._emailEl || !this._nicknameEl || !this._password || !this._ratNameEl) {
@@ -373,7 +373,7 @@ class Register extends React.Component {
       return false
     }
 
-    if (!platform) {
+    if (!ratPlatform) {
       return false
     }
 

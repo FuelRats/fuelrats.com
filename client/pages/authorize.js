@@ -34,7 +34,7 @@ class Authorize extends React.Component {
     Public Methods
   \***************************************************************************/
 
-  static async getInitialProps ({ query, res, store }, setLayoutProps) {
+  static async getInitialProps ({ query, res, store, accessToken }, setLayoutProps) {
     const {
       client_id: clientId,
       response_type: responseType,
@@ -57,6 +57,7 @@ class Authorize extends React.Component {
       })
 
       return {
+        accessToken,
         clientId,
         responseType,
         clientName: client.data.attributes.name,
