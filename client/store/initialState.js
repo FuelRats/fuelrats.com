@@ -6,21 +6,14 @@ const initialState = {
     total: null,
   },
 
-  decals: {
-    decals: [],
-    eligible: false,
-  },
+  decals: {},
 
   error: {
     errors: [],
     hasError: false,
   },
 
-  epics: {
-    epics: {},
-    retrieving: false,
-    total: 0,
-  },
+  epics: {},
 
   flags: {
     showLoginDialog: false,
@@ -33,6 +26,15 @@ const initialState = {
   leaderboard: {
     loading: false,
     statistics: [],
+  },
+
+  orders: {},
+
+  pageViews: {},
+
+  products: {
+    hasMore: false,
+    products: {},
   },
 
   rats: {},
@@ -49,18 +51,6 @@ const initialState = {
   ships: {},
 
   skus: {},
-
-  orders: {
-    hasMore: false,
-    orders: {},
-  },
-
-  pageViews: {},
-
-  products: {
-    hasMore: false,
-    products: {},
-  },
 
   storeCart: {},
 
