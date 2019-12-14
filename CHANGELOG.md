@@ -18,6 +18,18 @@
 
 
 
+## [2.9.1]
+
+### 🐛 Fixed
+* Fix decal panel not displaying redeemed decals
+* Fix error when logging out from website
+* Fix accessToken not being passed to the OAuth authorization page
+* Fix registration page improperly checking platform input for value
+
+
+
+
+
 ## [2.9.0] - Now 6% less convoluted
 
 ### ✨ Added
@@ -553,7 +565,8 @@
 
 
 
-[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.9.0...HEAD
+[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.9.1...HEAD
+[2.9.1]: https://github.com/FuelRats/fuelrats.com/compare/v2.9.0...v2.9.1
 [2.9.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.8.0...v2.9.0
 [2.8.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.7.3...v2.8.0
 [2.7.3]: https://github.com/FuelRats/fuelrats.com/compare/v2.7.2...v2.7.3

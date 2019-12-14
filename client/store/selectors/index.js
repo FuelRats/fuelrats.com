@@ -1,4 +1,5 @@
 export * from './blogs'
+export * from './decals'
 export * from './flags'
 export * from './groups'
 export * from './images'
