@@ -1,7 +1,7 @@
-const selectWordpressPages = (state) => state.wordpress.page
+const selectWordpressPages = (state) => state.wordpress.pages
 
 
-const selectWordpressPageBySlug = (state, { slug }) => state.wordpress.page[slug]
+const selectWordpressPageBySlug = (state, { slug }) => state.wordpress.pages[slug]
 
 
 

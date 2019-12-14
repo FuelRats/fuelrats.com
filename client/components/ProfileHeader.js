@@ -5,19 +5,26 @@ import React from 'react'
 import { connect } from '../store'
 import { formatAsEliteDateLong } from '../helpers/formatTime'
 import {
-  selectUser,
-  selectUserDisplayRat,
-  selectUserAvatar,
+  selectUserById,
+  selectDisplayRatByUserId,
+  selectAvatarByUserId,
+  withCurrentUserId,
 } from '../store/selectors'
+import ChangePasswordModal from './ChangePasswordModal'
+
+
+
 
 
 @connect
-class ClassName extends React.Component {
+class ProfileHeader extends React.Component {
   /***************************************************************************\
     Class Properties
   \***************************************************************************/
 
-  state = {}
+  state = {
+    showChangePassword: false,
+  }
 
 
 
@@ -34,7 +41,9 @@ class ClassName extends React.Component {
         </li>
       ))))
 
-
+  _handleToggleChangePassword = () => {
+    this.setState((state) => ({ showChangePassword: !state.showChangePassword }))
+  }
 
 
 
@@ -43,6 +52,9 @@ class ClassName extends React.Component {
   \***************************************************************************/
 
   render () {
+    const {
+      showChangePassword,
+    } = this.state
     const {
       displayRat,
       userAvatar,
@@ -55,29 +67,40 @@ class ClassName extends React.Component {
       email,
     } = attributes
 
-    // console.log(this.props.user)
     return (
-      <div className="profile-header">
-        <div className="user-avatar">
-          <div className="avatar xl"><img alt="User's avatar" src={userAvatar} /></div>
-        </div>
-        <div className="profile-basic-info">
-          <div className="rat-name">
-            {displayRat.attributes.name}
+      <>
+        <div className="profile-header">
+          <div className="user-avatar">
+            <div className="avatar xl"><img alt="User's avatar" src={userAvatar} /></div>
           </div>
-          <div className="email">
-            <span className="label">E-Mail:</span> <span>{email}</span>
+          <div className="profile-basic-info">
+            <div className="rat-name">
+              {displayRat.attributes.name}
+            </div>
+            <div className="email">
+              <span className="label">E-Mail:</span> <span>{email}</span>
+            </div>
+            <div className="member-since">
+              <span className="label">Date joined: </span> <span>{formatAsEliteDateLong(createdAt)}</span>
+            </div>
           </div>
-          <div className="member-since">
-            <span className="label">Date joined: </span> <span>{formatAsEliteDateLong(createdAt)}</span>
+          <div className="profile-user-badges">
+            <ul>
+              {this._renderUserGroups()}
+            </ul>
+          </div>
+          <div className="profile-controls">
+            <button
+              onClick={this._handleToggleChangePassword}
+              type="button">
+              Change Password
+            </button>
           </div>
         </div>
-        <div className="profile-user-badges">
-          <ul>
-            {this._renderUserGroups()}
-          </ul>
-        </div>
-      </div>
+        <ChangePasswordModal
+          isOpen={showChangePassword}
+          onClose={this._handleToggleChangePassword} />
+      </>
     )
   }
 
@@ -90,9 +113,9 @@ class ClassName extends React.Component {
   \***************************************************************************/
 
   static mapStateToProps = (state) => ({
-    user: selectUser(state),
-    userAvatar: selectUserAvatar(state),
-    displayRat: selectUserDisplayRat(state),
+    user: withCurrentUserId(selectUserById)(state),
+    userAvatar: withCurrentUserId(selectAvatarByUserId)(state),
+    displayRat: withCurrentUserId(selectDisplayRatByUserId)(state),
   })
 }
 
@@ -100,4 +123,4 @@ class ClassName extends React.Component {
 
 
 
-export default ClassName
+export default ProfileHeader

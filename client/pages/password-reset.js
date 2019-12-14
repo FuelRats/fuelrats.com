@@ -6,11 +6,10 @@ import React from 'react'
 
 
 // Component imports
+import { PageWrapper } from '../components/AppLayout'
 import { connect } from '../store'
 import { Link } from '../routes'
 import { passwordPattern } from '../data/RegExpr'
-import Component from '../components/Component'
-import PageWrapper from '../components/PageWrapper'
 import PasswordField from '../components/PasswordField'
 
 
@@ -18,7 +17,7 @@ import PasswordField from '../components/PasswordField'
 
 
 @connect
-class PasswordReset extends Component {
+class PasswordReset extends React.Component {
   /***************************************************************************\
     Class Properties
   \***************************************************************************/
@@ -147,7 +146,7 @@ class PasswordReset extends Component {
                 <h3>Invalid Token</h3>
               </header>
 
-              <p>Your token is invalid, which probably just means it expired. <Link href="/forgot-password"><a>Click here</a></Link> to try resetting your password again.</p>
+              <p>Your token is invalid, which probably just means it expired. <Link route="auth forgot-pass"><a>Click here</a></Link> to try resetting your password again.</p>
             </div>
           )}
         </div>

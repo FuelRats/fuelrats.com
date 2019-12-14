@@ -12,7 +12,6 @@ import {
   selectLeaderboard,
 } from '../store/selectors'
 import CodeRedIcon from './Leaderboard/CodeRedIcon'
-import Component from './Component'
 import FirstYearIcon from './Leaderboard/FirstYearIcon'
 import RescueAchievementIcon from './Leaderboard/RescueAchievementIcon'
 import safeParseInt from '../helpers/safeParseInt'
@@ -31,7 +30,7 @@ const caseInsensitiveFilter = (filter, row) => {
 
 
 @connect
-class RatLeaderboardTable extends Component {
+class RatLeaderboardTable extends React.Component {
   /***************************************************************************\
     Class Properties
   \***************************************************************************/

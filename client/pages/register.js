@@ -13,10 +13,9 @@ import {
   ircNickPattern,
   passwordPattern,
 } from '../data/RegExpr'
-import Component from '../components/Component'
-import PageWrapper from '../components/PageWrapper'
+import { PageWrapper } from '../components/AppLayout'
 import PasswordField from '../components/PasswordField'
-import RadioOptionsInput from '../components/RadioOptionsInput'
+import RadioInput from '../components/RadioInput'
 import WordpressTermsModal from '../components/TermsModal'
 
 
@@ -24,7 +23,7 @@ import WordpressTermsModal from '../components/TermsModal'
 
 
 @connect
-class Register extends Component {
+class Register extends React.Component {
   /***************************************************************************\
     Class Properties
   \***************************************************************************/
@@ -37,7 +36,7 @@ class Register extends Component {
     nickname: '',
     password: '',
     ratName: '',
-    ratPlatform: 'pc',
+    ratPlatform: '',
     recaptchaResponse: null,
     submitting: false,
   }
@@ -84,7 +83,8 @@ class Register extends Component {
     }
   }
 
-  _handleRadioOptionsChange = ({ name, value }) => {
+  _handleRadioInputChange = ({ target }) => {
+    const { name, value } = target
     sessionStorage.setItem(`register.${name}`, value)
     this.setState({ [name]: value })
   }
@@ -138,14 +138,14 @@ class Register extends Component {
   }
 
   componentDidMount () {
-    this.setState({
+    this.setState((state) => ({
       acceptTerms: sessionStorage.getItem('register.acceptTerms'),
       acceptPrivacy: sessionStorage.getItem('register.acceptTerms'),
-      email: sessionStorage.getItem('register.email') || '',
-      nickname: sessionStorage.getItem('register.nickname') || '',
-      ratName: sessionStorage.getItem('register.ratName') || '',
-      ratPlatform: sessionStorage.getItem('register.ratPlatform') || 'pc',
-    })
+      email: sessionStorage.getItem('register.email') || state.email,
+      nickname: sessionStorage.getItem('register.nickname') || state.nickname,
+      ratName: sessionStorage.getItem('register.ratName') || state.ratName,
+      ratPlatform: sessionStorage.getItem('register.ratPlatform') || state.ratPlatform,
+    }))
   }
 
   render () {
@@ -259,25 +259,25 @@ class Register extends Component {
           <fieldset data-name="Platform">
             <label>What platform is your CMDR on?</label>
 
-            <RadioOptionsInput
+            <RadioInput
               disabled={submitting}
               className="ratPlatform"
               name="ratPlatform"
               id="ratPlatform"
               value={ratPlatform}
-              onChange={this._handleRadioOptionsChange}
+              onChange={this._handleRadioInputChange}
               options={[
                 {
                   value: 'pc',
-                  displayValue: 'PC',
+                  label: 'PC',
                 },
                 {
                   value: 'xb',
-                  displayValue: 'Xbox',
+                  label: 'Xbox',
                 },
                 {
                   value: 'ps',
-                  displayValue: 'PS4',
+                  label: 'PS4',
                 },
               ]} />
           </fieldset>
@@ -358,6 +358,7 @@ class Register extends Component {
       acceptPrivacy,
       nickname,
       password,
+      platform,
     } = this.state
 
     if (!this._emailEl || !this._nicknameEl || !this._password || !this._ratNameEl) {
@@ -369,6 +370,10 @@ class Register extends Component {
     }
 
     if (nickname === password) {
+      return false
+    }
+
+    if (!platform) {
       return false
     }
 

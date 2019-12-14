@@ -9,14 +9,12 @@ import { formatAsEliteDate } from '../helpers/formatTime'
 
 // Module imports
 import { connect } from '../store'
-import Component from './Component'
-
 
 
 
 
 @connect
-class UserDetailsPanel extends Component {
+class UserDetailsPanel extends React.Component {
   state = {
     checkingEligibility: true,
     redeeming: false,

@@ -7,8 +7,8 @@ import React from 'react'
 
 // Component imports
 import { Link } from '../routes'
+import { PageWrapper } from '../components/AppLayout'
 import { connect } from '../store'
-import PageWrapper from '../components/PageWrapper'
 import Carousel from '../components/Carousel'
 
 
@@ -58,7 +58,7 @@ class Index extends React.Component {
         </header>
 
         <footer className="call-to-action">
-          <Link href="/i-need-fuel">
+          <Link route="rescue-landing">
             <a className="button tall">Get Help</a>
           </Link>
         </footer>

@@ -1,12 +1,6 @@
 // Module imports
+import React from 'react'
 import ReactDOM from 'react-dom'
-
-
-
-
-
-// Component imports
-import Component from './Component'
 
 
 
@@ -19,7 +13,7 @@ const canUseDOM = Boolean(typeof window !== 'undefined' && window.document && wi
 
 
 
-class Alert extends Component {
+class Alert extends React.Component {
   constructor (props) {
     super(props)
 

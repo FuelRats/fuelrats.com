@@ -6,7 +6,10 @@ import React from 'react'
 
 // Component imports
 import { connect } from '../store'
-import { selectUser } from '../store/selectors'
+import {
+  selectUserById,
+  withCurrentUserId,
+} from '../store/selectors'
 import RatCard from './RatCard'
 import AddRatForm from './AddRatForm'
 
@@ -36,7 +39,7 @@ const UserRatsPanel = ({ user }) => {
 
 
 UserRatsPanel.mapStateToProps = (state) => ({
-  user: selectUser(state),
+  user: withCurrentUserId(selectUserById)(state),
 })
 
 

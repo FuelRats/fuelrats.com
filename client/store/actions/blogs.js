@@ -1,80 +1,90 @@
 // Component imports
-import { createWpAction } from '../actionCreators'
+import { wpApiRequest, createAxiosAction } from './services'
 import actionTypes from '../actionTypes'
+import httpStatus from '../../helpers/httpStatus'
 import initialState from '../initialState'
+import wpApi from '../../services/wordpress'
 
 
 
 
 
-export const retrieveAuthor = (authorId) => createWpAction({
-  actionType: actionTypes.GET_WORDPRESS_AUTHOR,
-  url: `/users/${authorId}`,
-})
+export const getAuthor = (authorId) => wpApiRequest(
+  actionTypes.wordpress.authors.read,
+  { url: `/users/${authorId}` },
+)
 
 
 
 
 
-export const retrieveCategory = (categoryId) => createWpAction({
-  actionType: actionTypes.GET_WORDPRESS_CATEGORY,
-  url: `/categories/${categoryId}`,
-})
+export const getCategory = (categoryId) => wpApiRequest(
+  actionTypes.wordpress.categories.read,
+  { url: `/categories/${categoryId}` },
+)
 
 
 
 
 
-export const retrieveBlog = (id) => createWpAction({
-  actionType: actionTypes.GET_WORDPRESS_POST,
-  url: `/posts/${id}`,
-  onSuccess: async ({ data: { author: authorId, categories: categoryIds } }, { dispatch, getState }) => {
+export const getBlog = (id) => async (dispatch, getState) => {
+  const response = await wpApi.request({
+    url: `/posts/${id}`,
+  })
+
+  if (httpStatus.isSuccess(response.status)) {
+    const {
+      author: authorId,
+      categories: categoryIds,
+    } = response.data
+
     const state = getState ? getState() : { ...initialState }
     const { authors, categories } = state.blogs
 
     if (!authors[authorId]) {
-      await retrieveAuthor(authorId)(dispatch)
+      await getAuthor(authorId)(dispatch)
     }
 
     await Promise.all(categoryIds.map((categoryId) => {
       if (!categories[categoryId]) {
-        return retrieveCategory(categoryId)(dispatch)
+        return getCategory(categoryId)(dispatch)
       }
       return Promise.resolve()
     }))
-  },
-})
+  }
+
+  return dispatch(createAxiosAction(actionTypes.wordpress.posts.read, response))
+}
 
 
 
 
 
-export const retrieveBlogs = (params) => createWpAction({
-  actionType: actionTypes.GET_WORDPRESS_POSTS,
-  url: '/posts',
-  params,
-  onSuccess: ({ data: blogs, headers }, { dispatch, getState }) => {
+export const getBlogs = (params) => async (dispatch, getState) => {
+  const response = await wpApi.request({
+    url: '/posts',
+    params,
+  })
+
+  if (httpStatus.isSuccess(response.status)) {
     const state = getState ? getState() : { ...initialState }
     const authorCache = { ...state.blogs.authors }
     const categoryCache = { ...state.blogs.categories }
 
-    Object.values(blogs).forEach(({ author: authorId, categories: categoryIds }) => {
+    Object.values(response.data).forEach(({ author: authorId, categories: categoryIds }) => {
       if (!authorCache[authorId]) {
         authorCache[authorId] = {}
-        retrieveAuthor(authorId)(dispatch)
+        getAuthor(authorId)(dispatch)
       }
 
       categoryIds.forEach((categoryId) => {
         if (!categoryCache[categoryId]) {
           categoryCache[categoryId] = {}
-          retrieveCategory(categoryId)(dispatch)
+          getCategory(categoryId)(dispatch)
         }
       })
     })
+  }
 
-    return {
-      blogs,
-      totalPages: parseInt(headers['x-wp-totalpages'], 10),
-    }
-  },
-})
+  return dispatch(createAxiosAction(actionTypes.wordpress.posts.search, response))
+}

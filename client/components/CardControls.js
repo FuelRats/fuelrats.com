@@ -15,11 +15,11 @@ import classNames from '../helpers/classNames'
 
 const CardControls = (props) => {
   const {
-    canDelete,
+    canDelete = true,
     canSubmit,
-    deleteConfirmMessage,
-    editMode,
-    deleteMode,
+    deleteConfirmMessage = () => null,
+    deleteMode = false,
+    editMode = false,
     controlType,
     onCancelClick,
     onDeleteClick,
@@ -93,13 +93,6 @@ const CardControls = (props) => {
       )}
     </div>
   )
-}
-
-CardControls.defaultProps = {
-  canDelete: true,
-  deleteConfirmMessage: () => null,
-  deleteMode: false,
-  editMode: false,
 }
 
 

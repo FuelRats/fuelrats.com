@@ -8,9 +8,9 @@ import React from 'react'
 // Component imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect } from '../store'
-import { selectUser } from '../store/selectors'
+import { selectUserById, withCurrentUserId } from '../store/selectors'
 import { ircNickPattern } from '../data/RegExpr'
-import Component from './Component'
+import InfoBubble from './InfoBubble'
 import ValidatedFormInput from './ValidatedFormInput'
 
 
@@ -18,7 +18,7 @@ import ValidatedFormInput from './ValidatedFormInput'
 
 
 @connect
-class AddNicknameForm extends Component {
+class AddNicknameForm extends React.Component {
   /***************************************************************************\
     Class Properties
   \***************************************************************************/
@@ -38,7 +38,10 @@ class AddNicknameForm extends Component {
   \***************************************************************************/
 
   _handleSubmit = async (event) => {
-    const { addNickname } = this.props
+    const {
+      addNickname,
+      user,
+    } = this.props
     const {
       nickname,
       password,
@@ -48,7 +51,7 @@ class AddNicknameForm extends Component {
 
     this.setState({ submitting: true })
 
-    await addNickname(nickname, password)
+    await addNickname(user.id, nickname, password)
 
     this.setState({
       nickname: '',
@@ -78,10 +81,11 @@ class AddNicknameForm extends Component {
 
     return (
       <form
+        className="add-nickname-form"
         onSubmit={this._handleSubmit}>
         <ValidatedFormInput
           className="dark"
-          id="addNickname"
+          id="AddNickname"
           label="Nickname"
           name="nickname"
           onChange={this._handleChange}
@@ -89,10 +93,17 @@ class AddNicknameForm extends Component {
           pattern={ircNickPattern}
           patternMessage="Nickname must start with a letter, contain no spaces, and be between 2-30 characters"
           type="text"
-          value={nickname} />
+          value={nickname}>
+          <InfoBubble id="NickRegisterReminder" header="reminder">
+            You cannot register a nick that's in use on IRC. Switch to a temporary one before registering!
+          </InfoBubble>
+        </ValidatedFormInput>
+
+
+
         <ValidatedFormInput
           className="dark"
-          id="addNicknamePass"
+          id="AddNicknamePass"
           label="NicknamePass"
           name="password"
           onChange={this._handleChange}
@@ -100,6 +111,7 @@ class AddNicknameForm extends Component {
           title="This is the password you use to identify with in IRC"
           type="password"
           value={password} />
+
         <button
           aria-label="submit new nickname"
           className="green icon"
@@ -122,7 +134,7 @@ class AddNicknameForm extends Component {
   static mapDispatchToProps = ['addNickname']
 
   static mapStateToProps = (state) => ({
-    user: selectUser(state),
+    user: withCurrentUserId(selectUserById)(state),
   })
 }
 

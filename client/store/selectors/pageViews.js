@@ -15,7 +15,7 @@ const selectPageViewTargetById = (state, props) => {
 
 const selectPageViewDataById = createSelector(
   [selectPageViewById, selectPageViewTargetById],
-  (pageView, viewTarget) => pageView && viewTarget && pageView.data.map(((id) => viewTarget[id]))
+  (pageView, viewTarget) => pageView && viewTarget && pageView.data.map(((id) => viewTarget[id])),
 )
 
 const selectPageViewMetaById = (state, props) => {

@@ -22,7 +22,7 @@ const ModalContent = (props) => {
 
   const classes = classNames(
     'modal-content',
-    [className, className]
+    [className, className],
   )
 
   return (

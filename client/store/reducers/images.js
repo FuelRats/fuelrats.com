@@ -1,3 +1,9 @@
+import { produce } from 'immer'
+
+
+
+
+
 import actionTypes from '../actionTypes'
 import initialState from '../initialState'
 
@@ -5,7 +11,7 @@ import initialState from '../initialState'
 
 
 
-export default function imageReducer (state = initialState.images, action) {
+const imageReducer = produce((draftState, action) => {
   const {
     id,
     payload,
@@ -14,28 +20,25 @@ export default function imageReducer (state = initialState.images, action) {
   } = action
 
   switch (type) {
-    case actionTypes.GET_IMAGE:
+    case actionTypes.images.dispose:
       if (status === 'success') {
-        return {
-          ...state,
-          [id]: payload,
-        }
+        delete draftState[id]
       }
       break
 
-    case actionTypes.DISPOSE_IMAGE:
+
+    case actionTypes.images.read:
       if (status === 'success') {
-        const newState = { ...state }
-
-        delete newState[id]
-
-        return newState
+        draftState[id] = payload
       }
       break
 
     default:
       break
   }
+}, initialState.images)
 
-  return state
-}
+
+
+
+export default imageReducer

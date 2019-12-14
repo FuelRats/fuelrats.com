@@ -7,15 +7,14 @@ import React from 'react'
 
 // Component imports
 import { connect } from '../store'
-import Component from '../components/Component'
-import PageWrapper from '../components/PageWrapper'
+import { PageWrapper } from '../components/AppLayout'
 
 
 
 
 
 @connect
-class ForgotPassword extends Component {
+class ForgotPassword extends React.Component {
   /***************************************************************************\
     Class Properties
   \***************************************************************************/

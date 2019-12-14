@@ -8,6 +8,7 @@ div.user-nicknames {
       position: absolute;
       top: 0;
       right: 0;
+      bottom: 0;
       left: 0;
       z-index: 1;
 
@@ -15,26 +16,6 @@ div.user-nicknames {
       padding: 0.5rem 0 0.5rem 0.5rem;
 
       background: #1A1A1A;
-
-      form {
-        display: flex;
-
-        flex-flow: row nowrap;
-        align-items: center;
-      }
-
-      fieldset {
-        flex: 2 0;
-
-        margin-right: 0.5rem;
-        padding: 0;
-      }
-
-      button[type='submit'] {
-        flex: 0 0 auto;
-
-        margin-right: 0.2rem;
-      }
     }
 
     .controls {

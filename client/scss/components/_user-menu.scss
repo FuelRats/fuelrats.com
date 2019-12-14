@@ -1,15 +1,22 @@
+$user-menu-width-mobile: 21rem;
+$mobile-max-width: 768px;
+$avatar-size: 6.5rem;
+$avatar-top-margin: 0.5rem;
+$avatar-right-margin: 2rem;
+$user-menu-border-width-mobile: 0.5rem;
+
 .user-menu {
   display: flex;
   position: absolute;
   top: 1.5rem;
-  right: 2rem;
+  right: $avatar-right-margin;
   z-index: 100;
 
   transition: top 0.2s;
 
   &.logged-in,
   &.logging-in {
-    top: 0.5rem;
+    top: #{$avatar-top-margin};
   }
 
   &.logging-in .avatar {
@@ -26,83 +33,76 @@
     }
   }
 
-  &:hover {
-    menu {
-      max-width: 100vw;
-      max-height: 100vh;
-      transition-delay:
-        0s,
-        0.1s,
-        0.2s;
-    }
-  }
-
   header {
-    font-size: 1.2em;
+    margin-top: 0.5rem;
+
+    color: $grey;
+
+    font-size: 0.7em;
     font-weight: bold;
   }
 
   menu {
     display: flex;
+    position: fixed;
 
+    flex-flow: column nowrap;
     align-items: stretch;
     align-content: stretch;
+    justify-content: flex-start;
 
     order: 1;
     flex-shrink: 0;
 
-    max-width: 0;
-    max-height: 1rem;
-    margin-top: 3.25rem;
-    margin-right: -2rem;
     padding: 0;
 
     border-width: 0.2rem;
     border-style: solid;
     border-color: $red;
-    border-radius: 1rem;
 
-    background-color: $light-grey;
+    background-color: $black;
+    transition: transform 0.2s, box-shadow 0.2s;
+
+    text-align: center;
+    white-space: nowrap;
 
     overflow: hidden;
-    transition-delay:
-      0s,
-      0.4s,
-      0.3s;
-    transition-duration:
-      0.2s,
-      0.25s,
-      0.25s;
-    transition-property:
-      border-color,
-      max-height,
-      max-width;
 
     > * {
-      flex-grow: 1;
       flex-shrink: 0;
 
-      min-width: 10rem;
-      max-width: 20vw;
-      padding: 1rem;
+      padding: 2rem 1rem;
+    }
+
+    @media not screen and (max-width: $mobile-max-width) {
+      top: #{$avatar-top-margin + (($avatar-size - 4rem) / 2)};
+      right: #{$avatar-right-margin + (($avatar-size - 4rem) / 2)};
+
+      max-width: 4rem;
+      max-height: 4rem;
+
+      transition:
+        top 0.2s,
+        right 0.2s,
+        max-height 0.2s,
+        max-width 0.2s;
     }
   }
 
-  nav.user {
-    padding: 0;
+  nav {
+    padding: 1rem 0;
 
     background-color: $black;
 
-    &:not(:last-child) a::before {
-      right: initial;
-      left: 0%;
+    &:not(:last-child) {
+      border-bottom: 1px solid $black-lightened;
     }
 
     a {
       display: block;
       position: relative;
 
-      padding: 1rem;
+      padding: 0.5rem 2rem;
 
       color: $white;
 
@@ -113,8 +113,9 @@
       &::before {
         position: absolute;
         top: 0;
-        right: 0%;
+        right: initial;
         bottom: 0;
+        left: 0%;
         z-index: 0;
 
         content: '';
@@ -124,18 +125,24 @@
         transition: all 0.2s;
       }
 
-      &:focus,
+      span {
+        position: relative;
+        z-index: 1;
+      }
+    }
+
+    .logout a {
+      color: $red;
+    }
+
+    .logout a,
+    a {
       &:hover {
         color: $white;
 
         &::before {
           width: 100%;
         }
-      }
-
-      span {
-        position: relative;
-        z-index: 1;
       }
     }
   }
@@ -149,10 +156,34 @@
 
     order: 2;
 
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, border-radius 0.2s, border-width 0.2s, transform 0.2s, box-shadow 0.2s;
+
+    cursor: pointer;
   }
 
-  @media only screen and (max-width: 768px) {
+  .avatar:hover,
+  .avatar:focus {
+    border-width: 0.4rem;
+  }
+
+  .avatar:active {
+    transform: scale(0.9);
+
+    transition-duration: 0.1s;
+  }
+
+  @media not screen and (max-width: $mobile-max-width) {
+    #UserMenuControl:checked {
+      ~ menu {
+        top: #{($avatar-size / 2) + 1rem};
+        right: #{($avatar-size / 2) + 2.5rem};
+
+        max-width: 16rem;
+        max-height: 35rem;
+      }
+    }
+  }
+  @media only screen and (max-width: $mobile-max-width) {
     &:not(.logged-in) > button.login {
       border-color: $black-lightened;
 
@@ -166,10 +197,61 @@
         color: $white;
       }
     }
+  }
+}
 
-    .avatar,
-    menu {
+#UserMenuControl {
+  display: none;
+}
+
+@media only screen and (max-width: $mobile-max-width) {
+  #UserMenuControl {
+    &:checked {
+      ~ menu {
+        transform: translateX(-$user-menu-width-mobile);
+      }
+
+      ~ #UserMenuToggle {
+        $umt-mobile-translate: translateX(#{-1 * (($user-menu-width-mobile / 2) - ($avatar-size / 2) - $avatar-right-margin - ($user-menu-border-width-mobile / 2))});
+        transform: $umt-mobile-translate;
+
+        &:active {
+          transform: $umt-mobile-translate scale(0.9);
+          transition-duration: 0.1s;
+        }
+      }
+    }
+
+    &:not(:checked) ~ #UserMenuToggle {
       border-color: $black-lightened;
     }
+
+    ~ menu {
+      top: 0;
+      bottom: 0;
+      left: 100%;
+
+      width: $user-menu-width-mobile;
+      padding-top: #{$avatar-size + 1rem};
+
+      border-top: 0;
+      border-right: 0;
+      border-bottom: 0;
+      border-left: $user-menu-border-width-mobile solid $red;
+
+
+      box-shadow: 0 0 4px 0 rgba($black, 0.4);
+
+      transform: translateX(0);
+      overflow: auto;
+
+      nav a {
+        padding: 1rem;
+      }
+    }
+  }
+
+  .user-menu header {
+    margin-top: 1rem;
   }
 }

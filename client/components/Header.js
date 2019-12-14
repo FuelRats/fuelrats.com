@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 // Component imports
 import { connect } from '../store'
-import { selectAuthentication } from '../store/selectors'
+import { selectSession } from '../store/selectors'
 import Nav from './Nav'
 import { Link } from '../routes'
 import BrandSvg from './svg/BrandSvg'
@@ -30,7 +30,7 @@ const BUILD_COMMIT_SHORT = $BUILD_COMMIT_SHORT
 const Header = (props) => {
   const {
     loggedIn,
-    loggingIn,
+    userId,
   } = props
   return (
     <div id="HeaderContainer">
@@ -46,7 +46,7 @@ const Header = (props) => {
 
       <header role="banner">
 
-        <Link href="/">
+        <Link route="home">
           <a className="brand" title="Home">
             <div className="brand-animation-wrapper">
               <BrandSvg />
@@ -162,14 +162,14 @@ const Header = (props) => {
 
         <div className="join-actions">
 
-          <Link href="/i-need-fuel">
+          <Link route="rescue-landing">
             <a className="button">
               Get Help
             </a>
           </Link>
 
-          {!loggedIn && !loggingIn && (
-            <Link href="/register">
+          {!loggedIn && !userId && (
+            <Link route="register">
               <a className="button secondary">
                 Become a Rat
               </a>
@@ -186,7 +186,7 @@ const Header = (props) => {
 
 
 
-Header.mapStateToProps = (state) => selectAuthentication(state)
+Header.mapStateToProps = (state) => selectSession(state)
 
 
 

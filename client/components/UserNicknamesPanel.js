@@ -7,10 +7,12 @@ import React from 'react'
 // Component imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect } from '../store'
-import { selectUser } from '../store/selectors'
+import {
+  selectUserById,
+  withCurrentUserId,
+} from '../store/selectors'
 import AddNicknameForm from './AddNicknameForm'
 // import ConfirmActionButton from './ConfirmActionButton'
-import Component from './Component'
 
 // Component constants
 const MAXNICKS = 16 // Maximum IRC Nicknames allowed
@@ -18,7 +20,7 @@ const MAXNICKS = 16 // Maximum IRC Nicknames allowed
 
 
 @connect
-class UserNicknamesPanel extends Component {
+class UserNicknamesPanel extends React.Component {
   /***************************************************************************\
     Class Properties
   \***************************************************************************/
@@ -111,7 +113,7 @@ class UserNicknamesPanel extends Component {
   static mapDispatchToProps = ['deleteNickname']
 
   static mapStateToProps = (state) => ({
-    user: selectUser(state),
+    user: withCurrentUserId(selectUserById)(state),
   })
 }
 

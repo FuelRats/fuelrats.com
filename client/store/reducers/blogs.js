@@ -1,11 +1,16 @@
+import { produce } from 'immer'
+
+
+
+
+
 import actionTypes from '../actionTypes'
 import initialState from '../initialState'
 
 
 
 
-
-export default function blogsReducer (state = initialState.blogs, action) {
+const blogsReducer = produce((draftState, action) => {
   const {
     payload,
     status,
@@ -13,64 +18,47 @@ export default function blogsReducer (state = initialState.blogs, action) {
   } = action
 
   switch (type) {
-    case actionTypes.GET_WORDPRESS_POST:
+    case actionTypes.wordpress.authors.read:
       if (status === 'success') {
-        return {
-          ...state,
-          blogs: [payload],
-          totalPages: null,
-        }
+        draftState.authors[payload.id] = { ...payload }
       }
       break
 
-    case actionTypes.GET_WORDPRESS_POSTS:
+    case actionTypes.wordpress.categories.read:
+      if (status === 'success') {
+        draftState.categories[payload.id] = { ...payload }
+      }
+      break
+
+    case actionTypes.wordpress.posts.read:
+      if (status === 'success') {
+        draftState.blogs.push(payload)
+        draftState.totalPages = null
+      }
+      break
+
+    case actionTypes.wordpress.posts.search:
       switch (status) {
         case 'error':
-          return {
-            ...state,
-            blogs: [],
-            totalPages: 0,
-          }
+          draftState.blogs = []
+          draftState.totalPages = 0
+          break
 
         case 'success':
-          return {
-            ...state,
-            blogs: [...payload.blogs],
-            totalPages: payload.totalPages,
-          }
+          draftState.blogs = [...payload]
+          draftState.totalPages = parseInt(action.response.headers['x-wp-totalpages'], 10)
+          break
 
         default:
           break
       }
       break
 
-    case actionTypes.GET_WORDPRESS_AUTHOR:
-      if (status === 'success') {
-        return {
-          ...state,
-          authors: {
-            ...state.authors,
-            [payload.id]: { ...payload },
-          },
-        }
-      }
-      break
-
-    case actionTypes.GET_WORDPRESS_CATEGORY:
-      if (status === 'success') {
-        return {
-          ...state,
-          categories: {
-            ...state.categories,
-            [payload.id]: { ...payload },
-          },
-        }
-      }
-      break
-
     default:
       break
   }
+}, initialState.blogs)
 
-  return state
-}
+
+
+export default blogsReducer

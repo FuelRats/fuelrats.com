@@ -1,11 +1,18 @@
 // Module imports
 import React from 'react'
 
+
+
+
+
 // Component imports
 import { connect } from '../store'
-import { selectAuthentication } from '../store/selectors'
+import { selectSession } from '../store/selectors'
 import { Link } from '../routes'
-import Component from './Component'
+
+
+
+
 
 // Constants
 const allowedLinkKeys = ['href', 'params', 'route']
@@ -22,7 +29,7 @@ const navItems = [
       {
         key: 'blog-art',
         title: 'Stories, Art, & Toons',
-        route: 'blog list category',
+        route: 'blog list',
         params: {
           category: '138',
         },
@@ -34,6 +41,7 @@ const navItems = [
     title: 'Rat Stats',
     subnav: [
       {
+        external: true,
         key: 'stats-statistics',
         title: 'General',
         href: 'https://grafana.fuelrats.com/d/H-iTUTPmz/public-statistics?refresh=1h&orgId=2',
@@ -55,6 +63,7 @@ const navItems = [
         route: 'store list',
       },
       {
+        external: true,
         key: 'donate',
         title: 'Donations',
         href: 'https://donate.fuelrats.com/donate.php',
@@ -67,11 +76,13 @@ const navItems = [
     condition: (props) => props.loggedIn,
     subnav: [
       {
+        external: true,
         key: 'confluence',
         title: 'Knowledge Base',
         href: 'https://confluence.fuelrats.com/display/FRKB/Fuel+Rats+Knowledge+Base',
       },
       {
+        external: true,
         key: 'support-desk',
         title: 'Support Desk',
         href: 'https://t.fuelr.at/help',
@@ -81,7 +92,7 @@ const navItems = [
 ]
 
 @connect
-class Nav extends Component {
+class Nav extends React.Component {
   /***************************************************************************\
     Class Properties
   \***************************************************************************/
@@ -170,6 +181,10 @@ class Nav extends Component {
           name="subnav"
           type="checkbox" />
       )
+    } else if (item.external) {
+      renderedItemTitle = (
+        <a href={item.href} className={item.disabled ? 'disabled' : ''}><span>{renderedItemTitle}</span></a>
+      )
     } else {
       renderedItemTitle = (
         <Link
@@ -200,7 +215,7 @@ class Nav extends Component {
 
   static mapDispatchToProps = ['setFlag']
 
-  static mapStateToProps = (state) => selectAuthentication(state)
+  static mapStateToProps = (state) => selectSession(state)
 }
 
 

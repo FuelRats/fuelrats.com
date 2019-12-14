@@ -1,7 +1,37 @@
+import { produce } from 'immer'
+
+
+
+
+
 import actionTypes from '../actionTypes'
 import initialState from '../initialState'
 
-export default function productsReducer (state = initialState.products, action) {
+
+const productPresenter = (product) => {
+  const {
+    id,
+    type,
+    attributes: {
+      skus,
+      ...attributes
+    },
+  } = product
+
+  return {
+    id,
+    type,
+    attributes,
+    relationships: {
+      skus: {
+        data: skus.map((sku) => ({ id: sku.id, type: sku.object })),
+      },
+    },
+  }
+}
+
+
+const productsReducer = produce((draftState, action) => {
   const {
     payload,
     status,
@@ -9,39 +39,25 @@ export default function productsReducer (state = initialState.products, action) 
   } = action
 
   switch (type) {
-    case actionTypes.GET_STRIPE_PRODUCTS:
-    case actionTypes.GET_STRIPE_PRODUCT:
+    case actionTypes.stripe.products.read:
+    case actionTypes.stripe.products.search:
       if (status === 'success') {
-        let products = payload.data
-        if (!Array.isArray(products)) {
-          products = [products]
-        }
-        return {
-          products: {
-            ...state.products,
-            ...products.reduce((acc, product) => ({
-              ...acc,
-              [product.id]: {
-                ...product,
-                attributes: {
-                  ...product.attributes,
-                  skus: product.attributes.skus
-                    ? product.attributes.skus.reduce((skuAcc, sku) => ({
-                      ...skuAcc,
-                      [sku.id]: sku,
-                    }), {})
-                    : {},
-                },
-              },
-            }), {}),
-          },
-        }
+        const products = Array.isArray(payload.data)
+          ? payload.data
+          : [payload.data]
+
+        products.forEach((product) => {
+          draftState.products[product.id] = productPresenter(product)
+        })
       }
       break
 
     default:
       break
   }
+}, initialState.products)
 
-  return state
-}
+
+
+
+export default productsReducer

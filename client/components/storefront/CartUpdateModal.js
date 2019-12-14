@@ -10,7 +10,6 @@ import React from 'react'
 import { connect } from '../../store'
 import { selectStoreCart } from '../../store/selectors'
 import asModal, { ModalContent, ModalFooter } from '../Modal'
-import Component from '../Component'
 import isInStock from '../../helpers/isInStock'
 import getMoney from '../../helpers/getMoney'
 
@@ -29,7 +28,7 @@ const CONFIRMATION_DISPLAY_TIME = 1250
   title: 'Add to Cart',
 })
 @connect
-class CartUpdateModal extends Component {
+class CartUpdateModal extends React.Component {
   /***************************************************************************\
     Private Methods
   \***************************************************************************/

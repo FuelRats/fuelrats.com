@@ -1,3 +1,4 @@
+/* globals $IS_DEVELOPMENT:false */
 // Module imports
 import {
   bindActionCreators,
@@ -27,7 +28,18 @@ import * as actions from './actions'
 
 
 
-const initStore = (state = initialState) => createStore(reducer, state, composeWithDevTools(applyMiddleware(thunkMiddleware)))
+const middlewares = [thunkMiddleware]
+
+if ($IS_DEVELOPMENT) {
+  /* eslint-disable-next-line global-require */// Dev mode conditional import
+  middlewares.unshift(require('redux-immutable-state-invariant').default())
+}
+
+
+
+
+
+const initStore = (state = initialState) => createStore(reducer, state, composeWithDevTools(applyMiddleware(...middlewares)))
 
 
 
@@ -49,7 +61,7 @@ const connectDecorator = (target) => {
         [actionName]: actions[actionName],
       }
       ), {}),
-      dispatch
+      dispatch,
     )
   }
 
@@ -57,7 +69,7 @@ const connectDecorator = (target) => {
     mapStateToProps || (() => ({})),
     mapDispatchToProps || {},
     mergeProps,
-    reduxOptions
+    reduxOptions,
   )(target)
 }
 

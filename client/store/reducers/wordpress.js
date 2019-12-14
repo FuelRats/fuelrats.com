@@ -1,3 +1,9 @@
+import { produce } from 'immer'
+
+
+
+
+
 import actionTypes from '../actionTypes'
 import initialState from '../initialState'
 
@@ -5,7 +11,7 @@ import initialState from '../initialState'
 
 
 
-export default function wordpressReducer (state = initialState.rescues, action) {
+const wordpressReducer = produce((draftState, action) => {
   const {
     payload,
     status,
@@ -13,25 +19,22 @@ export default function wordpressReducer (state = initialState.rescues, action) 
   } = action
 
   switch (type) {
-    case actionTypes.GET_WORDPRESS_PAGE:
-    case actionTypes.GET_WORDPRESS_PAGES:
+    case actionTypes.wordpress.pages.read:
+    case actionTypes.wordpress.pages.search:
       if (status === 'success') {
-        return {
-          ...state,
-          page: {
-            ...state.page,
-            ...payload.reduce((accumulator, page) => ({
-              ...accumulator,
-              [page.slug]: page,
-            }), {}),
-          },
-        }
+        payload.forEach((page) => {
+          draftState.pages[page.slug] = page
+        })
       }
       break
 
     default:
       break
   }
+}, initialState.rescues)
 
-  return state
-}
+
+
+
+
+export default wordpressReducer

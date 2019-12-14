@@ -3,7 +3,7 @@ import isRequired from './isRequired'
 const parseJSONAPIResponseForEntityType = (
   response = isRequired('response'),
   _types = isRequired('types'),
-  asCollection = false
+  asCollection = false,
 ) => {
   const types = Array.isArray(_types) ? _types : [_types]
 

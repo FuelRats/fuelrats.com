@@ -1,12 +1,4 @@
 const initialState = {
-  authentication: {
-    loggedIn: false,
-    loggingIn: true,
-    loggingOut: false,
-    registering: false,
-    verifyError: null,
-  },
-
   blogs: {
     authors: {},
     blogs: [],
@@ -47,6 +39,13 @@ const initialState = {
 
   rescues: {},
 
+  session: {
+    loggedIn: false,
+    loggingOut: false,
+    error: null,
+    userId: null,
+  },
+
   ships: {},
 
   skus: {},
@@ -65,15 +64,10 @@ const initialState = {
 
   storeCart: {},
 
-  user: {
-    attributes: null,
-    id: null,
-    relationships: null,
-    retrieving: false,
-  },
+  users: {},
 
   wordpress: {
-    page: {},
+    pages: {},
   },
 }
 

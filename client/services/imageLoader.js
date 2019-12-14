@@ -24,7 +24,7 @@ export default function getImageLoader (dispatch) {
     worker = new ImageLoaderWorker()
     worker.addEventListener('message', (event) => {
       dispatch({
-        type: actionTypes.GET_IMAGE,
+        type: actionTypes.images.read,
         status: actionStatus.SUCCESS,
         ...event.data,
       })

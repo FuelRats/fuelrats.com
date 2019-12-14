@@ -1,89 +1,82 @@
 // Component imports
-import { createApiAction } from '../actionCreators'
+import { frApiRequest } from './services'
 import actionTypes from '../actionTypes'
 
 
 
 
 
-export const getProducts = (params = {}) => createApiAction({
-  actionType: actionTypes.GET_STRIPE_PRODUCTS,
-  url: '/products',
-  params: {
-    active: true,
-    type: 'good',
-    ...params,
+const getProduct = (id) => frApiRequest(
+  actionTypes.stripe.products.read,
+  { url: `/products/${id}` },
+)
+
+const getProducts = (params) => frApiRequest(
+  actionTypes.stripe.products.search,
+  {
+    url: '/products',
+    params: {
+      active: true,
+      type: 'good',
+      ...params,
+    },
   },
-})
+)
 
 
 
 
 
-export const getProduct = (id) => createApiAction({
-  actionType: actionTypes.GET_STRIPE_PRODUCT,
-  url: `/products/${id}`,
-})
+const createOrder = (data) => frApiRequest(
+  actionTypes.stripe.orders.create,
+  {
+    url: '/orders',
+    method: 'post',
+    data,
+  },
+)
+
+const getOrder = (id) => frApiRequest(
+  actionTypes.stripe.orders.read,
+  { url: `/orders/${id}` },
+)
+
+const getOrders = (params) => frApiRequest(
+  actionTypes.stripe.orders.search,
+  {
+    url: '/orders',
+    params,
+  },
+)
+
+const payOrder = (id, data) => frApiRequest(
+  actionTypes.stripe.orders.pay,
+  {
+    url: `/orders/${id}/pay`,
+    method: 'put',
+    data,
+  },
+)
+
+const updateOrder = (id, data) => frApiRequest(
+  actionTypes.stripe.orders.update,
+  {
+    url: `/orders/${id}`,
+    method: 'put',
+    data,
+  },
+)
 
 
 
 
 
-export const createOrder = (data) => createApiAction({
-  actionType: actionTypes.CREATE_STRIPE_ORDER,
-  url: '/orders',
-  method: 'post',
-  data,
-})
-
-
-
-
-
-export const getOrders = (params) => createApiAction({
-  actionType: actionTypes.GET_STRIPE_ORDERS,
-  url: '/orders',
-  params,
-})
-
-
-
-
-
-export const getOrder = (id) => createApiAction({
-  actionType: actionTypes.GET_STRIPE_ORDER,
-  url: `/orders/${id}`,
-})
-
-
-
-
-
-export const payOrder = (id, data) => createApiAction({
-  actionType: actionTypes.PAY_STRIPE_ORDER,
-  url: `/orders/${id}/pay`,
-  method: 'put',
-  data,
-})
-
-
-
-
-
-export const updateOrder = (id, data) => createApiAction({
-  actionType: actionTypes.UPDATE_STRIPE_ORDER,
-  url: `/orders/${id}`,
-  method: 'put',
-  data,
-})
-
-
-
-
-
-export const createCustomer = (data) => createApiAction({
-  actionType: actionTypes.CREATE_STRIPE_CUSTOMER,
-  url: '/customers',
-  method: 'post',
-  data,
-})
+export {
+  getProduct,
+  getProducts,
+  createOrder,
+  getOrder,
+  getOrders,
+  payOrder,
+  updateOrder,
+}

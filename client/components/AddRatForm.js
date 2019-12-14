@@ -8,8 +8,7 @@ import React from 'react'
 // Component imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect } from '../store'
-import { selectUser } from '../store/selectors'
-import Component from './Component'
+import { selectCurrentUserId } from '../store/selectors'
 import classNames from '../helpers/classNames'
 import ValidatedFormInput from './ValidatedFormInput'
 import ValidatedFormSelect from './ValidatedFormSelect'
@@ -35,7 +34,7 @@ const initialState = {
 
 
 @connect
-class AddRatForm extends Component {
+class AddRatForm extends React.Component {
   /***************************************************************************\
     Class Properties
   \***************************************************************************/
@@ -123,7 +122,7 @@ class AddRatForm extends Component {
     const classes = classNames(
       'add-rat',
       'compact',
-      ['form-open', formOpen]
+      ['form-open', formOpen],
     )
 
     return (
@@ -214,7 +213,7 @@ class AddRatForm extends Component {
   static mapDispatchToProps = ['createRat']
 
   static mapStateToProps = (state, ownProps) => ({
-    userId: ownProps.userId || selectUser(state).id,
+    userId: ownProps.userId || selectCurrentUserId(state),
   })
 }
 

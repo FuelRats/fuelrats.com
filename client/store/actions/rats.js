@@ -1,45 +1,51 @@
 // Component imports
-import { createApiAction } from '../actionCreators'
+import { frApiRequest } from './services'
+import { getResourceDeletePartial } from './partials'
 import actionTypes from '../actionTypes'
 
 
 
-
-const getRats = (params) => createApiAction({
-  actionType: actionTypes.GET_RATS,
-  url: '/rats',
-  params,
-})
-
-
-const getRat = (id) => createApiAction({
-  actionType: actionTypes.GET_RAT,
-  url: `/rats/${id}`,
-})
-
-
-const createRat = (data) => createApiAction({
-  actionType: actionTypes.CREATE_RAT,
-  url: '/rats',
-  method: 'post',
-  data,
-})
-
-const deleteRat = (ratId) => createApiAction({
-  actionType: actionTypes.DELETE_RAT,
-  url: `/rats/${ratId}`,
-  method: 'delete',
-  postDispatch: {
-    ratId,
+const getRats = (params) => frApiRequest(
+  actionTypes.rats.search,
+  {
+    url: '/rats',
+    params,
   },
-})
+)
 
-const updateRat = (ratId, data) => createApiAction({
-  actionType: actionTypes.UPDATE_RAT,
-  url: `/rats/${ratId}`,
-  method: 'put',
-  data,
-})
+
+const getRat = (id) => frApiRequest(
+  actionTypes.rats.read,
+  { url: `/rats/${id}` },
+)
+
+
+const createRat = (data) => frApiRequest(
+  actionTypes.rats.create,
+  {
+    url: '/rats',
+    method: 'post',
+    data,
+  },
+)
+
+const deleteRat = (ratId) => frApiRequest(
+  actionTypes.rats.delete,
+  {
+    url: `/rats/${ratId}`,
+    method: 'delete',
+  },
+  getResourceDeletePartial('rats', ratId),
+)
+
+const updateRat = (ratId, data) => frApiRequest(
+  actionTypes.rats.update,
+  {
+    url: `/rats/${ratId}`,
+    method: 'put',
+    data,
+  },
+)
 
 
 

@@ -1,65 +1,176 @@
-const actionTypes = [
-  'ADD_NICKNAME',
-  'CHANGE_PASSWORD',
-  'CHECK_DECAL_ELIGIBILITY',
-  'CLEAR_CART',
-  'CREATE_RAT',
-  'CREATE_EPICS',
-  'CREATE_SHIP',
-  'CREATE_STRIPE_ORDER',
-  'DELETE_CART_ITEM',
-  'DELETE_NICKNAME',
-  'DELETE_RAT',
-  'DELETE_RESCUE',
-  'DELETE_SHIP',
-  'DISPOSE_IMAGE',
-  'GET_CART',
-  'GET_CLIENT_AUTHORIZATION_PAGE',
-  'GET_IMAGE',
-  'GET_PROFILE',
-  'GET_RAT',
-  'GET_RAT_LEADERBOARD',
-  'GET_RATS',
-  'GET_RESCUE',
-  'GET_RESCUES',
-  'GET_SHIP',
-  'GET_SHIPS',
-  'GET_STRIPE_ORDER',
-  'GET_STRIPE_ORDERS',
-  'GET_STRIPE_PRODUCT',
-  'GET_STRIPE_PRODUCTS',
-  'GET_USER',
-  'GET_WORDPRESS_AUTHOR',
-  'GET_WORDPRESS_POST',
-  'GET_WORDPRESS_POSTS',
-  'GET_WORDPRESS_CATEGORY',
-  'GET_WORDPRESS_PAGE',
-  'GET_WORDPRESS_PAGES',
-  'LOGIN',
-  'LOGOUT',
-  'PAY_STRIPE_ORDER',
-  'REDEEM_DECAL',
-  'REGISTER',
-  'RESET_PASSWORD',
-  'RETRIEVE_EPIC',
-  'SEND_PASSWORD_RESET_EMAIL',
-  'SET_FLAG',
-  'UPDATE_CART_ITEM',
-  'UPDATE_RESCUE',
-  'UPDATE_RESCUE_RATS_ASSIGNED',
-  'UPDATE_RESCUE_RATS_REMOVED',
-  'UPDATE_RAT',
-  'UPDATE_SHIP',
-  'UPDATE_STRIPE_ORDER',
-  'UPDATE_USER',
-  'VALIDATE_PASSWORD_RESET_TOKEN',
-].reduce((acc, actionType) => ({
-  ...acc,
-  [actionType]: actionType,
-}), {})
+/* eslint-disable max-classes-per-file */// I know what I'm doing. shut up.
+
+const decals = {
+  read: 'decals/read',
+  redeem: 'decals/redeem',
+}
+
+
+const epics = {
+  read: 'epics/read',
+  create: 'epics/create',
+}
+
+
+const leaderboard = {
+  read: 'leaderboard/read',
+}
+
+
+const nicknames = {
+  create: 'nicknames/create',
+}
+
+
+const rats = {
+  read: 'rats/read',
+  search: 'rats/search',
+  create: 'rats/create',
+  delete: 'rats/delete',
+  update: 'rats/update',
+}
+
+
+const rescues = {
+  read: 'rescues/read',
+  search: 'rescues/search',
+  create: 'rescues/create',
+  delete: 'rescues/delete',
+  update: 'rescues/update',
+  patchRats: 'rescues/patchRats',
+}
+
+
+const ships = {
+  read: 'ships/read',
+  search: 'ships/search',
+  create: 'ships/create',
+  delete: 'ships/delete',
+  update: 'ships/update',
+}
+
+
+const users = {
+  update: 'users/update',
+}
+
+
+
+
+
+const images = {
+  read: 'images/read',
+  dispose: 'images/dispose',
+}
+
+
+
+
+
+const passwords = {
+  reset: 'passwords/reset',
+  requestReset: 'passwords/requestReset',
+  update: 'passwords/update',
+  validateReset: 'passwords/validateReset',
+}
+
+
+const session = {
+  login: 'session/login',
+  logout: 'session/logout',
+  register: 'session/register',
+  initialize: 'session/initialize',
+  read: 'session/read',
+  readClientOAuthPage: 'session/readClientOAuthPage',
+  pageChange: 'session/pageChange',
+  setFlag: 'session/setFlag',
+}
+
+
+
+
+
+const stripe = {
+  cart: {
+    clear: 'stripeCart/clear',
+    deleteItem: 'stripeCart/deleteItem',
+    read: 'stripeCart/read',
+    updateItem: 'stripeCart/updateItem',
+  },
+  orders: {
+    create: 'stripeOrders/create',
+    pay: 'stripeOrders/pay',
+    read: 'stripeOrders/read',
+    search: 'stripeOrders/search',
+    update: 'stripeOrders/update',
+  },
+  products: {
+    read: 'stripeProducts/read',
+    search: 'stripeProducts/search',
+  },
+}
+
+
+
+
+
+const wordpress = {
+  authors: {
+    read: 'wordpressAuthors/read',
+  },
+  categories: {
+    read: 'wordpressCategories/read',
+  },
+  pages: {
+    read: 'wordpressPages/read',
+  },
+  posts: {
+    read: 'wordpressPosts/read',
+    search: 'wordpressPosts/search',
+  },
+}
+
+
+
+
+
+const actionTypes = {
+  // API Resources
+  decals,
+  epics,
+  leaderboard,
+  nicknames,
+  passwords,
+  rats,
+  rescues,
+  ships,
+  users,
+
+  // Special
+  images,
+  session,
+
+  // Services
+  stripe,
+  wordpress,
+}
 
 
 
 
 
 export default actionTypes
+
+
+
+/* Template:
+
+const domain = {
+  create: 'domain/create',
+  delete: 'domain/delete',
+  read: 'domain/read',
+  search: 'domain/search',
+  update: 'domain/update',
+}
+
+*/
