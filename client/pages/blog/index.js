@@ -1,12 +1,15 @@
 // Module imports
-import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import moment from 'moment'
+import React from 'react'
 
 
 
 
 // Component imports
+import { PageWrapper } from '../../components/AppLayout'
+import TextPlaceholder from '../../components/TextPlaceholder'
+import safeParseInt from '../../helpers/safeParseInt'
 import { Link } from '../../routes'
 import { connect } from '../../store'
 import {
@@ -15,9 +18,6 @@ import {
   selectBlogCategories,
   selectBlogStatistics,
 } from '../../store/selectors'
-import { PageWrapper } from '../../components/AppLayout'
-import safeParseInt from '../../helpers/safeParseInt'
-import TextPlaceholder from '../../components/TextPlaceholder'
 
 
 

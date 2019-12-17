@@ -1,11 +1,13 @@
 // Module imports
-import React from 'react'
 import PropTypes from 'prop-types'
+import React from 'react'
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 
 // Component imports
+import classNames from '../../helpers/classNames'
+import { formatAsEliteDate } from '../../helpers/formatTime'
 import { connect, actionStatus } from '../../store'
 import {
   selectRatById,
@@ -15,11 +17,9 @@ import {
   selectPageViewMetaById,
   withCurrentUserId,
 } from '../../store/selectors'
-import { formatAsEliteDate } from '../../helpers/formatTime'
-import classNames from '../../helpers/classNames'
 import CardControls from '../CardControls'
-import DefaultRatButton from './DefaultRatButton'
 import InlineEditSpan from '../InlineEditSpan'
+import DefaultRatButton from './DefaultRatButton'
 
 
 

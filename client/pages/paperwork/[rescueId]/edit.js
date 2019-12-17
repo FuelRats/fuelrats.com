@@ -7,6 +7,14 @@ import { createSelector } from 'reselect'
 
 
 // Component imports
+import { PageWrapper, authenticated } from '../../../components/AppLayout'
+import FirstLimpetInput from '../../../components/FirstLimpetInput'
+import RadioInput from '../../../components/RadioInput'
+import RatTagsInput from '../../../components/RatTagsInput'
+import SystemTagsInput from '../../../components/SystemTagsInput'
+import { formatAsEliteDateTime } from '../../../helpers/formatTime'
+import userHasPermission from '../../../helpers/userHasPermission'
+import { Router } from '../../../routes'
 import { actions, connect } from '../../../store'
 import {
   selectRatsByRescueId,
@@ -15,14 +23,6 @@ import {
   selectGroupsByUserId,
   withCurrentUserId,
 } from '../../../store/selectors'
-import { PageWrapper, authenticated } from '../../../components/AppLayout'
-import { Router } from '../../../routes'
-import FirstLimpetInput from '../../../components/FirstLimpetInput'
-import RadioInput from '../../../components/RadioInput'
-import RatTagsInput from '../../../components/RatTagsInput'
-import SystemTagsInput from '../../../components/SystemTagsInput'
-import userHasPermission from '../../../helpers/userHasPermission'
-import { formatAsEliteDateTime } from '../../../helpers/formatTime'
 
 
 

@@ -1,4 +1,5 @@
 // Module imports
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 
 
@@ -6,10 +7,9 @@ import React from 'react'
 
 
 // Component imports
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import classNames from '../helpers/classNames'
 import { connect } from '../store'
 import { selectCurrentUserId } from '../store/selectors'
-import classNames from '../helpers/classNames'
 import ValidatedFormInput from './ValidatedFormInput'
 import ValidatedFormSelect from './ValidatedFormSelect'
 

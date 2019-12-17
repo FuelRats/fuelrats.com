@@ -7,10 +7,10 @@ import React from 'react'
 
 // Component imports
 import { PageWrapper } from '../components/AppLayout'
-import { connect } from '../store'
-import { Link } from '../routes'
-import { passwordPattern } from '../data/RegExpr'
 import PasswordField from '../components/PasswordField'
+import { passwordPattern } from '../data/RegExpr'
+import { Link } from '../routes'
+import { connect } from '../store'
 
 
 

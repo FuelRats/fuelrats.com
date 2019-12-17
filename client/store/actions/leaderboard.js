@@ -1,6 +1,6 @@
 // Component imports
-import { frApiRequest } from './services'
 import actionTypes from '../actionTypes'
+import { frApiRequest } from './services'
 
 
 

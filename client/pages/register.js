@@ -6,17 +6,17 @@ import React from 'react'
 
 
 // Component imports
-import { actions, connect } from '../store'
-import { Link } from '../routes'
+import { PageWrapper } from '../components/AppLayout'
+import PasswordField from '../components/PasswordField'
+import RadioInput from '../components/RadioInput'
+import WordpressTermsModal from '../components/TermsModal'
 import {
   commanderPattern,
   ircNickPattern,
   passwordPattern,
 } from '../data/RegExpr'
-import { PageWrapper } from '../components/AppLayout'
-import PasswordField from '../components/PasswordField'
-import RadioInput from '../components/RadioInput'
-import WordpressTermsModal from '../components/TermsModal'
+import { Link } from '../routes'
+import { actions, connect } from '../store'
 
 
 

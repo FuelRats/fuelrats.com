@@ -7,12 +7,12 @@ import React from 'react'
 
 // Component imports
 import { PageWrapper, authenticated } from '../../components/AppLayout'
-import { Router } from '../../routes'
+import FirstLoginModal from '../../components/FirstLoginModal'
+import ProfileHeader from '../../components/ProfileHeader'
 import TabbedPanel from '../../components/TabbedPanel'
 import UserOverview from '../../components/UserOverview'
-import ProfileHeader from '../../components/ProfileHeader'
 import UserRatsPanel from '../../components/UserRatsPanel'
-import FirstLoginModal from '../../components/FirstLoginModal'
+import { Router } from '../../routes'
 
 
 

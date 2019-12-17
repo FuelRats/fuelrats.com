@@ -1,15 +1,15 @@
 // Module imports
-import React from 'react'
 import PropTypes from 'prop-types'
+import React from 'react'
 
 
 
 
 
 // Component imports
-import { connect } from '../../store'
-import skuIsInStock from '../../helpers/isInStock'
 import getMoney from '../../helpers/getMoney'
+import skuIsInStock from '../../helpers/isInStock'
+import { connect } from '../../store'
 import { selectProductById, selectSkusByProductId } from '../../store/selectors'
 
 

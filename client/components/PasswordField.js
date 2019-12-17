@@ -1,6 +1,6 @@
 // Module imports
-import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React from 'react'
 import zxcvbn from 'zxcvbn'
 
 

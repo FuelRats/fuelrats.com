@@ -6,10 +6,10 @@ import React from 'react'
 
 
 // Component imports
-import { Link } from '../routes'
 import { PageWrapper } from '../components/AppLayout'
-import { connect } from '../store'
 import Carousel from '../components/Carousel'
+import { Link } from '../routes'
+import { connect } from '../store'
 
 
 const CarouselSlides = {

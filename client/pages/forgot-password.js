@@ -6,8 +6,8 @@ import React from 'react'
 
 
 // Component imports
-import { connect } from '../store'
 import { PageWrapper } from '../components/AppLayout'
+import { connect } from '../store'
 
 
 

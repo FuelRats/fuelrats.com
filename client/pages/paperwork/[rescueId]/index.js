@@ -1,12 +1,16 @@
 // Module imports
-import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React from 'react'
 
 
 
 
 
 // Component imports
+import { PageWrapper, authenticated } from '../../../components/AppLayout'
+import { formatAsEliteDateTime } from '../../../helpers/formatTime'
+import userHasPermission from '../../../helpers/userHasPermission'
+import { Link, Router } from '../../../routes'
 import { actions, connect } from '../../../store'
 import {
   selectRatsByRescueId,
@@ -15,10 +19,6 @@ import {
   selectGroupsByUserId,
   withCurrentUserId,
 } from '../../../store/selectors'
-import { PageWrapper, authenticated } from '../../../components/AppLayout'
-import { formatAsEliteDateTime } from '../../../helpers/formatTime'
-import { Link, Router } from '../../../routes'
-import userHasPermission from '../../../helpers/userHasPermission'
 
 
 

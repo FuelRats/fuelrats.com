@@ -1,11 +1,11 @@
 // Module imports
-import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React from 'react'
 
 // Component imports
+import { Link } from '../../routes'
 import { connect } from '../../store'
 import { selectStoreCart } from '../../store/selectors'
-import { Link } from '../../routes'
 
 
 

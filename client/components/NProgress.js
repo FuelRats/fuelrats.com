@@ -1,6 +1,6 @@
 // Module imports
-import React from 'react'
 import NProgress from 'nprogress'
+import React from 'react'
 
 
 

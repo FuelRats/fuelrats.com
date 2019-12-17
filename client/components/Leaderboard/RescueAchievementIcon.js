@@ -10,12 +10,12 @@ import React from 'react'
 
 
 
+import Rescue1000Svg from '../svg/Rescue1000Svg'
 import Rescue100Svg from '../svg/Rescue100Svg'
 import Rescue200Svg from '../svg/Rescue200Svg'
 import Rescue300Svg from '../svg/Rescue300Svg'
 import Rescue400Svg from '../svg/Rescue400Svg'
 import Rescue500Svg from '../svg/Rescue500Svg'
-import Rescue1000Svg from '../svg/Rescue1000Svg'
 
 
 

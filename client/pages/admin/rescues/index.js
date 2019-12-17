@@ -1,18 +1,18 @@
 // Module imports
-import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import debounce from 'lodash/debounce'
+import React from 'react'
 
 
 
 
 
 // Component imports
-import { connect, actions } from '../../../store'
-import { Link } from '../../../routes'
-import { selectPageViewDataById, selectPageViewMetaById } from '../../../store/selectors'
-import { formatAsEliteDateTime } from '../../../helpers/formatTime'
 import { PageWrapper, authenticated } from '../../../components/AppLayout'
+import { formatAsEliteDateTime } from '../../../helpers/formatTime'
+import { Link } from '../../../routes'
+import { connect, actions } from '../../../store'
+import { selectPageViewDataById, selectPageViewMetaById } from '../../../store/selectors'
 
 
 

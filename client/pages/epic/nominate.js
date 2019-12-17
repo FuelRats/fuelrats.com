@@ -7,11 +7,11 @@ import React from 'react'
 
 // Component imports
 import { PageWrapper, authenticated } from '../../components/AppLayout'
-import { connect } from '../../store'
-import classNames from '../../helpers/classNames'
 import RadioInput from '../../components/RadioInput'
-import RescuesTagsInput from '../../components/RescuesTagsInput'
 import RatTagsInput from '../../components/RatTagsInput'
+import RescuesTagsInput from '../../components/RescuesTagsInput'
+import classNames from '../../helpers/classNames'
+import { connect } from '../../store'
 
 
 

@@ -6,8 +6,8 @@ import React from 'react'
 
 
 // Component imports
-import { actions, connect, actionStatus } from '../store'
 import { PageWrapper } from '../components/AppLayout'
+import { actions, connect, actionStatus } from '../store'
 import { selectWordpressPageBySlug } from '../store/selectors'
 
 

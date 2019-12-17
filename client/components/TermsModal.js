@@ -6,10 +6,10 @@ import React from 'react'
 
 
 // Component imports
-import asModal, { ModalContent, ModalFooter } from './Modal'
 import classNames from '../helpers/classNames'
-import { selectWordpressPageBySlug } from '../store/selectors'
 import { connect } from '../store'
+import { selectWordpressPageBySlug } from '../store/selectors'
+import asModal, { ModalContent, ModalFooter } from './Modal'
 
 
 

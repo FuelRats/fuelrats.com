@@ -7,8 +7,8 @@ import React from 'react'
 
 // Component imports
 import { PageWrapper, authenticated } from '../components/AppLayout'
-import { actions } from '../store'
 import HiddenFormData from '../components/HiddenFormData'
+import { actions } from '../store'
 
 
 

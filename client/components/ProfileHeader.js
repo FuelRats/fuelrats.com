@@ -2,8 +2,8 @@
 import React from 'react'
 
 // Component imports
-import { connect } from '../store'
 import { formatAsEliteDateLong } from '../helpers/formatTime'
+import { connect } from '../store'
 import {
   selectUserById,
   selectDisplayRatByUserId,

@@ -1,8 +1,8 @@
-import { combineReducers } from 'redux'
 import getConfig from 'next/config'
+import { combineReducers } from 'redux'
 
-import chainReducers from '../utility/chainReducers'
 import initialState from '../initialState'
+import chainReducers from '../utility/chainReducers'
 import withDefaultReducers from '../utility/withDefaultReducers'
 
 import createJSONAPIResourceReducer from './APIResource'

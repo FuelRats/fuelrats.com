@@ -1,4 +1,5 @@
 // Module imports
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 
 
@@ -6,10 +7,9 @@ import React from 'react'
 
 
 // Component imports
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { ircNickPattern } from '../data/RegExpr'
 import { connect } from '../store'
 import { selectUserById, withCurrentUserId } from '../store/selectors'
-import { ircNickPattern } from '../data/RegExpr'
 import InfoBubble from './InfoBubble'
 import ValidatedFormInput from './ValidatedFormInput'
 

@@ -1,8 +1,8 @@
 // Component imports
-import { createAxiosAction } from './services'
-import actionTypes from '../actionTypes'
 import wpApi from '../../services/wordpress'
 import actionStatus from '../actionStatus'
+import actionTypes from '../actionTypes'
+import { createAxiosAction } from './services'
 
 
 

@@ -3,8 +3,8 @@ import React from 'react'
 
 
 // Component imports
-import { Link } from '../routes'
 import { PageWrapper } from '../components/AppLayout'
+import { Link } from '../routes'
 
 
 

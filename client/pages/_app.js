@@ -1,17 +1,17 @@
 // Module imports
 import { library as faLibrary, config as faConfig } from '@fortawesome/fontawesome-svg-core'
-import { Provider } from 'react-redux'
+import LocalForage from 'localforage'
+import withRedux from 'next-redux-wrapper'
 import App from 'next/app'
 import React from 'react'
-import withRedux from 'next-redux-wrapper'
-import LocalForage from 'localforage'
+import { Provider } from 'react-redux'
 
 
 
 // Component imports
-import { initStore } from '../store'
-import * as faIcons from '../helpers/faIconLibrary'
 import AppLayout from '../components/AppLayout'
+import * as faIcons from '../helpers/faIconLibrary'
+import { initStore } from '../store'
 
 
 

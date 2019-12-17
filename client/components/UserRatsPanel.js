@@ -10,8 +10,8 @@ import {
   selectUserById,
   withCurrentUserId,
 } from '../store/selectors'
-import RatCard from './RatCard'
 import AddRatForm from './AddRatForm'
+import RatCard from './RatCard'
 
 
 

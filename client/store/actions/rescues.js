@@ -1,7 +1,7 @@
 // Component imports
-import { frApiRequest } from './services'
-import { getPageViewPartial } from './partials'
 import actionTypes from '../actionTypes'
+import { getPageViewPartial } from './partials'
+import { frApiRequest } from './services'
 
 
 
