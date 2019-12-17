@@ -1024,10 +1024,10 @@
   dependencies:
     prop-types "^15.5.10"
 
-"@fuelrats/eslint-config-react@1.2.2":
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/@fuelrats/eslint-config-react/-/eslint-config-react-1.2.2.tgz#70d3ec81c39a7b067e5415440efbd792d016bdd4"
-  integrity sha512-adljNgm3i59pCIAD5w3UPgWi1h62Li88hA/mSwX8HVnC/PaT4TDHoNppKjWqh1CXnSyKVe/6w+anDYaByjN1rg==
+"@fuelrats/eslint-config-react@1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@fuelrats/eslint-config-react/-/eslint-config-react-1.2.3.tgz#c016345b8c64f05db12f03f533e222910e91e83c"
+  integrity sha512-0PE/nP3Bpm8Z53IcK19WWhPBAZhtIicOETYaa3r4xpsui9ryTMhM+H3HjOpNWLe7klWHq0mIlTdeqVyQuniRRg==
   dependencies:
     "@fuelrats/eslint-config" "^1.2.2"
 
