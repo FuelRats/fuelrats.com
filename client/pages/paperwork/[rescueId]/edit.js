@@ -28,23 +28,19 @@ import {
 
 
 
+
 // Component constants
 const PAPERWORK_MAX_EDIT_TIME = 3600000
 
-
 const selectFormattedRatsByRescueId = createSelector(
   selectRatsByRescueId,
-  (rats) => (rats
-    ? rats
-      .map((rat) => ({
+  (rats) => (rats?.reduce((accumulator, rat) => ({
+    ...accumulator,
+    [rat.id]: {
       ...rat,
       value: rat.attributes.name,
-      }))
-      .reduce((accumulator, rat) => ({
-        ...accumulator,
-        [rat.id]: rat,
-      }), {})
-    : []),
+    },
+  }), {}) ?? {}),
 )
 
 
