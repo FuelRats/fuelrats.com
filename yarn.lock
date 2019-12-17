@@ -1024,10 +1024,10 @@
   dependencies:
     prop-types "^15.5.10"
 
-"@fuelrats/eslint-config-react@1.2.3":
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/@fuelrats/eslint-config-react/-/eslint-config-react-1.2.3.tgz#c016345b8c64f05db12f03f533e222910e91e83c"
-  integrity sha512-0PE/nP3Bpm8Z53IcK19WWhPBAZhtIicOETYaa3r4xpsui9ryTMhM+H3HjOpNWLe7klWHq0mIlTdeqVyQuniRRg==
+"@fuelrats/eslint-config-react@1.2.5":
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/@fuelrats/eslint-config-react/-/eslint-config-react-1.2.5.tgz#ab449bab6db374cf41b805ca965d6f663e5c1cf2"
+  integrity sha512-6iteEgTgC4nJTbo+DKhN26WdOp3PyYMfIZj23wnm3YJe8ju4NpWQFhhTD9Xqb0LOSFCBuCcKtnkOXiPz55AEYQ==
   dependencies:
     "@fuelrats/eslint-config" "^1.2.2"
 
@@ -3286,7 +3286,7 @@ eslint-plugin-jsx-a11y@^6.2.3:
     has "^1.0.3"
     jsx-ast-utils "^2.2.1"
 
-eslint-plugin-react-hooks@^2.2.0:
+eslint-plugin-react-hooks@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-2.3.0.tgz#53e073961f1f5ccf8dd19558036c1fac8c29d99a"
   integrity sha512-gLKCa52G4ee7uXzdLiorca7JIQZPPXRAQDXV83J4bUEeUuc5pIEyZYAZ45Xnxe5IuupxEqHS+hUhSLIimK1EMw==
@@ -7211,7 +7211,7 @@ raw-body@^2.2.0:
     iconv-lite "0.4.24"
     unpipe "1.0.0"
 
-react-dom@^16.11.0:
+react-dom@^16.12.0:
   version "16.12.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.12.0.tgz#0da4b714b8d13c2038c9396b54a92baea633fe11"
   integrity sha512-LMxFfAGrcS3kETtQaCkTKjMiifahaMySFDn71fZUNpPHZQEzmk/GiAeIT8JSOrHB23fnuCOMruL2a8NYlw+8Gw==
@@ -7274,7 +7274,7 @@ react-table@^6.10.3:
     classnames "^2.2.5"
     react-is "^16.8.1"
 
-react@^16.11.0:
+react@^16.12.0:
   version "16.12.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.12.0.tgz#0c0a9c6a142429e3614834d5a778e18aa78a0b83"
   integrity sha512-fglqy3k5E+81pA8s+7K0/T3DBCF0ZDOher1elBFzF7O6arXJgzyu/FW+COxFvAWXJoJN9KIZbT2LXlukwphYTA==
