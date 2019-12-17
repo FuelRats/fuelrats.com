@@ -13,6 +13,7 @@ import RadioInput from '../../../components/RadioInput'
 import RatTagsInput from '../../../components/RatTagsInput'
 import SystemTagsInput from '../../../components/SystemTagsInput'
 import { formatAsEliteDateTime } from '../../../helpers/formatTime'
+import getRatTag from '../../../helpers/getRatTag'
 import userHasPermission from '../../../helpers/userHasPermission'
 import { Router } from '../../../routes'
 import { actions, connect } from '../../../store'
@@ -36,8 +37,8 @@ const selectFormattedRatsByRescueId = createSelector(
   (rats) => (rats
     ? rats
       .map((rat) => ({
-        ...rat,
-        value: rat.attributes.name,
+      ...rat,
+      value: rat.attributes.name,
       }))
       .reduce((accumulator, rat) => ({
         ...accumulator,
@@ -304,8 +305,6 @@ class Paperwork extends React.Component {
       system,
     } = fieldValues
 
-    const ratNameTemplate = (rat) => `${rat.attributes.name} [${rat.attributes.platform.toUpperCase()}]`
-
     const pwValidity = this.validate(fieldValues)
 
     return (
@@ -440,7 +439,7 @@ class Paperwork extends React.Component {
             onChange={this._handleRatsChange}
             onRemove={this._handleRatsRemove}
             value={rats}
-            valueProp={ratNameTemplate} />
+            valueProp={getRatTag} />
         </fieldset>
 
         <fieldset>
@@ -453,7 +452,7 @@ class Paperwork extends React.Component {
             onChange={this._handleFirstLimpetChange}
             options={rats}
             value={firstLimpetId}
-            valueProp={ratNameTemplate} />
+            valueProp={getRatTag} />
         </fieldset>
 
         <fieldset>
