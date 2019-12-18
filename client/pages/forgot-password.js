@@ -26,6 +26,8 @@ class ForgotPassword extends React.Component {
     error: null,
   }
 
+  _emailRef = React.createRef()
+
 
 
 
@@ -99,9 +101,7 @@ class ForgotPassword extends React.Component {
                   id="email"
                   onChange={this.handleInputChange}
                   name="email"
-                  ref={(_emailEl) => {
-                    this._emailEl = _emailEl
-                  }}
+                  ref={this._emailRef}
                   type="email"
                   value={email} />
               </fieldset>
@@ -144,11 +144,11 @@ class ForgotPassword extends React.Component {
   \***************************************************************************/
 
   get canSubmit () {
-    if (!this._emailEl) {
+    if (!this._emailRef.current) {
       return false
     }
 
-    if (!this._emailEl.validity.valid) {
+    if (!this._emailRef.current.validity.valid) {
       return false
     }
 

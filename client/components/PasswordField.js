@@ -27,6 +27,8 @@ export default class PasswordField extends React.Component {
     showPassword: false,
   }
 
+  _passwordRef = React.createRef()
+
 
 
 
@@ -72,8 +74,8 @@ export default class PasswordField extends React.Component {
       return newState
     })
 
-    if (this._el) {
-      this.validity = this._el.validity
+    if (this._passwordRef.current) {
+      this.validity = this._passwordRef.current.validity
     }
 
     if (onChange) {
@@ -86,12 +88,14 @@ export default class PasswordField extends React.Component {
 
   _handleShowPasswordClick = () => {
     this.setState((state) => ({ showPassword: !state.showPassword }))
-    this._el.focus()
+    this._passwordRef.current.focus()
   }
 
   _handleInputBlur = () => this.setState({ focused: false })
 
   _handleInputFocus = () => this.setState({ focused: true })
+
+
 
 
 
@@ -136,10 +140,7 @@ export default class PasswordField extends React.Component {
             onBlur={this._handleInputBlur}
             onFocus={this._handleInputFocus}
             onChange={this._handleChange}
-            onFocus={() => this.setState({ focused: true })}
-            ref={(_el) => {
-              this._el = _el
-            }}
+            ref={this._passwordRef}
             type={showPassword ? 'text' : 'password'}
             value={password} />
 

@@ -31,6 +31,8 @@ class PasswordReset extends React.Component {
     validating: true,
   }
 
+  _passwordRef = React.createRef()
+
 
 
 
@@ -120,9 +122,7 @@ class PasswordReset extends React.Component {
                   onChange={this._handleFieldChange}
                   pattern={passwordPattern}
                   placeholder="Use a strong password to keep your account secure"
-                  ref={(_password) => {
-                    this._password = _password
-                  }}
+                  ref={this._passwordRef}
                   required
                   showStrength
                   showSuggestions
@@ -166,11 +166,11 @@ class PasswordReset extends React.Component {
   \***************************************************************************/
 
   get canSubmit () {
-    if (!this._password) {
+    if (!this._passwordRef.current) {
       return false
     }
 
-    if (!this._password.validity.valid) {
+    if (!this._passwordRef.current.validity.valid) {
       return false
     }
 

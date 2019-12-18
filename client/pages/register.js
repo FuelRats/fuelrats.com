@@ -41,6 +41,11 @@ class Register extends React.Component {
     submitting: false,
   }
 
+  _emailRef = React.createRef()
+  _passwordRef = React.createRef()
+  _nicknameRef = React.createRef()
+  _ratNameRef = React.createRef()
+
 
 
 
@@ -189,9 +194,7 @@ class Register extends React.Component {
               disabled={submitting}
               onChange={this._handleChange}
               placeholder="i.e. surly_badger@gmail.com"
-              ref={(_emailEl) => {
-                this._emailEl = _emailEl
-              }}
+              ref={this._emailRef}
               required
               type="email"
               value={email} />
@@ -211,9 +214,7 @@ class Register extends React.Component {
               onChange={this._handleChange}
               pattern={passwordPattern}
               placeholder="Use a strong password to keep your account secure"
-              ref={(_password) => {
-                this._password = _password
-              }}
+              ref={this._passwordRef}
               required
               showStrength
               showSuggestions />
@@ -232,9 +233,7 @@ class Register extends React.Component {
               onChange={this._handleChange}
               pattern={ircNickPattern}
               placeholder="Surly_Badger"
-              ref={(_nicknameEl) => {
-                this._nicknameEl = _nicknameEl
-              }}
+              ref={this._nicknameRef}
               required
               type="text"
               value={nickname} />
@@ -255,9 +254,7 @@ class Register extends React.Component {
               maxLength={18}
               pattern={commanderPattern}
               placeholder="Surly Badger"
-              ref={(_ratNameEl) => {
-                this._ratNameEl = _ratNameEl
-              }}
+              ref={this._ratNameRef}
               required
               type="text"
               value={ratName} />
@@ -365,11 +362,21 @@ class Register extends React.Component {
       ratPlatform,
     } = this.state
 
-    if (!this._emailEl || !this._nicknameEl || !this._password || !this._ratNameEl) {
+    if (
+      !this._emailRef.current
+      || !this._nicknameRef.current
+      || !this._passwordRef.current
+      || !this._ratNameRef.current
+    ) {
       return false
     }
 
-    if (!this._emailEl.validity.valid || !this._password.validity.valid || !this._nicknameEl.validity.valid || !this._ratNameEl.validity.valid) {
+    if (
+      !this._emailRef.current.validity.valid
+      || !this._passwordRef.current.validity.valid
+      || !this._nicknameRef.current.validity.valid
+      || !this._ratNameRef.current.validity.valid
+    ) {
       return false
     }
 
