@@ -34,16 +34,14 @@ class UserDetailsPanel extends React.Component {
     Private Methods
   \***************************************************************************/
 
-  async _redeemDecal () {
+  _handleRedeemDecal = async () => {
     const { redeemDecal } = this.props
 
     this.setState({ redeeming: true })
 
     await redeemDecal()
 
-    this.setState({
-      redeeming: false,
-    })
+    this.setState({ redeeming: false })
   }
 
   _handleDecalVisibilityToggle = (event) => {
@@ -93,7 +91,7 @@ class UserDetailsPanel extends React.Component {
         <div className="redeem">
           <p>You're eligible for a decal but you haven't redeemed it yet.</p>
           <button
-            onClick={() => this._redeemDecal()}
+            onClick={this._handleRedeemDecal}
             type="button">
             Redeem
           </button>
