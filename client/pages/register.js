@@ -67,6 +67,13 @@ class Register extends React.Component {
     })
   }
 
+  _handleTOSAccept = () => this.setState({ acceptTerms: true })
+
+  _handlePrivacyAccept = () => {
+    this.setState({ acceptPrivacy: true })
+    sessionStorage.setItem('register.acceptTerms', true)
+  }
+
   _handleTOSChange = () => {
     const {
       acceptTerms,
@@ -325,17 +332,14 @@ class Register extends React.Component {
 
         <WordpressTermsModal
           isOpen={checkedTOS && !acceptTerms && !acceptPrivacy}
-          onClose={() => this.setState({ acceptTerms: true })}
+          onClose={this._handleTOSAccept}
           title="Terms of Service"
           slug="terms-of-service"
           checkboxLabel="I have read and agree to these Terms of Service" />
 
         <WordpressTermsModal
           isOpen={checkedTOS && acceptTerms && !acceptPrivacy}
-          onClose={() => {
-            this.setState({ acceptPrivacy: true })
-            sessionStorage.setItem('register.acceptTerms', true)
-          }}
+          onClose={this._handlePrivacyAccept}
           title="Privacy Policy"
           slug="privacy-policy"
           checkboxLabel="I have read and agree to this Privacy Policy" />
