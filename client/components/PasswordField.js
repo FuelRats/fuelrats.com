@@ -89,7 +89,9 @@ export default class PasswordField extends React.Component {
     this._el.focus()
   }
 
+  _handleInputBlur = () => this.setState({ focused: false })
 
+  _handleInputFocus = () => this.setState({ focused: true })
 
 
 
@@ -131,7 +133,8 @@ export default class PasswordField extends React.Component {
         <div className="input-group">
           <input
             {...inputProps}
-            onBlur={() => this.setState({ focused: false })}
+            onBlur={this._handleInputBlur}
+            onFocus={this._handleInputFocus}
             onChange={this._handleChange}
             onFocus={() => this.setState({ focused: true })}
             ref={(_el) => {
