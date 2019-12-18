@@ -130,7 +130,7 @@ class AddRatForm extends React.Component {
               name="name"
               minLength={1}
               maxLength={18}
-              onChange={(event) => this.setState({ name: event.target.value })}
+              onChange={this._handleFieldChange}
               placeholder="CMDR Name"
               required
               value={name} />
@@ -175,6 +175,9 @@ class AddRatForm extends React.Component {
       </form>
     )
   }
+
+
+
 
 
   /***************************************************************************\
