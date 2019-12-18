@@ -39,6 +39,9 @@ class PasswordReset extends React.Component {
     Private Methods
   \***************************************************************************/
 
+  _handleFieldChange = (event) => this.setState({ password: event.target.value })
+
+
   _handleSubmit = async (event) => {
     const {
       password,
@@ -114,7 +117,7 @@ class PasswordReset extends React.Component {
                   disabled={submitting}
                   id="password"
                   name="password"
-                  onChange={(event) => this.setState({ password: event.target.value })}
+                  onChange={this._handleFieldChange}
                   pattern={passwordPattern}
                   placeholder="Use a strong password to keep your account secure"
                   ref={(_password) => {
