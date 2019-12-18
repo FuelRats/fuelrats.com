@@ -41,6 +41,16 @@ class WordpressTermsModal extends React.Component {
 
 
   /***************************************************************************\
+    Private Methods
+  \***************************************************************************/
+
+  _handleCheckboxChange = ({ target }) => this.setState({ termsAgreed: target.checked })
+
+
+
+
+
+  /***************************************************************************\
     Public Methods
   \***************************************************************************/
 
@@ -83,14 +93,14 @@ class WordpressTermsModal extends React.Component {
               checked={termsAgreed}
               className="large"
               id={checkboxId}
-              onChange={({ target }) => this.setState({ termsAgreed: target.checked })}
+              onChange={this._handleCheckboxChange}
               type="checkbox" />
             <label htmlFor={checkboxId}>{checkboxLabel}</label>
           </span>
           <button
             disabled={!termsAgreed}
             key="NextButton"
-            onClick={() => onClose()}
+            onClick={onClose}
             type="button">
             Next
           </button>
