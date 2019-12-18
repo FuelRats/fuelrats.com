@@ -1,5 +1,6 @@
 // Module imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { produce } from 'immer'
 import React from 'react'
 
 
@@ -82,25 +83,15 @@ class AddRatForm extends React.Component {
   }
 
   _handleFieldChange = ({ target, valid, message }) => {
-    this.setState(({ validity }) => {
-      const {
-        name,
-        value,
-      } = target
-      const required = typeof validity[name] !== 'undefined'
+    this.setState(produce((draftState) => {
+      const { name, value } = target
 
-      return {
-        [name]: value,
-        ...(required
-          ? {
-            validity: {
-              ...validity,
-              [name]: valid || message,
-            },
-          }
-          : {}),
+      draftState[name] = value
+
+      if (typeof draftState.validity[name] !== 'undefined') {
+        draftState.validity[name] = valid || message
       }
-    })
+    }))
   }
 
 
