@@ -8,12 +8,21 @@
 
 ### ✨ Added
 
+
 ### ⚡ Changed
+* replace remaining function refs with `React.CreateRef()`
+* further optimize various components by removing inline function attributes (now disallowed by eslint config)
+* re-order imports (enforced by eslint config)
+* move rat tag rendering func to separate helper function. This same code was repeated in various places.
 
 ### 🐛 Fixed
 
 ### ⚙ Tasks
-
+* Add various new babel transform plugins to support new syntaxes
+    * export-namespace-from
+    * nullish-coalescing-operator
+    * optional-catch-binding
+    * optional-chaining
 
 
 
