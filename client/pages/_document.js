@@ -1,4 +1,5 @@
 // Module imports
+import Document, { Head, Main, NextScript } from 'next/document'
 import React from 'react'
 
 
@@ -6,7 +7,6 @@ import React from 'react'
 
 
 // Module imports
-import Document, { Head, Main, NextScript } from 'next/document'
 
 
 

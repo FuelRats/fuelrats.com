@@ -6,12 +6,12 @@ import React from 'react'
 
 
 // Component imports
-import { actions, connect } from '../../../store'
 // import StoreControlBar from '../../components/storefront/StoreControlBar'
-import CartUpdateModal from '../../../components/storefront/CartUpdateModal'
 import { PageWrapper } from '../../../components/AppLayout'
+import CartUpdateModal from '../../../components/storefront/CartUpdateModal'
 import ProductCard from '../../../components/storefront/ProductCard'
 import productPriorityDecendingSort from '../../../helpers/productPriorityDecendingSort'
+import { actions, connect } from '../../../store'
 import { selectProductsMeta, selectProducts } from '../../../store/selectors'
 
 

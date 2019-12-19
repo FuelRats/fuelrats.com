@@ -1,18 +1,18 @@
 /* globals $IS_DEVELOPMENT:false, $IS_STAGING:false, $BUILD_COMMIT:false, $BUILD_COMMIT_SHORT:false */
 
 // Module imports
-import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React from 'react'
 
 
 
 
 
 // Component imports
+import { Link } from '../routes'
 import { connect } from '../store'
 import { selectSession } from '../store/selectors'
 import Nav from './Nav'
-import { Link } from '../routes'
 import BrandSvg from './svg/BrandSvg'
 
 

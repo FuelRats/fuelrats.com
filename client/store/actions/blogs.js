@@ -1,9 +1,9 @@
 // Component imports
-import { wpApiRequest, createAxiosAction } from './services'
-import actionTypes from '../actionTypes'
 import httpStatus from '../../helpers/httpStatus'
-import initialState from '../initialState'
 import wpApi from '../../services/wordpress'
+import actionTypes from '../actionTypes'
+import initialState from '../initialState'
+import { wpApiRequest, createAxiosAction } from './services'
 
 
 

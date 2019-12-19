@@ -3,9 +3,9 @@ import localForage from 'localforage'
 
 
 // Component imports
+import actionStatus from '../actionStatus'
 import actionTypes from '../actionTypes'
 import initialState from '../initialState'
-import actionStatus from '../actionStatus'
 
 
 

@@ -1,21 +1,21 @@
 // Module imports
-import nextCookies from 'next-cookies'
 import JsCookie from 'js-cookie'
+import nextCookies from 'next-cookies'
 
 
 
 
 // Component imports
-import { getUserProfile } from './user'
+import HttpStatus from '../../helpers/httpStatus'
+import frApi from '../../services/fuelrats'
+import actionStatus from '../actionStatus'
+import actionTypes from '../actionTypes'
 import {
   selectSession,
   selectUserById,
   withCurrentUserId,
 } from '../selectors'
-import actionStatus from '../actionStatus'
-import actionTypes from '../actionTypes'
-import frApi from '../../services/fuelrats'
-import HttpStatus from '../../helpers/httpStatus'
+import { getUserProfile } from './user'
 
 
 

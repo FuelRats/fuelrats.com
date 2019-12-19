@@ -1,12 +1,12 @@
 /* eslint-env node */
 
 // Module imports
-const glob = require('glob')
-const path = require('path')
-const crypto = require('crypto')
-const webpack = require('webpack')
 const withSass = require('@zeit/next-sass')
 const withWorkers = require('@zeit/next-workers')
+const crypto = require('crypto')
+const glob = require('glob')
+const path = require('path')
+const webpack = require('webpack')
 
 
 

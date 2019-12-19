@@ -6,10 +6,10 @@ import React from 'react'
 
 
 // Component imports
-import asModal, { ModalContent, ModalFooter } from './Modal'
 import classNames from '../helpers/classNames'
-import { selectWordpressPageBySlug } from '../store/selectors'
 import { connect } from '../store'
+import { selectWordpressPageBySlug } from '../store/selectors'
+import asModal, { ModalContent, ModalFooter } from './Modal'
 
 
 
@@ -35,6 +35,16 @@ class WordpressTermsModal extends React.Component {
     termsAgreed: false,
     loading: true,
   }
+
+
+
+
+
+  /***************************************************************************\
+    Private Methods
+  \***************************************************************************/
+
+  _handleCheckboxChange = ({ target }) => this.setState({ termsAgreed: target.checked })
 
 
 
@@ -83,14 +93,14 @@ class WordpressTermsModal extends React.Component {
               checked={termsAgreed}
               className="large"
               id={checkboxId}
-              onChange={({ target }) => this.setState({ termsAgreed: target.checked })}
+              onChange={this._handleCheckboxChange}
               type="checkbox" />
             <label htmlFor={checkboxId}>{checkboxLabel}</label>
           </span>
           <button
             disabled={!termsAgreed}
             key="NextButton"
-            onClick={() => onClose()}
+            onClick={onClose}
             type="button">
             Next
           </button>

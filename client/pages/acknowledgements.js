@@ -3,8 +3,8 @@ import React from 'react'
 
 
 // Component imports
-import { PageWrapper } from '../components/AppLayout'
 import { dependencies } from '../../package.json'
+import { PageWrapper } from '../components/AppLayout'
 
 
 

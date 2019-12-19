@@ -6,16 +6,16 @@ import React from 'react'
 
 
 // Component imports
+import { PageWrapper } from '../../components/AppLayout'
+import StoreControlBar from '../../components/storefront/StoreControlBar'
+import getMoney from '../../helpers/getMoney'
+import { Link } from '../../routes'
 import { actions, connect } from '../../store'
 import {
   selectStoreCart,
   selectProductsMeta,
   selectProducts,
 } from '../../store/selectors'
-import { Link } from '../../routes'
-import { PageWrapper } from '../../components/AppLayout'
-import StoreControlBar from '../../components/storefront/StoreControlBar'
-import getMoney from '../../helpers/getMoney'
 
 
 

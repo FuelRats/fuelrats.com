@@ -7,11 +7,12 @@ import React from 'react'
 
 // Component imports
 import { PageWrapper, authenticated } from '../../components/AppLayout'
-import { connect } from '../../store'
-import classNames from '../../helpers/classNames'
 import RadioInput from '../../components/RadioInput'
-import RescuesTagsInput from '../../components/RescuesTagsInput'
 import RatTagsInput from '../../components/RatTagsInput'
+import RescuesTagsInput from '../../components/RescuesTagsInput'
+import classNames from '../../helpers/classNames'
+import getRatTag from '../../helpers/getRatTag'
+import { connect } from '../../store'
 
 
 
@@ -204,7 +205,7 @@ class EpicNominate extends React.Component {
                   name="rats"
                   onChange={this.handleRatsChange}
                   value={rats}
-                  valueProp={(rat) => `${rat.attributes.name} [${rat.attributes.platform.toUpperCase()}]`} />
+                  valueProp={getRatTag} />
               </fieldset>
             )}
 

@@ -1,13 +1,18 @@
 // Module imports
-import { StripeProvider } from 'react-stripe-elements'
-import getConfig from 'next/config'
 import hoistNonReactStatics from 'hoist-non-react-statics'
+import getConfig from 'next/config'
 import React from 'react'
+import { StripeProvider } from 'react-stripe-elements'
 
 
 
 
 // Component imports
+import HttpStatus from '../../helpers/httpStatus'
+import userHasPermission from '../../helpers/userHasPermission'
+import ErrorPage from '../../pages/_error'
+import { Router } from '../../routes'
+import frApi from '../../services/fuelrats'
 import { connect, getActionCreators } from '../../store'
 import {
   selectFlagByName,
@@ -16,16 +21,11 @@ import {
   selectGroupsByUserId,
   withCurrentUserId,
 } from '../../store/selectors'
-import { Router } from '../../routes'
-import ErrorPage from '../../pages/_error'
 import Header from '../Header'
-import HttpStatus from '../../helpers/httpStatus'
 import LoginModal from '../LoginModal'
 import NProgress from '../NProgress'
-import PageTransitionContainer from './PageTransitionContainer'
-import userHasPermission from '../../helpers/userHasPermission'
 import UserMenu from '../UserMenu'
-import frApi from '../../services/fuelrats'
+import PageTransitionContainer from './PageTransitionContainer'
 
 
 

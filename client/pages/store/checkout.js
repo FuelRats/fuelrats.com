@@ -7,8 +7,8 @@ import React from 'react'
 
 
 // Component imports
-import { actions, connect } from '../../store'
 import { PageWrapper, withStripe } from '../../components/AppLayout'
+import { actions, connect } from '../../store'
 import { selectStoreCart } from '../../store/selectors'
 
 

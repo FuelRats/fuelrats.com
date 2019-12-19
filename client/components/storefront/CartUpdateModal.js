@@ -7,11 +7,11 @@ import React from 'react'
 
 
 // Component imports
+import getMoney from '../../helpers/getMoney'
+import isInStock from '../../helpers/isInStock'
 import { connect } from '../../store'
 import { selectStoreCart } from '../../store/selectors'
 import asModal, { ModalContent, ModalFooter } from '../Modal'
-import isInStock from '../../helpers/isInStock'
-import getMoney from '../../helpers/getMoney'
 
 
 

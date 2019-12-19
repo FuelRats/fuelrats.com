@@ -6,8 +6,8 @@ import React from 'react'
 
 
 // Component imports
-import ValidatedFormInput from '../ValidatedFormInput'
 import ValidatedCountrySelect from '../ValidatedCountrySelect'
+import ValidatedFormInput from '../ValidatedFormInput'
 
 
 

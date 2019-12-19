@@ -1,4 +1,6 @@
 // Module imports
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { produce } from 'immer'
 import React from 'react'
 
 
@@ -6,10 +8,9 @@ import React from 'react'
 
 
 // Component imports
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import classNames from '../helpers/classNames'
 import { connect } from '../store'
 import { selectCurrentUserId } from '../store/selectors'
-import classNames from '../helpers/classNames'
 import ValidatedFormInput from './ValidatedFormInput'
 import ValidatedFormSelect from './ValidatedFormSelect'
 
@@ -82,25 +83,15 @@ class AddRatForm extends React.Component {
   }
 
   _handleFieldChange = ({ target, valid, message }) => {
-    this.setState(({ validity }) => {
-      const {
-        name,
-        value,
-      } = target
-      const required = typeof validity[name] !== 'undefined'
+    this.setState(produce((draftState) => {
+      const { name, value } = target
 
-      return {
-        [name]: value,
-        ...(required
-          ? {
-            validity: {
-              ...validity,
-              [name]: valid || message,
-            },
-          }
-          : {}),
+      draftState[name] = value
+
+      if (typeof draftState.validity[name] !== 'undefined') {
+        draftState.validity[name] = valid || message
       }
-    })
+    }))
   }
 
 
@@ -139,7 +130,7 @@ class AddRatForm extends React.Component {
               name="name"
               minLength={1}
               maxLength={18}
-              onChange={(event) => this.setState({ name: event.target.value })}
+              onChange={this._handleFieldChange}
               placeholder="CMDR Name"
               required
               value={name} />
@@ -184,6 +175,9 @@ class AddRatForm extends React.Component {
       </form>
     )
   }
+
+
+
 
 
   /***************************************************************************\
