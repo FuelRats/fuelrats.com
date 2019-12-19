@@ -14,6 +14,7 @@
 * further optimize various components by removing inline function attributes (now disallowed by eslint config)
 * re-order imports (enforced by eslint config)
 * move rat tag rendering func to separate helper function. This same code was repeated in various places.
+* other small refactors for code legibility or optimization
 
 ### 🐛 Fixed
 
