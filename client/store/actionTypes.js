@@ -90,6 +90,17 @@ const session = {
 
 
 
+const stripe = {
+  checkout: {
+    create: 'stripeCheckout/create',
+    read: 'stripeCheckout/read',
+  },
+}
+
+
+
+
+
 const wordpress = {
   authors: {
     read: 'wordpressAuthors/read',
@@ -127,6 +138,7 @@ const actionTypes = {
   session,
 
   // Services
+  stripe,
   wordpress,
 }
 
@@ -135,6 +147,8 @@ const actionTypes = {
 
 
 export default actionTypes
+
+
 
 
 
