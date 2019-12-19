@@ -28,14 +28,7 @@ const initialState = {
     statistics: [],
   },
 
-  orders: {},
-
   pageViews: {},
-
-  products: {
-    hasMore: false,
-    products: {},
-  },
 
   rats: {},
 
@@ -49,10 +42,6 @@ const initialState = {
   },
 
   ships: {},
-
-  skus: {},
-
-  storeCart: {},
 
   users: {},
 

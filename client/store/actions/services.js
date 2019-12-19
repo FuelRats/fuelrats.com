@@ -5,6 +5,7 @@ import httpStatus from '../../helpers/httpStatus'
 import isRequired from '../../helpers/isRequired'
 
 import frApi from '../../services/fuelrats'
+import stripeApi from '../../services/stripe'
 import wpApi from '../../services/wordpress'
 import actionStatus from '../actionStatus'
 
@@ -73,7 +74,7 @@ const frApiRequest = axiosRequest(frApi)
 
 const wpApiRequest = axiosRequest(wpApi)
 
-
+const stripeApiRequest = axiosRequest(stripeApi)
 
 
 

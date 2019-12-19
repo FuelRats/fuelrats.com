@@ -57,11 +57,11 @@ const navItems = [
     key: 'support-us',
     title: 'Support Us',
     subnav: [
-      {
-        key: 'merch',
-        title: 'Merch Store',
-        route: 'store list',
-      },
+      // {
+      //   key: 'merch',
+      //   title: 'Merch Store',
+      //   route: 'store list',
+      // },
       {
         external: true,
         key: 'donate',
