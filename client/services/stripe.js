@@ -13,7 +13,7 @@ const localStripeApiUrl = publicRuntimeConfig.apis.stripe.url
 
 
 
-const frApi = axios.create({
+const stApi = axios.create({
   baseURL: localStripeApiUrl,
   timeout: 10000,
   validateStatus: () => true, // Always resolve because it's simpler for the action creators.
@@ -23,4 +23,4 @@ const frApi = axios.create({
 
 
 
-export default frApi
+export default stApi
