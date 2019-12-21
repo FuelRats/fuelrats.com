@@ -5,7 +5,7 @@ import httpStatus from '../../helpers/httpStatus'
 import isRequired from '../../helpers/isRequired'
 
 import frApi from '../../services/fuelrats'
-import stripeApi from '../../services/stripe'
+import stApi from '../../services/stripe'
 import wpApi from '../../services/wordpress'
 import actionStatus from '../actionStatus'
 
@@ -56,30 +56,34 @@ const createAxiosAction = (type, response) => {
 
 
 
-const axiosRequest = (service) => (type = isRequired('type'), config, restAction) => async (dispatch) => {
+const axiosRequest = (service) => (type = isRequired('type'), config, restAction = {}) => async (dispatch) => {
   const response = await service.request(config)
   const action = createAxiosAction(type, response)
 
-  return dispatch(
-    restAction
-      ? {
-        ...action,
-        ...restAction,
-      }
-      : action,
-  )
+  return dispatch({
+    ...action,
+    ...restAction,
+  })
 }
+
+
+
+
 
 const frApiRequest = axiosRequest(frApi)
 
+const stApiRequest = axiosRequest(stApi)
+
 const wpApiRequest = axiosRequest(wpApi)
 
-const stripeApiRequest = axiosRequest(stripeApi)
+
 
 
 
 export {
   createAxiosAction,
+  axiosRequest,
   frApiRequest,
+  stApiRequest,
   wpApiRequest,
 }
