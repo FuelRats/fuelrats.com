@@ -1,11 +1,3 @@
-// Module imports
-const router = require('koa-router')()
-const send = require('koa-send')
-
-
-
-
-
 // Component constants
 const DAY_CHAR_LENGTH = 2
 const MONTH_CHAR_LENGTH = 2
@@ -20,35 +12,16 @@ const permanentRedirect = (path) => async (ctx) => {
   await ctx.redirect(path)
 }
 
-const sendFile = (path) => async (ctx) => {
-  await send(ctx, path)
-}
 
 
 
 
-
-module.exports = (nextApp, koaServer) => {
-  /***************************************************************************\
-    File Mappings
-  \***************************************************************************/
-
-  // Root dir static file mappings
-  router.get('/browserconfig.xml', sendFile('/client/public/static/browserconfig.xml'))
-  router.get('/sitemap.xml', sendFile('/client/public/static/sitemap.xml'))
-  router.get('/manifest.json', sendFile('/client/public/static/manifest.json'))
-  router.get('/favicon.ico', sendFile('/client/public/static/favicon/favicon.ico'))
-
-
-
-
-
+module.exports = (router) => {
   /***************************************************************************\
     Redirects
   \***************************************************************************/
 
   // Permanent Redirects
-
   router.get('/blogs', permanentRedirect('/blog')) // Old blog used to exist at /blogs
   router.get('/fuel-rats-lexicon', permanentRedirect('https://confluence.fuelrats.com/pages/viewpage.action?pageId=3637257')) // Lexicon used to be local
   router.get('/get-help', permanentRedirect('/i-need-fuel')) // get-help was used at launch of the website, but has since been changed back.
@@ -56,6 +29,7 @@ module.exports = (nextApp, koaServer) => {
   router.get('/privacy', permanentRedirect('/privacy-policy')) // Common endpoint for privacy policies
   router.get('/statistics', permanentRedirect('https://grafana.fuelrats.com')) // statistics page is no longer on the website
   router.get('/profile', permanentRedirect('/profile/overview')) // Profile page requires a tab name in the path
+
 
 
 
@@ -81,34 +55,4 @@ module.exports = (nextApp, koaServer) => {
 
     await next()
   })
-
-
-
-
-
-  /***************************************************************************\
-    Next-Routes passthrough
-  \***************************************************************************/
-
-  const nextRequestHandler = nextApp.getRequestHandler()
-  router.get('*', async (ctx) => {
-    ctx.respond = false
-    await nextRequestHandler(ctx.req, ctx.res)
-  })
-
-
-
-
-
-  /***************************************************************************\
-    Configure server and attach router.
-  \***************************************************************************/
-
-  koaServer.use(async (ctx, next) => {
-    ctx.res.statusCode = 200
-    await next()
-  })
-  koaServer.use(router.routes())
-  koaServer.use(router.allowedMethods())
 }
-/* eslint-enable */
