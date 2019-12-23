@@ -6,11 +6,12 @@ import { stApiRequest } from './services'
 
 
 
-export const createCheckoutSession = () => stApiRequest(
+export const createDonationSession = (data) => stApiRequest(
   actionTypes.stripe.checkout.create,
   {
-    url: '/checkout/sessions',
+    url: '/checkout/donate',
     method: 'post',
+    data,
   },
 )
 
