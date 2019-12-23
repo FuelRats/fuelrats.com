@@ -57,16 +57,15 @@ const navItems = [
     key: 'support-us',
     title: 'Support Us',
     subnav: [
-      // {
-      //   key: 'merch',
-      //   title: 'Merch Store',
-      //   route: 'store list',
-      // },
       {
-        external: true,
         key: 'donate',
         title: 'Donations',
-        href: 'https://donate.fuelrats.com/donate.php',
+        route: 'donate',
+      },
+      {
+        key: 'merch',
+        title: 'Merch (Coming soon!)',
+        disabled: true,
       },
     ],
   },
