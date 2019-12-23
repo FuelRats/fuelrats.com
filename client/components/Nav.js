@@ -180,15 +180,18 @@ class Nav extends React.Component {
           name="subnav"
           type="checkbox" />
       )
+    } else if (item.disabled) {
+      renderedItemTitle = (
+        <a className="disabled"><span>{renderedItemTitle}</span></a>
+      )
     } else if (item.external) {
       renderedItemTitle = (
-        <a href={item.href} className={item.disabled ? 'disabled' : ''}><span>{renderedItemTitle}</span></a>
+        <a href={item.href}><span>{renderedItemTitle}</span></a>
       )
     } else {
       renderedItemTitle = (
-        <Link
-          {...itemWithOnlyLinkProps}>
-          <a className={item.disabled ? 'disabled' : ''}><span>{renderedItemTitle}</span></a>
+        <Link {...itemWithOnlyLinkProps}>
+          <a><span>{renderedItemTitle}</span></a>
         </Link>
       )
     }
