@@ -84,6 +84,7 @@ class Blogs extends React.Component {
       author,
       category,
     } = this.props
+
     const {
       page,
       getBlogs,
@@ -127,31 +128,6 @@ class Blogs extends React.Component {
     this._getBlogs()
   }
 
-  UNSAFE_componentWillReceiveProps (nextProps) {
-    const {
-      author,
-      category,
-      page,
-    } = this.props
-
-    const {
-      author: nextAuthor,
-      category: nextCategory,
-      page: nextPage,
-    } = nextProps
-
-    const authorMatches = author === nextAuthor
-    const categoryMatches = category === nextCategory
-    const pageMatches = page === nextPage
-
-    if (!authorMatches || !categoryMatches || !pageMatches) {
-      this._getBlogs({
-        author: nextAuthor || null,
-        category: nextCategory || null,
-        page: nextPage,
-      })
-    }
-  }
 
   static getInitialProps ({ query }) {
     const props = {}
