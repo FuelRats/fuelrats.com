@@ -25,4 +25,7 @@ module.exports = {
   stripe: {
     secret: process.env.FRDC_STRIPE_API_SK,
   },
+  recaptcha: {
+    secret: process.env.FRDC_CAPTCHA_SK,
+  },
 }
