@@ -20,17 +20,22 @@ const path = 'M113.000,26.000 L6.000,26.000 C2.686,26.000 0.000,23.314 0.000,20.
 
 
 const StripeBadgeSvg = (props) => (
-  <Svg
-    {...props}
-    alt="Powered by Stripe"
-    width="119px"
-    height="26px"
-    path={path}
-    pathProps={{
-      fillRule: 'evenodd',
-      opacity: '0.502',
-      fill: 'rgb(66, 71, 112)',
-    }} />
+  <a
+    href="https://stripe.com/"
+    target="_blank"
+    rel="noopener noreferrer">
+    <Svg
+      {...props}
+      alt="Powered by Stripe"
+      width="119px"
+      height="26px"
+      path={path}
+      pathProps={{
+        fillRule: 'evenodd',
+        opacity: '0.502',
+        fill: 'rgb(66, 71, 112)',
+      }} />
+  </a>
 )
 
 
