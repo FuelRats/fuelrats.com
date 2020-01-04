@@ -1,0 +1,26 @@
+.donate-form {
+  position: relative;
+
+  max-width: 45rem;
+  margin: 4rem 0 0;
+
+  border: 1px solid $black;
+
+  input[type='text'] {
+    text-align: right;
+  }
+
+  label {
+    text-align: center;
+  }
+
+  .radio-input {
+    justify-content: center;
+  }
+
+  .donation-info-badge {
+    position: absolute;
+    right: 0;
+    bottom: calc(-26px - 1rem);
+  }
+}
