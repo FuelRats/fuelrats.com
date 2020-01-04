@@ -15,6 +15,8 @@ module.exports = (nextApp, koaServer, env) => {
   // Redirects
   require('./redirects')(router)
 
+  // Stripe Api
+  require('./stripeApi')(router, env)
 
   /***************************************************************************\
     Next.js Passthrough
