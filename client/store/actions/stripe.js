@@ -14,14 +14,3 @@ export const createDonationSession = (data) => stApiRequest(
     data,
   },
 )
-
-
-
-
-
-export const getCheckoutSession = (sessionId) => stApiRequest(
-  actionTypes.stripe.checkout.read,
-  {
-    url: `/checkout/sessions/${sessionId}`,
-  },
-)
