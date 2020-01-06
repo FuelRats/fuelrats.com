@@ -1,6 +1,8 @@
 # fuelrats.com Changelog
 
+All changes relative to the previous version of fuelrats.com shall be documented in this file.
 
+For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
@@ -570,6 +572,29 @@
 
 ## [2.0.0]
 * Initial Release
+
+
+
+
+
+## Changelog Rules
+
+basic format:
+
+```
+* message - [#pr1][], [#pr2][] - @externalContributor
+```
+
+* Entries must be easy to consume. Complex changes should be split up or made into a sublist of changes.
+* Entries for changes made by external contributors should be attributed via mention.
+    * Changes made by team members should **not** be attributed.
+* Entries must contain links to all PRs which contribute to the change.
+    * Changes made before 2.9.1 are kinda exempt right now. We're adding them over time.
+* Entries must be grouped using the following groups:
+    * **✨ Added** - For new features and additions.
+    * **⚡ Changed** - For any changes to existing features, or removal of old ones.
+    * **🐛 Fixed** - For bug fixes
+    * **⚙ Tasks** - Chores relating to the upkeep of the project or repository. (documentation, dependencies, etc.)
 
 
 
