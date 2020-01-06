@@ -42,10 +42,10 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ## [2.9.1]
 
 ### 🐛 Fixed
-* Fix decal panel not displaying redeemed decals
-* Fix error when logging out from website
-* Fix accessToken not being passed to the OAuth authorization page
-* Fix registration page improperly checking platform input for value
+* Fix decal panel not displaying redeemed decals - [#207][]
+* Fix error when logging out from website - [#207][]
+* Fix accessToken not being passed to the OAuth authorization page - [#207][]
+* Fix registration page improperly checking platform input for value - [#207][]
 
 
 
