@@ -9,23 +9,32 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ## [Unreleased]
 
 ### ✨ Added
-
+* Add donation page and it's subsequent donation result page - [#210][]
+* Add temporary donation API until APIv3 is out and we can use the new payments API we've been working on - [#210][]
+* Add foundation for recaptcha to be used in neccessary places - [#210][]
 
 ### ⚡ Changed
-* replace remaining function refs with `React.CreateRef()`
-* further optimize various components by removing inline function attributes (now disallowed by eslint config)
-* re-order imports (enforced by eslint config)
-* move rat tag rendering func to separate helper function. This same code was repeated in various places.
-* other small refactors for code legibility or optimization
+* Replace remaining function refs with `React.CreateRef()` - [#209][]
+* Further optimize various components by removing inline function attributes (now disallowed by eslint config) - [#209][]
+* Re-order imports (enforced by eslint config) - [#209][]
+* Move rat tag rendering func to separate helper function. This same code was repeated in various places - [#209][]
+* Split router middleware into it's own directory for better route management - [#210][]
+* Remove old webstore entirely. Just display disabled option for now showing that it will be back - [#210][]
+* Remove antiquated code which used to handle updating blog list page - [#210][]
+* Other small refactors for code legibility or optimization - [#210][]
 
 ### 🐛 Fixed
+* Fix locations of metadata files. They were in static, not on root directory - [#210][]
+* Fix disabled nav items so they never link to anything. We just want them sitting there looking pretty - [#210][]
 
 ### ⚙ Tasks
-* Add various new babel transform plugins to support new syntaxes
+* Add various new babel transform plugins to support new syntaxes - [#209][]
     * export-namespace-from
     * nullish-coalescing-operator
     * optional-catch-binding
     * optional-chaining
+* Upgrade to Node 12 LTS - [#210][]
+
 
 
 
