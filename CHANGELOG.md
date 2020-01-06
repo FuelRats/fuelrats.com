@@ -26,6 +26,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ### 🐛 Fixed
 * Fix locations of metadata files. They were in static, not on root directory - [#210][]
 * Fix disabled nav items so they never link to anything. We just want them sitting there looking pretty - [#210][]
+* Fix wp-content proxy origin header setting - [#211][]
 
 ### ⚙ Tasks
 * Add various new babel transform plugins to support new syntaxes - [#209][]
