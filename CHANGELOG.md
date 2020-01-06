@@ -39,7 +39,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.9.1]
+## [2.9.1] - 2019-12-14
 
 ### 🐛 Fixed
 * Fix decal panel not displaying redeemed decals - [#207][]
@@ -51,7 +51,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.9.0] - Now 6% less convoluted
+## [2.9.0] - 2019-12-14
 
 ### ✨ Added
 * Allow `<TagsInput />` component to be disabled
@@ -100,7 +100,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.8.0]
+## [2.8.0] - 2019-07-15
 
 ### ⚡ Changed
 * Version page no longer links to github commit comparison as that information is not easily accessible via teamcity :(
@@ -118,7 +118,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.7.3]
+## [2.7.3] - 2019-06-27
 
 ### 🐛 Fixed
 * Fix nickname password input.. we broke it.. oops...
@@ -127,7 +127,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.7.2]
+## [2.7.2] - 2019-06-26
 
 ### ✨ Added
 * Add rat honors to leaderboard
@@ -151,7 +151,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.7.1]
+## [2.7.1] - 2019-06-16
 
 ### 🐛 Fixed
 * Fix nickname input styles
@@ -160,7 +160,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.7.0]
+## [2.7.0] - 2019-06-11
 
 ### ✨ Added
 * Front page slideshow/carousel
@@ -199,7 +199,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.6.3]
+## [2.6.3] - 2018-12-19
 
 ### ⚡ Changed
 * Clean up helper functions
@@ -214,7 +214,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.6.2]
+## [2.6.2] - 2018-11-17
 
 ### ⚡ Changed
 * Hide layout on authorize page when the user is pre-authorized
@@ -229,7 +229,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.6.1]
+## [2.6.1] - 2018-11-11
 
 ### 🐛 Fixed
 * Fix rat global state filters
@@ -239,7 +239,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.6.0] - New server update!
+## [2.6.0] - 2018-11-10
 
 ### ✨ Added
 * Add dark input fields
@@ -260,7 +260,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.5.2]
+## [2.5.2] - 2018-10-13
 
 ### ⚡ Changed
 * Adjust code style to comply with updated ESLint stuff
@@ -272,7 +272,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.5.1]
+## [2.5.1] - 2018-10-11
 
 ### ⚡ Changed
 * Move billing info from shipping info stage to order summary page
@@ -296,7 +296,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.5.0]
+## [2.5.0] - 2018-10-10
 
 ### ✨ Added
 * Storefront + accompanying management pages
@@ -335,7 +335,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.4.3]
+## [2.4.3] - 2018-08-27
 
 ### ⚡ Changed
 * update rat kiwi link
@@ -347,7 +347,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.4.2] - Small (large?) Bits and Bobs
+## [2.4.2] - 2018-08-24
 
 ### ✨ Added
 * Add "rat links" nav section for logged in rats
@@ -373,7 +373,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.4.1]
+## [2.4.1] - 2018-07-27
 
 ### ⚡ Changed
 * Remove some unused code
@@ -388,7 +388,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.4.0]
+## [2.4.0] - 2018-05-28
 
 ### ✨ Added
 * Attempt to display wordpress page of the same slug when the page does not exist on the website
@@ -401,7 +401,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.3.2]
+## [2.3.2] - 2018-05-24
 
 ### 🐛 Fixed
 * Fix oauth page error caused by sending the wrong args to function
@@ -410,7 +410,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.3.1]
+## [2.3.1] - 2018-05-23
 
 ### ⚡ Changed
 * Only show rats with rescues on the leaderboard
@@ -423,7 +423,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.3.0]
+## [2.3.0] - 2018-05-22
 
 ### ✨ Added
 * Add paperwork edit button
@@ -441,7 +441,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.2.0] - The GDPR Update
+## [2.2.0] - 2018-05-13
 
 ### ✨ Added
 * New Privacy Policy
@@ -457,7 +457,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.1.9]
+## [2.1.9] - 2018-04-16
 
 ### 🐛 Fixed
 * Fix errors that occur during password resets and registration
@@ -466,7 +466,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.1.8] -
+## [2.1.8] - 2018-03-27
 
 ### ✨ Added
 * Donation page
@@ -475,7 +475,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.1.7]
+## [2.1.7] - 2018-04-11
 
 ### ✨ Added
 * Add link directly to the blog's art category
@@ -493,7 +493,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.1.6]
+## [2.1.6] - 2018-01-18
 
 ### ⚡ Changed
 * Change all instances of the word "Login" to "Rat Login"
@@ -504,7 +504,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.1.5]
+## [2.1.5] - 2018-01-17
 
 ### ✨ Added
 * Introduce acknowledgements page to credit those who have helped us so much
@@ -513,7 +513,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.1.4]
+## [2.1.4] - 2018-01-10
 
 ### 🐛 Fixed
 * Correctly set CR and system fields in paperwork
@@ -522,7 +522,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.1.3]
+## [2.1.3] - 2017-11-14
 
 ### ⚡ Changed
 * Swap to new TravisCI webhook
@@ -535,7 +535,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.1.2]
+## [2.1.2] - 2017-10-09
 
 ### ✨ Added
 * Restore IRC nick registration
@@ -548,7 +548,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.1.1]
+## [2.1.1] - 2017-10-05
 
 ### ⚡ Changed
 * Temporarily disable nickname registration
@@ -557,7 +557,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.1.0]
+## [2.1.0] - 2017-10-05
 
 ### ✨ Added
 * OAuth page
@@ -567,7 +567,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.0.1]
+## [2.0.1] - 2017-09-11
 
 ### ✨ Added
 * Password field suggestions and warnings
@@ -579,11 +579,17 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.0.0]
+## [2.0.0] - 2017-09-09
 * Initial Release
 
 
 
+## Previous Major Versions
+v1.0 refers to our old wordpress-based hybrid site which had major problems and wasn't very extensible in the long run.
+
+We look back on that old website fondly, but alas technology must continue moving forward.
+
+also... react is cooler, yo.
 
 
 ## Changelog Rules
@@ -597,7 +603,7 @@ basic format:
 * Entries must be easy to consume. Complex changes should be split up or made into a sublist of changes.
 * Entries for changes made by external contributors should be attributed via mention.
     * Changes made by team members should **not** be attributed.
-* Entries must contain links to all PRs which contribute to the change.
+* Entries must contain links to all PRs to `develop` which contribute to the change.
     * Changes made before 2.9.1 are kinda exempt right now. We're adding them over time.
 * Entries must be grouped using the following groups:
     * **✨ Added** - For new features and additions.
