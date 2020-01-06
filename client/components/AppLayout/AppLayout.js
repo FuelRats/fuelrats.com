@@ -2,7 +2,7 @@
 import hoistNonReactStatics from 'hoist-non-react-statics'
 import getConfig from 'next/config'
 import React from 'react'
-import { StripeProvider } from 'react-stripe-elements'
+
 
 
 
@@ -297,9 +297,7 @@ const withStripe = (Component) => {
 
     render () {
       return (
-        <StripeProvider stripe={this.state.stripe}>
-          <Component {...this.props} />
-        </StripeProvider>
+        <Component {...this.props} stripe={this.state.stripe} />
       )
     }
   }

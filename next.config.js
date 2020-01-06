@@ -16,6 +16,7 @@ const {
   BUILD_VCS_BRANCH,
   BUILD_VCS_NUMBER,
   FRDC_API_URL,
+  FRDC_CAPTCHA_PK,
   FRDC_PUBLIC_URL,
   FRDC_STRIPE_API_PK,
   PORT,
@@ -27,6 +28,7 @@ const DEFAULT_PORT = 3000
 const COMMIT_HASH_LENGTH = 10
 const DEV_BUILD_ID_LENGTH = 16
 
+const FINAL_PUBLIC_URL = FRDC_PUBLIC_URL || `http://localhost:${PORT || DEFAULT_PORT}`
 
 
 
@@ -39,18 +41,22 @@ module.exports = withWorkers(withSass({
   ),
   publicRuntimeConfig: {
     local: {
-      publicUrl: FRDC_PUBLIC_URL || `http://localhost:${PORT || DEFAULT_PORT}`,
+      publicUrl: FINAL_PUBLIC_URL,
     },
     apis: {
       fuelRats: {
-        local: FRDC_PUBLIC_URL ? `${FRDC_PUBLIC_URL}/api` : `http://localhost:${PORT || DEFAULT_PORT}/api`,
+        local: `${FINAL_PUBLIC_URL}/api`,
         server: FRDC_API_URL || 'http://localhost:8080',
       },
       wordpress: {
-        url: FRDC_PUBLIC_URL ? `${FRDC_PUBLIC_URL}/wp-api` : `http://localhost:${PORT || DEFAULT_PORT}/wp-api`,
+        url: `${FINAL_PUBLIC_URL}/wp-api`,
       },
       stripe: {
+        url: `${FINAL_PUBLIC_URL}/st-api`,
         public: FRDC_STRIPE_API_PK || null,
+      },
+      recaptcha: {
+        public: FRDC_CAPTCHA_PK || null,
       },
     },
   },

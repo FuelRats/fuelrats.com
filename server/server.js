@@ -64,7 +64,7 @@ app.prepare().then(() => {
   server.use(require('koa-body')())
 
   // Add routes
-  require('./middlewares/router')(app, server)
+  require('./router')(app, server, env)
 
   // Start the server
   server.listen(env.port)
