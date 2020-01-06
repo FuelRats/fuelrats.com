@@ -15,6 +15,10 @@
 
   .radio-input {
     justify-content: center;
+
+    .option .option-label .option-label-text {
+      min-width: 4.5rem;
+    }
   }
 
   .recaptcha-wrapper > div > div {
