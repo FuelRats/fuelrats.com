@@ -1,12 +1,15 @@
 // Module imports
-import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import moment from 'moment'
+import React from 'react'
 
 
 
 
 // Component imports
+import { PageWrapper } from '../../components/AppLayout'
+import TextPlaceholder from '../../components/TextPlaceholder'
+import safeParseInt from '../../helpers/safeParseInt'
 import { Link } from '../../routes'
 import { connect } from '../../store'
 import {
@@ -15,9 +18,6 @@ import {
   selectBlogCategories,
   selectBlogStatistics,
 } from '../../store/selectors'
-import { PageWrapper } from '../../components/AppLayout'
-import safeParseInt from '../../helpers/safeParseInt'
-import TextPlaceholder from '../../components/TextPlaceholder'
 
 
 
@@ -84,6 +84,7 @@ class Blogs extends React.Component {
       author,
       category,
     } = this.props
+
     const {
       page,
       getBlogs,
@@ -127,31 +128,6 @@ class Blogs extends React.Component {
     this._getBlogs()
   }
 
-  UNSAFE_componentWillReceiveProps (nextProps) {
-    const {
-      author,
-      category,
-      page,
-    } = this.props
-
-    const {
-      author: nextAuthor,
-      category: nextCategory,
-      page: nextPage,
-    } = nextProps
-
-    const authorMatches = author === nextAuthor
-    const categoryMatches = category === nextCategory
-    const pageMatches = page === nextPage
-
-    if (!authorMatches || !categoryMatches || !pageMatches) {
-      this._getBlogs({
-        author: nextAuthor || null,
-        category: nextCategory || null,
-        page: nextPage,
-      })
-    }
-  }
 
   static getInitialProps ({ query }) {
     const props = {}

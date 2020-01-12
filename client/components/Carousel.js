@@ -1,7 +1,7 @@
 // Module imports
-import React from 'react'
-import PropTypes from 'prop-types'
 import getConfig from 'next/config'
+import PropTypes from 'prop-types'
+import React from 'react'
 import { Transition, animated } from 'react-spring'
 import { createSelector, createStructuredSelector } from 'reselect'
 

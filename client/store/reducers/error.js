@@ -5,8 +5,8 @@ import { produce } from 'immer'
 
 
 // Component imports
-import initialState from '../initialState'
 import actionTypes from '../actionTypes'
+import initialState from '../initialState'
 
 
 

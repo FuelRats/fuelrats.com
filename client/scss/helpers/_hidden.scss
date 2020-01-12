@@ -6,3 +6,12 @@
   display: none !important;
   pointer-events: none;
 }
+
+
+.soft-hidable {
+  transition: opacity 0.2s ease;
+
+  &.soft-hidden {
+    opacity: 0;
+  }
+}

@@ -6,13 +6,13 @@ import React from 'react'
 
 
 // Component imports
-import { connect } from '../store'
-import asModal, { ModalContent, ModalFooter } from './Modal'
 import {
   passwordPattern,
 } from '../data/RegExpr'
-import PasswordField from './PasswordField'
 import HttpStatus from '../helpers/httpStatus'
+import { connect } from '../store'
+import asModal, { ModalContent, ModalFooter } from './Modal'
+import PasswordField from './PasswordField'
 
 
 @asModal({

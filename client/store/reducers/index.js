@@ -1,8 +1,8 @@
-import { combineReducers } from 'redux'
 import getConfig from 'next/config'
+import { combineReducers } from 'redux'
 
-import chainReducers from '../utility/chainReducers'
 import initialState from '../initialState'
+import chainReducers from '../utility/chainReducers'
 import withDefaultReducers from '../utility/withDefaultReducers'
 
 import createJSONAPIResourceReducer from './APIResource'
@@ -13,10 +13,7 @@ import flags from './flags'
 import images from './images'
 import leaderboard from './leaderboard'
 import pageViews from './pageViews'
-import products from './products'
 import session from './session'
-import skus from './skus'
-import storeCart from './storeCart'
 import users from './users'
 import wordpress from './wordpress'
 
@@ -35,7 +32,6 @@ const apiResourceReducer = createJSONAPIResourceReducer(localApiUrl, initialStat
   decals: 'decals',
   epics: 'epics',
   groups: 'groups',
-  order: 'orders',
   rats: {
     target: 'rats',
     dependencies: [{
@@ -74,10 +70,7 @@ export default chainReducers(
       images,
       leaderboard,
       pageViews,
-      products,
       session,
-      skus,
-      storeCart,
       users,
       wordpress,
     }),

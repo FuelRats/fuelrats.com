@@ -1,7 +1,7 @@
 // Component imports
-import { frApiRequest } from './services'
-import { getResourceDeletePartial } from './partials'
 import actionTypes from '../actionTypes'
+import { getResourceDeletePartial } from './partials'
+import { frApiRequest } from './services'
 
 
 

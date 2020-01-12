@@ -53,14 +53,8 @@ module.exports = routes()
   // Statistics
   .add('stats leaderboard', '/leaderboard')
 
-  // Storefront
-  .add('store cart', '/store/cart')
-  .add('store checkout', '/store/checkout')
-  .add('store orders', '/store/orders')
-  .add('store list', ({ page }) => ({
-    href: `/store/products/${page ? '[page]' : 'index'}`,
-    as: `/store/products${page ? `/${page}` : ''}`,
-  }))
+  // Donate
+  .add('donate', '/donate')
 
   // About
   .add('about fuelrats', '/about')

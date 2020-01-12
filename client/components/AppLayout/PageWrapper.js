@@ -1,18 +1,18 @@
 /* eslint-disable react/no-multi-comp */
 
 // Module imports
-import { animated } from 'react-spring'
-import React from 'react'
 import NextHead from 'next/head'
 import PropTypes from 'prop-types'
+import React from 'react'
+import { animated } from 'react-spring'
 
 
 
 
 
 // Component imports
-import { TransitionConsumer } from './PageTransitionContainer'
 import classnames from '../../helpers/classNames'
+import { TransitionConsumer } from './PageTransitionContainer'
 
 
 

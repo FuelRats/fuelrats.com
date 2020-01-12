@@ -1,6 +1,6 @@
 // Module imports
-import React from 'react'
 import PropTypes from 'prop-types'
+import React from 'react'
 
 // Component imports
 import countryList from '../data/CountryList'

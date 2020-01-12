@@ -91,22 +91,9 @@ const session = {
 
 
 const stripe = {
-  cart: {
-    clear: 'stripeCart/clear',
-    deleteItem: 'stripeCart/deleteItem',
-    read: 'stripeCart/read',
-    updateItem: 'stripeCart/updateItem',
-  },
-  orders: {
-    create: 'stripeOrders/create',
-    pay: 'stripeOrders/pay',
-    read: 'stripeOrders/read',
-    search: 'stripeOrders/search',
-    update: 'stripeOrders/update',
-  },
-  products: {
-    read: 'stripeProducts/read',
-    search: 'stripeProducts/search',
+  checkout: {
+    create: 'stripeCheckout/create',
+    read: 'stripeCheckout/read',
   },
 }
 
@@ -160,6 +147,8 @@ const actionTypes = {
 
 
 export default actionTypes
+
+
 
 
 

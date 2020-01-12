@@ -1,4 +1,5 @@
 // Module imports
+import Document, { Head, Main, NextScript } from 'next/document'
 import React from 'react'
 
 
@@ -6,7 +7,6 @@ import React from 'react'
 
 
 // Module imports
-import Document, { Head, Main, NextScript } from 'next/document'
 
 
 
@@ -57,7 +57,7 @@ class FuelRatsWebsite extends Document {
 
           <link rel="manifest" href="/manifest.json" />
 
-          <link rel="shortcut icon" href="/static/favicon/favicon.ico" />
+          <link rel="shortcut icon" href="/favicon.ico" />
 
           <script id="stripe-js" src="https://js.stripe.com/v3/" nonce={nonce} async defer />
         </Head>

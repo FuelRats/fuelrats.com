@@ -1,6 +1,6 @@
 // Module imports
-import React from 'react'
 import PropTypes from 'prop-types'
+import React from 'react'
 
 
 
@@ -60,11 +60,12 @@ class RadioInput extends React.Component {
       <Element className={classes}>
         {options.map((option) => (
           <OptionElement
+            {...option}
+            checked={option.value === value ?? option.checked}
+            disabled={disabled ?? option.disabled}
             key={option.value}
-            option={option}
-            onChange={this._handleOptionClick}
             name={name}
-            checked={option.value === value} />
+            onChange={this._handleOptionClick} />
         ))}
       </Element>
     )

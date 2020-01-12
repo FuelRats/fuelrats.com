@@ -1,10 +1,14 @@
 .radio-input {
   display: flex;
 
+  flex-wrap: wrap;
+
+  margin-bottom: -0.4rem;
+
   .option {
     display: inline-block;
 
-    margin: 0 0.2rem;
+    margin: 0 0.2rem 0.4rem;
 
 
     &:hover,
@@ -44,6 +48,8 @@
 
       .option-label-text {
         display: inline-block;
+
+        white-space: nowrap;
 
         transform: skewX(10deg);
       }

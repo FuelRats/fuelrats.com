@@ -1,48 +1,69 @@
 # fuelrats.com Changelog
 
+All changes relative to the previous version of fuelrats.com shall be documented in this file.
 
+For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
 ## [Unreleased]
 
 ### ✨ Added
+* Add donation page and it's subsequent donation result page - [#210][]
+* Add temporary donation API until APIv3 is out and we can use the new payments API we've been working on - [#210][]
+* Add foundation for recaptcha to be used in neccessary places - [#210][]
 
 ### ⚡ Changed
+* Replace remaining function refs with `React.CreateRef()` - [#209][]
+* Further optimize various components by removing inline function attributes (now disallowed by eslint config) - [#209][]
+* Re-order imports (enforced by eslint config) - [#209][]
+* Move rat tag rendering func to separate helper function. This same code was repeated in various places - [#209][]
+* Split router middleware into it's own directory for better route management - [#210][]
+* Remove old webstore entirely. Just display disabled option for now showing that it will be back - [#210][]
+* Remove antiquated code which used to handle updating blog list page - [#210][]
+* Other small refactors for code legibility or optimization - [#210][]
 
 ### 🐛 Fixed
+* Fix locations of metadata files. They were in static, not on root directory - [#210][]
+* Fix disabled nav items so they never link to anything. We just want them sitting there looking pretty - [#210][]
+* Fix wp-content proxy origin header setting - [#211][]
 
 ### ⚙ Tasks
+* Add various new babel transform plugins to support new syntaxes - [#209][]
+    * export-namespace-from
+    * nullish-coalescing-operator
+    * optional-catch-binding
+    * optional-chaining
 
 
 
 
 
-## [2.9.2]
+## [2.9.2] - 2020-01-12
 
 ### 🐛 Fixed
-* Fix user session not being properly initialized after registration.
+* Fix user session not being properly initialized after registration - [#212][]
 
 ### ⚙ Tasks
-* Upgrade to Node 12
+* Upgrade to Node 12 - [#212][]
 
 
 
 
 
-## [2.9.1]
+## [2.9.1] - 2019-12-14
 
 ### 🐛 Fixed
-* Fix decal panel not displaying redeemed decals
-* Fix error when logging out from website
-* Fix accessToken not being passed to the OAuth authorization page
-* Fix registration page improperly checking platform input for value
+* Fix decal panel not displaying redeemed decals - [#207][]
+* Fix error when logging out from website - [#207][]
+* Fix accessToken not being passed to the OAuth authorization page - [#207][]
+* Fix registration page improperly checking platform input for value - [#207][]
 
 
 
 
 
-## [2.9.0] - Now 6% less convoluted
+## [2.9.0] - 2019-12-14
 
 ### ✨ Added
 * Allow `<TagsInput />` component to be disabled
@@ -91,7 +112,7 @@
 
 
 
-## [2.8.0]
+## [2.8.0] - 2019-07-15
 
 ### ⚡ Changed
 * Version page no longer links to github commit comparison as that information is not easily accessible via teamcity :(
@@ -109,7 +130,7 @@
 
 
 
-## [2.7.3]
+## [2.7.3] - 2019-06-27
 
 ### 🐛 Fixed
 * Fix nickname password input.. we broke it.. oops...
@@ -118,7 +139,7 @@
 
 
 
-## [2.7.2]
+## [2.7.2] - 2019-06-26
 
 ### ✨ Added
 * Add rat honors to leaderboard
@@ -142,7 +163,7 @@
 
 
 
-## [2.7.1]
+## [2.7.1] - 2019-06-16
 
 ### 🐛 Fixed
 * Fix nickname input styles
@@ -151,7 +172,7 @@
 
 
 
-## [2.7.0]
+## [2.7.0] - 2019-06-11
 
 ### ✨ Added
 * Front page slideshow/carousel
@@ -190,7 +211,7 @@
 
 
 
-## [2.6.3]
+## [2.6.3] - 2018-12-19
 
 ### ⚡ Changed
 * Clean up helper functions
@@ -205,7 +226,7 @@
 
 
 
-## [2.6.2]
+## [2.6.2] - 2018-11-17
 
 ### ⚡ Changed
 * Hide layout on authorize page when the user is pre-authorized
@@ -220,7 +241,7 @@
 
 
 
-## [2.6.1]
+## [2.6.1] - 2018-11-11
 
 ### 🐛 Fixed
 * Fix rat global state filters
@@ -230,7 +251,7 @@
 
 
 
-## [2.6.0] - New server update!
+## [2.6.0] - 2018-11-10
 
 ### ✨ Added
 * Add dark input fields
@@ -251,7 +272,7 @@
 
 
 
-## [2.5.2]
+## [2.5.2] - 2018-10-13
 
 ### ⚡ Changed
 * Adjust code style to comply with updated ESLint stuff
@@ -263,7 +284,7 @@
 
 
 
-## [2.5.1]
+## [2.5.1] - 2018-10-11
 
 ### ⚡ Changed
 * Move billing info from shipping info stage to order summary page
@@ -287,7 +308,7 @@
 
 
 
-## [2.5.0]
+## [2.5.0] - 2018-10-10
 
 ### ✨ Added
 * Storefront + accompanying management pages
@@ -326,7 +347,7 @@
 
 
 
-## [2.4.3]
+## [2.4.3] - 2018-08-27
 
 ### ⚡ Changed
 * update rat kiwi link
@@ -338,7 +359,7 @@
 
 
 
-## [2.4.2] - Small (large?) Bits and Bobs
+## [2.4.2] - 2018-08-24
 
 ### ✨ Added
 * Add "rat links" nav section for logged in rats
@@ -364,7 +385,7 @@
 
 
 
-## [2.4.1]
+## [2.4.1] - 2018-07-27
 
 ### ⚡ Changed
 * Remove some unused code
@@ -379,7 +400,7 @@
 
 
 
-## [2.4.0]
+## [2.4.0] - 2018-05-28
 
 ### ✨ Added
 * Attempt to display wordpress page of the same slug when the page does not exist on the website
@@ -392,7 +413,7 @@
 
 
 
-## [2.3.2]
+## [2.3.2] - 2018-05-24
 
 ### 🐛 Fixed
 * Fix oauth page error caused by sending the wrong args to function
@@ -401,7 +422,7 @@
 
 
 
-## [2.3.1]
+## [2.3.1] - 2018-05-23
 
 ### ⚡ Changed
 * Only show rats with rescues on the leaderboard
@@ -414,7 +435,7 @@
 
 
 
-## [2.3.0]
+## [2.3.0] - 2018-05-22
 
 ### ✨ Added
 * Add paperwork edit button
@@ -432,7 +453,7 @@
 
 
 
-## [2.2.0] - The GDPR Update
+## [2.2.0] - 2018-05-13
 
 ### ✨ Added
 * New Privacy Policy
@@ -448,7 +469,7 @@
 
 
 
-## [2.1.9]
+## [2.1.9] - 2018-04-16
 
 ### 🐛 Fixed
 * Fix errors that occur during password resets and registration
@@ -457,7 +478,7 @@
 
 
 
-## [2.1.8] -
+## [2.1.8] - 2018-03-27
 
 ### ✨ Added
 * Donation page
@@ -466,7 +487,7 @@
 
 
 
-## [2.1.7]
+## [2.1.7] - 2018-04-11
 
 ### ✨ Added
 * Add link directly to the blog's art category
@@ -484,7 +505,7 @@
 
 
 
-## [2.1.6]
+## [2.1.6] - 2018-01-18
 
 ### ⚡ Changed
 * Change all instances of the word "Login" to "Rat Login"
@@ -495,7 +516,7 @@
 
 
 
-## [2.1.5]
+## [2.1.5] - 2018-01-17
 
 ### ✨ Added
 * Introduce acknowledgements page to credit those who have helped us so much
@@ -504,7 +525,7 @@
 
 
 
-## [2.1.4]
+## [2.1.4] - 2018-01-10
 
 ### 🐛 Fixed
 * Correctly set CR and system fields in paperwork
@@ -513,7 +534,7 @@
 
 
 
-## [2.1.3]
+## [2.1.3] - 2017-11-14
 
 ### ⚡ Changed
 * Swap to new TravisCI webhook
@@ -526,7 +547,7 @@
 
 
 
-## [2.1.2]
+## [2.1.2] - 2017-10-09
 
 ### ✨ Added
 * Restore IRC nick registration
@@ -539,7 +560,7 @@
 
 
 
-## [2.1.1]
+## [2.1.1] - 2017-10-05
 
 ### ⚡ Changed
 * Temporarily disable nickname registration
@@ -548,7 +569,7 @@
 
 
 
-## [2.1.0]
+## [2.1.0] - 2017-10-05
 
 ### ✨ Added
 * OAuth page
@@ -558,7 +579,7 @@
 
 
 
-## [2.0.1]
+## [2.0.1] - 2017-09-11
 
 ### ✨ Added
 * Password field suggestions and warnings
@@ -570,8 +591,37 @@
 
 
 
-## [2.0.0]
+## [2.0.0] - 2017-09-09
 * Initial Release
+
+
+
+## Previous Major Versions
+v1.0 refers to our old wordpress-based hybrid site which had major problems and wasn't very extensible in the long run.
+
+We look back on that old website fondly, but alas technology must continue moving forward.
+
+also... react is cooler, yo.
+
+
+## Changelog Rules
+
+basic format:
+
+```
+* message - [#pr1][], [#pr2][] - @externalContributor
+```
+
+* Entries must be easy to consume. Complex changes should be split up or made into a sublist of changes.
+* Entries for changes made by external contributors should be attributed via mention.
+    * Changes made by team members should **not** be attributed.
+* Entries must contain links to all PRs to `develop` which contribute to the change.
+    * Changes made before 2.9.1 are kinda exempt right now. We're adding them over time.
+* Entries must be grouped using the following groups:
+    * **✨ Added** - For new features and additions.
+    * **⚡ Changed** - For any changes to existing features, or removal of old ones.
+    * **🐛 Fixed** - For bug fixes
+    * **⚙ Tasks** - Chores relating to the upkeep of the project or repository. (documentation, dependencies, etc.)
 
 
 

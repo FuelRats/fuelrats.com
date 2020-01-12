@@ -72,12 +72,18 @@ const UserMenu = (props) => {
     user,
     userAvatar,
     userId,
+    setFlag,
   } = props
 
   const checkboxRef = useRef(null)
-  const closeMenu = useCallback(() => {
+
+  const handleItemClick = useCallback(() => {
     checkboxRef.current.checked = false
   }, [checkboxRef])
+
+  const handleLoginClick = useCallback(() => {
+    setFlag('showLoginDialog', true)
+  }, [setFlag])
 
   useEffect(() => {
     // This is a hack, but really the only way to pass this along.
@@ -104,16 +110,16 @@ const UserMenu = (props) => {
 
       {(loggedIn && user) && (
         <menu>
-          <NavSection onItemClick={closeMenu} items={userItems} />
-          <NavSection onItemClick={closeMenu} header="Admin" items={adminItems} />
-          <NavSection onItemClick={closeMenu} items={actions} />
+          <NavSection onItemClick={handleItemClick} items={userItems} />
+          <NavSection onItemClick={handleItemClick} header="Admin" items={adminItems} />
+          <NavSection onItemClick={handleItemClick} items={actions} />
         </menu>
       )}
 
       {!loggedIn && (
         <button
           className="login"
-          onClick={() => props.setFlag('showLoginDialog', true)}
+          onClick={handleLoginClick}
           type="button">
           Rat Login
         </button>

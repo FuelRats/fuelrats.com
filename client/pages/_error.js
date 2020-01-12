@@ -1,6 +1,6 @@
 // Module imports
-import React from 'react'
 import NextError from 'next/error'
+import React from 'react'
 
 
 

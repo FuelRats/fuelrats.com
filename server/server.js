@@ -14,8 +14,8 @@ require('dotenv').config()
 
 // Module imports
 const Koa = require('koa')
-const path = require('path')
 const next = require('next')
+const path = require('path')
 
 
 
@@ -64,7 +64,7 @@ app.prepare().then(() => {
   server.use(require('koa-body')())
 
   // Add routes
-  require('./middlewares/router')(app, server)
+  require('./router')(app, server, env)
 
   // Start the server
   server.listen(env.port)

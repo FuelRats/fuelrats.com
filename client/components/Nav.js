@@ -6,9 +6,9 @@ import React from 'react'
 
 
 // Component imports
+import { Link } from '../routes'
 import { connect } from '../store'
 import { selectSession } from '../store/selectors'
-import { Link } from '../routes'
 
 
 
@@ -58,15 +58,14 @@ const navItems = [
     title: 'Support Us',
     subnav: [
       {
-        key: 'merch',
-        title: 'Merch Store',
-        route: 'store list',
-      },
-      {
-        external: true,
         key: 'donate',
         title: 'Donations',
-        href: 'https://donate.fuelrats.com/donate.php',
+        route: 'donate',
+      },
+      {
+        key: 'merch',
+        title: 'Merch (Coming soon!)',
+        disabled: true,
       },
     ],
   },
@@ -181,15 +180,18 @@ class Nav extends React.Component {
           name="subnav"
           type="checkbox" />
       )
+    } else if (item.disabled) {
+      renderedItemTitle = (
+        <a className="disabled"><span>{renderedItemTitle}</span></a>
+      )
     } else if (item.external) {
       renderedItemTitle = (
-        <a href={item.href} className={item.disabled ? 'disabled' : ''}><span>{renderedItemTitle}</span></a>
+        <a href={item.href}><span>{renderedItemTitle}</span></a>
       )
     } else {
       renderedItemTitle = (
-        <Link
-          {...itemWithOnlyLinkProps}>
-          <a className={item.disabled ? 'disabled' : ''}><span>{renderedItemTitle}</span></a>
+        <Link {...itemWithOnlyLinkProps}>
+          <a><span>{renderedItemTitle}</span></a>
         </Link>
       )
     }

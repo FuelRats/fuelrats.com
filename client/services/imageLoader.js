@@ -1,6 +1,6 @@
 // Component imports
-import actionTypes from '../store/actionTypes'
 import actionStatus from '../store/actionStatus'
+import actionTypes from '../store/actionTypes'
 
 
 

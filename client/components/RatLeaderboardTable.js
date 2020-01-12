@@ -7,6 +7,7 @@ import ReactTable from 'react-table'
 
 
 // Module imports
+import safeParseInt from '../helpers/safeParseInt'
 import { connect } from '../store'
 import {
   selectLeaderboard,
@@ -14,7 +15,6 @@ import {
 import CodeRedIcon from './Leaderboard/CodeRedIcon'
 import FirstYearIcon from './Leaderboard/FirstYearIcon'
 import RescueAchievementIcon from './Leaderboard/RescueAchievementIcon'
-import safeParseInt from '../helpers/safeParseInt'
 
 
 
