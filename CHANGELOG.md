@@ -23,6 +23,9 @@
 ### 🐛 Fixed
 * Fix user session not being properly initialized after registration.
 
+### ⚙ Tasks
+* Upgrade to Node 12
+
 
 
 
