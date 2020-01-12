@@ -18,6 +18,15 @@
 
 
 
+## [2.9.2]
+
+### 🐛 Fixed
+* Fix user session not being properly initialized after registration.
+
+
+
+
+
 ## [2.9.1]
 
 ### 🐛 Fixed
