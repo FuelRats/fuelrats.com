@@ -50,26 +50,24 @@ export const initUserSession = (ctx) => async (dispatch, getState) => {
     accessToken,
   }
 
-  if (!session.loggedIn) {
-    if (accessToken) {
-      frApi.defaults.headers.common.Authorization = `Bearer ${accessToken}`
+  if (accessToken) {
+    frApi.defaults.headers.common.Authorization = `Bearer ${accessToken}`
 
-      if (!user && !session.error) {
-        const profileReq = await getUserProfile()(dispatch)
+    if (!user && !session.error) {
+      const profileReq = await getUserProfile()(dispatch)
 
-        if (!HttpStatus.isSuccess(profileReq.response.status)) {
-          result.error = profileReq.response.status
-          result.status = actionStatus.ERROR
+      if (!HttpStatus.isSuccess(profileReq.response.status)) {
+        result.error = profileReq.response.status
+        result.status = actionStatus.ERROR
 
-          if (profileReq.response.status === HttpStatus.UNAUTHORIZED) {
-            logout()(dispatch)
-            result.accessToken = null
-          }
+        if (profileReq.response.status === HttpStatus.UNAUTHORIZED) {
+          logout()(dispatch)
+          result.accessToken = null
         }
       }
-    }
 
-    dispatch(result)
+      dispatch(result)
+    }
   }
   return result
 }
