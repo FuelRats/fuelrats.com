@@ -42,10 +42,10 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ## [2.9.2] - 2020-01-12
 
 ### 🐛 Fixed
-* Fix user session not being properly initialized after registration - [#212][]
+* Fix user session not being properly initialized after registration - [#213][]
 
 ### ⚙ Tasks
-* Upgrade to Node 12 - [#212][]
+* Upgrade to Node 12 - [#213][]
 
 
 
