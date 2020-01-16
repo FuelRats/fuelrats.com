@@ -34,7 +34,18 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
     * nullish-coalescing-operator
     * optional-catch-binding
     * optional-chaining
-* Upgrade to Node 12 LTS - [#210][]
+
+
+
+
+
+## [2.9.2] - 2019-01-12
+
+### 🐛 Fixed
+* Fix user session not being properly initialized after registration. - [#213][]
+
+### ⚙ Tasks
+* Upgrade to Node 12 LTS - [#210][], [#213][]
 
 
 
@@ -616,7 +627,8 @@ basic format:
 
 
 
-[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.9.1...HEAD
+[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.9.2...HEAD
+[2.9.2]: https://github.com/FuelRats/fuelrats.com/compare/v2.9.1...v2.9.2
 [2.9.1]: https://github.com/FuelRats/fuelrats.com/compare/v2.9.0...v2.9.1
 [2.9.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.8.0...v2.9.0
 [2.8.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.7.3...v2.8.0
