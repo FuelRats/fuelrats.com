@@ -18,10 +18,10 @@ import userHasPermission from '../../../helpers/userHasPermission'
 import { Router } from '../../../routes'
 import { actions, connect } from '../../../store'
 import {
+  selectCurrentUserId,
+  selectGroupsByUserId,
   selectRatsByRescueId,
   selectRescueById,
-  selectUserById,
-  selectGroupsByUserId,
   withCurrentUserId,
 } from '../../../store/selectors'
 
@@ -646,19 +646,25 @@ class Paperwork extends React.Component {
   get userCanEdit () {
     const {
       rescue,
-      currentUser,
+      currentUserId,
       currentUserGroups,
     } = this.props
 
-    if (!rescue || !currentUser.relationships) {
+    if (!rescue || !currentUserId) {
       return false
     }
 
     // Check if current user is assigned to case.
-    const assignedRatIds = rescue.relationships.rats.data.map((rat) => rat.id)
-    const currentUserRatIds = currentUser.relationships.rats.data.map((rat) => rat.id)
+    const currentUsersAssignedRats = rescue.relationships.rats.data?.reduce(
+      (acc, rat) => {
+        if (rat.attributes.userId === currentUserId) {
+          return [...acc, rat]
+        }
+        return acc
+      }
+    )
 
-    if (assignedRatIds.some((ratId) => currentUserRatIds.includes(ratId))) {
+    if (currentUsersAssignedRats.length) {
       return true
     }
 
@@ -688,7 +694,7 @@ class Paperwork extends React.Component {
   static mapStateToProps = (state, { query }) => ({
     rats: selectFormattedRatsByRescueId(state, query),
     rescue: selectRescueById(state, query),
-    currentUser: withCurrentUserId(selectUserById)(state),
+    currentUserId: selectCurrentUserId(state),
     currentUserGroups: withCurrentUserId(selectGroupsByUserId)(state),
   })
 }
