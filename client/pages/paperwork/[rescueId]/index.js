@@ -13,19 +13,12 @@ import userHasPermission from '../../../helpers/userHasPermission'
 import { Link, Router } from '../../../routes'
 import { actions, connect } from '../../../store'
 import {
-  selectCurrentUserId,
   selectGroupsByUserId,
   selectRatsByRescueId,
   selectRescueById,
+  selectRescueCanEdit,
   withCurrentUserId,
 } from '../../../store/selectors'
-
-
-
-
-
-// Component constants
-const PAPERWORK_MAX_EDIT_TIME = 3600000
 
 
 
@@ -58,9 +51,11 @@ class Paperwork extends React.Component {
 
       await this.props.deleteRescue(this.props.rescue.id)
 
-      const userCanViewRescueSearch = userHasPermission(this.props.currentUserGroups, 'rescue.write')
-
-      Router.pushRoute(userCanViewRescueSearch ? 'admin rescues list' : '/')
+      Router.pushRoute(
+        userHasPermission(this.props.currentUserGroups, 'rescue.write')
+          ? 'admin rescues list'
+          : '/',
+      )
 
       return
     }
@@ -165,19 +160,14 @@ class Paperwork extends React.Component {
   renderRescue = () => {
     const {
       rescue,
+      userCanEdit,
+      currentUserGroups,
     } = this.props
-
 
     const {
       deleteConfirm,
       deleting,
     } = this.state
-
-    const {
-      userCanDelete,
-      userCanEdit,
-    } = this
-
 
     // This makes 2 new variables called status and outcome, and sets them to the values of the outcome and status in the rescue object.
     let {
@@ -231,7 +221,7 @@ class Paperwork extends React.Component {
                     </a>
                   </Link>
                 )}
-                {userCanDelete && (
+                {userHasPermission(currentUserGroups, 'rescue.delete') && (
                   <button
                     className="compact"
                     onClick={this._handleDeleteClick}
@@ -367,65 +357,6 @@ class Paperwork extends React.Component {
 
 
   /***************************************************************************\
-    Getters
-  \***************************************************************************/
-
-  get userCanEdit () {
-    const {
-      rescue,
-      currentUserId,
-      currentUserGroups,
-    } = this.props
-
-    if (!rescue || !currentUserId) {
-      return false
-    }
-
-    // Check if current user is assigned to case.
-    const currentUsersAssignedRats = rescue.relationships.rats.data?.reduce(
-      (acc, rat) => {
-        if (rat.attributes.userId === currentUserId) {
-          return [...acc, rat]
-        }
-        return acc
-      }
-    )
-
-    if (currentUsersAssignedRats.length) {
-      return true
-    }
-
-    // Check if the paperwork is not yet time locked
-    if ((new Date()).getTime() - (new Date(rescue.attributes.createdAt)).getTime() <= PAPERWORK_MAX_EDIT_TIME) {
-      return true
-    }
-
-    // Check if user has the permission to edit the paperwork anyway
-    if (currentUserGroups.length && userHasPermission(currentUserGroups, 'rescue.write')) {
-      return true
-    }
-
-    return false
-  }
-
-  get userCanDelete () {
-    const {
-      currentUserGroups,
-    } = this.props
-
-
-    if (currentUserGroups.length && (userHasPermission(currentUserGroups, 'rescue.delete') || userHasPermission(currentUserGroups, 'isAdministrator'))) {
-      return true
-    }
-
-    return false
-  }
-
-
-
-
-
-  /***************************************************************************\
     Redux Properties
   \***************************************************************************/
 
@@ -434,7 +365,7 @@ class Paperwork extends React.Component {
   static mapStateToProps = (state, { query }) => ({
     rats: selectRatsByRescueId(state, query) || [],
     rescue: selectRescueById(state, query),
-    currentUserId: selectCurrentUserId(state),
+    userCanEdit: selectRescueCanEdit(state, query),
     currentUserGroups: withCurrentUserId(selectGroupsByUserId)(state),
   })
 }
