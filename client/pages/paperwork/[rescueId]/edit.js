@@ -14,15 +14,12 @@ import RatTagsInput from '../../../components/RatTagsInput'
 import SystemTagsInput from '../../../components/SystemTagsInput'
 import { formatAsEliteDateTime } from '../../../helpers/formatTime'
 import getRatTag from '../../../helpers/getRatTag'
-import userHasPermission from '../../../helpers/userHasPermission'
 import { Router } from '../../../routes'
 import { actions, connect } from '../../../store'
 import {
-  selectCurrentUserId,
-  selectGroupsByUserId,
   selectRatsByRescueId,
   selectRescueById,
-  withCurrentUserId,
+  selectRescueCanEdit,
 } from '../../../store/selectors'
 
 
@@ -30,8 +27,6 @@ import {
 
 
 // Component constants
-const PAPERWORK_MAX_EDIT_TIME = 3600000
-
 const selectFormattedRatsByRescueId = createSelector(
   selectRatsByRescueId,
   (rats) => (rats?.reduce((accumulator, rat) => ({
@@ -210,6 +205,10 @@ class Paperwork extends React.Component {
       }), {}),
     },
   }))
+
+
+
+
 
   /***************************************************************************\
     Public Methods
@@ -537,7 +536,7 @@ class Paperwork extends React.Component {
   lastInvalidReason = null
 
   validate (values) {
-    const { rescue } = this.props
+    const { rescue, userCanEdit } = this.props
     const { changes } = this.state
 
     let invalidReason = null
@@ -566,7 +565,7 @@ class Paperwork extends React.Component {
         break
     }
 
-    if (!this.userCanEdit) {
+    if (!userCanEdit) {
       invalidReason = 'You cannot edit this rescue.'
     }
 
@@ -640,52 +639,6 @@ class Paperwork extends React.Component {
 
 
   /***************************************************************************\
-    Getters
-  \***************************************************************************/
-
-  get userCanEdit () {
-    const {
-      rescue,
-      currentUserId,
-      currentUserGroups,
-    } = this.props
-
-    if (!rescue || !currentUserId) {
-      return false
-    }
-
-    // Check if current user is assigned to case.
-    const currentUsersAssignedRats = rescue.relationships.rats.data?.reduce(
-      (acc, rat) => {
-        if (rat.attributes.userId === currentUserId) {
-          return [...acc, rat]
-        }
-        return acc
-      }
-    )
-
-    if (currentUsersAssignedRats.length) {
-      return true
-    }
-
-    // Check if the paperwork is not yet time locked
-    if ((new Date()).getTime() - (new Date(rescue.attributes.createdAt)).getTime() <= PAPERWORK_MAX_EDIT_TIME) {
-      return true
-    }
-
-    // Check if user has the permission to edit the paperwork anyway
-    if (currentUserGroups.length && userHasPermission(currentUserGroups, 'rescue.write')) {
-      return true
-    }
-
-    return false
-  }
-
-
-
-
-
-  /***************************************************************************\
     Redux Properties
   \***************************************************************************/
 
@@ -694,8 +647,7 @@ class Paperwork extends React.Component {
   static mapStateToProps = (state, { query }) => ({
     rats: selectFormattedRatsByRescueId(state, query),
     rescue: selectRescueById(state, query),
-    currentUserId: selectCurrentUserId(state),
-    currentUserGroups: withCurrentUserId(selectGroupsByUserId)(state),
+    userCanEdit: selectRescueCanEdit(state, query),
   })
 }
 
