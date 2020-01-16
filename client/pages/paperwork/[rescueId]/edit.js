@@ -622,20 +622,16 @@ class Paperwork extends React.Component {
     const { rescue, rats } = this.props
     const { changes } = this.state
 
-    const isDefined = (value, fallback) => (typeof value === 'undefined' ? fallback : value)
-    const getValue = (value) => isDefined(changes[value], rescue.attributes[value])
-
-
-
+    const getValue = (value) => changes[value] ?? rescue.attributes[value]
 
     return {
       codeRed: getValue('codeRed'),
-      firstLimpetId: isDefined(changes.firstLimpetId, rats[rescue.attributes.firstLimpetId]) || null,
+      firstLimpetId: changes.firstLimpetId ?? rats[rescue.attributes.firstLimpetId] ?? null,
       notes: getValue('notes'),
       outcome: getValue('outcome'),
       platform: getValue('platform'),
-      rats: Object.values(isDefined(changes.rats, rats)),
-      system: isDefined(changes.system, rescue.attributes.system ? { value: rescue.attributes.system.toUpperCase() } : null),
+      rats: Object.values(changes.rats ?? rats ?? {}),
+      system: changes.system ?? rescue.attributes.system?.toUpperCase() ?? null,
     }
   }
 
