@@ -190,15 +190,13 @@ class DonateForm extends React.Component {
       <div className="store-errors">
         <div className="store-error">
           {'An error occured while creating the checkout session.'}
-          {do {
-            if (typeof error === 'string') {
-              <>
-                {' Error message: '}
-                <br />
-                {error}
-              </>
-            }
-          }}
+          {typeof error === 'string' && (
+            <>
+              {' Error message: '}
+              <br />
+              {error}
+            </>
+          )}
           <br />
           {'If the problem persists, please contact a techrat via'}
           <a href="mailto:support@fuelrats.com">{'support@fuelrats.com'}</a>
