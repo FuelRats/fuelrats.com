@@ -9,7 +9,7 @@
  *          Always treat the state object as immutable.
  *
  * @param {Object} initialState Initial state object. Used in case provided state is undefined.
- * @param  {...function} reducers redux reducer functions
+ * @param  {function[]} reducers redux reducer functions
  */
 const chainReducers = (initialState, reducers) => (state = initialState, action) => {
   let nextState = state
