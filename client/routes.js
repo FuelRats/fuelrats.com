@@ -1,6 +1,6 @@
-const routes = require('@fuelrats/next-named-routes')
+import routes from '@fuelrats/next-named-routes'
 
-module.exports = routes()
+const { Link, Router } = routes()
   // Front Page
   .add('home', '/')
   .add('rescue-landing', '/i-need-fuel')
@@ -66,3 +66,9 @@ module.exports = routes()
 
   // Wordpress
   .add('wordpress', '/[slug]', ({ slug }) => `/${slug}`)
+
+
+export {
+  Link,
+  Router,
+}
