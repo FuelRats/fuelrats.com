@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect'
-import { selectCurrentUserId, withCurrentUserId } from './session'
-import { selectGroupsByUserId } from './groups'
 import userHasPermission from '../../helpers/userHasPermission'
+import { selectGroupsByUserId } from './groups'
+import { selectCurrentUserId, withCurrentUserId } from './session'
 
 
 
