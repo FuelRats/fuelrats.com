@@ -65,10 +65,10 @@ module.exports = withWorkers(withSass({
       $IS_DEVELOPMENT: JSON.stringify(data.dev),
       $IS_STAGING: JSON.stringify(['develop', 'beta'].includes(BUILD_VCS_BRANCH)),
       $BUILD_BRANCH: JSON.stringify(BUILD_VCS_BRANCH || 'develop'),
-      $BUILD_COMMIT: JSON.stringify(BUILD_VCS_NUMBER),
+      $BUILD_COMMIT: JSON.stringify(BUILD_VCS_NUMBER || null),
       $BUILD_COMMIT_SHORT: JSON.stringify((BUILD_VCS_NUMBER && BUILD_VCS_NUMBER.slice(0, COMMIT_HASH_LENGTH)) || BUILD_VCS_BRANCH || 'develop'),
       $BUILD_DATE: JSON.stringify((new Date()).toISOString()),
-      $BUILD_URL: JSON.stringify(TEAMCITY_BUILD_URL),
+      $BUILD_URL: JSON.stringify(TEAMCITY_BUILD_URL || null),
       $NEXT_BUILD_ID: JSON.stringify(data.buildId),
       $NODE_VERSION: JSON.stringify(process.version),
     }))
