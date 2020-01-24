@@ -7,7 +7,7 @@
   "scripts": {
     "add-contributor": "all-contributors add",
     "build": "next build client",
-    "dev": "node --inspect server/server.js",
+    "dev": "node --inspect --harmony server/server.js",
     "eslint": "eslint .",
     "stylelint": "stylelint \"client/scss/**/*.scss\"",
     "postinstall": "npm rebuild node-sass"
