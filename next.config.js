@@ -76,8 +76,7 @@ module.exports = withWorkers(withSass({
     if (data.dev) {
       config.module.rules.unshift({
         enforce: 'pre',
-        exclude: /node_modules/u,
-        loader: 'eslint-loader',
+        loader: require.resolve('eslint-loader'),
         test: /\.js$/u,
       })
     }
