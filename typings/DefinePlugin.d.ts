@@ -9,7 +9,7 @@
  * process.env.NODE_ENV !== 'production'
  * ```
  */
-declare const $IS_DEVELO3PMENT: boolean;
+declare const $IS_DEVELOPMENT: boolean;
 
 /**
  * Was CI build built from a staging branch.
