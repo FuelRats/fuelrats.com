@@ -1,10 +1,10 @@
 /* eslint-disable react/no-multi-comp */
 
 // Module imports
+import { animated } from '@react-spring/web'
 import NextHead from 'next/head'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { animated } from 'react-spring'
 
 
 
