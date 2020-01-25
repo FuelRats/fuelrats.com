@@ -25,13 +25,15 @@ By contributing to this repository, you are expected to know and follow the rule
 
 ## Project setup
 
+
+1. install Yarn v2 (if you haven't already). Instructions can be found [here][yarn2install]!
 1. Fork and clone the repo
 1. Setup environment variables (detailed in ["Some things you'll need"](#some-things-youll-need))
-1. `$ yarn install` to install dependencies
-1. `$ yarn run dev` to start up the dev server
+1. `$ yarn` to install native dependencies
+1. `$ yarn dev` to start up the dev server
 1. Create a branch for your PR
 
-> NPM is no longer supported due to exotic dependency versioning, which only works with yarn.
+> Use of NPM is **NOT** supported by this repository.
 
 ### Some things you'll need
 
@@ -58,7 +60,7 @@ By default, the website doesn't know much about connecting to the Fuel Rats API 
 This project follows the [all contributors][all-contributors] specification. To add yourself to the table of contributors on the README.md, please use the automated script as part of your PR:
 
 ```console
-$ yarn run add-contributor
+$ yarn add-contributor
 ```
 
 Follow the prompt. If you've already added yourself to the list and are making a new type of contribution, you can run it again and select the added contribution type.
@@ -143,3 +145,4 @@ There is also 1 additional type allowed for branches **only**
 [jira]: https://jira.fuelrats.com/browse/WEB
 [new-pr]: https://github.com/FuelRats/fuelrats.com/compare
 [ops-email]: mailto:ops@fuelrats.com
+[yarn2install]: https://yarnpkg.com/getting-started
