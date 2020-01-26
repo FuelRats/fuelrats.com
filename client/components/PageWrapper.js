@@ -6,14 +6,25 @@ import React from 'react'
 import NextHead from 'next/head'
 import PropTypes from 'prop-types'
 
+
+
+
+
 // Component imports
 import { TransitionContextConsumer } from './AppLayout/PageLayout'
 import Component from './Component'
 import classnames from '../helpers/classNames'
 
+
+
+
 // Component constants
 const MAX_TITLE_LENGTH = 50
 const MAX_DESCR_LENGTH = 300
+
+
+
+
 
 class Page extends Component {
   constructor (props) {
@@ -29,18 +40,26 @@ class Page extends Component {
     }
 
     if (this.props.description.indexOf('"') !== -1) {
-      console.error("Page descriptions shouldn't contain double quotes.")
+      console.error('Page descriptions shouldn\'t contain double quotes.')
     }
     /* eslint-enable no-console */
   }
 
   render () {
     const {
-      children, className, description, title, noHeader,
+      children,
+      className,
+      description,
+      title,
+      noHeader,
     } = this.props
 
     const titleContent = !noHeader && this.displayTitle
-    const mainClasses = classnames('page', [className, Boolean(className)], title.toLowerCase().replace(/\s/gu, '-'))
+    const mainClasses = classnames(
+      'page',
+      [className, Boolean(className)],
+      title.toLowerCase().replace(/\s/gu, '-')
+    )
 
     return (
       <>
@@ -53,7 +72,11 @@ class Page extends Component {
         <TransitionContextConsumer>
           {(style) => (
             <animated.main className={mainClasses} style={style}>
-              {!noHeader && <header className="page-header">{titleContent}</header>}
+              {!noHeader && (
+                <header className="page-header">
+                  {titleContent}
+                </header>
+              )}
               {children}
             </animated.main>
           )}
@@ -62,25 +85,32 @@ class Page extends Component {
     )
   }
 
+
   get displayTitle () {
-    const { displayTitle, title } = this.props
+    const {
+      displayTitle,
+      title,
+    } = this.props
 
     if (typeof displayTitle === 'function') {
       return displayTitle(title)
     }
 
-    return <h1>{displayTitle}</h1>
+    return (<h1>{displayTitle}</h1>)
   }
 
   static defaultProps = {
-    description: "The Fuel Rats are Elite: Dangerous's premier emergency refueling service. Fueling the galaxy, one ship at a time, since 3301.",
-    displayTitle: (title) => <h1>{title}</h1>,
+    description: 'The Fuel Rats are Elite: Dangerous\'s premier emergency refueling service. Fueling the galaxy, one ship at a time, since 3301.',
+    displayTitle: (title) => (<h1>{title}</h1>),
     noHeader: false,
   }
 
   static propTypes = {
     description: PropTypes.string,
-    displayTitle: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+    displayTitle: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.string,
+    ]),
     noHeader: PropTypes.bool,
     title: PropTypes.string.isRequired,
   }
