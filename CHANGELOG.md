@@ -21,6 +21,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Split router middleware into it's own directory for better route management - [#210][]
 * Remove old webstore entirely. Just display disabled option for now showing that it will be back - [#210][]
 * Remove antiquated code which used to handle updating blog list page - [#210][]
+* Migrate to `next-named-routes@2.0.0` - [#215][]
 * Other small refactors for code legibility or optimization - [#210][], [#215][]
 
 ### 🐛 Fixed
