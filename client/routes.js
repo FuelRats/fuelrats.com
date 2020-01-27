@@ -1,27 +1,30 @@
 import routes from '@fuelrats/next-named-routes'
+import NextLink from 'next/link'
+import * as NextRouter from 'next/router'
 
-const { Link, Router } = routes()
+
+const routeList = [
   // Front Page
-  .add('home', '/')
-  .add('rescue-landing', '/i-need-fuel')
+  ['home', '/'],
+  ['rescue-landing', '/i-need-fuel'],
 
   // Paperwork
-  .add('paperwork', '/paperwork/[rescueId]', ({ rescueId }) => `/paperwork/${rescueId}`)
-  .add('paperwork edit', '/paperwork/[rescueId]/edit', ({ rescueId }) => `/paperwork/${rescueId}/edit`)
+  ['paperwork', '/paperwork/[rescueId]', ({ rescueId }) => `/paperwork/${rescueId}`],
+  ['paperwork edit', '/paperwork/[rescueId]/edit', ({ rescueId }) => `/paperwork/${rescueId}/edit`],
 
   // Profile
-  .add('profile', '/profile/[tab]', ({ tab }) => `/profile/${tab || 'overview'}`)
+  ['profile', '/profile/[tab]', ({ tab }) => `/profile/${tab || 'overview'}`],
 
   // Register
-  .add('register', '/register')
+  ['register', '/register'],
 
   // Authentication
-  .add('auth authorize', '/authorize')
-  .add('auth forgot-pass', '/forgot-password')
-  .add('auth password-reset', '/password-reset')
+  ['auth authorize', '/authorize'],
+  ['auth forgot-pass', '/forgot-password'],
+  ['auth password-reset', '/password-reset'],
 
   // Blog
-  .add('blog list', ({
+  ['blog list', ({
     author,
     category,
     page,
@@ -43,29 +46,39 @@ const { Link, Router } = routes()
     }
 
     return { href, as }
-  })
+  }],
 
-  .add('blog view', '/blog/[blogId]', ({ blogId }) => `/blog/${blogId}`)
+  ['blog view', '/blog/[blogId]', ({ blogId }) => `/blog/${blogId}`],
 
   // Administration
-  .add('admin rescues list', '/admin/rescues')
+  ['admin rescues list', '/admin/rescues'],
 
   // Statistics
-  .add('stats leaderboard', '/leaderboard')
+  ['stats leaderboard', '/leaderboard'],
 
   // Donate
-  .add('donate', '/donate')
+  ['donate', '/donate'],
 
   // About
-  .add('about fuelrats', '/about')
-  .add('about acknowledgements', '/acknowledgements')
-  .add('about version', ({ raw }) => `/version/${raw ? 'raw' : 'index'}`)
+  ['about fuelrats', '/about'],
+  ['about acknowledgements', '/acknowledgements'],
+  ['about version', ({ raw }) => `/version/${raw ? 'raw' : 'index'}`],
 
   // Epics
-  .add('epic nominate', '/epic/nominate')
+  ['epic nominate', '/epic/nominate'],
 
   // Wordpress
-  .add('wordpress', '/[slug]', ({ slug }) => `/${slug}`)
+  ['wordpress', '/[slug]', ({ slug }) => `/${slug}`],
+]
+
+
+
+
+
+const { Link, Router } = routes(NextLink, NextRouter, routeList)
+
+
+
 
 
 export {

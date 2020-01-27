@@ -46,7 +46,7 @@
     "@fortawesome/free-brands-svg-icons": "^5.12.0",
     "@fortawesome/free-solid-svg-icons": "^5.12.0",
     "@fortawesome/react-fontawesome": "^0.1.8",
-    "@fuelrats/next-named-routes": "^2.1.2",
+    "@fuelrats/next-named-routes": "^2.2.0",
     "@react-spring/web": "9.0.0-beta.34",
     "@zeit/next-sass": "1.0.1",
     "@zeit/next-workers": "1.0.1-canary.1",
