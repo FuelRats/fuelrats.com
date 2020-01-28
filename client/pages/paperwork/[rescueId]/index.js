@@ -9,15 +9,14 @@ import React from 'react'
 // Component imports
 import { PageWrapper, authenticated } from '../../../components/AppLayout'
 import { formatAsEliteDateTime } from '../../../helpers/formatTime'
-import userHasPermission from '../../../helpers/userHasPermission'
 import { Link, Router } from '../../../routes'
 import { actions, connect } from '../../../store'
 import {
-  selectGroupsByUserId,
   selectRatsByRescueId,
   selectRescueById,
   selectRescueCanEdit,
   withCurrentUserId,
+  selectUserByIdHasScope,
 } from '../../../store/selectors'
 
 
@@ -52,7 +51,7 @@ class Paperwork extends React.Component {
       await this.props.deleteRescue(this.props.rescue.id)
 
       Router.pushRoute(
-        userHasPermission(this.props.currentUserGroups, 'rescue.write')
+        this.props.userCanEditAllRescues
           ? 'admin rescues list'
           : '/',
       )
@@ -161,7 +160,7 @@ class Paperwork extends React.Component {
     const {
       rescue,
       userCanEdit,
-      currentUserGroups,
+      userCanDelete,
     } = this.props
 
     const {
@@ -221,12 +220,12 @@ class Paperwork extends React.Component {
                     </a>
                   </Link>
                 )}
-                {userHasPermission(currentUserGroups, 'rescue.delete') && (
+                {userCanDelete && (
                   <button
                     className="compact"
                     onClick={this._handleDeleteClick}
                     type="button">
-                            Delete
+                    Delete
                   </button>
                 )}
               </>
@@ -366,7 +365,8 @@ class Paperwork extends React.Component {
     rats: selectRatsByRescueId(state, query) || [],
     rescue: selectRescueById(state, query),
     userCanEdit: selectRescueCanEdit(state, query),
-    currentUserGroups: withCurrentUserId(selectGroupsByUserId)(state),
+    userCanDelete: withCurrentUserId(selectUserByIdHasScope)(state, { scope: 'rescue.delete' }),
+    userCanEditAllRescues: withCurrentUserId(selectUserByIdHasScope)(state, { scope: 'rescue.write' }),
   })
 }
 
