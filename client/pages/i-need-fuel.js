@@ -20,7 +20,7 @@ class INeedFuel extends React.Component {
     }
 
     let isSupported = true
-    let supportMessage = () => null
+    let supportMessage = null
 
     if (userAgent.match(/playstation/giu)) {
       isSupported = false

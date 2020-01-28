@@ -14,15 +14,12 @@ import RatTagsInput from '../../../components/RatTagsInput'
 import SystemTagsInput from '../../../components/SystemTagsInput'
 import { formatAsEliteDateTime } from '../../../helpers/formatTime'
 import getRatTag from '../../../helpers/getRatTag'
-import userHasPermission from '../../../helpers/userHasPermission'
 import { Router } from '../../../routes'
 import { actions, connect } from '../../../store'
 import {
   selectRatsByRescueId,
   selectRescueById,
-  selectUserById,
-  selectGroupsByUserId,
-  withCurrentUserId,
+  selectRescueCanEdit,
 } from '../../../store/selectors'
 
 
@@ -30,8 +27,6 @@ import {
 
 
 // Component constants
-const PAPERWORK_MAX_EDIT_TIME = 3600000
-
 const selectFormattedRatsByRescueId = createSelector(
   selectRatsByRescueId,
   (rats) => (rats?.reduce((accumulator, rat) => ({
@@ -210,6 +205,10 @@ class Paperwork extends React.Component {
       }), {}),
     },
   }))
+
+
+
+
 
   /***************************************************************************\
     Public Methods
@@ -537,7 +536,7 @@ class Paperwork extends React.Component {
   lastInvalidReason = null
 
   validate (values) {
-    const { rescue } = this.props
+    const { rescue, userCanEdit } = this.props
     const { changes } = this.state
 
     let invalidReason = null
@@ -566,7 +565,7 @@ class Paperwork extends React.Component {
         break
     }
 
-    if (!this.userCanEdit) {
+    if (!userCanEdit) {
       invalidReason = 'You cannot edit this rescue.'
     }
 
@@ -622,61 +621,17 @@ class Paperwork extends React.Component {
     const { rescue, rats } = this.props
     const { changes } = this.state
 
-    const isDefined = (value, fallback) => (typeof value === 'undefined' ? fallback : value)
-    const getValue = (value) => isDefined(changes[value], rescue.attributes[value])
-
-
-
+    const getValue = (value) => changes[value] ?? rescue.attributes[value]
 
     return {
       codeRed: getValue('codeRed'),
-      firstLimpetId: isDefined(changes.firstLimpetId, rats[rescue.attributes.firstLimpetId]) || null,
+      firstLimpetId: changes.firstLimpetId ?? rats[rescue.attributes.firstLimpetId] ?? null,
       notes: getValue('notes'),
       outcome: getValue('outcome'),
       platform: getValue('platform'),
-      rats: Object.values(isDefined(changes.rats, rats)),
-      system: isDefined(changes.system, rescue.attributes.system ? { value: rescue.attributes.system.toUpperCase() } : null),
+      rats: Object.values(changes.rats ?? rats ?? {}),
+      system: changes.system ?? rescue.attributes.system?.toUpperCase() ?? null,
     }
-  }
-
-
-
-
-
-  /***************************************************************************\
-    Getters
-  \***************************************************************************/
-
-  get userCanEdit () {
-    const {
-      rescue,
-      currentUser,
-      currentUserGroups,
-    } = this.props
-
-    if (!rescue || !currentUser.relationships) {
-      return false
-    }
-
-    // Check if current user is assigned to case.
-    const assignedRatIds = rescue.relationships.rats.data.map((rat) => rat.id)
-    const currentUserRatIds = currentUser.relationships.rats.data.map((rat) => rat.id)
-
-    if (assignedRatIds.some((ratId) => currentUserRatIds.includes(ratId))) {
-      return true
-    }
-
-    // Check if the paperwork is not yet time locked
-    if ((new Date()).getTime() - (new Date(rescue.attributes.createdAt)).getTime() <= PAPERWORK_MAX_EDIT_TIME) {
-      return true
-    }
-
-    // Check if user has the permission to edit the paperwork anyway
-    if (currentUserGroups.length && userHasPermission(currentUserGroups, 'rescue.write')) {
-      return true
-    }
-
-    return false
   }
 
 
@@ -692,8 +647,7 @@ class Paperwork extends React.Component {
   static mapStateToProps = (state, { query }) => ({
     rats: selectFormattedRatsByRescueId(state, query),
     rescue: selectRescueById(state, query),
-    currentUser: withCurrentUserId(selectUserById)(state),
-    currentUserGroups: withCurrentUserId(selectGroupsByUserId)(state),
+    userCanEdit: selectRescueCanEdit(state, query),
   })
 }
 

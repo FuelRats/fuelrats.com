@@ -1,6 +1,4 @@
 // Module imports
-import hoistNonReactStatics from 'hoist-non-react-statics'
-import getConfig from 'next/config'
 import React from 'react'
 
 
@@ -9,7 +7,6 @@ import React from 'react'
 
 // Component imports
 import HttpStatus from '../../helpers/httpStatus'
-import userHasPermission from '../../helpers/userHasPermission'
 import ErrorPage from '../../pages/_error'
 import { Router } from '../../routes'
 import frApi from '../../services/fuelrats'
@@ -18,7 +15,7 @@ import {
   selectFlagByName,
   selectSession,
   selectUserById,
-  selectGroupsByUserId,
+  selectUserByIdHasScope,
   withCurrentUserId,
 } from '../../store/selectors'
 import Header from '../Header'
@@ -26,17 +23,6 @@ import LoginModal from '../LoginModal'
 import NProgress from '../NProgress'
 import UserMenu from '../UserMenu'
 import PageTransitionContainer from './PageTransitionContainer'
-
-
-
-const { publicRuntimeConfig } = getConfig()
-
-
-
-
-
-// Component Constants
-const STRIPE_API_PK = publicRuntimeConfig.apis.stripe.public
 
 
 
@@ -88,9 +74,9 @@ class AppLayout extends React.Component {
 
     if (!error && accessToken && Component.ಠ_ಠ_REQUIRED_PERMISSION) {
       const state = store.getState()
-      const userGroups = withCurrentUserId(selectGroupsByUserId)(state)
+      const userHasScope = withCurrentUserId(selectUserByIdHasScope)(state, { scope: Component.ಠ_ಠ_REQUIRED_PERMISSION })
 
-      if (!userHasPermission(userGroups, Component.ಠ_ಠ_REQUIRED_PERMISSION)) {
+      if (!userHasScope) {
         if (ctx.res) {
           /* eslint-disable-next-line require-atomic-updates */// This is fine
           ctx.res.statusCode = HttpStatus.UNAUTHORIZED
@@ -274,43 +260,7 @@ const authenticated = (_target) => {
 
 
 
-/**
- * Decorator to wrap a page with stripe context
- */
-const withStripe = (Component) => {
-  class StripePage extends React.Component {
-    state = {
-      stripe: null,
-    }
-
-    componentDidMount () {
-      if (!this.state.stripe) {
-        if (window.Stripe) {
-          this.setState({ stripe: window.Stripe(STRIPE_API_PK) })
-        } else {
-          document.querySelector('#stripe-js').addEventListener('load', () => {
-            this.setState({ stripe: window.Stripe(STRIPE_API_PK) })
-          })
-        }
-      }
-    }
-
-    render () {
-      return (
-        <Component {...this.props} stripe={this.state.stripe} />
-      )
-    }
-  }
-
-  return hoistNonReactStatics(StripePage, Component)
-}
-
-
-
-
-
 export default AppLayout
 export {
   authenticated,
-  withStripe,
 }

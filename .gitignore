@@ -1,13 +1,22 @@
+# Macs
 .DS_Store
+
+
+# IntelliJ
 .idea/
+
+
+# Build Dirs
 .next
-.env
-.stylelintcache
-.eslintcache
-bower_components
-node_modules
-static/compiled
-static/fonts/font-awesome
 logs/
-tsconfig.json
+
+
+# Sensitive Files
+.env
+
+
+# Package Manager Files
+.yarn/unplugged
+.yarn/build-state.yml
+node_modules
 package-lock.json

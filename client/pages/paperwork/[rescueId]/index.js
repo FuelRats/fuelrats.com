@@ -9,23 +9,15 @@ import React from 'react'
 // Component imports
 import { PageWrapper, authenticated } from '../../../components/AppLayout'
 import { formatAsEliteDateTime } from '../../../helpers/formatTime'
-import userHasPermission from '../../../helpers/userHasPermission'
 import { Link, Router } from '../../../routes'
 import { actions, connect } from '../../../store'
 import {
   selectRatsByRescueId,
   selectRescueById,
-  selectUserById,
-  selectGroupsByUserId,
+  selectRescueCanEdit,
   withCurrentUserId,
+  selectUserByIdHasScope,
 } from '../../../store/selectors'
-
-
-
-
-
-// Component constants
-const PAPERWORK_MAX_EDIT_TIME = 3600000
 
 
 
@@ -58,9 +50,11 @@ class Paperwork extends React.Component {
 
       await this.props.deleteRescue(this.props.rescue.id)
 
-      const userCanViewRescueSearch = userHasPermission(this.props.currentUserGroups, 'rescue.write')
-
-      Router.pushRoute(userCanViewRescueSearch ? 'admin rescues list' : '/')
+      Router.pushRoute(
+        this.props.userCanEditAllRescues
+          ? 'admin rescues list'
+          : '/',
+      )
 
       return
     }
@@ -165,19 +159,14 @@ class Paperwork extends React.Component {
   renderRescue = () => {
     const {
       rescue,
+      userCanEdit,
+      userCanDelete,
     } = this.props
-
 
     const {
       deleteConfirm,
       deleting,
     } = this.state
-
-    const {
-      userCanDelete,
-      userCanEdit,
-    } = this
-
 
     // This makes 2 new variables called status and outcome, and sets them to the values of the outcome and status in the rescue object.
     let {
@@ -236,7 +225,7 @@ class Paperwork extends React.Component {
                     className="compact"
                     onClick={this._handleDeleteClick}
                     type="button">
-                            Delete
+                    Delete
                   </button>
                 )}
               </>
@@ -367,59 +356,6 @@ class Paperwork extends React.Component {
 
 
   /***************************************************************************\
-    Getters
-  \***************************************************************************/
-
-  get userCanEdit () {
-    const {
-      rescue,
-      currentUser,
-      currentUserGroups,
-    } = this.props
-
-    if (!rescue || !currentUser.relationships) {
-      return false
-    }
-
-    // Check if current user is assigned to case.
-    const assignedRatIds = rescue.relationships.rats.data.map((rat) => rat.id)
-    const currentUserRatIds = currentUser.relationships.rats.data.map((rat) => rat.id)
-
-    if (assignedRatIds.some((ratId) => currentUserRatIds.includes(ratId))) {
-      return true
-    }
-
-    // Check if the paperwork is not yet time locked
-    if ((new Date()).getTime() - (new Date(rescue.attributes.createdAt)).getTime() <= PAPERWORK_MAX_EDIT_TIME) {
-      return true
-    }
-
-    // Check if user has the permission to edit the paperwork anyway
-    if (currentUserGroups.length && userHasPermission(currentUserGroups, 'rescue.write')) {
-      return true
-    }
-
-    return false
-  }
-
-  get userCanDelete () {
-    const {
-      currentUserGroups,
-    } = this.props
-
-
-    if (currentUserGroups.length && (userHasPermission(currentUserGroups, 'rescue.delete') || userHasPermission(currentUserGroups, 'isAdministrator'))) {
-      return true
-    }
-
-    return false
-  }
-
-
-
-
-
-  /***************************************************************************\
     Redux Properties
   \***************************************************************************/
 
@@ -428,8 +364,9 @@ class Paperwork extends React.Component {
   static mapStateToProps = (state, { query }) => ({
     rats: selectRatsByRescueId(state, query) || [],
     rescue: selectRescueById(state, query),
-    currentUser: withCurrentUserId(selectUserById)(state),
-    currentUserGroups: withCurrentUserId(selectGroupsByUserId)(state),
+    userCanEdit: selectRescueCanEdit(state, query),
+    userCanDelete: withCurrentUserId(selectUserByIdHasScope)(state, { scope: 'rescue.delete' }),
+    userCanEditAllRescues: withCurrentUserId(selectUserByIdHasScope)(state, { scope: 'rescue.write' }),
   })
 }
 
