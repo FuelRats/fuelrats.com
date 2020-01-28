@@ -7,7 +7,6 @@ import React from 'react'
 
 // Component imports
 import HttpStatus from '../../helpers/httpStatus'
-import userHasPermission from '../../helpers/userHasPermission'
 import ErrorPage from '../../pages/_error'
 import { Router } from '../../routes'
 import frApi from '../../services/fuelrats'
@@ -16,7 +15,7 @@ import {
   selectFlagByName,
   selectSession,
   selectUserById,
-  selectGroupsByUserId,
+  selectUserByIdHasScope,
   withCurrentUserId,
 } from '../../store/selectors'
 import Header from '../Header'
@@ -75,9 +74,9 @@ class AppLayout extends React.Component {
 
     if (!error && accessToken && Component.ಠ_ಠ_REQUIRED_PERMISSION) {
       const state = store.getState()
-      const userGroups = withCurrentUserId(selectGroupsByUserId)(state)
+      const userHasScope = withCurrentUserId(selectUserByIdHasScope)(state, { scope: Component.ಠ_ಠ_REQUIRED_PERMISSION })
 
-      if (!userHasPermission(userGroups, Component.ಠ_ಠ_REQUIRED_PERMISSION)) {
+      if (!userHasScope) {
         if (ctx.res) {
           /* eslint-disable-next-line require-atomic-updates */// This is fine
           ctx.res.statusCode = HttpStatus.UNAUTHORIZED
