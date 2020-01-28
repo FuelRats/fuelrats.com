@@ -1,6 +1,5 @@
 import { createSelector } from 'reselect'
-import userHasPermission from '../../helpers/userHasPermission'
-import { selectGroupsByUserId } from './groups'
+import { selectUserByIdHasScope } from './groups'
 import { selectCurrentUserId, withCurrentUserId } from './session'
 
 
@@ -17,10 +16,19 @@ const selectRescues = (state) => state.rescues.rescues
 const selectRescueById = (state, { rescueId }) => state.rescues[rescueId]
 
 const selectRescueCanEdit = createSelector(
-  [selectRescueById, selectCurrentUserId, withCurrentUserId(selectGroupsByUserId)],
-  (rescue, userId, userGroups) => {
+  [
+    selectRescueById,
+    selectCurrentUserId,
+    (state) => withCurrentUserId(selectUserByIdHasScope)(state, { scope: 'rescue.write' }),
+  ],
+  (rescue, userId, userCanEditAllRescues) => {
     if (!rescue || !userId) {
       return false
+    }
+
+    // Check if user has permission to edit all paperwork.
+    if (userCanEditAllRescues) {
+      return true
     }
 
     // Check if current user is assigned to case.
@@ -42,11 +50,7 @@ const selectRescueCanEdit = createSelector(
       return true
     }
 
-    // Check if user has the permission to edit the paperwork anyway
-    if (userGroups.length && userHasPermission(userGroups, 'rescue.write')) {
-      return true
-    }
-
+    // None of the conditions are met, user cannot edit paperwork
     return false
   },
 )
