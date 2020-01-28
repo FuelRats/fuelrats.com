@@ -6,10 +6,10 @@
   "license": "BSD-3-Clause",
   "scripts": {
     "add-contributor": "all-contributors add",
-    "build": "yarn next build client",
+    "build": "next build client",
     "dev": "yarn node --inspect --harmony server/server.js",
-    "eslint": "yarn eslint .",
-    "stylelint": "yarn stylelint \"client/scss/**/*.scss\"",
+    "eslint": "eslint .",
+    "stylelint": "stylelint \"client/scss/**/*.scss\"",
     "postinstall": "npm rebuild node-sass"
   },
   "devDependencies": {
