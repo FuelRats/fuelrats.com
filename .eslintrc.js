@@ -1,6 +1,7 @@
 module.exports = {
   env: {
     browser: true,
+    commonjs: true,
   },
   extends: '@fuelrats/eslint-config-react',
   rules: {
