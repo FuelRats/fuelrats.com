@@ -8,6 +8,12 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 ## [Unreleased]
 
+
+
+
+
+## [2.10.0] - 2020-01-28
+
 ### ✨ Added
 * Add donation page and it's subsequent donation result page - [#210][]
 * Add temporary donation API until APIv3 is out and we can use the new payments API we've been working on - [#210][]
@@ -30,17 +36,17 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Fix wp-content proxy origin header setting - [#211][]
 
 ### ⚙ Tasks
+* Update to Babel 7.8 to support optional chaining and nullish coalescing operators - [#216][]
 * Add various new babel transform plugins to support new syntaxes - [#209][]
     * export-namespace-from
-    * nullish-coalescing-operator
     * optional-catch-binding
-    * optional-chaining
+* Remove do-expressions since they're kinda too new - [#216][]
 
 
 
 
 
-## [2.9.2] - 2019-01-12
+## [2.9.2] - 2020-01-12
 
 ### 🐛 Fixed
 * Fix user session not being properly initialized after registration. - [#213][]
@@ -628,7 +634,8 @@ basic format:
 
 
 
-[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.9.2...HEAD
+[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.10.0...HEAD
+[2.10.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.9.2...v2.10.0
 [2.9.2]: https://github.com/FuelRats/fuelrats.com/compare/v2.9.1...v2.9.2
 [2.9.1]: https://github.com/FuelRats/fuelrats.com/compare/v2.9.0...v2.9.1
 [2.9.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.8.0...v2.9.0
