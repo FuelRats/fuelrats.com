@@ -632,7 +632,6 @@ basic format:
     * Changes made by team members should **not** be attributed.
 * Entries must contain links to all PRs to `develop` which contribute to the change.
     * Changes made before 2.9.1 are kinda exempt right now. We're adding them over time.
-* Fixes which are a part of an update, but were pushed to production ahead of release must be labeled with `**(HOTFIX)**`
 * Entries must be grouped using the following groups:
     * **✨ Added** - For new features and additions.
     * **⚡ Changed** - For any changes to existing features, or removal of old ones.
