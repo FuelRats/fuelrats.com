@@ -101,18 +101,18 @@ class PasswordReset extends React.Component {
       <PageWrapper title="Password Reset">
         <div className="page-content">
           {validating && (
-            <span>Validating token...</span>
+            <span>{'Validating token...'}</span>
           )}
 
           {submitted && (
-            <span>Your password has been changed! You may now login with your new credentials.</span>
+            <span>{'Your password has been changed! You may now login with your new credentials.'}</span>
           )}
 
           {(!submitted && !validating && tokenIsValid) && (
             <form onSubmit={this._handleSubmit}>
               <fieldset>
                 <label htmlFor="password">
-                  New Password
+                  {'New Password'}
                 </label>
 
                 <PasswordField
@@ -146,10 +146,14 @@ class PasswordReset extends React.Component {
           {(!submitted && !validating && !tokenIsValid) && (
             <div>
               <header>
-                <h3>Invalid Token</h3>
+                <h3>{'Invalid Token'}</h3>
               </header>
 
-              <p>Your token is invalid, which probably just means it expired. <Link route="auth forgot-pass"><a>Click here</a></Link> to try resetting your password again.</p>
+              <p>
+                {'Your token is invalid, which probably just means it expired. '}
+                <Link route="auth forgot-pass"><a>{'Click here'}</a></Link>
+                {' to try resetting your password again.'}
+              </p>
             </div>
           )}
         </div>

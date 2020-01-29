@@ -86,7 +86,7 @@ class ForgotPassword extends React.Component {
           {error && (
             <div className="store-errors">
               <div className="store-error">
-                Error submitting password reset request.
+                {'Error submitting password reset request.'}
               </div>
             </div>
           )}
@@ -94,7 +94,10 @@ class ForgotPassword extends React.Component {
           {!submitted && (
             <form onSubmit={this._handleSubmit}>
               <fieldset>
-                <label htmlFor="email">Enter the email address associated with your account <small>We'll send you an email with a link to reset your password.</small></label>
+                <label htmlFor="email">
+                  {'Enter the email address associated with your account. '}
+                  <small>{"We'll send you an email with a link to reset your password."}</small>
+                </label>
 
                 <input
                   aria-label="user email"
@@ -122,11 +125,11 @@ class ForgotPassword extends React.Component {
 
           {submitted && (
             <div>
-              <h3>Thanks!</h3>
+              <h3>{'Thanks!'}</h3>
 
               <p>
-                If there's a Fuel Rats account associated with that address, you should receive an email shortly with the final steps for resetting your password.
-                If you don't receive an email, please contact <a href="mailto:support@fuelrats.com">support@fuelrats.com</a>.
+                {"If there's a Fuel Rats account associated with that address, you should receive an email shortly with the final steps for resetting your password."}
+                {"If you don't receive an email, please contact "}<a href="mailto:support@fuelrats.com">{'support@fuelrats.com'}</a>{'.'}
               </p>
             </div>
           )}

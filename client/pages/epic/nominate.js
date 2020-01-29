@@ -145,7 +145,7 @@ class EpicNominate extends React.Component {
         {(error && !submitting) && (
           <div className="store-errors">
             <div className="store-error">
-              Error submitting nomination.
+              {'Error submitting nomination.'}
             </div>
           </div>
         )}
@@ -155,7 +155,7 @@ class EpicNominate extends React.Component {
             className={classes}
             onSubmit={this._handleSubmit}>
             <fieldset>
-              <label htmlFor="epic-type">Who are you nominating for an epic today?</label>
+              <label htmlFor="epic-type">{'Who are you nominating for an epic today?'}</label>
 
               <RadioInput
                 className="epic-type"
@@ -180,7 +180,7 @@ class EpicNominate extends React.Component {
 
             {epicType === 'epicRescue' && (
               <fieldset>
-                <label htmlFor="rescues">What is the ID of the rescue?</label>
+                <label htmlFor="rescues">{'What is the ID of the rescue?'}</label>
 
                 <RescuesTagsInput
                   aria-label="Rescue ID"
@@ -195,7 +195,7 @@ class EpicNominate extends React.Component {
 
             {epicType === 'epicPlayer' && (
               <fieldset>
-                <label htmlFor="rats">What is the rat's CMDR name?</label>
+                <label htmlFor="rats">{"What is the rat's CMDR name?"}</label>
 
                 <RatTagsInput
                   aria-label="Commander name"
@@ -210,7 +210,7 @@ class EpicNominate extends React.Component {
             )}
 
             <fieldset>
-              <label htmlFor="notes">What did the rat(s) do that makes them so epic?</label>
+              <label htmlFor="notes">{'What did the rat(s) do that makes them so epic?'}</label>
 
               <textarea
                 aria-label="epic nominee explaination"
@@ -238,9 +238,9 @@ class EpicNominate extends React.Component {
 
         {submitted && (
           <div>
-            <h3>Thanks!</h3>
-            <p>Your epic nomination has been submitted. If approved, the rats nominated will be notified that they are now epic rats!</p>
-            <p>Note that while we track who nominates who, the nominees will never be notified of who made the original nomination for their epic deed.</p>
+            <h3>{'Thanks!'}</h3>
+            <p>{'Your epic nomination has been submitted. If approved, the rats nominated will be notified that they are now epic rats!'}</p>
+            <p>{'Note that while we track who nominates who, the nominees will never be notified of who made the original nomination for their epic deed.'}</p>
           </div>
         )}
       </PageWrapper>

@@ -60,7 +60,8 @@ class Blog extends React.Component {
             <small>
               <span className="posted-date">
                 <FontAwesomeIcon icon="clock" fixedWidth />
-                Posted <time dateTime={0}>{moment(blog.date_gmt).format('DD MMMM, YYYY')}</time>
+                {'Posted '}
+                <time dateTime={0}>{moment(blog.date_gmt).format('DD MMMM, YYYY')}</time>
               </span>
 
               <span className="author">

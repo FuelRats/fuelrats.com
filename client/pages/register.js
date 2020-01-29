@@ -182,9 +182,9 @@ class Register extends React.Component {
           onSubmit={this._handleSubmit}>
 
           <fieldset data-name="Email">
-            <h5>This registration page is to become a Fuel Rat! <br /> Need fuel? No need to register! Just click "Get Help" in the sidebar!</h5><br />
+            <h5>{'This registration page is to become a Fuel Rat!'}<br />{'Need fuel? No need to register! Just click "Get Help" in the sidebar!'}</h5><br />
             <label htmlFor="email">
-              Email
+              {'Email'}
             </label>
 
             <input
@@ -202,7 +202,7 @@ class Register extends React.Component {
 
           <fieldset data-name="Password">
             <label htmlFor="password">
-              Password
+              {'Password'}
             </label>
 
             <PasswordField
@@ -222,7 +222,10 @@ class Register extends React.Component {
 
           <fieldset data-name="IRC Nick">
             <label htmlFor="nickname">
-              What's your <strong>base</strong> IRC nickname? <small>Base means your nickname without any suffixes, i.e. Surly_Badger instead of Surly_Badger[PC].</small>
+              {"What's your "}
+              <strong>{'base'}</strong>
+              {' IRC nickname? '}
+              <small>{'Base means your nickname without any suffixes, i.e. Surly_Badger instead of Surly_Badger[PC].'}</small>
             </label>
 
             <input
@@ -241,7 +244,7 @@ class Register extends React.Component {
 
           <fieldset data-name="CMDR Name">
             <label htmlFor="ratName">
-              What's your CMDR name? <small>If you have more than one CMDR, you can add the rest later.</small>
+              {"What's your CMDR name? "}<small>{'If you have more than one CMDR, you can add the rest later.'}</small>
             </label>
 
             <input
@@ -261,7 +264,7 @@ class Register extends React.Component {
           </fieldset>
 
           <fieldset data-name="Platform">
-            <label>What platform is your CMDR on?</label>
+            <label>{'What platform is your CMDR on?'}</label>
 
             <RadioInput
               disabled={submitting}
@@ -300,11 +303,11 @@ class Register extends React.Component {
               <label htmlFor="acceptTerms">
                 {'I agree that I have read and agree to the  '}
                 <Link route="wordpress" params={{ slug: 'terms-of-service' }}>
-                  <a>Terms of Service</a>
+                  <a>{'Terms of Service'}</a>
                 </Link>
                 {' and '}
                 <Link route="wordpress" params={{ slug: 'privacy-policy' }}>
-                  <a>Privacy Policy</a>
+                  <a>{'Privacy Policy'}</a>
                 </Link>
                 {', and that I am 13 years of age or older.'}
               </label>

@@ -37,13 +37,13 @@ function Version () {
     <PageWrapper title="Version Information" noHeader>
       <div className="page-content">
         <span>
-          <a className="button compact" href="/version/raw">Raw</a>
+          <a className="button compact" href="/version/raw">{'Raw'}</a>
         </span>
         <div className="page-content text-mono">
           <span>
             {'App Version: '}
             <a target="_blank" rel="noopener noreferrer" href={`https://github.com/FuelRats/fuelrats.com/releases/tag/v${version}`}>
-            v{version}
+              {`v${version}`}
             </a>
           </span>
           <span>

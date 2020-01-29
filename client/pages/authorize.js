@@ -96,9 +96,9 @@ class Authorize extends React.Component {
         <div className="page-content">
           {hasRequiredParameters && (
             <>
-              <h3>{clientName} is requesting access to your FuelRats account</h3>
+              <h3>{`${clientName} is requesting access to your FuelRats account`}</h3>
 
-              <p><strong>This application will be able to:</strong></p>
+              <p><strong>{'This application will be able to:'}</strong></p>
 
               <ul>
                 {scopes.map(({ permission, accessible }) => (
@@ -144,10 +144,10 @@ class Authorize extends React.Component {
           {!hasRequiredParameters && (
             <>
               <header>
-                <h3>Invalid Authorize Request</h3>
+                <h3>{'Invalid Authorize Request'}</h3>
               </header>
 
-              <p>Missing request parameters. Please contact the developer of the application you are trying to use.</p>
+              <p>{'Missing request parameters. Please contact the developer of the application you are trying to use.'}</p>
             </>
           )}
         </div>

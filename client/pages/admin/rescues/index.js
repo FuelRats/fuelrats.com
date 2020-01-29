@@ -115,11 +115,16 @@ class ListRescues extends React.Component {
       <div key={rescue.id} className="rescue-list-item">
         <span className="primary-info">
           <Link route="paperwork" params={{ rescueId: rescue.id }}>
-            <a><small>CMDR</small> {client} <small>in</small> {system}</a>
+            <a>
+              <small>{'CMDR '}</small>
+              {client}
+              <small>{' in '}</small>
+              {system}
+            </a>
           </Link>
         </span>
         <span className="secondary-info">
-          <small>{rescue.id} - {formatAsEliteDateTime(createdAt)}{status === 'closed' ? '' : ` - ${status}`}</small>
+          <small>{rescue.id}{' - '}{formatAsEliteDateTime(createdAt)}{status === 'closed' ? '' : ` - ${status}`}</small>
           {statusIcon && (
             <span
               className="status-icon"

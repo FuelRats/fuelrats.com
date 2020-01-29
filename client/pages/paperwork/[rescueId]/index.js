@@ -94,14 +94,20 @@ class Paperwork extends React.Component {
         <div className="times">
           <div className="created" title="Created at">{createdAt}</div>
           {(updatedAt !== createdAt) && (
-            <div className="updated" title="Updated at"><span className="label">Updated at </span>{updatedAt}</div>
+            <div className="updated" title="Updated at">
+              <span className="label">{'Updated at '}</span>
+              {updatedAt}
+            </div>
           )}
         </div>
         <span className="message">{quote.message}</span>
         <div className="authors">
           <div className="author" title="Created by">{quote.author}</div>
           {(quote.author !== quote.lastAuthor) && (
-            <div className="last-author" title="Last updated by"><span className="label">Updated by </span>{quote.lastAuthor}</div>
+            <div className="last-author" title="Last updated by">
+              <span className="label">{'Updated by '}</span>
+              {quote.lastAuthor}
+            </div>
           )}
         </div>
       </li>
@@ -128,7 +134,7 @@ class Paperwork extends React.Component {
     }
 
     return (
-      <span>N/A</span>
+      <span>{'N/A'}</span>
     )
   }
 
@@ -138,7 +144,7 @@ class Paperwork extends React.Component {
       <li key={rat.id} className="first-limpet">
         {rat.attributes.name}
         {(rat.id === rescue.attributes.firstLimpetId) && (
-          <span className="badge first-limpet">1st</span>
+          <span className="badge first-limpet">{'1st'}</span>
         )}
       </li>
     )
@@ -151,7 +157,7 @@ class Paperwork extends React.Component {
     return (
       <ul>
         {rats.map(this.renderRat)}
-        {rescue.attributes.unidentifiedRats.map((rat) => <li key={rat} className="unidentified">{rat}<span className="badge">UnID</span></li>)}
+        {rescue.attributes.unidentifiedRats.map((rat) => <li key={rat} className="unidentified">{rat}<span className="badge">{'UnID'}</span></li>)}
       </ul>
     )
   }
@@ -188,9 +194,9 @@ class Paperwork extends React.Component {
             {deleteConfirm && (
               <>
                 {deleting ? (
-                  <span>Deleting... <FontAwesomeIcon icon="spinner" pulse fixedWidth /> </span>
+                  <span>{'Deleting... '}<FontAwesomeIcon icon="spinner" pulse fixedWidth /> </span>
                 ) : (
-                  <span>Delete this rescue? (This cannot be undone!) </span>
+                  <span>{'Delete this rescue? (This cannot be undone!) '}</span>
                 )}
 
                 <button
@@ -198,7 +204,7 @@ class Paperwork extends React.Component {
                   disabled={deleting}
                   onClick={this._handleDeleteClick}
                   type="button">
-                      Yes
+                  {'Yes'}
                 </button>
 
                 <button
@@ -206,7 +212,7 @@ class Paperwork extends React.Component {
                   disabled={deleting}
                   onClick={this._handleDeleteCancel}
                   type="button">
-                      No
+                  {'No'}
                 </button>
               </>
             )}
@@ -216,7 +222,7 @@ class Paperwork extends React.Component {
                 {userCanEdit && (
                   <Link route="paperwork edit" params={{ rescueId: rescue.id }}>
                     <a className="button compact">
-                      Edit
+                      {'Edit'}
                     </a>
                   </Link>
                 )}
@@ -225,7 +231,7 @@ class Paperwork extends React.Component {
                     className="compact"
                     onClick={this._handleDeleteClick}
                     type="button">
-                    Delete
+                    {'Delete'}
                   </button>
                 )}
               </>
@@ -237,20 +243,21 @@ class Paperwork extends React.Component {
 
         <header className="paperwork-header">
           {(rescue.attributes.status !== 'closed') && (rescue.attributes.data) && (
-            <div className="board-index"><span>#{rescue.attributes.data.boardIndex}</span></div>
+            <div className="board-index"><span>{`#${rescue.attributes.data.boardIndex}`}</span></div>
           )}
           <div className="title">
             {(!rescue.attributes.title) && (
               <span>
-                    Rescue of
-                <span className="cmdr-name"> {rescue.attributes.client}</span> in
-                <span className="system"> {(rescue.attributes.system) || ('Unknown')}</span>
+                {'Rescue of '}
+                <span className="cmdr-name">{rescue.attributes.client}</span>
+                {' in '}
+                <span className="system">{(rescue.attributes.system) || ('Unknown')}</span>
               </span>
             )}
             {(rescue.attributes.title) && (
               <span>
-                    Operation
-                <span className="rescue-title"> {rescue.attributes.title}</span>
+                {'Operation '}
+                <span className="rescue-title">{rescue.attributes.title}</span>
               </span>
             )}
           </div>
@@ -265,15 +272,15 @@ class Paperwork extends React.Component {
           <div className={`tag platform ${rescue.attributes.platform || 'none'}`}>{rescue.attributes.platform || 'No Platform'}</div>
 
           {(rescue.attributes.codeRed) && (
-            <div className="tag code-red">CR</div>
+            <div className="tag code-red">{'CR'}</div>
           )}
 
-          {(rescue.attributes.data) && (rescue.attributes.data.markedForDeletion.marked) && (
+          {rescue.attributes.data?.markedForDeletion?.marked && (
             <div className="md-group">
-              <div className="marked-for-deletion">Marked for Deletion</div>
+              <div className="marked-for-deletion">{'Marked for Deletion'}</div>
               <div className="md-reason">
-                    &quot;{rescue.attributes.data.markedForDeletion.reason}&quot;
-                <div className="md-reporter"> -     {rescue.attributes.data.markedForDeletion.reporter}</div>
+                {`"${rescue.attributes.data.markedForDeletion?.reason}"`}
+                <div className="md-reporter">{` - ${rescue.attributes.data.markedForDeletion.reporter}`}</div>
               </div>
             </div>
           )}
@@ -282,38 +289,38 @@ class Paperwork extends React.Component {
         <div className="info">
           {(rescue.attributes.title) && (
             <>
-              <span className="label">Client</span>
-              <span className="cmdr-name"> {rescue.attributes.client}</span>
-              <span className="label">System</span>
-              <span className="system"> {(rescue.attributes.system) || ('Unknown')}</span>
+              <span className="label">{'Client '}</span>
+              <span className="cmdr-name">{rescue.attributes.client}</span>
+              <span className="label">{'System '}</span>
+              <span className="system">{(rescue.attributes.system) || ('Unknown')}</span>
             </>
           )}
-          <span className="label">Created</span>
+          <span className="label">{'Created'}</span>
           <span className="date-created content">{formatAsEliteDateTime(rescue.attributes.createdAt)}</span>
-          <span className="label">Updated</span>
+          <span className="label">{'Updated'}</span>
           <span className="date-updated content">{formatAsEliteDateTime(rescue.attributes.updatedAt)}</span>
           {Boolean(rescue.attributes.data) && (
             <>
-              <span className="label">IRC Nick</span>
+              <span className="label">{'IRC Nick'}</span>
               <span className="irc-nick content">{rescue.attributes.data.IRCNick}</span>
-              <span className="label">Language</span>
+              <span className="label">{'Language'}</span>
               <span className="language content">{rescue.attributes.data.langID}</span>
             </>
           )}
         </div>
 
         <div className="panel rats">
-          <header>Rats</header>
+          <header>{'Rats'}</header>
           <div className="panel-content">{this.renderRats()}</div>
         </div>
 
         <div className="panel quotes">
-          <header>Quotes</header>
+          <header>{'Quotes'}</header>
           <div className="panel-content">{this.renderQuotes()}</div>
         </div>
 
         <div className="panel notes">
-          <header>Notes</header>
+          <header>{'Notes'}</header>
           <div className="panel-content">{rescue.attributes.notes}</div>
         </div>
       </>
@@ -338,7 +345,7 @@ class Paperwork extends React.Component {
 
         {(!loading && !rescue) && (
           <div className="loading page-content">
-            <p>Sorry, we couldn't find the paperwork you requested.</p>
+            <p>{"Sorry, we couldn't find the paperwork you requested."}</p>
           </div>
         )}
 

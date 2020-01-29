@@ -27,7 +27,7 @@ function Donate (props) {
           `}
           <br />
           {'Donations are processed via stripe. Any questions may be directed to '}
-          <a href="mailto:support@fuelrats.com">support@fuelrats.com</a>
+          <a href="mailto:support@fuelrats.com">{'support@fuelrats.com'}</a>
         </div>
         <DonateForm stripe={stripe} />
       </div>

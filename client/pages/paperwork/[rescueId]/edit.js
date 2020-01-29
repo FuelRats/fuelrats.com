@@ -234,14 +234,14 @@ class Paperwork extends React.Component {
         <div className="times">
           <div className="created" title="Created at">{createdAt}</div>
           {(updatedAt !== createdAt) && (
-            <div className="updated" title="Updated at"><span className="label">Updated at </span>{updatedAt}</div>
+            <div className="updated" title="Updated at"><span className="label">{'Updated at '}</span>{updatedAt}</div>
           )}
         </div>
         <span className="message">{quote.message}</span>
         <div className="authors">
           <div className="author" title="Created by">{quote.author}</div>
           {(quote.author !== quote.lastAuthor) && (
-            <div className="last-author" title="Last updated by"><span className="label">Updated by </span>{quote.lastAuthor}</div>
+            <div className="last-author" title="Last updated by"><span className="label">{'Updated by '}</span>{quote.lastAuthor}</div>
           )}
         </div>
       </li>
@@ -260,7 +260,7 @@ class Paperwork extends React.Component {
     }
 
     return (
-      <span>N/A</span>
+      <span>{'N/A'}</span>
     )
   }
 
@@ -308,19 +308,20 @@ class Paperwork extends React.Component {
         onSubmit={this._handleSubmit}>
         <header className="paperwork-header">
           {(rescue.attributes.status !== 'closed') && (
-            <div className="board-index"><span>#{rescue.attributes.data.boardIndex}</span></div>
+            <div className="board-index"><span>{`#${rescue.attributes.data.boardIndex}`}</span></div>
           )}
           <div className="title">
             {(!rescue.attributes.title) && (
               <span>
-                    Rescue of
-                <span className="cmdr-name"> {rescue.attributes.client}</span> in
-                <span className="system"> {(rescue.attributes.system) || ('Unknown')}</span>
+                {'Rescue of '}
+                <span className="cmdr-name">{rescue.attributes.client}</span>
+                {' in '}
+                <span className="system">{(rescue.attributes.system) || 'Unknown'}</span>
               </span>
             )}
             {(rescue.attributes.title) && (
               <span>
-                    Operation
+                {'Operation '}
                 <span className="rescue-title"> {rescue.attributes.title}</span>
               </span>
             )}
@@ -328,7 +329,7 @@ class Paperwork extends React.Component {
         </header>
 
         <fieldset>
-          <label htmlFor="platform">What platform was the rescue on?</label>
+          <label htmlFor="platform">{'What platform was the rescue on?'}</label>
 
           <RadioInput
             disabled={submitting || loading}
@@ -358,14 +359,14 @@ class Paperwork extends React.Component {
 
         <fieldset>
           <label htmlFor="outcome-success">
-            Was the rescue successful?
+            {'Was the rescue successful?'}
             <a
               className="inline"
               target="_blank"
               rel="noopener noreferrer"
               href="https://t.fuelr.at/caseguide"
               title="How to file cases - Fuel Rats Confluence">
-              <small> (How do I choose?)</small>
+              <small>{' (How do I choose?)'}</small>
             </a>
           </label>
 
@@ -401,7 +402,7 @@ class Paperwork extends React.Component {
         </fieldset>
 
         <fieldset>
-          <label htmlFor="codeRed-yes">Was it a code red?</label>
+          <label htmlFor="codeRed-yes">{'Was it a code red?'}</label>
           <RadioInput
             disabled={submitting || loading}
             className="codeRed"
@@ -424,7 +425,7 @@ class Paperwork extends React.Component {
         </fieldset>
 
         <fieldset>
-          <label htmlFor="rats">Who was assigned to this rescue?</label>
+          <label htmlFor="rats">{'Who was assigned to this rescue?'}</label>
 
           <RatTagsInput
             aria-label="Assigned rats"
@@ -438,7 +439,7 @@ class Paperwork extends React.Component {
         </fieldset>
 
         <fieldset>
-          <label htmlFor="firstLimpetId">Who fired the first limpet?</label>
+          <label htmlFor="firstLimpetId">{'Who fired the first limpet?'}</label>
 
           <FirstLimpetInput
             data-single
@@ -451,7 +452,10 @@ class Paperwork extends React.Component {
         </fieldset>
 
         <fieldset>
-          <label htmlFor="system">Where did it happen? <small>In what star system did the rescue took place? (put "n/a" if not applicable)</small></label>
+          <label htmlFor="system">
+            {'Where did it happen? '}
+            <small>{'In what star system did the rescue took place? (put "n/a" if not applicable)'}</small>
+          </label>
 
           <SystemTagsInput
             aira-label="Rescue system"
@@ -464,7 +468,7 @@ class Paperwork extends React.Component {
         </fieldset>
 
         <fieldset>
-          <label htmlFor="notes">Notes</label>
+          <label htmlFor="notes">{'Notes'}</label>
 
           <textarea
             aria-label="case notes"
@@ -490,7 +494,7 @@ class Paperwork extends React.Component {
         </menu>
 
         <div className="panel quotes">
-          <header>Quotes</header>
+          <header>{'Quotes'}</header>
           <div className="panel-content">{this.renderQuotes()}</div>
         </div>
       </form>
@@ -513,7 +517,7 @@ class Paperwork extends React.Component {
         {(error && !submitting) && (
           <div className="store-errors">
             <div className="store-error">
-              Error while submitting paperwork.
+              {'Error while submitting paperwork.'}
             </div>
           </div>
         )}
@@ -524,7 +528,7 @@ class Paperwork extends React.Component {
 
         {(!loading && !rescue) && (
           <div className="loading page-content">
-            <p>Sorry, we couldn't find the paperwork you requested.</p>
+            <p>{"Sorry, we couldn't find the paperwork you requested."}</p>
           </div>
         )}
 

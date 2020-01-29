@@ -63,7 +63,7 @@ class Blogs extends React.Component {
         <div className="secondary">
           {(page > 1) && (
             <Link route="blog list" params={{ author, category, page: Math.max(1, page - 1) }}>
-              <a className="button">Previous Page</a>
+              <a className="button">{'Previous Page'}</a>
             </Link>
           )}
         </div>
@@ -71,7 +71,7 @@ class Blogs extends React.Component {
         <div className="primary">
           {(page < totalPages) && (
             <Link route="blog list" params={{ author, category, page: Math.min(page + 1, totalPages) }}>
-              <a className="button">Next Page</a>
+              <a className="button">{'Next Page'}</a>
             </Link>
           )}
         </div>
@@ -180,7 +180,8 @@ class Blogs extends React.Component {
                     <small>
                       <span className="posted-date">
                         <FontAwesomeIcon icon="clock" fixedWidth />
-                        Posted <time dateTime={0}>{postedAt.format('DD MMMM, YYYY')}</time>
+                        {'Posted '}
+                        <time dateTime={0}>{postedAt.format('DD MMMM, YYYY')}</time>
                       </span>
 
                       <span className="author">
