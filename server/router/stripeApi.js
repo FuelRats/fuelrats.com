@@ -1,7 +1,5 @@
 /* eslint-disable global-require, no-magic-numbers, camelcase */
-const axios = require('axios')
 const Router = require('koa-router')
-const qstr = require('qs')
 
 
 
@@ -29,20 +27,6 @@ const donationTiers = {
 }
 
 
-const verifyCaptcha = async (data) => {
-  try {
-    const response = await axios.request({
-      method: 'post',
-      url: 'https://www.google.com/recaptcha/api/siteverify',
-      headers: { 'content-type': 'application/x-www-form-urlencoded' },
-      data: qstr.stringify(data),
-    })
-
-    return response.data.success
-  } catch (error) {
-    return false
-  }
-}
 
 
 const internalServerErrorDocument = (error = {}) => ({
@@ -90,7 +74,7 @@ module.exports = (router, env) => {
   const stApiRouter = new Router()
   stApiRouter.use(prepareResponse)
 
-  stApiRouter.post('/checkout/donate', async (ctx) => {
+  stApiRouter.post('/checkout/donate', (ctx) => {
     const {
       body = {},
     } = ctx.request
@@ -98,20 +82,9 @@ module.exports = (router, env) => {
     const {
       amount,
       currency,
-      recaptcha,
       email,
       customer,
     } = body
-
-    const captchaSuccess = await verifyCaptcha({
-      secret: env.recaptcha.secret,
-      response: recaptcha,
-      remoteip: ctx.request.ip,
-    })
-
-    if (!captchaSuccess) {
-      throw new Error('Captcha failure!')
-    }
 
     let tier = 1
     if (amount >= 3500) {
