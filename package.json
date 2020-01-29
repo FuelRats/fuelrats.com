@@ -82,7 +82,7 @@
     "redux-immutable-state-invariant": "^2.1.0",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
-    "stripe": "^8.7.0",
+    "stripe": "^8.8.0",
     "uuid": "^3.4.0",
     "webpack": "4.41.5",
     "worker-loader": "^2.0.0",
