@@ -118,10 +118,10 @@ function UserMenu (props) {
 
       {!loggedIn && (
         <button
-          className="login"
+          className="login secondary"
           onClick={handleLoginClick}
           type="button">
-          Rat Login
+          {'Rat Login'}
         </button>
       )}
     </div>

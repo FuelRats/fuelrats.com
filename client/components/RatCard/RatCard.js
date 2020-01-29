@@ -165,18 +165,6 @@ class RatCard extends React.Component {
     }
   }
 
-  renderDeleteConfirmMessage = () => {
-    const {
-      rescueCount,
-    } = this.props
-
-    if (!rescueCount) {
-      return null
-    }
-
-    return (<small>This rat has {rescueCount} rescues. Are you sure?  </small>)
-  }
-
   render () {
     const {
       ratIsDisplayRat,
@@ -218,7 +206,7 @@ class RatCard extends React.Component {
       <div className={classes} data-loader-text={submitting ? submitText : null}>
         <header>
           <div>
-            <span>CMDR </span>
+            <span>{'CMDR '}</span>
             <InlineEditSpan
               canEdit={editMode}
               inputClassName="dark"
@@ -246,11 +234,11 @@ class RatCard extends React.Component {
         <footer className="panel-content">
           <div className="rat-stats">
             <small>
-              <span className="text-muted">Rescues: </span>
+              <span className="text-muted">{'Rescues: '}</span>
               {typeof rescueCount === 'number' ? rescueCount : '...'}
             </small>
             <small>
-              <span className="text-muted">Created: </span>
+              <span className="text-muted">{'Created: '}</span>
               {createdAt}
             </small>
           </div>
@@ -265,10 +253,9 @@ class RatCard extends React.Component {
           </div>
           */}
           <CardControls
-            canDelete={userHasMultipleRats && !ratIsDisplayRat}
+            canDelete={userHasMultipleRats && !ratIsDisplayRat && !rescueCount}
             canSubmit={this.canSubmit}
             controlType="rat"
-            deleteConfirmMessage={this.renderDeleteConfirmMessage}
             deleteMode={deleteConfirm}
             editMode={editMode}
             onCancelClick={this._handleCancel}

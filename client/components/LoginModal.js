@@ -130,7 +130,7 @@ class LoginModal extends React.Component {
         {error && !loggingIn && (
           <div className="store-errors">
             <div className="store-error">
-              Invalid email or password.
+              {'Invalid email or password.'}
             </div>
           </div>
         )}
@@ -182,12 +182,12 @@ class LoginModal extends React.Component {
               className="secondary"
               onClick={this._handleRegisterClick}
               type="button">
-              Become a Rat
+              {'Become a Rat'}
             </button>
           </div>
 
           <div className="primary">
-            <a className="button link secondary mobile-button" href="/forgot-password">Forgot password?</a>
+            <a className="button link secondary mobile-button" href="/forgot-password">{'Forgot password?'}</a>
             <button
               className="green"
               disabled={!this.isValid}

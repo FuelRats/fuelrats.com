@@ -17,7 +17,7 @@ class RescuesTagsInput extends TagsInput {
     return (
       <span>
         <FontAwesomeIcon icon="spinner" pulse fixedWidth />
-        Loading...
+        {'Loading...'}
       </span>
     )
   }
@@ -29,7 +29,7 @@ class RescuesTagsInput extends TagsInput {
     const clientDetails = `Rescue of ${rescue.attributes.client || 'unknown'} [${rescue.attributes.platform || 'N/A'}] in ${rescue.attributes.system || 'unknown'}`
 
     return (
-      <span>{rescue.id} ({operationName || clientDetails})</span>
+      <span>{rescue.id}{` (${operationName}` || `${clientDetails})`}</span>
     )
   }
 

@@ -62,14 +62,15 @@ class UserNicknamesPanel extends React.Component {
 
     return (
       <div className="panel user-nicknames">
-        <header>IRC Nicknames
+        <header>
+          {'IRC Nicknames'}
           {(this.state.formOpen) && (
             <div className="add-nickname-float">
               <AddNicknameForm />
             </div>
           )}
           <div className="controls">
-            <span className="nickname-count">{user.attributes.nicknames.length}/{MAXNICKS}</span>
+            <span className="nickname-count">{`${user.attributes.nicknames.length}/${MAXNICKS}`}</span>
             <button
               aria-label="add nickname"
               className={`icon ${this.state.formOpen ? '' : 'green'}`}

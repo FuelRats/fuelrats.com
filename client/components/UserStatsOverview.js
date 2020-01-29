@@ -15,22 +15,22 @@ function UserStatsOverview () {
     <div className="user-stats-overview">
       <div className="rescues-count stat">
         <data value={firstLimpetCount}>{firstLimpetCount}</data>
-        <small>rescues</small>
+        <small>{'rescues'}</small>
       </div>
 
       <div className="assists-count stat">
         <data value={assistCount}>{assistCount}</data>
-        <small>assists</small>
+        <small>{'assists'}</small>
       </div>
 
       <div className="failures-count stat">
         <data value={failureCount}>{failureCount}</data>
-        <small>failures</small>
+        <small>{'failures'}</small>
       </div>
 
       <div className="stat success-rate">
-        <data value={successRate}>{successRate}%</data>
-        <small>success</small>
+        <data value={successRate}>{`${successRate}%`}</data>
+        <small>{'success'}</small>
       </div>
     </div>
   )

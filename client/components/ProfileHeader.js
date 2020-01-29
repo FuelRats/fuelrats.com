@@ -78,10 +78,12 @@ class ProfileHeader extends React.Component {
               {displayRat.attributes.name}
             </div>
             <div className="email">
-              <span className="label">E-Mail:</span> <span>{email}</span>
+              <span className="label">{'E-Mail: '}</span>
+              <span>{email}</span>
             </div>
             <div className="member-since">
-              <span className="label">Date joined: </span> <span>{formatAsEliteDateLong(createdAt)}</span>
+              <span className="label">{'Date joined: '}</span>
+              <span>{formatAsEliteDateLong(createdAt)}</span>
             </div>
           </div>
           <div className="profile-user-badges">
@@ -93,7 +95,7 @@ class ProfileHeader extends React.Component {
             <button
               onClick={this._handleToggleChangePassword}
               type="button">
-              Change Password
+              {'Change Password'}
             </button>
           </div>
         </div>

@@ -84,16 +84,16 @@ class UserDetailsPanel extends React.Component {
 
     if (!checkingEligibility) {
       if (!eligible) {
-        return <div className="no-decal">Sorry, you're not eligible for a decal.</div>
+        return <div className="no-decal">{"Sorry, you're not eligible for a decal."}</div>
       }
 
       return (
         <div className="redeem">
-          <p>You're eligible for a decal but you haven't redeemed it yet.</p>
+          <p>{"You're eligible for a decal but you haven't redeemed it yet."}</p>
           <button
             onClick={this._handleRedeemDecal}
             type="button">
-            Redeem
+            {'Redeem'}
           </button>
         </div>
       )
@@ -139,7 +139,7 @@ class UserDetailsPanel extends React.Component {
 
     return (
       <div className="panel user-decals">
-        <header>Decal</header>
+        <header>{'Decal'}</header>
         <div className="panel-content">
           {(checkingEligibility || redeeming)
             ? (<div className="loading">{loadingText}</div>)

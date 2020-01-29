@@ -46,7 +46,7 @@ function CardControls (props) {
 
   return (
     <div className={classes}>
-      {deleteMode && (deleteConfirmMessage() || (<small>Are you sure? </small>))}
+      {deleteMode && (deleteConfirmMessage() || (<small>{'Are you sure? '}</small>))}
 
       {!(editMode || deleteMode) && (
         <>

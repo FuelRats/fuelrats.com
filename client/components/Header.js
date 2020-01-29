@@ -62,7 +62,7 @@ function Header (props) {
             <Link route="wordpress" params={{ slug: 'terms-of-service' }}>
               <a className="button link">
                 <FontAwesomeIcon icon="book" fixedWidth />
-                Terms of Service
+                {'Terms of Service'}
               </a>
             </Link>
           </li>
@@ -71,7 +71,7 @@ function Header (props) {
             <Link route="wordpress" params={{ slug: 'privacy-policy' }}>
               <a className="button link">
                 <FontAwesomeIcon icon="user-secret" fixedWidth />
-                Privacy Policy
+                {'Privacy Policy'}
               </a>
             </Link>
           </li>
@@ -80,7 +80,7 @@ function Header (props) {
             <Link route="about acknowledgements">
               <a className="button link">
                 <FontAwesomeIcon icon="hands-helping" fixedWidth />
-                Acknowledgements
+                {'Acknowledgements'}
               </a>
             </Link>
           </li>
@@ -164,14 +164,14 @@ function Header (props) {
 
           <Link route="rescue-landing">
             <a className="button">
-              Get Help
+              {'Get Help'}
             </a>
           </Link>
 
           {!loggedIn && !userId && (
             <Link route="register">
               <a className="button secondary">
-                Become a Rat
+                {'Become a Rat'}
               </a>
             </Link>
           )}

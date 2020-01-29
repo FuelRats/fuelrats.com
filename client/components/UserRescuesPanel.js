@@ -9,16 +9,12 @@ function UserRescuesPanel () {
   return (
     <div className="row">
       <div className="row">
-        <h2>Rescues</h2>
+        <h2>{'Rescues'}</h2>
       </div>
 
       <div className="row" data-hidden>
         <ul className="inline">
-          <li>
-            #each rats.models
-            <button data-rat-id="{attributes.id}" type="button">{}</button>
-            /each
-          </li>
+          <li />
         </ul>
       </div>
 

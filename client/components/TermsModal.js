@@ -102,7 +102,7 @@ class WordpressTermsModal extends React.Component {
             key="NextButton"
             onClick={onClose}
             type="button">
-            Next
+            {'Next'}
           </button>
         </div>
       </ModalFooter>

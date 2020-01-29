@@ -473,13 +473,13 @@ export default class TagsInputComponent extends React.Component {
 
   static renderLoader () {
     return (
-      <span>Loading...</span>
+      <span>{'Loading...'}</span>
     )
   }
 
   static renderNoResults () {
     return (
-      <span>No results</span>
+      <span>{'No results'}</span>
     )
   }
 
@@ -525,7 +525,7 @@ export default class TagsInputComponent extends React.Component {
 
     return (
       <div className={classes.join(' ')}>
-        <span>Press <Key>Return</Key> to add</span>
+        <span>{'Press '}<Key>{'Return'}</Key>{' to add'}</span>
       </div>
     )
   }
@@ -546,7 +546,7 @@ export default class TagsInputComponent extends React.Component {
         <button
           onClick={() => this.removeTag(tag)}
           type="button">
-          &times;
+          {'&times;'}
         </button>
       </li>
     )

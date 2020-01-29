@@ -209,7 +209,7 @@ class DonateForm extends React.Component {
         {!submitting && error && this.renderError()}
         <form className="donate-form compact" onSubmit={this._handleSubmit}>
           <fieldset>
-            <label htmlFor="currency">Select your currency</label>
+            <label htmlFor="currency">{'Select your currency'}</label>
 
             <RadioInput
               disabled={submitting}
@@ -221,7 +221,7 @@ class DonateForm extends React.Component {
           </fieldset>
 
           <fieldset>
-            <label htmlFor="amountType">Select your amount</label>
+            <label htmlFor="amountType">{'Select your amount'}</label>
 
             <RadioInput
               disabled={submitting || !currency}
@@ -234,7 +234,7 @@ class DonateForm extends React.Component {
 
           {amountType === 'custom' && (
             <fieldset>
-              <label htmlFor="amount">Input your custom amount</label>
+              <label htmlFor="amount">{'Input your custom amount'}</label>
 
               <input
                 aria-label="Custom amount"

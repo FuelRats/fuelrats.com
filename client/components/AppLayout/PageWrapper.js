@@ -63,7 +63,7 @@ class Page extends React.Component {
     return (
       <>
         <NextHead>
-          <title>{title} | The Fuel Rats</title>
+          <title>{`${title} | The Fuel Rats`}</title>
           <meta property="og:title" content={title} />
           <meta name="description" content={description} />
           <meta property="og:description" content={description} />

@@ -95,7 +95,7 @@ class AddNicknameForm extends React.Component {
           type="text"
           value={nickname}>
           <InfoBubble id="NickRegisterReminder" header="reminder">
-            You cannot register a nick that's in use on IRC. Switch to a temporary one before registering!
+            {"You cannot register a nick that's in use on IRC. Switch to a temporary one before registering!"}
           </InfoBubble>
         </ValidatedFormInput>
 
