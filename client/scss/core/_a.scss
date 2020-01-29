@@ -1,5 +1,8 @@
 a {
-  color: $red;
+  --link-color: #{$red};
+  --link-color-hover: #{$black};
+
+  color: var(--link-color);
   transition: all 0.2s;
 
   text-decoration: none;
@@ -7,15 +10,17 @@ a {
 
   &:focus,
   &:hover {
-    color: $black;
+    color: var(--link-color-hover);
     outline: none;
   }
 
   &.icon {
-    color: $black;
+    --link-color: #{$black};
+    --link-color-hover: #{$red};
+  }
 
-    &:hover {
-      color: $red;
-    }
+  &.light {
+    --link-color: #{$grey};
+    --link-color-hover: #{$red-darkened};
   }
 }

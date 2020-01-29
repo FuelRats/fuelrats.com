@@ -1,16 +1,16 @@
 // Module imports
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import moment from 'moment'
 import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 
 
 // Component imports
-import { actions, connect } from '../../store'
-import { Link } from '../../routes'
 import { PageWrapper } from '../../components/AppLayout'
 import TextPlaceholder from '../../components/TextPlaceholder'
+import { Link } from '../../routes'
+import { actions, connect } from '../../store'
 import { selectBlogStatistics, selectBlogAuthors, selectBlogCategories, selectBlogById } from '../../store/selectors'
 
 

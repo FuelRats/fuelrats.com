@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "module": "esnext",
+    "target": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "jsx": "react"
+  },
+  "include": [
+    "typings/**/*",
+    "client/**/*",
+    "server/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    ".next",
+    "public"
+  ]
+}

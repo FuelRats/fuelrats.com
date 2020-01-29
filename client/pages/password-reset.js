@@ -7,10 +7,10 @@ import React from 'react'
 
 // Component imports
 import { PageWrapper } from '../components/AppLayout'
-import { connect } from '../store'
-import { Link } from '../routes'
-import { passwordPattern } from '../data/RegExpr'
 import PasswordField from '../components/PasswordField'
+import { passwordPattern } from '../data/RegExpr'
+import { Link } from '../routes'
+import { connect } from '../store'
 
 
 
@@ -31,6 +31,8 @@ class PasswordReset extends React.Component {
     validating: true,
   }
 
+  _passwordRef = React.createRef()
+
 
 
 
@@ -38,6 +40,9 @@ class PasswordReset extends React.Component {
   /***************************************************************************\
     Private Methods
   \***************************************************************************/
+
+  _handleFieldChange = (event) => this.setState({ password: event.target.value })
+
 
   _handleSubmit = async (event) => {
     const {
@@ -114,12 +119,10 @@ class PasswordReset extends React.Component {
                   disabled={submitting}
                   id="password"
                   name="password"
-                  onChange={(event) => this.setState({ password: event.target.value })}
+                  onChange={this._handleFieldChange}
                   pattern={passwordPattern}
                   placeholder="Use a strong password to keep your account secure"
-                  ref={(_password) => {
-                    this._password = _password
-                  }}
+                  ref={this._passwordRef}
                   required
                   showStrength
                   showSuggestions
@@ -163,11 +166,11 @@ class PasswordReset extends React.Component {
   \***************************************************************************/
 
   get canSubmit () {
-    if (!this._password) {
+    if (!this._passwordRef.current) {
       return false
     }
 
-    if (!this._password.validity.valid) {
+    if (!this._passwordRef.current.validity.valid) {
       return false
     }
 

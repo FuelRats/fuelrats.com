@@ -1,6 +1,6 @@
 // Module imports
-import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React from 'react'
 import zxcvbn from 'zxcvbn'
 
 
@@ -26,6 +26,8 @@ export default class PasswordField extends React.Component {
     passwordWarnings: new Set(),
     showPassword: false,
   }
+
+  _passwordRef = React.createRef()
 
 
 
@@ -72,8 +74,8 @@ export default class PasswordField extends React.Component {
       return newState
     })
 
-    if (this._el) {
-      this.validity = this._el.validity
+    if (this._passwordRef.current) {
+      this.validity = this._passwordRef.current.validity
     }
 
     if (onChange) {
@@ -86,8 +88,12 @@ export default class PasswordField extends React.Component {
 
   _handleShowPasswordClick = () => {
     this.setState((state) => ({ showPassword: !state.showPassword }))
-    this._el.focus()
+    this._passwordRef.current.focus()
   }
+
+  _handleInputBlur = () => this.setState({ focused: false })
+
+  _handleInputFocus = () => this.setState({ focused: true })
 
 
 
@@ -131,12 +137,10 @@ export default class PasswordField extends React.Component {
         <div className="input-group">
           <input
             {...inputProps}
-            onBlur={() => this.setState({ focused: false })}
+            onBlur={this._handleInputBlur}
+            onFocus={this._handleInputFocus}
             onChange={this._handleChange}
-            onFocus={() => this.setState({ focused: true })}
-            ref={(_el) => {
-              this._el = _el
-            }}
+            ref={this._passwordRef}
             type={showPassword ? 'text' : 'password'}
             value={password} />
 

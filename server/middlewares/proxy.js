@@ -56,6 +56,7 @@ module.exports = (koaServer, env) => {
   }))
 
   koaServer.use(proxy('/wp-content', {
+    changeOrigin: true,
     target: env.wordpress.url,
   }))
 }

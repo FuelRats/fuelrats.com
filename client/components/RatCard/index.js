@@ -1,1 +1,1 @@
-export default from './RatCard'
+export { default } from './RatCard'

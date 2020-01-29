@@ -3,8 +3,8 @@ import React from 'react'
 
 
 // Component imports
-import { Link } from '../routes'
 import { PageWrapper } from '../components/AppLayout'
+import { Link } from '../routes'
 
 
 
@@ -20,7 +20,7 @@ class INeedFuel extends React.Component {
     }
 
     let isSupported = true
-    let supportMessage = () => null
+    let supportMessage = null
 
     if (userAgent.match(/playstation/giu)) {
       isSupported = false

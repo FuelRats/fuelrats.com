@@ -1,14 +1,14 @@
 // Module imports
-import React from 'react'
 import PropTypes from 'prop-types'
+import React from 'react'
 
 
 
 
 
 // Component imports
-import { connect } from '../store'
 import { Router } from '../routes'
+import { connect } from '../store'
 import asModal, { ModalContent, ModalFooter } from './Modal'
 import Switch from './Switch'
 import ValidatedFormInput from './ValidatedFormInput'

@@ -16,6 +16,7 @@ const headerKeys = [
 const domainWhitelist = [
   '*.fuelrats.com',
   '*.stripe.com',
+  'www.google.com',
 ]
 
 

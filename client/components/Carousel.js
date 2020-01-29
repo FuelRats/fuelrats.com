@@ -1,8 +1,8 @@
 // Module imports
-import React from 'react'
-import PropTypes from 'prop-types'
+import { Transition, animated } from '@react-spring/web'
 import getConfig from 'next/config'
-import { Transition, animated } from 'react-spring'
+import PropTypes from 'prop-types'
+import React from 'react'
 import { createSelector, createStructuredSelector } from 'reselect'
 
 

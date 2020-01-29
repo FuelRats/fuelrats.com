@@ -1,6 +1,6 @@
 // Module imports
-import React from 'react'
 import PropTypes from 'prop-types'
+import React from 'react'
 
 
 
@@ -13,18 +13,16 @@ import classNames from '../../helpers/classNames'
 
 
 
-const RadioInputOption = ({
-  option,
-  ...inputProps
-}) => {
+const RadioInputOption = (props) => {
   const {
     as: Element = 'div',
     className,
     label,
     title,
     value,
-    ...inputOptions
-  } = option
+    ...inputProps
+  } = props
+
   const optionId = `${inputProps.name}-${value}`
 
 
@@ -39,7 +37,6 @@ const RadioInputOption = ({
     <Element className={classes}>
       <input
         {...inputProps}
-        {...inputOptions}
         aria-label={label}
         aria-hidden={false}
         id={optionId}
@@ -59,14 +56,21 @@ const RadioInputOption = ({
 }
 
 
+RadioInputOption.defaultProps = {
+  as: 'div',
+  checked: false,
+  className: null,
+  disabled: false,
+}
+
 RadioInputOption.propTypes = {
+  as: PropTypes.elementType,
+  checked: PropTypes.any,
+  className: PropTypes.string,
+  disabled: PropTypes.any,
+  label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  option: PropTypes.shape({
-    className: PropTypes.string,
-    disabled: PropTypes.any,
-    label: PropTypes.string,
-    value: PropTypes.string.isRequired,
-  }).isRequired,
+  value: PropTypes.string.isRequired,
 }
 
 

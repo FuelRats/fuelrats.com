@@ -1,7 +1,7 @@
 // Module imports
-import React, { useEffect, useCallback } from 'react'
-import { animated, useTransition } from 'react-spring'
+import { animated, useTransition } from '@react-spring/web'
 import hoistNonReactStatics from 'hoist-non-react-statics'
+import React, { useEffect, useCallback } from 'react'
 
 
 

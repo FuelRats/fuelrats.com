@@ -7,13 +7,10 @@
     <loc>https://www.fuelrats.com/i-need-fuel</loc>
   </url>
   <url>
-    <loc>https://www.fuelrats.com/blog</loc>
-  </url>
-  <url>
-    <loc>https://www.fuelrats.com/statistics</loc>
-  </url>
-  <url>
     <loc>https://www.fuelrats.com/leaderboard</loc>
+  </url>
+  <url>
+    <loc>https://www.fuelrats.com/blog</loc>
   </url>
   <url>
     <loc>https://www.fuelrats.com/acknowledgements</loc>
@@ -26,8 +23,5 @@
   </url>
   <url>
     <loc>https://www.fuelrats.com/register</loc>
-  </url>
-  <url>
-    <loc>https://www.fuelrats.com/profile</loc>
   </url>
 </urlset>

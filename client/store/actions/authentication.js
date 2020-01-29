@@ -6,11 +6,11 @@ import Cookies from 'js-cookie'
 
 
 // Component imports
-import { frApiRequest, createAxiosAction } from './services'
-import { Router } from '../../routes'
-import actionTypes from '../actionTypes'
-import frApi from '../../services/fuelrats'
 import httpStatus from '../../helpers/httpStatus'
+import { Router } from '../../routes'
+import frApi from '../../services/fuelrats'
+import actionTypes from '../actionTypes'
+import { frApiRequest, createAxiosAction } from './services'
 
 
 

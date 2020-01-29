@@ -1,12 +1,12 @@
 /* globals $IS_DEVELOPMENT:false */
 // Module imports
+import { connect } from 'react-redux'
 import {
   bindActionCreators,
   createStore,
   applyMiddleware,
 } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import { connect } from 'react-redux'
 import thunkMiddleware from 'redux-thunk'
 
 
@@ -14,15 +14,10 @@ import thunkMiddleware from 'redux-thunk'
 
 
 // Component imports
+import actionStatus from './actionStatus'
+import * as actions from './actions'
 import initialState from './initialState'
 import reducer from './reducers'
-import actionStatus from './actionStatus'
-
-
-
-
-
-import * as actions from './actions'
 
 
 

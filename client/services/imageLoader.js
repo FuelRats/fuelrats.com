@@ -1,6 +1,6 @@
 // Component imports
-import actionTypes from '../store/actionTypes'
 import actionStatus from '../store/actionStatus'
+import actionTypes from '../store/actionTypes'
 
 
 
@@ -19,7 +19,7 @@ let worker = null
 
 
 
-export default function getImageLoader (dispatch) {
+const getImageLoader = (dispatch) => {
   if (!worker) {
     worker = new ImageLoaderWorker()
     worker.addEventListener('message', (event) => {
@@ -36,3 +36,9 @@ export default function getImageLoader (dispatch) {
 
   return worker
 }
+
+
+
+
+
+export default getImageLoader
