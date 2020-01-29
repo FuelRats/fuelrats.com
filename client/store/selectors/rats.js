@@ -4,7 +4,6 @@ import { createSelector } from 'reselect'
 
 
 
-import { selectRescueById } from './rescues'
 import { selectUserById } from './users'
 
 
@@ -15,17 +14,6 @@ const selectRats = (state) => state.rats
 
 
 const selectRatById = (state, { ratId }) => state.rats[ratId]
-
-
-const selectRatsByRescueId = createSelector(
-  [selectRats, selectRescueById],
-  (rats, rescue) => {
-    if (rats && rescue && rescue.relationships.rats.data && rescue.relationships.rats.data.length) {
-      return rescue.relationships.rats.data.map((ratRef) => rats[ratRef.id])
-    }
-    return null
-  },
-)
 
 
 const selectRatsByUserId = createSelector(
@@ -64,7 +52,6 @@ const selectDisplayRatByUserId = (state, props) => selectRatById(state, { ratId:
 export {
   selectRatById,
   selectRats,
-  selectRatsByRescueId,
   selectRatsByUserId,
   selectDisplayRatByUserId,
   selectDisplayRatIdByUserId,
