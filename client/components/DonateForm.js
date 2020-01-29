@@ -1,9 +1,7 @@
 // Module imports
 import { produce } from 'immer'
-import getConfig from 'next/config'
 import PropTypes from 'prop-types'
 import React from 'react'
-import ReCAPTCHA from 'react-google-recaptcha'
 
 
 
@@ -19,11 +17,6 @@ import StripeBadgeSvg from './svg/StripeBadgeSvg'
 
 
 
-
-// Component Constants
-const { publicRuntimeConfig } = getConfig()
-
-const recaptchaPublicKey = publicRuntimeConfig.apis.recaptcha.public
 
 const presetAmounts = {
   one: 1.00,
@@ -89,7 +82,6 @@ class DonateForm extends React.Component {
   state = {
     amount: 0,
     amountType: '',
-    captchaValue: null,
     currency: '',
     error: null,
     submitting: false,
@@ -118,10 +110,6 @@ class DonateForm extends React.Component {
     draftState[name] = value.replace(/^0+/u, '')
   }))
 
-  _handleCaptchaChange = (captchaValue) => {
-    this.setState({ captchaValue })
-  }
-
   _handleSubmit = async (event) => {
     event.preventDefault()
     if (!this.canSubmit) {
@@ -138,13 +126,11 @@ class DonateForm extends React.Component {
 
     const {
       currency,
-      captchaValue,
     } = this.state
 
     const sessionData = {
       amount: this.stripeAmount,
       currency,
-      recaptcha: captchaValue,
     }
 
     if (user) {
@@ -261,17 +247,9 @@ class DonateForm extends React.Component {
             </fieldset>
           )}
 
-          {recaptchaPublicKey && (
-            <fieldset>
-              <ReCAPTCHA
-                className="recaptcha-wrapper"
-                sitekey={recaptchaPublicKey}
-                onChange={this._handleCaptchaChange} />
-            </fieldset>
-          )}
-
           <div className="fieldset">
             <button
+              className="green"
               disabled={submitting || !this.canSubmit}
               type="submit">
               {'Donate '}
@@ -296,7 +274,6 @@ class DonateForm extends React.Component {
     const { stripe } = this.props
     const {
       amount,
-      captchaValue,
       currency,
     } = this.state
 
@@ -304,7 +281,6 @@ class DonateForm extends React.Component {
       stripe
       && amount
       && amount >= 1
-      && captchaValue
       && currency,
     )
   }

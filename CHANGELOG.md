@@ -10,6 +10,14 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
+## [2.10.0-patch.1] - 2020-01-29
+
+### 🐛 Fixed
+* Fix donate page by removing recaptcha. We removed this due to seemingly unfixable inconsistencies across browsers. - [#218][]
+* Fixed an error in paperwork edit permission checks. - [#217][]
+
+
+
 
 
 ## [2.10.0] - 2020-01-28

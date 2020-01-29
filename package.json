@@ -1,6 +1,6 @@
 {
   "name": "fuelrats.com",
-  "version": "2.10.0",
+  "version": "2.10.0-patch.1",
   "description": "The primary website of The Fuel Rats!",
   "main": "server/server.js",
   "license": "BSD-3-Clause",
@@ -75,7 +75,6 @@
     "qs": "^6.9.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-google-recaptcha": "^2.0.1",
     "react-redux": "^7.1.3",
     "react-table": "^6.11.5",
     "redux": "^4.0.5",
