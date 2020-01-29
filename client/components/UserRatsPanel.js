@@ -15,7 +15,7 @@ import RatCard from './RatCard'
 
 
 
-const UserRatsPanel = ({ user }) => {
+function UserRatsPanel ({ user }) {
   const { rats } = user.relationships
 
   return (

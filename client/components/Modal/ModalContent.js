@@ -12,7 +12,7 @@ import classNames from '../../helpers/classNames'
 
 
 
-const ModalContent = (props) => {
+function ModalContent (props) {
   const {
     as: Element,
     className,

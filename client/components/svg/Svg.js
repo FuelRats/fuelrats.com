@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Svg = (props) => {
+function Svg (props) {
   const {
     path,
     pathProps,

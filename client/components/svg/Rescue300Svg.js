@@ -23,9 +23,9 @@ const paths = [
 
 
 
-const Rescue300Svg = (props) => (
-  <Svg {...props} viewBox="0 0 256 256" path={paths} />
-)
+function Rescue300Svg (props) {
+  return <Svg {...props} viewBox="0 0 256 256" path={paths} />
+}
 
 
 

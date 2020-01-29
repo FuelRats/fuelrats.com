@@ -27,7 +27,7 @@ const BUILD_COMMIT_SHORT = $BUILD_COMMIT_SHORT
 
 
 
-const Header = (props) => {
+function Header (props) {
   const {
     loggedIn,
     userId,

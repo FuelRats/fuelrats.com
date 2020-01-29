@@ -16,7 +16,7 @@ import ModalPortal from './ModalPortal'
 
 
 
-const renderModal = ({ item, key, props: style }) => {
+function renderModal ({ item, key, props: style }) {
   const {
     as,
     className,
@@ -62,7 +62,7 @@ const renderModal = ({ item, key, props: style }) => {
 
 
 
-const OuterModal = (props) => {
+function OuterModal (props) {
   const {
     hideClose,
     isOpen,

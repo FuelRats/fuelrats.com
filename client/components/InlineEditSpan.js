@@ -4,14 +4,14 @@ import React from 'react'
 
 
 
-const InlineEditor = ({
+function InlineEditor ({
   canEdit,
   className,
   inputClassName,
   value,
   ...inputProps
-}) => (
-  canEdit
+}) {
+  return canEdit
     ? (
       <input
         className={`inline-editor inline ${inputClassName || ''}`}
@@ -24,7 +24,7 @@ const InlineEditor = ({
         {value}
       </span>
     )
-)
+}
 
 
 

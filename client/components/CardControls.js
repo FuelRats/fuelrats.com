@@ -13,7 +13,7 @@ import classNames from '../helpers/classNames'
 
 
 
-const CardControls = (props) => {
+function CardControls (props) {
   const {
     canDelete = true,
     canSubmit,

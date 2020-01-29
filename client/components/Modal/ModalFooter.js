@@ -12,7 +12,7 @@ import classNames from '../../helpers/classNames'
 
 
 
-const ModalFooter = (props) => {
+function ModalFooter (props) {
   const {
     className,
     children,

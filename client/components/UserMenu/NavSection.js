@@ -15,7 +15,7 @@ import NavItem from './NavItem'
 
 
 
-const NavSection = (props) => {
+function NavSection (props) {
   const {
     header,
     items,

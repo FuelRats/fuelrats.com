@@ -44,10 +44,11 @@ const brands = [
 
 
 
-const Acknowledgements = () => (
-  <PageWrapper title="Acknowledgements">
-    <div className="page-content">
-      {
+function Acknowledgements () {
+  return (
+    <PageWrapper title="Acknowledgements">
+      <div className="page-content">
+        {
         brands.map((brand) => (
           <div key={brand.key} className={`credit-section credit-${brand.key}`}>
             <a
@@ -60,21 +61,22 @@ const Acknowledgements = () => (
           </div>
         ))
       }
-      <div className="dependency-list-wrapper">
-        <div className="dependency-list">
-          <span>Fuelrats.com would not be possible without these awesome packages</span>
-          <ul className="text-mono">
-            {Object.keys({
-              ...dependencies,
-            }).map((dep) => (
-              <li key={dep}><a target="_blank" rel="noopener noreferrer" href={`https://www.npmjs.com/package/${dep}`}>{dep}</a></li>
-            ))}
-          </ul>
+        <div className="dependency-list-wrapper">
+          <div className="dependency-list">
+            <span>Fuelrats.com would not be possible without these awesome packages</span>
+            <ul className="text-mono">
+              {Object.keys({
+                ...dependencies,
+              }).map((dep) => (
+                <li key={dep}><a target="_blank" rel="noopener noreferrer" href={`https://www.npmjs.com/package/${dep}`}>{dep}</a></li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
-  </PageWrapper>
-)
+    </PageWrapper>
+  )
+}
 
 
 export default Acknowledgements

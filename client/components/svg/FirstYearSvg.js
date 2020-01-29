@@ -17,9 +17,9 @@ const path = 'M15.071,127.289l-13.679,3.1c-0.365,-1.641 -0.729,-2.735 -0.729,-3.
 
 
 
-const FirstYearSvg = (props) => (
-  <Svg {...props} viewBox="0 0 256 256" path={path} />
-)
+function FirstYearSvg (props) {
+  return <Svg {...props} viewBox="0 0 256 256" path={path} />
+}
 
 
 

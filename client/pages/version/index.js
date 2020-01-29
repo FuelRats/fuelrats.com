@@ -32,47 +32,49 @@ const NEXT_BUILD_ID = $NEXT_BUILD_ID
 
 
 
-const Version = () => (
-  <PageWrapper title="Version Information" noHeader>
-    <div className="page-content">
-      <span>
-        <a className="button compact" href="/version/raw">Raw</a>
-      </span>
-      <div className="page-content text-mono">
+function Version () {
+  return (
+    <PageWrapper title="Version Information" noHeader>
+      <div className="page-content">
         <span>
-          {'App Version: '}
-          <a target="_blank" rel="noopener noreferrer" href={`https://github.com/FuelRats/fuelrats.com/releases/tag/v${version}`}>
+          <a className="button compact" href="/version/raw">Raw</a>
+        </span>
+        <div className="page-content text-mono">
+          <span>
+            {'App Version: '}
+            <a target="_blank" rel="noopener noreferrer" href={`https://github.com/FuelRats/fuelrats.com/releases/tag/v${version}`}>
             v{version}
-          </a>
-        </span>
-        <span>
-          {'Node Version: '}
-          <a target="_blank" rel="noopener noreferrer" href={`https://github.com/nodejs/node/releases/tag/${NODE_VERSION}`}>
-            {NODE_VERSION}
-          </a>
-        </span>
-        <span>
-          {'Built On: '}
-          <a target="_blank" rel="noopener noreferrer" href={BUILD_URL}>
-            <time dateTime={BUILD_DATE}>{moment.utc(BUILD_DATE).format('MMMM Do YYYY, hh:mm z')}</time>
-          </a>
-        </span>
-        <span>
-          {'Branch: '}
-          <a target="_blank" rel="noopener noreferrer" href={`https://github.com/FuelRats/fuelrats.com/tree/${BUILD_BRANCH}`}>
-            {BUILD_BRANCH}
-          </a>
-        </span>
-        <span>
-          {'Commit: '}
-          <a target="_blank" rel="noopener noreferrer" href={`https://github.com/FuelRats/fuelrats.com/commit/${BUILD_COMMIT}`}>
-            {BUILD_COMMIT || 'null'}
-          </a>
-        </span>
+            </a>
+          </span>
+          <span>
+            {'Node Version: '}
+            <a target="_blank" rel="noopener noreferrer" href={`https://github.com/nodejs/node/releases/tag/${NODE_VERSION}`}>
+              {NODE_VERSION}
+            </a>
+          </span>
+          <span>
+            {'Built On: '}
+            <a target="_blank" rel="noopener noreferrer" href={BUILD_URL}>
+              <time dateTime={BUILD_DATE}>{moment.utc(BUILD_DATE).format('MMMM Do YYYY, hh:mm z')}</time>
+            </a>
+          </span>
+          <span>
+            {'Branch: '}
+            <a target="_blank" rel="noopener noreferrer" href={`https://github.com/FuelRats/fuelrats.com/tree/${BUILD_BRANCH}`}>
+              {BUILD_BRANCH}
+            </a>
+          </span>
+          <span>
+            {'Commit: '}
+            <a target="_blank" rel="noopener noreferrer" href={`https://github.com/FuelRats/fuelrats.com/commit/${BUILD_COMMIT}`}>
+              {BUILD_COMMIT || 'null'}
+            </a>
+          </span>
+        </div>
       </div>
-    </div>
-  </PageWrapper>
-)
+    </PageWrapper>
+  )
+}
 
 Version.getInitialProps = ({ asPath, res }) => {
   if (asPath.includes('/raw')) {

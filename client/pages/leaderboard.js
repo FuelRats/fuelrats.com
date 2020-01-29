@@ -13,13 +13,15 @@ import RatLeaderboardTable from '../components/RatLeaderboardTable'
 
 
 
-const Leaderboard = () => (
-  <PageWrapper title="Leaderboard">
-    <div className="page-content">
-      <RatLeaderboardTable />
-    </div>
-  </PageWrapper>
-)
+function Leaderboard () {
+  return (
+    <PageWrapper title="Leaderboard">
+      <div className="page-content">
+        <RatLeaderboardTable />
+      </div>
+    </PageWrapper>
+  )
+}
 
 
 

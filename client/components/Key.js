@@ -4,7 +4,7 @@ import React from 'react'
 
 
 
-const Key = (props) => {
+function Key (props) {
   let key = props.children
 
   switch (key.toLowerCase()) {

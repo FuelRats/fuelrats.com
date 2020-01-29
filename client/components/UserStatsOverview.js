@@ -5,7 +5,7 @@ import React from 'react'
 
 
 
-const UserStatsOverview = () => {
+function UserStatsOverview () {
   const assistCount = 2
   const firstLimpetCount = 5
   const failureCount = 3

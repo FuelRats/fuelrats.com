@@ -21,7 +21,7 @@ import Rescue500Svg from '../svg/Rescue500Svg'
 
 
 
-const RescueAchievementIcon = ({ rescueCount, ...iconProps }) => {
+function RescueAchievementIcon ({ rescueCount, ...iconProps }) {
   let Icon = null
   let count = 0
 

@@ -64,7 +64,7 @@ const actions = [
 ]
 
 
-const UserMenu = (props) => {
+function UserMenu (props) {
   const {
     authenticatedPage,
     loggedIn,

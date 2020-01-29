@@ -13,7 +13,7 @@ import classNames from '../../helpers/classNames'
 
 
 
-const RadioInputOption = (props) => {
+function RadioInputOption (props) {
   const {
     as: Element = 'div',
     className,

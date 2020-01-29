@@ -11,7 +11,7 @@ import DonateForm from '../../components/DonateForm'
 
 
 
-const Donate = (props) => {
+function Donate (props) {
   const {
     stripe,
   } = props

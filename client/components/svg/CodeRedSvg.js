@@ -18,9 +18,9 @@ const path = 'M107.61,92.257c-36.687,0 -66.36,29.673 -66.36,66.36c0,36.688 29.67
 
 
 
-const CodeRedSvg = (props) => (
-  <Svg {...props} viewBox="0 0 256 256" path={path} />
-)
+function CodeRedSvg (props) {
+  return <Svg {...props} viewBox="0 0 256 256" path={path} />
+}
 
 
 

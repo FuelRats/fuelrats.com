@@ -11,7 +11,7 @@ import { Link } from '../../routes'
 
 
 
-const NavItem = ({ item, ...linkProps }) => {
+function NavItem ({ item, ...linkProps }) {
   const {
     action,
     className,
