@@ -26,14 +26,38 @@ const selectBlogById = createSelector(
   (blogs, blogId) => blogs.find((blog) => (blog.id.toString() === blogId) || (blog.slug === blogId)),
 )
 
+const selectAuthorByBlogId = createSelector(
+  [selectBlogById, selectBlogAuthors],
+  (blog, authors) => {
+    if (!blog?.author) {
+      return null
+    }
 
+    return authors[blog.author] || {
+      id: blog.author,
+    }
+  },
+)
 
+const selectCategoriesByBlogId = createSelector(
+  [selectBlogById, selectBlogCategories],
+  (blog, categories) => {
+    if (!blog?.categories) {
+      return []
+    }
 
+    return blog.categories.map((categoryId) => categories[categoryId] || {
+      id: categoryId,
+    })
+  },
+)
 
 export {
+  selectAuthorByBlogId,
   selectBlogs,
   selectBlogAuthors,
   selectBlogById,
   selectBlogCategories,
   selectBlogStatistics,
+  selectCategoriesByBlogId,
 }
