@@ -23,7 +23,7 @@ const selectBlogById = createSelector(
     selectBlogs,
     (state, props) => props.blogId,
   ],
-  (blogs, blogId) => blogs.find((blog) => (blog.id.toString() === blogId) || (blog.slug === blogId)),
+  (blogs, blogId) => blogs.find((blog) => (blog.id.toString() === blogId.toString()) || (blog.slug === blogId)),
 )
 
 const selectAuthorByBlogId = createSelector(
