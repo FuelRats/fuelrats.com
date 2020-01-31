@@ -69,16 +69,20 @@ class Page extends React.Component {
           <meta property="og:description" content={description} />
         </NextHead>
         <TransitionConsumer>
-          {(style) => (
-            <animated.main className={mainClasses} style={style}>
-              {!noHeader && (
-                <header className="page-header">
-                  {titleContent}
-                </header>
-              )}
-              {children}
-            </animated.main>
-          )}
+          {
+            (style) => (
+              <animated.main className={mainClasses} style={style}>
+                {
+                  !noHeader && (
+                    <header className="page-header">
+                      {titleContent}
+                    </header>
+                  )
+                }
+                {children}
+              </animated.main>
+            )
+          }
         </TransitionConsumer>
       </>
     )

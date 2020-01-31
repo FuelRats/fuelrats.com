@@ -462,11 +462,13 @@ export default class TagsInputComponent extends React.Component {
 
         {(!loading && !newFocus && Boolean(currentValue) && !options.length) && TagsInputComponent._renderNoResults()}
 
-        {(!loading && Boolean(options.length)) && (
-          <ol className="options">
-            {this.renderOptions()}
-          </ol>
-        )}
+        {
+          (!loading && Boolean(options.length)) && (
+            <ol className="options">
+              {this.renderOptions()}
+            </ol>
+          )
+        }
       </div>
     )
   }
@@ -546,7 +548,7 @@ export default class TagsInputComponent extends React.Component {
         <button
           onClick={() => this.removeTag(tag)}
           type="button">
-          {'&times;'}
+          {'\u00d7'}
         </button>
       </li>
     )

@@ -43,23 +43,26 @@ class WordpressProxy extends React.Component {
     /* eslint-disable react/no-danger */
     return (
       <>
-        {Boolean(page) && (
-          <PageWrapper
-            className="wordpress-page"
-            title={title}>
-            <article className="page-content">
-              <div
-                className="article-content"
-                dangerouslySetInnerHTML={{ __html: content }} />
-            </article>
-          </PageWrapper>
-        )}
-
-        {!page && (
-          <PageWrapper title="Page not Found">
-            <article className="error page-content" />
-          </PageWrapper>
-        )}
+        {
+          Boolean(page) && (
+            <PageWrapper
+              className="wordpress-page"
+              title={title}>
+              <article className="page-content">
+                <div
+                  className="article-content"
+                  dangerouslySetInnerHTML={{ __html: content }} />
+              </article>
+            </PageWrapper>
+          )
+        }
+        {
+          !page && (
+            <PageWrapper title="Page not Found">
+              <article className="error page-content" />
+            </PageWrapper>
+          )
+        }
       </>
     )
     /* eslint-enable */

@@ -156,12 +156,14 @@ class AppLayout extends React.Component {
           minimum={0.15}
           showSpinner={false} />
 
-        {renderLayout && (
-          <>
-            <Header isServer={isServer} />
-            <UserMenu authenticatedPage={authenticatedPage} />
-          </>
-        )}
+        {
+          renderLayout && (
+            <>
+              <Header isServer={isServer} />
+              <UserMenu authenticatedPage={authenticatedPage} />
+            </>
+          )
+        }
 
         <PageTransitionContainer {...this.pageLayoutProps} />
 

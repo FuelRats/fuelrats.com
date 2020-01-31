@@ -34,9 +34,7 @@ function StripeBadgeSvg (props) {
         width="119px"
         height="26px"
         path={path}
-        pathProps={{
-          fillRule: 'evenodd',
-        }} />
+        pathProps={{ fillRule: 'evenodd' }} />
     </a>
   )
 }

@@ -217,12 +217,14 @@ class RatCard extends React.Component {
               value={cmdrNameValue} />
           </div>
           <div>
-            {userHasMultipleRats && (
-              <DefaultRatButton
-                ratId={rat.id}
-                onClick={this._handleDisplayRatClick}
-                onUpdate={this._handleDisplayRatUpdate} />
-            )}
+            {
+              userHasMultipleRats && (
+                <DefaultRatButton
+                  ratId={rat.id}
+                  onClick={this._handleDisplayRatClick}
+                  onUpdate={this._handleDisplayRatUpdate} />
+              )
+            }
             <span className="rat-platform">{rat.attributes.platform.toUpperCase()}</span>
           </div>
         </header>

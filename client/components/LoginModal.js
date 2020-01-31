@@ -127,13 +127,15 @@ class LoginModal extends React.Component {
 
     return (
       <ModalContent as="form" className="dialog no-pad" onSubmit={this._handleSubmit}>
-        {error && !loggingIn && (
-          <div className="store-errors">
-            <div className="store-error">
-              {'Invalid email or password.'}
+        {
+          error && !loggingIn && (
+            <div className="store-errors">
+              <div className="store-error">
+                {'Invalid email or password.'}
+              </div>
             </div>
-          </div>
-        )}
+          )
+        }
 
         <ValidatedFormInput
           aria-label="Fuel rats account e-mail"

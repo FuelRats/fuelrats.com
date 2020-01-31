@@ -119,15 +119,19 @@ class Carousel extends React.Component {
         enter={{ opacity: 1 }}
         leave={{ opacity: 0 }}>
         {
-          (slide) => slide.image && ((style) => (
-            <animated.div
-              className="carousel-slide"
-              style={{
-                ...style,
-                backgroundImage: `url(${slide.image})`,
-                backgroundPosition: slide.position || 'center',
-              }} />
-          ))
+          (slide) => slide.image && ((style) => {
+            const divStyle = {
+              ...style,
+              backgroundImage: `url(${slide.image})`,
+              backgroundPosition: slide.position || 'center',
+            }
+
+            return (
+              <animated.div
+                className="carousel-slide"
+                style={divStyle} />
+            )
+          })
         }
       </Transition>
     )
@@ -142,19 +146,23 @@ class Carousel extends React.Component {
         enter={{ xPos: 0 }}
         leave={{ xPos: 100 }}>
         {
-          (slide) => slide.image && (({ xPos }) => (
-            slide.text
-              ? (
-                <animated.span
-                  className="carousel-slide-text"
-                  style={{
-                    transform: xPos.to((value) => (value ? `translate3d(${value}%,0,0)` : undefined)),
-                  }}>
-                  {slide.text}
-                </animated.span>
-              )
-              : null
-          ))
+          (slide) => slide.image && (({ xPos }) => {
+            const spanStyle = {
+              transform: xPos.to((value) => (value ? `translate3d(${value}%,0,0)` : undefined)),
+            }
+
+            return (
+              slide.text
+                ? (
+                  <animated.span
+                    className="carousel-slide-text"
+                    style={spanStyle}>
+                    {slide.text}
+                  </animated.span>
+                )
+                : null
+            )
+          })
         }
       </Transition>
     )
@@ -176,15 +184,17 @@ class Carousel extends React.Component {
         {this.renderSlide()}
         {this.renderSlideText()}
         <div className="carousel-slide-picker">
-          {Object.keys(slides).map((slideId) => (
-            <button
-              aria-label={`Image carousel slide ${slideId}`}
-              className={`circle-button${curSlide === slideId ? ' active' : ''}`}
-              name={slideId}
-              key={slideId}
-              type="button"
-              onClick={this._handleSlideButtonClick} />
-          ))}
+          {
+            Object.keys(slides).map((slideId) => (
+              <button
+                aria-label={`Image carousel slide ${slideId}`}
+                className={`circle-button${curSlide === slideId ? ' active' : ''}`}
+                name={slideId}
+                key={slideId}
+                type="button"
+                onClick={this._handleSlideButtonClick} />
+            ))
+          }
         </div>
       </div>
     )

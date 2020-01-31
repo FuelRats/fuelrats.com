@@ -112,11 +112,10 @@ class WordpressTermsModal extends React.Component {
   /* eslint-disable react/no-danger */
   renderWordpressPage () {
     const { page } = this.props
+
     return (
       <div
-        dangerouslySetInnerHTML={page && {
-          __html: page.content.rendered.replace(/<ul>/giu, '<ul class="bulleted">').replace(/<ol>/giu, '<ol class="numbered">'),
-        }} />
+        dangerouslySetInnerHTML={page && { __html: page.content.rendered.replace(/<ul>/giu, '<ul class="bulleted">').replace(/<ol>/giu, '<ol class="numbered">') }} />
     )
   }
   /* eslint-enable react/no-danger */

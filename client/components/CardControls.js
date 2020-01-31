@@ -48,49 +48,53 @@ function CardControls (props) {
     <div className={classes}>
       {deleteMode && (deleteConfirmMessage() || (<small>{'Are you sure? '}</small>))}
 
-      {!(editMode || deleteMode) && (
-        <>
-          <button
-            className={`icon ${editMode || deleteMode ? 'green' : ''}`}
-            name="edit"
-            onClick={onEditClick}
-            title={`Edit ${controlType}`}
-            type="button">
-            <FontAwesomeIcon icon="pen" fixedWidth />
-          </button>
-          <button
-            className="icon"
-            disabled={!canDelete}
-            name="delete"
-            onClick={onDeleteClick}
-            title={canDelete ? `Delete ${controlType}` : `You cannot delete this ${controlType}.`}
-            type="button">
-            <FontAwesomeIcon icon="trash" fixedWidth />
-          </button>
-        </>
-      )}
+      {
+        !(editMode || deleteMode) && (
+          <>
+            <button
+              className={`icon ${editMode || deleteMode ? 'green' : ''}`}
+              name="edit"
+              onClick={onEditClick}
+              title={`Edit ${controlType}`}
+              type="button">
+              <FontAwesomeIcon icon="pen" fixedWidth />
+            </button>
+            <button
+              className="icon"
+              disabled={!canDelete}
+              name="delete"
+              onClick={onDeleteClick}
+              title={canDelete ? `Delete ${controlType}` : `You cannot delete this ${controlType}.`}
+              type="button">
+              <FontAwesomeIcon icon="trash" fixedWidth />
+            </button>
+          </>
+        )
+      }
 
-      {(editMode || deleteMode) && (
-        <>
-          <button
-            className="icon green"
-            disabled={editMode ? !canSubmit : false}
-            name="confirm"
-            onClick={onSubmitClick}
-            title={editModeSubmitTitle}
-            type="button">
-            <FontAwesomeIcon icon="check" fixedWidth />
-          </button>
-          <button
-            className="icon"
-            name="cancel"
-            onClick={onCancelClick}
-            title={editModeCancelTitle}
-            type="button">
-            <FontAwesomeIcon icon="times" fixedWidth />
-          </button>
-        </>
-      )}
+      {
+        (editMode || deleteMode) && (
+          <>
+            <button
+              className="icon green"
+              disabled={editMode ? !canSubmit : false}
+              name="confirm"
+              onClick={onSubmitClick}
+              title={editModeSubmitTitle}
+              type="button">
+              <FontAwesomeIcon icon="check" fixedWidth />
+            </button>
+            <button
+              className="icon"
+              name="cancel"
+              onClick={onCancelClick}
+              title={editModeCancelTitle}
+              type="button">
+              <FontAwesomeIcon icon="times" fixedWidth />
+            </button>
+          </>
+        )
+      }
     </div>
   )
 }

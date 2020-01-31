@@ -109,13 +109,15 @@ class ChangePasswordModal extends React.Component {
 
     return (
       <ModalContent as="form" className="dialog no-pad" onSubmit={this._handleSubmit}>
-        {error && !submitting && (
-          <div className="store-errors">
-            <div className="store-error">
-              {error}
+        {
+          error && !submitting && (
+            <div className="store-errors">
+              <div className="store-error">
+                {error}
+              </div>
             </div>
-          </div>
-        )}
+          )
+        }
 
         <fieldset data-name="Current Password">
           <PasswordField

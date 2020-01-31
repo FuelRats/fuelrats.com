@@ -15,6 +15,7 @@ import {
   ircNickPattern,
   passwordPattern,
 } from '../data/RegExpr'
+import platformRadioOptions from '../data/platformRadioOptions'
 import { Link } from '../routes'
 import { actions, connect } from '../store'
 
@@ -182,7 +183,10 @@ class Register extends React.Component {
           onSubmit={this._handleSubmit}>
 
           <fieldset data-name="Email">
-            <h5>{'This registration page is to become a Fuel Rat!'}<br />{'Need fuel? No need to register! Just click "Get Help" in the sidebar!'}</h5><br />
+            <h5>{'This registration page is to become a Fuel Rat!'}<br />{'Need fuel? No need to register! Just click "Get Help" in the sidebar!'}</h5>
+
+            <br />
+
             <label htmlFor="email">
               {'Email'}
             </label>
@@ -244,7 +248,8 @@ class Register extends React.Component {
 
           <fieldset data-name="CMDR Name">
             <label htmlFor="ratName">
-              {"What's your CMDR name? "}<small>{'If you have more than one CMDR, you can add the rest later.'}</small>
+              {"What's your CMDR name? "}
+              <small>{'If you have more than one CMDR, you can add the rest later.'}</small>
             </label>
 
             <input
@@ -273,20 +278,7 @@ class Register extends React.Component {
               id="ratPlatform"
               value={ratPlatform}
               onChange={this._handleRadioInputChange}
-              options={[
-                {
-                  value: 'pc',
-                  label: 'PC',
-                },
-                {
-                  value: 'xb',
-                  label: 'Xbox',
-                },
-                {
-                  value: 'ps',
-                  label: 'PS4',
-                },
-              ]} />
+              options={platformRadioOptions} />
           </fieldset>
 
           <fieldset data-name="Agreements">

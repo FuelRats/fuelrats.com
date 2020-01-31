@@ -125,13 +125,15 @@ class ListRescues extends React.Component {
         </span>
         <span className="secondary-info">
           <small>{rescue.id}{' - '}{formatAsEliteDateTime(createdAt)}{status === 'closed' ? '' : ` - ${status}`}</small>
-          {statusIcon && (
-            <span
-              className="status-icon"
-              title={statusIcon.text}>
-              <FontAwesomeIcon icon={statusIcon.icon} fixedWidth size="2x" />
-            </span>
-          )}
+          {
+            statusIcon && (
+              <span
+                className="status-icon"
+                title={statusIcon.text}>
+                <FontAwesomeIcon icon={statusIcon.icon} fixedWidth size="2x" />
+              </span>
+            )
+          }
         </span>
       </div>
     )

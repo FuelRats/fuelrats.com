@@ -85,18 +85,20 @@ function Header (props) {
             </Link>
           </li>
 
-          {IS_DEV_OR_STAGING && (
-            <li>
-              <a
-                className="button link"
-                href={`https://www.github.com/fuelrats/fuelrats.com${BUILD_COMMIT ? `/commit/${BUILD_COMMIT}` : ''}`}
-                target="_blank"
-                rel="noopener noreferrer">
-                <FontAwesomeIcon icon="code-branch" fixedWidth />
-                {BUILD_COMMIT_SHORT}
-              </a>
-            </li>
-          )}
+          {
+            IS_DEV_OR_STAGING && (
+              <li>
+                <a
+                  className="button link"
+                  href={`https://www.github.com/fuelrats/fuelrats.com${BUILD_COMMIT ? `/commit/${BUILD_COMMIT}` : ''}`}
+                  target="_blank"
+                  rel="noopener noreferrer">
+                  <FontAwesomeIcon icon="code-branch" fixedWidth />
+                  {BUILD_COMMIT_SHORT}
+                </a>
+              </li>
+            )
+          }
 
         </ul>
 
@@ -168,13 +170,15 @@ function Header (props) {
             </a>
           </Link>
 
-          {!loggedIn && !userId && (
-            <Link route="register">
-              <a className="button secondary">
-                {'Become a Rat'}
-              </a>
-            </Link>
-          )}
+          {
+            !loggedIn && !userId && (
+              <Link route="register">
+                <a className="button secondary">
+                  {'Become a Rat'}
+                </a>
+              </Link>
+            )
+          }
 
         </div>
       </header>

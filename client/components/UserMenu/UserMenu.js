@@ -92,38 +92,46 @@ function UserMenu (props) {
 
   return (
     <div className={`user-menu ${loggedIn ? 'logged-in' : ''} ${loggedIn && !userId ? 'logging-in' : ''}`}>
-      {Boolean(loggedIn) && (
-        <>
-          <input
-            aria-label="User menu toggle"
-            id="UserMenuControl"
-            ref={checkboxRef}
-            type="checkbox" />
+      {
+        Boolean(loggedIn) && (
+          <>
+            <input
+              aria-label="User menu toggle"
+              id="UserMenuControl"
+              ref={checkboxRef}
+              type="checkbox" />
 
-          <label className="avatar medium" htmlFor="UserMenuControl" id="UserMenuToggle">
-            {Boolean(user) && (
-              <img alt="Your avatar" src={userAvatar} />
-            )}
-          </label>
-        </>
-      )}
+            <label className="avatar medium" htmlFor="UserMenuControl" id="UserMenuToggle">
+              {
+                Boolean(user) && (
+                  <img alt="Your avatar" src={userAvatar} />
+                )
+              }
+            </label>
+          </>
+        )
+      }
 
-      {(loggedIn && user) && (
-        <menu>
-          <NavSection onItemClick={handleItemClick} items={userItems} />
-          <NavSection onItemClick={handleItemClick} header="Admin" items={adminItems} />
-          <NavSection onItemClick={handleItemClick} items={actions} />
-        </menu>
-      )}
+      {
+        (loggedIn && user) && (
+          <menu>
+            <NavSection onItemClick={handleItemClick} items={userItems} />
+            <NavSection onItemClick={handleItemClick} header="Admin" items={adminItems} />
+            <NavSection onItemClick={handleItemClick} items={actions} />
+          </menu>
+        )
+      }
 
-      {!loggedIn && (
-        <button
-          className="login secondary"
-          onClick={handleLoginClick}
-          type="button">
-          {'Rat Login'}
-        </button>
-      )}
+      {
+        !loggedIn && (
+          <button
+            className="login secondary"
+            onClick={handleLoginClick}
+            type="button">
+            {'Rat Login'}
+          </button>
+        )
+      }
     </div>
   )
 }

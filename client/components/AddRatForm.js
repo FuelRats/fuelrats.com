@@ -31,7 +31,11 @@ const initialState = {
   submitting: false,
 }
 
-
+const platformSelectOptions = {
+  pc: 'PC',
+  xb: 'XB1',
+  ps: 'PS4',
+}
 
 
 @connect
@@ -118,51 +122,51 @@ class AddRatForm extends React.Component {
 
     return (
       <form className={classes}>
-        {formOpen && (
-          <div className="form-row submit-row flex align-center">
-            <ValidatedFormInput
-              aria-label="Commander Name"
-              className="cmdr-input"
-              disabled={submitting}
-              id="newRatName"
-              invalidMessage={INVALID_NAME_MESSAGE}
-              label="CMDR Name"
-              name="name"
-              minLength={1}
-              maxLength={18}
-              onChange={this._handleFieldChange}
-              placeholder="CMDR Name"
-              required
-              value={name} />
+        {
+          formOpen && (
+            <div className="form-row submit-row flex align-center">
+              <ValidatedFormInput
+                aria-label="Commander Name"
+                className="cmdr-input"
+                disabled={submitting}
+                id="newRatName"
+                invalidMessage={INVALID_NAME_MESSAGE}
+                label="CMDR Name"
+                name="name"
+                minLength={1}
+                maxLength={18}
+                onChange={this._handleFieldChange}
+                placeholder="CMDR Name"
+                required
+                value={name} />
 
-            <ValidatedFormSelect
-              className="platform-input"
-              disabled={submitting}
-              id="newRatPlatform"
-              invalidMessage={INVALID_PLATFORM_MESSAGE}
-              name="platform"
-              label="Platform"
-              onChange={this._handleFieldChange}
-              options={{
-                pc: 'PC',
-                xb: 'XB1',
-                ps: 'PS4',
-              }}
-              required
-              value={platform} />
-          </div>
-        )}
+              <ValidatedFormSelect
+                className="platform-input"
+                disabled={submitting}
+                id="newRatPlatform"
+                invalidMessage={INVALID_PLATFORM_MESSAGE}
+                name="platform"
+                label="Platform"
+                onChange={this._handleFieldChange}
+                options={platformSelectOptions}
+                required
+                value={platform} />
+            </div>
+          )
+        }
         <div className="form-control">
-          {formOpen && (
-            <button
-              aria-label="submit new commander"
-              className="green compact square"
-              disabled={!this.canSubmit}
-              onClick={this._handleSubmit}
-              type="button">
-              <FontAwesomeIcon icon="check" fixedWidth />
-            </button>
-          )}
+          {
+            formOpen && (
+              <button
+                aria-label="submit new commander"
+                className="green compact square"
+                disabled={!this.canSubmit}
+                onClick={this._handleSubmit}
+                type="button">
+                <FontAwesomeIcon icon="check" fixedWidth />
+              </button>
+            )
+          }
           <button
             aria-label={formOpen ? 'cancel new commander creation' : 'add commander'}
             className={`compact square ${formOpen ? '' : 'green'}`}

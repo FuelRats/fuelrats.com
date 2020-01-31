@@ -46,9 +46,11 @@ class SwitchInput extends React.Component {
           {...this.inputProps}
           className="switch-input"
           type="checkbox" />
-        {label && (
-          <label htmlFor={id} className="switch-label">{label}</label>
-        )}
+        {
+          label && (
+            <label htmlFor={id} className="switch-label">{label}</label>
+          )
+        }
       </div>
     )
   }

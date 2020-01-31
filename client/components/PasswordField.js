@@ -154,15 +154,17 @@ export default class PasswordField extends React.Component {
           </button>
         </div>
 
-        {showStrength && (
-          <meter
-            className="password-strength-meter"
-            high="3"
-            low="2"
-            max="4"
-            optimum="4"
-            value={passwordStrength} />
-        )}
+        {
+          showStrength && (
+            <meter
+              className="password-strength-meter"
+              high="3"
+              low="2"
+              max="4"
+              optimum="4"
+              value={passwordStrength} />
+          )
+        }
 
         {showSuggestions && this.renderWarnings()}
       </div>

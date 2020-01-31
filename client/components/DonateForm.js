@@ -176,13 +176,15 @@ class DonateForm extends React.Component {
       <div className="store-errors">
         <div className="store-error">
           {'An error occured while creating the checkout session.'}
-          {typeof error === 'string' && (
-            <>
-              {' Error message: '}
-              <br />
-              {error}
-            </>
-          )}
+          {
+            typeof error === 'string' && (
+              <>
+                {' Error message: '}
+                <br />
+                {error}
+              </>
+            )
+          }
           <br />
           {'If the problem persists, please contact a techrat via'}
           <a href="mailto:support@fuelrats.com">{'support@fuelrats.com'}</a>
@@ -232,20 +234,22 @@ class DonateForm extends React.Component {
               options={amountOptions(currencySymbol)} />
           </fieldset>
 
-          {amountType === 'custom' && (
-            <fieldset>
-              <label htmlFor="amount">{'Input your custom amount'}</label>
+          {
+            amountType === 'custom' && (
+              <fieldset>
+                <label htmlFor="amount">{'Input your custom amount'}</label>
 
-              <input
-                aria-label="Custom amount"
-                disabled={submitting || amountType !== 'custom'}
-                id="DonateAmount"
-                name="amount"
-                type="text"
-                onChange={this._handleFieldChange}
-                value={amount} />
-            </fieldset>
-          )}
+                <input
+                  aria-label="Custom amount"
+                  disabled={submitting || amountType !== 'custom'}
+                  id="DonateAmount"
+                  name="amount"
+                  type="text"
+                  onChange={this._handleFieldChange}
+                  value={amount} />
+              </fieldset>
+            )
+          }
 
           <div className="fieldset">
             <button

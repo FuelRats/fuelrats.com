@@ -53,7 +53,7 @@ class Index extends React.Component {
         <Carousel id="HomeImages" slides={CarouselSlides} />
 
         <header>
-          <h1>{'We Have Fuel. '}<wbr />{"You&nbsp;Don't."}</h1>
+          <h1>{'We Have Fuel. '}<wbr />{"You\u00a0Don't."}</h1>
           <h2>{'Any Questions?'}</h2>
         </header>
 

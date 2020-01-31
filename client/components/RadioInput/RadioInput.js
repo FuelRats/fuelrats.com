@@ -58,15 +58,17 @@ class RadioInput extends React.Component {
 
     return (
       <Element className={classes}>
-        {options.map((option) => (
-          <OptionElement
-            {...option}
-            checked={option.value === value ?? option.checked}
-            disabled={disabled ?? option.disabled}
-            key={option.value}
-            name={name}
-            onChange={this._handleOptionClick} />
-        ))}
+        {
+          options.map((option) => (
+            <OptionElement
+              {...option}
+              checked={option.value === value ?? option.checked}
+              disabled={disabled ?? option.disabled}
+              key={option.value}
+              name={name}
+              onChange={this._handleOptionClick} />
+          ))
+        }
       </Element>
     )
   }

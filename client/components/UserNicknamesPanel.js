@@ -64,11 +64,13 @@ class UserNicknamesPanel extends React.Component {
       <div className="panel user-nicknames">
         <header>
           {'IRC Nicknames'}
-          {(this.state.formOpen) && (
-            <div className="add-nickname-float">
-              <AddNicknameForm />
-            </div>
-          )}
+          {
+            (this.state.formOpen) && (
+              <div className="add-nickname-float">
+                <AddNicknameForm />
+              </div>
+            )
+          }
           <div className="controls">
             <span className="nickname-count">{`${user.attributes.nicknames.length}/${MAXNICKS}`}</span>
             <button
@@ -85,7 +87,8 @@ class UserNicknamesPanel extends React.Component {
 
         <div className="panel-content">
           <ul>
-            {(user.attributes && user.attributes.nicknames)
+            {
+(user.attributes && user.attributes.nicknames)
               && user.attributes.nicknames.map((nickname) => (
                 <li key={nickname}>
                   <span>{nickname}</span>
@@ -97,7 +100,8 @@ class UserNicknamesPanel extends React.Component {
                   </ConfirmActionButton>
                   */}
                 </li>
-              ))}
+              ))
+}
           </ul>
         </div>
       </div>

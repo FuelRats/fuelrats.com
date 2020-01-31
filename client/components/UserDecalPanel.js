@@ -113,9 +113,11 @@ class UserDetailsPanel extends React.Component {
           type="button">
           <FontAwesomeIcon icon={this.state.decalsVisible[decal.id] ? 'eye' : 'eye-slash'} fixedWidth />
         </button>
-        {this.state.decalsVisible[decal.id]
-          ? decal.attributes.code
-          : `•••••-•••••-•••••-•••••-${decal.attributes.code.substring(24)}`}
+        {
+          this.state.decalsVisible[decal.id]
+            ? decal.attributes.code
+            : `•••••-•••••-•••••-•••••-${decal.attributes.code.substring(24)}`
+        }
       </div>
       <div className="claimed-at">{formatAsEliteDate(decal.attributes.claimedAt)}</div>
     </div>
@@ -141,9 +143,11 @@ class UserDetailsPanel extends React.Component {
       <div className="panel user-decals">
         <header>{'Decal'}</header>
         <div className="panel-content">
-          {(checkingEligibility || redeeming)
-            ? (<div className="loading">{loadingText}</div>)
-            : (this.renderDecalCodes(decals))}
+          {
+            (checkingEligibility || redeeming)
+              ? (<div className="loading">{loadingText}</div>)
+              : (this.renderDecalCodes(decals))
+          }
           {!decals.length && this.renderNoDataText()}
         </div>
       </div>

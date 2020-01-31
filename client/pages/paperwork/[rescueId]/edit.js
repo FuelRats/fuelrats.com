@@ -12,6 +12,7 @@ import FirstLimpetInput from '../../../components/FirstLimpetInput'
 import RadioInput from '../../../components/RadioInput'
 import RatTagsInput from '../../../components/RatTagsInput'
 import SystemTagsInput from '../../../components/SystemTagsInput'
+import platformRadioOptions from '../../../data/platformRadioOptions'
 import { formatAsEliteDateTime } from '../../../helpers/formatTime'
 import getRatTag from '../../../helpers/getRatTag'
 import { Router } from '../../../routes'
@@ -38,6 +39,41 @@ const selectFormattedRatsByRescueId = createSelector(
   }), {}) ?? {}),
 )
 
+const codeRedRadioOptions = [
+  {
+    value: 'true',
+    label: 'Yes',
+    title: '$#!7 was on fire, yo.',
+  },
+  {
+    value: 'false',
+    label: 'No',
+    title: 'The client did not experience any undue stress.',
+  },
+]
+
+const outcomeRadioOptions = [
+  {
+    value: 'success',
+    label: 'Yes',
+    title: 'Fuel was successfully delivered to the client.',
+  },
+  {
+    value: 'failure',
+    label: 'No',
+    title: 'Fuel wasn\'t successfully delivered to the client. (Explain why)',
+  },
+  {
+    value: 'invalid',
+    label: 'Invalid',
+    title: 'Fuel wasn\'t delievered because the request was illegitimate. (Cats / Trolling)',
+  },
+  {
+    value: 'other',
+    label: 'Other',
+    title: 'Fuel wasn\'t delievered because the client was able to get out of trouble without it. (Explain)',
+  },
+]
 
 
 
@@ -233,16 +269,20 @@ class Paperwork extends React.Component {
       <li key={index}>
         <div className="times">
           <div className="created" title="Created at">{createdAt}</div>
-          {(updatedAt !== createdAt) && (
-            <div className="updated" title="Updated at"><span className="label">{'Updated at '}</span>{updatedAt}</div>
-          )}
+          {
+            (updatedAt !== createdAt) && (
+              <div className="updated" title="Updated at"><span className="label">{'Updated at '}</span>{updatedAt}</div>
+            )
+          }
         </div>
         <span className="message">{quote.message}</span>
         <div className="authors">
           <div className="author" title="Created by">{quote.author}</div>
-          {(quote.author !== quote.lastAuthor) && (
-            <div className="last-author" title="Last updated by"><span className="label">{'Updated by '}</span>{quote.lastAuthor}</div>
-          )}
+          {
+            (quote.author !== quote.lastAuthor) && (
+              <div className="last-author" title="Last updated by"><span className="label">{'Updated by '}</span>{quote.lastAuthor}</div>
+            )
+          }
         </div>
       </li>
     )
@@ -307,24 +347,30 @@ class Paperwork extends React.Component {
         className={classes.join(' ')}
         onSubmit={this._handleSubmit}>
         <header className="paperwork-header">
-          {(rescue.attributes.status !== 'closed') && (
-            <div className="board-index"><span>{`#${rescue.attributes.data.boardIndex}`}</span></div>
-          )}
+          {
+            (rescue.attributes.status !== 'closed') && (
+              <div className="board-index"><span>{`#${rescue.attributes.data.boardIndex}`}</span></div>
+            )
+          }
           <div className="title">
-            {(!rescue.attributes.title) && (
-              <span>
-                {'Rescue of '}
-                <span className="cmdr-name">{rescue.attributes.client}</span>
-                {' in '}
-                <span className="system">{(rescue.attributes.system) || 'Unknown'}</span>
-              </span>
-            )}
-            {(rescue.attributes.title) && (
-              <span>
-                {'Operation '}
-                <span className="rescue-title"> {rescue.attributes.title}</span>
-              </span>
-            )}
+            {
+              (!rescue.attributes.title) && (
+                <span>
+                  {'Rescue of '}
+                  <span className="cmdr-name">{rescue.attributes.client}</span>
+                  {' in '}
+                  <span className="system">{(rescue.attributes.system) || 'Unknown'}</span>
+                </span>
+              )
+            }
+            {
+              (rescue.attributes.title) && (
+                <span>
+                  {'Operation '}
+                  <span className="rescue-title"> {rescue.attributes.title}</span>
+                </span>
+              )
+            }
           </div>
         </header>
 
@@ -338,23 +384,7 @@ class Paperwork extends React.Component {
             id="platform"
             value={platform}
             onChange={this._handleRadioInputChange}
-            options={[
-              {
-                value: 'pc',
-                label: 'PC',
-                title: 'Personal Computational Device',
-              },
-              {
-                value: 'xb',
-                label: 'Xbox',
-                title: 'Xbox One',
-              },
-              {
-                value: 'ps',
-                label: 'PS4',
-                title: 'Playstation 4',
-              },
-            ]} />
+            options={platformRadioOptions} />
         </fieldset>
 
         <fieldset>
@@ -377,28 +407,7 @@ class Paperwork extends React.Component {
             id="outcome"
             value={outcome}
             onChange={this._handleRadioInputChange}
-            options={[
-              {
-                value: 'success',
-                label: 'Yes',
-                title: 'Fuel was successfully delivered to the client.',
-              },
-              {
-                value: 'failure',
-                label: 'No',
-                title: 'Fuel wasn\'t successfully delivered to the client. (Explain why)',
-              },
-              {
-                value: 'invalid',
-                label: 'Invalid',
-                title: 'Fuel wasn\'t delievered because the request was illegitimate. (Cats / Trolling)',
-              },
-              {
-                value: 'other',
-                label: 'Other',
-                title: 'Fuel wasn\'t delievered because the client was able to get out of trouble without it. (Explain)',
-              },
-            ]} />
+            options={outcomeRadioOptions} />
         </fieldset>
 
         <fieldset>
@@ -410,18 +419,7 @@ class Paperwork extends React.Component {
             id="codeRed"
             value={`${codeRed}`}
             onChange={this._handleRadioInputChange}
-            options={[
-              {
-                value: 'true',
-                label: 'Yes',
-                title: '$#!7 was on fire, yo.',
-              },
-              {
-                value: 'false',
-                label: 'No',
-                title: 'The client did not experience any undue stress.',
-              },
-            ]} />
+            options={codeRedRadioOptions} />
         </fieldset>
 
         <fieldset>
@@ -514,23 +512,29 @@ class Paperwork extends React.Component {
 
     return (
       <PageWrapper title="Paperwork">
-        {(error && !submitting) && (
-          <div className="store-errors">
-            <div className="store-error">
-              {'Error while submitting paperwork.'}
+        {
+          (error && !submitting) && (
+            <div className="store-errors">
+              <div className="store-error">
+                {'Error while submitting paperwork.'}
+              </div>
             </div>
-          </div>
-        )}
+          )
+        }
 
-        {loading && (
-          <div className="loading page-content" />
-        )}
+        {
+          loading && (
+            <div className="loading page-content" />
+          )
+        }
 
-        {(!loading && !rescue) && (
-          <div className="loading page-content">
-            <p>{"Sorry, we couldn't find the paperwork you requested."}</p>
-          </div>
-        )}
+        {
+          (!loading && !rescue) && (
+            <div className="loading page-content">
+              <p>{"Sorry, we couldn't find the paperwork you requested."}</p>
+            </div>
+          )
+        }
 
         {(!loading && rescue) && this.renderRescueEditForm()}
       </PageWrapper>

@@ -73,13 +73,15 @@ class ValidatedFormSelect extends React.Component {
             className={classes}
             onChange={this._handleChange}>
             {!renderLabel && (<option value="">{label}</option>)}
-            {Object.entries(options).map(([key, text]) => (
-              <option
-                key={key}
-                value={key}>
-                {text}
-              </option>
-            ))}
+            {
+              Object.entries(options).map(([key, text]) => (
+                <option
+                  key={key}
+                  value={key}>
+                  {text}
+                </option>
+              ))
+            }
           </select>
         </div>
       </fieldset>
