@@ -13,7 +13,8 @@
     "postinstall": "npm rebuild node-sass"
   },
   "devDependencies": {
-    "@fuelrats/eslint-config-react": "1.2.5",
+    "@fuelrats/eslint-config": "^2.0.0-canary.1",
+    "@fuelrats/eslint-config-react": "^2.0.0-canary",
     "@fuelrats/stylelint-config": "^0.8.1",
     "all-contributors-cli": "^6.13.0",
     "babel-eslint": "^10.0.3",
@@ -22,6 +23,7 @@
     "eslint-loader": "^3.0.3",
     "eslint-plugin-babel": "^5.3.0",
     "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-jsdoc": "^21.0.0",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.18.0",
     "eslint-plugin-react-hooks": "^2.3.0",
@@ -30,12 +32,12 @@
     "stylelint-scss": "^3.13.0"
   },
   "dependencies": {
-    "@babel/core": "7.8.3",
+    "@babel/core": "7.8.4",
     "@babel/plugin-proposal-decorators": "7.8.3",
     "@babel/plugin-proposal-export-default-from": "^7.8.3",
     "@babel/plugin-proposal-export-namespace-from": "^7.8.3",
     "@babel/plugin-proposal-optional-catch-binding": "7.8.3",
-    "@babel/runtime": "7.8.3",
+    "@babel/runtime": "7.8.4",
     "@fortawesome/fontawesome-svg-core": "^1.2.26",
     "@fortawesome/free-brands-svg-icons": "^5.12.0",
     "@fortawesome/free-solid-svg-icons": "^5.12.0",
