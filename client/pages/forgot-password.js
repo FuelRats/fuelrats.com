@@ -99,7 +99,7 @@ class ForgotPassword extends React.Component {
                 <input
                   aria-label="user email"
                   id="email"
-                  onChange={this.handleInputChange}
+                  onChange={this._handleInputChange}
                   name="email"
                   ref={this._emailRef}
                   type="email"
