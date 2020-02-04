@@ -16,7 +16,6 @@ const {
   BUILD_VCS_BRANCH,
   BUILD_VCS_NUMBER,
   FRDC_API_URL,
-  FRDC_CAPTCHA_PK,
   FRDC_PUBLIC_URL,
   FRDC_STRIPE_API_PK,
   PORT,
@@ -54,9 +53,6 @@ module.exports = withWorkers(withSass({
       stripe: {
         url: `${FINAL_PUBLIC_URL}/st-api`,
         public: FRDC_STRIPE_API_PK || null,
-      },
-      recaptcha: {
-        public: FRDC_CAPTCHA_PK || null,
       },
     },
   },

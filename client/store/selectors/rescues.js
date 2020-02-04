@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect'
 import { selectUserByIdHasScope } from './groups'
+import { selectRats } from './rats'
 import { selectCurrentUserId, withCurrentUserId } from './session'
-
 
 
 // Constants
@@ -15,13 +15,26 @@ const selectRescues = (state) => state.rescues.rescues
 
 const selectRescueById = (state, { rescueId }) => state.rescues[rescueId]
 
+
+const selectRatsByRescueId = createSelector(
+  [selectRats, selectRescueById],
+  (rats, rescue) => {
+    if (rats) {
+      return rescue?.relationships?.rats?.data?.map((ratRef) => rats[ratRef.id]) ?? null
+    }
+    return null
+  },
+)
+
+
 const selectRescueCanEdit = createSelector(
   [
     selectRescueById,
+    selectRatsByRescueId,
     selectCurrentUserId,
     (state) => withCurrentUserId(selectUserByIdHasScope)(state, { scope: 'rescue.write' }),
   ],
-  (rescue, userId, userCanEditAllRescues) => {
+  (rescue, rescueRats, userId, userCanEditAllRescues) => {
     if (!rescue || !userId) {
       return false
     }
@@ -32,13 +45,14 @@ const selectRescueCanEdit = createSelector(
     }
 
     // Check if current user is assigned to case.
-    const usersAssignedRats = rescue.relationships.rats.data?.reduce(
+    const usersAssignedRats = rescueRats?.reduce(
       (acc, rat) => {
         if (rat.attributes.userId === userId) {
           return [...acc, rat]
         }
         return acc
-      }
+      },
+      []
     )
 
     if (usersAssignedRats.length) {
@@ -60,6 +74,7 @@ const selectRescueCanEdit = createSelector(
 
 
 export {
+  selectRatsByRescueId,
   selectRescues,
   selectRescueById,
   selectRescueCanEdit,
