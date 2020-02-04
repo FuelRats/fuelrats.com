@@ -8,6 +8,9 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 ## [Unreleased]
 
+### 🐛 Fixed
+* Fix Forgot password input being uneditable - [#219][]
+
 
 
 
