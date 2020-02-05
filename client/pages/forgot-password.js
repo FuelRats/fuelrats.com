@@ -36,7 +36,9 @@ class ForgotPassword extends React.Component {
     Private Methods
   \***************************************************************************/
 
-  _handleInputChange = (event) => this.setState({ email: event.target.value })
+  _handleInputChange = (event) => {
+    this.setState({ email: event.target.value })
+  }
 
 
   _handleSubmit = async (event) => {
@@ -105,7 +107,7 @@ class ForgotPassword extends React.Component {
                   <input
                     aria-label="user email"
                     id="email"
-                    onChange={this.handleInputChange}
+                    onChange={this._handleInputChange}
                     name="email"
                     ref={this._emailRef}
                     type="email"

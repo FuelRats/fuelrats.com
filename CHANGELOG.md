@@ -6,7 +6,20 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
+
+
 ## [Unreleased]
+
+
+
+
+
+## [2.10.0-patch.2] - 2020-02-04
+
+### 🐛 Fixed
+* Fix Forgot password input being uneditable - [#219][]
+
+
 
 
 
