@@ -63,7 +63,7 @@ class DisableProfileModal extends React.Component {
 
     this.setState({ submitting: true })
 
-    const { payload, response } = await this.props.disableProfile(password)
+    const { payload, response } = await this.props.deleteUser(password)
 
     let error = null
 
@@ -171,7 +171,7 @@ class DisableProfileModal extends React.Component {
     Redux Properties
   \***************************************************************************/
 
-  static mapDispatchToProps = ['disableProfile']
+  static mapDispatchToProps = ['deleteUser']
 }
 
 

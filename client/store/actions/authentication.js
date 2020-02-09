@@ -39,7 +39,8 @@ export const changePassword = (currentPassword, newPassword) => frApiRequest(
 
 
 
-export const disableProfile = (currentPassword) => frApiRequest(
+export const deleteUser = (currentPassword) => frApiRequest(
+  actionTypes.users.delete,
   {
     url: '/users',
     method: 'delete',
