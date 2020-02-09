@@ -39,6 +39,20 @@ export const changePassword = (currentPassword, newPassword) => frApiRequest(
 
 
 
+export const disableProfile = (currentPassword) => frApiRequest(
+  {
+    url: '/users',
+    method: 'delete',
+    data: {
+      password: currentPassword,
+    },
+  },
+)
+
+
+
+
+
 export const login = (options) => async (dispatch) => {
   const {
     password,
