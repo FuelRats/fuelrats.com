@@ -150,7 +150,7 @@ class DisableProfileModal extends React.Component {
               {submitting ? 'Submitting...' : 'Disable Profile'}
             </button>
             <button
-              disabled={!this.isValid || submitting}
+              disabled={(!confirming && !this.isValid) || submitting}
               onClick={this._handleConfirm}
               type="button">
               {confirming ? 'Cancel' : 'Disable Profile'}
