@@ -29,6 +29,7 @@ class DisableProfileModal extends React.Component {
       password: false,
     },
     submitting: false,
+    confirming: false,
   }
 
 
@@ -52,6 +53,10 @@ class DisableProfileModal extends React.Component {
         [name]: event.validity.valid,
       },
     }))
+  }
+
+  _handleConfirm = () => {
+    this.setState((state) => ({ confirming: !state.confirming }))
   }
 
   _handleSubmit = async (event) => {
@@ -98,6 +103,7 @@ class DisableProfileModal extends React.Component {
       password,
       error,
       submitting,
+      confirming,
     } = this.state
 
     return (
@@ -136,10 +142,18 @@ class DisableProfileModal extends React.Component {
         <ModalFooter>
           <div className="secondary" />
           <div className="primary">
+            <div className={!confirming && 'hidden'}>Are you sure?</div>
             <button
+              className={confirming ? 'green' : 'hidden'}
               disabled={!this.isValid || submitting}
               type="submit">
               {submitting ? 'Submitting...' : 'Disable Profile'}
+            </button>
+            <button
+              disabled={!this.isValid || submitting}
+              onClick={this._handleConfirm}
+              type="button">
+              {confirming ? 'Cancel' : 'Disable Profile'}
             </button>
           </div>
         </ModalFooter>
