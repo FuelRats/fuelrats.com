@@ -57,8 +57,11 @@
       text-align: center;
     }
 
-    a:hover {
-      color: $white;
+    a {
+      &:hover,
+      &:focus {
+        color: $white;
+      }
     }
 
     .info {
