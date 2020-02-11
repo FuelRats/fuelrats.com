@@ -29,18 +29,20 @@ const donationTiers = {
 
 
 
-const internalServerErrorDocument = (error = {}) => ({
-  errors: [
-    {
-      status: 'internal_server',
-      code: 500,
-      source: {
-        message: error.message,
-        stack: error.stack,
+const internalServerErrorDocument = (error = {}) => {
+  return {
+    errors: [
+      {
+        status: 'internal_server',
+        code: 500,
+        source: {
+          message: error.message,
+          stack: error.stack,
+        },
       },
-    },
-  ],
-})
+    ],
+  }
+}
 
 
 

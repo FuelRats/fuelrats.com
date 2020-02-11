@@ -5,6 +5,16 @@ const proxy = require('koa-proxies')
 
 
 
+const stripPathSegment = (segmentName, replaceValue = '/') => {
+  return (path) => {
+    return path.replace(new RegExp(`\\/${segmentName}\\/`, 'u'), replaceValue)
+  }
+}
+
+
+
+
+
 module.exports = (koaServer, env) => {
   /***************************************************************************\
     Proxy Fuelrats API requests
@@ -14,7 +24,7 @@ module.exports = (koaServer, env) => {
     auth: `${env.api.clientId}:${env.api.clientSecret}`,
     changeOrigin: true,
     jar: true,
-    rewrite: (path) => path.replace(/^\/api/u, ''),
+    rewrite: stripPathSegment('api'),
     secure: true,
     target: env.api.url,
   }))
@@ -22,7 +32,7 @@ module.exports = (koaServer, env) => {
   koaServer.use(proxy('/api', {
     changeOrigin: true,
     jar: true,
-    rewrite: (path) => path.replace(/^\/api/u, ''),
+    rewrite: stripPathSegment('api'),
     secure: true,
     target: env.api.url,
   }))
@@ -37,7 +47,7 @@ module.exports = (koaServer, env) => {
 
   koaServer.use(proxy('/edsm-api', {
     changeOrigin: true,
-    rewrite: (path) => path.replace(/^\/edsm-api/u, ''),
+    rewrite: stripPathSegment('edsm-api'),
     target: env.edsm.url,
   }))
 
@@ -51,7 +61,7 @@ module.exports = (koaServer, env) => {
 
   koaServer.use(proxy('/wp-api', {
     changeOrigin: true,
-    rewrite: (path) => path.replace(/^\/wp-api/u, '/wp-json/wp/v2'),
+    rewrite: stripPathSegment('wp-api', '/wp-json/wp/v2/'),
     target: env.wordpress.url,
   }))
 
