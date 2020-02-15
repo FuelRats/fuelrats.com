@@ -82,24 +82,28 @@ class ConfirmActionButton extends React.Component {
     return (
       <div className={`action-confirmation-button${containerClassName ? ` ${containerClassName}` : ''}`}>
         {confirmingAction && (<span>{confirmSubText}</span>)}
-        {confirmingAction && (
-          <button
-            className="compact"
-            data-action="deny"
-            onClick={this._handleClick}
-            type="button">
-            {denyButtonText}
-          </button>
-        )}
+        {
+          confirmingAction && (
+            <button
+              className="compact"
+              data-action="deny"
+              type="button"
+              onClick={this._handleClick}>
+              {denyButtonText}
+            </button>
+          )
+        }
         <button
           className={confirmingAction ? 'compact green' : 'compact'}
           data-action="confirm"
-          onClick={this._handleClick}
           type="button"
+          onClick={this._handleClick}
           {...this.renderProps}>
-          {performingAction && (
-            <span name="confirm"><FontAwesomeIcon icon="spinner" pulse /> {onConfirmText}</span>
-          )}
+          {
+            performingAction && (
+              <span name="confirm"><FontAwesomeIcon pulse icon="spinner" /> {onConfirmText}</span>
+            )
+          }
           {confirmingAction && confirmButtonText}
           {(!performingAction && !confirmingAction) && (actionResult || children)}
         </button>

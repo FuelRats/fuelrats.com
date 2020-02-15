@@ -5,25 +5,23 @@ import React from 'react'
 
 
 
-const UserRescuesPanel = () => (
-  <div className="row">
+function UserRescuesPanel () {
+  return (
     <div className="row">
-      <h2>Rescues</h2>
-    </div>
+      <div className="row">
+        <h2>{'Rescues'}</h2>
+      </div>
 
-    <div className="row" data-hidden>
-      <ul className="inline">
-        <li>
-            #each rats.models
-          <button data-rat-id="{attributes.id}" type="button">{}</button>
-            /each
-        </li>
-      </ul>
-    </div>
+      <div data-hidden className="row">
+        <ul className="inline">
+          <li />
+        </ul>
+      </div>
 
-    <div className="rescues" />
-  </div>
-)
+      <div className="rescues" />
+    </div>
+  )
+}
 
 
 

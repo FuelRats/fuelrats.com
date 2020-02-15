@@ -4,7 +4,7 @@ import React from 'react'
 import classNames from '../helpers/classNames'
 
 
-const InfoBubble = (props) => {
+function InfoBubble (props) {
   const {
     className,
     header = 'information',

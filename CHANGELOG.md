@@ -6,7 +6,52 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
+
+
 ## [Unreleased]
+
+### ✨ Added
+
+### ⚡ Changed
+* Make login button always gray so it doesn't pop out on the front page. - [#221][]
+* Wrap all JSX string literals in a container (New ESLint Rule) - [#221][]
+* Enforce consistent newline rules for JSX code containers (New ESLint Rule) - [#221][]
+* Begin Splitting up blog list into different components (for our sanity) - [#221][]
+* A ton of other style changes brought upon us by the release of `@fuelrats/eslint-config` v2 - [#221][]
+
+### 🐛 Fixed
+
+### ⚙ Tasks
+* Update `@fuelrats/eslint-config-react` to `v2.0.0` - [#221][]
+
+
+[#221]: https://github.com/FuelRats/fuelrats.com/pull/221
+
+
+
+
+
+## [2.10.0-patch.2] - 2020-02-04
+
+### 🐛 Fixed
+* Fix Forgot password input being uneditable - [#219][]
+
+
+[#219]: https://github.com/FuelRats/fuelrats.com/pull/219
+
+
+
+
+
+## [2.10.0-patch.1] - 2020-01-29
+
+### 🐛 Fixed
+* Fix donate page by removing recaptcha. We removed this due to seemingly unfixable inconsistencies across browsers. - [#218][]
+* Fixed an error in paperwork edit permission checks. - [#217][]
+
+
+[#217]: https://github.com/FuelRats/fuelrats.com/pull/217
+[#218]: https://github.com/FuelRats/fuelrats.com/pull/218
 
 
 
@@ -43,6 +88,11 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Remove do-expressions since they're kinda too new - [#216][]
 
 
+[#209]: https://github.com/FuelRats/fuelrats.com/pull#209
+[#215]: https://github.com/FuelRats/fuelrats.com/pull/215
+[#216]: https://github.com/FuelRats/fuelrats.com/pull/216
+
+
 
 
 
@@ -55,6 +105,10 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Upgrade to Node 12 LTS - [#210][], [#213][]
 
 
+[#210]: https://github.com/FuelRats/fuelrats.com/pull/210
+[#213]: https://github.com/FuelRats/fuelrats.com/pull/213
+
+
 
 
 
@@ -65,6 +119,9 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Fix error when logging out from website - [#207][]
 * Fix accessToken not being passed to the OAuth authorization page - [#207][]
 * Fix registration page improperly checking platform input for value - [#207][]
+
+
+[#207]: https://github.com/FuelRats/fuelrats.com/pull/207
 
 
 

@@ -9,11 +9,31 @@ const routeList = [
   ['rescue-landing', '/i-need-fuel'],
 
   // Paperwork
-  ['paperwork', '/paperwork/[rescueId]', ({ rescueId }) => `/paperwork/${rescueId}`],
-  ['paperwork edit', '/paperwork/[rescueId]/edit', ({ rescueId }) => `/paperwork/${rescueId}/edit`],
+  [
+    'paperwork',
+    '/paperwork/[rescueId]',
+    ({ rescueId }) => {
+      return `/paperwork/${rescueId}`
+    },
+  ],
+
+
+  [
+    'paperwork edit',
+    '/paperwork/[rescueId]/edit',
+    ({ rescueId }) => {
+      return `/paperwork/${rescueId}/edit`
+    },
+  ],
 
   // Profile
-  ['profile', '/profile/[tab]', ({ tab }) => `/profile/${tab || 'overview'}`],
+  [
+    'profile',
+    '/profile/[tab]',
+    ({ tab }) => {
+      return `/profile/${tab || 'overview'}`
+    },
+  ],
 
   // Register
   ['register', '/register'],
@@ -24,31 +44,40 @@ const routeList = [
   ['auth password-reset', '/password-reset'],
 
   // Blog
-  ['blog list', ({
-    author,
-    category,
-    page,
-  }) => {
-    let href = '/blog'
-    let as = '/blog'
+  [
+    'blog list',
+    ({
+      author,
+      category,
+      page,
+    }) => {
+      let href = '/blog'
+      let as = '/blog'
 
-    if (author) {
-      href += '/author/[author]'
-      as += `/author/${author}`
-    } else if (category) {
-      href += '/category/[category]'
-      as += `/category/${category}`
-    }
+      if (author) {
+        href += '/author/[author]'
+        as += `/author/${author}`
+      } else if (category) {
+        href += '/category/[category]'
+        as += `/category/${category}`
+      }
 
-    if (typeof page === 'number') {
-      href += '/page/[page]'
-      as += `/page/${page}`
-    }
+      if (typeof page === 'number') {
+        href += '/page/[page]'
+        as += `/page/${page}`
+      }
 
-    return { href, as }
-  }],
+      return { href, as }
+    },
+  ],
 
-  ['blog view', '/blog/[blogId]', ({ blogId }) => `/blog/${blogId}`],
+  [
+    'blog view',
+    '/blog/[blogId]',
+    ({ blogId }) => {
+      return `/blog/${blogId}`
+    },
+  ],
 
   // Administration
   ['admin rescues list', '/admin/rescues'],
@@ -62,13 +91,24 @@ const routeList = [
   // About
   ['about fuelrats', '/about'],
   ['about acknowledgements', '/acknowledgements'],
-  ['about version', ({ raw }) => `/version/${raw ? 'raw' : 'index'}`],
+  [
+    'about version',
+    ({ raw }) => {
+      return `/version/${raw ? 'raw' : 'index'}`
+    },
+  ],
 
   // Epics
   ['epic nominate', '/epic/nominate'],
 
   // Wordpress
-  ['wordpress', '/[slug]', ({ slug }) => `/${slug}`],
+  [
+    'wordpress',
+    '/[slug]',
+    ({ slug }) => {
+      return `/${slug}`
+    },
+  ],
 ]
 
 

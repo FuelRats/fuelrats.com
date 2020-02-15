@@ -55,15 +55,21 @@ class RatCard extends React.Component {
   }
 
   _handleExpandShips = () => {
-    this.setState(({ shipsExpanded }) => ({
-      shipsExpanded: !shipsExpanded,
-    }))
+    this.setState(({ shipsExpanded }) => {
+      return {
+        shipsExpanded: !shipsExpanded,
+      }
+    })
   }
 
   _handleNameChange = ({ target: { value } }) => {
     this.setChanges(
-      (state, props) => ({ name: value === props.rat.attributes.name ? undefined : value }), // changes
-      (state, props) => ({ name: value && value !== props.rat.attributes.name }), // validity
+      (_, props) => {
+        return { name: value === props.rat.attributes.name ? undefined : value }
+      }, // changes
+      (_, props) => {
+        return { name: value && value !== props.rat.attributes.name }
+      }, // validity
     )
   }
 
@@ -165,18 +171,6 @@ class RatCard extends React.Component {
     }
   }
 
-  renderDeleteConfirmMessage = () => {
-    const {
-      rescueCount,
-    } = this.props
-
-    if (!rescueCount) {
-      return null
-    }
-
-    return (<small>This rat has {rescueCount} rescues. Are you sure?  </small>)
-  }
-
   render () {
     const {
       ratIsDisplayRat,
@@ -218,23 +212,25 @@ class RatCard extends React.Component {
       <div className={classes} data-loader-text={submitting ? submitText : null}>
         <header>
           <div>
-            <span>CMDR </span>
+            <span>{'CMDR '}</span>
             <InlineEditSpan
               canEdit={editMode}
               inputClassName="dark"
-              name="name"
-              minLength={1}
               maxLength={18}
-              onChange={this._handleNameChange}
-              value={cmdrNameValue} />
+              minLength={1}
+              name="name"
+              value={cmdrNameValue}
+              onChange={this._handleNameChange} />
           </div>
           <div>
-            {userHasMultipleRats && (
-              <DefaultRatButton
-                ratId={rat.id}
-                onClick={this._handleDisplayRatClick}
-                onUpdate={this._handleDisplayRatUpdate} />
-            )}
+            {
+              userHasMultipleRats && (
+                <DefaultRatButton
+                  ratId={rat.id}
+                  onClick={this._handleDisplayRatClick}
+                  onUpdate={this._handleDisplayRatUpdate} />
+              )
+            }
             <span className="rat-platform">{rat.attributes.platform.toUpperCase()}</span>
           </div>
         </header>
@@ -246,11 +242,11 @@ class RatCard extends React.Component {
         <footer className="panel-content">
           <div className="rat-stats">
             <small>
-              <span className="text-muted">Rescues: </span>
+              <span className="text-muted">{'Rescues: '}</span>
               {typeof rescueCount === 'number' ? rescueCount : '...'}
             </small>
             <small>
-              <span className="text-muted">Created: </span>
+              <span className="text-muted">{'Created: '}</span>
               {createdAt}
             </small>
           </div>
@@ -265,10 +261,9 @@ class RatCard extends React.Component {
           </div>
           */}
           <CardControls
-            canDelete={userHasMultipleRats && !ratIsDisplayRat}
+            canDelete={userHasMultipleRats && !ratIsDisplayRat && !rescueCount}
             canSubmit={this.canSubmit}
             controlType="rat"
-            deleteConfirmMessage={this.renderDeleteConfirmMessage}
             deleteMode={deleteConfirm}
             editMode={editMode}
             onCancelClick={this._handleCancel}
@@ -280,16 +275,20 @@ class RatCard extends React.Component {
     )
   }
 
-  setChanges = (changedFields, validatedFields) => this.setState((state, props) => ({
-    changes: {
-      ...state.changes,
-      ...(typeof changedFields === 'function' ? changedFields(state, props) : changedFields),
-    },
-    validity: {
-      ...state.validity,
-      ...(typeof validatedFields === 'function' ? validatedFields(state, props) : validatedFields),
-    },
-  }))
+  setChanges = (changedFields, validatedFields) => {
+    this.setState((state, props) => {
+      return {
+        changes: {
+          ...state.changes,
+          ...(typeof changedFields === 'function' ? changedFields(state, props) : changedFields),
+        },
+        validity: {
+          ...state.validity,
+          ...(typeof validatedFields === 'function' ? validatedFields(state, props) : validatedFields),
+        },
+      }
+    })
+  }
 
 
 
@@ -313,8 +312,13 @@ class RatCard extends React.Component {
       validity,
     } = this.state
 
-    const hasChanges = Object.values(changes).filter((change) => typeof change !== 'undefined').length
-    const isValid = Object.values(validity).filter((validityMember) => validityMember).length
+    const hasChanges = Object.values(changes).filter((change) => {
+      return typeof change !== 'undefined'
+    }).length
+
+    const isValid = Object.values(validity).filter((validityMember) => {
+      return validityMember
+    }).length
 
     return hasChanges && isValid
   }

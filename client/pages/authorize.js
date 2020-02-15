@@ -91,65 +91,74 @@ class Authorize extends React.Component {
 
     const hasRequiredParameters = clientId && scope && responseType
 
+    const formData = {
+      transaction_id: transactionId, /* eslint-disable-line camelcase */// Required by API
+      scope,
+      redirectUri,
+      ...(preAuthorized ? { allow: 'true' } : {}),
+    }
+
     return (
       <PageWrapper className={preAuthorized ? 'hidden' : ''} title="Authorize Application">
         <div className="page-content">
-          {hasRequiredParameters && (
-            <>
-              <h3>{clientName} is requesting access to your FuelRats account</h3>
+          {
+            hasRequiredParameters && (
+              <>
+                <h3>{`${clientName} is requesting access to your FuelRats account`}</h3>
 
-              <p><strong>This application will be able to:</strong></p>
+                <p><strong>{'This application will be able to:'}</strong></p>
 
-              <ul>
-                {scopes.map(({ permission, accessible }) => (
-                  <li key={permission} className={accessible ? null : 'inaccessible'}>{permission}</li>
-                ))}
-              </ul>
+                <ul>
+                  {
+                    scopes.map(({ permission, accessible }) => {
+                      return (
+                        <li key={permission} className={accessible ? null : 'inaccessible'}>{permission}</li>
+                      )
+                    })
+                  }
+                </ul>
 
-              <form
-                action={`/api/oauth2/authorize?bearer=${accessToken}`}
-                method="post"
-                ref={this._formRef}>
+                <form
+                  ref={this._formRef}
+                  action={`/api/oauth2/authorize?bearer=${accessToken}`}
+                  method="post">
 
-                <HiddenFormData
-                  data={{
-                    transaction_id: transactionId, /* eslint-disable-line camelcase */// Required by API
-                    scope,
-                    redirectUri,
-                    ...(preAuthorized ? { allow: 'true' } : {}),
-                  }} />
+                  <HiddenFormData data={formData} />
 
-                <div className="primary">
-                  <button
-                    className="green"
-                    disabled={submitting}
-                    name="allow"
-                    value="true"
-                    type="submit">
-                    {submitting ? 'Submitting...' : 'Allow'}
-                  </button>
+                  <div className="primary">
+                    <button
+                      className="green"
+                      disabled={submitting}
+                      name="allow"
+                      type="submit"
+                      value="true">
+                      {submitting ? 'Submitting...' : 'Allow'}
+                    </button>
 
-                  <button
-                    disabled={submitting}
-                    name="cancel"
-                    value="true"
-                    type="submit">
-                    {submitting ? 'Submitting...' : 'Deny'}
-                  </button>
-                </div>
-              </form>
-            </>
-          )}
+                    <button
+                      disabled={submitting}
+                      name="cancel"
+                      type="submit"
+                      value="true">
+                      {submitting ? 'Submitting...' : 'Deny'}
+                    </button>
+                  </div>
+                </form>
+              </>
+            )
+          }
 
-          {!hasRequiredParameters && (
-            <>
-              <header>
-                <h3>Invalid Authorize Request</h3>
-              </header>
+          {
+            !hasRequiredParameters && (
+              <>
+                <header>
+                  <h3>{'Invalid Authorize Request'}</h3>
+                </header>
 
-              <p>Missing request parameters. Please contact the developer of the application you are trying to use.</p>
-            </>
-          )}
+                <p>{'Missing request parameters. Please contact the developer of the application you are trying to use.'}</p>
+              </>
+            )
+          }
         </div>
       </PageWrapper>
     )

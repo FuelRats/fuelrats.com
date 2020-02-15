@@ -13,7 +13,7 @@ import classNames from '../../helpers/classNames'
 
 
 
-const RadioInputOption = (props) => {
+function RadioInputOption (props) {
   const {
     as: Element = 'div',
     className,
@@ -37,12 +37,12 @@ const RadioInputOption = (props) => {
     <Element className={classes}>
       <input
         {...inputProps}
-        aria-label={label}
         aria-hidden={false}
-        id={optionId}
+        aria-label={label}
         className="option-input"
-        value={value}
-        type="radio" />
+        id={optionId}
+        type="radio"
+        value={value} />
       <label
         className="option-label"
         htmlFor={optionId}

@@ -5,7 +5,9 @@ import React from 'react'
 
 
 
-const Reminders = () => (<div className="panel reminders minimize" />)
+function Reminders () {
+  return <div className="panel reminders minimize" />
+}
 
 
 

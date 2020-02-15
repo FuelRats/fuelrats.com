@@ -15,7 +15,7 @@ import RatCard from './RatCard'
 
 
 
-const UserRatsPanel = ({ user }) => {
+function UserRatsPanel ({ user }) {
   const { rats } = user.relationships
 
   return (
@@ -24,11 +24,15 @@ const UserRatsPanel = ({ user }) => {
         <AddRatForm />
       </div>
       <div className="rat-cards-container">
-        {rats.data.map(({ id }) => (
-          <div key={id} className="rat-card-wrapper">
-            <RatCard ratId={id} />
-          </div>
-        ))}
+        {
+          rats.data.map(({ id }) => {
+            return (
+              <div key={id} className="rat-card-wrapper">
+                <RatCard ratId={id} />
+              </div>
+            )
+          })
+        }
       </div>
     </div>
   )
@@ -38,9 +42,11 @@ const UserRatsPanel = ({ user }) => {
 
 
 
-UserRatsPanel.mapStateToProps = (state) => ({
-  user: withCurrentUserId(selectUserById)(state),
-})
+UserRatsPanel.mapStateToProps = (state) => {
+  return {
+    user: withCurrentUserId(selectUserById)(state),
+  }
+}
 
 
 

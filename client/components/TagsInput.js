@@ -9,6 +9,8 @@
     react/jsx-no-bind,
     react/no-deprecated,
     react/state-in-constructor,
+    eqeqeq,
+    arrow-body-style,
 */
 
 
@@ -444,17 +446,17 @@ export default class TagsInputComponent extends React.Component {
         <ul className="tags">{this.renderTags()}</ul>
 
         <input
+          ref={(input) => this.input = input}
           aria-label={ariaLabel}
           autoComplete="off"
           disabled={this.props.disabled}
           name={name}
+          placeholder={placeholder}
+          type="search"
           onBlur={this.onBlur}
           onFocus={TagsInputComponent.onFocus}
           onInput={this.onInput}
-          onKeyDown={this.onKeyDown}
-          placeholder={placeholder}
-          ref={(input) => this.input = input}
-          type="search" />
+          onKeyDown={this.onKeyDown} />
 
         {Boolean(allowNew) && this.renderReturnPrompt()}
 
@@ -462,24 +464,26 @@ export default class TagsInputComponent extends React.Component {
 
         {(!loading && !newFocus && Boolean(currentValue) && !options.length) && TagsInputComponent._renderNoResults()}
 
-        {(!loading && Boolean(options.length)) && (
-          <ol className="options">
-            {this.renderOptions()}
-          </ol>
-        )}
+        {
+          (!loading && Boolean(options.length)) && (
+            <ol className="options">
+              {this.renderOptions()}
+            </ol>
+          )
+        }
       </div>
     )
   }
 
   static renderLoader () {
     return (
-      <span>Loading...</span>
+      <span>{'Loading...'}</span>
     )
   }
 
   static renderNoResults () {
     return (
-      <span>No results</span>
+      <span>{'No results'}</span>
     )
   }
 
@@ -494,8 +498,8 @@ export default class TagsInputComponent extends React.Component {
 
     return (
       <li
-        className={classes.join(' ')}
         key={index}
+        className={classes.join(' ')}
         onBlur={TagsInputComponent.handleOptionMouseOut}
         onFocus={(event) => this.handleOptionMouseOver(event, index)}
         onMouseDown={() => this.addTag(option)}
@@ -525,7 +529,7 @@ export default class TagsInputComponent extends React.Component {
 
     return (
       <div className={classes.join(' ')}>
-        <span>Press <Key>Return</Key> to add</span>
+        <span>{'Press '}<Key>{'Return'}</Key>{' to add'}</span>
       </div>
     )
   }
@@ -540,13 +544,13 @@ export default class TagsInputComponent extends React.Component {
     }
 
     return (
-      <li className={classes.join(' ')} key={index}>
+      <li key={index} className={classes.join(' ')}>
         {this.renderValue(tag)}
 
         <button
-          onClick={() => this.removeTag(tag)}
-          type="button">
-          &times;
+          type="button"
+          onClick={() => this.removeTag(tag)}>
+          {'\u00d7'}
         </button>
       </li>
     )

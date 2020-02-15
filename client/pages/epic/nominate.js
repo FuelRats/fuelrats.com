@@ -15,6 +15,28 @@ import getRatTag from '../../helpers/getRatTag'
 import { connect } from '../../store'
 
 
+// Component constants
+const epicTypeRadioOptions = [
+  {
+    value: 'epicRescue',
+    label: 'A rat, or group of rats, who performed an epic rescue.',
+    title: 'This option nominates all rats assigned to a rescue for an epic laurel.',
+  },
+  {
+    value: 'epicPlayer',
+    label: 'A rat who has done something awesome!',
+    title: 'This option nominates an individual rat for an epic laurel.',
+  },
+]
+
+
+const getResourceIdListString = (resources) => {
+  return resources.map((resource) => {
+    return resource.id
+  }).join(',')
+}
+
+
 
 
 
@@ -53,28 +75,25 @@ class EpicNominate extends React.Component {
 
 
   handleRatsChange = (value) => {
-    const newRatIds = value.map((rat) => rat.id).join(',')
-    const oldRatIds = this.state.rats.map((rat) => rat.id).join(',')
+    const newRatIds = getResourceIdListString(value)
+    const oldRatIds = getResourceIdListString(this.state.rats)
+
     if (newRatIds !== oldRatIds) {
       this.setState({ rats: value })
     }
   }
 
   handleRescuesChange = (value) => {
-    const newRescueId = value.map((rescue) => rescue.id).join('')
-    const oldRescueId = this.state.rescue.map((rescue) => rescue.id).join('')
+    const newRescueId = getResourceIdListString(value)
+    const oldRescueId = getResourceIdListString(this.state.rescue)
+
     if (newRescueId !== oldRescueId) {
       this.setState((state) => {
         const newState = { ...state }
 
         if (value.length) {
           const [rescue] = value
-          newState.rats = rescue.relationships
-            && rescue.relationships.rats
-            && rescue.relationships.rats.data
-            && rescue.relationships.rats.data.length
-            ? rescue.relationships.rats.data
-            : []
+          newState.rats = rescue?.relationships?.rats?.data ?? []
         }
 
         newState.rescue = value
@@ -84,7 +103,9 @@ class EpicNominate extends React.Component {
     }
   }
 
-  handleNotesChange = (event) => this.setState({ notes: event.target.value })
+  handleNotesChange = (event) => {
+    return this.setState({ notes: event.target.value })
+  }
 
 
   _handleSubmit = async (event) => {
@@ -101,12 +122,16 @@ class EpicNominate extends React.Component {
     })
 
 
-    let responses = await Promise.all(rats.map((rat) => this.props.createEpic({
-      ratId: rat.id,
-      rescueId: rescue.length ? rescue[0].id : null,
-      notes,
-    })))
-    responses = responses.filter(({ status }) => status === 'error')
+    let responses = await Promise.all(rats.map((rat) => {
+      return this.props.createEpic({
+        ratId: rat.id,
+        rescueId: rescue.length ? rescue[0].id : null,
+        notes,
+      })
+    }))
+    responses = responses.filter(({ status }) => {
+      return status === 'error'
+    })
 
     if (responses.length) {
       this.setState({
@@ -142,107 +167,106 @@ class EpicNominate extends React.Component {
     return (
       <PageWrapper title="Epic Nomination">
 
-        {(error && !submitting) && (
-          <div className="store-errors">
-            <div className="store-error">
-              Error submitting nomination.
-            </div>
-          </div>
-        )}
-
-        {!submitted && (
-          <form
-            className={classes}
-            onSubmit={this._handleSubmit}>
-            <fieldset>
-              <label htmlFor="epic-type">Who are you nominating for an epic today?</label>
-
-              <RadioInput
-                className="epic-type"
-                name="epic-type"
-                id="epic-type"
-                defaultValue="epicRescue"
-                value={epicType}
-                onChange={this.handleEpicTypeChange}
-                options={[
-                  {
-                    value: 'epicRescue',
-                    label: 'A rat, or group of rats, who performed an epic rescue.',
-                    title: 'This option nominates all rats assigned to a rescue for an epic laurel.',
-                  },
-                  {
-                    value: 'epicPlayer',
-                    label: 'A rat who has done something awesome!',
-                    title: 'This option nominates an individual rat for an epic laurel.',
-                  },
-                ]} />
-            </fieldset>
-
-            {epicType === 'epicRescue' && (
-              <fieldset>
-                <label htmlFor="rescues">What is the ID of the rescue?</label>
-
-                <RescuesTagsInput
-                  aria-label="Rescue ID"
-                  data-single
-                  disabled={submitting}
-                  id="rescues"
-                  name="rescues"
-                  onChange={this.handleRescuesChange}
-                  value={rescue} />
-              </fieldset>
-            )}
-
-            {epicType === 'epicPlayer' && (
-              <fieldset>
-                <label htmlFor="rats">What is the rat's CMDR name?</label>
-
-                <RatTagsInput
-                  aria-label="Commander name"
-                  data-single
-                  disabled={submitting}
-                  id="rats"
-                  name="rats"
-                  onChange={this.handleRatsChange}
-                  value={rats}
-                  valueProp={getRatTag} />
-              </fieldset>
-            )}
-
-            <fieldset>
-              <label htmlFor="notes">What did the rat(s) do that makes them so epic?</label>
-
-              <textarea
-                aria-label="epic nominee explaination"
-                disabled={submitting}
-                id="notes"
-                name="notes"
-                onChange={this.handleNotesChange}
-                value={notes} />
-            </fieldset>
-
-
-            <menu type="toolbar">
-              <div className="primary">
-                <button
-                  disabled={submitting || !this.validate()}
-                  type="submit">
-                  {submitting ? 'Submitting...' : 'Submit Nomination'}
-                </button>
+        {
+          (error && !submitting) && (
+            <div className="store-errors">
+              <div className="store-error">
+                {'Error submitting nomination.'}
               </div>
+            </div>
+          )
+        }
 
-              <div className="secondary" />
-            </menu>
-          </form>
-        )}
+        {
+          !submitted && (
+            <form
+              className={classes}
+              onSubmit={this._handleSubmit}>
+              <fieldset>
+                <label htmlFor="epic-type">{'Who are you nominating for an epic today?'}</label>
 
-        {submitted && (
-          <div>
-            <h3>Thanks!</h3>
-            <p>Your epic nomination has been submitted. If approved, the rats nominated will be notified that they are now epic rats!</p>
-            <p>Note that while we track who nominates who, the nominees will never be notified of who made the original nomination for their epic deed.</p>
-          </div>
-        )}
+                <RadioInput
+                  className="epic-type"
+                  defaultValue="epicRescue"
+                  id="epic-type"
+                  name="epic-type"
+                  options={epicTypeRadioOptions}
+                  value={epicType}
+                  onChange={this.handleEpicTypeChange} />
+              </fieldset>
+
+              {
+                epicType === 'epicRescue' && (
+                  <fieldset>
+                    <label htmlFor="rescues">{'What is the ID of the rescue?'}</label>
+
+                    <RescuesTagsInput
+                      data-single
+                      aria-label="Rescue ID"
+                      disabled={submitting}
+                      id="rescues"
+                      name="rescues"
+                      value={rescue}
+                      onChange={this.handleRescuesChange} />
+                  </fieldset>
+                )
+              }
+
+              {
+                epicType === 'epicPlayer' && (
+                  <fieldset>
+                    <label htmlFor="rats">{"What is the rat's CMDR name?"}</label>
+
+                    <RatTagsInput
+                      data-single
+                      aria-label="Commander name"
+                      disabled={submitting}
+                      id="rats"
+                      name="rats"
+                      value={rats}
+                      valueProp={getRatTag}
+                      onChange={this.handleRatsChange} />
+                  </fieldset>
+                )
+              }
+
+              <fieldset>
+                <label htmlFor="notes">{'What did the rat(s) do that makes them so epic?'}</label>
+
+                <textarea
+                  aria-label="epic nominee explaination"
+                  disabled={submitting}
+                  id="notes"
+                  name="notes"
+                  value={notes}
+                  onChange={this.handleNotesChange} />
+              </fieldset>
+
+
+              <menu type="toolbar">
+                <div className="primary">
+                  <button
+                    disabled={submitting || !this.validate()}
+                    type="submit">
+                    {submitting ? 'Submitting...' : 'Submit Nomination'}
+                  </button>
+                </div>
+
+                <div className="secondary" />
+              </menu>
+            </form>
+          )
+        }
+
+        {
+          submitted && (
+            <div>
+              <h3>{'Thanks!'}</h3>
+              <p>{'Your epic nomination has been submitted. If approved, the rats nominated will be notified that they are now epic rats!'}</p>
+              <p>{'Note that while we track who nominates who, the nominees will never be notified of who made the original nomination for their epic deed.'}</p>
+            </div>
+          )
+        }
       </PageWrapper>
     )
   }

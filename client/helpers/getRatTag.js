@@ -1,4 +1,6 @@
-const getRatTag = (rat) => `${rat.attributes.name} [${rat.attributes.platform.toUpperCase()}]`
+const getRatTag = (rat) => {
+  return `${rat.attributes.name} [${rat.attributes.platform.toUpperCase()}]`
+}
 
 
 

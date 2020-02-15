@@ -12,11 +12,13 @@ import { PageWrapper } from '../components/AppLayout'
 
 
 
-const About = () => (
-  <PageWrapper title="About">
-    <div className="nothing-here" />
-  </PageWrapper>
-)
+function About () {
+  return (
+    <PageWrapper title="About">
+      <div className="nothing-here" />
+    </PageWrapper>
+  )
+}
 
 
 

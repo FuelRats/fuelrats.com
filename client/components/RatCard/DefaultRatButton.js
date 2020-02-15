@@ -70,11 +70,11 @@ class ClassName extends React.Component {
     return (
       <button
         className="inline display-rat-button"
-        type="button"
         disabled={isDefaultRat}
         title={isDefaultRat ? 'This rat represents you.' : 'Use this rat to represent you. (Display Rat)'}
+        type="button"
         onClick={this._handleClick}>
-        <FontAwesomeIcon icon="id-card-alt" size="lg" fixedWidth />
+        <FontAwesomeIcon fixedWidth icon="id-card-alt" size="lg" />
       </button>
     )
   }
@@ -104,10 +104,12 @@ class ClassName extends React.Component {
 
   static mapDispatchToProps = ['updateUser']
 
-  static mapStateToProps = (state) => ({
-    userId: selectCurrentUserId(state),
-    displayRatId: withCurrentUserId(selectDisplayRatIdByUserId)(state),
-  })
+  static mapStateToProps = (state) => {
+    return {
+      userId: selectCurrentUserId(state),
+      displayRatId: withCurrentUserId(selectDisplayRatIdByUserId)(state),
+    }
+  }
 
 
 

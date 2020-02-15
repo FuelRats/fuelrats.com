@@ -14,9 +14,10 @@ import { actions, connect } from '../../../store'
 import {
   selectRatsByRescueId,
   selectRescueById,
-  selectRescueCanEdit,
+  selectUserCanEditRescue,
   withCurrentUserId,
   selectUserByIdHasScope,
+  selectUserCanEditAllRescues,
 } from '../../../store/selectors'
 
 
@@ -31,7 +32,6 @@ class Paperwork extends React.Component {
   \***************************************************************************/
 
   state = {
-    loading: !this.props.rescue,
     deleteConfirm: false,
     deleting: false,
   }
@@ -74,18 +74,6 @@ class Paperwork extends React.Component {
     Public Methods
   \***************************************************************************/
 
-  async componentDidMount () {
-    const { id, rescue } = this.props
-
-    if (id && !rescue) {
-      await this.props.getRescue(id)
-    }
-
-    if (this.state.loading) {
-      this.setState({ loading: false })
-    }
-  }
-
   static renderQuote = (quote) => {
     const createdAt = formatAsEliteDateTime(quote.createdAt)
     const updatedAt = formatAsEliteDateTime(quote.updatedAt)
@@ -93,16 +81,26 @@ class Paperwork extends React.Component {
       <li key={quote.createdAt}>
         <div className="times">
           <div className="created" title="Created at">{createdAt}</div>
-          {(updatedAt !== createdAt) && (
-            <div className="updated" title="Updated at"><span className="label">Updated at </span>{updatedAt}</div>
-          )}
+          {
+            (updatedAt !== createdAt) && (
+              <div className="updated" title="Updated at">
+                <span className="label">{'Updated at '}</span>
+                {updatedAt}
+              </div>
+            )
+          }
         </div>
         <span className="message">{quote.message}</span>
         <div className="authors">
           <div className="author" title="Created by">{quote.author}</div>
-          {(quote.author !== quote.lastAuthor) && (
-            <div className="last-author" title="Last updated by"><span className="label">Updated by </span>{quote.lastAuthor}</div>
-          )}
+          {
+            (quote.author !== quote.lastAuthor) && (
+              <div className="last-author" title="Last updated by">
+                <span className="label">{'Updated by '}</span>
+                {quote.lastAuthor}
+              </div>
+            )
+          }
         </div>
       </li>
     )
@@ -128,7 +126,7 @@ class Paperwork extends React.Component {
     }
 
     return (
-      <span>N/A</span>
+      <span>{'N/A'}</span>
     )
   }
 
@@ -137,9 +135,11 @@ class Paperwork extends React.Component {
     return (
       <li key={rat.id} className="first-limpet">
         {rat.attributes.name}
-        {(rat.id === rescue.attributes.firstLimpetId) && (
-          <span className="badge first-limpet">1st</span>
-        )}
+        {
+          (rat.id === rescue.attributes.firstLimpetId) && (
+            <span className="badge first-limpet">{'1st'}</span>
+          )
+        }
       </li>
     )
   }
@@ -151,7 +151,11 @@ class Paperwork extends React.Component {
     return (
       <ul>
         {rats.map(this.renderRat)}
-        {rescue.attributes.unidentifiedRats.map((rat) => <li key={rat} className="unidentified">{rat}<span className="badge">UnID</span></li>)}
+        {
+rescue.attributes.unidentifiedRats.map((rat) => {
+  return <li key={rat} className="unidentified">{rat}<span className="badge">{'UnID'}</span></li>
+})
+}
       </ul>
     )
   }
@@ -185,74 +189,91 @@ class Paperwork extends React.Component {
       <>
         <menu type="toolbar">
           <div className="primary">
-            {deleteConfirm && (
-              <>
-                {deleting ? (
-                  <span>Deleting... <FontAwesomeIcon icon="spinner" pulse fixedWidth /> </span>
-                ) : (
-                  <span>Delete this rescue? (This cannot be undone!) </span>
-                )}
+            {
+              deleteConfirm && (
+                <>
+                  {
+                    deleting ? (
+                      <span>{'Deleting... '}<FontAwesomeIcon fixedWidth pulse icon="spinner" /> </span>
+                    ) : (
+                      <span>{'Delete this rescue? (This cannot be undone!) '}</span>
+                    )
+                }
 
-                <button
-                  className="compact"
-                  disabled={deleting}
-                  onClick={this._handleDeleteClick}
-                  type="button">
-                      Yes
-                </button>
-
-                <button
-                  className="compact"
-                  disabled={deleting}
-                  onClick={this._handleDeleteCancel}
-                  type="button">
-                      No
-                </button>
-              </>
-            )}
-
-            {!deleteConfirm && (
-              <>
-                {userCanEdit && (
-                  <Link route="paperwork edit" params={{ rescueId: rescue.id }}>
-                    <a className="button compact">
-                      Edit
-                    </a>
-                  </Link>
-                )}
-                {userCanDelete && (
                   <button
                     className="compact"
-                    onClick={this._handleDeleteClick}
-                    type="button">
-                    Delete
+                    disabled={deleting}
+                    type="button"
+                    onClick={this._handleDeleteClick}>
+                    {'Yes'}
                   </button>
-                )}
-              </>
-            )}
+
+                  <button
+                    className="compact"
+                    disabled={deleting}
+                    type="button"
+                    onClick={this._handleDeleteCancel}>
+                    {'No'}
+                  </button>
+                </>
+              )
+            }
+
+            {
+              !deleteConfirm && (
+                <>
+                  {
+                  userCanEdit && (
+                    <Link params={{ rescueId: rescue.id }} route="paperwork edit">
+                      <a className="button compact">
+                        {'Edit'}
+                      </a>
+                    </Link>
+                  )
+                }
+                  {
+                  userCanDelete && (
+                    <button
+                      className="compact"
+                      type="button"
+                      onClick={this._handleDeleteClick}>
+                      {'Delete'}
+                    </button>
+                  )
+                }
+                </>
+              )
+            }
           </div>
 
           <div className="secondary" />
         </menu>
 
         <header className="paperwork-header">
-          {(rescue.attributes.status !== 'closed') && (rescue.attributes.data) && (
-            <div className="board-index"><span>#{rescue.attributes.data.boardIndex}</span></div>
-          )}
+          {
+            (rescue.attributes.status !== 'closed') && (rescue.attributes.data) && (
+              <div className="board-index"><span>{`#${rescue.attributes.data.boardIndex}`}</span></div>
+            )
+          }
           <div className="title">
-            {(!rescue.attributes.title) && (
-              <span>
-                    Rescue of
-                <span className="cmdr-name"> {rescue.attributes.client}</span> in
-                <span className="system"> {(rescue.attributes.system) || ('Unknown')}</span>
-              </span>
-            )}
-            {(rescue.attributes.title) && (
-              <span>
-                    Operation
-                <span className="rescue-title"> {rescue.attributes.title}</span>
-              </span>
-            )}
+            {
+              (!rescue.attributes.title) && (
+                <span>
+                  {'Rescue of '}
+                  <span className="cmdr-name">{rescue.attributes.client}</span>
+                  {' in '}
+                  <span className="system">{(rescue.attributes.system) || ('Unknown')}</span>
+                </span>
+              )
+            }
+            {
+              (rescue.attributes.title) && (
+                <span>
+                  {'Operation '}
+                  <span className="rescue-title">{rescue.attributes.title}</span>
+                </span>
+              )
+            }
           </div>
         </header>
 
@@ -264,56 +285,64 @@ class Paperwork extends React.Component {
 
           <div className={`tag platform ${rescue.attributes.platform || 'none'}`}>{rescue.attributes.platform || 'No Platform'}</div>
 
-          {(rescue.attributes.codeRed) && (
-            <div className="tag code-red">CR</div>
-          )}
+          {
+            (rescue.attributes.codeRed) && (
+              <div className="tag code-red">{'CR'}</div>
+            )
+          }
 
-          {(rescue.attributes.data) && (rescue.attributes.data.markedForDeletion.marked) && (
-            <div className="md-group">
-              <div className="marked-for-deletion">Marked for Deletion</div>
-              <div className="md-reason">
-                    &quot;{rescue.attributes.data.markedForDeletion.reason}&quot;
-                <div className="md-reporter"> -     {rescue.attributes.data.markedForDeletion.reporter}</div>
+          {
+            rescue.attributes.data?.markedForDeletion?.marked && (
+              <div className="md-group">
+                <div className="marked-for-deletion">{'Marked for Deletion'}</div>
+                <div className="md-reason">
+                  {`"${rescue.attributes.data.markedForDeletion?.reason}"`}
+                  <div className="md-reporter">{` - ${rescue.attributes.data.markedForDeletion.reporter}`}</div>
+                </div>
               </div>
-            </div>
-          )}
+          )
+          }
         </div>
 
         <div className="info">
-          {(rescue.attributes.title) && (
-            <>
-              <span className="label">Client</span>
-              <span className="cmdr-name"> {rescue.attributes.client}</span>
-              <span className="label">System</span>
-              <span className="system"> {(rescue.attributes.system) || ('Unknown')}</span>
-            </>
-          )}
-          <span className="label">Created</span>
+          {
+            (rescue.attributes.title) && (
+              <>
+                <span className="label">{'Client '}</span>
+                <span className="cmdr-name">{rescue.attributes.client}</span>
+                <span className="label">{'System '}</span>
+                <span className="system">{(rescue.attributes.system) || ('Unknown')}</span>
+              </>
+            )
+          }
+          <span className="label">{'Created'}</span>
           <span className="date-created content">{formatAsEliteDateTime(rescue.attributes.createdAt)}</span>
-          <span className="label">Updated</span>
+          <span className="label">{'Updated'}</span>
           <span className="date-updated content">{formatAsEliteDateTime(rescue.attributes.updatedAt)}</span>
-          {Boolean(rescue.attributes.data) && (
-            <>
-              <span className="label">IRC Nick</span>
-              <span className="irc-nick content">{rescue.attributes.data.IRCNick}</span>
-              <span className="label">Language</span>
-              <span className="language content">{rescue.attributes.data.langID}</span>
-            </>
-          )}
+          {
+            Boolean(rescue.attributes.data) && (
+              <>
+                <span className="label">{'IRC Nick'}</span>
+                <span className="irc-nick content">{rescue.attributes.data.IRCNick}</span>
+                <span className="label">{'Language'}</span>
+                <span className="language content">{rescue.attributes.data.langID}</span>
+              </>
+            )
+          }
         </div>
 
         <div className="panel rats">
-          <header>Rats</header>
+          <header>{'Rats'}</header>
           <div className="panel-content">{this.renderRats()}</div>
         </div>
 
         <div className="panel quotes">
-          <header>Quotes</header>
+          <header>{'Quotes'}</header>
           <div className="panel-content">{this.renderQuotes()}</div>
         </div>
 
         <div className="panel notes">
-          <header>Notes</header>
+          <header>{'Notes'}</header>
           <div className="panel-content">{rescue.attributes.notes}</div>
         </div>
       </>
@@ -325,28 +354,23 @@ class Paperwork extends React.Component {
       rescue,
     } = this.props
 
-    const {
-      loading,
-    } = this.state
-
     return (
       <PageWrapper title="Paperwork">
+        {
+          (!rescue) && (
+            <div className="loading page-content">
+              <p>{"Sorry, we couldn't find the paperwork you requested."}</p>
+            </div>
+          )
+        }
 
-        {loading && (
-          <div className="loading page-content" />
-        )}
-
-        {(!loading && !rescue) && (
-          <div className="loading page-content">
-            <p>Sorry, we couldn't find the paperwork you requested.</p>
-          </div>
-        )}
-
-        {(!loading && rescue) && (
-          <div className="page-content">
-            {this.renderRescue()}
-          </div>
-        )}
+        {
+          (rescue) && (
+            <div className="page-content">
+              {this.renderRescue()}
+            </div>
+          )
+        }
       </PageWrapper>
     )
   }
@@ -361,13 +385,15 @@ class Paperwork extends React.Component {
 
   static mapDispatchToProps = ['getRescue', 'deleteRescue']
 
-  static mapStateToProps = (state, { query }) => ({
-    rats: selectRatsByRescueId(state, query) || [],
-    rescue: selectRescueById(state, query),
-    userCanEdit: selectRescueCanEdit(state, query),
-    userCanDelete: withCurrentUserId(selectUserByIdHasScope)(state, { scope: 'rescue.delete' }),
-    userCanEditAllRescues: withCurrentUserId(selectUserByIdHasScope)(state, { scope: 'rescue.write' }),
-  })
+  static mapStateToProps = (state, { query }) => {
+    return {
+      rats: selectRatsByRescueId(state, query) || [],
+      rescue: selectRescueById(state, query),
+      userCanEdit: selectUserCanEditRescue(state, query),
+      userCanDelete: withCurrentUserId(selectUserByIdHasScope)(state, { scope: 'rescue.delete' }),
+      userCanEditAllRescues: withCurrentUserId(selectUserCanEditAllRescues)(state),
+    }
+  }
 }
 
 

@@ -6,7 +6,7 @@ import React from 'react'
 
 
 // Component imports
-import HttpStatus from '../../helpers/httpStatus'
+import HttpStatus from '../../helpers/HttpStatus'
 import ErrorPage from '../../pages/_error'
 import { Router } from '../../routes'
 import frApi from '../../services/fuelrats'
@@ -34,7 +34,9 @@ class AppLayout extends React.Component {
     Private Methods
   \***************************************************************************/
 
-  _handleLoginDialogClose = () => this.props.setFlag('showLoginDialog', false)
+  _handleLoginDialogClose = () => {
+    return this.props.setFlag('showLoginDialog', false)
+  }
 
   _handlePageChange = () => {
     this.props.notifyPageChange(this.props.pageProps.asPath)
@@ -156,12 +158,14 @@ class AppLayout extends React.Component {
           minimum={0.15}
           showSpinner={false} />
 
-        {renderLayout && (
-          <>
-            <Header isServer={isServer} />
-            <UserMenu authenticatedPage={authenticatedPage} />
-          </>
-        )}
+        {
+          renderLayout && (
+            <>
+              <Header isServer={isServer} />
+              <UserMenu authenticatedPage={authenticatedPage} />
+            </>
+          )
+        }
 
         <PageTransitionContainer {...this.pageLayoutProps} />
 
@@ -222,18 +226,20 @@ class AppLayout extends React.Component {
 
   static mapDispatchToProps = ['setFlag', 'notifyPageChange']
 
-  static mapStateToProps = (state) => ({
-    ...selectSession(state),
-    showLoginModal: selectFlagByName(state, { name: 'showLoginDialog' }),
-    user: withCurrentUserId(selectUserById)(state),
-  })
+  static mapStateToProps = (state) => {
+    return {
+      ...selectSession(state),
+      showLoginModal: selectFlagByName(state, { name: 'showLoginDialog' }),
+      user: withCurrentUserId(selectUserById)(state),
+    }
+  }
 }
 
 
 
 
 
-/**
+/*
  * Decorator to mark a page as requiring user authentication.
  */
 const authenticated = (_target) => {

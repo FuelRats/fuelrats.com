@@ -40,15 +40,17 @@ class SwitchInput extends React.Component {
         className={containerClasses}>
         <div className="switch-background" />
         <div className="switch-handle">
-          <FontAwesomeIcon icon={checked ? 'check' : 'times'} fixedWidth />
+          <FontAwesomeIcon fixedWidth icon={checked ? 'check' : 'times'} />
         </div>
         <input
           {...this.inputProps}
           className="switch-input"
           type="checkbox" />
-        {label && (
-          <label htmlFor={id} className="switch-label">{label}</label>
-        )}
+        {
+          label && (
+            <label className="switch-label" htmlFor={id}>{label}</label>
+          )
+        }
       </div>
     )
   }

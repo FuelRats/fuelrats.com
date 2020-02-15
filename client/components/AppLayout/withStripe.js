@@ -15,7 +15,7 @@ const STRIPE_API_PK = publicRuntimeConfig.apis.stripe.public
 
 
 
-/**
+/*
  * Decorator to wrap a page with stripe context
  */
 const withStripe = (Component) => {

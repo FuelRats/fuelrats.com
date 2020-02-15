@@ -64,7 +64,7 @@ const actions = [
 ]
 
 
-const UserMenu = (props) => {
+function UserMenu (props) {
   const {
     authenticatedPage,
     loggedIn,
@@ -87,43 +87,53 @@ const UserMenu = (props) => {
 
   useEffect(() => {
     // This is a hack, but really the only way to pass this along.
-    actions[0].action = () => logout(authenticatedPage)
+    actions[0].action = () => {
+      return logout(authenticatedPage)
+    }
   }, [authenticatedPage, logout])
 
   return (
     <div className={`user-menu ${loggedIn ? 'logged-in' : ''} ${loggedIn && !userId ? 'logging-in' : ''}`}>
-      {Boolean(loggedIn) && (
-        <>
-          <input
-            aria-label="User menu toggle"
-            id="UserMenuControl"
-            ref={checkboxRef}
-            type="checkbox" />
+      {
+        Boolean(loggedIn) && (
+          <>
+            <input
+              ref={checkboxRef}
+              aria-label="User menu toggle"
+              id="UserMenuControl"
+              type="checkbox" />
 
-          <label className="avatar medium" htmlFor="UserMenuControl" id="UserMenuToggle">
-            {Boolean(user) && (
-              <img alt="Your avatar" src={userAvatar} />
-            )}
-          </label>
-        </>
-      )}
+            <label className="avatar medium" htmlFor="UserMenuControl" id="UserMenuToggle">
+              {
+                Boolean(user) && (
+                  <img alt="Your avatar" src={userAvatar} />
+                )
+              }
+            </label>
+          </>
+        )
+      }
 
-      {(loggedIn && user) && (
-        <menu>
-          <NavSection onItemClick={handleItemClick} items={userItems} />
-          <NavSection onItemClick={handleItemClick} header="Admin" items={adminItems} />
-          <NavSection onItemClick={handleItemClick} items={actions} />
-        </menu>
-      )}
+      {
+        (loggedIn && user) && (
+          <menu>
+            <NavSection items={userItems} onItemClick={handleItemClick} />
+            <NavSection header="Admin" items={adminItems} onItemClick={handleItemClick} />
+            <NavSection items={actions} onItemClick={handleItemClick} />
+          </menu>
+        )
+      }
 
-      {!loggedIn && (
-        <button
-          className="login"
-          onClick={handleLoginClick}
-          type="button">
-          Rat Login
-        </button>
-      )}
+      {
+        !loggedIn && (
+          <button
+            className="login secondary"
+            type="button"
+            onClick={handleLoginClick}>
+            {'Rat Login'}
+          </button>
+        )
+      }
     </div>
   )
 }
@@ -134,11 +144,13 @@ const UserMenu = (props) => {
 
 UserMenu.mapDispatchToProps = ['logout', 'setFlag']
 
-UserMenu.mapStateToProps = (state) => ({
-  ...selectSession(state),
-  user: withCurrentUserId(selectUserById)(state),
-  userAvatar: withCurrentUserId(selectAvatarByUserId)(state),
-})
+UserMenu.mapStateToProps = (state) => {
+  return {
+    ...selectSession(state),
+    user: withCurrentUserId(selectUserById)(state),
+    userAvatar: withCurrentUserId(selectAvatarByUserId)(state),
+  }
+}
 
 
 

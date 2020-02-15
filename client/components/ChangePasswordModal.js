@@ -9,7 +9,7 @@ import React from 'react'
 import {
   passwordPattern,
 } from '../data/RegExpr'
-import HttpStatus from '../helpers/httpStatus'
+import HttpStatus from '../helpers/HttpStatus'
 import { connect } from '../store'
 import asModal, { ModalContent, ModalFooter } from './Modal'
 import PasswordField from './PasswordField'
@@ -50,13 +50,15 @@ class ChangePasswordModal extends React.Component {
       value,
     } = event.target
 
-    this.setState((state) => ({
-      [name]: value,
-      validity: {
-        ...state.validity,
-        [name]: event.validity.valid,
-      },
-    }))
+    this.setState((state) => {
+      return {
+        [name]: value,
+        validity: {
+          ...state.validity,
+          [name]: event.validity.valid,
+        },
+      }
+    })
   }
 
   _handleSubmit = async (event) => {
@@ -109,30 +111,35 @@ class ChangePasswordModal extends React.Component {
 
     return (
       <ModalContent as="form" className="dialog no-pad" onSubmit={this._handleSubmit}>
-        {error && !submitting && (
-          <div className="store-errors">
-            <div className="store-error">
-              {error}
+        {
+          error && !submitting && (
+            <div className="store-errors">
+              <div className="store-error">
+                {error}
+              </div>
             </div>
-          </div>
-        )}
+          )
+        }
 
         <fieldset data-name="Current Password">
           <PasswordField
+            required
             aria-label="Current Password"
             autoComplete="current-password"
             className="dark"
             disabled={submitting}
             id="currentPassword"
             name="currentPassword"
-            onChange={this._handleChange}
             placeholder="Current Password"
             value={currentPassword}
-            required />
+            onChange={this._handleChange} />
         </fieldset>
 
         <fieldset data-name="New Password">
           <PasswordField
+            required
+            showStrength
+            showSuggestions
             aria-label="New Password"
             autoComplete="new-password"
             className="dark"
@@ -141,13 +148,10 @@ class ChangePasswordModal extends React.Component {
             maxLength="42"
             minLength="5"
             name="newPassword"
-            onChange={this._handleChange}
             pattern={passwordPattern}
             placeholder="New Password"
-            required
-            showStrength
-            showSuggestions
-            value={newPassword} />
+            value={newPassword}
+            onChange={this._handleChange} />
         </fieldset>
 
         <ModalFooter>

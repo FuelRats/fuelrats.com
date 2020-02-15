@@ -34,7 +34,9 @@ if ($IS_DEVELOPMENT) {
 
 
 
-const initStore = (state = initialState) => createStore(reducer, state, composeWithDevTools(applyMiddleware(...middlewares)))
+const initStore = (state = initialState) => {
+  return createStore(reducer, state, composeWithDevTools(applyMiddleware(...middlewares)))
+}
 
 
 
@@ -50,18 +52,26 @@ const connectDecorator = (target) => {
   let mapDispatchToProps = mDTP
 
   if (Array.isArray(mDTP)) {
-    mapDispatchToProps = (dispatch) => bindActionCreators(
-      mDTP.reduce((acc, actionName) => ({
-        ...acc,
-        [actionName]: actions[actionName],
-      }
-      ), {}),
-      dispatch,
-    )
+    mapDispatchToProps = (dispatch) => {
+      return bindActionCreators(
+        mDTP.reduce(
+          (acc, actionName) => {
+            return {
+              ...acc,
+              [actionName]: actions[actionName],
+            }
+          },
+          {},
+        ),
+        dispatch,
+      )
+    }
   }
 
   return connect(
-    mapStateToProps || (() => ({})),
+    mapStateToProps || (() => {
+      return {}
+    }),
     mapDispatchToProps || {},
     mergeProps,
     reduxOptions,
@@ -76,10 +86,12 @@ const getActionCreators = (action, dispatch) => {
   let resolvedAction = action
 
   if (Array.isArray(action) && typeof action[0] === 'string') {
-    resolvedAction = action.reduce((acc, actionName) => ({
-      ...acc,
-      [actionName]: actions[actionName],
-    }), {})
+    resolvedAction = action.reduce((acc, actionName) => {
+      return {
+        ...acc,
+        [actionName]: actions[actionName],
+      }
+    }, {})
   }
 
   if (typeof action === 'string') {

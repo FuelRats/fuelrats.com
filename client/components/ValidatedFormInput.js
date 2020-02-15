@@ -147,7 +147,7 @@ class ValidatedFormInput extends React.Component {
     doubleValidate: false,
     invalidMessage: null,
     name: null,
-    onChange: () => ({}),
+    onChange: () => {},
     pattern: null,
     patternMessage: null,
     renderLabel: false,

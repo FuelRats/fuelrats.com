@@ -7,9 +7,11 @@ const YEAR_CHAR_LENGTH = 4
 
 
 
-const permanentRedirect = (path) => async (ctx) => {
-  ctx.status = 301
-  await ctx.redirect(path)
+const permanentRedirect = (path) => {
+  return async (ctx) => {
+    ctx.status = 301
+    await ctx.redirect(path)
+  }
 }
 
 

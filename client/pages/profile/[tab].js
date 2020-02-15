@@ -72,10 +72,10 @@ class Profile extends React.Component {
         <div className="page-content">
           <ProfileHeader />
           <TabbedPanel
-            name="User Tabs"
             activeTab={tab || 'overview'}
-            onTabClick={this._handleTabClick}
-            tabs={Profile.tabs} />
+            name="User Tabs"
+            tabs={Profile.tabs}
+            onTabClick={this._handleTabClick} />
         </div>
 
         <FirstLoginModal

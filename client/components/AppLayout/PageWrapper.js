@@ -63,22 +63,28 @@ class Page extends React.Component {
     return (
       <>
         <NextHead>
-          <title>{title} | The Fuel Rats</title>
-          <meta property="og:title" content={title} />
-          <meta name="description" content={description} />
-          <meta property="og:description" content={description} />
+          <title>{`${title} | The Fuel Rats`}</title>
+          <meta content={title} property="og:title" />
+          <meta content={description} name="description" />
+          <meta content={description} property="og:description" />
         </NextHead>
         <TransitionConsumer>
-          {(style) => (
-            <animated.main className={mainClasses} style={style}>
-              {!noHeader && (
-                <header className="page-header">
-                  {titleContent}
-                </header>
-              )}
-              {children}
-            </animated.main>
-          )}
+          {
+            (style) => {
+              return (
+                <animated.main className={mainClasses} style={style}>
+                  {
+                    !noHeader && (
+                      <header className="page-header">
+                        {titleContent}
+                      </header>
+                    )
+                  }
+                  {children}
+                </animated.main>
+              )
+            }
+          }
         </TransitionConsumer>
       </>
     )
@@ -100,7 +106,9 @@ class Page extends React.Component {
 
   static defaultProps = {
     description: 'The Fuel Rats are Elite: Dangerous\'s premier emergency refueling service. Fueling the galaxy, one ship at a time, since 3301.',
-    displayTitle: (title) => (<h1>{title}</h1>),
+    displayTitle: (title) => {
+      return (<h1>{title}</h1>)
+    },
     noHeader: false,
   }
 

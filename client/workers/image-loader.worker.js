@@ -7,7 +7,9 @@ self.addEventListener('message', async (event) => {
       url,
     } = event.data
 
-    const blob = await fetch(url).then((res) => res.blob())
+    const blob = await fetch(url).then((res) => {
+      return res.blob()
+    })
 
     self.postMessage({
       id,

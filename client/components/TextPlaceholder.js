@@ -13,7 +13,7 @@ import classNames from '../helpers/classNames'
 
 
 
-const TextPlaceholder = ({ size, loading }) => {
+function TextPlaceholder ({ size, loading }) {
   const classes = classNames(
     'text-placeholder',
     ['loading', Boolean(loading)],

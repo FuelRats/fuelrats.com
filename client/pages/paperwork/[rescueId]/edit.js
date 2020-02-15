@@ -12,6 +12,7 @@ import FirstLimpetInput from '../../../components/FirstLimpetInput'
 import RadioInput from '../../../components/RadioInput'
 import RatTagsInput from '../../../components/RatTagsInput'
 import SystemTagsInput from '../../../components/SystemTagsInput'
+import platformRadioOptions from '../../../data/platformRadioOptions'
 import { formatAsEliteDateTime } from '../../../helpers/formatTime'
 import getRatTag from '../../../helpers/getRatTag'
 import { Router } from '../../../routes'
@@ -19,7 +20,7 @@ import { actions, connect } from '../../../store'
 import {
   selectRatsByRescueId,
   selectRescueById,
-  selectRescueCanEdit,
+  selectUserCanEditRescue,
 } from '../../../store/selectors'
 
 
@@ -29,15 +30,54 @@ import {
 // Component constants
 const selectFormattedRatsByRescueId = createSelector(
   selectRatsByRescueId,
-  (rats) => (rats?.reduce((accumulator, rat) => ({
-    ...accumulator,
-    [rat.id]: {
-      ...rat,
-      value: rat.attributes.name,
-    },
-  }), {}) ?? {}),
+  (rats) => {
+    return (rats?.reduce((accumulator, rat) => {
+      return {
+        ...accumulator,
+        [rat.id]: {
+          ...rat,
+          value: rat.attributes.name,
+        },
+      }
+    }, {}) ?? {})
+  },
 )
 
+const codeRedRadioOptions = [
+  {
+    value: 'true',
+    label: 'Yes',
+    title: '$#!7 was on fire, yo.',
+  },
+  {
+    value: 'false',
+    label: 'No',
+    title: 'The client did not experience any undue stress.',
+  },
+]
+
+const outcomeRadioOptions = [
+  {
+    value: 'success',
+    label: 'Yes',
+    title: 'Fuel was successfully delivered to the client.',
+  },
+  {
+    value: 'failure',
+    label: 'No',
+    title: 'Fuel wasn\'t successfully delivered to the client. (Explain why)',
+  },
+  {
+    value: 'invalid',
+    label: 'Invalid',
+    title: 'Fuel wasn\'t delievered because the request was illegitimate. (Cats / Trolling)',
+  },
+  {
+    value: 'other',
+    label: 'Other',
+    title: 'Fuel wasn\'t delievered because the client was able to get out of trouble without it. (Explain)',
+  },
+]
 
 
 
@@ -50,7 +90,6 @@ class Paperwork extends React.Component {
   \***************************************************************************/
 
   state = {
-    loading: !this.props.rescue,
     submitting: false,
     error: null,
     changes: {},
@@ -75,7 +114,9 @@ class Paperwork extends React.Component {
     })
   }
 
-  _handleNotesChange = (event) => this._setChanges({ notes: event.target.value })
+  _handleNotesChange = (event) => {
+    return this._setChanges({ notes: event.target.value })
+  }
 
   _handleRadioInputChange = ({ target }) => {
     const attribute = target.name
@@ -183,7 +224,9 @@ class Paperwork extends React.Component {
     }
 
     if (rats) {
-      await this.props.updateRescueRats(rescue.id, rats.map(({ id, type }) => ({ id, type })))
+      await this.props.updateRescueRats(rescue.id, rats.map(({ id, type }) => {
+        return { id, type }
+      }))
     }
 
     const { status } = await this.props.updateRescue(rescue.id, changes)
@@ -196,15 +239,21 @@ class Paperwork extends React.Component {
     Router.pushRoute('paperwork', { rescueId: rescue.id })
   }
 
-  _setChanges = (changedFields) => this.setState((prevState) => ({
-    changes: {
-      ...prevState.changes,
-      ...Object.entries(changedFields).reduce((acc, [key, value]) => ({
-        ...acc,
-        [key]: this.props.rescue.attributes[key] === value ? undefined : value,
-      }), {}),
-    },
-  }))
+  _setChanges = (changedFields) => {
+    return this.setState((prevState) => {
+      return {
+        changes: {
+          ...prevState.changes,
+          ...Object.entries(changedFields).reduce((acc, [key, value]) => {
+            return {
+              ...acc,
+              [key]: this.props.rescue.attributes[key] === value ? undefined : value,
+            }
+          }, {}),
+        },
+      }
+    })
+  }
 
 
 
@@ -214,18 +263,6 @@ class Paperwork extends React.Component {
     Public Methods
   \***************************************************************************/
 
-  async componentDidMount () {
-    const { id, rescue } = this.props
-
-    if (id && !rescue) {
-      await this.props.getRescue(id)
-    }
-
-    if (this.state.loading) {
-      this.setState({ loading: false })
-    }
-  }
-
   static renderQuote = (quote, index) => {
     const createdAt = formatAsEliteDateTime(quote.createdAt)
     const updatedAt = formatAsEliteDateTime(quote.updatedAt)
@@ -233,16 +270,20 @@ class Paperwork extends React.Component {
       <li key={index}>
         <div className="times">
           <div className="created" title="Created at">{createdAt}</div>
-          {(updatedAt !== createdAt) && (
-            <div className="updated" title="Updated at"><span className="label">Updated at </span>{updatedAt}</div>
-          )}
+          {
+            (updatedAt !== createdAt) && (
+              <div className="updated" title="Updated at"><span className="label">{'Updated at '}</span>{updatedAt}</div>
+            )
+          }
         </div>
         <span className="message">{quote.message}</span>
         <div className="authors">
           <div className="author" title="Created by">{quote.author}</div>
-          {(quote.author !== quote.lastAuthor) && (
-            <div className="last-author" title="Last updated by"><span className="label">Updated by </span>{quote.lastAuthor}</div>
-          )}
+          {
+            (quote.author !== quote.lastAuthor) && (
+              <div className="last-author" title="Last updated by"><span className="label">{'Updated by '}</span>{quote.lastAuthor}</div>
+            )
+          }
         </div>
       </li>
     )
@@ -260,7 +301,7 @@ class Paperwork extends React.Component {
     }
 
     return (
-      <span>N/A</span>
+      <span>{'N/A'}</span>
     )
   }
 
@@ -278,13 +319,12 @@ class Paperwork extends React.Component {
     } = this.props
 
     const {
-      loading,
       submitting,
     } = this.state
 
     const classes = ['page-content']
 
-    if (loading || submitting) {
+    if (submitting) {
       classes.push('loading', 'force')
     }
 
@@ -307,180 +347,142 @@ class Paperwork extends React.Component {
         className={classes.join(' ')}
         onSubmit={this._handleSubmit}>
         <header className="paperwork-header">
-          {(rescue.attributes.status !== 'closed') && (
-            <div className="board-index"><span>#{rescue.attributes.data.boardIndex}</span></div>
-          )}
+          {
+            (rescue.attributes.status !== 'closed') && (
+              <div className="board-index"><span>{`#${rescue.attributes.data.boardIndex}`}</span></div>
+            )
+          }
           <div className="title">
-            {(!rescue.attributes.title) && (
-              <span>
-                    Rescue of
-                <span className="cmdr-name"> {rescue.attributes.client}</span> in
-                <span className="system"> {(rescue.attributes.system) || ('Unknown')}</span>
-              </span>
-            )}
-            {(rescue.attributes.title) && (
-              <span>
-                    Operation
-                <span className="rescue-title"> {rescue.attributes.title}</span>
-              </span>
-            )}
+            {
+              (!rescue.attributes.title) && (
+                <span>
+                  {'Rescue of '}
+                  <span className="cmdr-name">{rescue.attributes.client}</span>
+                  {' in '}
+                  <span className="system">{(rescue.attributes.system) || 'Unknown'}</span>
+                </span>
+              )
+            }
+            {
+              (rescue.attributes.title) && (
+                <span>
+                  {'Operation '}
+                  <span className="rescue-title"> {rescue.attributes.title}</span>
+                </span>
+              )
+            }
           </div>
         </header>
 
         <fieldset>
-          <label htmlFor="platform">What platform was the rescue on?</label>
+          <label htmlFor="platform">{'What platform was the rescue on?'}</label>
 
           <RadioInput
-            disabled={submitting || loading}
             className="platform"
-            name="platform"
+            disabled={submitting}
             id="platform"
+            name="platform"
+            options={platformRadioOptions}
             value={platform}
-            onChange={this._handleRadioInputChange}
-            options={[
-              {
-                value: 'pc',
-                label: 'PC',
-                title: 'Personal Computational Device',
-              },
-              {
-                value: 'xb',
-                label: 'Xbox',
-                title: 'Xbox One',
-              },
-              {
-                value: 'ps',
-                label: 'PS4',
-                title: 'Playstation 4',
-              },
-            ]} />
+            onChange={this._handleRadioInputChange} />
         </fieldset>
 
         <fieldset>
           <label htmlFor="outcome-success">
-            Was the rescue successful?
+            {'Was the rescue successful?'}
             <a
               className="inline"
-              target="_blank"
-              rel="noopener noreferrer"
               href="https://t.fuelr.at/caseguide"
+              rel="noopener noreferrer"
+              target="_blank"
               title="How to file cases - Fuel Rats Confluence">
-              <small> (How do I choose?)</small>
+              <small>{' (How do I choose?)'}</small>
             </a>
           </label>
 
           <RadioInput
-            disabled={submitting || loading}
             className="outcome"
-            name="outcome"
+            disabled={submitting}
             id="outcome"
+            name="outcome"
+            options={outcomeRadioOptions}
             value={outcome}
-            onChange={this._handleRadioInputChange}
-            options={[
-              {
-                value: 'success',
-                label: 'Yes',
-                title: 'Fuel was successfully delivered to the client.',
-              },
-              {
-                value: 'failure',
-                label: 'No',
-                title: 'Fuel wasn\'t successfully delivered to the client. (Explain why)',
-              },
-              {
-                value: 'invalid',
-                label: 'Invalid',
-                title: 'Fuel wasn\'t delievered because the request was illegitimate. (Cats / Trolling)',
-              },
-              {
-                value: 'other',
-                label: 'Other',
-                title: 'Fuel wasn\'t delievered because the client was able to get out of trouble without it. (Explain)',
-              },
-            ]} />
+            onChange={this._handleRadioInputChange} />
         </fieldset>
 
         <fieldset>
-          <label htmlFor="codeRed-yes">Was it a code red?</label>
+          <label htmlFor="codeRed-yes">{'Was it a code red?'}</label>
           <RadioInput
-            disabled={submitting || loading}
             className="codeRed"
-            name="codeRed"
+            disabled={submitting}
             id="codeRed"
+            name="codeRed"
+            options={codeRedRadioOptions}
             value={`${codeRed}`}
-            onChange={this._handleRadioInputChange}
-            options={[
-              {
-                value: 'true',
-                label: 'Yes',
-                title: '$#!7 was on fire, yo.',
-              },
-              {
-                value: 'false',
-                label: 'No',
-                title: 'The client did not experience any undue stress.',
-              },
-            ]} />
+            onChange={this._handleRadioInputChange} />
         </fieldset>
 
         <fieldset>
-          <label htmlFor="rats">Who was assigned to this rescue?</label>
+          <label htmlFor="rats">{'Who was assigned to this rescue?'}</label>
 
           <RatTagsInput
             aria-label="Assigned rats"
             data-platform={platform}
-            disabled={submitting || loading}
+            disabled={submitting}
             name="rats"
-            onChange={this._handleRatsChange}
-            onRemove={this._handleRatsRemove}
             value={rats}
-            valueProp={getRatTag} />
+            valueProp={getRatTag}
+            onChange={this._handleRatsChange}
+            onRemove={this._handleRatsRemove} />
         </fieldset>
 
         <fieldset>
-          <label htmlFor="firstLimpetId">Who fired the first limpet?</label>
+          <label htmlFor="firstLimpetId">{'Who fired the first limpet?'}</label>
 
           <FirstLimpetInput
             data-single
-            disabled={submitting || loading || (outcome !== 'success')}
+            disabled={submitting || (outcome !== 'success')}
             name="firstLimpetId"
-            onChange={this._handleFirstLimpetChange}
             options={rats}
             value={firstLimpetId}
-            valueProp={getRatTag} />
+            valueProp={getRatTag}
+            onChange={this._handleFirstLimpetChange} />
         </fieldset>
 
         <fieldset>
-          <label htmlFor="system">Where did it happen? <small>In what star system did the rescue took place? (put "n/a" if not applicable)</small></label>
+          <label htmlFor="system">
+            {'Where did it happen? '}
+            <small>{'In what star system did the rescue took place? (put "n/a" if not applicable)'}</small>
+          </label>
 
           <SystemTagsInput
-            aira-label="Rescue system"
             data-allownew
-            disabled={submitting || loading}
-            name="system"
-            onChange={this._handleSystemChange}
             data-single
-            value={system} />
+            aira-label="Rescue system"
+            disabled={submitting}
+            name="system"
+            value={system}
+            onChange={this._handleSystemChange} />
         </fieldset>
 
         <fieldset>
-          <label htmlFor="notes">Notes</label>
+          <label htmlFor="notes">{'Notes'}</label>
 
           <textarea
             aria-label="case notes"
-            disabled={submitting || loading}
+            disabled={submitting}
             id="notes"
             name="notes"
-            onChange={this._handleNotesChange}
-            value={notes} />
+            value={notes}
+            onChange={this._handleNotesChange} />
         </fieldset>
 
         <menu type="toolbar">
           <div className="primary">
             <div className={`invalidity-explainer ${pwValidity.noChange ? 'no-change' : ''} ${pwValidity.valid ? '' : 'show'}`}>{pwValidity.reason}</div>
             <button
-              disabled={submitting || loading || !pwValidity.valid}
               className="green"
+              disabled={submitting || !pwValidity.valid}
               type="submit">
               {submitting ? 'Submitting...' : 'Submit'}
             </button>
@@ -490,7 +492,7 @@ class Paperwork extends React.Component {
         </menu>
 
         <div className="panel quotes">
-          <header>Quotes</header>
+          <header>{'Quotes'}</header>
           <div className="panel-content">{this.renderQuotes()}</div>
         </div>
       </form>
@@ -503,32 +505,31 @@ class Paperwork extends React.Component {
     } = this.props
 
     const {
-      loading,
       submitting,
       error,
     } = this.state
 
     return (
       <PageWrapper title="Paperwork">
-        {(error && !submitting) && (
-          <div className="store-errors">
-            <div className="store-error">
-              Error while submitting paperwork.
+        {
+          (error && !submitting) && (
+            <div className="store-errors">
+              <div className="store-error">
+                {'Error while submitting paperwork.'}
+              </div>
             </div>
-          </div>
-        )}
+          )
+        }
 
-        {loading && (
-          <div className="loading page-content" />
-        )}
+        {
+          (!rescue) && (
+            <div className="loading page-content">
+              <p>{"Sorry, we couldn't find the paperwork you requested."}</p>
+            </div>
+          )
+        }
 
-        {(!loading && !rescue) && (
-          <div className="loading page-content">
-            <p>Sorry, we couldn't find the paperwork you requested.</p>
-          </div>
-        )}
-
-        {(!loading && rescue) && this.renderRescueEditForm()}
+        {(rescue) && this.renderRescueEditForm()}
       </PageWrapper>
     )
   }
@@ -569,13 +570,13 @@ class Paperwork extends React.Component {
       invalidReason = 'You cannot edit this rescue.'
     }
 
-    if (invalidReason === null && !Object.keys(changes).length) {
+    if (!invalidReason && !Object.keys(changes).length) {
       invalidReason = 'No changes have been made yet!'
       noChange = true
     }
 
     const response = {
-      valid: Boolean(invalidReason === null),
+      valid: !invalidReason,
       reason: invalidReason || this.lastInvalidReason,
       noChange,
     }
@@ -621,7 +622,9 @@ class Paperwork extends React.Component {
     const { rescue, rats } = this.props
     const { changes } = this.state
 
-    const getValue = (value) => changes[value] ?? rescue.attributes[value]
+    const getValue = (value) => {
+      return changes[value] ?? rescue.attributes[value]
+    }
 
     return {
       codeRed: getValue('codeRed'),
@@ -644,11 +647,13 @@ class Paperwork extends React.Component {
 
   static mapDispatchToProps = ['updateRescue', 'updateRescueRats', 'getRescue']
 
-  static mapStateToProps = (state, { query }) => ({
-    rats: selectFormattedRatsByRescueId(state, query),
-    rescue: selectRescueById(state, query),
-    userCanEdit: selectRescueCanEdit(state, query),
-  })
+  static mapStateToProps = (state, { query }) => {
+    return {
+      rats: selectFormattedRatsByRescueId(state, query),
+      rescue: selectRescueById(state, query),
+      userCanEdit: selectUserCanEditRescue(state, query),
+    }
+  }
 }
 
 

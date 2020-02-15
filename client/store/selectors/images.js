@@ -1,12 +1,8 @@
-const selectImages = (state) => state.images
-
-const selectImageById = (state, { imageId }) => state.images[imageId] || null
-
-
+export const selectImages = (state) => {
+  return state.images
+}
 
 
-
-export {
-  selectImageById,
-  selectImages,
+export const selectImageById = (state, { imageId }) => {
+  return state.images[imageId] || null
 }

@@ -4,21 +4,23 @@ import { produce } from 'immer'
 
 
 
-import httpStatus from '../../helpers/httpStatus'
+import HttpStatus from '../../helpers/HttpStatus'
 
 
 
 
 
 const createJSONAPIResourceReducer = (sourceIdent, initialState, resourceTypes) => {
-  const withResourceType = (reducerFunc) => (draftState, resource) => {
-    let resourceType = resourceTypes[resource.type]
-    if (resourceType) {
-      if (typeof resourceType === 'string') {
-        resourceType = { target: resourceType }
-      }
+  const withResourceType = (reducerFunc) => {
+    return (draftState, resource) => {
+      let resourceType = resourceTypes[resource.type]
+      if (resourceType) {
+        if (typeof resourceType === 'string') {
+          resourceType = { target: resourceType }
+        }
 
-      reducerFunc(draftState, resource, resourceType)
+        reducerFunc(draftState, resource, resourceType)
+      }
     }
   }
 
@@ -54,7 +56,9 @@ const createJSONAPIResourceReducer = (sourceIdent, initialState, resourceTypes) 
         const dependentObjId = draftState[target][id].attributes[dependency.idAttribute]
         const dependentObj = draftState[dependency.type][dependentObjId]
         if (dependentObj) {
-          dependentObj.relationships[target].data = dependentObj.relationships[target].data.filter((curValue) => curValue.id !== id)
+          dependentObj.relationships[target].data = dependentObj.relationships[target].data.filter((curValue) => {
+            return curValue.id !== id
+          })
         }
       })
     }
@@ -69,7 +73,7 @@ const createJSONAPIResourceReducer = (sourceIdent, initialState, resourceTypes) 
       payload,
     } = action
 
-    if (request && request.baseUrl === sourceIdent && httpStatus.isSuccess(response.status)) { // Check if this action is a result of a HTTP request we care about
+    if (request && request.baseUrl === sourceIdent && HttpStatus.isSuccess(response.status)) { // Check if this action is a result of a HTTP request we care about
       if (payload && payload.data) { // Double check that the payload contains processible data
         const { data } = payload
 

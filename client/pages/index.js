@@ -47,26 +47,28 @@ class Index extends React.Component {
     }
   }
 
-  render = () => (
-    <PageWrapper title="Home" noHeader>
-      <section className="hero">
-        <Carousel id="HomeImages" slides={CarouselSlides} />
+  render () {
+    return (
+      <PageWrapper noHeader title="Home">
+        <section className="hero">
+          <Carousel id="HomeImages" slides={CarouselSlides} />
 
-        <header>
-          <h1>We Have Fuel. <wbr />You&nbsp;Don't.</h1>
-          <h2>Any Questions?</h2>
-        </header>
+          <header>
+            <h1>{'We Have Fuel. '}<wbr />{"You\u00a0Don't."}</h1>
+            <h2>{'Any Questions?'}</h2>
+          </header>
 
-        <footer className="call-to-action">
-          <Link route="rescue-landing">
-            <a className="button tall">Get Help</a>
-          </Link>
-        </footer>
+          <footer className="call-to-action">
+            <Link route="rescue-landing">
+              <a className="button tall">{'Get Help'}</a>
+            </Link>
+          </footer>
 
 
-      </section>
-    </PageWrapper>
-  )
+        </section>
+      </PageWrapper>
+    )
+  }
 
   static mapDispatchToProps = ['setFlag']
 }

@@ -36,7 +36,9 @@ class ForgotPassword extends React.Component {
     Private Methods
   \***************************************************************************/
 
-  _handleInputChange = (event) => this.setState({ email: event.target.value })
+  _handleInputChange = (event) => {
+    this.setState({ email: event.target.value })
+  }
 
 
   _handleSubmit = async (event) => {
@@ -83,53 +85,62 @@ class ForgotPassword extends React.Component {
     return (
       <PageWrapper title="Forgot Password">
         <div className="page-content">
-          {error && (
-            <div className="store-errors">
-              <div className="store-error">
-                Error submitting password reset request.
-              </div>
-            </div>
-          )}
-
-          {!submitted && (
-            <form onSubmit={this._handleSubmit}>
-              <fieldset>
-                <label htmlFor="email">Enter the email address associated with your account <small>We'll send you an email with a link to reset your password.</small></label>
-
-                <input
-                  aria-label="user email"
-                  id="email"
-                  onChange={this.handleInputChange}
-                  name="email"
-                  ref={this._emailRef}
-                  type="email"
-                  value={email} />
-              </fieldset>
-
-              <menu type="toolbar">
-                <div className="primary">
-                  <button
-                    disabled={!email || submitting || !this.canSubmit}
-                    type="submit">
-                    {submitting ? 'Submitting...' : 'Send Email'}
-                  </button>
+          {
+            error && (
+              <div className="store-errors">
+                <div className="store-error">
+                  {'Error submitting password reset request.'}
                 </div>
+              </div>
+            )
+          }
 
-                <div className="secondary" />
-              </menu>
-            </form>
-          )}
+          {
+            !submitted && (
+              <form onSubmit={this._handleSubmit}>
+                <fieldset>
+                  <label htmlFor="email">
+                    {'Enter the email address associated with your account. '}
+                    <small>{"We'll send you an email with a link to reset your password."}</small>
+                  </label>
 
-          {submitted && (
-            <div>
-              <h3>Thanks!</h3>
+                  <input
+                    ref={this._emailRef}
+                    aria-label="user email"
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={email}
+                    onChange={this._handleInputChange} />
+                </fieldset>
 
-              <p>
-                If there's a Fuel Rats account associated with that address, you should receive an email shortly with the final steps for resetting your password.
-                If you don't receive an email, please contact <a href="mailto:support@fuelrats.com">support@fuelrats.com</a>.
-              </p>
-            </div>
-          )}
+                <menu type="toolbar">
+                  <div className="primary">
+                    <button
+                      disabled={!email || submitting || !this.canSubmit}
+                      type="submit">
+                      {submitting ? 'Submitting...' : 'Send Email'}
+                    </button>
+                  </div>
+
+                  <div className="secondary" />
+                </menu>
+              </form>
+            )
+          }
+
+          {
+            submitted && (
+              <div>
+                <h3>{'Thanks!'}</h3>
+
+                <p>
+                  {"If there's a Fuel Rats account associated with that address, you should receive an email shortly with the final steps for resetting your password."}
+                  {"If you don't receive an email, please contact "}<a href="mailto:support@fuelrats.com">{'support@fuelrats.com'}</a>{'.'}
+                </p>
+              </div>
+            )
+          }
         </div>
       </PageWrapper>
     )

@@ -66,16 +66,16 @@ class RatLeaderboardTable extends React.Component {
     return (
       <section className="panel">
         <ReactTable
+          filterable
           className="rat-leaderboard -striped"
           columns={this.columns}
           data={statistics}
-          defaultPageSize={75}
-          filterable
-          sortable={false}
-          resizable={false}
           defaultFilterMethod={caseInsensitiveFilter}
+          defaultPageSize={75}
           loading={loading}
-          showPageSizeOptions={false} />
+          resizable={false}
+          showPageSizeOptions={false}
+          sortable={false} />
       </section>
     )
   }
@@ -92,7 +92,9 @@ class RatLeaderboardTable extends React.Component {
     if (!this._columns) {
       this._columns = [
         {
-          accessor: (datum) => datum.attributes['user.displayRat.name'] || datum.attributes.rats[0],
+          accessor: (datum) => {
+            return datum.attributes['user.displayRat.name'] || datum.attributes.rats[0]
+          },
           className: 'name',
           Header: 'Name',
           headerClassName: 'name-header',
@@ -110,7 +112,9 @@ class RatLeaderboardTable extends React.Component {
           maxWidth: 80,
         },
         {
-          accessor: (datum) => datum,
+          accessor: (datum) => {
+            return datum
+          },
           className: 'badges',
           Header: 'Badges',
           headerClassName: 'badges-header',
@@ -127,9 +131,9 @@ class RatLeaderboardTable extends React.Component {
 
             return (
               <div className="badge-list">
-                <RescueAchievementIcon rescueCount={rescueCount} className="size-32 fixed" />
-                <CodeRedIcon codeRedCount={safeParseInt(codeRed)} className="size-32 fixed" />
-                <FirstYearIcon createdAt={createdAt} className="size-32 fixed" />
+                <RescueAchievementIcon className="size-32 fixed" rescueCount={rescueCount} />
+                <CodeRedIcon className="size-32 fixed" codeRedCount={safeParseInt(codeRed)} />
+                <FirstYearIcon className="size-32 fixed" createdAt={createdAt} />
               </div>
             )
           },
@@ -142,9 +146,11 @@ class RatLeaderboardTable extends React.Component {
 
   static mapDispatchToProps = ['getRatLeaderboard']
 
-  static mapStateToProps = (state) => ({
-    statistics: selectLeaderboard(state),
-  })
+  static mapStateToProps = (state) => {
+    return {
+      statistics: selectLeaderboard(state),
+    }
+  }
 }
 
 

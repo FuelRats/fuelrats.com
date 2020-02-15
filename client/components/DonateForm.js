@@ -1,9 +1,7 @@
 // Module imports
 import { produce } from 'immer'
-import getConfig from 'next/config'
 import PropTypes from 'prop-types'
 import React from 'react'
-import ReCAPTCHA from 'react-google-recaptcha'
 
 
 
@@ -19,11 +17,6 @@ import StripeBadgeSvg from './svg/StripeBadgeSvg'
 
 
 
-
-// Component Constants
-const { publicRuntimeConfig } = getConfig()
-
-const recaptchaPublicKey = publicRuntimeConfig.apis.recaptcha.public
 
 const presetAmounts = {
   one: 1.00,
@@ -53,28 +46,30 @@ const currencyOptions = [
   },
 ]
 
-const amountOptions = (prefix) => [
-  {
-    value: 'one',
-    label: `${prefix}1.00`,
-  },
-  {
-    value: 'five',
-    label: `${prefix}5.00`,
-  },
-  {
-    value: 'ten',
-    label: `${prefix}10.00`,
-  },
-  {
-    value: 'twenty',
-    label: `${prefix}20.00`,
-  },
-  {
-    value: 'custom',
-    label: 'Custom Amount',
-  },
-]
+const amountOptions = (prefix) => {
+  return [
+    {
+      value: 'one',
+      label: `${prefix}1.00`,
+    },
+    {
+      value: 'five',
+      label: `${prefix}5.00`,
+    },
+    {
+      value: 'ten',
+      label: `${prefix}10.00`,
+    },
+    {
+      value: 'twenty',
+      label: `${prefix}20.00`,
+    },
+    {
+      value: 'custom',
+      label: 'Custom Amount',
+    },
+  ]
+}
 
 
 
@@ -89,7 +84,6 @@ class DonateForm extends React.Component {
   state = {
     amount: 0,
     amountType: '',
-    captchaValue: null,
     currency: '',
     error: null,
     submitting: false,
@@ -103,23 +97,21 @@ class DonateForm extends React.Component {
     Private Methods
   \***************************************************************************/
 
-  _handleFieldChange = ({ target }) => this.setState(produce((draftState) => {
-    const { name } = target
-    const { value } = target
+  _handleFieldChange = ({ target }) => {
+    this.setState(produce((draftState) => {
+      const { name } = target
+      const { value } = target
 
-    if (name === 'amount' && !value.match(currencyValidator)) {
-      return
-    }
+      if (name === 'amount' && !value.match(currencyValidator)) {
+        return
+      }
 
-    if (name === 'amountType') {
-      draftState.amount = presetAmounts[value]
-    }
+      if (name === 'amountType') {
+        draftState.amount = presetAmounts[value]
+      }
 
-    draftState[name] = value.replace(/^0+/u, '')
-  }))
-
-  _handleCaptchaChange = (captchaValue) => {
-    this.setState({ captchaValue })
+      draftState[name] = value.replace(/^0+/u, '')
+    }))
   }
 
   _handleSubmit = async (event) => {
@@ -138,13 +130,11 @@ class DonateForm extends React.Component {
 
     const {
       currency,
-      captchaValue,
     } = this.state
 
     const sessionData = {
       amount: this.stripeAmount,
       currency,
-      recaptcha: captchaValue,
     }
 
     if (user) {
@@ -190,13 +180,15 @@ class DonateForm extends React.Component {
       <div className="store-errors">
         <div className="store-error">
           {'An error occured while creating the checkout session.'}
-          {typeof error === 'string' && (
-            <>
-              {' Error message: '}
-              <br />
-              {error}
-            </>
-          )}
+          {
+            typeof error === 'string' && (
+              <>
+                {' Error message: '}
+                <br />
+                {error}
+              </>
+            )
+          }
           <br />
           {'If the problem persists, please contact a techrat via'}
           <a href="mailto:support@fuelrats.com">{'support@fuelrats.com'}</a>
@@ -223,55 +215,49 @@ class DonateForm extends React.Component {
         {!submitting && error && this.renderError()}
         <form className="donate-form compact" onSubmit={this._handleSubmit}>
           <fieldset>
-            <label htmlFor="currency">Select your currency</label>
+            <label htmlFor="currency">{'Select your currency'}</label>
 
             <RadioInput
               disabled={submitting}
-              name="currency"
               id="currency"
+              name="currency"
+              options={currencyOptions}
               value={currency}
-              onChange={this._handleFieldChange}
-              options={currencyOptions} />
+              onChange={this._handleFieldChange} />
           </fieldset>
 
           <fieldset>
-            <label htmlFor="amountType">Select your amount</label>
+            <label htmlFor="amountType">{'Select your amount'}</label>
 
             <RadioInput
               disabled={submitting || !currency}
-              name="amountType"
               id="amountType"
+              name="amountType"
+              options={amountOptions(currencySymbol)}
               value={amountType}
-              onChange={this._handleFieldChange}
-              options={amountOptions(currencySymbol)} />
+              onChange={this._handleFieldChange} />
           </fieldset>
 
-          {amountType === 'custom' && (
-            <fieldset>
-              <label htmlFor="amount">Input your custom amount</label>
+          {
+            amountType === 'custom' && (
+              <fieldset>
+                <label htmlFor="amount">{'Input your custom amount'}</label>
 
-              <input
-                aria-label="Custom amount"
-                disabled={submitting || amountType !== 'custom'}
-                id="DonateAmount"
-                name="amount"
-                type="text"
-                onChange={this._handleFieldChange}
-                value={amount} />
-            </fieldset>
-          )}
-
-          {recaptchaPublicKey && (
-            <fieldset>
-              <ReCAPTCHA
-                className="recaptcha-wrapper"
-                sitekey={recaptchaPublicKey}
-                onChange={this._handleCaptchaChange} />
-            </fieldset>
-          )}
+                <input
+                  aria-label="Custom amount"
+                  disabled={submitting || amountType !== 'custom'}
+                  id="DonateAmount"
+                  name="amount"
+                  type="text"
+                  value={amount}
+                  onChange={this._handleFieldChange} />
+              </fieldset>
+            )
+          }
 
           <div className="fieldset">
             <button
+              className="green"
               disabled={submitting || !this.canSubmit}
               type="submit">
               {'Donate '}
@@ -296,7 +282,6 @@ class DonateForm extends React.Component {
     const { stripe } = this.props
     const {
       amount,
-      captchaValue,
       currency,
     } = this.state
 
@@ -304,7 +289,6 @@ class DonateForm extends React.Component {
       stripe
       && amount
       && amount >= 1
-      && captchaValue
       && currency,
     )
   }

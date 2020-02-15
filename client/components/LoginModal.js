@@ -49,27 +49,31 @@ class LoginModal extends React.Component {
     Private Methods
   \***************************************************************************/
 
-  _handleChange = ({ target, valid }) => this.setState(({ validity }) => {
-    const {
-      name,
-      value,
-    } = target
-    const required = typeof validity[name] !== 'undefined'
+  _handleChange = ({ target, valid }) => {
+    this.setState(({ validity }) => {
+      const {
+        name,
+        value,
+      } = target
+      const required = typeof validity[name] !== 'undefined'
 
-    return {
-      [name]: value,
-      ...(required
-        ? {
-          validity: {
-            ...validity,
-            [name]: valid,
-          },
-        }
-        : {}),
-    }
-  })
+      return {
+        [name]: value,
+        ...(required
+          ? {
+            validity: {
+              ...validity,
+              [name]: valid,
+            },
+          }
+          : {}),
+      }
+    })
+  }
 
-  _handleSwitchChange = ({ target }) => this.setState({ [target.name]: target.checked })
+  _handleSwitchChange = ({ target }) => {
+    this.setState({ [target.name]: target.checked })
+  }
 
   _handleSubmit = async (event) => {
     event.preventDefault()
@@ -127,15 +131,18 @@ class LoginModal extends React.Component {
 
     return (
       <ModalContent as="form" className="dialog no-pad" onSubmit={this._handleSubmit}>
-        {error && !loggingIn && (
-          <div className="store-errors">
-            <div className="store-error">
-              Invalid email or password.
+        {
+          error && !loggingIn && (
+            <div className="store-errors">
+              <div className="store-error">
+                {'Invalid email or password.'}
+              </div>
             </div>
-          </div>
-        )}
+          )
+        }
 
         <ValidatedFormInput
+          required
           aria-label="Fuel rats account e-mail"
           autoComplete="username"
           className="email dark"
@@ -145,12 +152,12 @@ class LoginModal extends React.Component {
           inputRef={this.emailInput}
           label="Email"
           name="email"
-          onChange={this._handleChange}
-          required
           type="email"
-          value={email} />
+          value={email}
+          onChange={this._handleChange} />
 
         <ValidatedFormInput
+          required
           aria-label="Fuel rats account password"
           autoComplete="current-password"
           className="password dark"
@@ -159,35 +166,34 @@ class LoginModal extends React.Component {
           id="password"
           label="Password"
           name="password"
-          onChange={this._handleChange}
           pattern="^.{5,42}$"
-          required
           type="password"
-          value={password} />
+          value={password}
+          onChange={this._handleChange} />
         <fieldset>
           <div className="switch-form-container">
             <Switch
               aria-label="Remember me on this computer"
+              checked={remember}
               disabled={loggingIn}
               id="remember"
               label="Remember me"
               name="remember"
-              onChange={this._handleSwitchChange}
-              checked={remember} />
+              onChange={this._handleSwitchChange} />
           </div>
         </fieldset>
         <ModalFooter>
           <div className="secondary">
             <button
               className="secondary"
-              onClick={this._handleRegisterClick}
-              type="button">
-              Become a Rat
+              type="button"
+              onClick={this._handleRegisterClick}>
+              {'Become a Rat'}
             </button>
           </div>
 
           <div className="primary">
-            <a className="button link secondary mobile-button" href="/forgot-password">Forgot password?</a>
+            <a className="button link secondary mobile-button" href="/forgot-password">{'Forgot password?'}</a>
             <button
               className="green"
               disabled={!this.isValid}
@@ -213,7 +219,9 @@ class LoginModal extends React.Component {
       return false
     }
 
-    return !Object.values(this.state.validity).filter((value) => value !== true).length
+    return !Object.values(this.state.validity).filter((value) => {
+      return value !== true
+    }).length
   }
 
 

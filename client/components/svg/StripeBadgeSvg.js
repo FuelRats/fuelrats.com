@@ -21,23 +21,23 @@ const path = [
 
 
 
-const StripeBadgeSvg = (props) => (
-  <a
-    className="icon light"
-    href="https://stripe.com/"
-    rel="noopener noreferrer"
-    target="_blank">
-    <Svg
-      {...props}
-      alt="Powered by Stripe"
-      width="119px"
-      height="26px"
-      path={path}
-      pathProps={{
-        fillRule: 'evenodd',
-      }} />
-  </a>
-)
+function StripeBadgeSvg (props) {
+  return (
+    <a
+      className="icon light"
+      href="https://stripe.com/"
+      rel="noopener noreferrer"
+      target="_blank">
+      <Svg
+        {...props}
+        alt="Powered by Stripe"
+        height="26px"
+        path={path}
+        pathProps={{ fillRule: 'evenodd' }}
+        width="119px" />
+    </a>
+  )
+}
 
 
 

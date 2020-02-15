@@ -10,29 +10,21 @@ import { selectRatById } from './rats'
 
 
 
-const selectShips = (state) => state.ships
+export const selectShips = (state) => {
+  return state.ships
+}
 
 
-const selectShipById = (state, { shipId }) => state.ships[shipId]
+export const selectShipById = (state, { shipId }) => {
+  return state.ships[shipId]
+}
 
 
-const selectShipsByRatId = createSelector(
+export const selectShipsByRatId = createSelector(
   [selectRatById, selectShips],
   (rat, ships) => {
-    if (!rat || !rat.relationships.ships.data) {
-      return null
-    }
-
-    return rat.relationships.ships.data.map(({ id }) => ships[id])
+    return rat?.relationships.ships.data?.map(({ id }) => {
+      return ships[id]
+    }) ?? null
   },
 )
-
-
-
-
-
-export {
-  selectShips,
-  selectShipById,
-  selectShipsByRatId,
-}

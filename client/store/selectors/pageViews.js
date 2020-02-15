@@ -4,7 +4,9 @@ import { createSelector } from 'reselect'
 
 
 
-const selectPageViewById = (state, { pageViewId }) => state.pageViews[pageViewId]
+const selectPageViewById = (state, { pageViewId }) => {
+  return state.pageViews[pageViewId]
+}
 
 
 const selectPageViewTargetById = (state, props) => {
@@ -13,21 +15,17 @@ const selectPageViewTargetById = (state, props) => {
 }
 
 
-const selectPageViewDataById = createSelector(
+export const selectPageViewDataById = createSelector(
   [selectPageViewById, selectPageViewTargetById],
-  (pageView, viewTarget) => pageView && viewTarget && pageView.data.map(((id) => viewTarget[id])),
+  (pageView, viewTarget) => {
+    return pageView && viewTarget && pageView.data.map(((id) => {
+      return viewTarget[id]
+    }))
+  },
 )
 
-const selectPageViewMetaById = (state, props) => {
+
+export const selectPageViewMetaById = (state, props) => {
   const pageView = selectPageViewById(state, props)
   return pageView && pageView.meta
-}
-
-
-
-
-
-export {
-  selectPageViewDataById,
-  selectPageViewMetaById,
 }

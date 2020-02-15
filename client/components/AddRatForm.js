@@ -31,7 +31,11 @@ const initialState = {
   submitting: false,
 }
 
-
+const platformSelectOptions = {
+  pc: 'PC',
+  xb: 'XB1',
+  ps: 'PS4',
+}
 
 
 @connect
@@ -76,10 +80,12 @@ class AddRatForm extends React.Component {
   }
 
   _handleToggle = () => {
-    this.setState((state) => ({
-      ...initialState,
-      formOpen: !state.formOpen,
-    }))
+    this.setState((state) => {
+      return {
+        ...initialState,
+        formOpen: !state.formOpen,
+      }
+    })
   }
 
   _handleFieldChange = ({ target, valid, message }) => {
@@ -118,58 +124,58 @@ class AddRatForm extends React.Component {
 
     return (
       <form className={classes}>
-        {formOpen && (
-          <div className="form-row submit-row flex align-center">
-            <ValidatedFormInput
-              aria-label="Commander Name"
-              className="cmdr-input"
-              disabled={submitting}
-              id="newRatName"
-              invalidMessage={INVALID_NAME_MESSAGE}
-              label="CMDR Name"
-              name="name"
-              minLength={1}
-              maxLength={18}
-              onChange={this._handleFieldChange}
-              placeholder="CMDR Name"
-              required
-              value={name} />
+        {
+          formOpen && (
+            <div className="form-row submit-row flex align-center">
+              <ValidatedFormInput
+                required
+                aria-label="Commander Name"
+                className="cmdr-input"
+                disabled={submitting}
+                id="newRatName"
+                invalidMessage={INVALID_NAME_MESSAGE}
+                label="CMDR Name"
+                maxLength={18}
+                minLength={1}
+                name="name"
+                placeholder="CMDR Name"
+                value={name}
+                onChange={this._handleFieldChange} />
 
-            <ValidatedFormSelect
-              className="platform-input"
-              disabled={submitting}
-              id="newRatPlatform"
-              invalidMessage={INVALID_PLATFORM_MESSAGE}
-              name="platform"
-              label="Platform"
-              onChange={this._handleFieldChange}
-              options={{
-                pc: 'PC',
-                xb: 'XB1',
-                ps: 'PS4',
-              }}
-              required
-              value={platform} />
-          </div>
-        )}
+              <ValidatedFormSelect
+                required
+                className="platform-input"
+                disabled={submitting}
+                id="newRatPlatform"
+                invalidMessage={INVALID_PLATFORM_MESSAGE}
+                label="Platform"
+                name="platform"
+                options={platformSelectOptions}
+                value={platform}
+                onChange={this._handleFieldChange} />
+            </div>
+          )
+        }
         <div className="form-control">
-          {formOpen && (
-            <button
-              aria-label="submit new commander"
-              className="green compact square"
-              disabled={!this.canSubmit}
-              onClick={this._handleSubmit}
-              type="button">
-              <FontAwesomeIcon icon="check" fixedWidth />
-            </button>
-          )}
+          {
+            formOpen && (
+              <button
+                aria-label="submit new commander"
+                className="green compact square"
+                disabled={!this.canSubmit}
+                type="button"
+                onClick={this._handleSubmit}>
+                <FontAwesomeIcon fixedWidth icon="check" />
+              </button>
+            )
+          }
           <button
             aria-label={formOpen ? 'cancel new commander creation' : 'add commander'}
             className={`compact square ${formOpen ? '' : 'green'}`}
-            onClick={this._handleToggle}
             title={formOpen ? 'Cancel' : 'Add new commander'}
-            type="button">
-            <FontAwesomeIcon icon={formOpen ? 'times' : 'plus'} fixedWidth />
+            type="button"
+            onClick={this._handleToggle}>
+            <FontAwesomeIcon fixedWidth icon={formOpen ? 'times' : 'plus'} />
           </button>
         </div>
       </form>
@@ -191,7 +197,9 @@ class AddRatForm extends React.Component {
       validity,
     } = this.state
 
-    const isValid = Object.values(validity).filter((validityMember) => validityMember).length
+    const isValid = Object.values(validity).filter((validityMember) => {
+      return validityMember
+    }).length
 
     return name && platform && isValid
   }
@@ -206,9 +214,11 @@ class AddRatForm extends React.Component {
 
   static mapDispatchToProps = ['createRat']
 
-  static mapStateToProps = (state, ownProps) => ({
-    userId: ownProps.userId || selectCurrentUserId(state),
-  })
+  static mapStateToProps = (state, ownProps) => {
+    return {
+      userId: ownProps.userId || selectCurrentUserId(state),
+    }
+  }
 }
 
 

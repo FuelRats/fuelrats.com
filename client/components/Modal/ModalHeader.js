@@ -6,20 +6,24 @@ import React from 'react'
 
 
 
-const ModalHeader = ({ hideClose, onClose, title }) => (title || !hideClose) && (
-  <header className="modal-header">
-    {title && (<h3>{title}</h3>)}
+function ModalHeader ({ hideClose, onClose, title }) {
+  return (title || !hideClose) && (
+    <header className="modal-header">
+      {title && (<h3>{title}</h3>)}
 
-    {!hideClose && (
-      <button
-        className="danger button-close"
-        type="button"
-        onClick={onClose}>
-        <FontAwesomeIcon icon="times" fixedWidth />
-      </button>
-    )}
-  </header>
-)
+      {
+        !hideClose && (
+          <button
+            className="danger button-close"
+            type="button"
+            onClick={onClose}>
+            <FontAwesomeIcon fixedWidth icon="times" />
+          </button>
+        )
+      }
+    </header>
+  )
+}
 
 
 

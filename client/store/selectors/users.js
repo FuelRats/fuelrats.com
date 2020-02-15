@@ -1,10 +1,9 @@
-const selectUserById = (state, { userId }) => (state.users[userId] || null)
+export const selectUserById = (state, { userId }) => {
+  return state.users[userId] || null
+}
 
 
-
-
-
-const selectAvatarByUserId = (state, props) => {
+export const selectAvatarByUserId = (state, props) => {
   const user = selectUserById(state, props)
 
   if (!user) {
@@ -12,13 +11,4 @@ const selectAvatarByUserId = (state, props) => {
   }
 
   return user.attributes.image || `//api.adorable.io/avatars/${user.id}`
-}
-
-
-
-
-
-export {
-  selectUserById,
-  selectAvatarByUserId,
 }

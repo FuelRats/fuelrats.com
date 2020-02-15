@@ -6,16 +6,20 @@ import { frApiRequest } from './services'
 
 
 
-export const checkDecalEligibility = () => frApiRequest(
-  actionTypes.decals.read,
-  { url: '/decals/check' },
-)
+export const checkDecalEligibility = () => {
+  return frApiRequest(
+    actionTypes.decals.read,
+    { url: '/decals/check' },
+  )
+}
 
 
 
 
 
-export const redeemDecal = () => frApiRequest(
-  actionTypes.decals.redeem,
-  { url: '/decals/redeem' },
-)
+export const redeemDecal = () => {
+  return frApiRequest(
+    actionTypes.decals.redeem,
+    { url: '/decals/redeem' },
+  )
+}

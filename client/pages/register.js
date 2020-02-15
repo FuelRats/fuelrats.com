@@ -15,6 +15,7 @@ import {
   ircNickPattern,
   passwordPattern,
 } from '../data/RegExpr'
+import platformRadioOptions from '../data/platformRadioOptions'
 import { Link } from '../routes'
 import { actions, connect } from '../store'
 
@@ -62,21 +63,18 @@ class Register extends React.Component {
 
     const value = type === 'checkbox' ? target.checked : target.value
 
-    if (name !== 'password') {
-      sessionStorage.setItem(`register.${name}`, value)
-    }
-
     this.setState({
       [name]: value,
       ...(name === 'acceptTerms' ? { acceptPrivacy: value } : {}),
     })
   }
 
-  _handleTOSAccept = () => this.setState({ acceptTerms: true })
+  _handleTOSAccept = () => {
+    return this.setState({ acceptTerms: true })
+  }
 
   _handlePrivacyAccept = () => {
     this.setState({ acceptPrivacy: true })
-    sessionStorage.setItem('register.acceptTerms', true)
   }
 
   _handleTOSChange = () => {
@@ -97,7 +95,6 @@ class Register extends React.Component {
 
   _handleRadioInputChange = ({ target }) => {
     const { name, value } = target
-    sessionStorage.setItem(`register.${name}`, value)
     this.setState({ [name]: value })
   }
 
@@ -149,17 +146,6 @@ class Register extends React.Component {
     await actions.getWordpressPage('privacy-policy')(store.dispatch)
   }
 
-  componentDidMount () {
-    this.setState((state) => ({
-      acceptTerms: sessionStorage.getItem('register.acceptTerms'),
-      acceptPrivacy: sessionStorage.getItem('register.acceptTerms'),
-      email: sessionStorage.getItem('register.email') || state.email,
-      nickname: sessionStorage.getItem('register.nickname') || state.nickname,
-      ratName: sessionStorage.getItem('register.ratName') || state.ratName,
-      ratPlatform: sessionStorage.getItem('register.ratPlatform') || state.ratPlatform,
-    }))
-  }
-
   render () {
     const {
       checkedTOS,
@@ -182,129 +168,123 @@ class Register extends React.Component {
           onSubmit={this._handleSubmit}>
 
           <fieldset data-name="Email">
-            <h5>This registration page is to become a Fuel Rat! <br /> Need fuel? No need to register! Just click "Get Help" in the sidebar!</h5><br />
+            <h5>{'This registration page is to become a Fuel Rat!'}<br />{'Need fuel? No need to register! Just click "Get Help" in the sidebar!'}</h5>
+
+            <br />
+
             <label htmlFor="email">
-              Email
+              {'Email'}
             </label>
 
             <input
-              aria-label="email"
-              id="email"
-              name="email"
-              disabled={submitting}
-              onChange={this._handleChange}
-              placeholder="i.e. surly_badger@gmail.com"
               ref={this._emailRef}
               required
+              aria-label="email"
+              disabled={submitting}
+              id="email"
+              name="email"
+              placeholder="i.e. surly_badger@gmail.com"
               type="email"
-              value={email} />
+              value={email}
+              onChange={this._handleChange} />
           </fieldset>
 
           <fieldset data-name="Password">
             <label htmlFor="password">
-              Password
+              {'Password'}
             </label>
 
             <PasswordField
+              ref={this._passwordRef}
+              required
+              showStrength
+              showSuggestions
               disabled={submitting}
               id="password"
               maxLength="42"
               minLength="5"
               name="password"
-              onChange={this._handleChange}
               pattern={passwordPattern}
               placeholder="Use a strong password to keep your account secure"
-              ref={this._passwordRef}
-              required
-              showStrength
-              showSuggestions />
+              onChange={this._handleChange} />
           </fieldset>
 
           <fieldset data-name="IRC Nick">
             <label htmlFor="nickname">
-              What's your <strong>base</strong> IRC nickname? <small>Base means your nickname without any suffixes, i.e. Surly_Badger instead of Surly_Badger[PC].</small>
+              {"What's your "}
+              <strong>{'base'}</strong>
+              {' IRC nickname? '}
+              <small>{'Base means your nickname without any suffixes, i.e. Surly_Badger instead of Surly_Badger[PC].'}</small>
             </label>
 
             <input
+              ref={this._nicknameRef}
+              required
               aria-label="Base IRC Nickname"
               disabled={submitting}
               id="nickname"
               name="nickname"
-              onChange={this._handleChange}
               pattern={ircNickPattern}
               placeholder="Surly_Badger"
-              ref={this._nicknameRef}
-              required
               type="text"
-              value={nickname} />
+              value={nickname}
+              onChange={this._handleChange} />
           </fieldset>
 
           <fieldset data-name="CMDR Name">
             <label htmlFor="ratName">
-              What's your CMDR name? <small>If you have more than one CMDR, you can add the rest later.</small>
+              {"What's your CMDR name? "}
+              <small>{'If you have more than one CMDR, you can add the rest later.'}</small>
             </label>
 
             <input
+              ref={this._ratNameRef}
+              required
               aria-label="Commander name"
               disabled={submitting}
               id="ratName"
-              name="ratName"
-              onChange={this._handleChange}
-              minLength={1}
               maxLength={18}
+              minLength={1}
+              name="ratName"
               pattern={commanderPattern}
               placeholder="Surly Badger"
-              ref={this._ratNameRef}
-              required
               type="text"
-              value={ratName} />
+              value={ratName}
+              onChange={this._handleChange} />
           </fieldset>
 
           <fieldset data-name="Platform">
-            <label>What platform is your CMDR on?</label>
+            <label>{'What platform is your CMDR on?'}</label>
 
             <RadioInput
-              disabled={submitting}
               className="ratPlatform"
-              name="ratPlatform"
+              disabled={submitting}
               id="ratPlatform"
+              name="ratPlatform"
+              options={platformRadioOptions}
               value={ratPlatform}
-              onChange={this._handleRadioInputChange}
-              options={[
-                {
-                  value: 'pc',
-                  label: 'PC',
-                },
-                {
-                  value: 'xb',
-                  label: 'Xbox',
-                },
-                {
-                  value: 'ps',
-                  label: 'PS4',
-                },
-              ]} />
+              onChange={this._handleRadioInputChange} />
           </fieldset>
 
           <fieldset data-name="Agreements">
             <span>
               <input
                 aria-label="Terms of"
+                checked={Boolean(acceptTerms && acceptPrivacy)}
                 className="large"
                 disabled={submitting}
                 id="acceptTerms"
                 name="acceptTerms"
                 type="checkbox"
-                checked={Boolean(acceptTerms && acceptPrivacy)}
                 onChange={this._handleTOSChange} />
               <label htmlFor="acceptTerms">
                 {'I agree that I have read and agree to the  '}
-                <Link route="wordpress" params={{ slug: 'terms-of-service' }}>
-                  <a>Terms of Service</a>
+                <Link params={{ slug: 'terms-of-service' }} route="wordpress">
+                  <a>{'Terms of Service'}</a>
                 </Link>
                 {' and '}
-                <Link route="wordpress" params={{ slug: 'privacy-policy' }}>
-                  <a>Privacy Policy</a>
+                <Link params={{ slug: 'privacy-policy' }} route="wordpress">
+                  <a>{'Privacy Policy'}</a>
                 </Link>
                 {', and that I am 13 years of age or older.'}
               </label>
@@ -314,8 +294,8 @@ class Register extends React.Component {
           <menu type="toolbar">
             <div className="primary position-vertical">
               <button
-                disabled={submitting || !this.canRegister}
                 className="green"
+                disabled={submitting || !this.canRegister}
                 title="Don't want to rescue people? You're in the wrong place."
                 type="submit">
                 {submitting ? 'Submitting...' : 'I want to rescue others!'}
@@ -328,18 +308,18 @@ class Register extends React.Component {
 
 
         <WordpressTermsModal
+          checkboxLabel="I have read and agree to these Terms of Service"
           isOpen={checkedTOS && !acceptTerms && !acceptPrivacy}
-          onClose={this._handleTOSAccept}
-          title="Terms of Service"
           slug="terms-of-service"
-          checkboxLabel="I have read and agree to these Terms of Service" />
+          title="Terms of Service"
+          onClose={this._handleTOSAccept} />
 
         <WordpressTermsModal
+          checkboxLabel="I have read and agree to this Privacy Policy"
           isOpen={checkedTOS && acceptTerms && !acceptPrivacy}
-          onClose={this._handlePrivacyAccept}
-          title="Privacy Policy"
           slug="privacy-policy"
-          checkboxLabel="I have read and agree to this Privacy Policy" />
+          title="Privacy Policy"
+          onClose={this._handlePrivacyAccept} />
 
       </PageWrapper>
     )

@@ -13,13 +13,15 @@ import UserNicknamesPanel from './UserNicknamesPanel'
 
 
 
-const UserOverview = () => (
-  <div className="user-overview-tab">
-    <UserNicknamesPanel />
+function UserOverview () {
+  return (
+    <div className="user-overview-tab">
+      <UserNicknamesPanel />
 
-    <UserDecalPanel />
-  </div>
-)
+      <UserDecalPanel />
+    </div>
+  )
+}
 
 
 

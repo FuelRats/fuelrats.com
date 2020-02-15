@@ -16,7 +16,6 @@ const {
   BUILD_VCS_BRANCH,
   BUILD_VCS_NUMBER,
   FRDC_API_URL,
-  FRDC_CAPTCHA_PK,
   FRDC_PUBLIC_URL,
   FRDC_STRIPE_API_PK,
   PORT,
@@ -34,11 +33,13 @@ const FINAL_PUBLIC_URL = FRDC_PUBLIC_URL || `http://localhost:${PORT || DEFAULT_
 
 
 module.exports = withWorkers(withSass({
-  generateBuildId: () => (
-    TEAMCITY
-      ? BUILD_VCS_NUMBER.toLowerCase()
-      : `DEV_${crypto.randomBytes(DEV_BUILD_ID_LENGTH).toString('hex').toLowerCase()}`
-  ),
+  generateBuildId: () => {
+    return (
+      TEAMCITY
+        ? BUILD_VCS_NUMBER.toLowerCase()
+        : `DEV_${crypto.randomBytes(DEV_BUILD_ID_LENGTH).toString('hex').toLowerCase()}`
+    )
+  },
   publicRuntimeConfig: {
     local: {
       publicUrl: FINAL_PUBLIC_URL,
@@ -54,9 +55,6 @@ module.exports = withWorkers(withSass({
       stripe: {
         url: `${FINAL_PUBLIC_URL}/st-api`,
         public: FRDC_STRIPE_API_PK || null,
-      },
-      recaptcha: {
-        public: FRDC_CAPTCHA_PK || null,
       },
     },
   },
@@ -86,9 +84,11 @@ module.exports = withWorkers(withSass({
   },
   sassLoaderOptions: {
     includePaths: ['styles', 'node_modules']
-      .map((dir) => path.join(__dirname, dir))
-      .map((dir) => glob.sync(dir))
-      .reduce((acc, dir) => acc.concat(dir), []),
+      .reduce((acc, dir) => {
+        return acc.concat(
+          glob.sync(path.join(__dirname, dir)),
+        )
+      }, []),
   },
   workerLoaderOptions: { inline: true },
 }))
