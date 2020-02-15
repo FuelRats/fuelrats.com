@@ -17,6 +17,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Wrap all JSX string literals in a container (New ESLint Rule) - [#221][]
 * Enforce consistent newline rules for JSX code containers (New ESLint Rule) - [#221][]
 * Begin Splitting up blog list into different components (for our sanity) - [#221][]
+* A ton of other style changes brought upon us by the release of `@fuelrats/eslint-config` v2 - [#221][]
 
 ### 🐛 Fixed
 
