@@ -1002,15 +1002,15 @@
   dependencies:
     "@babel/plugin-proposal-decorators" "^7.8.3"
 
-"@fuelrats/eslint-config-react@^2.0.0-canary.2":
-  version "2.0.0-canary.2"
-  resolved "https://registry.yarnpkg.com/@fuelrats/eslint-config-react/-/eslint-config-react-2.0.0-canary.2.tgz#a87b50db33798895752a4d3184ea10630c8401d1"
-  integrity sha512-Roz3h2Jm1RTyjEGV3PvvhDvcTnkVV9nFOsekPXXwY8jQnbk8g2gRtGPJxV5nEYA7G3aghiwzZwmHmJjTQMLiOw==
+"@fuelrats/eslint-config-react@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@fuelrats/eslint-config-react/-/eslint-config-react-2.0.0.tgz#a95001a4ac04f9d9cbbab90d19c86ca6153c800e"
+  integrity sha512-tPolYxgr4uhkgvSh0X/SizNTJrc9ZIJykSi49IXC3fYVvuu9TWLxbtiujeuo95NC6hsXJTOi3rCggiEMNohCUA==
 
-"@fuelrats/eslint-config@^2.0.0-canary.2":
-  version "2.0.0-canary.2"
-  resolved "https://registry.yarnpkg.com/@fuelrats/eslint-config/-/eslint-config-2.0.0-canary.2.tgz#d73e6ae51370e7a1c4f614c5f76832dbb76d84b2"
-  integrity sha512-GquZ1o5YlMEnZ8gQCHKXjPYB1n9BhpAexAkZP44nYZ0JYmpLSGdMCqWn/Eu6kYuPgVfG+M7mHCGirxKnuXsu1w==
+"@fuelrats/eslint-config@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@fuelrats/eslint-config/-/eslint-config-2.0.0.tgz#600aadb19a833bb6fe061f992883cb271db5b348"
+  integrity sha512-1FlR3KKSdpJJzxz0hrNwtQqDOcmLhUc5DArTTQThaz0wGnF//RKnHWYFnt2ftazyq50W1XDDotxfMBfvodlxZg==
   dependencies:
     eslint-restricted-globals "^0.2.0"
 
@@ -4458,10 +4458,10 @@ immediate@~3.0.5:
   resolved "https://registry.yarnpkg.com/immediate/-/immediate-3.0.6.tgz#9db1dbd0faf8de6fbe0f5dd5e56bb606280de69b"
   integrity sha1-nbHb0Pr43m++D13V5Wu2BigN5ps=
 
-immer@^5.3.4:
-  version "5.3.4"
-  resolved "https://registry.yarnpkg.com/immer/-/immer-5.3.4.tgz#84edcfc0033e0db076a986fa9cdf28d035e97a67"
-  integrity sha512-2SmrJY1MviStaIM+nGWGQVrSxICx5QnzrgtDQgIv0vAka9urVnOR4ZGNFFXo04cnZUqQ2T1W7MjHVTVJoYujFg==
+immer@^5.3.6:
+  version "5.3.6"
+  resolved "https://registry.yarnpkg.com/immer/-/immer-5.3.6.tgz#51eab8cbbeb13075fe2244250f221598818cac04"
+  integrity sha512-pqWQ6ozVfNOUDjrLfm4Pt7q4Q12cGw2HUZgry4Q5+Myxu9nmHRkWBpI0J4+MK0AxbdFtdMTwEGVl7Vd+vEiK+A==
 
 import-cwd@^2.0.0:
   version "2.1.0"
@@ -5195,18 +5195,18 @@ koa-no-trailing-slash@^2.1.0:
   resolved "https://registry.yarnpkg.com/koa-no-trailing-slash/-/koa-no-trailing-slash-2.1.0.tgz#a6a090cd4e77f72d47bec75be8b6b895f6a27a12"
   integrity sha1-pqCQzU539y1Hvsdb6La4lfaiehI=
 
-koa-proxies@0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/koa-proxies/-/koa-proxies-0.9.0.tgz#b4324b7a4d65dda67127f21ea19e54d72f8e80d9"
-  integrity sha512-wc1fFpL/zlLjKXbhkdAFBea3UMCuC+LVihHUqPkt6JqYJqpH5T1SGmMvrToQaDnNC5PWx/tNc2xMuY2nmZyDiA==
+koa-proxies@0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/koa-proxies/-/koa-proxies-0.11.0.tgz#43dde4260080f7cb0f284655f85cf654bbe9ec84"
+  integrity sha512-iXGRADBE0fM7g7AttNOlLZ/cCFKXeVMHbFJKIRb0dUCrSYXi02loyVSdBlKlBQ5ZfVKJLo9Q9FyqwVTp1poVVA==
   dependencies:
     http-proxy "^1.16.2"
     path-match "^1.2.4"
 
-koa-router@^8.0.6:
-  version "8.0.6"
-  resolved "https://registry.yarnpkg.com/koa-router/-/koa-router-8.0.6.tgz#5e808ee69dad4fd62d647102aac42be09e4425b0"
-  integrity sha512-qBrxDisLkuIPfasyrEtSPAtaP49ILfjDTJJoAiVC96uWM4PGM12XuFBY/iSm43zQFry1XFFE2OgVRaV2IrBnMg==
+koa-router@^8.0.7:
+  version "8.0.7"
+  resolved "https://registry.yarnpkg.com/koa-router/-/koa-router-8.0.7.tgz#40a6a7ca95f17e3809181d93f5d6d8f2ec39f206"
+  integrity sha512-g1nwr0nAQ/WgtY68IAx0bh2Z8eOX8dKypG55StMAYc0vs+1m87/fUrFKi0quJNAATzMhsQ5GFEC1XaAFvGB37g==
   dependencies:
     debug "^4.1.1"
     http-errors "^1.7.3"
@@ -8602,10 +8602,10 @@ strip-json-comments@^3.0.1:
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-3.0.1.tgz#85713975a91fb87bf1b305cca77395e40d2a64a7"
   integrity sha512-VTyMAUfdm047mwKl+u79WIdrZxtFtn+nBxHeb844XBQ9uMNTuTHdx2hc5RiAJYqwTj3wc/xe5HLSdJSkJ+WfZw==
 
-stripe@^8.8.0:
-  version "8.12.0"
-  resolved "https://registry.yarnpkg.com/stripe/-/stripe-8.12.0.tgz#59af76668a2be884d6d7c940d99e22fd78fb7147"
-  integrity sha512-XFjrjSn96AYr/9aU35bKY5zI99opLBpYPjYLJ3m6ArlOAPvJk810+6pOZSPRQw1Sc5lFtJ+/acOhg3oBXKm72Q==
+stripe@^8.17.0:
+  version "8.17.0"
+  resolved "https://registry.yarnpkg.com/stripe/-/stripe-8.17.0.tgz#0b3498482176db9a18eb46d7e5c4fd9397e56266"
+  integrity sha512-mYv9sSnyUW53g022ZYQO3/Hn0c3V7f5gi45vR9eHCODHDzPLP3i0cG6Kx3+q360BE84Q9u1540AYQshFzSB2Qw==
   dependencies:
     "@types/node" ">=8.1.0"
     qs "^6.6.0"
@@ -9437,10 +9437,10 @@ webpack@4.41.2:
     watchpack "^1.6.0"
     webpack-sources "^1.4.1"
 
-webpack@4.41.5:
-  version "4.41.5"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.41.5.tgz#3210f1886bce5310e62bb97204d18c263341b77c"
-  integrity sha512-wp0Co4vpyumnp3KlkmpM5LWuzvZYayDwM2n17EHFr4qxBBbRokC7DJawPJC7TfSFZ9HZ6GsdH40EBj4UV0nmpw==
+webpack@4.41.6:
+  version "4.41.6"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.41.6.tgz#12f2f804bf6542ef166755050d4afbc8f66ba7e1"
+  integrity sha512-yxXfV0Zv9WMGRD+QexkZzmGIh54bsvEs+9aRWxnN8erLWEOehAKUTeNBoUbA6HPEZPlRo7KDi2ZcNveoZgK9MA==
   dependencies:
     "@webassemblyjs/ast" "1.8.5"
     "@webassemblyjs/helper-module-context" "1.8.5"
