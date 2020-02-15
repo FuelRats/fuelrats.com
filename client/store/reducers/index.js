@@ -5,9 +5,9 @@ import { combineReducers } from 'redux'
 
 
 
-import chainReducers from '../../../../fuelrats.com-redux-utils/dist/chainReducers'
-import withDefaultReducers from '../../../../fuelrats.com-redux-utils/dist/withDefaultReducers'
 import initialState from '../initialState'
+import chainReducers from '../utility/chainReducers'
+import withDefaultReducers from '../utility/withDefaultReducers'
 import createJSONAPIResourceReducer from './APIResource'
 
 
