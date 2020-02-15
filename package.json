@@ -9,8 +9,7 @@
     "build": "next build client",
     "dev": "yarn node --inspect --harmony server/server.js",
     "eslint": "eslint .",
-    "stylelint": "stylelint \"client/scss/**/*.scss\"",
-    "postinstall": "npm rebuild node-sass"
+    "stylelint": "stylelint \"client/scss/**/*.scss\""
   },
   "devDependencies": {
     "@fuelrats/eslint-config": "^2.0.0",
@@ -44,7 +43,7 @@
     "@fortawesome/react-fontawesome": "^0.1.8",
     "@fuelrats/next-named-routes": "^2.2.0",
     "@react-spring/web": "9.0.0-beta.34",
-    "@zeit/next-sass": "1.0.1",
+    "@zeit/next-css": "^1.0.1",
     "@zeit/next-workers": "1.0.1-canary.1",
     "autoprefixer": "^9.7.4",
     "axios": "^0.19.2",
@@ -52,6 +51,7 @@
     "content-security-policy-builder": "^2.1.0",
     "cross-env": "^7.0.0",
     "dotenv": "^8.2.0",
+    "fibers": "^4.0.2",
     "find-remove": "^2.0.0",
     "glob": "^7.1.6",
     "hoist-non-react-statics": "^3.3.2",
@@ -71,7 +71,6 @@
     "next": "9.2.1",
     "next-cookies": "^2.0.3",
     "next-redux-wrapper": "4.0.1",
-    "node-sass": "4.13.1",
     "nprogress": "^0.2.0",
     "postcss-easy-import": "^3.0.0",
     "prop-types": "^15.7.2",
@@ -85,6 +84,8 @@
     "redux-immutable-state-invariant": "^2.1.0",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
+    "sass": "^1.25.0",
+    "sass-loader": "^8.0.2",
     "stripe": "^8.17.0",
     "uuid": "^3.4.0",
     "webpack": "4.41.6",
