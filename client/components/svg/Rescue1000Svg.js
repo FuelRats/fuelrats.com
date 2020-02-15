@@ -23,7 +23,7 @@ const paths = [
 
 
 function Rescue1000Svg (props) {
-  return <Svg {...props} viewBox="0 0 256 256" path={paths} />
+  return <Svg {...props} path={paths} viewBox="0 0 256 256" />
 }
 
 

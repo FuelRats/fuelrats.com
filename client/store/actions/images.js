@@ -5,29 +5,20 @@ import actionTypes from '../actionTypes'
 
 
 
-const getImage = (payload) => (dispatch) => {
-  imageLoader(dispatch).postMessage(payload)
+export const getImage = (payload) => {
+  return (dispatch) => {
+    imageLoader(dispatch).postMessage(payload)
+  }
 }
 
+export const disposeImage = ({ id, url }) => {
+  return (dispatch) => {
+    window.URL.revokeObjectURL(url)
 
-
-
-
-const disposeImage = ({ id, url }) => (dispatch) => {
-  window.URL.revokeObjectURL(url)
-
-  return dispatch({
-    type: actionTypes.images.dispose,
-    status: 'success',
-    payload: id,
-  })
-}
-
-
-
-
-
-export {
-  getImage,
-  disposeImage,
+    return dispatch({
+      type: actionTypes.images.dispose,
+      status: 'success',
+      payload: id,
+    })
+  }
 }

@@ -1,11 +1,16 @@
 import getConfig from 'next/config'
 import { combineReducers } from 'redux'
 
-import initialState from '../initialState'
-import chainReducers from '../utility/chainReducers'
-import withDefaultReducers from '../utility/withDefaultReducers'
 
+
+
+
+import chainReducers from '../../../../fuelrats.com-redux-utils/dist/chainReducers'
+import withDefaultReducers from '../../../../fuelrats.com-redux-utils/dist/withDefaultReducers'
+import initialState from '../initialState'
 import createJSONAPIResourceReducer from './APIResource'
+
+
 import blogs from './blogs'
 import decals from './decals'
 import error from './error'
@@ -50,7 +55,9 @@ const apiResourceReducer = createJSONAPIResourceReducer(localApiUrl, initialStat
   users: 'users',
   profiles: {
     target: 'users',
-    resourceReducer: (resource) => ({ ...resource, type: 'users' }),
+    resourceReducer: (resource) => {
+      return { ...resource, type: 'users' }
+    },
   },
 })
 

@@ -15,7 +15,14 @@ import { selectSession } from '../store/selectors'
 
 
 // Constants
+const userIsLoggedIn = (props) => {
+  return props.loggedIn
+}
+
+
 const allowedLinkKeys = ['href', 'params', 'route']
+
+
 const navItems = [
   {
     key: 'blog',
@@ -72,7 +79,7 @@ const navItems = [
   {
     key: 'rat-links',
     title: 'Rat Links',
-    condition: (props) => props.loggedIn,
+    condition: userIsLoggedIn,
     subnav: [
       {
         external: true,
@@ -89,6 +96,10 @@ const navItems = [
     ],
   },
 ]
+
+
+
+
 
 @connect
 class Nav extends React.Component {
@@ -108,7 +119,11 @@ class Nav extends React.Component {
     Private Methods
   \***************************************************************************/
 
-  _handleSubnavChange = ({ target: { id } }) => this.setState((prevState) => ({ openSubNav: prevState.openSubNav === id ? '' : id }))
+  _handleSubnavChange = ({ target: { id } }) => {
+    return this.setState((prevState) => {
+      return { openSubNav: prevState.openSubNav === id ? '' : id }
+    })
+  }
 
 
 
@@ -172,13 +187,13 @@ class Nav extends React.Component {
       renderedSubnavToggle = (
         <input
           aria-hidden
-          className="subnav-toggle"
           hidden
-          id={key}
           checked={openSubNav === key}
-          onChange={this._handleSubnavChange}
+          className="subnav-toggle"
+          id={key}
           name="subnav"
-          type="checkbox" />
+          type="checkbox"
+          onChange={this._handleSubnavChange} />
       )
     } else if (item.disabled) {
       renderedItemTitle = (
@@ -217,7 +232,9 @@ class Nav extends React.Component {
 
   static mapDispatchToProps = ['setFlag']
 
-  static mapStateToProps = (state) => selectSession(state)
+  static mapStateToProps = (state) => {
+    return selectSession(state)
+  }
 }
 
 

@@ -6,65 +6,54 @@ import { frApiRequest } from './services'
 
 
 
-const addNickname = (userId, nickname, password) => frApiRequest(
-  actionTypes.nicknames.create,
-  {
-    url: '/nicknames',
-    method: 'post',
-    data: {
-      nickname,
-      password,
+export const addNickname = (userId, nickname, password) => {
+  return frApiRequest(
+    actionTypes.nicknames.create,
+    {
+      url: '/nicknames',
+      method: 'post',
+      data: {
+        nickname,
+        password,
+      },
     },
-  },
-  {
-    nickname,
-    userId,
-  },
-)
+    {
+      nickname,
+      userId,
+    },
+  )
+}
 
 
+export const deleteNickname = (nickname) => {
+  return frApiRequest(
+    actionTypes.nicknames.delete,
+    {
+      url: `/nicknames/${nickname}`,
+      method: 'delete',
+    },
+    {
+      nickname,
+    },
+  )
+}
 
 
-
-const deleteNickname = (nickname) => frApiRequest(
-  actionTypes.nicknames.delete,
-  {
-    url: `/nicknames/${nickname}`,
-    method: 'delete',
-  },
-  {
-    nickname,
-  },
-)
+export const getUserProfile = () => {
+  return frApiRequest(
+    actionTypes.session.read,
+    { url: '/profile' },
+  )
+}
 
 
-
-
-const getUserProfile = () => frApiRequest(
-  actionTypes.session.read,
-  { url: '/profile' },
-)
-
-
-
-
-
-const updateUser = (userId, data) => frApiRequest(
-  actionTypes.users.update,
-  {
-    url: `/users/${userId}`,
-    method: 'put',
-    data,
-  },
-)
-
-
-
-
-
-export {
-  addNickname,
-  deleteNickname,
-  getUserProfile,
-  updateUser,
+export const updateUser = (userId, data) => {
+  return frApiRequest(
+    actionTypes.users.update,
+    {
+      url: `/users/${userId}`,
+      method: 'put',
+      data,
+    },
+  )
 }

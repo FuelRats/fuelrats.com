@@ -1,13 +1,8 @@
-const selectWordpressPages = (state) => state.wordpress.pages
+export const selectWordpressPages = (state) => {
+  return state.wordpress.pages
+}
 
 
-const selectWordpressPageBySlug = (state, { slug }) => state.wordpress.pages[slug]
-
-
-
-
-
-export {
-  selectWordpressPages,
-  selectWordpressPageBySlug,
+export const selectWordpressPageBySlug = (state, { slug }) => {
+  return state.wordpress.pages[slug]
 }

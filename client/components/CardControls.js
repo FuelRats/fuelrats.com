@@ -17,7 +17,9 @@ function CardControls (props) {
   const {
     canDelete = true,
     canSubmit,
-    deleteConfirmMessage = () => null,
+    deleteConfirmMessage = () => {
+      return null
+    },
     deleteMode = false,
     editMode = false,
     controlType,
@@ -54,19 +56,19 @@ function CardControls (props) {
             <button
               className={`icon ${editMode || deleteMode ? 'green' : ''}`}
               name="edit"
-              onClick={onEditClick}
               title={`Edit ${controlType}`}
-              type="button">
-              <FontAwesomeIcon icon="pen" fixedWidth />
+              type="button"
+              onClick={onEditClick}>
+              <FontAwesomeIcon fixedWidth icon="pen" />
             </button>
             <button
               className="icon"
               disabled={!canDelete}
               name="delete"
-              onClick={onDeleteClick}
               title={canDelete ? `Delete ${controlType}` : `You cannot delete this ${controlType}.`}
-              type="button">
-              <FontAwesomeIcon icon="trash" fixedWidth />
+              type="button"
+              onClick={onDeleteClick}>
+              <FontAwesomeIcon fixedWidth icon="trash" />
             </button>
           </>
         )
@@ -79,18 +81,18 @@ function CardControls (props) {
               className="icon green"
               disabled={editMode ? !canSubmit : false}
               name="confirm"
-              onClick={onSubmitClick}
               title={editModeSubmitTitle}
-              type="button">
-              <FontAwesomeIcon icon="check" fixedWidth />
+              type="button"
+              onClick={onSubmitClick}>
+              <FontAwesomeIcon fixedWidth icon="check" />
             </button>
             <button
               className="icon"
               name="cancel"
-              onClick={onCancelClick}
               title={editModeCancelTitle}
-              type="button">
-              <FontAwesomeIcon icon="times" fixedWidth />
+              type="button"
+              onClick={onCancelClick}>
+              <FontAwesomeIcon fixedWidth icon="times" />
             </button>
           </>
         )

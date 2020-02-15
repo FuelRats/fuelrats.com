@@ -39,8 +39,8 @@ class TabbedPanel extends React.Component {
 
     return (
       <li
-        className={classes}
         key={key}
+        className={classes}
         name={key}
         onClick={this._handleTabClick}
         onKeyPress={this._handleTabClick}>

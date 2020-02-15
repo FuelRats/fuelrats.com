@@ -88,13 +88,13 @@ class AddNicknameForm extends React.Component {
           id="AddNickname"
           label="Nickname"
           name="nickname"
-          onChange={this._handleChange}
-          placeholder="Add a nickname..."
           pattern={ircNickPattern}
           patternMessage="Nickname must start with a letter, contain no spaces, and be between 2-30 characters"
+          placeholder="Add a nickname..."
           type="text"
-          value={nickname}>
-          <InfoBubble id="NickRegisterReminder" header="reminder">
+          value={nickname}
+          onChange={this._handleChange}>
+          <InfoBubble header="reminder" id="NickRegisterReminder">
             {"You cannot register a nick that's in use on IRC. Switch to a temporary one before registering!"}
           </InfoBubble>
         </ValidatedFormInput>
@@ -106,18 +106,18 @@ class AddNicknameForm extends React.Component {
           id="AddNicknamePass"
           label="NicknamePass"
           name="password"
-          onChange={this._handleChange}
           placeholder="IRC Password"
           title="This is the password you use to identify with in IRC"
           type="password"
-          value={password} />
+          value={password}
+          onChange={this._handleChange} />
 
         <button
           aria-label="submit new nickname"
           className="green icon"
           disabled={!nickname || !password || submitting}
           type="submit">
-          <FontAwesomeIcon icon="check" fixedWidth />
+          <FontAwesomeIcon fixedWidth icon="check" />
         </button>
       </form>
     )
@@ -133,9 +133,11 @@ class AddNicknameForm extends React.Component {
 
   static mapDispatchToProps = ['addNickname']
 
-  static mapStateToProps = (state) => ({
-    user: withCurrentUserId(selectUserById)(state),
-  })
+  static mapStateToProps = (state) => {
+    return {
+      user: withCurrentUserId(selectUserById)(state),
+    }
+  }
 }
 
 

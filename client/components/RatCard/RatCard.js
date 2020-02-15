@@ -55,15 +55,21 @@ class RatCard extends React.Component {
   }
 
   _handleExpandShips = () => {
-    this.setState(({ shipsExpanded }) => ({
-      shipsExpanded: !shipsExpanded,
-    }))
+    this.setState(({ shipsExpanded }) => {
+      return {
+        shipsExpanded: !shipsExpanded,
+      }
+    })
   }
 
   _handleNameChange = ({ target: { value } }) => {
     this.setChanges(
-      (state, props) => ({ name: value === props.rat.attributes.name ? undefined : value }), // changes
-      (state, props) => ({ name: value && value !== props.rat.attributes.name }), // validity
+      (_, props) => {
+        return { name: value === props.rat.attributes.name ? undefined : value }
+      }, // changes
+      (_, props) => {
+        return { name: value && value !== props.rat.attributes.name }
+      }, // validity
     )
   }
 
@@ -210,11 +216,11 @@ class RatCard extends React.Component {
             <InlineEditSpan
               canEdit={editMode}
               inputClassName="dark"
-              name="name"
-              minLength={1}
               maxLength={18}
-              onChange={this._handleNameChange}
-              value={cmdrNameValue} />
+              minLength={1}
+              name="name"
+              value={cmdrNameValue}
+              onChange={this._handleNameChange} />
           </div>
           <div>
             {
@@ -269,16 +275,20 @@ class RatCard extends React.Component {
     )
   }
 
-  setChanges = (changedFields, validatedFields) => this.setState((state, props) => ({
-    changes: {
-      ...state.changes,
-      ...(typeof changedFields === 'function' ? changedFields(state, props) : changedFields),
-    },
-    validity: {
-      ...state.validity,
-      ...(typeof validatedFields === 'function' ? validatedFields(state, props) : validatedFields),
-    },
-  }))
+  setChanges = (changedFields, validatedFields) => {
+    this.setState((state, props) => {
+      return {
+        changes: {
+          ...state.changes,
+          ...(typeof changedFields === 'function' ? changedFields(state, props) : changedFields),
+        },
+        validity: {
+          ...state.validity,
+          ...(typeof validatedFields === 'function' ? validatedFields(state, props) : validatedFields),
+        },
+      }
+    })
+  }
 
 
 
@@ -302,8 +312,13 @@ class RatCard extends React.Component {
       validity,
     } = this.state
 
-    const hasChanges = Object.values(changes).filter((change) => typeof change !== 'undefined').length
-    const isValid = Object.values(validity).filter((validityMember) => validityMember).length
+    const hasChanges = Object.values(changes).filter((change) => {
+      return typeof change !== 'undefined'
+    }).length
+
+    const isValid = Object.values(validity).filter((validityMember) => {
+      return validityMember
+    }).length
 
     return hasChanges && isValid
   }

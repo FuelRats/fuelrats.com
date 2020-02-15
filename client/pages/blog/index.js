@@ -60,7 +60,7 @@ class Blogs extends React.Component {
         <div className="secondary">
           {
             (page > 1) && (
-              <Link route="blog list" params={{ author, category, page: Math.max(1, page - 1) }}>
+              <Link params={{ author, category, page: Math.max(1, page - 1) }} route="blog list">
                 <a className="button">{'Previous Page'}</a>
               </Link>
             )
@@ -70,7 +70,7 @@ class Blogs extends React.Component {
         <div className="primary">
           {
             (page < totalPages) && (
-              <Link route="blog list" params={{ author, category, page: Math.min(page + 1, totalPages) }}>
+              <Link params={{ author, category, page: Math.min(page + 1, totalPages) }} route="blog list">
                 <a className="button">{'Next Page'}</a>
               </Link>
             )
@@ -157,11 +157,13 @@ class Blogs extends React.Component {
         <div className="page-content">
           <ol className="article-list loading">
             {
-              !retrieving && Boolean(blogs.length) && blogs.map((blog) => (
-                <li key={blog.id}>
-                  <ArticleCard blogId={blog.id} renderMode="excerpt" />
-                </li>
-              ))
+              !retrieving && Boolean(blogs.length) && blogs.map((blog) => {
+                return (
+                  <li key={blog.id}>
+                    <ArticleCard blogId={blog.id} renderMode="excerpt" />
+                  </li>
+                )
+              })
             }
           </ol>
 
@@ -171,10 +173,12 @@ class Blogs extends React.Component {
     )
   }
 
-  static mapStateToProps = (state) => ({
-    blogs: selectBlogs(state),
-    ...selectBlogStatistics(state),
-  })
+  static mapStateToProps = (state) => {
+    return {
+      blogs: selectBlogs(state),
+      ...selectBlogStatistics(state),
+    }
+  }
 
   static mapDispatchToProps = ['getBlogs']
 }

@@ -20,7 +20,7 @@ const path = 'M248.26,177.042c0,0 -44.948,-20.242 -117.283,-20.689c-72.335,-0.44
 
 
 function Rescue500Svg (props) {
-  return <Svg {...props} viewBox="0 0 256 256" path={path} />
+  return <Svg {...props} path={path} viewBox="0 0 256 256" />
 }
 
 

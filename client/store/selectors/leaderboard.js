@@ -4,19 +4,21 @@ import { createSelector } from 'reselect'
 
 
 
-const selectLeaderboardLoading = (state) => state.leaderboard.loading
-
-
-const selectLeaderboard = createSelector(
-  (state) => state.leaderboard.statistics,
-  (stats) => stats.filter((rat) => rat.attributes.rescueCount > 0),
-)
-
-
-
-
-
-export {
-  selectLeaderboard,
-  selectLeaderboardLoading,
+const selectLeaderboardStatistics = (state) => {
+  return state.leaderboard.statistics
 }
+
+
+export const selectLeaderboardLoading = (state) => {
+  return state.leaderboard.loading
+}
+
+
+export const selectLeaderboard = createSelector(
+  [selectLeaderboardStatistics],
+  (statistics) => {
+    return statistics.filter((rat) => {
+      return rat.attributes.rescueCount > 0
+    })
+  },
+)

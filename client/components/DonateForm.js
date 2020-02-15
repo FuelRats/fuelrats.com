@@ -46,28 +46,30 @@ const currencyOptions = [
   },
 ]
 
-const amountOptions = (prefix) => [
-  {
-    value: 'one',
-    label: `${prefix}1.00`,
-  },
-  {
-    value: 'five',
-    label: `${prefix}5.00`,
-  },
-  {
-    value: 'ten',
-    label: `${prefix}10.00`,
-  },
-  {
-    value: 'twenty',
-    label: `${prefix}20.00`,
-  },
-  {
-    value: 'custom',
-    label: 'Custom Amount',
-  },
-]
+const amountOptions = (prefix) => {
+  return [
+    {
+      value: 'one',
+      label: `${prefix}1.00`,
+    },
+    {
+      value: 'five',
+      label: `${prefix}5.00`,
+    },
+    {
+      value: 'ten',
+      label: `${prefix}10.00`,
+    },
+    {
+      value: 'twenty',
+      label: `${prefix}20.00`,
+    },
+    {
+      value: 'custom',
+      label: 'Custom Amount',
+    },
+  ]
+}
 
 
 
@@ -95,20 +97,22 @@ class DonateForm extends React.Component {
     Private Methods
   \***************************************************************************/
 
-  _handleFieldChange = ({ target }) => this.setState(produce((draftState) => {
-    const { name } = target
-    const { value } = target
+  _handleFieldChange = ({ target }) => {
+    this.setState(produce((draftState) => {
+      const { name } = target
+      const { value } = target
 
-    if (name === 'amount' && !value.match(currencyValidator)) {
-      return
-    }
+      if (name === 'amount' && !value.match(currencyValidator)) {
+        return
+      }
 
-    if (name === 'amountType') {
-      draftState.amount = presetAmounts[value]
-    }
+      if (name === 'amountType') {
+        draftState.amount = presetAmounts[value]
+      }
 
-    draftState[name] = value.replace(/^0+/u, '')
-  }))
+      draftState[name] = value.replace(/^0+/u, '')
+    }))
+  }
 
   _handleSubmit = async (event) => {
     event.preventDefault()
@@ -215,11 +219,11 @@ class DonateForm extends React.Component {
 
             <RadioInput
               disabled={submitting}
-              name="currency"
               id="currency"
+              name="currency"
+              options={currencyOptions}
               value={currency}
-              onChange={this._handleFieldChange}
-              options={currencyOptions} />
+              onChange={this._handleFieldChange} />
           </fieldset>
 
           <fieldset>
@@ -227,11 +231,11 @@ class DonateForm extends React.Component {
 
             <RadioInput
               disabled={submitting || !currency}
-              name="amountType"
               id="amountType"
+              name="amountType"
+              options={amountOptions(currencySymbol)}
               value={amountType}
-              onChange={this._handleFieldChange}
-              options={amountOptions(currencySymbol)} />
+              onChange={this._handleFieldChange} />
           </fieldset>
 
           {
@@ -245,8 +249,8 @@ class DonateForm extends React.Component {
                   id="DonateAmount"
                   name="amount"
                   type="text"
-                  onChange={this._handleFieldChange}
-                  value={amount} />
+                  value={amount}
+                  onChange={this._handleFieldChange} />
               </fieldset>
             )
           }

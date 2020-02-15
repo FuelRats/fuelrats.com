@@ -38,7 +38,9 @@ class UserNicknamesPanel extends React.Component {
   \***************************************************************************/
 
   _handleFormVisibilityToggle = () => {
-    this.setState((state) => ({ formOpen: !state.formOpen }))
+    this.setState((state) => {
+      return { formOpen: !state.formOpen }
+    })
   }
 
   _handleDeleteNickname = async (event) => {
@@ -76,11 +78,11 @@ class UserNicknamesPanel extends React.Component {
             <button
               aria-label="add nickname"
               className={`icon ${this.state.formOpen ? '' : 'green'}`}
-              onClick={this._handleFormVisibilityToggle}
+              disabled={maxNicksReached}
               title={maxNicksReached ? 'You\'ve used all your nicknames' : 'Add new nickname'}
               type="button"
-              disabled={maxNicksReached}>
-              <FontAwesomeIcon icon={this.state.formOpen ? 'times' : 'plus'} fixedWidth />
+              onClick={this._handleFormVisibilityToggle}>
+              <FontAwesomeIcon fixedWidth icon={this.state.formOpen ? 'times' : 'plus'} />
             </button>
           </div>
         </header>
@@ -88,20 +90,21 @@ class UserNicknamesPanel extends React.Component {
         <div className="panel-content">
           <ul>
             {
-(user.attributes && user.attributes.nicknames)
-              && user.attributes.nicknames.map((nickname) => (
-                <li key={nickname}>
-                  <span>{nickname}</span>
-                  {/* <ConfirmActionButton
-                    name={nickname}
-                    onConfirm={this._handleDeleteNickname}
-                    className="icon">
-                    <FontAwesomeIcon icon="trash" fixedWidth />
-                  </ConfirmActionButton>
-                  */}
-                </li>
-              ))
-}
+              user?.attributes.nicknames.map((nickname) => {
+                return (
+                  <li key={nickname}>
+                    <span>{nickname}</span>
+                    {/* <ConfirmActionButton
+                      name={nickname}
+                      onConfirm={this._handleDeleteNickname}
+                      className="icon">
+                      <FontAwesomeIcon icon="trash" fixedWidth />
+                    </ConfirmActionButton>
+                    */}
+                  </li>
+                )
+              }) ?? null
+            }
           </ul>
         </div>
       </div>
@@ -117,9 +120,11 @@ class UserNicknamesPanel extends React.Component {
 
   static mapDispatchToProps = ['deleteNickname']
 
-  static mapStateToProps = (state) => ({
-    user: withCurrentUserId(selectUserById)(state),
-  })
+  static mapStateToProps = (state) => {
+    return {
+      user: withCurrentUserId(selectUserById)(state),
+    }
+  }
 }
 
 

@@ -25,11 +25,13 @@ function UserRatsPanel ({ user }) {
       </div>
       <div className="rat-cards-container">
         {
-          rats.data.map(({ id }) => (
-            <div key={id} className="rat-card-wrapper">
-              <RatCard ratId={id} />
-            </div>
-          ))
+          rats.data.map(({ id }) => {
+            return (
+              <div key={id} className="rat-card-wrapper">
+                <RatCard ratId={id} />
+              </div>
+            )
+          })
         }
       </div>
     </div>
@@ -40,9 +42,11 @@ function UserRatsPanel ({ user }) {
 
 
 
-UserRatsPanel.mapStateToProps = (state) => ({
-  user: withCurrentUserId(selectUserById)(state),
-})
+UserRatsPanel.mapStateToProps = (state) => {
+  return {
+    user: withCurrentUserId(selectUserById)(state),
+  }
+}
 
 
 

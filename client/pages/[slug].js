@@ -68,9 +68,11 @@ class WordpressProxy extends React.Component {
     /* eslint-enable */
   }
 
-  static mapStateToProps = (state, ownProps) => ({
-    page: selectWordpressPageBySlug(state, { slug: ownProps.query.slug }) || ownProps.query.page || null,
-  })
+  static mapStateToProps = (state, ownProps) => {
+    return {
+      page: selectWordpressPageBySlug(state, { slug: ownProps.query.slug }) || ownProps.query.page || null,
+    }
+  }
 }
 
 export default WordpressProxy

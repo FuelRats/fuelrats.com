@@ -20,7 +20,7 @@ import { actions, connect } from '../../../store'
 import {
   selectRatsByRescueId,
   selectRescueById,
-  selectRescueCanEdit,
+  selectUserCanEditRescue,
 } from '../../../store/selectors'
 
 
@@ -30,13 +30,17 @@ import {
 // Component constants
 const selectFormattedRatsByRescueId = createSelector(
   selectRatsByRescueId,
-  (rats) => (rats?.reduce((accumulator, rat) => ({
-    ...accumulator,
-    [rat.id]: {
-      ...rat,
-      value: rat.attributes.name,
-    },
-  }), {}) ?? {}),
+  (rats) => {
+    return (rats?.reduce((accumulator, rat) => {
+      return {
+        ...accumulator,
+        [rat.id]: {
+          ...rat,
+          value: rat.attributes.name,
+        },
+      }
+    }, {}) ?? {})
+  },
 )
 
 const codeRedRadioOptions = [
@@ -86,7 +90,6 @@ class Paperwork extends React.Component {
   \***************************************************************************/
 
   state = {
-    loading: !this.props.rescue,
     submitting: false,
     error: null,
     changes: {},
@@ -111,7 +114,9 @@ class Paperwork extends React.Component {
     })
   }
 
-  _handleNotesChange = (event) => this._setChanges({ notes: event.target.value })
+  _handleNotesChange = (event) => {
+    return this._setChanges({ notes: event.target.value })
+  }
 
   _handleRadioInputChange = ({ target }) => {
     const attribute = target.name
@@ -219,7 +224,9 @@ class Paperwork extends React.Component {
     }
 
     if (rats) {
-      await this.props.updateRescueRats(rescue.id, rats.map(({ id, type }) => ({ id, type })))
+      await this.props.updateRescueRats(rescue.id, rats.map(({ id, type }) => {
+        return { id, type }
+      }))
     }
 
     const { status } = await this.props.updateRescue(rescue.id, changes)
@@ -232,15 +239,21 @@ class Paperwork extends React.Component {
     Router.pushRoute('paperwork', { rescueId: rescue.id })
   }
 
-  _setChanges = (changedFields) => this.setState((prevState) => ({
-    changes: {
-      ...prevState.changes,
-      ...Object.entries(changedFields).reduce((acc, [key, value]) => ({
-        ...acc,
-        [key]: this.props.rescue.attributes[key] === value ? undefined : value,
-      }), {}),
-    },
-  }))
+  _setChanges = (changedFields) => {
+    return this.setState((prevState) => {
+      return {
+        changes: {
+          ...prevState.changes,
+          ...Object.entries(changedFields).reduce((acc, [key, value]) => {
+            return {
+              ...acc,
+              [key]: this.props.rescue.attributes[key] === value ? undefined : value,
+            }
+          }, {}),
+        },
+      }
+    })
+  }
 
 
 
@@ -249,18 +262,6 @@ class Paperwork extends React.Component {
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
-
-  async componentDidMount () {
-    const { id, rescue } = this.props
-
-    if (id && !rescue) {
-      await this.props.getRescue(id)
-    }
-
-    if (this.state.loading) {
-      this.setState({ loading: false })
-    }
-  }
 
   static renderQuote = (quote, index) => {
     const createdAt = formatAsEliteDateTime(quote.createdAt)
@@ -318,13 +319,12 @@ class Paperwork extends React.Component {
     } = this.props
 
     const {
-      loading,
       submitting,
     } = this.state
 
     const classes = ['page-content']
 
-    if (loading || submitting) {
+    if (submitting) {
       classes.push('loading', 'force')
     }
 
@@ -378,13 +378,13 @@ class Paperwork extends React.Component {
           <label htmlFor="platform">{'What platform was the rescue on?'}</label>
 
           <RadioInput
-            disabled={submitting || loading}
             className="platform"
-            name="platform"
+            disabled={submitting}
             id="platform"
+            name="platform"
+            options={platformRadioOptions}
             value={platform}
-            onChange={this._handleRadioInputChange}
-            options={platformRadioOptions} />
+            onChange={this._handleRadioInputChange} />
         </fieldset>
 
         <fieldset>
@@ -392,34 +392,34 @@ class Paperwork extends React.Component {
             {'Was the rescue successful?'}
             <a
               className="inline"
-              target="_blank"
-              rel="noopener noreferrer"
               href="https://t.fuelr.at/caseguide"
+              rel="noopener noreferrer"
+              target="_blank"
               title="How to file cases - Fuel Rats Confluence">
               <small>{' (How do I choose?)'}</small>
             </a>
           </label>
 
           <RadioInput
-            disabled={submitting || loading}
             className="outcome"
-            name="outcome"
+            disabled={submitting}
             id="outcome"
+            name="outcome"
+            options={outcomeRadioOptions}
             value={outcome}
-            onChange={this._handleRadioInputChange}
-            options={outcomeRadioOptions} />
+            onChange={this._handleRadioInputChange} />
         </fieldset>
 
         <fieldset>
           <label htmlFor="codeRed-yes">{'Was it a code red?'}</label>
           <RadioInput
-            disabled={submitting || loading}
             className="codeRed"
-            name="codeRed"
+            disabled={submitting}
             id="codeRed"
+            name="codeRed"
+            options={codeRedRadioOptions}
             value={`${codeRed}`}
-            onChange={this._handleRadioInputChange}
-            options={codeRedRadioOptions} />
+            onChange={this._handleRadioInputChange} />
         </fieldset>
 
         <fieldset>
@@ -428,12 +428,12 @@ class Paperwork extends React.Component {
           <RatTagsInput
             aria-label="Assigned rats"
             data-platform={platform}
-            disabled={submitting || loading}
+            disabled={submitting}
             name="rats"
-            onChange={this._handleRatsChange}
-            onRemove={this._handleRatsRemove}
             value={rats}
-            valueProp={getRatTag} />
+            valueProp={getRatTag}
+            onChange={this._handleRatsChange}
+            onRemove={this._handleRatsRemove} />
         </fieldset>
 
         <fieldset>
@@ -441,12 +441,12 @@ class Paperwork extends React.Component {
 
           <FirstLimpetInput
             data-single
-            disabled={submitting || loading || (outcome !== 'success')}
+            disabled={submitting || (outcome !== 'success')}
             name="firstLimpetId"
-            onChange={this._handleFirstLimpetChange}
             options={rats}
             value={firstLimpetId}
-            valueProp={getRatTag} />
+            valueProp={getRatTag}
+            onChange={this._handleFirstLimpetChange} />
         </fieldset>
 
         <fieldset>
@@ -456,13 +456,13 @@ class Paperwork extends React.Component {
           </label>
 
           <SystemTagsInput
-            aira-label="Rescue system"
             data-allownew
-            disabled={submitting || loading}
-            name="system"
-            onChange={this._handleSystemChange}
             data-single
-            value={system} />
+            aira-label="Rescue system"
+            disabled={submitting}
+            name="system"
+            value={system}
+            onChange={this._handleSystemChange} />
         </fieldset>
 
         <fieldset>
@@ -470,19 +470,19 @@ class Paperwork extends React.Component {
 
           <textarea
             aria-label="case notes"
-            disabled={submitting || loading}
+            disabled={submitting}
             id="notes"
             name="notes"
-            onChange={this._handleNotesChange}
-            value={notes} />
+            value={notes}
+            onChange={this._handleNotesChange} />
         </fieldset>
 
         <menu type="toolbar">
           <div className="primary">
             <div className={`invalidity-explainer ${pwValidity.noChange ? 'no-change' : ''} ${pwValidity.valid ? '' : 'show'}`}>{pwValidity.reason}</div>
             <button
-              disabled={submitting || loading || !pwValidity.valid}
               className="green"
+              disabled={submitting || !pwValidity.valid}
               type="submit">
               {submitting ? 'Submitting...' : 'Submit'}
             </button>
@@ -505,7 +505,6 @@ class Paperwork extends React.Component {
     } = this.props
 
     const {
-      loading,
       submitting,
       error,
     } = this.state
@@ -523,20 +522,14 @@ class Paperwork extends React.Component {
         }
 
         {
-          loading && (
-            <div className="loading page-content" />
-          )
-        }
-
-        {
-          (!loading && !rescue) && (
+          (!rescue) && (
             <div className="loading page-content">
               <p>{"Sorry, we couldn't find the paperwork you requested."}</p>
             </div>
           )
         }
 
-        {(!loading && rescue) && this.renderRescueEditForm()}
+        {(rescue) && this.renderRescueEditForm()}
       </PageWrapper>
     )
   }
@@ -577,13 +570,13 @@ class Paperwork extends React.Component {
       invalidReason = 'You cannot edit this rescue.'
     }
 
-    if (invalidReason === null && !Object.keys(changes).length) {
+    if (!invalidReason && !Object.keys(changes).length) {
       invalidReason = 'No changes have been made yet!'
       noChange = true
     }
 
     const response = {
-      valid: Boolean(invalidReason === null),
+      valid: !invalidReason,
       reason: invalidReason || this.lastInvalidReason,
       noChange,
     }
@@ -629,7 +622,9 @@ class Paperwork extends React.Component {
     const { rescue, rats } = this.props
     const { changes } = this.state
 
-    const getValue = (value) => changes[value] ?? rescue.attributes[value]
+    const getValue = (value) => {
+      return changes[value] ?? rescue.attributes[value]
+    }
 
     return {
       codeRed: getValue('codeRed'),
@@ -652,11 +647,13 @@ class Paperwork extends React.Component {
 
   static mapDispatchToProps = ['updateRescue', 'updateRescueRats', 'getRescue']
 
-  static mapStateToProps = (state, { query }) => ({
-    rats: selectFormattedRatsByRescueId(state, query),
-    rescue: selectRescueById(state, query),
-    userCanEdit: selectRescueCanEdit(state, query),
-  })
+  static mapStateToProps = (state, { query }) => {
+    return {
+      rats: selectFormattedRatsByRescueId(state, query),
+      rescue: selectRescueById(state, query),
+      userCanEdit: selectUserCanEditRescue(state, query),
+    }
+  }
 }
 
 

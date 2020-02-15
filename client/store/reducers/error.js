@@ -11,6 +11,7 @@ import initialState from '../initialState'
 
 
 
+
 // Component constants
 const IS_DEV_OR_STAGING = $IS_DEVELOPMENT || $IS_STAGING
 const ignoredTypes = [
@@ -18,6 +19,7 @@ const ignoredTypes = [
   // It's not generally helpful to log
   actionTypes.wordpress.pages.read,
 ]
+
 
 
 
@@ -34,6 +36,9 @@ const errorReducer = produce((draftState, action) => {
     }
   }
 }, initialState.error)
+
+
+
 
 
 export default errorReducer

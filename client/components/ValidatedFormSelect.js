@@ -74,13 +74,15 @@ class ValidatedFormSelect extends React.Component {
             onChange={this._handleChange}>
             {!renderLabel && (<option value="">{label}</option>)}
             {
-              Object.entries(options).map(([key, text]) => (
-                <option
-                  key={key}
-                  value={key}>
-                  {text}
-                </option>
-              ))
+              Object.entries(options).map(([key, text]) => {
+                return (
+                  <option
+                    key={key}
+                    value={key}>
+                    {text}
+                  </option>
+                )
+              })
             }
           </select>
         </div>
@@ -108,7 +110,9 @@ class ValidatedFormSelect extends React.Component {
   static defaultProps = {
     invalidMessage: null,
     name: null,
-    onChange: () => ({}),
+    onChange: () => {
+      return {}
+    },
     renderLabel: false,
     required: false,
   }

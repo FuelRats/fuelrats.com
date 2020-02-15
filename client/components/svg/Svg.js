@@ -11,13 +11,15 @@ function Svg (props) {
     <svg {...svgProps}>
       {
         Array.isArray(path)
-          ? (path.map((pathPart, index) => (
-            <path
-              fill="currentColor"
-              {...(Array.isArray(pathProps) ? pathProps[index] : pathProps)}
-              d={pathPart}
-              key={pathPart} />
-          ))) : (
+          ? (path.map((pathPart, index) => {
+            return (
+              <path
+                fill="currentColor"
+                {...(Array.isArray(pathProps) ? pathProps[index] : pathProps)}
+                key={pathPart}
+                d={pathPart} />
+            )
+          })) : (
             <path fill="currentColor" {...pathProps} d={path} />
           )
       }

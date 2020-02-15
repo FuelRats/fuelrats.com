@@ -30,6 +30,16 @@ const epicTypeRadioOptions = [
 ]
 
 
+const getResourceIdListString = (resources) => {
+  return resources.map((resource) => {
+    return resource.id
+  }).join(',')
+}
+
+
+
+
+
 @authenticated
 @connect
 class EpicNominate extends React.Component {
@@ -65,28 +75,25 @@ class EpicNominate extends React.Component {
 
 
   handleRatsChange = (value) => {
-    const newRatIds = value.map((rat) => rat.id).join(',')
-    const oldRatIds = this.state.rats.map((rat) => rat.id).join(',')
+    const newRatIds = getResourceIdListString(value)
+    const oldRatIds = getResourceIdListString(this.state.rats)
+
     if (newRatIds !== oldRatIds) {
       this.setState({ rats: value })
     }
   }
 
   handleRescuesChange = (value) => {
-    const newRescueId = value.map((rescue) => rescue.id).join('')
-    const oldRescueId = this.state.rescue.map((rescue) => rescue.id).join('')
+    const newRescueId = getResourceIdListString(value)
+    const oldRescueId = getResourceIdListString(this.state.rescue)
+
     if (newRescueId !== oldRescueId) {
       this.setState((state) => {
         const newState = { ...state }
 
         if (value.length) {
           const [rescue] = value
-          newState.rats = rescue.relationships
-            && rescue.relationships.rats
-            && rescue.relationships.rats.data
-            && rescue.relationships.rats.data.length
-            ? rescue.relationships.rats.data
-            : []
+          newState.rats = rescue?.relationships?.rats?.data ?? []
         }
 
         newState.rescue = value
@@ -96,7 +103,9 @@ class EpicNominate extends React.Component {
     }
   }
 
-  handleNotesChange = (event) => this.setState({ notes: event.target.value })
+  handleNotesChange = (event) => {
+    return this.setState({ notes: event.target.value })
+  }
 
 
   _handleSubmit = async (event) => {
@@ -113,12 +122,16 @@ class EpicNominate extends React.Component {
     })
 
 
-    let responses = await Promise.all(rats.map((rat) => this.props.createEpic({
-      ratId: rat.id,
-      rescueId: rescue.length ? rescue[0].id : null,
-      notes,
-    })))
-    responses = responses.filter(({ status }) => status === 'error')
+    let responses = await Promise.all(rats.map((rat) => {
+      return this.props.createEpic({
+        ratId: rat.id,
+        rescueId: rescue.length ? rescue[0].id : null,
+        notes,
+      })
+    }))
+    responses = responses.filter(({ status }) => {
+      return status === 'error'
+    })
 
     if (responses.length) {
       this.setState({
@@ -174,12 +187,12 @@ class EpicNominate extends React.Component {
 
                 <RadioInput
                   className="epic-type"
-                  name="epic-type"
-                  id="epic-type"
                   defaultValue="epicRescue"
+                  id="epic-type"
+                  name="epic-type"
+                  options={epicTypeRadioOptions}
                   value={epicType}
-                  onChange={this.handleEpicTypeChange}
-                  options={epicTypeRadioOptions} />
+                  onChange={this.handleEpicTypeChange} />
               </fieldset>
 
               {
@@ -188,13 +201,13 @@ class EpicNominate extends React.Component {
                     <label htmlFor="rescues">{'What is the ID of the rescue?'}</label>
 
                     <RescuesTagsInput
-                      aria-label="Rescue ID"
                       data-single
+                      aria-label="Rescue ID"
                       disabled={submitting}
                       id="rescues"
                       name="rescues"
-                      onChange={this.handleRescuesChange}
-                      value={rescue} />
+                      value={rescue}
+                      onChange={this.handleRescuesChange} />
                   </fieldset>
                 )
               }
@@ -205,14 +218,14 @@ class EpicNominate extends React.Component {
                     <label htmlFor="rats">{"What is the rat's CMDR name?"}</label>
 
                     <RatTagsInput
-                      aria-label="Commander name"
                       data-single
+                      aria-label="Commander name"
                       disabled={submitting}
                       id="rats"
                       name="rats"
-                      onChange={this.handleRatsChange}
                       value={rats}
-                      valueProp={getRatTag} />
+                      valueProp={getRatTag}
+                      onChange={this.handleRatsChange} />
                   </fieldset>
                 )
               }
@@ -225,8 +238,8 @@ class EpicNominate extends React.Component {
                   disabled={submitting}
                   id="notes"
                   name="notes"
-                  onChange={this.handleNotesChange}
-                  value={notes} />
+                  value={notes}
+                  onChange={this.handleNotesChange} />
               </fieldset>
 
 

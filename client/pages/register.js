@@ -63,10 +63,6 @@ class Register extends React.Component {
 
     const value = type === 'checkbox' ? target.checked : target.value
 
-    if (name !== 'password') {
-      sessionStorage.setItem(`register.${name}`, value)
-    }
-
     this.setState({
       [name]: value,
       ...(name === 'acceptTerms' ? { acceptPrivacy: value } : {}),
@@ -79,7 +75,6 @@ class Register extends React.Component {
 
   _handlePrivacyAccept = () => {
     this.setState({ acceptPrivacy: true })
-    sessionStorage.setItem('register.acceptTerms', true)
   }
 
   _handleTOSChange = () => {
@@ -100,7 +95,6 @@ class Register extends React.Component {
 
   _handleRadioInputChange = ({ target }) => {
     const { name, value } = target
-    sessionStorage.setItem(`register.${name}`, value)
     this.setState({ [name]: value })
   }
 
@@ -150,19 +144,6 @@ class Register extends React.Component {
   static async getInitialProps ({ store }) {
     await actions.getWordpressPage('terms-of-service')(store.dispatch)
     await actions.getWordpressPage('privacy-policy')(store.dispatch)
-  }
-
-  componentDidMount () {
-    this.setState((state) => {
-      return {
-        acceptTerms: sessionStorage.getItem('register.acceptTerms'),
-        acceptPrivacy: sessionStorage.getItem('register.acceptTerms'),
-        email: sessionStorage.getItem('register.email') || state.email,
-        nickname: sessionStorage.getItem('register.nickname') || state.nickname,
-        ratName: sessionStorage.getItem('register.ratName') || state.ratName,
-        ratPlatform: sessionStorage.getItem('register.ratPlatform') || state.ratPlatform,
-      }
-    })
   }
 
   render () {

@@ -16,7 +16,9 @@ const localWordpressApiUrl = publicRuntimeConfig.apis.wordpress.url
 const wpApi = axios.create({
   baseURL: localWordpressApiUrl,
   timeout: 10000,
-  validateStatus: () => true, // Always resolve because it's simpler for the action creators.
+  validateStatus: () => {
+    return true // Always resolve because it's simpler for the action creators.
+  },
 })
 
 

@@ -5,53 +5,56 @@ import { frApiRequest } from './services'
 
 
 
-const getShip = (shipId) => frApiRequest(
-  actionTypes.ships.read,
-  { url: `/ships/${shipId}` },
-)
 
-const getShips = (params) => frApiRequest(
-  actionTypes.ships.search,
-  {
-    url: '/ships',
-    params,
-  },
-)
-
-const createShip = (data) => frApiRequest(
-  actionTypes.ships.create,
-  {
-    url: '/ships',
-    method: 'post',
-    data,
-  },
-)
-
-const deleteShip = (shipId) => frApiRequest(
-  actionTypes.ships.delete,
-  {
-    url: `/ships/${shipId}`,
-    method: 'delete',
-  },
-)
-
-const updateShip = (shipId, data) => frApiRequest(
-  actionTypes.ships.update,
-  {
-    url: `/ships/${shipId}`,
-    method: 'put',
-    data,
-  },
-)
+export const getShip = (shipId) => {
+  return frApiRequest(
+    actionTypes.ships.read,
+    { url: `/ships/${shipId}` },
+  )
+}
 
 
+export const getShips = (params) => {
+  return frApiRequest(
+    actionTypes.ships.search,
+    {
+      url: '/ships',
+      params,
+    },
+  )
+}
 
 
+export const createShip = (data) => {
+  return frApiRequest(
+    actionTypes.ships.create,
+    {
+      url: '/ships',
+      method: 'post',
+      data,
+    },
+  )
+}
 
-export {
-  getShip,
-  getShips,
-  createShip,
-  deleteShip,
-  updateShip,
+
+export const deleteShip = (shipId) => {
+  return frApiRequest(
+    actionTypes.ships.delete,
+    {
+      url: `/ships/${shipId}`,
+      method: 'delete',
+    },
+  )
+}
+
+
+export const updateShip = (shipId, data) => {
+  return frApiRequest(
+    actionTypes.ships.update,
+    {
+      url: `/ships/${shipId}`,
+      method: 'put',
+      data,
+    },
+  )
 }

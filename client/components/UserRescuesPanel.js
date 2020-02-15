@@ -12,7 +12,7 @@ function UserRescuesPanel () {
         <h2>{'Rescues'}</h2>
       </div>
 
-      <div className="row" data-hidden>
+      <div data-hidden className="row">
         <ul className="inline">
           <li />
         </ul>

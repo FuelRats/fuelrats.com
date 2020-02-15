@@ -33,16 +33,23 @@ class ProfileHeader extends React.Component {
   /***************************************************************************\
     Private Methods
   \***************************************************************************/
-  _renderUserGroups = () => (
-    this.props.user.relationships.groups.data && (
-      this.props.user.relationships.groups.data.map((item) => (
-        <li className={`badge ${item.id}`} key={item.id}>
-          {item.id}
-        </li>
-      ))))
+
+  _renderUserGroups = () => {
+    return (
+      this.props.user.relationships.groups.data && (
+        this.props.user.relationships.groups.data.map((item) => {
+          return (
+            <li key={item.id} className={`badge ${item.id}`}>
+              {item.id}
+            </li>
+          )
+        })))
+  }
 
   _handleToggleChangePassword = () => {
-    this.setState((state) => ({ showChangePassword: !state.showChangePassword }))
+    this.setState((state) => {
+      return { showChangePassword: !state.showChangePassword }
+    })
   }
 
 
@@ -93,8 +100,8 @@ class ProfileHeader extends React.Component {
           </div>
           <div className="profile-controls">
             <button
-              onClick={this._handleToggleChangePassword}
-              type="button">
+              type="button"
+              onClick={this._handleToggleChangePassword}>
               {'Change Password'}
             </button>
           </div>
@@ -114,11 +121,13 @@ class ProfileHeader extends React.Component {
     Redux Properties
   \***************************************************************************/
 
-  static mapStateToProps = (state) => ({
-    user: withCurrentUserId(selectUserById)(state),
-    userAvatar: withCurrentUserId(selectAvatarByUserId)(state),
-    displayRat: withCurrentUserId(selectDisplayRatByUserId)(state),
-  })
+  static mapStateToProps = (state) => {
+    return {
+      user: withCurrentUserId(selectUserById)(state),
+      userAvatar: withCurrentUserId(selectAvatarByUserId)(state),
+      displayRat: withCurrentUserId(selectDisplayRatByUserId)(state),
+    }
+  }
 }
 
 

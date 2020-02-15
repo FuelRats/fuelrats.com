@@ -44,7 +44,9 @@ class WordpressTermsModal extends React.Component {
     Private Methods
   \***************************************************************************/
 
-  _handleCheckboxChange = ({ target }) => this.setState({ termsAgreed: target.checked })
+  _handleCheckboxChange = ({ target }) => {
+    return this.setState({ termsAgreed: target.checked })
+  }
 
 
 
@@ -93,15 +95,15 @@ class WordpressTermsModal extends React.Component {
               checked={termsAgreed}
               className="large"
               id={checkboxId}
-              onChange={this._handleCheckboxChange}
-              type="checkbox" />
+              type="checkbox"
+              onChange={this._handleCheckboxChange} />
             <label htmlFor={checkboxId}>{checkboxLabel}</label>
           </span>
           <button
-            disabled={!termsAgreed}
             key="NextButton"
-            onClick={onClose}
-            type="button">
+            disabled={!termsAgreed}
+            type="button"
+            onClick={onClose}>
             {'Next'}
           </button>
         </div>
@@ -154,9 +156,11 @@ class WordpressTermsModal extends React.Component {
 
   static mapDispatchToProps = ['getWordpressPage']
 
-  static mapStateToProps = (state, ownProps) => ({
-    page: selectWordpressPageBySlug(state, ownProps),
-  })
+  static mapStateToProps = (state, ownProps) => {
+    return {
+      page: selectWordpressPageBySlug(state, ownProps),
+    }
+  }
 }
 
 

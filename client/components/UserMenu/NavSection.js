@@ -28,7 +28,11 @@ function NavSection (props) {
       <nav>
         {header && (<header>{header}</header>)}
         <ul>
-          {items.map((item) => (item.permission && <NavItem key={item.key} item={item} onClick={onItemClick} />))}
+          {
+            items.map((item) => {
+              return (item.permission && <NavItem key={item.key} item={item} onClick={onItemClick} />)
+            })
+          }
         </ul>
       </nav>
     )
@@ -41,7 +45,9 @@ function NavSection (props) {
 
 NavSection.mapStateToProps = createSelector(
   [
-    (state, ownProps) => ownProps.items,
+    (state, ownProps) => {
+      return ownProps.items
+    },
     withCurrentUserId(selectGroupsByUserId),
   ],
   (items, userGroups) => {

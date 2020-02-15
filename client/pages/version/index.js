@@ -34,7 +34,7 @@ const NEXT_BUILD_ID = $NEXT_BUILD_ID
 
 function Version () {
   return (
-    <PageWrapper title="Version Information" noHeader>
+    <PageWrapper noHeader title="Version Information">
       <div className="page-content">
         <span>
           <a className="button compact" href="/version/raw">{'Raw'}</a>
@@ -42,31 +42,31 @@ function Version () {
         <div className="page-content text-mono">
           <span>
             {'App Version: '}
-            <a target="_blank" rel="noopener noreferrer" href={`https://github.com/FuelRats/fuelrats.com/releases/tag/v${version}`}>
+            <a href={`https://github.com/FuelRats/fuelrats.com/releases/tag/v${version}`} rel="noopener noreferrer" target="_blank">
               {`v${version}`}
             </a>
           </span>
           <span>
             {'Node Version: '}
-            <a target="_blank" rel="noopener noreferrer" href={`https://github.com/nodejs/node/releases/tag/${NODE_VERSION}`}>
+            <a href={`https://github.com/nodejs/node/releases/tag/${NODE_VERSION}`} rel="noopener noreferrer" target="_blank">
               {NODE_VERSION}
             </a>
           </span>
           <span>
             {'Built On: '}
-            <a target="_blank" rel="noopener noreferrer" href={BUILD_URL}>
+            <a href={BUILD_URL} rel="noopener noreferrer" target="_blank">
               <time dateTime={BUILD_DATE}>{moment.utc(BUILD_DATE).format('MMMM Do YYYY, hh:mm z')}</time>
             </a>
           </span>
           <span>
             {'Branch: '}
-            <a target="_blank" rel="noopener noreferrer" href={`https://github.com/FuelRats/fuelrats.com/tree/${BUILD_BRANCH}`}>
+            <a href={`https://github.com/FuelRats/fuelrats.com/tree/${BUILD_BRANCH}`} rel="noopener noreferrer" target="_blank">
               {BUILD_BRANCH}
             </a>
           </span>
           <span>
             {'Commit: '}
-            <a target="_blank" rel="noopener noreferrer" href={`https://github.com/FuelRats/fuelrats.com/commit/${BUILD_COMMIT}`}>
+            <a href={`https://github.com/FuelRats/fuelrats.com/commit/${BUILD_COMMIT}`} rel="noopener noreferrer" target="_blank">
               {BUILD_COMMIT || 'null'}
             </a>
           </span>

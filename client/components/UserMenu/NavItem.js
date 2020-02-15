@@ -22,7 +22,7 @@ function NavItem ({ item, ...linkProps }) {
 
   return (
     <li className={className}>
-      <Link route={route} params={routeParams}>
+      <Link params={routeParams} route={route}>
         <a {...linkProps} {...(action && { href: '#', onClick: action })}>
           <span>{title}</span>
         </a>

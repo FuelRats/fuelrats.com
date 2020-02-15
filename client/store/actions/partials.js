@@ -6,19 +6,23 @@
 
 
 
-export const getResourceDeletePartial = (type, id) => ({
-  payload: {
-    data: {
-      type,
-      id,
+export const getResourceDeletePartial = (type, id) => {
+  return {
+    payload: {
+      data: {
+        type,
+        id,
+      },
     },
-  },
-})
+  }
+}
 
 
-export const getPageViewPartial = (type, viewName) => ({
-  pageView: viewName && {
-    id: viewName,
-    type,
-  },
-})
+export const getPageViewPartial = (type, viewName) => {
+  return {
+    pageView: viewName && {
+      id: viewName,
+      type,
+    },
+  }
+}

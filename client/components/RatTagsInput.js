@@ -16,7 +16,7 @@ class RatTagsInput extends TagsInput {
   static renderLoader () {
     return (
       <span>
-        <FontAwesomeIcon icon="spinner" pulse fixedWidth />
+        <FontAwesomeIcon fixedWidth pulse icon="spinner" />
         {'Loading...'}
       </span>
     )

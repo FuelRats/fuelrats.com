@@ -1,14 +1,18 @@
-const selectSession = (state) => state.session
+export const selectSession = (state) => {
+  return state.session
+}
 
-const selectCurrentUserId = (state) => state.session.userId
 
-const withCurrentUserId = (selector) => (state, props) => selector(state, {
-  ...props,
-  userId: selectCurrentUserId(state),
-})
+export const selectCurrentUserId = (state) => {
+  return state.session.userId
+}
 
-export {
-  selectCurrentUserId,
-  selectSession,
-  withCurrentUserId,
+
+export const withCurrentUserId = (selector) => {
+  return (state, props) => {
+    return selector(state, {
+      ...props,
+      userId: selectCurrentUserId(state),
+    })
+  }
 }

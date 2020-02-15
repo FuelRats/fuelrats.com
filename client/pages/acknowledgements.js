@@ -49,17 +49,19 @@ function Acknowledgements () {
     <PageWrapper title="Acknowledgements">
       <div className="page-content">
         {
-        brands.map((brand) => (
-          <div key={brand.key} className={`credit-section credit-${brand.key}`}>
-            <a
-              href={brand.homepage}
-              rel="noopener noreferrer"
-              target="_blank">
-              <div className={`brand-image ${brand.key}-brand`} />
-            </a>
-            <p>{brand.description}</p>
-          </div>
-        ))
+        brands.map((brand) => {
+          return (
+            <div key={brand.key} className={`credit-section credit-${brand.key}`}>
+              <a
+                href={brand.homepage}
+                rel="noopener noreferrer"
+                target="_blank">
+                <div className={`brand-image ${brand.key}-brand`} />
+              </a>
+              <p>{brand.description}</p>
+            </div>
+          )
+        })
       }
         <div className="dependency-list-wrapper">
           <div className="dependency-list">
@@ -68,9 +70,11 @@ function Acknowledgements () {
               {
                 Object.keys({
                   ...dependencies,
-                }).map((dep) => (
-                  <li key={dep}><a target="_blank" rel="noopener noreferrer" href={`https://www.npmjs.com/package/${dep}`}>{dep}</a></li>
-                ))
+                }).map((dep) => {
+                  return (
+                    <li key={dep}><a href={`https://www.npmjs.com/package/${dep}`} rel="noopener noreferrer" target="_blank">{dep}</a></li>
+                  )
+                })
               }
             </ul>
           </div>

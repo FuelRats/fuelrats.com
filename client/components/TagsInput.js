@@ -9,6 +9,8 @@
     react/jsx-no-bind,
     react/no-deprecated,
     react/state-in-constructor,
+    eqeqeq,
+    arrow-body-style,
 */
 
 
@@ -444,17 +446,17 @@ export default class TagsInputComponent extends React.Component {
         <ul className="tags">{this.renderTags()}</ul>
 
         <input
+          ref={(input) => this.input = input}
           aria-label={ariaLabel}
           autoComplete="off"
           disabled={this.props.disabled}
           name={name}
+          placeholder={placeholder}
+          type="search"
           onBlur={this.onBlur}
           onFocus={TagsInputComponent.onFocus}
           onInput={this.onInput}
-          onKeyDown={this.onKeyDown}
-          placeholder={placeholder}
-          ref={(input) => this.input = input}
-          type="search" />
+          onKeyDown={this.onKeyDown} />
 
         {Boolean(allowNew) && this.renderReturnPrompt()}
 
@@ -496,8 +498,8 @@ export default class TagsInputComponent extends React.Component {
 
     return (
       <li
-        className={classes.join(' ')}
         key={index}
+        className={classes.join(' ')}
         onBlur={TagsInputComponent.handleOptionMouseOut}
         onFocus={(event) => this.handleOptionMouseOver(event, index)}
         onMouseDown={() => this.addTag(option)}
@@ -542,12 +544,12 @@ export default class TagsInputComponent extends React.Component {
     }
 
     return (
-      <li className={classes.join(' ')} key={index}>
+      <li key={index} className={classes.join(' ')}>
         {this.renderValue(tag)}
 
         <button
-          onClick={() => this.removeTag(tag)}
-          type="button">
+          type="button"
+          onClick={() => this.removeTag(tag)}>
           {'\u00d7'}
         </button>
       </li>

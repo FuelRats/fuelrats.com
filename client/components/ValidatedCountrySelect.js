@@ -74,13 +74,15 @@ class ValidatedCountrySelect extends React.Component {
             onChange={this._handleChange}>
             {!renderLabel && (<option value="">{label}</option>)}
             {
-              countryList.map((country) => (
-                <option
-                  key={country}
-                  value={country}>
-                  {country}
-                </option>
-              ))
+              countryList.map((country) => {
+                return (
+                  <option
+                    key={country}
+                    value={country}>
+                    {country}
+                  </option>
+                )
+              })
             }
           </select>
         </div>
@@ -108,7 +110,7 @@ class ValidatedCountrySelect extends React.Component {
   static defaultProps = {
     invalidMessage: null,
     name: null,
-    onChange: () => ({}),
+    onChange: () => {},
     renderLabel: false,
   }
 

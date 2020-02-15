@@ -10,49 +10,42 @@ import { selectUserById } from './users'
 
 
 
-const selectRats = (state) => state.rats
+export const selectRats = (state) => {
+  return state.rats
+}
 
 
-const selectRatById = (state, { ratId }) => state.rats[ratId]
+export const selectRatById = (state, { ratId }) => {
+  return state.rats[ratId]
+}
 
 
-const selectRatsByUserId = createSelector(
+export const selectRatsByUserId = createSelector(
   [selectUserById, selectRats],
   (user, rats) => {
-    if (user) {
-      return user.relationships.rats.data.map(({ id }) => rats[id])
-    }
-    return null
+    return user?.relationships.rats.data?.map(({ id }) => {
+      return rats[id]
+    }) || null
   },
 )
 
 
-const selectDisplayRatIdByUserId = (state, props) => {
-  const user = selectUserById(state, props)
-  let ratId = null
-
-  if (user && user.attributes) {
-    if (user.attributes.displayRatId) {
-      ratId = user.attributes.displayRatId
-    } else if (user.relationships.rats.data.length) {
-      ratId = user.relationships.rats.data[0].id
-    }
-  }
-
-  return ratId
-}
+export const selectDisplayRatIdByUserId = createSelector(
+  [selectUserById],
+  (user) => {
+    return (
+      user?.attributes.displayRatId
+      ?? user?.relationships.rats.data?.[0]?.id
+    ) || null
+  },
+)
 
 
-const selectDisplayRatByUserId = (state, props) => selectRatById(state, { ratId: selectDisplayRatIdByUserId(state, props) })
-
-
-
-
-
-export {
-  selectRatById,
-  selectRats,
-  selectRatsByUserId,
-  selectDisplayRatByUserId,
-  selectDisplayRatIdByUserId,
+export const selectDisplayRatByUserId = (state, props) => {
+  return selectRatById(
+    state,
+    {
+      ratId: selectDisplayRatIdByUserId(state, props),
+    },
+  )
 }

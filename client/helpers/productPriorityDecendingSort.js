@@ -5,7 +5,7 @@ import safeParseInt from './safeParseInt'
 
 
 
-/**
+/*
  * Array.sort() function to sort stripe store products by the "sortPriority" metadata key
  */
 const productPriorityDecendingSort = (aObj, bObj) => {

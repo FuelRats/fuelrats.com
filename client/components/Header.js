@@ -40,7 +40,7 @@ function Header (props) {
         id="NavControl"
         type="checkbox" />
 
-      <label title="Expand/Collapse Menu" htmlFor="NavControl" className="burger button tall secondary" id="Burger">
+      <label className="burger button tall secondary" htmlFor="NavControl" id="Burger" title="Expand/Collapse Menu">
         <FontAwesomeIcon icon="bars" />
       </label>
 
@@ -59,18 +59,18 @@ function Header (props) {
         <ul className="about-actions fa-ul">
 
           <li>
-            <Link route="wordpress" params={{ slug: 'terms-of-service' }}>
+            <Link params={{ slug: 'terms-of-service' }} route="wordpress">
               <a className="button link">
-                <FontAwesomeIcon icon="book" fixedWidth />
+                <FontAwesomeIcon fixedWidth icon="book" />
                 {'Terms of Service'}
               </a>
             </Link>
           </li>
 
           <li>
-            <Link route="wordpress" params={{ slug: 'privacy-policy' }}>
+            <Link params={{ slug: 'privacy-policy' }} route="wordpress">
               <a className="button link">
-                <FontAwesomeIcon icon="user-secret" fixedWidth />
+                <FontAwesomeIcon fixedWidth icon="user-secret" />
                 {'Privacy Policy'}
               </a>
             </Link>
@@ -79,7 +79,7 @@ function Header (props) {
           <li>
             <Link route="about acknowledgements">
               <a className="button link">
-                <FontAwesomeIcon icon="hands-helping" fixedWidth />
+                <FontAwesomeIcon fixedWidth icon="hands-helping" />
                 {'Acknowledgements'}
               </a>
             </Link>
@@ -91,9 +91,9 @@ function Header (props) {
                 <a
                   className="button link"
                   href={`https://www.github.com/fuelrats/fuelrats.com${BUILD_COMMIT ? `/commit/${BUILD_COMMIT}` : ''}`}
-                  target="_blank"
-                  rel="noopener noreferrer">
-                  <FontAwesomeIcon icon="code-branch" fixedWidth />
+                  rel="noopener noreferrer"
+                  target="_blank">
+                  <FontAwesomeIcon fixedWidth icon="code-branch" />
                   {BUILD_COMMIT_SHORT}
                 </a>
               </li>
@@ -107,57 +107,57 @@ function Header (props) {
           <a
             className="button link"
             href="https://www.twitter.com/FuelRats/"
-            target="_blank"
             rel="noopener noreferrer"
+            target="_blank"
             title="Fuel Rats on Twitter">
             <FontAwesomeIcon
-              icon={['fab', 'twitter']}
-              fixedWidth />
+              fixedWidth
+              icon={['fab', 'twitter']} />
           </a>
 
           <a
             className="button link"
             href="https://www.reddit.com/r/FuelRats/"
-            target="_blank"
             rel="noopener noreferrer"
+            target="_blank"
             title="Fuel Rats on Reddit">
             <FontAwesomeIcon
-              icon={['fab', 'reddit-alien']}
-              fixedWidth />
+              fixedWidth
+              icon={['fab', 'reddit-alien']} />
           </a>
 
           <a
             className="button link"
             href="https://www.twitch.tv/fuelrats/"
-            target="_blank"
             rel="noopener noreferrer"
+            target="_blank"
             title="Fuel Rats on Twitch">
             <FontAwesomeIcon
-              icon={['fab', 'twitch']}
-              fixedWidth />
+              fixedWidth
+              icon={['fab', 'twitch']} />
           </a>
 
           <a
             className="button link"
             href="https://www.github.com/FuelRats/"
-            target="_blank"
             rel="noopener noreferrer"
+            target="_blank"
             title="Tech Rats on GitHub">
             <FontAwesomeIcon
-              icon={['fab', 'github']}
-              fixedWidth />
+              fixedWidth
+              icon={['fab', 'github']} />
           </a>
 
           <a
             className="button link"
             href="https://forums.frontier.co.uk/showthread.php/150703-Out-of-Fuel-Explorer-Rescue-Service-The-Fuel-Rats"
-            target="_blank"
             rel="noopener noreferrer"
+            target="_blank"
             title="Fuel Rats on Frontier Forums">
             <FontAwesomeIcon
+              fixedWidth
               icon="space-shuttle"
-              transform={{ rotate: -45 }}
-              fixedWidth />
+              transform={{ rotate: -45 }} />
           </a>
 
         </div>
@@ -190,7 +190,9 @@ function Header (props) {
 
 
 
-Header.mapStateToProps = (state) => selectSession(state)
+Header.mapStateToProps = (state) => {
+  return selectSession(state)
+}
 
 
 

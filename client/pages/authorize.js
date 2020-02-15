@@ -110,16 +110,18 @@ class Authorize extends React.Component {
 
                 <ul>
                   {
-                    scopes.map(({ permission, accessible }) => (
-                      <li key={permission} className={accessible ? null : 'inaccessible'}>{permission}</li>
-                    ))
+                    scopes.map(({ permission, accessible }) => {
+                      return (
+                        <li key={permission} className={accessible ? null : 'inaccessible'}>{permission}</li>
+                      )
+                    })
                   }
                 </ul>
 
                 <form
+                  ref={this._formRef}
                   action={`/api/oauth2/authorize?bearer=${accessToken}`}
-                  method="post"
-                  ref={this._formRef}>
+                  method="post">
 
                   <HiddenFormData data={formData} />
 
@@ -128,16 +130,16 @@ class Authorize extends React.Component {
                       className="green"
                       disabled={submitting}
                       name="allow"
-                      value="true"
-                      type="submit">
+                      type="submit"
+                      value="true">
                       {submitting ? 'Submitting...' : 'Allow'}
                     </button>
 
                     <button
                       disabled={submitting}
                       name="cancel"
-                      value="true"
-                      type="submit">
+                      type="submit"
+                      value="true">
                       {submitting ? 'Submitting...' : 'Deny'}
                     </button>
                   </div>

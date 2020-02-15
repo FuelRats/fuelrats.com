@@ -105,13 +105,13 @@ class ForgotPassword extends React.Component {
                   </label>
 
                   <input
+                    ref={this._emailRef}
                     aria-label="user email"
                     id="email"
-                    onChange={this._handleInputChange}
                     name="email"
-                    ref={this._emailRef}
                     type="email"
-                    value={email} />
+                    value={email}
+                    onChange={this._handleInputChange} />
                 </fieldset>
 
                 <menu type="toolbar">

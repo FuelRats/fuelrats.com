@@ -31,7 +31,7 @@ function ArticleCard (props) {
   const { id } = blog
   const {
     id: authorId,
-    name: authorName = (<TextPlaceholder size={30} loading />),
+    name: authorName = (<TextPlaceholder loading size={30} />),
   } = author
 
   let content = null
@@ -54,7 +54,7 @@ function ArticleCard (props) {
     <article className={className}>
       <header>
         <h3 className="title">
-          <Link route="blog view" params={{ blogId: id }}>
+          <Link params={{ blogId: id }} route="blog view">
             <a dangerouslySetInnerHTML={{ __html: blog.title.rendered }} />
           </Link>
         </h3>
@@ -62,20 +62,20 @@ function ArticleCard (props) {
 
       <small>
         <span className="posted-date">
-          <FontAwesomeIcon icon="clock" fixedWidth />
+          <FontAwesomeIcon fixedWidth icon="clock" />
           {'Posted '}
           <time dateTime={blog.date_gmt}>{formatAsEliteDateTime(`${blog.date_gmt}Z`)}</time>
         </span>
 
         <span className="author">
-          <FontAwesomeIcon icon="user" fixedWidth />
-          <Link route="blog list" params={{ author: authorId }}>
+          <FontAwesomeIcon fixedWidth icon="user" />
+          <Link params={{ author: authorId }} route="blog list">
             <a>{authorName}</a>
           </Link>
         </span>
 
         <span>
-          <FontAwesomeIcon icon="folder" fixedWidth />
+          <FontAwesomeIcon fixedWidth icon="folder" />
 
           <ul className="category-list">
             {
@@ -83,12 +83,12 @@ function ArticleCard (props) {
                 const {
                   id: categoryId,
                   description = 'loading...',
-                  name = (<TextPlaceholder size={25} loading />),
+                  name = (<TextPlaceholder loading size={25} />),
                 } = category
 
                 return (
                   <li key={categoryId}>
-                    <Link route="blog list" params={{ category: categoryId }}>
+                    <Link params={{ category: categoryId }} route="blog list">
                       <a title={description}>{name}</a>
                     </Link>
                   </li>
@@ -110,11 +110,13 @@ function ArticleCard (props) {
 
 
 
-ArticleCard.mapStateToProps = (state, ownProps) => ({
-  author: selectAuthorByBlogId(state, ownProps),
-  blog: selectBlogById(state, ownProps),
-  categories: selectCategoriesByBlogId(state, ownProps),
-})
+ArticleCard.mapStateToProps = (state, ownProps) => {
+  return {
+    author: selectAuthorByBlogId(state, ownProps),
+    blog: selectBlogById(state, ownProps),
+    categories: selectCategoriesByBlogId(state, ownProps),
+  }
+}
 
 
 

@@ -87,8 +87,8 @@ class ConfirmActionButton extends React.Component {
             <button
               className="compact"
               data-action="deny"
-              onClick={this._handleClick}
-              type="button">
+              type="button"
+              onClick={this._handleClick}>
               {denyButtonText}
             </button>
           )
@@ -96,14 +96,14 @@ class ConfirmActionButton extends React.Component {
         <button
           className={confirmingAction ? 'compact green' : 'compact'}
           data-action="confirm"
-          onClick={this._handleClick}
           type="button"
+          onClick={this._handleClick}
           {...this.renderProps}>
           {
-performingAction && (
-  <span name="confirm"><FontAwesomeIcon icon="spinner" pulse /> {onConfirmText}</span>
-)
-}
+            performingAction && (
+              <span name="confirm"><FontAwesomeIcon pulse icon="spinner" /> {onConfirmText}</span>
+            )
+          }
           {confirmingAction && confirmButtonText}
           {(!performingAction && !confirmingAction) && (actionResult || children)}
         </button>

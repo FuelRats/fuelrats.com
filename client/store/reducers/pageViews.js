@@ -15,7 +15,9 @@ const dataReducer = ({ data }, { reducer }) => {
   if (reducer) {
     return reducer(data)
   }
-  return data.map((item) => item.id)
+  return data.map((item) => {
+    return item.id
+  })
 }
 
 

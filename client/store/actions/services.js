@@ -1,9 +1,5 @@
-import httpStatus from '../../helpers/httpStatus'
-
-
-
+import HttpStatus from '../../helpers/HttpStatus'
 import isRequired from '../../helpers/isRequired'
-
 import frApi from '../../services/fuelrats'
 import stApi from '../../services/stripe'
 import wpApi from '../../services/wordpress'
@@ -14,10 +10,11 @@ import actionStatus from '../actionStatus'
 /**
  * Converts an axios reponse to object to a dispatchable action object.
  *
- * @param {!String} type Redux action type string.
- * @param {!Object} response Axios response object.
+ * @param {!string} type Redux action type string.
+ * @param {!object} response Axios response object.
+ * @returns {object} axios response formatted for redux consumption.
  */
-const createAxiosAction = (type, response) => {
+export const createAxiosAction = (type, response) => {
   const {
     config,
     data,
@@ -47,43 +44,28 @@ const createAxiosAction = (type, response) => {
       status,
       statusText,
     },
-    status: httpStatus.isSuccess(status) ? actionStatus.SUCCESS : actionStatus.ERROR,
+    status: HttpStatus.isSuccess(status) ? actionStatus.SUCCESS : actionStatus.ERROR,
     type,
   }
 }
 
 
+export const axiosRequest = (service) => {
+  return (type = isRequired('type'), config, restAction = {}) => {
+    return async (dispatch) => {
+      const response = await service.request(config)
+      const action = createAxiosAction(type, response)
 
-
-
-const axiosRequest = (service) => (type = isRequired('type'), config, restAction = {}) => async (dispatch) => {
-  const response = await service.request(config)
-  const action = createAxiosAction(type, response)
-
-  return dispatch({
-    ...action,
-    ...restAction,
-  })
+      return dispatch({
+        ...action,
+        ...restAction,
+      })
+    }
+  }
 }
 
+export const frApiRequest = axiosRequest(frApi)
 
+export const stApiRequest = axiosRequest(stApi)
 
-
-
-const frApiRequest = axiosRequest(frApi)
-
-const stApiRequest = axiosRequest(stApi)
-
-const wpApiRequest = axiosRequest(wpApi)
-
-
-
-
-
-export {
-  createAxiosAction,
-  axiosRequest,
-  frApiRequest,
-  stApiRequest,
-  wpApiRequest,
-}
+export const wpApiRequest = axiosRequest(wpApi)

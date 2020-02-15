@@ -114,7 +114,7 @@ class ListRescues extends React.Component {
     return (
       <div key={rescue.id} className="rescue-list-item">
         <span className="primary-info">
-          <Link route="paperwork" params={{ rescueId: rescue.id }}>
+          <Link params={{ rescueId: rescue.id }} route="paperwork">
             <a>
               <small>{'CMDR '}</small>
               {client}
@@ -130,7 +130,7 @@ class ListRescues extends React.Component {
               <span
                 className="status-icon"
                 title={statusIcon.text}>
-                <FontAwesomeIcon icon={statusIcon.icon} fixedWidth size="2x" />
+                <FontAwesomeIcon fixedWidth icon={statusIcon.icon} size="2x" />
               </span>
             )
           }
@@ -154,21 +154,21 @@ class ListRescues extends React.Component {
           <div className="search-controls">
             <button
               className="inline"
-              onClick={this._handleRefreshClick}
-              type="button">
-              <FontAwesomeIcon icon="sync" fixedWidth spin={loading} />
+              type="button"
+              onClick={this._handleRefreshClick}>
+              <FontAwesomeIcon fixedWidth icon="sync" spin={loading} />
             </button>
           </div>
           <div className="searchInput">
             <input
               aria-label="Search by client name"
-              id="ClientNameInput"
               className="input"
-              placeholder="Client Name"
+              id="ClientNameInput"
               name="client"
+              placeholder="Client Name"
               type="text"
-              onChange={this._handleSearchChange}
-              value={this.state.client} />
+              value={this.state.client}
+              onChange={this._handleSearchChange} />
           </div>
           <div className="rescue-list flex column">
             {rescues.map(ListRescues.renderListItem)}
@@ -188,10 +188,12 @@ class ListRescues extends React.Component {
 
   static mapDispatchToProps = ['getRescues']
 
-  static mapStateToProps = (state) => ({
-    rescues: selectPageViewDataById(state, { pageViewId }) || [],
-    meta: selectPageViewMetaById(state, { pageViewId }),
-  })
+  static mapStateToProps = (state) => {
+    return {
+      rescues: selectPageViewDataById(state, { pageViewId }) || [],
+      meta: selectPageViewMetaById(state, { pageViewId }),
+    }
+  }
 }
 
 

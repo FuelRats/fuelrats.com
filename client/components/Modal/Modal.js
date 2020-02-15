@@ -16,6 +16,14 @@ import ModalPortal from './ModalPortal'
 
 
 
+const translate3dHeight = (value) => {
+  return (value ? `translate3d(0,${value}vh,0)` : undefined)
+}
+
+
+
+
+
 function renderModal ({ item, key, props: style }) {
   const {
     as,
@@ -41,15 +49,15 @@ function renderModal ({ item, key, props: style }) {
 
   return isOpen && (
     <RootElement
-      className={rootClasses}
       key={key}
+      className={rootClasses}
       role="dialog"
-      style={{ transform: style.pos.to((value) => (value ? `translate3d(0,${value}vh,0)` : undefined)) }}>
+      style={{ transform: style.pos.to(translate3dHeight) }}>
 
       <ModalHeader
         hideClose={hideClose}
-        onClose={onClose}
-        title={title} />
+        title={title}
+        onClose={onClose} />
 
       <InnerModal {...innerModalProps}>
         {innerModalChildren}
@@ -115,13 +123,19 @@ OuterModal.defaultProps = {
 
 
 
-const asModal = (options) => (Component) => hoistNonReactStatics(({ children, ...props }) => (
-  <OuterModal
-    {...props}
-    {...options}>
-    {{ Component, children, props }}
-  </OuterModal>
-), Component)
+const asModal = (options) => {
+  return (Component) => {
+    return hoistNonReactStatics(({ children, ...props }) => {
+      return (
+        <OuterModal
+          {...props}
+          {...options}>
+          {{ Component, children, props }}
+        </OuterModal>
+      )
+    }, Component)
+  }
+}
 
 
 

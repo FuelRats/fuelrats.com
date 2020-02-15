@@ -20,7 +20,7 @@ const path = 'm289.06069 312.31338c6.28153-5.62032 13.22428-6.83255 18.07318-6.8
 
 
 function BrandSvg (props) {
-  return <Svg {...props} id="brandSvg" viewBox="0 0 512 512" path={path} />
+  return <Svg {...props} id="brandSvg" path={path} viewBox="0 0 512 512" />
 }
 
 

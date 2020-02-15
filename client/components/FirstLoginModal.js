@@ -25,16 +25,18 @@ function FirstLoginModal () {
       </ModalContent>
       <ModalFooter>
         <div className="primary">
-          <a className="button" target="_blank" rel="noopener noreferrer" href="https://t.fuelr.at/join">{'New Rat Documentation'}</a>
+          <a className="button" href="https://t.fuelr.at/join" rel="noopener noreferrer" target="_blank">{'New Rat Documentation'}</a>
         </div>
       </ModalFooter>
     </>
   )
 }
 
-FirstLoginModal.mapStateToProps = (state) => ({
-  displayRat: withCurrentUserId(selectDisplayRatByUserId)(state),
-})
+FirstLoginModal.mapStateToProps = (state) => {
+  return {
+    displayRat: withCurrentUserId(selectDisplayRatByUserId)(state),
+  }
+}
 
 
 

@@ -90,11 +90,11 @@ class INeedFuel extends React.Component {
 
                   <small>
                     {'By connecting to our IRC and using our services, you agree to our '}
-                    <Link route="wordpress" params={{ slug: 'terms-of-service' }}>
+                    <Link params={{ slug: 'terms-of-service' }} route="wordpress">
                       <a>{'Terms of Service'}</a>
                     </Link>
                     {' and '}
-                    <Link route="wordpress" params={{ slug: 'privacy-policy' }}>
+                    <Link params={{ slug: 'privacy-policy' }} route="wordpress">
                       <a>{'Privacy Policy'}</a>
                     </Link>
                     {'.'}

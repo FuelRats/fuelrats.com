@@ -14,9 +14,10 @@ import { actions, connect } from '../../../store'
 import {
   selectRatsByRescueId,
   selectRescueById,
-  selectRescueCanEdit,
+  selectUserCanEditRescue,
   withCurrentUserId,
   selectUserByIdHasScope,
+  selectUserCanEditAllRescues,
 } from '../../../store/selectors'
 
 
@@ -31,7 +32,6 @@ class Paperwork extends React.Component {
   \***************************************************************************/
 
   state = {
-    loading: !this.props.rescue,
     deleteConfirm: false,
     deleting: false,
   }
@@ -73,18 +73,6 @@ class Paperwork extends React.Component {
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
-
-  async componentDidMount () {
-    const { id, rescue } = this.props
-
-    if (id && !rescue) {
-      await this.props.getRescue(id)
-    }
-
-    if (this.state.loading) {
-      this.setState({ loading: false })
-    }
-  }
 
   static renderQuote = (quote) => {
     const createdAt = formatAsEliteDateTime(quote.createdAt)
@@ -163,7 +151,11 @@ class Paperwork extends React.Component {
     return (
       <ul>
         {rats.map(this.renderRat)}
-        {rescue.attributes.unidentifiedRats.map((rat) => <li key={rat} className="unidentified">{rat}<span className="badge">{'UnID'}</span></li>)}
+        {
+rescue.attributes.unidentifiedRats.map((rat) => {
+  return <li key={rat} className="unidentified">{rat}<span className="badge">{'UnID'}</span></li>
+})
+}
       </ul>
     )
   }
@@ -202,7 +194,7 @@ class Paperwork extends React.Component {
                 <>
                   {
                     deleting ? (
-                      <span>{'Deleting... '}<FontAwesomeIcon icon="spinner" pulse fixedWidth /> </span>
+                      <span>{'Deleting... '}<FontAwesomeIcon fixedWidth pulse icon="spinner" /> </span>
                     ) : (
                       <span>{'Delete this rescue? (This cannot be undone!) '}</span>
                     )
@@ -211,16 +203,16 @@ class Paperwork extends React.Component {
                   <button
                     className="compact"
                     disabled={deleting}
-                    onClick={this._handleDeleteClick}
-                    type="button">
+                    type="button"
+                    onClick={this._handleDeleteClick}>
                     {'Yes'}
                   </button>
 
                   <button
                     className="compact"
                     disabled={deleting}
-                    onClick={this._handleDeleteCancel}
-                    type="button">
+                    type="button"
+                    onClick={this._handleDeleteCancel}>
                     {'No'}
                   </button>
                 </>
@@ -232,7 +224,7 @@ class Paperwork extends React.Component {
                 <>
                   {
                   userCanEdit && (
-                    <Link route="paperwork edit" params={{ rescueId: rescue.id }}>
+                    <Link params={{ rescueId: rescue.id }} route="paperwork edit">
                       <a className="button compact">
                         {'Edit'}
                       </a>
@@ -243,8 +235,8 @@ class Paperwork extends React.Component {
                   userCanDelete && (
                     <button
                       className="compact"
-                      onClick={this._handleDeleteClick}
-                      type="button">
+                      type="button"
+                      onClick={this._handleDeleteClick}>
                       {'Delete'}
                     </button>
                   )
@@ -362,21 +354,10 @@ class Paperwork extends React.Component {
       rescue,
     } = this.props
 
-    const {
-      loading,
-    } = this.state
-
     return (
       <PageWrapper title="Paperwork">
-
         {
-          loading && (
-            <div className="loading page-content" />
-          )
-        }
-
-        {
-          (!loading && !rescue) && (
+          (!rescue) && (
             <div className="loading page-content">
               <p>{"Sorry, we couldn't find the paperwork you requested."}</p>
             </div>
@@ -384,7 +365,7 @@ class Paperwork extends React.Component {
         }
 
         {
-          (!loading && rescue) && (
+          (rescue) && (
             <div className="page-content">
               {this.renderRescue()}
             </div>
@@ -404,13 +385,15 @@ class Paperwork extends React.Component {
 
   static mapDispatchToProps = ['getRescue', 'deleteRescue']
 
-  static mapStateToProps = (state, { query }) => ({
-    rats: selectRatsByRescueId(state, query) || [],
-    rescue: selectRescueById(state, query),
-    userCanEdit: selectRescueCanEdit(state, query),
-    userCanDelete: withCurrentUserId(selectUserByIdHasScope)(state, { scope: 'rescue.delete' }),
-    userCanEditAllRescues: withCurrentUserId(selectUserByIdHasScope)(state, { scope: 'rescue.write' }),
-  })
+  static mapStateToProps = (state, { query }) => {
+    return {
+      rats: selectRatsByRescueId(state, query) || [],
+      rescue: selectRescueById(state, query),
+      userCanEdit: selectUserCanEditRescue(state, query),
+      userCanDelete: withCurrentUserId(selectUserByIdHasScope)(state, { scope: 'rescue.delete' }),
+      userCanEditAllRescues: withCurrentUserId(selectUserCanEditAllRescues)(state),
+    }
+  }
 }
 
 

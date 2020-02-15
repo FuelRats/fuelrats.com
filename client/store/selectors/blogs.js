@@ -4,29 +4,46 @@ import { createSelector } from 'reselect'
 
 
 
-const selectBlogs = (state) => state.blogs.blogs
+const getBlogId = (_, props) => {
+  return props.blogId
+}
 
 
-const selectBlogAuthors = (state) => state.blogs.authors
 
 
-const selectBlogCategories = (state) => state.blogs.categories
+
+export const selectBlogs = (state) => {
+  return state.blogs.blogs
+}
 
 
-const selectBlogStatistics = (state) => ({
-  total: state.blogs.total,
-  totalPages: state.blogs.totalPages,
-})
+export const selectBlogAuthors = (state) => {
+  return state.blogs.authors
+}
 
-const selectBlogById = createSelector(
-  [
-    selectBlogs,
-    (state, props) => props.blogId,
-  ],
-  (blogs, blogId) => blogs.find((blog) => (blog.id.toString() === blogId.toString()) || (blog.slug === blogId)),
+
+export const selectBlogCategories = (state) => {
+  return state.blogs.categories
+}
+
+
+export const selectBlogStatistics = (state) => {
+  return {
+    total: state.blogs.total,
+    totalPages: state.blogs.totalPages,
+  }
+}
+
+export const selectBlogById = createSelector(
+  [selectBlogs, getBlogId],
+  (blogs, blogId) => {
+    return blogs.find((blog) => {
+      return (blog.id.toString() === blogId.toString()) || (blog.slug === blogId)
+    })
+  },
 )
 
-const selectAuthorByBlogId = createSelector(
+export const selectAuthorByBlogId = createSelector(
   [selectBlogById, selectBlogAuthors],
   (blog, authors) => {
     if (!blog?.author) {
@@ -39,25 +56,17 @@ const selectAuthorByBlogId = createSelector(
   },
 )
 
-const selectCategoriesByBlogId = createSelector(
+export const selectCategoriesByBlogId = createSelector(
   [selectBlogById, selectBlogCategories],
   (blog, categories) => {
     if (!blog?.categories) {
       return []
     }
 
-    return blog.categories.map((categoryId) => categories[categoryId] || {
-      id: categoryId,
+    return blog.categories.map((categoryId) => {
+      return categories[categoryId] || {
+        id: categoryId,
+      }
     })
   },
 )
-
-export {
-  selectAuthorByBlogId,
-  selectBlogs,
-  selectBlogAuthors,
-  selectBlogById,
-  selectBlogCategories,
-  selectBlogStatistics,
-  selectCategoriesByBlogId,
-}

@@ -16,7 +16,7 @@ import PageWrapper from '../components/AppLayout/PageWrapper'
 class ErrorPage extends NextError {
   render () {
     return (
-      <PageWrapper title="error-page" noHeader>
+      <PageWrapper noHeader title="error-page">
         <div className="page-content">
           {super.render()}
         </div>

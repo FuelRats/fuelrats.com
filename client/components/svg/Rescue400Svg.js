@@ -25,7 +25,7 @@ const paths = [
 
 
 function Rescue400Svg (props) {
-  return <Svg {...props} viewBox="0 0 256 256" path={paths} />
+  return <Svg {...props} path={paths} viewBox="0 0 256 256" />
 }
 
 

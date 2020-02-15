@@ -87,13 +87,19 @@ export default class PasswordField extends React.Component {
   }
 
   _handleShowPasswordClick = () => {
-    this.setState((state) => ({ showPassword: !state.showPassword }))
+    this.setState((state) => {
+      return { showPassword: !state.showPassword }
+    })
     this._passwordRef.current.focus()
   }
 
-  _handleInputBlur = () => this.setState({ focused: false })
+  _handleInputBlur = () => {
+    return this.setState({ focused: false })
+  }
 
-  _handleInputFocus = () => this.setState({ focused: true })
+  _handleInputFocus = () => {
+    return this.setState({ focused: true })
+  }
 
 
 
@@ -137,20 +143,20 @@ export default class PasswordField extends React.Component {
         <div className="input-group">
           <input
             {...inputProps}
-            onBlur={this._handleInputBlur}
-            onFocus={this._handleInputFocus}
-            onChange={this._handleChange}
             ref={this._passwordRef}
             type={showPassword ? 'text' : 'password'}
-            value={password} />
+            value={password}
+            onBlur={this._handleInputBlur}
+            onChange={this._handleChange}
+            onFocus={this._handleInputFocus} />
 
           <button
             className={showPassword ? 'show' : 'hide'}
             disabled={disabled}
-            onClick={this._handleShowPasswordClick}
             tabIndex="-1"
-            type="button">
-            <FontAwesomeIcon icon={showPassword ? 'eye-slash' : 'eye'} fixedWidth />
+            type="button"
+            onClick={this._handleShowPasswordClick}>
+            <FontAwesomeIcon fixedWidth icon={showPassword ? 'eye-slash' : 'eye'} />
           </button>
         </div>
 
@@ -174,9 +180,9 @@ export default class PasswordField extends React.Component {
   static renderSuggestion (suggestion, index) {
     return (
       <li
-        className="suggestion"
-        key={index}>
-        <FontAwesomeIcon icon="info-circle" fixedWidth />
+        key={index}
+        className="suggestion">
+        <FontAwesomeIcon fixedWidth icon="info-circle" />
         {suggestion}
       </li>
     )
@@ -185,9 +191,9 @@ export default class PasswordField extends React.Component {
   static renderWarning (warning, index) {
     return (
       <li
-        className="warning"
-        key={index}>
-        <FontAwesomeIcon icon="exclamation-triangle" fixedWidth />
+        key={index}
+        className="warning">
+        <FontAwesomeIcon fixedWidth icon="exclamation-triangle" />
         {warning}
       </li>
     )

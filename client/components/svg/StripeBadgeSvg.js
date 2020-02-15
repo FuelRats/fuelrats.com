@@ -31,10 +31,10 @@ function StripeBadgeSvg (props) {
       <Svg
         {...props}
         alt="Powered by Stripe"
-        width="119px"
         height="26px"
         path={path}
-        pathProps={{ fillRule: 'evenodd' }} />
+        pathProps={{ fillRule: 'evenodd' }}
+        width="119px" />
     </a>
   )
 }

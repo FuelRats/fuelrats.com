@@ -20,7 +20,7 @@ const path = 'M142.871,193.513l-53.806,-82.501c0,0 13.245,-13.521 43.045,-25.661
 
 
 function DispatchSvg (props) {
-  return <Svg {...props} viewBox="0 0 256 256" path={path} />
+  return <Svg {...props} path={path} viewBox="0 0 256 256" />
 }
 
 

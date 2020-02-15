@@ -1,13 +1,8 @@
-const selectFlags = (state) => state.flags
+export const selectFlags = (state) => {
+  return state.flags
+}
 
 
-const selectFlagByName = (state, { name }) => state.flags[name]
-
-
-
-
-
-export {
-  selectFlags,
-  selectFlagByName,
+export const selectFlagByName = (state, { name }) => {
+  return state.flags[name]
 }
