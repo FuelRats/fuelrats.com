@@ -1,7 +1,8 @@
+/* eslint-disable no-param-reassign */// This is fine
 /* eslint-env node */
 
 // Module imports
-const withSass = require('@zeit/next-sass')
+const cssLoaderConfig = require('@zeit/next-css/css-loader-config')
 const withWorkers = require('@zeit/next-workers')
 const crypto = require('crypto')
 const glob = require('glob')
@@ -32,7 +33,17 @@ const FINAL_PUBLIC_URL = FRDC_PUBLIC_URL || `http://localhost:${PORT || DEFAULT_
 
 
 
-module.exports = withWorkers(withSass({
+const expandPaths = (paths) => {
+  return paths.reduce((acc, dir) => {
+    return acc.concat(
+      glob.sync(path.join(__dirname, dir)),
+    )
+  }, [])
+}
+
+
+
+module.exports = withWorkers({
   generateBuildId: () => {
     return (
       TEAMCITY
@@ -58,20 +69,48 @@ module.exports = withWorkers(withSass({
       },
     },
   },
-  webpack: (config, data) => {
+  webpack: (config, options) => {
+    /* Define Plugin */
     config.plugins.push(new webpack.DefinePlugin({
-      $IS_DEVELOPMENT: JSON.stringify(data.dev),
+      $IS_DEVELOPMENT: JSON.stringify(options.dev),
       $IS_STAGING: JSON.stringify(['develop', 'beta'].includes(BUILD_VCS_BRANCH)),
       $BUILD_BRANCH: JSON.stringify(BUILD_VCS_BRANCH || 'develop'),
       $BUILD_COMMIT: JSON.stringify(BUILD_VCS_NUMBER || null),
       $BUILD_COMMIT_SHORT: JSON.stringify((BUILD_VCS_NUMBER && BUILD_VCS_NUMBER.slice(0, COMMIT_HASH_LENGTH)) || BUILD_VCS_BRANCH || 'develop'),
       $BUILD_DATE: JSON.stringify((new Date()).toISOString()),
       $BUILD_URL: JSON.stringify(TEAMCITY_BUILD_URL || null),
-      $NEXT_BUILD_ID: JSON.stringify(data.buildId),
+      $NEXT_BUILD_ID: JSON.stringify(options.buildId),
       $NODE_VERSION: JSON.stringify(process.version),
     }))
 
-    if (data.dev) {
+    /* Sass loading */
+    const sassLoaderConfig = cssLoaderConfig(
+      config,
+      {
+        extensions: ['scss', 'sass'],
+        dev: options.dev,
+        isServer: options.isServer,
+        loaders: [
+          {
+            loader: 'sass-loader',
+            options: {
+              sassOptions: {
+                includePaths: expandPaths(['styles', 'node_modules']),
+              },
+            },
+          },
+        ],
+      },
+    )
+
+    config.module.rules.push(
+      { test: /\.scss$/u, use: sassLoaderConfig },
+      { test: /\.sass$/u, use: sassLoaderConfig },
+    )
+
+
+    /* ESLint reporting */
+    if (options.dev) {
       config.module.rules.unshift({
         enforce: 'pre',
         exclude: /node_modules/u,
@@ -82,13 +121,5 @@ module.exports = withWorkers(withSass({
 
     return config
   },
-  sassLoaderOptions: {
-    includePaths: ['styles', 'node_modules']
-      .reduce((acc, dir) => {
-        return acc.concat(
-          glob.sync(path.join(__dirname, dir)),
-        )
-      }, []),
-  },
   workerLoaderOptions: { inline: true },
-}))
+})
