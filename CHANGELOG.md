@@ -24,10 +24,13 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ### ⚙ Tasks
 * Update `@fuelrats/eslint-config-react` to `v2.0.0` - [#221][]
 * Replace `node-sass` in favor of `dart-sass` - [#222][]
+* Restructure project to use a more standard file structure - [#223][]
+* Upgrade to Node 13 - [#223][]
 
 
 [#221]: https://github.com/FuelRats/fuelrats.com/pull/221
 [#222]: https://github.com/FuelRats/fuelrats.com/pull/222
+[#223]: https://github.com/FuelRats/fuelrats.com/pull/223
 
 
 

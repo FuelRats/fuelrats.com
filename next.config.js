@@ -1,5 +1,8 @@
-/* eslint-disable no-param-reassign */// This is fine
 /* eslint-env node */
+
+
+
+
 
 // Module imports
 const cssLoaderConfig = require('@zeit/next-css/css-loader-config')
@@ -8,6 +11,7 @@ const crypto = require('crypto')
 const glob = require('glob')
 const path = require('path')
 const webpack = require('webpack')
+
 
 
 
@@ -24,14 +28,22 @@ const {
   TEAMCITY_BUILD_URL,
 } = process.env
 
+
 const DEFAULT_PORT = 3000
 const COMMIT_HASH_LENGTH = 10
 const DEV_BUILD_ID_LENGTH = 16
 
+
 const FINAL_PUBLIC_URL = FRDC_PUBLIC_URL || `http://localhost:${PORT || DEFAULT_PORT}`
 
 
-
+const generateBuildId = () => {
+  return (
+    TEAMCITY
+      ? BUILD_VCS_NUMBER.toLowerCase()
+      : `DEV_${crypto.randomBytes(DEV_BUILD_ID_LENGTH).toString('hex').toLowerCase()}`
+  )
+}
 
 const expandPaths = (paths) => {
   return paths.reduce((acc, dir) => {
@@ -44,13 +56,8 @@ const expandPaths = (paths) => {
 
 
 module.exports = withWorkers({
-  generateBuildId: () => {
-    return (
-      TEAMCITY
-        ? BUILD_VCS_NUMBER.toLowerCase()
-        : `DEV_${crypto.randomBytes(DEV_BUILD_ID_LENGTH).toString('hex').toLowerCase()}`
-    )
-  },
+  distDir: 'dist',
+  generateBuildId,
   publicRuntimeConfig: {
     local: {
       publicUrl: FINAL_PUBLIC_URL,
@@ -112,10 +119,10 @@ module.exports = withWorkers({
     /* ESLint reporting */
     if (options.dev) {
       config.module.rules.unshift({
-        enforce: 'pre',
-        exclude: /node_modules/u,
-        loader: require.resolve('eslint-loader'),
         test: /\.js$/u,
+        exclude: /node_modules/u,
+        enforce: 'pre',
+        loader: require.resolve('eslint-loader'),
       })
     }
 

@@ -6,10 +6,12 @@
   "license": "BSD-3-Clause",
   "scripts": {
     "add-contributor": "all-contributors add",
-    "build": "next build client",
-    "dev": "yarn node --inspect --harmony server/server.js",
+    "build": "next build",
+    "dev": "yarn node --inspect --harmony src/server/server.js",
     "eslint": "eslint .",
-    "stylelint": "stylelint \"client/scss/**/*.scss\""
+    "eslint:ci": "eslint --max-warnings 1 .",
+    "stylelint": "stylelint \"src/scss/**/*.scss\"",
+    "stylelint:ci": "stylelint --max-warnings 1 \"src/scss/**/*.scss\""
   },
   "devDependencies": {
     "@fuelrats/eslint-config": "^2.0.0",

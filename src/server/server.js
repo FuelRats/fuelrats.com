@@ -15,7 +15,6 @@ require('dotenv').config()
 // Module imports
 const Koa = require('koa')
 const next = require('next')
-const path = require('path')
 
 
 
@@ -32,7 +31,6 @@ const env = require('./environment')
 const server = new Koa()
 const app = next({
   dev: env.isDev,
-  dir: path.resolve('client'),
 })
 
 
