@@ -1,17 +1,20 @@
 // Module imports
-const buildCSP = require('content-security-policy-builder')
-const uuidv4 = require('uuid/v4')
+import buildCSP from 'content-security-policy-builder'
+import UUID from 'pure-uuid'
 
 
 
 
 
 // Constants
+const UUID_VERSION_4 = 4
+
 const headerKeys = [
   'Content-Security-Policy',
   'X-Content-Security-Policy',
   'X-WebKit-CSP',
 ]
+
 
 const domainWhitelist = [
   '*.fuelrats.com',
@@ -23,9 +26,9 @@ const domainWhitelist = [
 
 
 
-module.exports = ({ isDev, publicUrl }) => {
+const configureCSP = ({ isDev, publicUrl }) => {
   return async (ctx, next) => {
-    const nonce = uuidv4()
+    const nonce = (new UUID(UUID_VERSION_4)).format()
 
     ctx.res.nonce = nonce /* eslint-disable-line no-param-reassign */
 
@@ -64,3 +67,9 @@ module.exports = ({ isDev, publicUrl }) => {
     await next()
   }
 }
+
+
+
+
+
+export default configureCSP

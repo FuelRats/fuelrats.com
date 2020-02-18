@@ -1,22 +1,35 @@
-/* eslint-disable global-require */
-
 // Module imports
-const router = require('koa-router')()
+import Router from 'koa-router'
 
 
 
 
 
-module.exports = (nextApp, koaServer, env) => {
+// local imports
+import redirects from './redirects'
+import stripeApi from './stripeApi'
+
+
+
+
+
+const configureRouter = (nextApp, koaServer, env) => {
+  const router = new Router()
+
+
   /***************************************************************************\
     Routes
   \***************************************************************************/
 
   // Redirects
-  require('./redirects')(router)
+  redirects(router)
 
   // Stripe Api
-  require('./stripeApi')(router, env)
+  stripeApi(router, env)
+
+
+
+
 
   /***************************************************************************\
     Next.js Passthrough
@@ -43,4 +56,9 @@ module.exports = (nextApp, koaServer, env) => {
   koaServer.use(router.routes())
   koaServer.use(router.allowedMethods())
 }
-/* eslint-enable */
+
+
+
+
+
+export default configureRouter

@@ -3,16 +3,15 @@
 
 
 # IntelliJ
-.idea/
+/.idea
 
 
 # Build Dirs
-.next
-logs/
+/dist*
 
 
 # Sensitive Files
-.env
+/.env
 
 
 # Package Manager Files
