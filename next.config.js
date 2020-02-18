@@ -45,6 +45,7 @@ const generateBuildId = () => {
   )
 }
 
+
 const expandPaths = (paths) => {
   return paths.reduce((acc, dir) => {
     return acc.concat(
@@ -55,8 +56,10 @@ const expandPaths = (paths) => {
 
 
 
+
+
 module.exports = withWorkers({
-  distDir: 'dist',
+  distDir: path.join('dist', 'next'),
   generateBuildId,
   publicRuntimeConfig: {
     local: {
