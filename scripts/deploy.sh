@@ -13,12 +13,6 @@ develop)
   ;;
 
 
-beta)
-  DEPLOY_DIR="beta.fuelrats.com"
-  SERVICE_NAME="fr-web_beta"
-  ;;
-
-
 master)
   DEPLOY_DIR="fuelrats.com"
   SERVICE_NAME="fr-web"
