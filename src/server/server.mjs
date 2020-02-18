@@ -7,7 +7,6 @@
 
 
 // Module imports
-import dotEnv from 'dotenv'
 import Koa from 'koa'
 import koaBody from 'koa-body'
 import koaCompress from 'koa-compress'
@@ -24,13 +23,6 @@ import env from './environment'
 import csp from './middlewares/csp'
 import proxies from './middlewares/proxy'
 import router from './router'
-
-
-
-
-
-// Import variables from .env file.
-dotEnv.config()
 
 
 
