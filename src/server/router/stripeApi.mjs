@@ -1,5 +1,14 @@
-/* eslint-disable global-require, no-magic-numbers, camelcase */
-const Router = require('koa-router')
+/* eslint-disable no-magic-numbers */
+
+
+
+
+
+// Module imports
+import Router from 'koa-router'
+import stripeJs from 'stripe'
+
+
 
 
 
@@ -70,8 +79,8 @@ const prepareResponse = async (ctx, next) => {
 
 
 
-module.exports = (router, env) => {
-  const stripe = require('stripe')(env.stripe.secret)
+const configureStripeApi = (router, env) => {
+  const stripe = stripeJs(env.stripe.secret)
 
   const stApiRouter = new Router()
   stApiRouter.use(prepareResponse)
@@ -119,3 +128,9 @@ module.exports = (router, env) => {
 
   router.use('/st-api', stApiRouter.routes(), stApiRouter.allowedMethods())
 }
+
+
+
+
+
+export default configureStripeApi

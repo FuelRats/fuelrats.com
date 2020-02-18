@@ -7,7 +7,7 @@ const DEFAULT_PORT = 3000
 
 
 
-module.exports = {
+const env = {
   isDev: process.env.NODE_ENV !== 'production',
   port: process.env.PORT || DEFAULT_PORT,
   publicUrl: process.env.FRDC_PUBLIC_URL || `http://localhost:${process.env.PORT || DEFAULT_PORT}`,
@@ -25,4 +25,13 @@ module.exports = {
   stripe: {
     secret: process.env.FRDC_STRIPE_API_SK,
   },
+}
+
+
+
+
+
+export default env
+export {
+  DEFAULT_PORT,
 }

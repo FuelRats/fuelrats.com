@@ -18,7 +18,7 @@ const permanentRedirect = (path) => {
 
 
 
-module.exports = (router) => {
+const configureRedirects = (router) => {
   /***************************************************************************\
     Redirects
   \***************************************************************************/
@@ -58,3 +58,9 @@ module.exports = (router) => {
     await next()
   })
 }
+
+
+
+
+
+export default configureRedirects
