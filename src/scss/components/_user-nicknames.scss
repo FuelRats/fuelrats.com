@@ -1,41 +1,30 @@
 div.user-nicknames {
-  header {
-    button {
-      min-height: 23px;
+  form.add-nickname-form {
+    display: flex;
+
+    flex-flow: row nowrap;
+    align-items: center;
+
+    padding: 1rem;
+
+    fieldset {
+      flex: 2 0;
+
+      margin-right: 0.5rem;
+      padding: 0;
     }
 
-    .add-nickname-float {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      z-index: 1;
+    button[type='submit'] {
+      flex: 0 0 auto;
 
-      width: calc(100% - 3.5rem);
-      padding: 0.5rem 0 0.5rem 0.5rem;
-
-      background: #1A1A1A;
-    }
-
-    .controls {
-      position: relative;
-
-      button {
-        z-index: 2;
-
-        margin-left: 0.5rem;
-
-        // svg {
-        //   width: 1.1em;
-        // }
-      }
+      margin-right: 0.2rem;
     }
   }
 
   .panel-content {
     padding: 0;
 
+    overflow: visible;
 
     ul > li {
       display: flex;
@@ -51,38 +40,6 @@ div.user-nicknames {
 
       span {
         word-break: break-word;
-      }
-    }
-  }
-
-  footer form.row {
-    .validated-form-input {
-      margin-right: 1rem;
-      padding: 0;
-
-      color: $black;
-
-      input {
-        padding: 1.1rem;
-      }
-    }
-
-    button {
-      flex-grow: initial;
-      flex-basis: initial;
-    }
-
-    @media only screen and (max-width: 900px) {
-      flex-direction: column;
-      align-items: flex-end;
-
-      .validated-form-input {
-        margin: 0 0 1rem;
-      }
-
-
-      > * {
-        flex-basis: initial;
       }
     }
   }

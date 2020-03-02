@@ -1,5 +1,6 @@
 .info-bubble {
   position: absolute;
+  z-index: 98;
 
   padding: 1rem;
 
@@ -25,6 +26,8 @@
     display: inline-block;
 
     margin: 0.5rem 1rem 0;
+
+    color: $white;
 
     font-family: $paragraph-fonts;
   }
