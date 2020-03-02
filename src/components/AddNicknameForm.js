@@ -25,7 +25,6 @@ class AddNicknameForm extends React.Component {
 
   state = {
     nickname: '',
-    password: '',
     submitting: false,
   }
 
@@ -44,18 +43,16 @@ class AddNicknameForm extends React.Component {
     } = this.props
     const {
       nickname,
-      password,
     } = this.state
 
     event.preventDefault()
 
     this.setState({ submitting: true })
 
-    await addNickname(user.id, nickname, password)
+    await addNickname(user.id, nickname)
 
     this.setState({
       nickname: '',
-      password: '',
       submitting: false,
     })
   }
@@ -75,7 +72,6 @@ class AddNicknameForm extends React.Component {
   render () {
     const {
       nickname,
-      password,
       submitting,
     } = this.state
 
@@ -84,7 +80,6 @@ class AddNicknameForm extends React.Component {
         className="add-nickname-form"
         onSubmit={this._handleSubmit}>
         <ValidatedFormInput
-          className="dark"
           id="AddNickname"
           label="Nickname"
           name="nickname"
@@ -99,23 +94,10 @@ class AddNicknameForm extends React.Component {
           </InfoBubble>
         </ValidatedFormInput>
 
-
-
-        <ValidatedFormInput
-          className="dark"
-          id="AddNicknamePass"
-          label="NicknamePass"
-          name="password"
-          placeholder="IRC Password"
-          title="This is the password you use to identify with in IRC"
-          type="password"
-          value={password}
-          onChange={this._handleChange} />
-
         <button
           aria-label="submit new nickname"
           className="green icon"
-          disabled={!nickname || !password || submitting}
+          disabled={!nickname || submitting}
           type="submit">
           <FontAwesomeIcon fixedWidth icon="check" />
         </button>

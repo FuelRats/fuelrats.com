@@ -1,5 +1,4 @@
 // Module imports
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 
 
@@ -66,24 +65,8 @@ class UserNicknamesPanel extends React.Component {
       <div className="panel user-nicknames">
         <header>
           {'IRC Nicknames'}
-          {
-            (this.state.formOpen) && (
-              <div className="add-nickname-float">
-                <AddNicknameForm />
-              </div>
-            )
-          }
           <div className="controls">
             <span className="nickname-count">{`${user.attributes.nicknames.length}/${MAXNICKS}`}</span>
-            <button
-              aria-label="add nickname"
-              className={`icon ${this.state.formOpen ? '' : 'green'}`}
-              disabled={maxNicksReached}
-              title={maxNicksReached ? 'You\'ve used all your nicknames' : 'Add new nickname'}
-              type="button"
-              onClick={this._handleFormVisibilityToggle}>
-              <FontAwesomeIcon fixedWidth icon={this.state.formOpen ? 'times' : 'plus'} />
-            </button>
           </div>
         </header>
 
@@ -106,6 +89,8 @@ class UserNicknamesPanel extends React.Component {
               }) ?? null
             }
           </ul>
+
+          {!maxNicksReached && (<AddNicknameForm />)}
         </div>
       </div>
     )
