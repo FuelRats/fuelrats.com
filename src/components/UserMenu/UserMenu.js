@@ -24,6 +24,7 @@ const userItems = [
     key: 'profile',
     title: 'Profile',
     route: 'profile',
+    routeParams: { tab: 'overview' },
   },
   {
     key: 'my-rats',
