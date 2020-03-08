@@ -126,7 +126,7 @@ class Register extends React.Component {
         email,
         password,
         route: 'profile',
-        routeParams: { fl: '1' },
+        routeParams: { tab: 'overview', fl: '1' },
       })
     } else {
       this.setState({ submitting: false })
