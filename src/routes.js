@@ -3,119 +3,87 @@ import NextLink from 'next/link'
 import * as NextRouter from 'next/router'
 
 
-const routeList = [
+
+
+
+const { Link, Router } = routes(NextLink, NextRouter)
+
   // Front Page
-  ['home', '/'],
-  ['rescue-landing', '/i-need-fuel'],
+  .add('home', '/')
+  .add('rescue-landing', '/i-need-fuel')
 
   // Paperwork
-  [
-    'paperwork',
-    '/paperwork/[rescueId]',
-    ({ rescueId }) => {
-      return `/paperwork/${rescueId}`
-    },
-  ],
+  .add('paperwork', '/paperwork/[rescueId]')
 
 
-  [
-    'paperwork edit',
-    '/paperwork/[rescueId]/edit',
-    ({ rescueId }) => {
-      return `/paperwork/${rescueId}/edit`
-    },
-  ],
+  .add('paperwork edit', '/paperwork/[rescueId]/edit')
 
   // Profile
-  [
-    'profile',
-    '/profile/[tab]',
-    ({ tab }) => {
-      return `/profile/${tab || 'overview'}`
-    },
-  ],
+  .add('profile', '/profile/[tab]')
 
   // Register
-  ['register', '/register'],
+  .add('register', '/register')
 
   // Authentication
-  ['auth authorize', '/authorize'],
-  ['auth forgot-pass', '/forgot-password'],
-  ['auth password-reset', '/password-reset'],
+  .add('auth authorize', '/authorize')
+  .add('auth forgot-pass', '/forgot-password')
+  .add('auth password-reset', '/password-reset')
 
   // Blog
-  [
-    'blog list',
-    ({
+  .add('blog list', (params) => {
+    const {
       author,
       category,
       page,
-    }) => {
-      let href = '/blog'
-      let as = '/blog'
+      ...query
+    } = params
 
-      if (author) {
-        href += '/author/[author]'
-        as += `/author/${author}`
-      } else if (category) {
-        href += '/category/[category]'
-        as += `/category/${category}`
-      }
+    let href = '/blog'
+    let as = '/blog'
 
-      if (typeof page === 'number') {
-        href += '/page/[page]'
-        as += `/page/${page}`
-      }
+    if (author) {
+      href += '/author/[author]'
+      as += `/author/${author}`
+    } else if (category) {
+      href += '/category/[category]'
+      as += `/category/${category}`
+    }
 
-      return { href, as }
-    },
-  ],
+    if (typeof page === 'number') {
+      href += '/page/[page]'
+      as += `/page/${page}`
+    }
 
-  [
-    'blog view',
-    '/blog/[blogId]',
-    ({ blogId }) => {
-      return `/blog/${blogId}`
-    },
-  ],
+    return { href, as, query }
+  })
+
+  .add('blog view', '/blog/[blogId]')
 
   // Administration
-  ['admin rescues list', '/admin/rescues'],
+  .add('admin rescues list', '/admin/rescues')
 
   // Statistics
-  ['stats leaderboard', '/leaderboard'],
+  .add('stats leaderboard', '/leaderboard')
 
   // Donate
-  ['donate', '/donate'],
+  .add('donate', '/donate')
 
   // About
-  ['about fuelrats', '/about'],
-  ['about acknowledgements', '/acknowledgements'],
-  [
-    'about version',
-    ({ raw }) => {
-      return `/version/${raw ? 'raw' : 'index'}`
-    },
-  ],
+  .add('about fuelrats', '/about')
+  .add('about acknowledgements', '/acknowledgements')
+
+  .add('about version', ({ raw, ...query }) => {
+    return {
+      href: `/version/${raw ? 'raw' : 'index'}`,
+      query,
+    }
+  })
 
   // Epics
-  ['epic nominate', '/epic/nominate'],
+  .add('epic nominate', '/epic/nominate')
 
   // Wordpress
-  [
-    'wordpress',
-    '/[slug]',
-    ({ slug }) => {
-      return `/${slug}`
-    },
-  ],
-]
-
-
-
-
-
-const { Link, Router } = routes(NextLink, NextRouter, routeList)
+  .add('wordpress', '/[slug]')
 
 
 
