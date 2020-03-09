@@ -1225,6 +1225,14 @@
     core-js-pure "^3.0.0"
     regenerator-runtime "^0.13.2"
 
+"@babel/runtime-corejs3@^7.8.3":
+  version "7.8.7"
+  resolved "https://registry.yarnpkg.com/@babel/runtime-corejs3/-/runtime-corejs3-7.8.7.tgz#8209d9dff2f33aa2616cb319c83fe159ffb07b8c"
+  integrity sha512-sc7A+H4I8kTd7S61dgB9RomXu/C+F4IrRr4Ytze4dnfx7AXEpCrejSNpjx7vq6y/Bak9S6Kbk65a/WgMLtg43Q==
+  dependencies:
+    core-js-pure "^3.0.0"
+    regenerator-runtime "^0.13.4"
+
 "@babel/runtime@7.7.2":
   version "7.7.2"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.7.2.tgz#111a78002a5c25fc8e3361bedc9529c696b85a6a"
@@ -1359,10 +1367,10 @@
   dependencies:
     prop-types "^15.7.2"
 
-"@fuelrats/argument-validator-utils@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@fuelrats/argument-validator-utils/-/argument-validator-utils-1.0.0.tgz#5a1984d18b8c3adc1c1d87a26434923a33bd787c"
-  integrity sha512-AnZzvs59uADaW28fTwF3f5GzBnCLtWakgFRLl/hAUOuuIICU5HUuly2dE2Rfopy54WuWXRHpo+v8hyw2wPToWg==
+"@fuelrats/argument-validator-utils@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@fuelrats/argument-validator-utils/-/argument-validator-utils-1.0.1.tgz#87fa9ccd7fc8b6bcbcd54b81eb29131770fb5728"
+  integrity sha512-UKUE4JvtjR7vQxcZPWfMfzvEHkkSqOJgCJ9o4563KwWeuuFnJ72fL1AYb7UatbNEmgXRUq938rSL0Du8OLyRCA==
 
 "@fuelrats/eslint-config-react@^2.1.0":
   version "2.1.0"
@@ -1376,12 +1384,12 @@
   dependencies:
     eslint-restricted-globals "^0.2.0"
 
-"@fuelrats/next-named-routes@3.0.0-beta.2":
-  version "3.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@fuelrats/next-named-routes/-/next-named-routes-3.0.0-beta.2.tgz#45851d4738b5c8469f5690ab206fee7564087e0b"
-  integrity sha512-lm0Bb9gDGt8hrm5wnMJ7eGfcD/vEzRee4/Vzth3X0bNcCDFxLBkzeATVVA7m0K7S6BcMkGxTyrTDAMyWuTrxWA==
+"@fuelrats/next-named-routes@3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@fuelrats/next-named-routes/-/next-named-routes-3.0.0.tgz#6565d6812d3b38ca94e39a926bb61a5ab479b3de"
+  integrity sha512-sFiPhwgpcj3HP/ElESkXAwaFluCPQy+bb+1zVm15gbxGlRoaOy1gSQOjI3eiKqXD71oJTc0fJ0Frw+4D8t+gHA==
   dependencies:
-    "@fuelrats/argument-validator-utils" "^1.0.0"
+    "@fuelrats/argument-validator-utils" "^1.0.1"
     hoist-non-react-statics "^3.3.2"
     react "^16.13.0"
 
@@ -3796,10 +3804,10 @@ eslint-plugin-react-hooks@^2.5.0:
   resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-2.5.0.tgz#c50ab7ca5945ce6d1cf8248d9e185c80b54171b6"
   integrity sha512-bzvdX47Jx847bgAYf0FPX3u1oxU+mKU8tqrpj4UX9A96SbAmj/HVEefEy6rJUog5u8QIlOPTKZcBpGn5kkKfAQ==
 
-eslint-plugin-react@^7.18.3:
-  version "7.18.3"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.18.3.tgz#8be671b7f6be095098e79d27ac32f9580f599bc8"
-  integrity sha512-Bt56LNHAQCoou88s8ViKRjMB2+36XRejCQ1VoLj716KI1MoE99HpTVvIThJ0rvFmG4E4Gsq+UgToEjn+j044Bg==
+eslint-plugin-react@^7.19.0:
+  version "7.19.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.19.0.tgz#6d08f9673628aa69c5559d33489e855d83551666"
+  integrity sha512-SPT8j72CGuAP+JFbT0sJHOB80TX/pu44gQ4vXH/cq+hQTiY2PuZ6IHkqXJV6x1b28GDdo1lbInjKUrrdUf0LOQ==
   dependencies:
     array-includes "^3.1.1"
     doctrine "^2.1.0"
@@ -3809,8 +3817,10 @@ eslint-plugin-react@^7.18.3:
     object.fromentries "^2.0.2"
     object.values "^1.1.1"
     prop-types "^15.7.2"
-    resolve "^1.14.2"
+    resolve "^1.15.1"
+    semver "^6.3.0"
     string.prototype.matchall "^4.0.2"
+    xregexp "^4.3.0"
 
 eslint-restricted-globals@^0.2.0:
   version "0.2.0"
@@ -8101,6 +8111,13 @@ resolve@^1.1.7, resolve@^1.10.0, resolve@^1.12.0, resolve@^1.13.1, resolve@^1.14
   dependencies:
     path-parse "^1.0.6"
 
+resolve@^1.15.1:
+  version "1.15.1"
+  resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.15.1.tgz#27bdcdeffeaf2d6244b95bb0f9f4b4653451f3e8"
+  integrity sha512-84oo6ZTtoTUpjgNEr5SJyzQhzL72gaRodsSfyxC/AXRvwu0Yse9H8eF9IpGo7b8YetZhlI6v7ZQ6bKBFV/6S7w==
+  dependencies:
+    path-parse "^1.0.6"
+
 restore-cursor@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/restore-cursor/-/restore-cursor-2.0.0.tgz#9f7ee287f82fd326d4fd162923d62129eee0dfaf"
@@ -8177,10 +8194,10 @@ rollup-plugin-auto-external@^2.0.0:
     safe-resolve "^1.0.0"
     semver "^5.5.0"
 
-rollup-plugin-babel@^4.3.3:
-  version "4.3.3"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-babel/-/rollup-plugin-babel-4.3.3.tgz#7eb5ac16d9b5831c3fd5d97e8df77ba25c72a2aa"
-  integrity sha512-tKzWOCmIJD/6aKNz0H1GMM+lW1q9KyFubbWzGiOG540zxPPifnEAHTZwjo0g991Y+DyOZcLqBgqOdqazYE5fkw==
+rollup-plugin-babel@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-babel/-/rollup-plugin-babel-4.4.0.tgz#d15bd259466a9d1accbdb2fe2fff17c52d030acb"
+  integrity sha512-Lek/TYp1+7g7I+uMfJnnSJ7YWoD58ajo6Oarhlex7lvUce+RCKRuGRSgztDO3/MF/PuGKmUL5iTHKf208UNszw==
   dependencies:
     "@babel/helper-module-imports" "^7.0.0"
     rollup-pluginutils "^2.8.1"
@@ -8773,10 +8790,10 @@ strip-json-comments@^3.0.1:
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-3.0.1.tgz#85713975a91fb87bf1b305cca77395e40d2a64a7"
   integrity sha512-VTyMAUfdm047mwKl+u79WIdrZxtFtn+nBxHeb844XBQ9uMNTuTHdx2hc5RiAJYqwTj3wc/xe5HLSdJSkJ+WfZw==
 
-stripe@^8.28.1:
-  version "8.28.1"
-  resolved "https://registry.yarnpkg.com/stripe/-/stripe-8.28.1.tgz#63e04e5e9bbb3b0dd8522293551422ff25735934"
-  integrity sha512-BkROv3FO9nC2BAllP2FqVRszimxHaBnfN4j2ukov77zHsPtQZrkKf89LQLO3bcol0nFaN9DsIKDWk0hLY+ZXAw==
+stripe@^8.29.0:
+  version "8.29.0"
+  resolved "https://registry.yarnpkg.com/stripe/-/stripe-8.29.0.tgz#f46d3a26f07bfaff170a0376489504932ea47c87"
+  integrity sha512-ZuQA/M8dU6pHV174uU4w/K21Ftv4v+2yAOdkitijVbDue4YF2n14qbjIBT+rwGl+jaJovZAuMrbOWyZ+glI34w==
   dependencies:
     "@types/node" ">=8.1.0"
     qs "^6.6.0"
@@ -9707,6 +9724,13 @@ x-is-string@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/x-is-string/-/x-is-string-0.1.0.tgz#474b50865af3a49a9c4657f05acd145458f77d82"
   integrity sha1-R0tQhlrzpJqcRlfwWs0UVFj3fYI=
+
+xregexp@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/xregexp/-/xregexp-4.3.0.tgz#7e92e73d9174a99a59743f67a4ce879a04b5ae50"
+  integrity sha512-7jXDIFXh5yJ/orPn4SXjuVrWWoi4Cr8jfV1eHv9CixKSbU+jY4mxfrBwAuDvupPNKpMUY+FeIqsVw/JLT9+B8g==
+  dependencies:
+    "@babel/runtime-corejs3" "^7.8.3"
 
 xtend@^4.0.0, xtend@^4.0.1, xtend@~4.0.1:
   version "4.0.2"
