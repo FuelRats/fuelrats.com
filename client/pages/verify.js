@@ -24,7 +24,6 @@ class Verify extends React.Component {
     password: '',
     submitted: false,
     submitting: false,
-    validating: false,
   }
 
   /***************************************************************************\
@@ -110,7 +109,6 @@ class Verify extends React.Component {
       password,
       submitted,
       submitting,
-      validating,
     } = this.state
 
     const tokenIsValid = this.props.response.status
@@ -127,7 +125,7 @@ class Verify extends React.Component {
             <span>An error as occurred, please try again</span>
           )}
 
-          {(!submitted && !validating && tokenIsValid && type === 'reset') && (
+          {(!submitted && tokenIsValid && type === 'reset') && (
             <form onSubmit={this._handleSubmit}>
               <fieldset>
                 <label htmlFor="password">
@@ -164,7 +162,7 @@ class Verify extends React.Component {
             </form>
           )}
 
-          {(!submitted && !validating && !tokenIsValid) && (
+          {(!submitted && !tokenIsValid) && (
             <div>
               <header>
                 <h3>Invalid Token</h3>
