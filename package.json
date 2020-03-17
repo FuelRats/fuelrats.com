@@ -58,7 +58,7 @@
     "rollup-plugin-cleaner": "^1.0.0",
     "sass": "^1.26.2",
     "sass-loader": "^8.0.2",
-    "stylelint": "^13.2.0",
+    "stylelint": "^13.2.1",
     "stylelint-order": "^4.0.0",
     "stylelint-scss": "^3.13.0"
   },
@@ -91,7 +91,7 @@
     "localforage": "^1.7.3",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
-    "next": "9.2.2",
+    "next": "9.3.0",
     "next-cookies": "^2.0.3",
     "next-redux-wrapper": "5.0.0",
     "nprogress": "^0.2.0",
