@@ -23,7 +23,7 @@ const PageTransitionContainer = ({ items, keys, ...transitionProps }) => {
     const {
       Page,
       pageProps,
-      shouldRender,
+      shouldRender = true,
     } = item
 
     return shouldRender && (
