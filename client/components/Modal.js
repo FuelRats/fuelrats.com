@@ -39,13 +39,22 @@ const renderModal = ({ item, key, props: style }) => {
     [className, className]
   )
 
-  return (
-    isOpen && (
-      <RootElement className={rootClasses} key={key} role="dialog" style={{ transform: style.pos.to((value) => (value ? `translate3d(0,${value}vh,0)` : undefined)) }}>
-        <ModalHeader hideClose={hideClose} onClose={onClose} title={title} />
-        <InnerModal {...innerModalProps}>{innerModalChildren}</InnerModal>
-      </RootElement>
-    )
+  return isOpen && (
+    <RootElement
+      className={rootClasses}
+      key={key}
+      role="dialog"
+      style={{ transform: style.pos.to((value) => (value ? `translate3d(0,${value}vh,0)` : undefined)) }}>
+
+      <ModalHeader
+        hideClose={hideClose}
+        onClose={onClose}
+        title={title} />
+
+      <InnerModal {...innerModalProps}>
+        {innerModalChildren}
+      </InnerModal>
+    </RootElement>
   )
 }
 
