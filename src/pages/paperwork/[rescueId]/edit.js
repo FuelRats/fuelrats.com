@@ -342,9 +342,6 @@ class Paperwork extends React.Component {
 
     const pwValidity = this.validate(fieldValues)
 
-    console.log('attriibutes', this.props.rescue.attributes.firstLimpetId)
-    console.log('changes', this.state.changes.firstLimpetId)
-
     return (
       <form
         className={classes.join(' ')}
