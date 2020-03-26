@@ -636,7 +636,7 @@ class Paperwork extends React.Component {
       notes: getValue('notes'),
       outcome: getValue('outcome'),
       platform: getValue('platform'),
-      rats: Object.values(isDefined(changes.rats, rats)),
+      rats: Object.values(isDefined(changes.rats, rats) ?? {}),
       system: isDefined(changes.system, rescue.attributes.system ? { value: rescue.attributes.system.toUpperCase() } : null),
     }
   }
