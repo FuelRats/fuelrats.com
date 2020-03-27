@@ -4,7 +4,13 @@ import React from 'react'
 
 
 
-const TransitionContext = React.createContext(null)
+const {
+  Provider: TransitionProvider,
+  Consumer: TransitionConsumer,
+} = React.createContext(null)
+
+
+
 
 
 const PageTransitionContainer = ({ items, keys, ...transitionProps }) => {
@@ -27,9 +33,9 @@ const PageTransitionContainer = ({ items, keys, ...transitionProps }) => {
     } = item
 
     return shouldRender && (
-      <TransitionContext.Provider key={key} value={props}>
+      <TransitionProvider key={key} value={props}>
         <Page {...pageProps} />
-      </TransitionContext.Provider>
+      </TransitionProvider>
     )
   })
 }
@@ -37,9 +43,6 @@ const PageTransitionContainer = ({ items, keys, ...transitionProps }) => {
 
 
 
-const {
-  Consumer: TransitionConsumer,
-} = TransitionContext
 
 export default PageTransitionContainer
 export {
