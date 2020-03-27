@@ -1,6 +1,6 @@
 // Module imports
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { useMemo } from 'react'
 
 
 
@@ -9,6 +9,7 @@ import React from 'react'
 // Component imports
 import { Router } from '../routes'
 import { connect } from '../store'
+import { selectFlagByName, selectSession } from '../store/selectors'
 import asModal, { ModalContent, ModalFooter } from './Modal'
 import Switch from './Switch'
 import ValidatedFormInput from './ValidatedFormInput'
@@ -21,7 +22,6 @@ import ValidatedFormInput from './ValidatedFormInput'
   className: 'login-dialog',
   title: 'Login',
 })
-@connect
 class LoginModal extends React.Component {
   /***************************************************************************\
     Class Properties
@@ -119,6 +119,7 @@ class LoginModal extends React.Component {
     const {
       userAgent,
     } = this.props
+
     const {
       email,
       error,
@@ -229,16 +230,6 @@ class LoginModal extends React.Component {
 
 
   /***************************************************************************\
-    Redux Properties
-  \***************************************************************************/
-
-  static mapDispatchToProps = ['login', 'getUserProfile']
-
-
-
-
-
-  /***************************************************************************\
     Prop Definitions
   \***************************************************************************/
 
@@ -254,4 +245,34 @@ class LoginModal extends React.Component {
 
 
 
-export default LoginModal
+function ConnectedLoginModal ({ setFlag, showLoginModal, ...modalProps }) {
+  const handleClose = useMemo(() => {
+    setFlag('showLoginDialog', false)
+  }, [setFlag])
+
+  return (
+    <LoginModal
+      isOpen={showLoginModal}
+      onClose={handleClose}
+      {...modalProps} />
+  )
+}
+
+ConnectedLoginModal.mapDispatchToProps = [
+  'getUserProfile',
+  'login',
+  'setFlag',
+]
+
+ConnectedLoginModal.mapStateToProps = (state) => {
+  return {
+    showLoginModal: selectFlagByName(state, { name: 'showLoginDialog' }),
+    userAgent: selectSession(state).userAgent,
+  }
+}
+
+
+
+
+
+export default connect(ConnectedLoginModal)
