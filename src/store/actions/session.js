@@ -43,11 +43,20 @@ export const initUserSession = (ctx) => {
 
     const { access_token: accessToken } = nextCookies(ctx)
 
+    // Get user agent to be used by login modal and i-need-fuel page
+    let userAgent = ''
+    if (ctx.req && ctx.req.headers['user-agent']) {
+      userAgent = ctx.req.headers['user-agent'].toLowerCase()
+    } else if (typeof window !== 'undefined') {
+      userAgent = window.navigator.userAgent.toLowerCase()
+    }
+
     const result = {
       type: actionTypes.session.initialize,
       status: actionStatus.SUCCESS,
       error: null,
       accessToken,
+      userAgent,
     }
 
     if (accessToken) {

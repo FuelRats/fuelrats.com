@@ -38,6 +38,7 @@ const initialState = {
     loggedIn: false,
     loggingOut: false,
     error: null,
+    userAgent: '',
     userId: null,
   },
 

@@ -22,6 +22,7 @@ const sessionReducer = produce((draftState, action) => {
   switch (type) {
     case actionTypes.session.initialize:
       draftState.loggedIn = Boolean(action.accessToken && !action.error)
+      draftState.userAgent = action.userAgent
       draftState.error = action.error
       break
 
