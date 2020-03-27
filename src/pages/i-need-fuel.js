@@ -3,42 +3,29 @@ import React from 'react'
 
 
 // Component imports
+import { createStructuredSelector } from 'reselect'
 import { PageWrapper } from '../components/AppLayout'
 import { Link } from '../routes'
+import { connect } from '../store'
+import { selectSession } from '../store/selectors'
 
 
 
-
-class INeedFuel extends React.Component {
-  static getInitialProps (ctx) {
-    let userAgent = ''
-
-    if (ctx.req && ctx.req.headers['user-agent']) {
-      userAgent = ctx.req.headers['user-agent'].toLowerCase()
-    } else if (typeof window !== 'undefined') {
-      userAgent = window.navigator.userAgent.toLowerCase()
-    }
-
-    let isSupported = true
-    let supportMessage = null
-
-    if (userAgent.match(/playstation/giu)) {
-      isSupported = false
-      supportMessage = 'The built-in PS4 browser is currently not supported. Please use your phone or computer instead.'
-    }
-
-    return {
-      browserInfo: {
-        supportMessage,
-        isSupported,
-      },
-    }
-  }
-
+function INeedFuel (props) {
   render () {
     const {
-      browserInfo,
+      session,
     } = this.props
+
+    let supportMessage = null
+
+    if (session.userAgent.match(/playstation/giu)) {
+      supportMessage = `
+        The built-in PS4 browser is currently not supported.
+        This is due to bugs in the PS4 browser, and outside of our control.
+        Please use your phone or computer instead.
+      `
+    }
 
     return (
       <PageWrapper title="I Need Fuel">
@@ -58,9 +45,10 @@ class INeedFuel extends React.Component {
 
             <br />
 
+            {supportMessage && (<h5>{supportMessage}</h5>)}
 
             {
-              browserInfo.isSupported && (
+              !supportMessage && (
                 <>
                   <p>{'Have you found yourself low on fuel and unable to make it to your nearest refuel point? Never fear! The Fuel Rats are here to help!'}</p>
 
@@ -102,10 +90,6 @@ class INeedFuel extends React.Component {
                 </>
               )
             }
-
-            {!browserInfo.isSupported && (<h5>{browserInfo.supportMessage}</h5>)}
-
-
           </div>
         </div>
       </PageWrapper>
@@ -113,7 +97,9 @@ class INeedFuel extends React.Component {
   }
 }
 
+INeedFuel.mapStateToProps = createStructuredSelector({
+  session: selectSession,
+})
 
 
-
-export default INeedFuel
+export default connect(INeedFuel)
