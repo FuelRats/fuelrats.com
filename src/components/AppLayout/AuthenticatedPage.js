@@ -1,9 +1,3 @@
-import hoistNonReactStatics from 'hoist-non-react-statics'
-
-
-
-
-
 import HttpStatus from '../../helpers/HttpStatus'
 import pageRedirect from '../../helpers/pageRedirect'
 import userHasPermission from '../../helpers/userHasPermission'
@@ -16,7 +10,8 @@ import getWrappedPage from './PageWrapper'
 
 const asAuthenticatedPage = (pageConfig, _requiredPerms) => {
   return (PageComponent) => {
-    const WrappedPage = hoistNonReactStatics(getWrappedPage(pageConfig, PageComponent), PageComponent, { getInitialProps: true })
+    const WrappedPage = getWrappedPage(pageConfig, PageComponent, { getInitialProps: true })
+
     WrappedPage.displayName = `AuthenticatedPage(${PageComponent.displayName || PageComponent.name || 'PageComponent'})`
     WrappedPage.requiresAuthentication = {}
 

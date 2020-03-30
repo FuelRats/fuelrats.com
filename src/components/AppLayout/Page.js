@@ -1,4 +1,3 @@
-import hoistNonReactStatics from 'hoist-non-react-statics'
 import getWrappedPage from './PageWrapper'
 
 
@@ -7,8 +6,10 @@ import getWrappedPage from './PageWrapper'
 
 const asPage = (PageConfig) => {
   return (PageComponent) => {
-    const WrappedPage = hoistNonReactStatics(getWrappedPage(PageConfig, PageComponent), PageComponent)
+    const WrappedPage = getWrappedPage(PageConfig, PageComponent)
+
     WrappedPage.displayName = `Page(${PageComponent.displayName || PageComponent.name || 'PageComponent'})`
+
     return WrappedPage
   }
 }
