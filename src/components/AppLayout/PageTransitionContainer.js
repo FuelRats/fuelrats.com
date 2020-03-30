@@ -4,10 +4,9 @@ import React from 'react'
 
 
 
-const {
-  Provider: TransitionProvider,
-  Consumer: TransitionConsumer,
-} = React.createContext(null)
+
+import { connect } from '../../store'
+import { notifyPageChange } from '../../store/actions'
 
 
 
@@ -26,25 +25,20 @@ const PageTransitionContainer = ({ items, keys, ...transitionProps }) => {
     },
     ...transitionProps,
   }).map(({ item, key, props }) => {
-    const {
-      Page,
-      pageProps,
-      shouldRender = true,
-    } = item
+    const { Page, pageProps } = item
 
-    return shouldRender && (
-      <TransitionProvider key={key} value={props}>
-        <Page {...pageProps} />
-      </TransitionProvider>
+    return (
+      <Page key={key} {...pageProps} transitionStyle={props} />
     )
   })
 }
 
-
-
-
-
-export default PageTransitionContainer
-export {
-  TransitionConsumer,
+PageTransitionContainer.mapDispatchToProps = {
+  onDestroyed: notifyPageChange, // called by react-spring when a page is unmounted so we know that it's safe to destructively change global state.
 }
+
+
+
+
+
+export default connect(PageTransitionContainer)
