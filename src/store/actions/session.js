@@ -83,12 +83,11 @@ export const initUserSession = (ctx) => {
 }
 
 
-export const notifyPageChange = (path) => {
+export const notifyPageChange = () => {
   return (dispatch) => {
     return dispatch({
       type: actionTypes.session.pageChange,
       status: actionStatus.SUCCESS,
-      path,
     })
   }
 }
