@@ -1,7 +1,9 @@
+/* global $IS_DEVELOPMENT:false */
 /* eslint-disable react/no-multi-comp */
 
 // Module imports
 import { animated } from '@react-spring/web'
+import hoistNonReactStatics from 'hoist-non-react-statics'
 import NextHead from 'next/head'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -11,8 +13,7 @@ import React from 'react'
 
 
 // Component imports
-import classnames from '../../helpers/classNames'
-import { TransitionConsumer } from './PageTransitionContainer'
+import classNames from '../../helpers/classNames'
 
 
 
@@ -23,104 +24,94 @@ const MAX_DESCR_LENGTH = 300
 
 
 
-
-
-class Page extends React.Component {
-  constructor (props) {
-    super(props)
-
-    /* eslint-disable no-console */
-    if (this.props.title.length > MAX_TITLE_LENGTH) {
-      console.warn(`Page titles should be fewer than 60 characters, preferably closer to 50. This page's title is ${this.props.title.length} characters.`)
-    }
-
-    if (this.props.description.length > MAX_DESCR_LENGTH) {
-      console.error(`Page description is too long! The description should be 50-300 characters long, but this page's description is ${this.props.description.length} characters.`)
-    }
-
-    if (this.props.description.indexOf('"') !== -1) {
-      console.error('Page descriptions shouldn\'t contain double quotes.')
-    }
-    /* eslint-enable no-console */
+const validatePageOptions = (props) => {
+  if (props.title.length > MAX_TITLE_LENGTH) {
+    console.warn(`Page titles should be fewer than 60 characters, preferably closer to 50. This page's title is ${props.title.length} characters.`)
   }
 
-  render () {
-    const {
-      children,
-      className,
-      description,
-      title,
-      noHeader,
-    } = this.props
-
-    const titleContent = !noHeader && this.displayTitle
-    const mainClasses = classnames(
-      'page',
-      [className, Boolean(className)],
-      title.toLowerCase().replace(/\s/gu, '-'),
-    )
-
-    return (
-      <>
-        <NextHead>
-          <title>{`${title} | The Fuel Rats`}</title>
-          <meta content={title} property="og:title" />
-          <meta content={description} name="description" />
-          <meta content={description} property="og:description" />
-        </NextHead>
-        <TransitionConsumer>
-          {
-            (style) => {
-              return (
-                <animated.main className={mainClasses} style={style}>
-                  {
-                    !noHeader && (
-                      <header className="page-header">
-                        {titleContent}
-                      </header>
-                    )
-                  }
-                  {children}
-                </animated.main>
-              )
-            }
-          }
-        </TransitionConsumer>
-      </>
-    )
+  if (props.description.length > MAX_DESCR_LENGTH) {
+    console.error(`Page description is too long! The description should be 50-300 characters long, but this page's description is ${props.description.length} characters.`)
   }
 
-
-  get displayTitle () {
-    const {
-      displayTitle,
-      title,
-    } = this.props
-
-    if (typeof displayTitle === 'function') {
-      return displayTitle(title)
-    }
-
-    return (<h1>{displayTitle}</h1>)
-  }
-
-  static defaultProps = {
-    description: 'The Fuel Rats are Elite: Dangerous\'s premier emergency refueling service. Fueling the galaxy, one ship at a time, since 3301.',
-    displayTitle: (title) => {
-      return (<h1>{title}</h1>)
-    },
-    noHeader: false,
-  }
-
-  static propTypes = {
-    description: PropTypes.string,
-    displayTitle: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.string,
-    ]),
-    noHeader: PropTypes.bool,
-    title: PropTypes.string.isRequired,
+  if (props.description.indexOf('"') !== -1) {
+    console.error('Page descriptions shouldn\'t contain double quotes.')
   }
 }
 
-export default Page
+
+
+
+function PageWrapper (props) {
+  if ($IS_DEVELOPMENT) {
+    validatePageOptions(props)
+  }
+
+  const {
+    children,
+    className,
+    description = 'The Fuel Rats are Elite: Dangerous\'s premier emergency refueling service. Fueling the galaxy, one ship at a time, since 3301.',
+    displayTitle,
+    noHeader = false,
+    title,
+    transitionStyle,
+  } = props
+
+  const mainClasses = classNames(
+    'page',
+    className,
+    title.toLowerCase().replace(/\s/gu, '-'),
+  )
+
+  return (
+    <>
+      <NextHead>
+        <title>{`${title} | The Fuel Rats`}</title>
+        <meta content={title} property="og:title" />
+        <meta content={description} name="description" />
+        <meta content={description} property="og:description" />
+      </NextHead>
+      <animated.main className={mainClasses} style={transitionStyle}>
+        {
+          !noHeader && (
+            <header className="page-header">
+              <h1>
+                {displayTitle ?? title}
+              </h1>
+            </header>
+          )
+        }
+        {children}
+      </animated.main>
+    </>
+  )
+}
+
+
+PageWrapper.propTypes = {
+  description: PropTypes.string,
+  displayTitle: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.string,
+  ]),
+  noHeader: PropTypes.bool,
+  title: PropTypes.string.isRequired,
+}
+
+
+
+
+const getWrappedPage = (options, PageComponent, filter) => {
+  return hoistNonReactStatics((props) => {
+    return (
+      <PageWrapper {...options}>
+        <PageComponent {...props} />
+      </PageWrapper>
+    )
+  }, PageComponent, filter)
+}
+
+
+
+
+
+export default getWrappedPage
