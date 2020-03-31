@@ -1,5 +1,4 @@
 import { useTransition } from '@react-spring/web'
-import React from 'react'
 
 
 
@@ -12,7 +11,7 @@ import { notifyPageChange } from '../../store/actions'
 
 
 
-const PageTransitionContainer = ({ items, keys, ...transitionProps }) => {
+const PageTransitionContainer = ({ children, items, keys, ...transitionProps }) => {
   return useTransition(items, keys, {
     initial: true,
     from: { opacity: 1 },
@@ -24,13 +23,7 @@ const PageTransitionContainer = ({ items, keys, ...transitionProps }) => {
       clamp: true,
     },
     ...transitionProps,
-  }).map(({ item, key, props }) => {
-    const { Page, pageProps } = item
-
-    return (
-      <Page key={key} {...pageProps} transitionStyle={props} />
-    )
-  })
+  }).map(children)
 }
 
 PageTransitionContainer.mapDispatchToProps = {

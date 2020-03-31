@@ -1,27 +1,30 @@
+import hoistNonReactStatics from 'hoist-non-react-statics'
+import React from 'react'
+
+
+
+
+
 import HttpStatus from '../../helpers/HttpStatus'
-import pageRedirect from '../../helpers/pageRedirect'
+import { pageRedirect, setError } from '../../helpers/gIPTools'
 import userHasPermission from '../../helpers/userHasPermission'
 import { selectSession, withCurrentUserId, selectGroupsByUserId } from '../../store/selectors'
-import getWrappedPage from './PageWrapper'
 
 
 
 
 
-const asAuthenticatedPage = (pageConfig, _requiredPerms) => {
+const authenticated = (scopes) => {
   return (PageComponent) => {
-    const WrappedPage = getWrappedPage(pageConfig, PageComponent, { getInitialProps: true })
+    function AuthenticatedPage (props) {
+      return (<PageComponent {...props} />)
+    }
 
-    WrappedPage.displayName = `AuthenticatedPage(${PageComponent.displayName || PageComponent.name || 'PageComponent'})`
-    WrappedPage.requiresAuthentication = {}
+    AuthenticatedPage.displayName = `AuthenticatedPage(${PageComponent.displayName || PageComponent.name || 'PageComponent'})`
+    AuthenticatedPage.requiresAuthentication = true
 
-    WrappedPage.getInitialProps = async (ctx) => {
-      // Get the initial props for our page
-      const initialProps = {
-        pageProps: (await PageComponent.getInitialProps?.(ctx)) ?? {},
-      }
-
-      // Now that we've initilized our page, lets get state so we can check up on the session info.
+    AuthenticatedPage.getInitialProps = async (ctx) => {
+      // Get state so we can check up on the session info.
       const state = ctx.store.getState()
       const { loggedIn } = selectSession(state)
 
@@ -32,23 +35,20 @@ const asAuthenticatedPage = (pageConfig, _requiredPerms) => {
       }
 
       // Now that we know the user is logged in, lets check if they require any permission scopes to view the page.
-      // If they do, check against their groups.
-      const requiredPerms = typeof _requiredPerms === 'function' ? _requiredPerms({ ...ctx, ...initialProps }) : _requiredPerms
-      const userGroups = withCurrentUserId(selectGroupsByUserId)(state)
+      // If they do, check scopes against their groups.
+      if (scopes) {
+        const userGroups = withCurrentUserId(selectGroupsByUserId)(state)
 
-      if (requiredPerms && !userHasPermission(userGroups, requiredPerms)) {
-        if (ctx.res) {
-          ctx.res.statusCode = HttpStatus.UNAUTHORIZED
-        } else {
-          initialProps.err = { statusCode: HttpStatus.UNAUTHORIZED }
+        if (!userHasPermission(userGroups, scopes)) {
+          setError(HttpStatus.UNAUTHORIZED)
         }
       }
 
 
-      return initialProps
+      return (await PageComponent.getInitialProps?.(ctx)) ?? {}
     }
 
-    return WrappedPage
+    return hoistNonReactStatics(AuthenticatedPage, PageComponent, { getInitialProps: true })
   }
 }
 
@@ -56,4 +56,4 @@ const asAuthenticatedPage = (pageConfig, _requiredPerms) => {
 
 
 
-export default asAuthenticatedPage
+export default authenticated
