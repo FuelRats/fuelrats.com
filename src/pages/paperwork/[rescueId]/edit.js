@@ -7,7 +7,7 @@ import { createSelector } from 'reselect'
 
 
 // Component imports
-import { PageWrapper, authenticated } from '../../../components/AppLayout'
+import { authenticated } from '../../../components/AppLayout'
 import FirstLimpetInput from '../../../components/FirstLimpetInput'
 import RadioInput from '../../../components/RadioInput'
 import RatTagsInput from '../../../components/RatTagsInput'
@@ -313,6 +313,12 @@ class Paperwork extends React.Component {
     }
   }
 
+  static getPageMeta () {
+    return {
+      title: 'Paperwork',
+    }
+  }
+
   renderRescueEditForm = () => {
     const {
       rescue,
@@ -510,7 +516,7 @@ class Paperwork extends React.Component {
     } = this.state
 
     return (
-      <PageWrapper title="Paperwork">
+      <>
         {
           (error && !submitting) && (
             <div className="store-errors">
@@ -530,7 +536,7 @@ class Paperwork extends React.Component {
         }
 
         {(rescue) && this.renderRescueEditForm()}
-      </PageWrapper>
+      </>
     )
   }
 

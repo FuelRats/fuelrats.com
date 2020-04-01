@@ -6,7 +6,6 @@ import React from 'react'
 
 
 // Component imports
-import { PageWrapper } from '../components/AppLayout'
 import PasswordField from '../components/PasswordField'
 import RadioInput from '../components/RadioInput'
 import WordpressTermsModal from '../components/TermsModal'
@@ -146,6 +145,13 @@ class Register extends React.Component {
     await actions.getWordpressPage('privacy-policy')(store.dispatch)
   }
 
+  static getPageMeta () {
+    return {
+      displayTitle: 'Become a Rat',
+      title: 'Register',
+    }
+  }
+
   render () {
     const {
       checkedTOS,
@@ -159,9 +165,7 @@ class Register extends React.Component {
     } = this.state
 
     return (
-      <PageWrapper
-        displayTitle="Become a Rat"
-        title="Register">
+      <>
         <form
           className={`${submitting ? 'loading force' : ''}`}
           data-loader-text="Submitting"
@@ -320,8 +324,7 @@ class Register extends React.Component {
           slug="privacy-policy"
           title="Privacy Policy"
           onClose={this._handlePrivacyAccept} />
-
-      </PageWrapper>
+      </>
     )
   }
 

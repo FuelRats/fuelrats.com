@@ -6,7 +6,6 @@ import React from 'react'
 
 
 // Component imports
-import { PageWrapper } from '../components/AppLayout'
 import PasswordField from '../components/PasswordField'
 import { passwordPattern } from '../data/RegExpr'
 import { Link } from '../routes'
@@ -93,6 +92,12 @@ class PasswordReset extends React.Component {
     }
   }
 
+  static getPageMeta () {
+    return {
+      title: 'Password Reset',
+    }
+  }
+
   render () {
     const {
       tokenIsValid,
@@ -104,14 +109,13 @@ class PasswordReset extends React.Component {
     } = this.state
 
     return (
-      <PageWrapper title="Password Reset">
-        <div className="page-content">
-          {
+      <div className="page-content">
+        {
             submitted && (
               <span>{'Your password has been changed! You may now login with your new credentials.'}</span>
             )
           }
-          {
+        {
             (!submitted && tokenIsValid) && (
               <form onSubmit={this._handleSubmit}>
                 <fieldset>
@@ -147,7 +151,7 @@ class PasswordReset extends React.Component {
               </form>
             )
           }
-          {
+        {
             (!submitted && !tokenIsValid) && (
               <div>
                 <header>
@@ -162,8 +166,7 @@ class PasswordReset extends React.Component {
               </div>
             )
           }
-        </div>
-      </PageWrapper>
+      </div>
     )
   }
 

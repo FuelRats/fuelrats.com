@@ -6,7 +6,6 @@ import React from 'react'
 
 
 // Component imports
-import { PageWrapper } from '../components/AppLayout'
 import Carousel from '../components/Carousel'
 import { Link } from '../routes'
 import { connect } from '../store'
@@ -41,6 +40,10 @@ class Index extends React.Component {
     Public Methods
   \***************************************************************************/
 
+  static getPageMeta () {
+    return { noHeader: true, title: 'Home' }
+  }
+
   componentDidMount () {
     if (this.props.query.authenticate) {
       this.props.setFlag('showLoginDialog', true)
@@ -49,24 +52,22 @@ class Index extends React.Component {
 
   render () {
     return (
-      <PageWrapper noHeader title="Home">
-        <section className="hero">
-          <Carousel id="HomeImages" slides={CarouselSlides} />
+      <section className="hero">
+        <Carousel id="HomeImages" slides={CarouselSlides} />
 
-          <header>
-            <h1>{'We Have Fuel. '}<wbr />{"You\u00a0Don't."}</h1>
-            <h2>{'Any Questions?'}</h2>
-          </header>
+        <header>
+          <h1>{'We Have Fuel. '}<wbr />{"You\u00a0Don't."}</h1>
+          <h2>{'Any Questions?'}</h2>
+        </header>
 
-          <footer className="call-to-action">
-            <Link route="rescue-landing">
-              <a className="button tall">{'Get Help'}</a>
-            </Link>
-          </footer>
+        <footer className="call-to-action">
+          <Link route="rescue-landing">
+            <a className="button tall">{'Get Help'}</a>
+          </Link>
+        </footer>
 
 
-        </section>
-      </PageWrapper>
+      </section>
     )
   }
 

@@ -7,7 +7,7 @@ import React from 'react'
 
 
 // Component imports
-import { PageWrapper, authenticated } from '../../../components/AppLayout'
+import { authenticated } from '../../../components/AppLayout'
 import { formatAsEliteDateTime } from '../../../helpers/formatTime'
 import { Link, Router } from '../../../routes'
 import { actions, connect } from '../../../store'
@@ -114,6 +114,12 @@ class Paperwork extends React.Component {
     }
   }
 
+  static getPageMeta () {
+    return {
+      title: 'Paperwork',
+    }
+  }
+
   renderQuotes = () => {
     const { rescue } = this.props
 
@@ -152,10 +158,10 @@ class Paperwork extends React.Component {
       <ul>
         {rats.map(this.renderRat)}
         {
-rescue.attributes.unidentifiedRats.map((rat) => {
-  return <li key={rat} className="unidentified">{rat}<span className="badge">{'UnID'}</span></li>
-})
-}
+          rescue.attributes.unidentifiedRats.map((rat) => {
+            return <li key={rat} className="unidentified">{rat}<span className="badge">{'UnID'}</span></li>
+          })
+        }
       </ul>
     )
   }
@@ -355,7 +361,7 @@ rescue.attributes.unidentifiedRats.map((rat) => {
     } = this.props
 
     return (
-      <PageWrapper title="Paperwork">
+      <>
         {
           (!rescue) && (
             <div className="loading page-content">
@@ -371,7 +377,7 @@ rescue.attributes.unidentifiedRats.map((rat) => {
             </div>
           )
         }
-      </PageWrapper>
+      </>
     )
   }
 

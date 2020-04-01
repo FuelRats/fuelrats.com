@@ -6,7 +6,7 @@ import React from 'react'
 
 
 // Component imports
-import { PageWrapper, authenticated } from '../components/AppLayout'
+import { authenticated } from '../components/AppLayout'
 import HiddenFormData from '../components/HiddenFormData'
 import { actions } from '../store'
 
@@ -34,7 +34,7 @@ class Authorize extends React.Component {
     Public Methods
   \***************************************************************************/
 
-  static async getInitialProps ({ query, res, store, accessToken }, setLayoutProps) {
+  static async getInitialProps ({ query, res, store, accessToken }) {
     const {
       client_id: clientId,
       response_type: responseType,
@@ -52,10 +52,6 @@ class Authorize extends React.Component {
         res.setHeader('set-cookie', response.headers['set-cookie'])
       }
 
-      setLayoutProps({
-        renderLayout: !oauthProps.preAuthorized,
-      })
-
       return {
         accessToken,
         clientId,
@@ -67,6 +63,13 @@ class Authorize extends React.Component {
     }
 
     return {}
+  }
+
+  static getPageMeta (_, { preAuthorized }) {
+    return {
+      className: preAuthorized ? 'hidden' : '',
+      title: 'Authorize Application',
+    }
   }
 
   componentDidMount () {
@@ -99,68 +102,66 @@ class Authorize extends React.Component {
     }
 
     return (
-      <PageWrapper className={preAuthorized ? 'hidden' : ''} title="Authorize Application">
-        <div className="page-content">
-          {
-            hasRequiredParameters && (
-              <>
-                <h3>{`${clientName} is requesting access to your FuelRats account`}</h3>
+      <div className="page-content">
+        {
+          hasRequiredParameters && (
+            <>
+              <h3>{`${clientName} is requesting access to your FuelRats account`}</h3>
 
-                <p><strong>{'This application will be able to:'}</strong></p>
+              <p><strong>{'This application will be able to:'}</strong></p>
 
-                <ul>
-                  {
-                    scopes.map(({ permission, accessible }) => {
-                      return (
-                        <li key={permission} className={accessible ? null : 'inaccessible'}>{permission}</li>
-                      )
-                    })
-                  }
-                </ul>
+              <ul>
+                {
+                  scopes.map(({ permission, accessible }) => {
+                    return (
+                      <li key={permission} className={accessible ? null : 'inaccessible'}>{permission}</li>
+                    )
+                  })
+                }
+              </ul>
 
-                <form
-                  ref={this._formRef}
-                  action={`/api/oauth2/authorize?bearer=${accessToken}`}
-                  method="post">
+              <form
+                ref={this._formRef}
+                action={`/api/oauth2/authorize?bearer=${accessToken}`}
+                method="post">
 
-                  <HiddenFormData data={formData} />
+                <HiddenFormData data={formData} />
 
-                  <div className="primary">
-                    <button
-                      className="green"
-                      disabled={submitting}
-                      name="allow"
-                      type="submit"
-                      value="true">
-                      {submitting ? 'Submitting...' : 'Allow'}
-                    </button>
+                <div className="primary">
+                  <button
+                    className="green"
+                    disabled={submitting}
+                    name="allow"
+                    type="submit"
+                    value="true">
+                    {submitting ? 'Submitting...' : 'Allow'}
+                  </button>
 
-                    <button
-                      disabled={submitting}
-                      name="cancel"
-                      type="submit"
-                      value="true">
-                      {submitting ? 'Submitting...' : 'Deny'}
-                    </button>
-                  </div>
-                </form>
-              </>
-            )
-          }
+                  <button
+                    disabled={submitting}
+                    name="cancel"
+                    type="submit"
+                    value="true">
+                    {submitting ? 'Submitting...' : 'Deny'}
+                  </button>
+                </div>
+              </form>
+            </>
+          )
+        }
 
-          {
-            !hasRequiredParameters && (
-              <>
-                <header>
-                  <h3>{'Invalid Authorize Request'}</h3>
-                </header>
+        {
+          !hasRequiredParameters && (
+            <>
+              <header>
+                <h3>{'Invalid Authorize Request'}</h3>
+              </header>
 
-                <p>{'Missing request parameters. Please contact the developer of the application you are trying to use.'}</p>
-              </>
-            )
-          }
-        </div>
-      </PageWrapper>
+              <p>{'Missing request parameters. Please contact the developer of the application you are trying to use.'}</p>
+            </>
+          )
+        }
+      </div>
     )
   }
 }

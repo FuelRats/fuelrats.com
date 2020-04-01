@@ -4,7 +4,6 @@ import React from 'react'
 
 // Component imports
 import { dependencies } from '../../package.json'
-import { PageWrapper } from '../components/AppLayout'
 
 
 
@@ -46,42 +45,46 @@ const brands = [
 
 function Acknowledgements () {
   return (
-    <PageWrapper title="Acknowledgements">
-      <div className="page-content">
-        {
-        brands.map((brand) => {
-          return (
-            <div key={brand.key} className={`credit-section credit-${brand.key}`}>
-              <a
-                href={brand.homepage}
-                rel="noopener noreferrer"
-                target="_blank">
-                <div className={`brand-image ${brand.key}-brand`} />
-              </a>
-              <p>{brand.description}</p>
-            </div>
-          )
-        })
-      }
-        <div className="dependency-list-wrapper">
-          <div className="dependency-list">
-            <span>{'Fuelrats.com would not be possible without these awesome packages'}</span>
-            <ul className="text-mono">
-              {
-                Object.keys({
-                  ...dependencies,
-                }).map((dep) => {
-                  return (
-                    <li key={dep}><a href={`https://www.npmjs.com/package/${dep}`} rel="noopener noreferrer" target="_blank">{dep}</a></li>
-                  )
-                })
-              }
-            </ul>
+    <div className="page-content">
+      {
+      brands.map((brand) => {
+        return (
+          <div key={brand.key} className={`credit-section credit-${brand.key}`}>
+            <a
+              href={brand.homepage}
+              rel="noopener noreferrer"
+              target="_blank">
+              <div className={`brand-image ${brand.key}-brand`} />
+            </a>
+            <p>{brand.description}</p>
           </div>
+        )
+      })
+    }
+      <div className="dependency-list-wrapper">
+        <div className="dependency-list">
+          <span>{'Fuelrats.com would not be possible without these awesome packages'}</span>
+          <ul className="text-mono">
+            {
+              Object.keys({
+                ...dependencies,
+              }).map((dep) => {
+                return (
+                  <li key={dep}><a href={`https://www.npmjs.com/package/${dep}`} rel="noopener noreferrer" target="_blank">{dep}</a></li>
+                )
+              })
+            }
+          </ul>
         </div>
       </div>
-    </PageWrapper>
+    </div>
   )
+}
+
+Acknowledgements.getPageMeta = () => {
+  return {
+    title: 'Acknowledgements',
+  }
 }
 
 
