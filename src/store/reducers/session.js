@@ -9,7 +9,11 @@ import actionTypes from '../actionTypes'
 import initialState from '../initialState'
 
 
-
+const clearLoginState = (draftState = initialState.session) => {
+  draftState.loggedIn = false
+  draftState.loggingOut = false
+  draftState.userId = null
+}
 
 
 const sessionReducer = produce((draftState, action) => {
@@ -40,17 +44,23 @@ const sessionReducer = produce((draftState, action) => {
 
     case actionTypes.session.logout:
       if (status === actionStatus.SUCCESS) {
-        if (action.delayLogout) {
+        if (action.payload?.waitForDestroy) {
           draftState.loggingOut = true
         } else {
-          return initialState.session
+          clearLoginState(draftState)
         }
       }
       break
 
-    case actionTypes.session.pageChange:
+    case actionTypes.session.pageLoading:
+      if (payload) {
+        draftState.pageRequiresAuth = payload.requiresAuth
+      }
+      break
+
+    case actionTypes.session.pageDestroyed:
       if (status === actionStatus.SUCCESS && draftState.loggingOut) {
-        return initialState.session
+        clearLoginState(draftState)
       }
       break
 

@@ -11,6 +11,7 @@ import frApi from '../../services/fuelrats'
 import actionStatus from '../actionStatus'
 import actionTypes from '../actionTypes'
 import {
+  selectPageRequiresAuth,
   selectSession,
   selectUserById,
   withCurrentUserId,
@@ -21,15 +22,17 @@ import { getUserProfile } from './user'
 
 
 
-export const logout = (delayLogout) => {
-  return (dispatch) => {
+export const logout = () => {
+  return (dispatch, getState) => {
     JsCookie.remove('access_token')
     delete frApi.defaults.headers.common.Authorization
 
     return dispatch({
       status: 'success',
       type: actionTypes.session.logout,
-      delayLogout,
+      payload: {
+        waitForDestroy: Boolean(selectPageRequiresAuth(getState())),
+      },
     })
   }
 }
