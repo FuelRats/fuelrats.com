@@ -1,7 +1,9 @@
-/* eslint-disable no-console */
 // Module imports
 import React from 'react'
-// import PropTypes from 'prop-types'
+
+
+
+
 
 // Component imports
 import { actions, connect, actionStatus } from '../store'
@@ -12,7 +14,8 @@ import PasswordField from '../components/PasswordField'
 import { passwordPattern } from '../data/RegExpr'
 
 
-// Component Constants
+
+
 
 @connect
 class Verify extends React.Component {
@@ -26,9 +29,14 @@ class Verify extends React.Component {
     submitting: false,
   }
 
+
+
+
+
   /***************************************************************************\
     Private Methods
   \***************************************************************************/
+
   _handleSubmit = async (event) => {
     const {
       password,
@@ -52,6 +60,11 @@ class Verify extends React.Component {
       Router.pushRoute('home', { authenticate: true })
     }
   }
+
+
+
+
+
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
@@ -64,21 +77,18 @@ class Verify extends React.Component {
 
     switch (type) {
       case 'reset':
-        console.log('Reset Redirect', token)
         response = await actions.verifyResetToken(token)(store.dispatch)
         if (response.status === actionStatus.SUCCESS) {
           destination = null
         }
         break
       case 'email':
-        console.log('Verifying Email')
         response = await actions.verifyEmailToken(token)(store.dispatch)
         if (response.status === actionStatus.SUCCESS) {
           destination = '/profile'
         }
         break
       case 'session':
-        console.log('Session was recieved')
         response = await actions.verifySessionToken(token)(store.dispatch)
         if (response.status === actionStatus.SUCCESS) {
           destination = '/?authenticate=true'
@@ -88,20 +98,24 @@ class Verify extends React.Component {
         destination = '/'
         break
     }
-    if (destination === null) {
-      return response
-    }
-    if (res) {
-      res.writeHead(httpStatus.FOUND, {
-        Location: `${destination}`,
-      })
-      res.end()
-      res.finished = true
-    } else {
-      Router.replace(`${destination}`)
+    if (destination) {
+      if (res) {
+        res.writeHead(httpStatus.FOUND, {
+          Location: `${destination}`,
+        })
+        res.end()
+        res.finished = true
+      } else {
+        Router.replace(`${destination}`)
+      }
     }
 
-    return { response }
+
+
+
+    return {
+      tokenIsValid: response.status,
+    }
   }
 
   render () {
@@ -111,7 +125,7 @@ class Verify extends React.Component {
       submitting,
     } = this.state
 
-    const tokenIsValid = this.props.response.status
+    const { tokenIsValid } = this.props
     const { type } = this.props.query
     return (
       <PageWrapper title="Verify">
@@ -176,6 +190,10 @@ class Verify extends React.Component {
     )
   }
 
+
+
+
+
   /***************************************************************************\
     Getters
   \***************************************************************************/
@@ -201,16 +219,10 @@ class Verify extends React.Component {
   \***************************************************************************/
 
   static mapDispatchToProps = ['resetPassword', 'validatePasswordResetToken']
-
-  static mapStateToProps = () => ({})
-
-  /***************************************************************************\
-    Prop Definitions
-  \***************************************************************************/
-
-  static defaultProps = {}
-
-  static propTypes = {}
 }
+
+
+
+
 
 export default Verify
