@@ -23,7 +23,7 @@ import * as faIcons from '../helpers/faIconLibrary'
 import { resolvePageMeta } from '../helpers/gIPTools'
 import frApi from '../services/fuelrats'
 import { initStore } from '../store'
-import { initUserSession } from '../store/actions/session'
+import { initUserSession, notifyPageLoading } from '../store/actions/session'
 import ErrorPage from './_error'
 
 
@@ -61,7 +61,9 @@ class FuelRatsApp extends App {
   }
 
 
-  static async getInitialProps ({ Component, ctx }) {
+  static async getInitialProps (appCtx) {
+    const { Component, ctx } = appCtx
+
     const {
       asPath,
       isServer,
@@ -89,6 +91,8 @@ class FuelRatsApp extends App {
     }
 
     initialProps.pageMeta = await resolvePageMeta(Component, ctx, initialProps.pageProps)
+
+    await notifyPageLoading(appCtx)(store.dispatch)
 
     return initialProps
   }

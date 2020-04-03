@@ -83,10 +83,23 @@ export const initUserSession = (ctx) => {
 }
 
 
-export const notifyPageChange = () => {
+export const notifyPageLoading = ({ Component }) => {
   return (dispatch) => {
     return dispatch({
-      type: actionTypes.session.pageChange,
+      type: actionTypes.session.pageLoading,
+      status: actionStatus.SUCCESS,
+      payload: {
+        requiresAuth: Boolean(Component.requiresAuthentication),
+      },
+    })
+  }
+}
+
+
+export const notifyPageDestroyed = () => {
+  return (dispatch) => {
+    return dispatch({
+      type: actionTypes.session.pageDestroyed,
       status: actionStatus.SUCCESS,
     })
   }

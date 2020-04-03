@@ -5,7 +5,7 @@ import { useTransition } from '@react-spring/web'
 
 
 import { connect } from '../../store'
-import { notifyPageChange } from '../../store/actions'
+import { notifyPageDestroyed } from '../../store/actions'
 
 
 
@@ -27,7 +27,7 @@ const PageTransitionContainer = ({ children, items, keys, ...transitionProps }) 
 }
 
 PageTransitionContainer.mapDispatchToProps = {
-  onDestroyed: notifyPageChange, // called by react-spring when a page is unmounted so we know that it's safe to destructively change global state.
+  onDestroyed: notifyPageDestroyed, // called by react-spring when a page is unmounted so we know that it's safe to destructively change global state.
 }
 
 
