@@ -62,7 +62,10 @@ class Profile extends React.Component {
   }
 
   static getPageMeta (ctx) {
-
+    return {
+      title: 'Profile',
+      displayTitle: this.tabs[ctx.query.tab].pageTitle,
+    }
   }
 
   render () {
@@ -105,6 +108,7 @@ class Profile extends React.Component {
       overview: {
         component: (<UserOverview />),
         title: 'Overview',
+        pageTitle: 'Profile',
       },
       rats: {
         component: (<UserRatsPanel />),
