@@ -35,9 +35,10 @@ const initialState = {
   rescues: {},
 
   session: {
+    error: null,
     loggedIn: false,
     loggingOut: false,
-    error: null,
+    pageRequiresAuth: false,
     userAgent: '',
     userId: null,
   },
