@@ -1,6 +1,6 @@
 // Module imports
 import PropTypes from 'prop-types'
-import React, { useMemo } from 'react'
+import React from 'react'
 
 
 
@@ -246,9 +246,9 @@ class LoginModal extends React.Component {
 
 
 function ConnectedLoginModal ({ setFlag, showLoginModal, ...modalProps }) {
-  const handleClose = useMemo(() => {
+  function handleClose () {
     setFlag('showLoginDialog', false)
-  }, [setFlag])
+  }
 
   return (
     <LoginModal
