@@ -55,12 +55,9 @@ const actionTypes = [
   'UPDATE_STRIPE_ORDER',
   'UPDATE_USER',
   'VALIDATE_PASSWORD_RESET_TOKEN',
-].reduce(
-  (acc, actionType) => ({
-    ...acc,
-    [actionType]: actionType,
-  }),
-  {}
-)
+].reduce((acc, actionType) => ({
+  ...acc,
+  [actionType]: actionType,
+}), {})
 
 export default actionTypes
