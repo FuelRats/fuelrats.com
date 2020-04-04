@@ -1,7 +1,6 @@
 // Module imports
 import { library as faLibrary, config as faConfig } from '@fortawesome/fontawesome-svg-core'
 import { animated } from '@react-spring/web'
-import LocalForage from 'localforage'
 import withRedux from 'next-redux-wrapper'
 import App from 'next/app'
 import NextHead from 'next/head'
@@ -53,11 +52,6 @@ class FuelRatsApp extends App {
     if (props.accessToken) {
       frApi.defaults.headers.common.Authorization = `Bearer ${props.accessToken}`
     }
-
-    LocalForage.config({
-      name: 'TheFuelRats',
-      storeName: 'webStore',
-    })
   }
 
 
