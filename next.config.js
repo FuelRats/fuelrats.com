@@ -5,10 +5,8 @@
 
 
 // Module imports
-const cssLoaderConfig = require('@zeit/next-css/css-loader-config')
 const withWorkers = require('@zeit/next-workers')
 const crypto = require('crypto')
-const glob = require('glob')
 const path = require('path')
 const webpack = require('webpack')
 
@@ -46,18 +44,6 @@ const generateBuildId = () => {
 }
 
 
-const expandPaths = (paths) => {
-  return paths.reduce((acc, dir) => {
-    return acc.concat(
-      glob.sync(path.join(__dirname, dir)),
-    )
-  }, [])
-}
-
-
-
-
-
 module.exports = withWorkers({
   distDir: path.join('dist', 'next'),
   generateBuildId,
@@ -92,32 +78,6 @@ module.exports = withWorkers({
       $NEXT_BUILD_ID: JSON.stringify(options.buildId),
       $NODE_VERSION: JSON.stringify(process.version),
     }))
-
-    /* Sass loading */
-    const sassLoaderConfig = cssLoaderConfig(
-      config,
-      {
-        extensions: ['scss', 'sass'],
-        dev: options.dev,
-        isServer: options.isServer,
-        loaders: [
-          {
-            loader: 'sass-loader',
-            options: {
-              sassOptions: {
-                includePaths: expandPaths(['styles', 'node_modules']),
-              },
-            },
-          },
-        ],
-      },
-    )
-
-    config.module.rules.push(
-      { test: /\.scss$/u, use: sassLoaderConfig },
-      { test: /\.sass$/u, use: sassLoaderConfig },
-    )
-
 
     /* ESLint reporting */
     if (options.dev) {
