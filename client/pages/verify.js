@@ -101,7 +101,7 @@ class Verify extends React.Component {
     if (destination) {
       if (res) {
         res.writeHead(httpStatus.FOUND, {
-          Location: `${destination}`,
+          Location: destination,
         })
         res.end()
         res.finished = true
