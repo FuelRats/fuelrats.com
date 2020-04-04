@@ -106,7 +106,7 @@ class Verify extends React.Component {
         res.end()
         res.finished = true
       } else {
-        Router.replace(`${destination}`)
+        Router.replace(destination)
       }
     }
 
