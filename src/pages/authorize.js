@@ -67,6 +67,7 @@ class Authorize extends React.Component {
 
   static getPageMeta (_, { preAuthorized }) {
     return {
+      noLayout: preAuthorized,
       className: preAuthorized ? 'hidden' : '',
       title: 'Authorize Application',
     }
