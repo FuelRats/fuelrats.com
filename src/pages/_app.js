@@ -98,6 +98,7 @@ class FuelRatsApp extends App {
       title,
       displayTitle,
       noHeader,
+      noLayout,
     } = pageMeta
 
     const mainClasses = classNames(
@@ -109,7 +110,7 @@ class FuelRatsApp extends App {
     return (
       <animated.main key={key} className={mainClasses} style={props}>
         {
-          !noHeader && (
+          !noHeader && !noLayout && (
             <header className="page-header">
               <h1>
                 {displayTitle ?? title}
@@ -124,7 +125,6 @@ class FuelRatsApp extends App {
 
   render () {
     const {
-      Component,
       pageMeta,
       store,
     } = this.props
@@ -139,11 +139,15 @@ class FuelRatsApp extends App {
         </NextHead>
         <div role="application">
           <Provider store={store}>
-            <NProgress />
-
-            <Header />
-
-            <UserMenu authenticatedPage={Component.requiresAuthentication} />
+            {
+              !pageMeta.noLayout && (
+                <>
+                  <NProgress />
+                  <Header />
+                  <UserMenu />
+                </>
+              )
+            }
 
             <PageTransitionContainer {...this.pageData}>
               {this.renderPage}
