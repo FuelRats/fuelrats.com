@@ -13,25 +13,36 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ### ✨ Added
 
 ### ⚡ Changed
+* Simplify a lot about the layout of the application - [#228][]
+* Convert `UserMenu` back to a class for our sanity - [#228][]
+* Remove `LocalForage` because it's no longer in use - [#228][]
+* Convert to next.js builtin SCSS loading - [#228][]
 * Make login button always gray so it doesn't pop out on the front page. - [#221][]
 * Wrap all JSX string literals in a container (New ESLint Rule) - [#221][]
 * Enforce consistent newline rules for JSX code containers (New ESLint Rule) - [#221][]
 * Begin Splitting up blog list into different components (for our sanity) - [#221][]
+* Update to `@fuelrats/next-named-routes` v3 for it's vastly superior syntax and better querystring handling - [#228][]
+* Add priority to `sitemap.xml` entries.
 * A ton of other style changes brought upon us by the release of `@fuelrats/eslint-config` v2 - [#221][]
 
+
 ### 🐛 Fixed
+* Resolved a problem where certain changed values were not being taken into account when validating the paperwork form - [#226][]
+
 
 ### ⚙ Tasks
-* Update `@fuelrats/eslint-config-react` to `v2.0.0` - [#221][]
+* Update `@fuelrats/eslint-config` to `v2.1.0` - [#221][], [#228][]
 * Replace `node-sass` in favor of `dart-sass` - [#222][]
-* Restructure project to use a more standard file structure - [#223][]
+* Restructure project to use a more standard file structure - [#223][], [#224][]
 * Upgrade to Node 13 - [#223][]
 
 
 [#221]: https://github.com/FuelRats/fuelrats.com/pull/221
 [#222]: https://github.com/FuelRats/fuelrats.com/pull/222
 [#223]: https://github.com/FuelRats/fuelrats.com/pull/223
-
+[#224]: https://github.com/FuelRats/fuelrats.com/pull/224
+[#226]: https://github.com/FuelRats/fuelrats.com/pull/226
+[#228]: https://github.com/fuelRats/fuelrats.com/pull/228
 
 
 
