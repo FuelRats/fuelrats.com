@@ -9,6 +9,9 @@ import React from 'react'
 // Component imports
 import { Router } from '../routes'
 import { connect } from '../store'
+import { login } from '../store/actions/authentication'
+import { setFlag } from '../store/actions/flags'
+import { getUserProfile } from '../store/actions/user'
 import { selectFlagByName, selectSession } from '../store/selectors'
 import asModal, { ModalContent, ModalFooter } from './Modal'
 import Switch from './Switch'
@@ -16,8 +19,7 @@ import ValidatedFormInput from './ValidatedFormInput'
 
 
 
-
-
+@connect
 @asModal({
   className: 'login-dialog',
   title: 'Login',
@@ -239,35 +241,21 @@ class LoginModal extends React.Component {
     onClose: PropTypes.func.isRequired,
     userAgent: PropTypes.string.isRequired,
   }
-}
 
 
-
-
-
-function ConnectedLoginModal ({ setFlag, showLoginModal, ...modalProps }) {
-  function handleClose () {
-    setFlag('showLoginDialog', false)
+  static mapDispatchToProps = {
+    getUserProfile,
+    login,
+    onClose: () => {
+      return setFlag('showLoginDialog', false)
+    },
   }
 
-  return (
-    <LoginModal
-      isOpen={showLoginModal}
-      onClose={handleClose}
-      {...modalProps} />
-  )
-}
-
-ConnectedLoginModal.mapDispatchToProps = [
-  'getUserProfile',
-  'login',
-  'setFlag',
-]
-
-ConnectedLoginModal.mapStateToProps = (state) => {
-  return {
-    showLoginModal: selectFlagByName(state, { name: 'showLoginDialog' }),
-    userAgent: selectSession(state).userAgent,
+  static mapStateToProps = (state) => {
+    return {
+      isOpen: selectFlagByName(state, { name: 'showLoginDialog' }),
+      userAgent: selectSession(state).userAgent,
+    }
   }
 }
 
@@ -275,4 +263,4 @@ ConnectedLoginModal.mapStateToProps = (state) => {
 
 
 
-export default connect(ConnectedLoginModal)
+export default LoginModal
