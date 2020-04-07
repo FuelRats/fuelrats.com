@@ -9,19 +9,21 @@ import React from 'react'
 // Component imports
 import { Router } from '../routes'
 import { connect } from '../store'
+import { login } from '../store/actions/authentication'
+import { setFlag } from '../store/actions/flags'
+import { getUserProfile } from '../store/actions/user'
+import { selectFlagByName, selectSession } from '../store/selectors'
 import asModal, { ModalContent, ModalFooter } from './Modal'
 import Switch from './Switch'
 import ValidatedFormInput from './ValidatedFormInput'
 
 
 
-
-
+@connect
 @asModal({
   className: 'login-dialog',
   title: 'Login',
 })
-@connect
 class LoginModal extends React.Component {
   /***************************************************************************\
     Class Properties
@@ -119,6 +121,7 @@ class LoginModal extends React.Component {
     const {
       userAgent,
     } = this.props
+
     const {
       email,
       error,
@@ -229,16 +232,6 @@ class LoginModal extends React.Component {
 
 
   /***************************************************************************\
-    Redux Properties
-  \***************************************************************************/
-
-  static mapDispatchToProps = ['login', 'getUserProfile']
-
-
-
-
-
-  /***************************************************************************\
     Prop Definitions
   \***************************************************************************/
 
@@ -247,6 +240,22 @@ class LoginModal extends React.Component {
     login: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
     userAgent: PropTypes.string.isRequired,
+  }
+
+
+  static mapDispatchToProps = {
+    getUserProfile,
+    login,
+    onClose: () => {
+      return setFlag('showLoginDialog', false)
+    },
+  }
+
+  static mapStateToProps = (state) => {
+    return {
+      isOpen: selectFlagByName(state, { name: 'showLoginDialog' }),
+      userAgent: selectSession(state).userAgent,
+    }
   }
 }
 

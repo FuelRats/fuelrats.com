@@ -1,27 +1,35 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://www.fuelrats.com/</loc>
+    <loc>https://fuelrats.com/</loc>
+    <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://www.fuelrats.com/i-need-fuel</loc>
+    <loc>https://fuelrats.com/i-need-fuel</loc>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://www.fuelrats.com/leaderboard</loc>
+    <loc>https://fuelrats.com/register</loc>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.fuelrats.com/blog</loc>
+    <loc>https://fuelrats.com/terms-of-service</loc>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.fuelrats.com/acknowledgements</loc>
+    <loc>https://fuelrats.com/privacy-policy</loc>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.fuelrats.com/terms-of-service</loc>
+    <loc>https://fuelrats.com/acknowledgements</loc>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.fuelrats.com/privacy-policy</loc>
+    <loc>https://fuelrats.com/blog</loc>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.fuelrats.com/register</loc>
+    <loc>https://fuelrats.com/leaderboard</loc>
+    <priority>0.6</priority>
   </url>
 </urlset>

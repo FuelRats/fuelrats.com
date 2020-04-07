@@ -6,7 +6,6 @@ import React from 'react'
 
 
 // Component imports
-import { PageWrapper } from '../components/AppLayout'
 import RatLeaderboardTable from '../components/RatLeaderboardTable'
 
 
@@ -15,16 +14,18 @@ import RatLeaderboardTable from '../components/RatLeaderboardTable'
 
 function Leaderboard () {
   return (
-    <PageWrapper title="Leaderboard">
-      <div className="page-content">
-        <RatLeaderboardTable />
-      </div>
-    </PageWrapper>
+    <div className="page-content">
+      <RatLeaderboardTable />
+    </div>
   )
 }
 
 
-
+Leaderboard.getPageMeta = () => {
+  return {
+    title: 'Leaderboard',
+  }
+}
 
 
 export default Leaderboard

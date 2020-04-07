@@ -8,7 +8,7 @@ import React from 'react'
 
 
 // Component imports
-import { PageWrapper, authenticated } from '../../../components/AppLayout'
+import { authenticated } from '../../../components/AppLayout'
 import { formatAsEliteDateTime } from '../../../helpers/formatTime'
 import { Link } from '../../../routes'
 import { connect, actions } from '../../../store'
@@ -75,6 +75,10 @@ class ListRescues extends React.Component {
     )
   }, viewUpdateDebounceTime, { maxWait: viewUpdateMaxWaitTime })
 
+
+
+
+
   /***************************************************************************\
     Public Methods
   \***************************************************************************/
@@ -83,6 +87,12 @@ class ListRescues extends React.Component {
     await actions.getRescues({
       'status[ne]': 'closed',
     }, { pageView: pageViewId })(store.dispatch)
+  }
+
+  static getPageMeta () {
+    return {
+      title: 'Rescue Search',
+    }
   }
 
   static renderListItem (rescue) {
@@ -149,32 +159,30 @@ class ListRescues extends React.Component {
     } = this.props
 
     return (
-      <PageWrapper title="Rescue Search">
-        <div className="page-content">
-          <div className="search-controls">
-            <button
-              className="inline"
-              type="button"
-              onClick={this._handleRefreshClick}>
-              <FontAwesomeIcon fixedWidth icon="sync" spin={loading} />
-            </button>
-          </div>
-          <div className="searchInput">
-            <input
-              aria-label="Search by client name"
-              className="input"
-              id="ClientNameInput"
-              name="client"
-              placeholder="Client Name"
-              type="text"
-              value={this.state.client}
-              onChange={this._handleSearchChange} />
-          </div>
-          <div className="rescue-list flex column">
-            {rescues.map(ListRescues.renderListItem)}
-          </div>
+      <div className="page-content">
+        <div className="search-controls">
+          <button
+            className="inline"
+            type="button"
+            onClick={this._handleRefreshClick}>
+            <FontAwesomeIcon fixedWidth icon="sync" spin={loading} />
+          </button>
         </div>
-      </PageWrapper>
+        <div className="searchInput">
+          <input
+            aria-label="Search by client name"
+            className="input"
+            id="ClientNameInput"
+            name="client"
+            placeholder="Client Name"
+            type="text"
+            value={this.state.client}
+            onChange={this._handleSearchChange} />
+        </div>
+        <div className="rescue-list flex column">
+          {rescues.map(ListRescues.renderListItem)}
+        </div>
+      </div>
     )
   }
 

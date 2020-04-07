@@ -82,7 +82,8 @@ const session = {
   initialize: 'session/initialize',
   read: 'session/read',
   readClientOAuthPage: 'session/readClientOAuthPage',
-  pageChange: 'session/pageChange',
+  pageLoading: 'session/pageLoading',
+  pageDestroyed: 'session/pageDestroyed',
   setFlag: 'session/setFlag',
 }
 

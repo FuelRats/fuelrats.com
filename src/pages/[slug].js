@@ -6,9 +6,12 @@ import React from 'react'
 
 
 // Component imports
-import { PageWrapper } from '../components/AppLayout'
+import HttpStatus from '../helpers/HttpStatus'
+import { setError } from '../helpers/gIPTools'
 import { actions, connect, actionStatus } from '../store'
 import { selectWordpressPageBySlug } from '../store/selectors'
+
+
 
 
 
@@ -18,25 +21,33 @@ class WordpressProxy extends React.Component {
     Public Methods
   \***************************************************************************/
 
-  static async getInitialProps ({ query, store, res }) {
+  static async getInitialProps (ctx) {
+    const { query, store } = ctx
     const { slug } = query
 
     if (!selectWordpressPageBySlug(store.getState(), { slug })) {
       const { status } = await actions.getWordpressPage(slug)(store.dispatch)
 
-      if (status === actionStatus.ERROR && res) {
-        res.statusCode = 404
+      if (status === actionStatus.ERROR) {
+        setError(ctx, HttpStatus.NOT_FOUND)
       }
+    }
+  }
+
+  static getPageMeta ({ store, query }) {
+    const page = selectWordpressPageBySlug(store.getState(), { slug: query.slug })
+
+    return {
+      className: 'wordpress-page',
+      title: page.title.rendered,
     }
   }
 
   render () {
     const { page } = this.props
-    let title = 'Wordpress Page'
     let content = null
 
     if (page) {
-      title = page.title.rendered
       content = page.content.rendered.replace(/<ul>/giu, '<ul class="bulleted">').replace(/<ol>/giu, '<ol class="numbered">')
     }
 
@@ -45,22 +56,16 @@ class WordpressProxy extends React.Component {
       <>
         {
           Boolean(page) && (
-            <PageWrapper
-              className="wordpress-page"
-              title={title}>
-              <article className="page-content">
-                <div
-                  className="article-content"
-                  dangerouslySetInnerHTML={{ __html: content }} />
-              </article>
-            </PageWrapper>
+            <article className="page-content">
+              <div
+                className="article-content"
+                dangerouslySetInnerHTML={{ __html: content }} />
+            </article>
           )
         }
         {
           !page && (
-            <PageWrapper title="Page not Found">
-              <article className="error page-content" />
-            </PageWrapper>
+            <article className="error page-content" />
           )
         }
       </>

@@ -6,12 +6,14 @@ import React from 'react'
 
 
 // Component imports
-import { PageWrapper, authenticated } from '../../components/AppLayout'
+import { authenticated } from '../../components/AppLayout'
 import FirstLoginModal from '../../components/FirstLoginModal'
 import ProfileHeader from '../../components/ProfileHeader'
 import TabbedPanel from '../../components/TabbedPanel'
 import UserOverview from '../../components/UserOverview'
 import UserRatsPanel from '../../components/UserRatsPanel'
+import HttpStatus from '../../helpers/HttpStatus'
+import { setError } from '../../helpers/gIPTools'
 import { Router } from '../../routes'
 
 
@@ -53,9 +55,16 @@ class Profile extends React.Component {
     Public Methods
   \***************************************************************************/
 
-  static getInitialProps ({ res, query }) {
-    if (!this.tabs[query.tab]) {
-      res.statusCode = 404
+  static getInitialProps (ctx) {
+    if (!this.tabs[ctx.query.tab]) {
+      setError(ctx, HttpStatus.NOT_FOUND)
+    }
+  }
+
+  static getPageMeta (ctx) {
+    return {
+      title: 'Profile',
+      displayTitle: this.tabs[ctx.query.tab].pageTitle,
     }
   }
 
@@ -68,7 +77,7 @@ class Profile extends React.Component {
     } = this.props.query
 
     return (
-      <PageWrapper title="Profile">
+      <>
         <div className="page-content">
           <ProfileHeader />
           <TabbedPanel
@@ -82,7 +91,7 @@ class Profile extends React.Component {
           isOpen={showFirstLoginDialog}
           onClose={this._handleFLDClose} />
 
-      </PageWrapper>
+      </>
     )
   }
 
@@ -99,10 +108,12 @@ class Profile extends React.Component {
       overview: {
         component: (<UserOverview />),
         title: 'Overview',
+        pageTitle: 'Profile',
       },
       rats: {
         component: (<UserRatsPanel />),
         title: 'Rats',
+        pageTitle: 'Your Rats',
       },
     }
   }

@@ -8,6 +8,10 @@ export const selectCurrentUserId = (state) => {
 }
 
 
+export const selectPageRequiresAuth = (state) => {
+  return selectSession(state).pageRequiresAuth
+}
+
 export const withCurrentUserId = (selector) => {
   return (state, props) => {
     return selector(state, {

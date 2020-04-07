@@ -6,7 +6,6 @@ import React from 'react'
 
 
 // Component imports
-import { PageWrapper } from '../../components/AppLayout'
 import ArticleCard from '../../components/Blog/ArticleCard'
 import safeParseInt from '../../helpers/safeParseInt'
 import { Link } from '../../routes'
@@ -129,7 +128,6 @@ class Blogs extends React.Component {
     this._getBlogs()
   }
 
-
   static getInitialProps ({ query }) {
     const props = {}
 
@@ -146,6 +144,12 @@ class Blogs extends React.Component {
     return props
   }
 
+  static getPageMeta () {
+    return {
+      title: 'Blog',
+    }
+  }
+
   render () {
     const { blogs } = this.props
     const {
@@ -153,23 +157,21 @@ class Blogs extends React.Component {
     } = this.state
 
     return (
-      <PageWrapper title="Blog">
-        <div className="page-content">
-          <ol className="article-list loading">
-            {
-              !retrieving && Boolean(blogs.length) && blogs.map((blog) => {
-                return (
-                  <li key={blog.id}>
-                    <ArticleCard blogId={blog.id} renderMode="excerpt" />
-                  </li>
-                )
-              })
-            }
-          </ol>
+      <div className="page-content">
+        <ol className="article-list loading">
+          {
+            !retrieving && Boolean(blogs.length) && blogs.map((blog) => {
+              return (
+                <li key={blog.id}>
+                  <ArticleCard blogId={blog.id} renderMode="excerpt" />
+                </li>
+              )
+            })
+          }
+        </ol>
 
-          {this._renderMenu()}
-        </div>
-      </PageWrapper>
+        {this._renderMenu()}
+      </div>
     )
   }
 
