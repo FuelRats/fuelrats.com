@@ -8,10 +8,9 @@ import React from 'react'
 // Component imports
 import PasswordField from '../components/PasswordField'
 import { passwordPattern } from '../data/RegExpr'
-import HttpStatus from '../helpers/HttpStatus'
+import { pageRedirect } from '../helpers/gIPTools'
 import { Router, Link } from '../routes'
 import { actions, connect, actionStatus } from '../store'
-
 
 
 
@@ -70,7 +69,8 @@ class Verify extends React.Component {
     Public Methods
   \***************************************************************************/
 
-  static async getInitialProps ({ query, store, res }) {
+  static async getInitialProps (ctx) {
+    const { query, store } = ctx
     // eslint-disable-next-line id-length
     const { type, t: token } = query
     let destination = null
@@ -100,15 +100,7 @@ class Verify extends React.Component {
         break
     }
     if (destination) {
-      if (res) {
-        res.writeHead(HttpStatus.FOUND, {
-          Location: destination,
-        })
-        res.end()
-        res.finished = true
-      } else {
-        Router.replace(destination)
-      }
+      pageRedirect(ctx, destination)
     }
 
 
