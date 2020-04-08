@@ -1,0 +1,27 @@
+.store-error {
+  position: relative;
+
+  margin: 0 2rem 2rem;
+  padding: 1rem 1rem 1rem 3.5rem;
+
+  border: 1px solid $red;
+
+  background: rgba(255, 127, 127, 0.15);
+  color: $black-lightened;
+
+  line-height: 2;
+
+  &::before {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0.75rem;
+
+    content: '⚠';
+
+    color: $red;
+
+    font-size: 1.65em;
+    font-weight: bold;
+  }
+}

@@ -5,33 +5,31 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "FR Client",
+      "name": "Next: Server",
+      "type": "node",
       "request": "launch",
-      "type": "chrome",
-      "url": "http://localhost:3000",
-      "webRoot": "${workspaceRoot}"
-    },
-    {
-      "console": "integratedTerminal",
       "envFile": "${workspaceFolder}/.env",
-      "name": "FR Server",
       "program": "${workspaceFolder}/server/server.js",
       "protocol": "inspector",
-      "request": "launch",
+      "console": "integratedTerminal",
+    },
+    {
+      "name": "Next: Server (Attach)",
       "type": "node",
-      "windows": {
-        "console": "internalConsole",
-        "useWSL": true
-      }
+      "request": "attach"
+    },
+    {
+      "name": "Next: Chrome",
+      "type": "chrome",
+      "request": "launch",
+      "url": "${config:debug.developurl}",
+      "webRoot": "${workspaceFolder}"
     }
   ],
   "compounds": [
     {
-      "name": "FR Full",
-      "configurations": [
-        "FR Server",
-        "FR Client"
-      ]
+      "name": "Next: Full",
+      "configurations": ["Next: Chrome", "Next: Server"]
     }
   ]
 }

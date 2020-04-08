@@ -25,11 +25,15 @@ By contributing to this repository, you are expected to know and follow the rule
 
 ## Project setup
 
+
+1. install Yarn v2 (if you haven't already). Instructions can be found [here][yarn2install]!
 1. Fork and clone the repo
 1. Setup environment variables (detailed in ["Some things you'll need"](#some-things-youll-need))
-1. `$ yarn install` or `$ npm install` to install dependencies
-1. `$ yarn run dev` or `$ npm run dev` to start up the dev server
+1. `$ yarn` to install native dependencies
+1. `$ yarn dev` to start up the dev server
 1. Create a branch for your PR
+
+> Use of NPM is **NOT** supported by this repository.
 
 ### Some things you'll need
 
@@ -56,7 +60,7 @@ By default, the website doesn't know much about connecting to the Fuel Rats API 
 This project follows the [all contributors][all-contributors] specification. To add yourself to the table of contributors on the README.md, please use the automated script as part of your PR:
 
 ```console
-$ yarn run add-contributor
+$ yarn add-contributor
 ```
 
 Follow the prompt. If you've already added yourself to the list and are making a new type of contribution, you can run it again and select the added contribution type.
@@ -68,16 +72,17 @@ Below are steps which **MUST** be followed by all Fuel Rats org members. Externa
 ### Steps for development
 
 1. Branch from `develop` using the formatting rules below.
-2. Do the work required to satisfy the Ticket or objective. If work unrelated to the objective needs to be done, make a separate branch.
-3. Submit PR to merge back into `develop`.
+1. Do the work required to satisfy the Ticket or objective. If work unrelated to the objective needs to be done, make a separate branch.
+1. Document the changes introduced from the previous release in `CHANGELOG.md`.
+1. Submit PR to merge back into `develop`.
     * Any change which would affect current development should be documented in the description.
     * PRs for a ticket should be tagged in the title with the ticket. IE: `[WEB-##] Fix bug`
-    * Assign the PR to yourself.
+    * Assign the PR to yourself. (If you cannot, leave it for someone who can)
     * The PR should be labeled with the label most fitting to the type of work. If the PR is a bugfix which must be merged to fix a major problem, it should be labeled `Urgent`.
     * When the PR is ready to be merged, A review should be requested from the `FuelRats/web` team.
-4. Once the PR is approved, it is the responsibility of the **assignee** to merge the changes to the branch.
-5. After the build has been deployed, test the changes on the [staging preview website][testsite].
-6. Once the change is confirmed working, delete the working branch. If further changes need to be made, change them **on the same branch** and submit a new PR.
+1. Once the PR is approved, it is the responsibility of the **assignee** to merge the changes to the branch.
+1. After the build has been deployed, test the changes on the [staging preview website][testsite].
+1. Once the change is confirmed working, delete the working branch. If further changes need to be made, change them **on the same branch** and submit a new PR.
 
 
 
@@ -140,3 +145,4 @@ There is also 1 additional type allowed for branches **only**
 [jira]: https://jira.fuelrats.com/browse/WEB
 [new-pr]: https://github.com/FuelRats/fuelrats.com/compare
 [ops-email]: mailto:ops@fuelrats.com
+[yarn2install]: https://yarnpkg.com/getting-started

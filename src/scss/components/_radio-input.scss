@@ -1,0 +1,58 @@
+.radio-input {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  margin-bottom: -0.4rem;
+
+  .option {
+    display: inline-block;
+
+    margin: 0 0.2rem 0.4rem;
+
+
+    &:hover,
+    &.checked {
+      .option-label {
+        background-color: $red;
+        color: $white;
+      }
+    }
+
+    &.disabled {
+      .option-label {
+        border-color: $grey;
+
+        background-color: $grey;
+        color: $white;
+      }
+    }
+
+    .option-input {
+      display: none;
+    }
+
+    .option-label {
+      display: inline-block;
+
+      padding: 0 1.5rem;
+
+      border: 0.2rem solid $red;
+
+      transition: all 0.2s;
+
+      text-align: center;
+
+      transform: skewX(-10deg);
+      cursor: pointer;
+
+      .option-label-text {
+        display: inline-block;
+
+        white-space: nowrap;
+
+        transform: skewX(10deg);
+      }
+    }
+  }
+}

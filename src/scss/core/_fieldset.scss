@@ -1,0 +1,14 @@
+fieldset,
+.fieldset {
+  display: flex;
+
+  flex-direction: column;
+  align-items: stretch;
+
+  width: 100%;
+  padding: 2rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}

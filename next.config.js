@@ -1,12 +1,15 @@
 /* eslint-env node */
 
+
+
+
+
 // Module imports
-const glob = require('glob')
-const path = require('path')
-const crypto = require('crypto')
-const webpack = require('webpack')
-const withSass = require('@zeit/next-sass')
 const withWorkers = require('@zeit/next-workers')
+const crypto = require('crypto')
+const path = require('path')
+const webpack = require('webpack')
+
 
 
 
@@ -23,66 +26,70 @@ const {
   TEAMCITY_BUILD_URL,
 } = process.env
 
+
 const DEFAULT_PORT = 3000
 const COMMIT_HASH_LENGTH = 10
 const DEV_BUILD_ID_LENGTH = 16
 
 
+const FINAL_PUBLIC_URL = FRDC_PUBLIC_URL || `http://localhost:${PORT || DEFAULT_PORT}`
 
 
-
-module.exports = withWorkers(withSass({
-  generateBuildId: () => (
+const generateBuildId = () => {
+  return (
     TEAMCITY
       ? BUILD_VCS_NUMBER.toLowerCase()
       : `DEV_${crypto.randomBytes(DEV_BUILD_ID_LENGTH).toString('hex').toLowerCase()}`
-  ),
+  )
+}
+
+
+module.exports = withWorkers({
+  distDir: path.join('dist', 'next'),
+  generateBuildId,
   publicRuntimeConfig: {
     local: {
-      publicUrl: FRDC_PUBLIC_URL || `http://localhost:${PORT || DEFAULT_PORT}`,
+      publicUrl: FINAL_PUBLIC_URL,
     },
     apis: {
       fuelRats: {
-        local: FRDC_PUBLIC_URL ? `${FRDC_PUBLIC_URL}/api` : `http://localhost:${PORT || DEFAULT_PORT}/api`,
+        local: `${FINAL_PUBLIC_URL}/api`,
         server: FRDC_API_URL || 'http://localhost:8080',
       },
       wordpress: {
-        url: FRDC_PUBLIC_URL ? `${FRDC_PUBLIC_URL}/wp-api` : `http://localhost:${PORT || DEFAULT_PORT}/wp-api`,
+        url: `${FINAL_PUBLIC_URL}/wp-api`,
       },
       stripe: {
+        url: `${FINAL_PUBLIC_URL}/st-api`,
         public: FRDC_STRIPE_API_PK || null,
       },
     },
   },
-  webpack: (config, data) => {
+  webpack: (config, options) => {
+    /* Define Plugin */
     config.plugins.push(new webpack.DefinePlugin({
-      $IS_DEVELOPMENT: JSON.stringify(data.dev),
+      $IS_DEVELOPMENT: JSON.stringify(options.dev),
       $IS_STAGING: JSON.stringify(['develop', 'beta'].includes(BUILD_VCS_BRANCH)),
       $BUILD_BRANCH: JSON.stringify(BUILD_VCS_BRANCH || 'develop'),
-      $BUILD_COMMIT: JSON.stringify(BUILD_VCS_NUMBER),
+      $BUILD_COMMIT: JSON.stringify(BUILD_VCS_NUMBER || null),
       $BUILD_COMMIT_SHORT: JSON.stringify((BUILD_VCS_NUMBER && BUILD_VCS_NUMBER.slice(0, COMMIT_HASH_LENGTH)) || BUILD_VCS_BRANCH || 'develop'),
       $BUILD_DATE: JSON.stringify((new Date()).toISOString()),
-      $BUILD_URL: JSON.stringify(TEAMCITY_BUILD_URL),
-      $NEXT_BUILD_ID: JSON.stringify(data.buildId),
+      $BUILD_URL: JSON.stringify(TEAMCITY_BUILD_URL || null),
+      $NEXT_BUILD_ID: JSON.stringify(options.buildId),
       $NODE_VERSION: JSON.stringify(process.version),
     }))
 
-    if (data.dev) {
+    /* ESLint reporting */
+    if (options.dev) {
       config.module.rules.unshift({
-        enforce: 'pre',
-        exclude: /node_modules/u,
-        loader: 'eslint-loader',
         test: /\.js$/u,
+        exclude: /node_modules/u,
+        enforce: 'pre',
+        loader: require.resolve('eslint-loader'),
       })
     }
 
     return config
   },
-  sassLoaderOptions: {
-    includePaths: ['styles', 'node_modules']
-      .map((dir) => path.join(__dirname, dir))
-      .map((dir) => glob.sync(dir))
-      .reduce((acc, dir) => acc.concat(dir), []),
-  },
   workerLoaderOptions: { inline: true },
-}))
+})

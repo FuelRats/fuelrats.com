@@ -1,0 +1,39 @@
+.input-group {
+  display: flex;
+
+  width: 100%;
+
+  border: 0.1rem solid $grey-lightened;
+
+  box-shadow: 0 0 0.5rem 0 rgba($red, 0);
+  color: inherit;
+  outline: none;
+
+  font-family: inherit;
+  font-size: inherit;
+
+  transition-duration: 0.5s;
+  transition-property: border-color, box-shadow;
+
+  > {
+    input[type] {
+      border-width: 0;
+    }
+
+    button,
+    .button {
+      display: flex;
+      position: absolute;
+      right: 0;
+
+      align-items: center;
+
+      height: 100%;
+      padding-top: 0;
+      padding-bottom: 0;
+
+      border-top: 0;
+      border-bottom: 0;
+    }
+  }
+}

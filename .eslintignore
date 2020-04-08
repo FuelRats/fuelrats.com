@@ -1,3 +1,6 @@
+# Opt into dotfile linting
 !.*
-**/.next
-**/node_modules
+
+# Compiled sources
+/dist*
+node_modules

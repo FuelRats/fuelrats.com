@@ -1,0 +1,17 @@
+$svg-sizes: 16, 32, 64, 128, 256;
+
+svg {
+  fill: currentColor;
+
+  @each $size in $svg-sizes {
+    &.size-#{$size} {
+      max-width: $size * 1px;
+      max-height: $size * 1px;
+
+      &.fixed {
+        min-width: $size * 1px;
+        min-height: $size * 1px;
+      }
+    }
+  }
+}

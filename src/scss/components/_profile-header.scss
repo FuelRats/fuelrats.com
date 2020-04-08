@@ -1,0 +1,82 @@
+.profile-header {
+  display: grid;
+
+  grid-template:
+    'avatar info controls' 1fr
+    'avatar badges controls' min-content
+    / min-content auto max-content;
+  grid-column-gap: 2rem;
+
+  margin-bottom: 3rem;
+
+  .user-avatar {
+    grid-area: avatar;
+  }
+
+  .profile-basic-info {
+    grid-area: info;
+    align-self: center;
+
+    padding-bottom: 1rem;
+
+    > div .label {
+      font-weight: bold;
+    }
+
+    .rat-name {
+      font-size: 3rem;
+    }
+  }
+
+  .profile-user-badges {
+    grid-area: badges;
+    align-self: end;
+
+    height: min-content;
+
+    .badge {
+      padding: 0 0.75rem;
+
+      background-color: #878787;
+
+      font-size: 1.2rem;
+    }
+  }
+
+  .profile-controls {
+    display: flex;
+
+    flex-direction: column;
+    justify-content: flex-end;
+
+    grid-area: controls;
+
+    button,
+    .button {
+      margin-top: 1rem;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    grid-template-areas:
+      'avatar avatar'
+      'info   info'
+      'badges badges'
+      'controls controls';
+    justify-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    .profile-controls {
+      flex-direction: row;
+
+      button,
+      .button {
+        &:not(:last-child) {
+          margin-right: 1rem;
+        }
+      }
+    }
+  }
+}

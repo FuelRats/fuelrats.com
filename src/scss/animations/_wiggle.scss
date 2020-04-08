@@ -1,0 +1,19 @@
+$wiggle-rotation: 7.5;
+
+@keyframes wiggle {
+  10%,
+  90% {
+    transform: rotateZ((($wiggle-rotation / 3) * 2) * 1deg);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: rotateZ($wiggle-rotation * -1deg);
+  }
+
+  40%,
+  60% {
+    transform: rotateZ($wiggle-rotation * 1deg);
+  }
+}

@@ -1,0 +1,31 @@
+.info-bubble {
+  position: absolute;
+
+  padding: 1rem;
+
+  border: 0.2rem solid $red;
+
+  background: $black;
+  box-shadow: 0 0 4px 0 rgba(26, 26, 26, 0.4);
+
+  line-height: 1.5;
+
+  .info-bubble-header {
+    display: block;
+
+    margin: 0.25rem 0 0;
+
+    color: $red-lightened;
+
+    text-transform: uppercase;
+    font-size: 0.85em;
+  }
+
+  .info-bubble-body {
+    display: inline-block;
+
+    margin: 0.5rem 1rem 0;
+
+    font-family: $paragraph-fonts;
+  }
+}

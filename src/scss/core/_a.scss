@@ -1,0 +1,26 @@
+a {
+  --link-color: #{$red};
+  --link-color-hover: #{$black};
+
+  color: var(--link-color);
+  transition: all 0.2s;
+
+  text-decoration: none;
+
+
+  &:focus,
+  &:hover {
+    color: var(--link-color-hover);
+    outline: none;
+  }
+
+  &.icon {
+    --link-color: #{$black};
+    --link-color-hover: #{$red};
+  }
+
+  &.light {
+    --link-color: #{$grey};
+    --link-color-hover: #{$red-darkened};
+  }
+}
