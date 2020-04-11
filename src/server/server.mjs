@@ -37,10 +37,14 @@ const nextApp = createNextServer({
 
 
 
-
 ;(async function init () {
   // Prepare nextApp
   await nextApp.prepare()
+
+  // Inject env into context.
+  server.use((ctx) => {
+    ctx.state.env = env
+  })
 
   // Rewrite URLS to remove trailing slashes
   server.use(koaNoTrailingSlash())
@@ -49,7 +53,7 @@ const nextApp = createNextServer({
   server.use(koaLogger())
 
   // Add CSP
-  server.use(csp(env))
+  server.use(csp)
 
   // Add proxies
   proxies(server, env)
@@ -61,7 +65,7 @@ const nextApp = createNextServer({
   server.use(koaBody())
 
   // Add routes
-  router(nextApp, server, env)
+  router(nextApp, server)
 
   // Start the server
   server.listen(env.port)
