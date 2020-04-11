@@ -8,7 +8,7 @@
 import Router from 'koa-router'
 import stripeJs from 'stripe'
 
-
+import prepareResponse from './document'
 
 
 
@@ -38,54 +38,13 @@ const donationTiers = {
 
 
 
-const internalServerErrorDocument = (error = {}) => {
-  return {
-    errors: [
-      {
-        status: 'internal_server',
-        code: 500,
-        source: {
-          message: error.message,
-          stack: error.stack,
-        },
-      },
-    ],
-  }
-}
 
-
-
-
-
-const prepareResponse = async (ctx, next) => {
-  try {
-    const apiResponse = await next()
-
-    if (apiResponse) {
-      ctx.status = 200
-      ctx.type = 'application/json'
-      ctx.body = JSON.stringify(apiResponse)
-    } else {
-      throw new Error('Router received an unprocessable response.')
-    }
-  } catch (error) {
-    ctx.status = error.statusCode || 500
-    ctx.type = 'application/json'
-    ctx.body = JSON.stringify(internalServerErrorDocument(error))
-  }
-}
-
-
-
-
-
-const configureStripeApi = (router, env) => {
-  const stripe = stripeJs(env.stripe.secret)
-
+const configureStripeApi = (router) => {
   const stApiRouter = new Router()
   stApiRouter.use(prepareResponse)
 
   stApiRouter.post('/checkout/donate', (ctx) => {
+    const stripe = stripeJs(ctx.state.env.stripe.secret)
     const {
       body = {},
     } = ctx.request
@@ -109,8 +68,8 @@ const configureStripeApi = (router, env) => {
     }
 
     return stripe.checkout.sessions.create({
-      success_url: `${env.publicUrl}/donate/success`,
-      cancel_url: `${env.publicUrl}/donate/cancel`,
+      success_url: `${ctx.state.env.publicUrl}/donate/success`,
+      cancel_url: `${ctx.state.env.publicUrl}/donate/cancel`,
       submit_type: 'donate',
       payment_method_types: ['card'],
       customer_email: email,
