@@ -4754,6 +4754,14 @@ invariant@^2.1.0, invariant@^2.2.2, invariant@^2.2.4:
   dependencies:
     loose-envify "^1.0.0"
 
+ip6addr@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/ip6addr/-/ip6addr-0.2.3.tgz#660df0d27092434f0aadee025aba8337c6d7d4d4"
+  integrity sha512-qA9DXRAUW+lT47/i/4+Q3GHPwZjGt/atby1FH/THN6GVATA6+Pjp2nztH7k6iKeil7hzYnBwfSsxjthlJ8lJKw==
+  dependencies:
+    assert-plus "^1.0.0"
+    jsprim "^1.4.0"
+
 is-accessor-descriptor@^0.1.6:
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/is-accessor-descriptor/-/is-accessor-descriptor-0.1.6.tgz#a9e12cb3ae8d876727eeef3843f8a0897b5c98d6"
@@ -5148,7 +5156,7 @@ jsonfile@^6.0.1:
   optionalDependencies:
     graceful-fs "^4.1.6"
 
-jsprim@^1.2.2:
+jsprim@^1.2.2, jsprim@^1.4.0:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/jsprim/-/jsprim-1.4.1.tgz#313e66bc1e5cc06e438bc1b7499c2e5c56acb6a2"
   integrity sha1-MT5mvB5cwG5Di8G3SZwuXFastqI=
