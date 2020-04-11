@@ -27,49 +27,48 @@ const domainWhitelist = [
 
 
 const configureCSP = async (ctx, next) => {
-    const {
-      isDev,
-      publicUrl
-    } = ctx.state.env
+  const {
+    isDev,
+    publicUrl,
+  } = ctx.state.env
 
-    const nonce = (new UUID(UUID_VERSION_4)).format()
+  const nonce = (new UUID(UUID_VERSION_4)).format()
 
-    ctx.res.nonce = nonce /* eslint-disable-line no-param-reassign */
+  ctx.res.nonce = nonce /* eslint-disable-line no-param-reassign */
 
-    const policyString = buildCSP({
-      directives: {
-        defaultSrc: ["'self'", ...domainWhitelist, 'blob:'],
-        connectSrc: [
-          "'self'",
-          'wss://*.fuelrats.com',
-          ...(isDev
-            ? [
-              publicUrl,
-              'webpack://*',
-            ]
-            : []),
-        ],
-        baseUri: ["'none'"],
-        scriptSrc: [
-          "'self'",
-          `'nonce-${nonce}'`,
-          "'strict-dynamic'",
-          ...(isDev ? ["'unsafe-eval'"] : []),
-        ],
-        styleSrc: ["'self'", "'unsafe-inline'", ...domainWhitelist],
-        imgSrc: ["'self'", ...domainWhitelist, 'api.adorable.io', '*.wp.com', 'blob:'],
-        mediaSrc: ["'self'"],
-        objectSrc: ["'self'"],
-        fontSrc: ["'self'", 'fonts.gstatic.com'],
-      },
-    })
+  const policyString = buildCSP({
+    directives: {
+      defaultSrc: ["'self'", ...domainWhitelist, 'blob:'],
+      connectSrc: [
+        "'self'",
+        'wss://*.fuelrats.com',
+        ...(isDev
+          ? [
+            publicUrl,
+            'webpack://*',
+          ]
+          : []),
+      ],
+      baseUri: ["'none'"],
+      scriptSrc: [
+        "'self'",
+        `'nonce-${nonce}'`,
+        "'strict-dynamic'",
+        ...(isDev ? ["'unsafe-eval'"] : []),
+      ],
+      styleSrc: ["'self'", "'unsafe-inline'", ...domainWhitelist],
+      imgSrc: ["'self'", ...domainWhitelist, 'api.adorable.io', '*.wp.com', 'blob:'],
+      mediaSrc: ["'self'"],
+      objectSrc: ["'self'"],
+      fontSrc: ["'self'", 'fonts.gstatic.com'],
+    },
+  })
 
-    headerKeys.forEach((key) => {
-      ctx.response.set(key, policyString)
-    })
+  headerKeys.forEach((key) => {
+    ctx.response.set(key, policyString)
+  })
 
-    await next()
-  }
+  await next()
 }
 
 
