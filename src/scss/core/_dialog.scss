@@ -60,6 +60,17 @@
     input {
       color: $black;
     }
+
+    .store-errors {
+      display: flex;
+
+      justify-content: center;
+
+      .store-error {
+        min-width: 80%;
+        margin: 1rem 0;
+      }
+    }
   }
 
   .modal-footer {
