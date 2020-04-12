@@ -20,7 +20,7 @@ import createNextServer from 'next'
 
 // Component imports
 import env from './environment'
-import csp from './middlewares/csp'
+import configureCSP from './middlewares/csp'
 import proxies from './middlewares/proxy'
 import router from './router'
 
@@ -30,9 +30,12 @@ import router from './router'
 
 // Constants
 const server = new Koa()
+server.proxy = env.proxyEnabled
+
 const nextApp = createNextServer({
   dev: env.isDev,
 })
+
 
 
 
@@ -42,8 +45,9 @@ const nextApp = createNextServer({
   await nextApp.prepare()
 
   // Inject env into context.
-  server.use((ctx) => {
+  server.use(async (ctx, next) => {
     ctx.state.env = env
+    await next()
   })
 
   // Rewrite URLS to remove trailing slashes
@@ -53,7 +57,7 @@ const nextApp = createNextServer({
   server.use(koaLogger())
 
   // Add CSP
-  server.use(csp)
+  server.use(configureCSP())
 
   // Add proxies
   proxies(server, env)
