@@ -54,7 +54,7 @@ const configureStripeApi = (router) => {
   stApiRouter.use(authorizeUser)
 
 
-  stApiRouter.post('/checkout/donate', (ctx) => {
+  stApiRouter.post('/checkout/donate', async (ctx) => {
     const stripe = stripeJs(ctx.state.env.stripe.secret)
     const {
       body = {},
@@ -71,7 +71,7 @@ const configureStripeApi = (router) => {
       return amount > (tier.gt ?? 0) && amount < (tier.lt ?? Infinity)
     })
 
-    ctx.body = { data: 'woop!' } /* await stripe.checkout.sessions.create({
+    ctx.body = await stripe.checkout.sessions.create({
       success_url: `${ctx.state.env.publicUrl}/donate/success`,
       cancel_url: `${ctx.state.env.publicUrl}/donate/cancel`,
       submit_type: 'donate',
@@ -86,7 +86,7 @@ const configureStripeApi = (router) => {
         currency,
         quantity: 1,
       }],
-    }) */
+    })
   })
 
   router.use('/st-api', stApiRouter.routes(), stApiRouter.allowedMethods())
