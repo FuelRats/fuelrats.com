@@ -29,40 +29,39 @@ class ResponseDocument {
 }
 
 const prepareResponse = async (ctx, next) => {
-  ctx.status = 200
-  ctx.type = 'application/json'
-  let body = null
-
   try {
-    const data = await next()
+    await next()
 
-    if (!data) {
+    if (!ctx.body) {
       throw new InternalServerError()
     }
 
-    body = new ResponseDocument({
+    ctx.status = 200
+    ctx.body = new ResponseDocument({
       ctx,
-      data,
+      data: ctx.body,
     })
   } catch (error) {
-    ctx.status = error.statusCode ?? HttpStatus.INTERNAL_SERVER_ERROR
+    // Only expose internal errors in dev mode
+    const internalError = ctx.state.env.isDev
+      ? error
+      : undefined
 
-    if (error instanceof ApiError) {
-      body = error
-    } else {
-      body = new InternalServerError(error.message)
-    }
-
-    body = new ResponseDocument({
+    ctx.status = typeof error?.code === 'number' ? error.code : HttpStatus.INTERNAL_SERVER_ERROR
+    ctx.body = new ResponseDocument({
       ctx,
       errors: [
-        error instanceof ApiError ? error : new InternalServerError(error.message, error),
+        error instanceof ApiError
+          ? error
+          : new InternalServerError({
+            internalError,
+          }),
       ],
     })
   }
 
-
-  ctx.body = JSON.stringify(body)
+  ctx.type = 'application/json'
+  ctx.body = JSON.stringify(ctx.body)
 }
 
 
