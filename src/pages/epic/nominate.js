@@ -176,7 +176,7 @@ class EpicNominate extends React.Component {
           (error && !submitting) && (
             <div className="store-errors">
               <div className="store-error">
-                {'Error submitting nomination.'}
+                <span className="detail">{'Error submitting nomination.'}</span>
               </div>
             </div>
           )

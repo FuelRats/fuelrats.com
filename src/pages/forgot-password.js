@@ -93,7 +93,7 @@ class ForgotPassword extends React.Component {
           error && (
             <div className="store-errors">
               <div className="store-error">
-                {'Error submitting password reset request.'}
+                <span className="detail">{'Error submitting password reset request.'}</span>
               </div>
             </div>
           )
