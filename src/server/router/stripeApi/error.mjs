@@ -1,58 +1,80 @@
 import HttpStatus from '../../../helpers/HttpStatus'
 
 export class ApiError extends Error {
-  constructor ({ message, code, status, ...source }) {
+  constructor (conf) {
+    const {
+      message,
+      code,
+      meta,
+      status,
+      source,
+      title,
+    } = conf
+
     super(message)
-    this.statusCode = code
-    this.status = status
+    this.code = code
+    this.meta = meta
     this.source = source
+    this.status = status
+    this.title = title
   }
 
   toJSON () {
     return {
       status: this.status ?? 'internal_server_error',
-      code: this.statusCode ?? HttpStatus.INTERNAL_SERVER_ERROR,
-      source: {
-        ...this.source,
-        message: this.message,
-      },
+      code: this.code ?? HttpStatus.INTERNAL_SERVER_ERROR,
+      title: this.title ?? 'Internal Server Error',
+      detail: this.message,
+      source: this.source,
+      meta: this.meta,
     }
   }
 }
 
 export class UnauthorizedError extends ApiError {
-  constructor (message) {
-    super(
-      message ?? 'The request has not been applied because it lacks valid authentication credentials for the target resource.',
-      HttpStatus.UNAUTHORIZED,
-      'unauthorized',
-    )
+  constructor ({ message, ...restErr } = {}) {
+    super({
+      ...restErr,
+      status: 'unauthorized',
+      code: HttpStatus.UNAUTHORIZED,
+      title: 'Unauthorized',
+      message: message ?? 'You lack valid authentication credentials for this action.',
+    })
   }
 }
 
 export class TooManyRequestsError extends ApiError {
-  constructor (message, retryAfter) {
+  constructor ({ message, tryAfter, meta, ...restErr } = {}) {
     super({
-      message: message ?? 'The user has sent too many requests in a given amount of time',
+      ...restErr,
       status: 'too_many_requests',
-      statusCode: HttpStatus.TOO_MANY_REQUESTS,
-      retryAfter,
+      code: HttpStatus.TOO_MANY_REQUESTS,
+      title: 'Too Many Requests',
+      message: message ?? `You have sent too many requests in a given amount of time.${tryAfter ? ` Try again after: ${tryAfter}.` : ''}`,
+      meta: {
+        ...(meta ?? {}),
+        tryAfter: tryAfter ?? 0,
+      },
     })
   }
 }
 
 export class InternalServerError extends ApiError {
-  constructor (message, internalError) {
+  constructor ({ message, internalError, meta } = {}) {
     super({
-      message: message ?? 'The server encountered an unexpected condition that prevented it from fulfilling the request.',
       status: 'internal_server_error',
-      statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
-      internalError: internalError
+      code: HttpStatus.INTERNAL_SERVER_ERROR,
+      title: 'Internal Server Error',
+      message: message ?? 'The server encountered an unexpected condition that prevented it from fulfilling the request.',
+      meta: internalError
         ? {
-          message: internalError.message,
-          name: internalError.name,
+          ...(meta ?? {}),
+          internalError: {
+            message: internalError.message,
+            name: internalError.name,
+          },
         }
-        : undefined,
+        : meta,
     })
   }
 }
