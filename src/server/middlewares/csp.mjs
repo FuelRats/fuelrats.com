@@ -26,8 +26,13 @@ const domainWhitelist = [
 
 
 
-const configureCSP = ({ isDev, publicUrl }) => {
-  return async (ctx, next) => {
+const configureCSP = () => {
+  return async function koaCSP (ctx, next) {
+    const {
+      isDev,
+      publicUrl,
+    } = ctx.state.env
+
     const nonce = (new UUID(UUID_VERSION_4)).format()
 
     ctx.res.nonce = nonce /* eslint-disable-line no-param-reassign */

@@ -11,6 +11,9 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ## [Unreleased]
 
 ### ✨ Added
+* IP blocking for Donation API - [#230][]
+* Rate limiting for Donation API - [#230][]
+
 
 ### ⚡ Changed
 * Simplify a lot about the layout of the application - [#228][]
@@ -24,6 +27,8 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Update to `@fuelrats/next-named-routes` v3 for it's vastly superior syntax and better querystring handling - [#228][]
 * Add priority to `sitemap.xml` entries.
 * A ton of other style changes brought upon us by the release of `@fuelrats/eslint-config` v2 - [#221][]
+* Setup a better structure for Donation API - [#230][]
+* Fix up styling and output of donation page errors - [#230][]
 
 
 ### 🐛 Fixed
@@ -43,6 +48,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 [#224]: https://github.com/FuelRats/fuelrats.com/pull/224
 [#226]: https://github.com/FuelRats/fuelrats.com/pull/226
 [#228]: https://github.com/fuelRats/fuelrats.com/pull/228
+[#230]: https://github.com/fuelRats/fuelrats.com/pull/230
 
 
 

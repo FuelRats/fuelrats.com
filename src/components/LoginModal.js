@@ -138,7 +138,7 @@ class LoginModal extends React.Component {
           error && !loggingIn && (
             <div className="store-errors">
               <div className="store-error">
-                {'Invalid email or password.'}
+                <span className="detail">{'Invalid email or password.'}</span>
               </div>
             </div>
           )
