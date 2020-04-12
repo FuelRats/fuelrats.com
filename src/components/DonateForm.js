@@ -159,9 +159,14 @@ class DonateForm extends React.Component {
     }
 
     try {
-      await stripe.redirectToCheckout({ sessionId: response.payload.id })
+      await stripe.redirectToCheckout({ sessionId: response.payload.data.id })
     } catch (error) {
-      this.setState({ error: error.message, submitting: false })
+      this.setState({
+        error: {
+          detail: error.message,
+        },
+        submitting: false,
+      })
     }
 
     this.setState({ submitting: false })
