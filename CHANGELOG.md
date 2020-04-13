@@ -57,7 +57,8 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Replace `node-sass` in favor of `dart-sass` - [#222][]
 * Restructure project to use a more standard file structure - [#223][], [#224][]
 * Replace all-contributors-cli with the all-contributors GitHub bot - [#231][]
-* Upgrade to Node 13 - [#223][]
+* Upgrade Rollup to v2.x - [#231][]
+* Upgrade Node to v13.x - [#223][]
 
 
 [#221]: https://github.com/FuelRats/fuelrats.com/pull/221
