@@ -135,7 +135,7 @@ class AddRatForm extends React.Component {
                 id="newRatName"
                 invalidMessage={INVALID_NAME_MESSAGE}
                 label="CMDR Name"
-                maxLength={18}
+                maxLength={22}
                 minLength={1}
                 name="name"
                 placeholder="CMDR Name"
