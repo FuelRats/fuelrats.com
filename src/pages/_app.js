@@ -66,6 +66,7 @@ class FuelRatsApp extends App {
     } = ctx
 
     const { accessToken } = await initUserSession(ctx)(store.dispatch, store.getState)
+    ctx.accessToken = accessToken // Assign for page to access
 
     const initialProps = {
       accessToken,
