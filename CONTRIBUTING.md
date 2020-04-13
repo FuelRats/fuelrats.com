@@ -57,9 +57,10 @@ By default, the website doesn't know much about connecting to the Fuel Rats API 
 
 ## Being added as a contributor
 
-When you create your first PR, or the PR of your first bug report is opened, we will add you as a contributor as per [All Contributors][all-contributors] convention.
+When you create your first PR we will add you as a contributor as per [All Contributors][all-contributors] convention.
+If you have made a bug report, you will be added along with the PR that fixes the bug. (Assuming you have a GitHub account!)
 
-If you do not wish to be added, please let us know in your PR submission.
+If you do not wish to be added, please let us know.
 
 
 ## Contributing as an Organization member
