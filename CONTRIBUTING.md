@@ -55,15 +55,12 @@ By default, the website doesn't know much about connecting to the Fuel Rats API 
 > branch. Whenever you want to update your version of `develop`, do a regular
 > `git pull`.
 
-## Add yourself as a contributor
+## Being added as a contributor
 
-This project follows the [all contributors][all-contributors] specification. To add yourself to the table of contributors on the README.md, please use the automated script as part of your PR:
+When you create your first PR, or the PR of your first bug report is opened, we will add you as a contributor as per [All Contributors][all-contributors] convention.
 
-```console
-$ yarn add-contributor
-```
+If you do not wish to be added, please let us know in your PR submission.
 
-Follow the prompt. If you've already added yourself to the list and are making a new type of contribution, you can run it again and select the added contribution type.
 
 ## Contributing as an Organization member
 
