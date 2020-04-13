@@ -29,9 +29,9 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ## [2.11.1] - 2020-04-13
 
 ### 🐛 Fixed
-* Resolved client error that occurs when attempting to authorize an external application - [@233][]
-* Resolved server error that arises when donation api bans file is not configured - [@233][]
-* Fixed an issue where the description and image associated with a donation amount - [@233][]
+* Resolved client error that occurs when attempting to authorize an external application - [#233][]
+* Resolved server error that arises when donation api bans file is not configured - [#233][]
+* Fixed an issue where the description and image associated with a donation amount - [#233][]
 
 [#233]: https://github.com/fuelRats/fuelrats.com/pull/233
 
