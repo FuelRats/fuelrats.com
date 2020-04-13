@@ -13,38 +13,41 @@ import createControlTower from './TrafficControl'
 import authorizeUser from './authorization'
 import prepareResponse from './document'
 
+const getDonationItemInfo = (amount) => {
+  if (amount >= 3500) {
+    return {
+      description: 'Mother of rats! Talk about a boatload of generosity! We highly appreciate you going the extra lightyear to help us out. Fly Safe, CMDR o7',
+      image: 'https://wordpress.fuelrats.com/wp-content/uploads/2020/01/coins35.png',
+    }
+  }
+
+  if (amount >= 2000) {
+    return {
+      description: 'Holy limpet! You sure like to live dangerously! We are most grateful for everything you can give. Fly Safe, CMDR o7',
+      image: 'https://wordpress.fuelrats.com/wp-content/uploads/2020/01/coins20.png',
+    }
+  }
+
+  if (amount >= 1000) {
+    return {
+      description: 'Wow! This is a major donation for our sake. A contribution like this offsets our running costs for three whole days! Fly Safe, CMDR o7',
+      image: 'https://wordpress.fuelrats.com/wp-content/uploads/2020/01/coins10.png',
+    }
+  }
 
 
-const donationTiers = [
-  {
-    gt: 3599, // 3600+
+  if (amount >= 500) {
+    return {
+      description: 'Thank you so much! A donation like this will go a long way towards covering our running costs. Fly Safe, CMDR o7',
+      image: 'https://wordpress.fuelrats.com/wp-content/uploads/2020/01/coins5.png',
+    }
+  }
+
+  return {
     description: 'Every little bit helps! Your contribution will ensure our continuous service to the galaxy. Fly Safe, CMDR o7',
     image: 'https://wordpress.fuelrats.com/wp-content/uploads/2020/01/coins1.png',
-  },
-  {
-    gt: 1999, // 2000-3599
-    lt: 3600,
-    description: 'Thank you so much! A donation like this will go a long way towards covering our running costs. Fly Safe, CMDR o7',
-    image: 'https://wordpress.fuelrats.com/wp-content/uploads/2020/01/coins5.png',
-  },
-  {
-    gt: 999, // 1000-1999
-    lt: 2000,
-    description: 'Wow! This is a major donation for our sake. A contribution like this offsets our running costs for three whole days! Fly Safe, CMDR o7',
-    image: 'https://wordpress.fuelrats.com/wp-content/uploads/2020/01/coins10.png',
-  },
-  {
-    gt: 499, // 500-999
-    lt: 1000,
-    description: 'Holy limpet! You sure like to live dangerously! We are most grateful for everything you can give. Fly Safe, CMDR o7',
-    image: 'https://wordpress.fuelrats.com/wp-content/uploads/2020/01/coins20.png',
-  },
-  {
-    lt: 500, // 0-499
-    description: 'Mother of rats! Talk about a boatload of generosity! We highly appreciate you going the extra lightyear to help us out. Fly Safe, CMDR o7',
-    image: 'https://wordpress.fuelrats.com/wp-content/uploads/2020/01/coins35.png',
-  },
-]
+  }
+}
 
 const configureStripeApi = (router) => {
   const trafficControl = createControlTower()
@@ -67,9 +70,7 @@ const configureStripeApi = (router) => {
       customer,
     } = body
 
-    const donationInfo = donationTiers.find((tier) => {
-      return amount > (tier.gt ?? 0) && amount < (tier.lt ?? Infinity)
-    })
+    const donationInfo = getDonationItemInfo(amount)
 
     ctx.body = await stripe.checkout.sessions.create({
       success_url: `${ctx.state.env.publicUrl}/donate/success`,
