@@ -11,6 +11,23 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ## [Unreleased]
 
 ### ✨ Added
+
+
+### ⚡ Changed
+
+
+### 🐛 Fixed
+
+
+### ⚙ Tasks
+
+
+
+
+
+## [2.11.0] - 2020-04-13
+
+### ✨ Added
 * IP blocking for Donation API - [#230][]
 * Rate limiting for Donation API - [#230][]
 
@@ -39,7 +56,9 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Update `@fuelrats/eslint-config` to `v2.1.0` - [#221][], [#228][]
 * Replace `node-sass` in favor of `dart-sass` - [#222][]
 * Restructure project to use a more standard file structure - [#223][], [#224][]
-* Upgrade to Node 13 - [#223][]
+* Replace all-contributors-cli with the all-contributors GitHub bot - [#231][]
+* Upgrade Rollup to v2.x - [#231][]
+* Upgrade Node to v13.x - [#223][]
 
 
 [#221]: https://github.com/FuelRats/fuelrats.com/pull/221
@@ -49,11 +68,13 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 [#226]: https://github.com/FuelRats/fuelrats.com/pull/226
 [#228]: https://github.com/fuelRats/fuelrats.com/pull/228
 [#230]: https://github.com/fuelRats/fuelrats.com/pull/230
+[#231]: https://github.com/fuelRats/fuelrats.com/pull/231
 
 
 
 
-## [2.10.0-patch.2] - 2020-02-04
+
+## [2.10.0-patch.2][2.10.0] - 2020-02-04
 
 ### 🐛 Fixed
 * Fix Forgot password input being uneditable - [#219][]
@@ -65,7 +86,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.10.0-patch.1] - 2020-01-29
+## [2.10.0-patch.1][2.10.0]  - 2020-01-29
 
 ### 🐛 Fixed
 * Fix donate page by removing recaptcha. We removed this due to seemingly unfixable inconsistencies across browsers. - [#218][]
@@ -713,7 +734,8 @@ basic format:
 
 
 
-[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.10.0...HEAD
+[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.11.0...HEAD
+[2.11.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.11.0...v2.10.0
 [2.10.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.9.2...v2.10.0
 [2.9.2]: https://github.com/FuelRats/fuelrats.com/compare/v2.9.1...v2.9.2
 [2.9.1]: https://github.com/FuelRats/fuelrats.com/compare/v2.9.0...v2.9.1
