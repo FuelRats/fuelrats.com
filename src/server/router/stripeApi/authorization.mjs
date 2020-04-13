@@ -21,7 +21,7 @@ const compareIps = (userIp) => {
   return (_bannedIp) => {
     let bannedIp = _bannedIp
 
-    if (!bannedIp.includes('/')) { // If banned ip does not have a
+    if (!bannedIp.includes('/')) { // If banned ip does not have a defined prefix length
       bannedIp = `${bannedIp}/${defaultPrefixLength}`
     }
 
@@ -32,19 +32,18 @@ const compareIps = (userIp) => {
 }
 
 const authorizeUser = async (ctx, next) => {
-  if (!ctx.state.env?.stripe?.bansFile) {
-    return // no bans file defined. Skip checking.
-  }
-
-  // Load on every request since we don't want to
-  const bansFile = await jsonfile.readFile(ctx.state.env.stripe.bansFile)
-  const bansList = bansFile[getIpType(ctx.ip)] ?? []
+  // We only care about checking the file if it's actually configured
+  if (ctx.state.env?.stripe?.bansFile) {
+    // Load on every request since we don't want to
+    const bansFile = await jsonfile.readFile(ctx.state.env.stripe.bansFile)
+    const bansList = bansFile[getIpType(ctx.ip)] ?? []
 
 
-  const isBanned = bansList.find(compareIps(ctx.ip))
+    const isBanned = bansList.find(compareIps(ctx.ip))
 
-  if (isBanned) {
-    throw new UnauthorizedError()
+    if (isBanned) {
+      throw new UnauthorizedError()
+    }
   }
 
   await next()
