@@ -25,6 +25,20 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
+
+## [2.11.1] - 2020-04-13
+
+### 🐛 Fixed
+* Resolved client error that occurs when attempting to authorize an external application - [@233][]
+* Resolved server error that arises when donation api bans file is not configured - [@233][]
+* Fixed an issue where the description and image associated with a donation amount - [@233][]
+
+[#233]: https://github.com/fuelRats/fuelrats.com/pull/233
+
+
+
+
+
 ## [2.11.0] - 2020-04-13
 
 ### ✨ Added
@@ -50,6 +64,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 ### 🐛 Fixed
 * Resolved a problem where certain changed values were not being taken into account when validating the paperwork form - [#226][]
+* Updated maximum CMDR name length so those with long names can properly register - [#232][]
 
 
 ### ⚙ Tasks
@@ -69,6 +84,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 [#228]: https://github.com/fuelRats/fuelrats.com/pull/228
 [#230]: https://github.com/fuelRats/fuelrats.com/pull/230
 [#231]: https://github.com/fuelRats/fuelrats.com/pull/231
+[#232]: https://github.com/fuelRats/fuelrats.com/pull/232
 
 
 
