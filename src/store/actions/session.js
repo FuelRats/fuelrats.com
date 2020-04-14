@@ -73,7 +73,7 @@ export const initUserSession = (ctx) => {
           result.status = actionStatus.ERROR
 
           if (profileReq.response.status === HttpStatus.UNAUTHORIZED) {
-            logout()(dispatch)
+            logout()(dispatch, getState)
             result.accessToken = null
           }
         }
