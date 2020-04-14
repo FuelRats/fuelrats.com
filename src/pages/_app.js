@@ -104,7 +104,7 @@ class FuelRatsApp extends App {
 
     const mainClasses = classNames(
       'page',
-      pageProps.className,
+      pageMeta.className,
       title.toLowerCase().replace(/\s/gu, '-'),
     )
 
