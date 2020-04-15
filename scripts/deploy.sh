@@ -13,12 +13,6 @@ develop)
   ;;
 
 
-beta)
-  DEPLOY_DIR="beta.fuelrats.com"
-  SERVICE_NAME="fr-web_beta"
-  ;;
-
-
 master)
   DEPLOY_DIR="fuelrats.com"
   SERVICE_NAME="fr-web"
@@ -32,7 +26,7 @@ master)
 esac
 
 # Move built project files to server
-rsync -r --delete-after ./dist/ fuelrats@emmental.fuelrats.com:/var/www/$DEPLOY_DIR/
+rsync -r --delete-after ./deploy_dist/ fuelrats@emmental.fuelrats.com:/var/www/$DEPLOY_DIR/
 
 # restart service
 ssh -t fuelrats@emmental.fuelrats.com "sudo systemctl restart $SERVICE_NAME.service"
