@@ -28,7 +28,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ## [2.11.2] - 2020-04-16
 
 ### 🐛 Fixed
-* Fixed a 404 error that occured after signing in when attempting to access an authenticated page. - [#236][]
+* Fixed a 404 error that occurred after signing in when attempting to access an authenticated page. - [#236][]
 
 
 [#236]: https://github.com/fuelrats/fuelrats.com/pull/236
