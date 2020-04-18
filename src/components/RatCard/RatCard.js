@@ -97,7 +97,10 @@ class RatCard extends React.Component {
 
     this.setState({ submitting: true })
 
-    await updateRat(rat.id, changes)
+    await updateRat({
+      id: rat.id,
+      attributes: changes,
+    })
 
     this.setState({
       changes: {},
