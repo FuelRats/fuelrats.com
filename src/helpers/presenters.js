@@ -1,11 +1,15 @@
 import isRequired from './isRequired'
 
-export function presentApiRequestBody (type = isRequired('resourceType'), data = isRequired('data')) {
+export function presentApiRequestBody (
+  type = isRequired('resourceType'),
+  data = isRequired('data'),
+  documentMeta,
+) {
   const {
     id,
     attributes = {},
     relationships,
-    links,
+    links, // API doesn't understand links or meta in resources we send to it, so we strip them here.
     meta,
     ...restAttributes
   } = data
@@ -20,5 +24,6 @@ export function presentApiRequestBody (type = isRequired('resourceType'), data =
       },
       relationships,
     },
+    meta: documentMeta,
   }
 }
