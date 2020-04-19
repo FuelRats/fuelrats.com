@@ -1,5 +1,7 @@
 // Component imports
+import { presentApiRequestBody } from '../../helpers/presenters'
 import actionTypes from '../actionTypes'
+import { withCurrentUserId, selectUserById } from '../selectors'
 import { frApiRequest } from './services'
 
 
@@ -47,13 +49,23 @@ export const getUserProfile = () => {
 }
 
 
-export const updateUser = (userId, data) => {
-  return frApiRequest(
-    actionTypes.users.update,
-    {
-      url: `/users/${userId}`,
+export const updateUser = (data, password) => {
+  return (dispatch, getState) => {
+    const request = {
+      url: `/users/${data.id}`,
       method: 'put',
-      data,
-    },
-  )
+      data: presentApiRequestBody('users', data),
+    }
+
+    if (password) {
+      const user = withCurrentUserId(selectUserById)(getState())
+
+      request.auth = {
+        username: user?.attributes?.email,
+        password,
+      }
+    }
+
+    return dispatch(frApiRequest(actionTypes.users.update, request))
+  }
 }

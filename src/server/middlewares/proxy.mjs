@@ -23,7 +23,6 @@ const configureProxies = (koaServer, env) => {
   koaServer.use(koaProxy('/api/oauth2/token', {
     auth: `${env.api.clientId}:${env.api.clientSecret}`,
     changeOrigin: true,
-    jar: true,
     rewrite: stripPathSegment('api'),
     secure: true,
     target: env.api.url,
@@ -31,7 +30,6 @@ const configureProxies = (koaServer, env) => {
 
   koaServer.use(koaProxy('/api', {
     changeOrigin: true,
-    jar: true,
     rewrite: stripPathSegment('api'),
     secure: true,
     target: env.api.url,
