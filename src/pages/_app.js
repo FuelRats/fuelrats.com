@@ -19,7 +19,7 @@ import NProgress from '../components/NProgress'
 import UserMenu from '../components/UserMenu'
 import classNames from '../helpers/classNames'
 import * as faIcons from '../helpers/faIconLibrary'
-import { resolvePageMeta } from '../helpers/gIPTools'
+import { resolvePageMeta, configureServerRequest } from '../helpers/gIPTools'
 import frApi from '../services/fuelrats'
 import { initStore } from '../store'
 import { initUserSession, notifyPageLoading } from '../store/actions/session'
@@ -57,6 +57,8 @@ class FuelRatsApp extends App {
 
   static async getInitialProps (appCtx) {
     const { Component, ctx } = appCtx
+
+    configureServerRequest(ctx)
 
     const {
       asPath,

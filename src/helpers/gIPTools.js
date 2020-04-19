@@ -71,3 +71,16 @@ export const resolvePageMeta = async (Component, ctx, pageProps) => {
     ...pageMeta,
   }
 }
+
+
+export const configureServerRequest = (ctx) => {
+  if (ctx.isServer) {
+    console.log({
+      remoteAddress: ctx.req.client.remoteAddress,
+      remoteFamily: ctx.req.client.remoteFamily,
+      remotePort: ctx.req.client.remotePort,
+      localAddress: ctx.req.client.localAddress,
+      localPort: ctx.req.client.localPort,
+    })
+  }
+}
