@@ -18,6 +18,13 @@ const createProxyWithDefaults = (path, opts) => {
     changeOrigin: true,
     secure: true,
     xfwd: true,
+    events: {
+      proxyReq (proxyReq, req, res) {
+        console.log('on(ProxyReq): proxyReq -', proxyReq)
+        console.log('on(ProxyReq): req -', req)
+        console.log('on(ProxyReq): res -', res)
+      },
+    },
     ...opts,
   })
 }
