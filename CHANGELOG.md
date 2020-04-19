@@ -25,6 +25,17 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
+## [2.11.2] - 2020-04-16
+
+### 🐛 Fixed
+* Fixed a 404 error that occurred after signing in when attempting to access an authenticated page. - [#236][]
+
+
+[#236]: https://github.com/fuelrats/fuelrats.com/pull/236
+
+
+
+
 
 ## [2.11.1] - 2020-04-13
 
@@ -32,6 +43,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Resolved client error that occurs when attempting to authorize an external application - [#233][]
 * Resolved server error that arises when donation api bans file is not configured - [#233][]
 * Fixed an issue where the description and image associated with a donation amount - [#233][]
+
 
 [#233]: https://github.com/fuelRats/fuelrats.com/pull/233
 

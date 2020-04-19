@@ -74,7 +74,7 @@ export const login = (options) => {
 
         const destination = searchParams.destination ? decodeURIComponent(searchParams.destination) : '/profile'
 
-        Router.pushRoute(destination)
+        Router.push(destination)
       } else if (route) {
         Router.pushRoute(route, routeParams)
       }
