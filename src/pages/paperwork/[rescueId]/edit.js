@@ -521,7 +521,7 @@ class Paperwork extends React.Component {
           (error && !submitting) && (
             <div className="store-errors">
               <div className="store-error">
-                {'Error while submitting paperwork.'}
+                <span className="detail">{'Error while submitting paperwork.'}</span>
               </div>
             </div>
           )

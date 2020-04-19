@@ -247,7 +247,7 @@ class Register extends React.Component {
               aria-label="Commander name"
               disabled={submitting}
               id="ratName"
-              maxLength={18}
+              maxLength={22}
               minLength={1}
               name="ratName"
               pattern={commanderPattern}

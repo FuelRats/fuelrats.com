@@ -216,7 +216,7 @@ class RatCard extends React.Component {
             <InlineEditSpan
               canEdit={editMode}
               inputClassName="dark"
-              maxLength={18}
+              maxLength={22}
               minLength={1}
               name="name"
               value={cmdrNameValue}

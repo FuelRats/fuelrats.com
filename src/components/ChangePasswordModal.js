@@ -115,7 +115,7 @@ class ChangePasswordModal extends React.Component {
           error && !submitting && (
             <div className="store-errors">
               <div className="store-error">
-                {error}
+                <span className="detail">{error}</span>
               </div>
             </div>
           )

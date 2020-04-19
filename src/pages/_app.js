@@ -66,6 +66,7 @@ class FuelRatsApp extends App {
     } = ctx
 
     const { accessToken } = await initUserSession(ctx)(store.dispatch, store.getState)
+    ctx.accessToken = accessToken // Assign for page to access
 
     const initialProps = {
       accessToken,
@@ -103,7 +104,7 @@ class FuelRatsApp extends App {
 
     const mainClasses = classNames(
       'page',
-      pageProps.className,
+      pageMeta.className,
       title.toLowerCase().replace(/\s/gu, '-'),
     )
 

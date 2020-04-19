@@ -1,21 +1,19 @@
 .store-error {
   position: relative;
 
-  margin: 0 2rem 2rem;
-  padding: 1rem 1rem 1rem 3.5rem;
+  max-width: 500px;
+  margin: 0;
+  padding: 1rem 0;
 
   border: 1px solid $red;
 
   background: rgba(255, 127, 127, 0.15);
-  color: $black-lightened;
-
-  line-height: 2;
 
   &::before {
     display: block;
     position: absolute;
     top: 0;
-    left: 0.75rem;
+    left: 1.25rem;
 
     content: '⚠';
 
@@ -23,5 +21,23 @@
 
     font-size: 1.65em;
     font-weight: bold;
+  }
+
+  > .title,
+  > .detail {
+    display: inline-block;
+
+    padding: 0 4rem;
+  }
+
+  > .footer {
+    display: inline-block;
+
+    width: 100%;
+    padding: 1rem 2rem 0;
+
+    font-size: 0.85em;
+    text-align: center;
+    white-space: nowrap;
   }
 }
