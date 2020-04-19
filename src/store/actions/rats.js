@@ -1,4 +1,5 @@
 // Component imports
+import { presentApiRequestBody } from '../../helpers/presenters'
 import actionTypes from '../actionTypes'
 import { getResourceDeletePartial } from './partials'
 import { frApiRequest } from './services'
@@ -19,7 +20,9 @@ export const getRats = (params) => {
 export const getRat = (id) => {
   return frApiRequest(
     actionTypes.rats.read,
-    { url: `/rats/${id}` },
+    {
+      url: `/rats/${id}`,
+    },
   )
 }
 
@@ -30,7 +33,7 @@ export const createRat = (data) => {
     {
       url: '/rats',
       method: 'post',
-      data,
+      data: presentApiRequestBody('rats', data),
     },
   )
 }
@@ -48,13 +51,13 @@ export const deleteRat = (ratId) => {
 }
 
 
-export const updateRat = (ratId, data) => {
+export const updateRat = (data) => {
   return frApiRequest(
     actionTypes.rats.update,
     {
-      url: `/rats/${ratId}`,
+      url: `/rats/${data.id}`,
       method: 'put',
-      data,
+      data: presentApiRequestBody('rats', data),
     },
   )
 }

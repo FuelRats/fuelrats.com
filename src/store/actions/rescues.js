@@ -1,8 +1,8 @@
 // Component imports
+import { presentApiRequestBody } from '../../helpers/presenters'
 import actionTypes from '../actionTypes'
 import { getPageViewPartial } from './partials'
 import { frApiRequest } from './services'
-
 
 
 
@@ -33,30 +33,20 @@ export const getRescues = (params, opts) => {
 export const getRescue = (rescueId) => {
   return frApiRequest(
     actionTypes.rescues.read,
-    { url: `/rescues/${rescueId}` },
-  )
-}
-
-
-export const updateRescue = (rescueId, data) => {
-  return frApiRequest(
-    actionTypes.rescues.update,
     {
       url: `/rescues/${rescueId}`,
-      method: 'put',
-      data,
     },
   )
 }
 
 
-export const updateRescueRats = (rescueId, data) => {
+export const updateRescue = (data) => {
   return frApiRequest(
-    actionTypes.rescues.patchRats,
+    actionTypes.rescues.update,
     {
-      url: `/rescues/${rescueId}/rats`,
-      method: 'patch',
-      data,
+      url: `/rescues/${data.id}`,
+      method: 'put',
+      data: presentApiRequestBody('rescues', data),
     },
   )
 }
