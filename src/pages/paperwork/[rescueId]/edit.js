@@ -223,13 +223,25 @@ class Paperwork extends React.Component {
       }
     }
 
-    if (rats) {
-      await this.props.updateRescueRats(rescue.id, rats.map(({ id, type }) => {
-        return { id, type }
-      }))
+    const updateData = {
+      id: rescue.id,
+      attributes: changes,
     }
 
-    const { status } = await this.props.updateRescue(rescue.id, changes)
+    if (rats) {
+      updateData.relationships = {
+        rats: {
+          data: rats.map(({ type, id }) => {
+            return {
+              type,
+              id,
+            }
+          }),
+        },
+      }
+    }
+
+    const { status } = await this.props.updateRescue(updateData)
 
     if (status === 'error') {
       this.setState({ error: true })
@@ -655,7 +667,7 @@ class Paperwork extends React.Component {
     Redux Properties
   \***************************************************************************/
 
-  static mapDispatchToProps = ['updateRescue', 'updateRescueRats', 'getRescue']
+  static mapDispatchToProps = ['updateRescue', 'getRescue']
 
   static mapStateToProps = (state, { query }) => {
     return {

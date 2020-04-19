@@ -4,6 +4,7 @@ import { produce } from 'immer'
 
 
 
+import actionStatus from '../actionStatus'
 import actionTypes from '../actionTypes'
 import initialState from '../initialState'
 
@@ -19,9 +20,9 @@ const decalsReducer = produce((draftState, action) => {
   } = action
 
   switch (type) {
-    case actionTypes.decals.read:
-      if (status === 'success' && payload.eligible) {
-        draftState.eligible = true
+    case actionTypes.session.read:
+      if (status === actionStatus.SUCCESS) {
+        draftState.eligible = payload.meta.eligible
       }
       break
 
