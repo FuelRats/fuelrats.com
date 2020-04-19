@@ -102,6 +102,16 @@ const stripe = {
 
 
 
+const verify = {
+  email: 'verify/email',
+  reset: 'verify/reset',
+  session: 'verify/session',
+}
+
+
+
+
+
 const wordpress = {
   authors: {
     read: 'wordpressAuthors/read',
@@ -137,6 +147,7 @@ const actionTypes = {
   // Special
   images,
   session,
+  verify,
 
   // Services
   stripe,
