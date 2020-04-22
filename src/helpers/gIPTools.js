@@ -81,8 +81,6 @@ export const configureRequest = (ctx) => {
   ctx.accessToken = accessToken
   frApi.defaults.headers.common.Authorization = `Bearer ${accessToken}`
 
-  console.log(ctx.req.headers)
-
   // If we're on the server, we should set proxy headers to retain origin IP
   if (ctx.isServer) {
     frApi.defaults.headers.common['x-real-ip'] = ctx.req.headers['x-real-ip'] ?? ctx.req.client.remoteAddress
