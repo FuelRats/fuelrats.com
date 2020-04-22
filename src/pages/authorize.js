@@ -40,7 +40,7 @@ class Authorize extends React.Component {
       response_type: responseType,
     } = query
 
-    const { payload, response, status } = await actions.getClientOAuthPage(query)(store.dispatch)
+    const { payload, response, status } = await store.dispatch(actions.getClientOAuthPage(query))
 
     if (status === 'success') {
       const {
