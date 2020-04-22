@@ -1,12 +1,13 @@
 // Module imports
 import JsCookie from 'js-cookie'
-import nextCookies from 'next-cookies'
+
 
 
 
 
 // Component imports
 import HttpStatus from '../../helpers/HttpStatus'
+import { configureRequest } from '../../helpers/gIPTools'
 import frApi from '../../services/fuelrats'
 import actionStatus from '../actionStatus'
 import actionTypes from '../actionTypes'
@@ -40,11 +41,13 @@ export const logout = () => {
 
 export const initUserSession = (ctx) => {
   return async (dispatch, getState) => {
+    configureRequest(ctx)
+
+    const { accessToken } = ctx
+
     const state = getState()
     const user = withCurrentUserId(selectUserById)(state)
     const session = selectSession(state)
-
-    const { access_token: accessToken } = nextCookies(ctx)
 
     // Get user agent to be used by login modal and i-need-fuel page
     let userAgent = ''
@@ -63,18 +66,17 @@ export const initUserSession = (ctx) => {
     }
 
     if (accessToken) {
-      frApi.defaults.headers.common.Authorization = `Bearer ${accessToken}`
-
       if (!user && !session.error) {
-        const profileReq = await getUserProfile()(dispatch)
+        const profileReq = await dispatch(getUserProfile())
 
         if (!HttpStatus.isSuccess(profileReq.response.status)) {
           result.error = profileReq.response.status
           result.status = actionStatus.ERROR
 
           if (profileReq.response.status === HttpStatus.UNAUTHORIZED) {
-            logout()(dispatch, getState)
+            dispatch(logout())
             result.accessToken = null
+            ctx.accessToken = null
           }
         }
 
