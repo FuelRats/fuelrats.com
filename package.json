@@ -71,6 +71,7 @@
     "content-security-policy-builder": "^2.1.0",
     "dotenv": "^8.2.0",
     "fibers": "^4.0.2",
+    "fingerprintjs2": "^2.1.0",
     "hoist-non-react-statics": "^3.3.2",
     "immer": "^6.0.3",
     "ip6addr": "^0.2.3",
