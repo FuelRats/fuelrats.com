@@ -7,6 +7,7 @@ import React from 'react'
 
 
 // Component imports
+import getFingerprint from '../helpers/getFingerprint'
 import { Router } from '../routes'
 import { connect } from '../store'
 import { login } from '../store/actions/authentication'
@@ -16,6 +17,8 @@ import { selectFlagByName, selectSession } from '../store/selectors'
 import asModal, { ModalContent, ModalFooter } from './Modal'
 import Switch from './Switch'
 import ValidatedFormInput from './ValidatedFormInput'
+
+
 
 
 
@@ -30,11 +33,12 @@ class LoginModal extends React.Component {
   \***************************************************************************/
 
   state = {
+    error: false,
     email: '',
+    fingerprint: null,
     loggingIn: false,
     password: '',
     remember: false,
-    error: false,
     validity: {
       email: false,
       password: false,
@@ -82,8 +86,9 @@ class LoginModal extends React.Component {
 
     this.setState({ loggingIn: true })
 
-    const { status } = await this.props.login({
+    const { status, payload } = await this.props.login({
       email: this.state.email,
+      fingerprint: this.state.fingerprint,
       password: this.state.password,
       remember: this.state.remember,
     })
@@ -95,7 +100,7 @@ class LoginModal extends React.Component {
     } else {
       this.setState({
         loggingIn: false,
-        error: true,
+        error: payload?.errors?.[0]?.status ?? 'unknown',
       })
     }
   }
@@ -113,8 +118,11 @@ class LoginModal extends React.Component {
     Public Methods
   \***************************************************************************/
 
-  componentDidMount () {
+  async componentDidMount () {
     this.emailInput.current.focus()
+
+    const fingerprint = await getFingerprint()
+    this.setState({ fingerprint })
   }
 
   render () {
@@ -219,6 +227,10 @@ class LoginModal extends React.Component {
 
   get isValid () {
     if (this.state.loggingIn) {
+      return false
+    }
+
+    if (!this.state.fingerprint) {
       return false
     }
 
