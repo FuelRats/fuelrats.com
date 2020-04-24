@@ -1,6 +1,6 @@
 /* global $IS_DEVELOPMENT:false */
+import jsCookie from 'js-cookie'
 import nextCookies from 'next-cookies'
-
 
 
 
@@ -49,6 +49,16 @@ export const pageRedirect = (ctx, route) => {
 
 
 
+export const deleteCookie = (cookieName, ctx = {}) => {
+  if (ctx.res) {
+    ctx.res.setHeader('Set-Cookie', `${cookieName}=null; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`)
+  } else {
+    jsCookie.remove(cookieName)
+  }
+}
+
+
+
 export const setError = (ctx, statusCode) => {
   if (ctx.res) {
     ctx.res.statusCode = statusCode
@@ -73,6 +83,9 @@ export const resolvePageMeta = async (Component, ctx, pageProps) => {
     ...pageMeta,
   }
 }
+
+
+
 
 
 export const configureRequest = (ctx) => {
