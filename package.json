@@ -103,6 +103,7 @@
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
     "stripe": "^8.44.0",
+    "ua-parser-js": "^0.7.21",
     "webpack": "4.42.1",
     "worker-loader": "^2.0.0",
     "zxcvbn": "^4.4.2"
