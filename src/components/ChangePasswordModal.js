@@ -1,6 +1,6 @@
 // Module imports
 import React from 'react'
-
+import { createStructuredSelector } from 'reselect'
 
 
 
@@ -11,6 +11,7 @@ import {
 } from '../data/RegExpr'
 import HttpStatus from '../helpers/HttpStatus'
 import { connect } from '../store'
+import { selectCurrentUserId } from '../store/selectors'
 import asModal, { ModalContent, ModalFooter } from './Modal'
 import PasswordField from './PasswordField'
 
@@ -26,11 +27,11 @@ class ChangePasswordModal extends React.Component {
   \***************************************************************************/
 
   state = {
-    currentPassword: '',
+    password: '',
     error: null,
     newPassword: '',
     validity: {
-      currentPassword: false,
+      password: false,
       newPassword: false,
     },
     submitting: false,
@@ -65,13 +66,21 @@ class ChangePasswordModal extends React.Component {
     event.preventDefault()
 
     const {
-      currentPassword,
+      userId,
+    } = this.props
+
+    const {
+      password,
       newPassword,
     } = this.state
 
     this.setState({ submitting: true })
 
-    const { payload, response } = await this.props.changePassword(currentPassword, newPassword)
+    const { payload, response } = await this.props.changePassword({
+      id: userId,
+      password,
+      newPassword,
+    })
 
     let error = null
 
@@ -103,7 +112,7 @@ class ChangePasswordModal extends React.Component {
 
   render () {
     const {
-      currentPassword,
+      password,
       error,
       newPassword,
       submitting,
@@ -128,10 +137,10 @@ class ChangePasswordModal extends React.Component {
             autoComplete="current-password"
             className="dark"
             disabled={submitting}
-            id="currentPassword"
-            name="currentPassword"
+            id="password"
+            name="password"
             placeholder="Current Password"
-            value={currentPassword}
+            value={password}
             onChange={this._handleChange} />
         </fieldset>
 
@@ -179,11 +188,11 @@ class ChangePasswordModal extends React.Component {
 
   get isValid () {
     const {
-      currentPassword,
+      password,
       newPassword,
     } = this.state.validity
 
-    return (currentPassword && newPassword)
+    return (password && newPassword)
   }
 
 
@@ -195,6 +204,10 @@ class ChangePasswordModal extends React.Component {
   \***************************************************************************/
 
   static mapDispatchToProps = ['changePassword']
+
+  static mapStateToProps = createStructuredSelector({
+    userId: selectCurrentUserId,
+  })
 }
 
 

@@ -58,22 +58,13 @@ class FuelRatsApp extends App {
   static async getInitialProps (appCtx) {
     const { Component, ctx } = appCtx
 
-    const {
-      asPath,
-      isServer,
-      query,
-      store,
-    } = ctx
-
-    const { accessToken } = await initUserSession(ctx)(store.dispatch, store.getState)
-    ctx.accessToken = accessToken // Assign for page to access
+    await ctx.store.dispatch(initUserSession(ctx))
 
     const initialProps = {
-      accessToken,
+      accessToken: ctx.accessToken,
       pageProps: {
-        asPath,
-        isServer,
-        query,
+        asPath: ctx.asPath,
+        query: ctx.query,
         ...((await Component.getInitialProps?.(ctx)) ?? {}),
       },
     }
@@ -82,12 +73,11 @@ class FuelRatsApp extends App {
       initialProps.err = { ...ctx.err }
       initialProps.pageProps = (await ErrorPage.getInitialProps?.(ctx)) ?? {}
       initialProps.pageMeta = await resolvePageMeta(ErrorPage, ctx, initialProps.pageProps)
-      return initialProps
+    } else {
+      initialProps.pageMeta = await resolvePageMeta(Component, ctx, initialProps.pageProps)
     }
 
-    initialProps.pageMeta = await resolvePageMeta(Component, ctx, initialProps.pageProps)
-
-    await notifyPageLoading(appCtx)(store.dispatch)
+    await ctx.store.dispatch(notifyPageLoading(appCtx))
 
     return initialProps
   }

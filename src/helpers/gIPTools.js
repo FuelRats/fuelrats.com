@@ -1,10 +1,12 @@
 /* global $IS_DEVELOPMENT:false */
+import nextCookies from 'next-cookies'
 
 
 
 
 
 import { Router } from '../routes'
+import frApi from '../services/fuelrats'
 import HttpStatus from './HttpStatus'
 
 
@@ -69,5 +71,20 @@ export const resolvePageMeta = async (Component, ctx, pageProps) => {
     title: 'Fuel Rats',
     description: 'The Fuel Rats are Elite: Dangerous\'s premier emergency refueling service. Fueling the galaxy, one ship at a time, since 3301.',
     ...pageMeta,
+  }
+}
+
+
+export const configureRequest = (ctx) => {
+  // Always setup access token
+  const { access_token: accessToken } = nextCookies(ctx)
+  ctx.accessToken = accessToken
+  frApi.defaults.headers.common.Authorization = `Bearer ${accessToken}`
+
+  // If we're on the server, we should set proxy headers to retain origin IP
+  if (ctx.isServer) {
+    frApi.defaults.headers.common['x-real-ip'] = ctx.req.headers['x-real-ip'] ?? ctx.req.client.remoteAddress
+    frApi.defaults.headers.common['x-forwarded-for'] = ctx.req.headers['x-forwarded-for'] ?? ctx.req.client.remoteAddress
+    frApi.defaults.headers.common['x-forwarded-proto'] = ctx.req.headers['x-forwarded-proto'] ?? ctx.req.headers.host
   }
 }

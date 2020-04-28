@@ -7,6 +7,7 @@ import Cookies from 'js-cookie'
 
 // Component imports
 import HttpStatus from '../../helpers/HttpStatus'
+import { presentApiRequestBody } from '../../helpers/presenters'
 import { Router } from '../../routes'
 import frApi from '../../services/fuelrats'
 import actionTypes from '../actionTypes'
@@ -23,16 +24,13 @@ const SESSION_TOKEN_LENGTH = 365 // days
 
 
 
-export const changePassword = (currentPassword, newPassword) => {
+export const changePassword = ({ id, ...data }) => {
   return frApiRequest(
     actionTypes.passwords.update,
     {
-      url: '/users/setpassword',
-      method: 'put',
-      data: {
-        password: currentPassword,
-        new: newPassword,
-      },
+      url: `/users/${id}/password`,
+      method: 'patch',
+      data: presentApiRequestBody('password-changes', data),
     },
   )
 }
@@ -76,7 +74,7 @@ export const login = (options) => {
 
         const destination = searchParams.destination ? decodeURIComponent(searchParams.destination) : '/profile'
 
-        Router.pushRoute(destination)
+        Router.push(destination)
       } else if (route) {
         Router.pushRoute(route, routeParams)
       }
@@ -99,30 +97,25 @@ export const getClientOAuthPage = (params) => {
 }
 
 
-export const register = ({ recaptcha, ...data }) => {
+export const register = (data) => {
   return frApiRequest(
     actionTypes.session.register,
     {
       url: '/register',
       method: 'post',
-      data: {
-        ...data,
-        'g-recaptcha-response': recaptcha,
-      },
+      data: presentApiRequestBody('users', data),
     },
   )
 }
 
 
-export const resetPassword = ({ password, token }) => {
+export const resetPassword = ({ token, ...data }) => {
   return frApiRequest(
     actionTypes.passwords.reset,
     {
       url: `/reset/${token}`,
       method: 'post',
-      data: {
-        password,
-      },
+      data: presentApiRequestBody('resets', data),
     },
   )
 }
@@ -134,9 +127,7 @@ export const sendPasswordResetEmail = (email) => {
     {
       url: '/reset',
       method: 'post',
-      data: {
-        email,
-      },
+      data: presentApiRequestBody('resets', { email }),
     },
   )
 }
@@ -145,6 +136,8 @@ export const sendPasswordResetEmail = (email) => {
 export const validatePasswordResetToken = (token) => {
   return frApiRequest(
     actionTypes.passwords.validateReset,
-    { url: `/reset/${token}` },
+    {
+      url: `/reset/${token}`,
+    },
   )
 }

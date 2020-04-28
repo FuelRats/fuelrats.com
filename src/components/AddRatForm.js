@@ -71,9 +71,18 @@ class AddRatForm extends React.Component {
     this.setState({ submitting: true })
 
     await createRat({
-      name,
-      platform,
-      userId,
+      attributes: {
+        name,
+        platform,
+      },
+      relationships: {
+        user: {
+          data: {
+            type: 'users',
+            id: userId,
+          },
+        },
+      },
     })
 
     this.setState({ ...initialState })

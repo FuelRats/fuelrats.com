@@ -12,6 +12,15 @@ const stripPathSegment = (segmentName, replaceValue = '/') => {
 }
 
 
+// Default options for all proxies should go here.
+const createProxyWithDefaults = (path, opts) => {
+  return koaProxy(path, {
+    changeOrigin: true,
+    secure: true,
+    xfwd: true,
+    ...opts,
+  })
+}
 
 
 
@@ -20,20 +29,14 @@ const configureProxies = (koaServer, env) => {
     Proxy Fuelrats API requests
   \***************************************************************************/
 
-  koaServer.use(koaProxy('/api/oauth2/token', {
+  koaServer.use(createProxyWithDefaults('/api/oauth2/token', {
     auth: `${env.api.clientId}:${env.api.clientSecret}`,
-    changeOrigin: true,
-    jar: true,
     rewrite: stripPathSegment('api'),
-    secure: true,
     target: env.api.url,
   }))
 
-  koaServer.use(koaProxy('/api', {
-    changeOrigin: true,
-    jar: true,
+  koaServer.use(createProxyWithDefaults('/api', {
     rewrite: stripPathSegment('api'),
-    secure: true,
     target: env.api.url,
   }))
 
@@ -45,8 +48,7 @@ const configureProxies = (koaServer, env) => {
     Proxy EDSM API requests
   \***************************************************************************/
 
-  koaServer.use(koaProxy('/edsm-api', {
-    changeOrigin: true,
+  koaServer.use(createProxyWithDefaults('/edsm-api', {
     rewrite: stripPathSegment('edsm-api'),
     target: env.edsm.url,
   }))
@@ -59,14 +61,12 @@ const configureProxies = (koaServer, env) => {
     Proxy Wordpress requests
   \***************************************************************************/
 
-  koaServer.use(koaProxy('/wp-api', {
-    changeOrigin: true,
+  koaServer.use(createProxyWithDefaults('/wp-api', {
     rewrite: stripPathSegment('wp-api', '/wp-json/wp/v2/'),
     target: env.wordpress.url,
   }))
 
-  koaServer.use(koaProxy('/wp-content', {
-    changeOrigin: true,
+  koaServer.use(createProxyWithDefaults('/wp-content', {
     target: env.wordpress.url,
   }))
 }

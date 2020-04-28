@@ -10,6 +10,8 @@ import { frApiRequest } from './services'
 export const getRatLeaderboard = () => {
   return frApiRequest(
     actionTypes.leaderboard.read,
-    { url: '/statistics/rats' },
+    {
+      url: '/leaderboard',
+    },
   )
 }

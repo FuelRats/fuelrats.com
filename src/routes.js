@@ -79,6 +79,9 @@ const { Link, Router } = routes(NextLink, NextRouter)
     }
   })
 
+  // Verify
+  .add('verify', '/verify')
+
   // Epics
   .add('epic nominate', '/epic/nominate')
 
