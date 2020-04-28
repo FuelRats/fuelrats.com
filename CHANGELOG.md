@@ -11,7 +11,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ## [Unreleased]
 
 ### ✨ Added
-
+* Disable profile function which soft deletes a user.
 
 ### ⚡ Changed
 
