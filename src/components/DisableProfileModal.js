@@ -8,6 +8,7 @@ import React from 'react'
 // Component imports
 import HttpStatus from '../helpers/HttpStatus'
 import { connect } from '../store'
+import { selectUserById, withCurrentUserId } from '../store/selectors'
 import asModal, { ModalContent, ModalFooter } from './Modal'
 import PasswordField from './PasswordField'
 
@@ -23,6 +24,7 @@ class DisableProfileModal extends React.Component {
   \***************************************************************************/
 
   state = {
+    userId: this.props.user.id,
     password: '',
     error: null,
     validity: {
@@ -68,19 +70,20 @@ class DisableProfileModal extends React.Component {
 
     const {
       password,
+      userId,
     } = this.state
 
     this.setState({ submitting: true })
 
-    const { payload, response } = await this.props.deleteUser(password)
+    const response = await this.props.updateUser(userId, { status: 'deactivated' }, password)
 
     let error = null
 
-    if (HttpStatus.isClientError(response.status)) {
-      error = payload.errors && payload.errors.length ? payload.errors[0].detail : 'Client communication error'
+    if (HttpStatus.isClientError(response.errors.code)) {
+      error = response.errors && response.errors.length ? response.errors[0].detail : 'Client communication error'
     }
 
-    if (HttpStatus.isServerError(response.status)) {
+    if (HttpStatus.isServerError(response.errors.code)) {
       error = 'Server communication error'
     }
 
@@ -191,7 +194,12 @@ class DisableProfileModal extends React.Component {
     Redux Properties
   \***************************************************************************/
 
-  static mapDispatchToProps = ['deleteUser']
+  static mapDispatchToProps = ['updateUser']
+  static mapStateToProps = (state) => {
+    return {
+      user: withCurrentUserId(selectUserById)(state),
+    }
+  }
 }
 
 

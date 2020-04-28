@@ -37,19 +37,6 @@ export const changePassword = (currentPassword, newPassword) => {
   )
 }
 
-export const deleteUser = (currentPassword) => {
-  return frApiRequest(
-    actionTypes.users.delete,
-    {
-      url: '/users',
-      method: 'delete',
-      data: {
-        password: currentPassword,
-      },
-    },
-  )
-}
-
 
 export const login = (options) => {
   return async (dispatch) => {
