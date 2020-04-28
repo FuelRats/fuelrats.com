@@ -57,6 +57,18 @@
       text-align: center;
     }
 
+    a {
+      &:hover,
+      &:focus {
+        color: $white;
+      }
+    }
+
+    .info {
+      max-width: 56rem;
+      padding: 0 2rem 2rem;
+    }
+
     input {
       color: $black;
     }
@@ -121,5 +133,9 @@
 
   @media screen and (max-width: 768px) {
     min-width: 100vw;
+
+    > .modal-content .info {
+      max-width: initial;
+    }
   }
 }
