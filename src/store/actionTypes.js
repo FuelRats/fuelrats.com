@@ -51,6 +51,7 @@ const ships = {
 
 
 const users = {
+  delete: 'users/delete',
   update: 'users/update',
 }
 
