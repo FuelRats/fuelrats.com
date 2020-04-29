@@ -37,7 +37,7 @@ const wrapPage = (PageComponent, scopes) => {
       const userGroups = withCurrentUserId(selectGroupsByUserId)(state)
 
       if (!userHasPermission(userGroups, scopes)) {
-        setError(HttpStatus.UNAUTHORIZED)
+        setError(ctx, HttpStatus.UNAUTHORIZED)
       }
     }
 
