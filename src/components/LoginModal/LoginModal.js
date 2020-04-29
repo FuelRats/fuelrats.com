@@ -7,19 +7,20 @@ import React from 'react'
 
 
 // Component imports
-import getFingerprint from '../helpers/getFingerprint'
-import { Router } from '../routes'
-import { connect } from '../store'
-import { login } from '../store/actions/authentication'
-import { setFlag } from '../store/actions/flags'
-import { getUserProfile } from '../store/actions/user'
-import { selectFlagByName, selectSession } from '../store/selectors'
-import asModal, { ModalContent, ModalFooter } from './Modal'
-import Switch from './Switch'
-import ValidatedFormInput from './ValidatedFormInput'
+import ca from '../../helpers/classNames'
+import getFingerprint from '../../helpers/getFingerprint'
+import { Router } from '../../routes'
+import { connect } from '../../store'
+import { login } from '../../store/actions/authentication'
+import { setFlag } from '../../store/actions/flags'
+import { getUserProfile } from '../../store/actions/user'
+import { selectFlagByName, selectSession } from '../../store/selectors'
+import ErrorBox from '../ErrorBox'
+import asModal, { ModalContent, ModalFooter } from '../Modal'
+import Switch from '../Switch'
+import ValidatedFormInput from '../ValidatedFormInput'
 
-
-
+import styles from './LoginModal.module.scss'
 
 
 @connect
@@ -100,7 +101,7 @@ class LoginModal extends React.Component {
     } else {
       this.setState({
         loggingIn: false,
-        error: payload?.errors?.[0]?.status ?? 'unknown',
+        error: payload?.errors?.[0] ?? 'unknown',
       })
     }
   }
@@ -144,11 +145,20 @@ class LoginModal extends React.Component {
       <ModalContent as="form" className="dialog no-pad" onSubmit={this._handleSubmit}>
         {
           error && !loggingIn && (
-            <div className="store-errors">
-              <div className="store-error">
-                <span className="detail">{'Invalid email or password.'}</span>
-              </div>
-            </div>
+            <ErrorBox className={styles.errorBox}>
+              {
+                (() => {
+                  switch (error.status) {
+                    case 'verification_required':
+                      return 'Looks like you\'re logging in from a new location.\nPlease check your email to confirm your identity!'
+                    case 'unauthorized':
+                      return 'Invalid Username or Password'
+                    default:
+                      return 'Whoops. Something went wrong!'
+                  }
+                })()
+              }
+            </ErrorBox>
           )
         }
 
@@ -193,20 +203,20 @@ class LoginModal extends React.Component {
               onChange={this._handleSwitchChange} />
           </div>
         </fieldset>
-        <ModalFooter>
-          <div className="secondary">
+        <ModalFooter className={styles.footer}>
+          <div className={styles.secondary}>
             <button
-              className="secondary"
+              className={ca(styles.button, 'secondary')}
               type="button"
               onClick={this._handleRegisterClick}>
               {'Become a Rat'}
             </button>
           </div>
 
-          <div className="primary">
-            <a className="button link secondary mobile-button" href="/forgot-password">{'Forgot password?'}</a>
+          <div className={styles.primary}>
+            <a className={styles.linkButton} href="/forgot-password">{'Forgot password?'}</a>
             <button
-              className="green"
+              className={ca(styles.button, 'green')}
               disabled={!this.isValid}
               type="submit">
               {loggingIn ? 'Submitting...' : 'Login'}

@@ -1,0 +1,49 @@
+.errorBox {
+  margin: 0 auto 1rem;
+}
+
+.primary {
+  composes: primary from global;
+}
+
+.secondary {
+  composes: secondary from global;
+}
+
+.button {
+  composes: button from global;
+}
+
+.linkButton {
+  composes: button link secondary mobile-button from global;
+}
+
+@media screen and (max-width: 768px) {
+  [role='dialog'] .footer > menu[type='toolbar'] {
+    flex-direction: column-reverse;
+
+    .primary,
+    .secondary {
+      flex-direction: column-reverse;
+      align-items: center;
+
+      width: 100%;
+      margin: initial;
+
+      &:not(:first-child) {
+        margin-bottom: 1rem;
+      }
+    }
+
+    .button,
+    .linkButton {
+      min-width: 80%;
+      margin: 0;
+
+      &:not(:first-child) {
+        margin-bottom: 2rem;
+        margin-left: 0;
+      }
+    }
+  }
+}
