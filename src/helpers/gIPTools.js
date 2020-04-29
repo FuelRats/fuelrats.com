@@ -91,8 +91,10 @@ export const resolvePageMeta = async (Component, ctx, pageProps) => {
 export const configureRequest = (ctx) => {
   // Always setup access token
   const { access_token: accessToken } = nextCookies(ctx)
-  ctx.accessToken = accessToken
-  frApi.defaults.headers.common.Authorization = `Bearer ${accessToken}`
+  if (accessToken) {
+    ctx.accessToken = accessToken
+    frApi.defaults.headers.common.Authorization = `Bearer ${accessToken}`
+  }
 
   // If we're on the server, we should set proxy headers to retain origin IP
   if (ctx.isServer) {
