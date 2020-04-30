@@ -7,7 +7,7 @@ import React from 'react'
 
 
 // Component imports
-import ca from '../../helpers/classNames'
+import cn from '../../helpers/classNames'
 import getFingerprint from '../../helpers/getFingerprint'
 import { Router } from '../../routes'
 import { connect } from '../../store'
@@ -206,7 +206,7 @@ class LoginModal extends React.Component {
         <ModalFooter className={styles.footer}>
           <div className={styles.secondary}>
             <button
-              className={ca(styles.button, 'secondary')}
+              className={cn(styles.button, 'secondary')}
               type="button"
               onClick={this._handleRegisterClick}>
               {'Become a Rat'}
@@ -216,7 +216,7 @@ class LoginModal extends React.Component {
           <div className={styles.primary}>
             <a className={styles.linkButton} href="/forgot-password">{'Forgot password?'}</a>
             <button
-              className={ca(styles.button, 'green')}
+              className={cn(styles.button, 'green')}
               disabled={!this.isValid}
               type="submit">
               {loggingIn ? 'Submitting...' : 'Login'}
