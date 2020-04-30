@@ -7,7 +7,7 @@ import nextCookies from 'next-cookies'
 
 import { Router } from '../routes'
 import frApi from '../services/fuelrats'
-import HttpStatus from './HttpStatus'
+import { HttpStatus } from './HttpStatus'
 
 
 

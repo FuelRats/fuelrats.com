@@ -184,7 +184,6 @@ Object.freeze(HttpStatus)
 
 
 
-export default HttpStatus
 export {
   HttpStatus,
   HttpStatusText,

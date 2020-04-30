@@ -1,4 +1,4 @@
-import HttpStatus from '../../../helpers/HttpStatus'
+import { HttpStatus } from '../../../helpers/HttpStatus'
 import { ApiError, InternalServerError } from './error'
 
 

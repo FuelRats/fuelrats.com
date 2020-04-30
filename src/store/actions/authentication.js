@@ -6,7 +6,7 @@ import Cookies from 'js-cookie'
 
 
 // Component imports
-import HttpStatus from '../../helpers/HttpStatus'
+import { HttpStatus } from '../../helpers/HttpStatus'
 import { presentApiRequestBody } from '../../helpers/presenters'
 import { Router } from '../../routes'
 import frApi from '../../services/fuelrats'

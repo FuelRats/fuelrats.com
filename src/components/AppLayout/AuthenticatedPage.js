@@ -5,7 +5,7 @@ import React from 'react'
 
 
 
-import HttpStatus from '../../helpers/HttpStatus'
+import { HttpStatus } from '../../helpers/HttpStatus'
 import { pageRedirect, setError } from '../../helpers/gIPTools'
 import userHasPermission from '../../helpers/userHasPermission'
 import { selectSession, withCurrentUserId, selectGroupsByUserId } from '../../store/selectors'

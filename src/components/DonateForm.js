@@ -8,7 +8,7 @@ import React from 'react'
 
 // Component imports
 import { createStructuredSelector } from 'reselect'
-import HttpStatus from '../helpers/HttpStatus'
+import { HttpStatus } from '../helpers/HttpStatus'
 import getMoney from '../helpers/getMoney'
 import { connect, actionStatus } from '../store'
 import { withCurrentUserId, selectUserById } from '../store/selectors'

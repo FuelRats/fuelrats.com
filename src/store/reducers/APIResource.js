@@ -4,7 +4,7 @@ import { produce } from 'immer'
 
 
 
-import HttpStatus from '../../helpers/HttpStatus'
+import { HttpStatus } from '../../helpers/HttpStatus'
 
 
 

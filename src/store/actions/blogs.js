@@ -1,5 +1,5 @@
 // Component imports
-import HttpStatus from '../../helpers/HttpStatus'
+import { HttpStatus } from '../../helpers/HttpStatus'
 import wpApi from '../../services/wordpress'
 import actionTypes from '../actionTypes'
 import initialState from '../initialState'
