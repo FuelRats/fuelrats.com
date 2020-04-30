@@ -1,0 +1,36 @@
+@import '../fonts';
+@import '../colors';
+
+.errorPage {
+  align-items: center;
+  justify-content: center;
+
+  font-family: $title-fonts;
+
+  .errorText {
+    display: inline-block;
+    vertical-align: baseline;
+  }
+}
+
+.errorInfo {
+  width: 100%;
+
+  text-align: center;
+}
+
+.errorCode {
+  composes: errorText;
+
+  margin-right: 2rem;
+  padding-right: 2rem;
+
+  border-right: 2px solid $black;
+}
+
+.subtext {
+  display: block;
+
+  text-align: center;
+  font-size: 0.9em;
+}
