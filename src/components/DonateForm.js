@@ -8,6 +8,7 @@ import React from 'react'
 
 // Component imports
 import { createStructuredSelector } from 'reselect'
+import HttpStatus from '../helpers/HttpStatus'
 import getMoney from '../helpers/getMoney'
 import { connect, actionStatus } from '../store'
 import { withCurrentUserId, selectUserById } from '../store/selectors'
@@ -151,16 +152,21 @@ class DonateForm extends React.Component {
 
     if (response.status === actionStatus.ERROR) {
       this.setState({
-        error: response.payload?.errors?.[0]?.source?.message ?? true,
+        error: response.payload?.errors?.[0] ?? true,
         submitting: false,
       })
       return
     }
 
     try {
-      await stripe.redirectToCheckout({ sessionId: response.payload.id })
+      await stripe.redirectToCheckout({ sessionId: response.payload.data.id })
     } catch (error) {
-      this.setState({ error: error.message, submitting: false })
+      this.setState({
+        error: {
+          detail: error.message,
+        },
+        submitting: false,
+      })
     }
 
     this.setState({ submitting: false })
@@ -179,20 +185,26 @@ class DonateForm extends React.Component {
     return (
       <div className="store-errors">
         <div className="store-error">
-          {'An error occured while creating the checkout session.'}
-          {
-            typeof error === 'string' && (
-              <>
-                {' Error message: '}
-                <br />
-                {error}
-              </>
-            )
-          }
+          <h5 className="title">{error.title ?? 'Unknown Error'}</h5>
+          <span className="detail">{error.detail}</span>
           <br />
-          {'If the problem persists, please contact a techrat via'}
-          <a href="mailto:support@fuelrats.com">{'support@fuelrats.com'}</a>
-          {'.'}
+          <small className="footer">
+            {
+              error.code === HttpStatus.UNAUTHORIZED
+                ? (
+                  <>
+                    {'If you believe this is an error, Please appeal via email: '}
+                    <a href="mailto:ops@fuelrats.com">{'ops@fuelrats.com'}</a>
+                  </>
+                ) : (
+                  <>
+                    {'If the problem persists, please contact a techrat via email: '}
+                    <a href="mailto:support@fuelrats.com">{'support@fuelrats.com'}</a>
+                  </>
+                )
+            }
+          </small>
+
         </div>
       </div>
     )

@@ -6,21 +6,19 @@ import React from 'react'
 
 
 
-// Component imports
-import PageWrapper from '../components/AppLayout/PageWrapper'
-
-
-
-
-
 class ErrorPage extends NextError {
+  static getPageMeta () {
+    return {
+      title: 'error-page',
+      noHeader: true,
+    }
+  }
+
   render () {
     return (
-      <PageWrapper noHeader title="error-page">
-        <div className="page-content">
-          {super.render()}
-        </div>
-      </PageWrapper>
+      <div className="page-content">
+        {super.render()}
+      </div>
     )
   }
 }

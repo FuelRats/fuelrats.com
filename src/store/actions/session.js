@@ -1,16 +1,18 @@
 // Module imports
 import JsCookie from 'js-cookie'
-import nextCookies from 'next-cookies'
+
 
 
 
 
 // Component imports
 import HttpStatus from '../../helpers/HttpStatus'
+import { configureRequest } from '../../helpers/gIPTools'
 import frApi from '../../services/fuelrats'
 import actionStatus from '../actionStatus'
 import actionTypes from '../actionTypes'
 import {
+  selectPageRequiresAuth,
   selectSession,
   selectUserById,
   withCurrentUserId,
@@ -21,15 +23,17 @@ import { getUserProfile } from './user'
 
 
 
-export const logout = (delayLogout) => {
-  return (dispatch) => {
+export const logout = () => {
+  return (dispatch, getState) => {
     JsCookie.remove('access_token')
     delete frApi.defaults.headers.common.Authorization
 
     return dispatch({
       status: 'success',
       type: actionTypes.session.logout,
-      delayLogout,
+      payload: {
+        waitForDestroy: Boolean(selectPageRequiresAuth(getState())),
+      },
     })
   }
 }
@@ -37,32 +41,42 @@ export const logout = (delayLogout) => {
 
 export const initUserSession = (ctx) => {
   return async (dispatch, getState) => {
+    configureRequest(ctx)
+
+    const { accessToken } = ctx
+
     const state = getState()
     const user = withCurrentUserId(selectUserById)(state)
     const session = selectSession(state)
 
-    const { access_token: accessToken } = nextCookies(ctx)
+    // Get user agent to be used by login modal and i-need-fuel page
+    let userAgent = ''
+    if (ctx.req && ctx.req.headers['user-agent']) {
+      userAgent = ctx.req.headers['user-agent'].toLowerCase()
+    } else if (typeof window !== 'undefined') {
+      userAgent = window.navigator.userAgent.toLowerCase()
+    }
 
     const result = {
       type: actionTypes.session.initialize,
       status: actionStatus.SUCCESS,
       error: null,
       accessToken,
+      userAgent,
     }
 
     if (accessToken) {
-      frApi.defaults.headers.common.Authorization = `Bearer ${accessToken}`
-
       if (!user && !session.error) {
-        const profileReq = await getUserProfile()(dispatch)
+        const profileReq = await dispatch(getUserProfile())
 
         if (!HttpStatus.isSuccess(profileReq.response.status)) {
           result.error = profileReq.response.status
           result.status = actionStatus.ERROR
 
           if (profileReq.response.status === HttpStatus.UNAUTHORIZED) {
-            logout()(dispatch)
+            dispatch(logout())
             result.accessToken = null
+            ctx.accessToken = null
           }
         }
 
@@ -74,12 +88,24 @@ export const initUserSession = (ctx) => {
 }
 
 
-export const notifyPageChange = (path) => {
+export const notifyPageLoading = ({ Component }) => {
   return (dispatch) => {
     return dispatch({
-      type: actionTypes.session.pageChange,
+      type: actionTypes.session.pageLoading,
       status: actionStatus.SUCCESS,
-      path,
+      payload: {
+        requiresAuth: Boolean(Component.requiresAuthentication),
+      },
+    })
+  }
+}
+
+
+export const notifyPageDestroyed = () => {
+  return (dispatch) => {
+    return dispatch({
+      type: actionTypes.session.pageDestroyed,
+      status: actionStatus.SUCCESS,
     })
   }
 }

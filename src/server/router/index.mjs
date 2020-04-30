@@ -13,7 +13,7 @@ import stripeApi from './stripeApi'
 
 
 
-const configureRouter = (nextApp, koaServer, env) => {
+const configureRouter = (nextApp, koaServer) => {
   const router = new Router()
 
 
@@ -25,7 +25,7 @@ const configureRouter = (nextApp, koaServer, env) => {
   redirects(router)
 
   // Stripe Api
-  stripeApi(router, env)
+  stripeApi(router)
 
 
 

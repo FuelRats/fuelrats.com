@@ -1,40 +1,37 @@
 // Module imports
 import React from 'react'
-import { createStructuredSelector } from 'reselect'
+
 
 
 
 
 // Component imports
-import {
-  passwordPattern,
-} from '../data/RegExpr'
 import HttpStatus from '../helpers/HttpStatus'
 import { connect } from '../store'
-import { selectCurrentUserId } from '../store/selectors'
+import { selectUserById, withCurrentUserId } from '../store/selectors'
 import asModal, { ModalContent, ModalFooter } from './Modal'
 import PasswordField from './PasswordField'
 
 
 @asModal({
-  className: 'password-change-dialog',
-  title: 'Change Password',
+  className: 'disable-profile-dialog',
+  title: 'Disable Profile',
 })
 @connect
-class ChangePasswordModal extends React.Component {
+class DisableProfileModal extends React.Component {
   /***************************************************************************\
     Class Properties
   \***************************************************************************/
 
   state = {
+    userId: this.props.user.id,
     password: '',
     error: null,
-    newPassword: '',
     validity: {
       password: false,
-      newPassword: false,
     },
     submitting: false,
+    confirming: false,
   }
 
 
@@ -62,33 +59,31 @@ class ChangePasswordModal extends React.Component {
     })
   }
 
+  _handleConfirm = () => {
+    this.setState((state) => {
+      return { confirming: !state.confirming }
+    })
+  }
+
   _handleSubmit = async (event) => {
     event.preventDefault()
 
     const {
-      userId,
-    } = this.props
-
-    const {
       password,
-      newPassword,
+      userId,
     } = this.state
 
     this.setState({ submitting: true })
 
-    const { payload, response } = await this.props.changePassword({
-      id: userId,
-      password,
-      newPassword,
-    })
+    const response = await this.props.updateUser(userId, { status: 'deactivated' }, password)
 
     let error = null
 
-    if (HttpStatus.isClientError(response.status)) {
-      error = payload.errors && payload.errors.length ? payload.errors[0].detail : 'Client communication error'
+    if (HttpStatus.isClientError(response.errors.code)) {
+      error = response.errors && response.errors.length ? response.errors[0].detail : 'Client communication error'
     }
 
-    if (HttpStatus.isServerError(response.status)) {
+    if (HttpStatus.isServerError(response.errors.code)) {
       error = 'Server communication error'
     }
 
@@ -114,8 +109,8 @@ class ChangePasswordModal extends React.Component {
     const {
       password,
       error,
-      newPassword,
       submitting,
+      confirming,
     } = this.state
 
     return (
@@ -124,53 +119,50 @@ class ChangePasswordModal extends React.Component {
           error && !submitting && (
             <div className="store-errors">
               <div className="store-error">
-                <span className="detail">{error}</span>
+                {error}
               </div>
             </div>
           )
         }
 
-        <fieldset data-name="Current Password">
+        <div className="info">
+          {'This will hide your profile from public view, but will not delete it from our servers. To re-enable your account, please email '}
+          <a href="mailto:support@fuelrats.com">{'support@fuelrats.com'}</a>{'.'}
+          <br />
+          {'You may contact '}
+          <a href="mailto:gdpr@fuelrats.com">{'gdpr@fuelrats.com'}</a>
+          {' to request a copy of all information stored about you, or to request a permanent deletion of all your data.'}
+        </div>
+
+        <fieldset data-name="Password">
           <PasswordField
             required
-            aria-label="Current Password"
-            autoComplete="current-password"
+            aria-label="Password"
+            autoComplete="password"
             className="dark"
             disabled={submitting}
             id="password"
             name="password"
-            placeholder="Current Password"
+            placeholder="Password"
             value={password}
-            onChange={this._handleChange} />
-        </fieldset>
-
-        <fieldset data-name="New Password">
-          <PasswordField
-            required
-            showStrength
-            showSuggestions
-            aria-label="New Password"
-            autoComplete="new-password"
-            className="dark"
-            disabled={submitting}
-            id="newPassword"
-            maxLength="42"
-            minLength="5"
-            name="newPassword"
-            pattern={passwordPattern}
-            placeholder="New Password"
-            value={newPassword}
             onChange={this._handleChange} />
         </fieldset>
 
         <ModalFooter>
           <div className="secondary" />
           <div className="primary">
+            <div className={!confirming && 'hidden'}>{'Are you sure?'}</div>
             <button
-              className="green"
+              className={confirming ? 'green' : 'hidden'}
               disabled={!this.isValid || submitting}
               type="submit">
-              {submitting ? 'Submitting...' : 'Change Password'}
+              {submitting ? 'Submitting...' : 'Disable Profile'}
+            </button>
+            <button
+              disabled={(!confirming && !this.isValid) || submitting}
+              type="button"
+              onClick={this._handleConfirm}>
+              {confirming ? 'Cancel' : 'Disable Profile'}
             </button>
           </div>
         </ModalFooter>
@@ -189,10 +181,9 @@ class ChangePasswordModal extends React.Component {
   get isValid () {
     const {
       password,
-      newPassword,
     } = this.state.validity
 
-    return (password && newPassword)
+    return (password)
   }
 
 
@@ -203,15 +194,16 @@ class ChangePasswordModal extends React.Component {
     Redux Properties
   \***************************************************************************/
 
-  static mapDispatchToProps = ['changePassword']
-
-  static mapStateToProps = createStructuredSelector({
-    userId: selectCurrentUserId,
-  })
+  static mapDispatchToProps = ['updateUser']
+  static mapStateToProps = (state) => {
+    return {
+      user: withCurrentUserId(selectUserById)(state),
+    }
+  }
 }
 
 
 
 
 
-export default ChangePasswordModal
+export default DisableProfileModal

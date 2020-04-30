@@ -7,7 +7,7 @@ import { createSelector } from 'reselect'
 
 
 // Component imports
-import { PageWrapper, authenticated } from '../../../components/AppLayout'
+import { authenticated } from '../../../components/AppLayout'
 import FirstLimpetInput from '../../../components/FirstLimpetInput'
 import RadioInput from '../../../components/RadioInput'
 import RatTagsInput from '../../../components/RatTagsInput'
@@ -223,13 +223,25 @@ class Paperwork extends React.Component {
       }
     }
 
-    if (rats) {
-      await this.props.updateRescueRats(rescue.id, rats.map(({ id, type }) => {
-        return { id, type }
-      }))
+    const updateData = {
+      id: rescue.id,
+      attributes: changes,
     }
 
-    const { status } = await this.props.updateRescue(rescue.id, changes)
+    if (rats) {
+      updateData.relationships = {
+        rats: {
+          data: rats.map(({ type, id }) => {
+            return {
+              type,
+              id,
+            }
+          }),
+        },
+      }
+    }
+
+    const { status } = await this.props.updateRescue(updateData)
 
     if (status === 'error') {
       this.setState({ error: true })
@@ -310,6 +322,12 @@ class Paperwork extends React.Component {
 
     if (!selectRescueById(state, query)) {
       await actions.getRescue(query.rescueId)(store.dispatch)
+    }
+  }
+
+  static getPageMeta () {
+    return {
+      title: 'Paperwork',
     }
   }
 
@@ -510,12 +528,12 @@ class Paperwork extends React.Component {
     } = this.state
 
     return (
-      <PageWrapper title="Paperwork">
+      <>
         {
           (error && !submitting) && (
             <div className="store-errors">
               <div className="store-error">
-                {'Error while submitting paperwork.'}
+                <span className="detail">{'Error while submitting paperwork.'}</span>
               </div>
             </div>
           )
@@ -530,7 +548,7 @@ class Paperwork extends React.Component {
         }
 
         {(rescue) && this.renderRescueEditForm()}
-      </PageWrapper>
+      </>
     )
   }
 
@@ -622,18 +640,22 @@ class Paperwork extends React.Component {
     const { rescue, rats } = this.props
     const { changes } = this.state
 
+    const isDefined = (value, fallback) => {
+      return typeof value === 'undefined' ? fallback : value
+    }
+
     const getValue = (value) => {
-      return changes[value] ?? rescue.attributes[value]
+      return isDefined(changes[value], rescue.attributes[value])
     }
 
     return {
       codeRed: getValue('codeRed'),
-      firstLimpetId: changes.firstLimpetId ?? rats[rescue.attributes.firstLimpetId] ?? null,
+      firstLimpetId: isDefined(changes.firstLimpetId, rats[rescue.attributes.firstLimpetId]) ?? null,
       notes: getValue('notes'),
       outcome: getValue('outcome'),
       platform: getValue('platform'),
-      rats: Object.values(changes.rats ?? rats ?? {}),
-      system: changes.system ?? rescue.attributes.system?.toUpperCase() ?? null,
+      rats: Object.values(isDefined(changes.rats, rats) ?? {}),
+      system: isDefined(changes.system, rescue.attributes.system ? { value: rescue.attributes.system.toUpperCase() } : null),
     }
   }
 
@@ -645,7 +667,7 @@ class Paperwork extends React.Component {
     Redux Properties
   \***************************************************************************/
 
-  static mapDispatchToProps = ['updateRescue', 'updateRescueRats', 'getRescue']
+  static mapDispatchToProps = ['updateRescue', 'getRescue']
 
   static mapStateToProps = (state, { query }) => {
     return {

@@ -11,6 +11,7 @@ import {
   withCurrentUserId,
 } from '../store/selectors'
 import ChangePasswordModal from './ChangePasswordModal'
+import DisableProfileModal from './DisableProfileModal'
 
 
 
@@ -24,6 +25,7 @@ class ProfileHeader extends React.Component {
 
   state = {
     showChangePassword: false,
+    showDisableProfile: false,
   }
 
 
@@ -52,6 +54,12 @@ class ProfileHeader extends React.Component {
     })
   }
 
+  _handleToggleDisableProfile = () => {
+    this.setState((state) => {
+      return { showDisableProfile: !state.showDisableProfile }
+    })
+  }
+
 
 
   /***************************************************************************\
@@ -61,6 +69,7 @@ class ProfileHeader extends React.Component {
   render () {
     const {
       showChangePassword,
+      showDisableProfile,
     } = this.state
     const {
       displayRat,
@@ -104,11 +113,19 @@ class ProfileHeader extends React.Component {
               onClick={this._handleToggleChangePassword}>
               {'Change Password'}
             </button>
+            <button
+              type="button"
+              onClick={this._handleToggleDisableProfile}>
+              {'Disable Profile'}
+            </button>
           </div>
         </div>
         <ChangePasswordModal
           isOpen={showChangePassword}
           onClose={this._handleToggleChangePassword} />
+        <DisableProfileModal
+          isOpen={showDisableProfile}
+          onClose={this._handleToggleDisableProfile} />
       </>
     )
   }

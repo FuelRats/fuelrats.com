@@ -1,13 +1,31 @@
 {
   "projectName": "fuelrats.com",
-  "projectOwner": "fuelrats",
-  "files": [
-    "CONTRIBUTORS.md",
-    "README.md"
-  ],
-  "imageSize": 100,
-  "commit": true,
+  "projectOwner": "FuelRats",
+  "imageSize": 80,
+  "commit": false,
   "contributors": [
+    {
+      "login": "UncleClapton",
+      "name": "Cameron Welter",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/2686824?v=4",
+      "profile": "https://github.com/UncleClapton",
+      "contributions": [
+        "blog",
+        "bug",
+        "code",
+        "content",
+        "design",
+        "doc",
+        "ideas",
+        "maintenance",
+        "plugin",
+        "projectManagement",
+        "question",
+        "review",
+        "tool",
+        "userTesting"
+      ]
+    },
     {
       "login": "trezy",
       "name": "Trezy",
@@ -17,28 +35,28 @@
         "blog",
         "bug",
         "code",
+        "content",
         "design",
         "doc",
         "ideas",
         "infra",
         "question",
-        "review"
+        "review",
+        "userTesting"
       ]
     },
     {
-      "login": "UncleClapton",
-      "name": "Cameron \"Clapton\"",
-      "avatar_url": "https://avatars2.githubusercontent.com/u/2686824?v=4",
-      "profile": "https://github.com/UncleClapton",
+      "login": "314numberpi",
+      "name": "NumberPi",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/15672322?v=4",
+      "profile": "https://github.com/314numberpi",
       "contributions": [
-        "blog",
         "bug",
         "code",
+        "content",
         "design",
-        "doc",
-        "ideas",
-        "question",
-        "review"
+        "review",
+        "userTesting"
       ]
     },
     {
@@ -49,8 +67,11 @@
       "contributions": [
         "bug",
         "code",
+        "fundingFinding",
         "ideas",
-        "infra"
+        "infra",
+        "security",
+        "userTesting"
       ]
     },
     {
@@ -63,13 +84,23 @@
       ]
     },
     {
-      "login": "spansh",
-      "name": "spansh",
-      "avatar_url": "https://avatars2.githubusercontent.com/u/103208?v=4",
-      "profile": "https://github.com/spansh",
+      "login": "Adanaran",
+      "name": "Adanaran",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/2139937?v=4",
+      "profile": "https://github.com/Adanaran",
       "contributions": [
-        "code",
-        "design"
+        "bug",
+        "code"
+      ]
+    },
+    {
+      "login": "andybish",
+      "name": "Andrew Bishop",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/6172379?v=4",
+      "profile": "https://github.com/andybish",
+      "contributions": [
+        "bug",
+        "infra"
       ]
     },
     {
@@ -79,17 +110,9 @@
       "profile": "https://github.com/kenneaal",
       "contributions": [
         "bug",
+        "fundingFinding",
         "ideas",
         "infra"
-      ]
-    },
-    {
-      "login": "andybish",
-      "name": "Andrew Bishop",
-      "avatar_url": "https://avatars2.githubusercontent.com/u/6172379?v=4",
-      "profile": "https://github.com/andybish",
-      "contributions": [
-        "bug"
       ]
     },
     {
@@ -103,14 +126,32 @@
       ]
     },
     {
-      "login": "314numberpi",
-      "name": "314numberpi",
-      "avatar_url": "https://avatars0.githubusercontent.com/u/15672322?v=4",
-      "profile": "https://github.com/314numberpi",
+      "login": "EladKarni",
+      "name": "Elad Karni",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/39969481?v=4",
+      "profile": "https://github.com/EladKarni",
       "contributions": [
         "code",
-        "content",
         "design"
+      ]
+    },
+    {
+      "login": "spansh",
+      "name": "spansh",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/103208?v=4",
+      "profile": "https://github.com/spansh",
+      "contributions": [
+        "code",
+        "design"
+      ]
+    },
+    {
+      "login": "Uvelius",
+      "name": "Uvelius",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/35564469?v=4",
+      "profile": "https://github.com/Uvelius",
+      "contributions": [
+        "code"
       ]
     },
     {
@@ -121,8 +162,24 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "allcontributors[bot]",
+      "name": "allcontributors[bot]",
+      "avatar_url": "https://avatars0.githubusercontent.com/in/23186?v=4",
+      "profile": "https://github.com/apps/allcontributors",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "dependabot[bot]",
+      "name": "dependabot[bot]",
+      "avatar_url": "https://avatars2.githubusercontent.com/in/29110?v=4",
+      "profile": "https://github.com/apps/dependabot",
+      "contributions": [
+        "infra"
+      ]
     }
-  ],
-  "repoType": "github",
-  "commitConvention": "none"
+  ]
 }

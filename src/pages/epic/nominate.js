@@ -6,7 +6,7 @@ import React from 'react'
 
 
 // Component imports
-import { PageWrapper, authenticated } from '../../components/AppLayout'
+import { authenticated } from '../../components/AppLayout'
 import RadioInput from '../../components/RadioInput'
 import RatTagsInput from '../../components/RatTagsInput'
 import RescuesTagsInput from '../../components/RescuesTagsInput'
@@ -65,6 +65,12 @@ class EpicNominate extends React.Component {
     Public Methods
   \***************************************************************************/
 
+  static getPageMeta () {
+    return {
+      title: 'Epic Nomination',
+    }
+  }
+
   handleEpicTypeChange = ({ target }) => {
     this.setState({
       epicType: target.value,
@@ -72,7 +78,6 @@ class EpicNominate extends React.Component {
       rescue: [],
     })
   }
-
 
   handleRatsChange = (value) => {
     const newRatIds = getResourceIdListString(value)
@@ -165,13 +170,13 @@ class EpicNominate extends React.Component {
     )
 
     return (
-      <PageWrapper title="Epic Nomination">
+      <>
 
         {
           (error && !submitting) && (
             <div className="store-errors">
               <div className="store-error">
-                {'Error submitting nomination.'}
+                <span className="detail">{'Error submitting nomination.'}</span>
               </div>
             </div>
           )
@@ -267,7 +272,7 @@ class EpicNominate extends React.Component {
             </div>
           )
         }
-      </PageWrapper>
+      </>
     )
   }
 

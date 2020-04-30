@@ -1,13 +1,17 @@
 import { useTransition } from '@react-spring/web'
-import React from 'react'
 
 
 
 
-const TransitionContext = React.createContext(null)
+
+import { connect } from '../../store'
+import { notifyPageDestroyed } from '../../store/actions'
 
 
-const PageTransitionContainer = ({ items, keys, ...transitionProps }) => {
+
+
+
+const PageTransitionContainer = ({ children, items, keys, ...transitionProps }) => {
   return useTransition(items, keys, {
     initial: true,
     from: { opacity: 1 },
@@ -19,29 +23,15 @@ const PageTransitionContainer = ({ items, keys, ...transitionProps }) => {
       clamp: true,
     },
     ...transitionProps,
-  }).map(({ item, key, props }) => {
-    const {
-      Page,
-      pageProps,
-      shouldRender,
-    } = item
+  }).map(children)
+}
 
-    return shouldRender && (
-      <TransitionContext.Provider key={key} value={props}>
-        <Page {...pageProps} />
-      </TransitionContext.Provider>
-    )
-  })
+PageTransitionContainer.mapDispatchToProps = {
+  onDestroyed: notifyPageDestroyed, // called by react-spring when a page is unmounted so we know that it's safe to destructively change global state.
 }
 
 
 
 
-const {
-  Consumer: TransitionConsumer,
-} = TransitionContext
 
-export default PageTransitionContainer
-export {
-  TransitionConsumer,
-}
+export default connect(PageTransitionContainer)

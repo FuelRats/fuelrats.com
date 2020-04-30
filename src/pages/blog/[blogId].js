@@ -5,7 +5,6 @@ import React from 'react'
 
 
 // Component imports
-import { PageWrapper } from '../../components/AppLayout'
 import ArticleCard from '../../components/Blog/ArticleCard'
 import { actions } from '../../store'
 import { selectBlogById } from '../../store/selectors'
@@ -19,7 +18,6 @@ class Blog extends React.Component {
     Public Methods
   \***************************************************************************/
 
-
   static async getInitialProps ({ query, store }) {
     const state = store.getState()
     if (!selectBlogById(state, query)) {
@@ -27,15 +25,19 @@ class Blog extends React.Component {
     }
   }
 
+  static getPageMeta () {
+    return {
+      title: 'Blog',
+    }
+  }
+
   render () {
     const { query } = this.props
     return (
-      <PageWrapper title="Blog">
-        <ArticleCard
-          blogId={query.blogId}
-          className="page-content"
-          renderMode="article" />
-      </PageWrapper>
+      <ArticleCard
+        blogId={query.blogId}
+        className="page-content"
+        renderMode="article" />
     )
   }
 }

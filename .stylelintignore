@@ -1,3 +1,6 @@
+dist
+deploy_dist
+node_modules
 **/*.js
 **/*.mjs
 **/*.json

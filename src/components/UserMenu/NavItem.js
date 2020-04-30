@@ -13,7 +13,7 @@ import { Link } from '../../routes'
 
 function NavItem ({ item, ...linkProps }) {
   const {
-    action,
+    onClick,
     className,
     route,
     routeParams,
@@ -23,7 +23,7 @@ function NavItem ({ item, ...linkProps }) {
   return (
     <li className={className}>
       <Link params={routeParams} route={route}>
-        <a {...linkProps} {...(action && { href: '#', onClick: action })}>
+        <a {...linkProps} {...(onClick ? { href: '#', onClick } : {})}>
           <span>{title}</span>
         </a>
       </Link>

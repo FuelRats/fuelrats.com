@@ -69,6 +69,16 @@ class NProgressReact extends React.Component {
   render () {
     return null
   }
+
+
+  /***************************************************************************\
+    Prop Properties
+  \***************************************************************************/
+
+  static defaultProps = {
+    minimum: 0.15,
+    showSpinner: false,
+  }
 }
 
 

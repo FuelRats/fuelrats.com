@@ -11,32 +11,98 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ## [Unreleased]
 
 ### ✨ Added
+* Disable profile function which soft deletes a user.
 
 ### ⚡ Changed
+
+
+### 🐛 Fixed
+
+
+### ⚙ Tasks
+
+
+
+
+
+## [2.11.2] - 2020-04-16
+
+### 🐛 Fixed
+* Fixed a 404 error that occurred after signing in when attempting to access an authenticated page. - [#236][]
+
+
+[#236]: https://github.com/fuelrats/fuelrats.com/pull/236
+
+
+
+
+
+## [2.11.1] - 2020-04-13
+
+### 🐛 Fixed
+* Resolved client error that occurs when attempting to authorize an external application - [#233][]
+* Resolved server error that arises when donation api bans file is not configured - [#233][]
+* Fixed an issue where the description and image associated with a donation amount - [#233][]
+
+
+[#233]: https://github.com/fuelRats/fuelrats.com/pull/233
+
+
+
+
+
+## [2.11.0] - 2020-04-13
+
+### ✨ Added
+* IP blocking for Donation API - [#230][]
+* Rate limiting for Donation API - [#230][]
+
+
+### ⚡ Changed
+* Simplify a lot about the layout of the application - [#228][]
+* Convert `UserMenu` back to a class for our sanity - [#228][]
+* Remove `LocalForage` because it's no longer in use - [#228][]
+* Convert to next.js builtin SCSS loading - [#228][]
 * Make login button always gray so it doesn't pop out on the front page. - [#221][]
 * Wrap all JSX string literals in a container (New ESLint Rule) - [#221][]
 * Enforce consistent newline rules for JSX code containers (New ESLint Rule) - [#221][]
 * Begin Splitting up blog list into different components (for our sanity) - [#221][]
+* Update to `@fuelrats/next-named-routes` v3 for it's vastly superior syntax and better querystring handling - [#228][]
+* Add priority to `sitemap.xml` entries.
 * A ton of other style changes brought upon us by the release of `@fuelrats/eslint-config` v2 - [#221][]
+* Setup a better structure for Donation API - [#230][]
+* Fix up styling and output of donation page errors - [#230][]
+
 
 ### 🐛 Fixed
+* Resolved a problem where certain changed values were not being taken into account when validating the paperwork form - [#226][]
+* Updated maximum CMDR name length so those with long names can properly register - [#232][]
+
 
 ### ⚙ Tasks
-* Update `@fuelrats/eslint-config-react` to `v2.0.0` - [#221][]
+* Update `@fuelrats/eslint-config` to `v2.1.0` - [#221][], [#228][]
 * Replace `node-sass` in favor of `dart-sass` - [#222][]
-* Restructure project to use a more standard file structure - [#223][]
-* Upgrade to Node 13 - [#223][]
+* Restructure project to use a more standard file structure - [#223][], [#224][]
+* Replace all-contributors-cli with the all-contributors GitHub bot - [#231][]
+* Upgrade Rollup to v2.x - [#231][]
+* Upgrade Node to v13.x - [#223][]
 
 
 [#221]: https://github.com/FuelRats/fuelrats.com/pull/221
 [#222]: https://github.com/FuelRats/fuelrats.com/pull/222
 [#223]: https://github.com/FuelRats/fuelrats.com/pull/223
+[#224]: https://github.com/FuelRats/fuelrats.com/pull/224
+[#226]: https://github.com/FuelRats/fuelrats.com/pull/226
+[#228]: https://github.com/fuelRats/fuelrats.com/pull/228
+[#230]: https://github.com/fuelRats/fuelrats.com/pull/230
+[#231]: https://github.com/fuelRats/fuelrats.com/pull/231
+[#232]: https://github.com/fuelRats/fuelrats.com/pull/232
 
 
 
 
 
-## [2.10.0-patch.2] - 2020-02-04
+## [2.10.0-patch.2][2.10.0] - 2020-02-04
 
 ### 🐛 Fixed
 * Fix Forgot password input being uneditable - [#219][]
@@ -48,7 +114,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.10.0-patch.1] - 2020-01-29
+## [2.10.0-patch.1][2.10.0]  - 2020-01-29
 
 ### 🐛 Fixed
 * Fix donate page by removing recaptcha. We removed this due to seemingly unfixable inconsistencies across browsers. - [#218][]
@@ -696,7 +762,8 @@ basic format:
 
 
 
-[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.10.0...HEAD
+[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.11.0...HEAD
+[2.11.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.11.0...v2.10.0
 [2.10.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.9.2...v2.10.0
 [2.9.2]: https://github.com/FuelRats/fuelrats.com/compare/v2.9.1...v2.9.2
 [2.9.1]: https://github.com/FuelRats/fuelrats.com/compare/v2.9.0...v2.9.1

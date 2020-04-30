@@ -51,6 +51,7 @@ const ships = {
 
 
 const users = {
+  delete: 'users/delete',
   update: 'users/update',
 }
 
@@ -82,7 +83,8 @@ const session = {
   initialize: 'session/initialize',
   read: 'session/read',
   readClientOAuthPage: 'session/readClientOAuthPage',
-  pageChange: 'session/pageChange',
+  pageLoading: 'session/pageLoading',
+  pageDestroyed: 'session/pageDestroyed',
   setFlag: 'session/setFlag',
 }
 
@@ -95,6 +97,16 @@ const stripe = {
     create: 'stripeCheckout/create',
     read: 'stripeCheckout/read',
   },
+}
+
+
+
+
+
+const verify = {
+  email: 'verify/email',
+  reset: 'verify/reset',
+  session: 'verify/session',
 }
 
 
@@ -136,6 +148,7 @@ const actionTypes = {
   // Special
   images,
   session,
+  verify,
 
   // Services
   stripe,

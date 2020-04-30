@@ -97,7 +97,10 @@ class RatCard extends React.Component {
 
     this.setState({ submitting: true })
 
-    await updateRat(rat.id, changes)
+    await updateRat({
+      id: rat.id,
+      attributes: changes,
+    })
 
     this.setState({
       changes: {},
@@ -216,7 +219,7 @@ class RatCard extends React.Component {
             <InlineEditSpan
               canEdit={editMode}
               inputClassName="dark"
-              maxLength={18}
+              maxLength={22}
               minLength={1}
               name="name"
               value={cmdrNameValue}
