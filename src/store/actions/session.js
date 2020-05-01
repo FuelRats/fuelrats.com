@@ -1,13 +1,6 @@
-// Module imports
-import JsCookie from 'js-cookie'
-
-
-
-
-
 // Component imports
-import HttpStatus from '../../helpers/HttpStatus'
-import { configureRequest } from '../../helpers/gIPTools'
+import { HttpStatus } from '../../helpers/HttpStatus'
+import { configureRequest, deleteCookie } from '../../helpers/gIPTools'
 import frApi from '../../services/fuelrats'
 import actionStatus from '../actionStatus'
 import actionTypes from '../actionTypes'
@@ -22,10 +15,13 @@ import { getUserProfile } from './user'
 
 
 
-
-export const logout = () => {
+/**
+ * @param {object?} ctx NextJS context. Only required when called from `getInitialProps`
+ * @returns {Function} Redux action thunk
+ */
+export const logout = (ctx) => {
   return (dispatch, getState) => {
-    JsCookie.remove('access_token')
+    deleteCookie('access_token', ctx)
     delete frApi.defaults.headers.common.Authorization
 
     return dispatch({
@@ -74,7 +70,7 @@ export const initUserSession = (ctx) => {
           result.status = actionStatus.ERROR
 
           if (profileReq.response.status === HttpStatus.UNAUTHORIZED) {
-            dispatch(logout())
+            dispatch(logout(ctx))
             result.accessToken = null
             ctx.accessToken = null
           }

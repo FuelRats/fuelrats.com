@@ -1,7 +1,82 @@
 /* eslint-disable no-magic-numbers */// Not even gonna bother defining consts when it's clear what the numbers here are for.
 
 
+class HttpStatusText {
+  // Informational
+  static 100 = 'Continue'
+  static 101 = 'Switching Protocols'
+  static 102 = 'Processing'
 
+
+  //  Success
+  static 200 = 'OK'
+  static 201 = 'Created'
+  static 202 = 'Accepted'
+  static 203 = 'Non-authoritative Information'
+  static 204 = 'No Content'
+  static 205 = 'Reset Content'
+  static 206 = 'Partial Content'
+  static 207 = 'Multi-Status'
+  static 208 = 'Already Reported'
+  static 226 = 'IM Used'
+
+  // Redirection
+  static 300 = 'Multiple Choices'
+  static 301 = 'Moved Permanently'
+  static 302 = 'Found'
+  static 303 = 'See Other'
+  static 304 = 'Not Modified'
+  static 305 = 'Use Proxy'
+  static 307 = 'Temporary Redirect'
+  static 308 = 'Permanent Redirect'
+
+  // Client Error
+  static 400 = 'Bad Request'
+  static 401 = 'Unauthorized'
+  static 402 = 'Payment Required'
+  static 403 = 'Forbidden'
+  static 404 = 'Not Found'
+  static 405 = 'Method Not Allowed'
+  static 406 = 'Not Acceptable'
+  static 407 = 'Proxy Authentication Required'
+  static 408 = 'Request Timeout'
+  static 409 = 'Conflict'
+  static 410 = 'Gone'
+  static 411 = 'Length Required'
+  static 412 = 'Precondition Failed'
+  static 413 = 'Payload Too Large'
+  static 414 = 'Request-URI Too Long'
+  static 415 = 'Unsupported Media Type'
+  static 416 = 'Requested Range Not Satisfiable'
+  static 417 = 'Expectation Failed'
+  static 418 = 'I\'m a teapot'
+  static 421 = 'Misdirected Request'
+  static 422 = 'Unprocessable Entity'
+  static 423 = 'Locked'
+  static 424 = 'Failed Dependency'
+  static 426 = 'Upgrade Required'
+  static 428 = 'Precondition Required'
+  static 429 = 'Too Many Requests'
+  static 431 = 'Request Header Fields Too Large'
+  static 444 = 'Connection Closed Without Response'
+  static 451 = 'Unavailable For Legal Reasons'
+  static 499 = 'Client Closed Request'
+
+  // Server Error
+  static 500 = 'Internal Server Error'
+  static 501 = 'Not Implemented'
+  static 502 = 'Bad Gateway'
+  static 503 = 'Service Unavailable'
+  static 504 = 'Gateway Timeout'
+  static 505 = 'HTTP Version Not Supported'
+  static 506 = 'Variant Also Negotiates'
+  static 507 = 'Insufficient Storage'
+  static 508 = 'Loop Detected'
+  static 510 = 'Not Extended'
+  static 511 = 'Network Authentication Required'
+  static 599 = 'Network Connect Timeout Error'
+}
+Object.freeze(HttpStatusText)
 
 
 class HttpStatus {
@@ -103,15 +178,13 @@ class HttpStatus {
     return code >= 500 && code < 600
   }
 }
-
-
-
-
-
 Object.freeze(HttpStatus)
 
 
 
 
 
-export default HttpStatus
+export {
+  HttpStatus,
+  HttpStatusText,
+}

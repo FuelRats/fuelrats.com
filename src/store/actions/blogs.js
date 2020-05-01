@@ -1,5 +1,5 @@
 // Component imports
-import HttpStatus from '../../helpers/HttpStatus'
+import { HttpStatus } from '../../helpers/HttpStatus'
 import wpApi from '../../services/wordpress'
 import actionTypes from '../actionTypes'
 import initialState from '../initialState'
@@ -41,12 +41,12 @@ export const getBlog = (id) => {
       const { authors, categories } = state.blogs
 
       if (!authors[authorId]) {
-        await getAuthor(authorId)(dispatch)
+        await dispatch(getAuthor(authorId))
       }
 
       await Promise.all(categoryIds.map((categoryId) => {
         if (!categories[categoryId]) {
-          return getCategory(categoryId)(dispatch)
+          return dispatch(getCategory(categoryId))
         }
         return Promise.resolve()
       }))
@@ -72,13 +72,13 @@ export const getBlogs = (params) => {
       Object.values(response.data).forEach(({ author: authorId, categories: categoryIds }) => {
         if (!authorCache[authorId]) {
           authorCache[authorId] = {}
-          getAuthor(authorId)(dispatch)
+          dispatch(getAuthor(authorId))
         }
 
         categoryIds.forEach((categoryId) => {
           if (!categoryCache[categoryId]) {
             categoryCache[categoryId] = {}
-            getCategory(categoryId)(dispatch)
+            dispatch(getCategory(categoryId))
           }
         })
       })

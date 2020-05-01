@@ -11,15 +11,22 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ## [Unreleased]
 
 ### ✨ Added
-* Disable profile function which soft deletes a user.
+* Disable profile function which soft deletes a user. - [#220][]
+* Add support for 2FA login flow. - [#240][]
+
 
 ### ⚡ Changed
+* Reworked error page so it integrates better into the website. - [#240][]
 
 
 ### 🐛 Fixed
-
+* Fixed removal of the accessToken cookie when the token is revoked. - [#240][]
+* Fixed error that occured when user is not authorized to view a page. - [#240][]
 
 ### ⚙ Tasks
+
+
+[#240]: https://github.com/fuelrats/fuelrats.com/pull/240
 
 
 

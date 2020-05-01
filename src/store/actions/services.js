@@ -1,4 +1,4 @@
-import HttpStatus from '../../helpers/HttpStatus'
+import { HttpStatus } from '../../helpers/HttpStatus'
 import isRequired from '../../helpers/isRequired'
 import frApi from '../../services/fuelrats'
 import stApi from '../../services/stripe'

@@ -6,7 +6,7 @@ import Cookies from 'js-cookie'
 
 
 // Component imports
-import HttpStatus from '../../helpers/HttpStatus'
+import { HttpStatus } from '../../helpers/HttpStatus'
 import { presentApiRequestBody } from '../../helpers/presenters'
 import { Router } from '../../routes'
 import frApi from '../../services/fuelrats'
@@ -41,6 +41,7 @@ export const login = (options) => {
     const {
       password,
       email,
+      fingerprint,
       route,
       routeParams,
       remember,
@@ -49,6 +50,9 @@ export const login = (options) => {
     const response = await frApi.request({
       url: '/oauth2/token',
       method: 'post',
+      headers: {
+        'X-Fingerprint': fingerprint,
+      },
       data: {
         grant_type: 'password', /* eslint-disable-line camelcase */ // name required by api
         password,

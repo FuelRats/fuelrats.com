@@ -1,0 +1,41 @@
+@import '../../scss/colors';
+
+.error {
+  position: relative;
+
+  max-width: 500px;
+  margin: 0;
+  padding: 1rem 0;
+
+  border: 1px solid $red;
+
+  background: rgba(255, 127, 127, 0.15);
+}
+
+.icon {
+  display: block;
+  position: fixed;
+
+  margin: 0.5rem 0 0 1rem;
+
+  color: $red;
+}
+
+.section {
+  display: inline-block;
+
+  padding: 0 4rem;
+
+  white-space: pre-line;
+}
+
+.footer {
+  display: inline-block;
+
+  width: 100%;
+  padding: 1rem 2rem 0;
+
+  font-size: 0.85em;
+  text-align: center;
+  white-space: nowrap;
+}

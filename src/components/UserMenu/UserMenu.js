@@ -54,7 +54,7 @@ class UserMenu extends React.Component {
        key: 'admin-rescues-list',
        title: 'Rescues',
        route: 'admin rescues list',
-       permission: 'rescue.write',
+       permission: 'rescues.write',
      },
      // {
      //   key: 'admin-users',
