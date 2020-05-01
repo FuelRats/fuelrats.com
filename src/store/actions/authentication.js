@@ -1,3 +1,9 @@
+/* globals $IS_DEVELOPMENT:false */
+
+
+
+
+
 // Module imports
 import Cookies from 'js-cookie'
 
@@ -91,13 +97,22 @@ export const login = (options) => {
 
 
 export const getClientOAuthPage = (params) => {
-  return frApiRequest(
+  const action = frApiRequest(
     actionTypes.session.readClientOAuthPage,
     {
       url: '/oauth2/authorize',
       params,
     },
   )
+
+  if ($IS_DEVELOPMENT) {
+    // The API sends these cookies as secure & httponly, this breaks them in a development environment
+    action.response.headers['set-cookie'] = action.response.headers['set-cookie'].map((cookieString) => {
+      return cookieString.replace('; secure; httponly', '')
+    })
+  }
+
+  return action
 }
 
 
