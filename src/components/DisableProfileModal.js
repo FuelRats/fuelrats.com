@@ -75,15 +75,15 @@ class DisableProfileModal extends React.Component {
 
     this.setState({ submitting: true })
 
-    const response = await this.props.updateUser(userId, { status: 'deactivated' }, password)
+    const response = await this.props.updateUser({ id: userId, attributes: { status: 'deactivated' } }, password)
 
     let error = null
 
-    if (HttpStatus.isClientError(response.errors.code)) {
-      error = response.errors && response.errors.length ? response.errors[0].detail : 'Client communication error'
+    if (HttpStatus.isClientError(response.payload.errors[0].code)) {
+      error = response.payload.errors && response.payload.errors.length ? response.payload.errors[0].detail : 'Client communication error'
     }
 
-    if (HttpStatus.isServerError(response.errors.code)) {
+    if (HttpStatus.isServerError(response.payload.errors[0].code)) {
       error = 'Server communication error'
     }
 
@@ -151,7 +151,7 @@ class DisableProfileModal extends React.Component {
         <ModalFooter>
           <div className="secondary" />
           <div className="primary">
-            <div className={!confirming && 'hidden'}>{'Are you sure?'}</div>
+            <div className={confirming ? undefined : 'hidden'}>{'Are you sure?'}</div>
             <button
               className={confirming ? 'green' : 'hidden'}
               disabled={!this.isValid || submitting}
