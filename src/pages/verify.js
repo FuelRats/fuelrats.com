@@ -78,19 +78,19 @@ class Verify extends React.Component {
 
     switch (type) {
       case 'reset':
-        response = await actions.verifyResetToken(token)(store.dispatch)
+        response = await store.dispatch(actions.verifyResetToken(token))
         if (response.status === actionStatus.SUCCESS) {
           destination = null
         }
         break
       case 'email':
-        response = await actions.verifyEmailToken(token)(store.dispatch)
+        response = await store.dispatch(actions.verifyEmailToken(token))
         if (response.status === actionStatus.SUCCESS) {
           destination = '/profile'
         }
         break
       case 'session':
-        response = await actions.verifySessionToken(token)(store.dispatch)
+        response = await store.dispatch(actions.verifySessionToken(token))
         if (response.status === actionStatus.SUCCESS) {
           destination = '/?authenticate=true'
         }

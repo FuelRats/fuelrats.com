@@ -1,13 +1,13 @@
 /* global $IS_DEVELOPMENT:false */
+import jsCookie from 'js-cookie'
 import nextCookies from 'next-cookies'
-
 
 
 
 
 import { Router } from '../routes'
 import frApi from '../services/fuelrats'
-import HttpStatus from './HttpStatus'
+import { HttpStatus } from './HttpStatus'
 
 
 
@@ -49,6 +49,16 @@ export const pageRedirect = (ctx, route) => {
 
 
 
+export const deleteCookie = (cookieName, ctx = {}) => {
+  if (ctx.res) {
+    ctx.res.setHeader('Set-Cookie', `${cookieName}=null; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`)
+  } else {
+    jsCookie.remove(cookieName)
+  }
+}
+
+
+
 export const setError = (ctx, statusCode) => {
   if (ctx.res) {
     ctx.res.statusCode = statusCode
@@ -75,11 +85,16 @@ export const resolvePageMeta = async (Component, ctx, pageProps) => {
 }
 
 
+
+
+
 export const configureRequest = (ctx) => {
   // Always setup access token
   const { access_token: accessToken } = nextCookies(ctx)
-  ctx.accessToken = accessToken
-  frApi.defaults.headers.common.Authorization = `Bearer ${accessToken}`
+  if (accessToken) {
+    ctx.accessToken = accessToken
+    frApi.defaults.headers.common.Authorization = `Bearer ${accessToken}`
+  }
 
   // If we're on the server, we should set proxy headers to retain origin IP
   if (ctx.isServer) {

@@ -83,7 +83,7 @@ class PasswordReset extends React.Component {
     let tokenIsValid = false
 
     if (token) {
-      const { status } = await actions.validatePasswordResetToken(token)(store.dispatch)
+      const { status } = await store.dispatch(actions.validatePasswordResetToken(token))
       tokenIsValid = status === 'success'
     }
 

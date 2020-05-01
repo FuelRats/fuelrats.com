@@ -11,8 +11,8 @@ import HiddenFormData from '../components/HiddenFormData'
 import { actions } from '../store'
 
 
-
-
+// For Testing
+// /authorize?client_id=480f28cf-71cc-454e-b502-959d9a5346fc&redirect_uri=https://dispatch.fuelrats.com/&scope=users.read.me%20rescues.read&response_type=token&state=hello
 
 @authenticated
 class Authorize extends React.Component {
@@ -40,7 +40,7 @@ class Authorize extends React.Component {
       response_type: responseType,
     } = query
 
-    const { payload, response, status } = await actions.getClientOAuthPage(query)(store.dispatch)
+    const { payload, response, status } = await store.dispatch(actions.getClientOAuthPage(query))
 
     if (status === 'success') {
       const {
@@ -56,8 +56,8 @@ class Authorize extends React.Component {
         accessToken,
         clientId,
         responseType,
-        clientName: client.data.attributes.name,
-        redirectUri: client.data.attributes.redirectUri,
+        clientName: client?.attributes?.name,
+        redirectUri: client?.attributes?.redirectUri,
         ...oauthProps,
       }
     }

@@ -6,7 +6,7 @@ import React from 'react'
 
 
 // Component imports
-import HttpStatus from '../helpers/HttpStatus'
+import { HttpStatus } from '../helpers/HttpStatus'
 import { setError } from '../helpers/gIPTools'
 import { actions, connect, actionStatus } from '../store'
 import { selectWordpressPageBySlug } from '../store/selectors'
@@ -26,7 +26,7 @@ class WordpressProxy extends React.Component {
     const { slug } = query
 
     if (!selectWordpressPageBySlug(store.getState(), { slug })) {
-      const { status } = await actions.getWordpressPage(slug)(store.dispatch)
+      const { status } = await store.dispatch(actions.getWordpressPage(slug))
 
       if (status === actionStatus.ERROR) {
         setError(ctx, HttpStatus.NOT_FOUND)

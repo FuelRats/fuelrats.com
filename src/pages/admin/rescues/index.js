@@ -84,9 +84,12 @@ class ListRescues extends React.Component {
   \***************************************************************************/
 
   static async getInitialProps ({ store }) {
-    await actions.getRescues({
-      'status[ne]': 'closed',
-    }, { pageView: pageViewId })(store.dispatch)
+    await store.dispatch(
+      actions.getRescues(
+        { 'status[ne]': 'closed' },
+        { pageView: pageViewId },
+      ),
+    )
   }
 
   static getPageMeta () {

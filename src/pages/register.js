@@ -141,8 +141,8 @@ class Register extends React.Component {
   \***************************************************************************/
 
   static async getInitialProps ({ store }) {
-    await actions.getWordpressPage('terms-of-service')(store.dispatch)
-    await actions.getWordpressPage('privacy-policy')(store.dispatch)
+    await store.dispatch(actions.getWordpressPage('terms-of-service'))
+    await store.dispatch(actions.getWordpressPage('privacy-policy'))
   }
 
   static getPageMeta () {

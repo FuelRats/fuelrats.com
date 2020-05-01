@@ -321,7 +321,7 @@ class Paperwork extends React.Component {
     const state = store.getState()
 
     if (!selectRescueById(state, query)) {
-      await actions.getRescue(query.rescueId)(store.dispatch)
+      await store.dispatch(actions.getRescue(query.rescueId))
     }
   }
 

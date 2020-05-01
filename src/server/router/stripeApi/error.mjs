@@ -1,4 +1,4 @@
-import HttpStatus from '../../../helpers/HttpStatus'
+import { HttpStatus } from '../../../helpers/HttpStatus'
 
 export class ApiError extends Error {
   constructor (conf) {

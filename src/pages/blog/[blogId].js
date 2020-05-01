@@ -21,7 +21,7 @@ class Blog extends React.Component {
   static async getInitialProps ({ query, store }) {
     const state = store.getState()
     if (!selectBlogById(state, query)) {
-      await actions.getBlog(query.blogId)(store.dispatch)
+      await store.dispatch(actions.getBlog(query.blogId))
     }
   }
 

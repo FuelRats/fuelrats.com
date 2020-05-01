@@ -9,7 +9,7 @@ import { createStructuredSelector } from 'reselect'
 import {
   passwordPattern,
 } from '../data/RegExpr'
-import HttpStatus from '../helpers/HttpStatus'
+import { HttpStatus } from '../helpers/HttpStatus'
 import { connect } from '../store'
 import { selectCurrentUserId } from '../store/selectors'
 import asModal, { ModalContent, ModalFooter } from './Modal'
