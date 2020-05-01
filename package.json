@@ -17,8 +17,8 @@
     "dev": "yarn build:server && yarn start",
     "eslint": "eslint .",
     "eslint:ci": "eslint --max-warnings 1 .",
-    "stylelint": "stylelint \"src/scss/**/*.scss\"",
-    "stylelint:ci": "stylelint --max-warnings 1 \"src/scss/**/*.scss\""
+    "stylelint": "stylelint \"src/**/*.scss\"",
+    "stylelint:ci": "stylelint --max-warnings 1 \"src/**/*.scss\""
   },
   "devDependencies": {
     "@babel/core": "7.9.0",
