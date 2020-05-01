@@ -88,7 +88,6 @@ class Authorize extends React.Component {
       redirectUri,
       responseType,
       scope,
-      scopes,
       transactionId,
     } = this.props
     const { submitting } = this.state
@@ -112,15 +111,15 @@ class Authorize extends React.Component {
               <p><strong>{'This application will be able to:'}</strong></p>
 
               <ul>
-                {
-                  scopes.map(({ permission, accessible }) => {
-                    return (
-                      <li key={permission} className={accessible ? null : 'inaccessible'}>{permission}</li>
-                    )
-                  })
-                }
+                {'Do things that relate to these scopes:'}
+                <pre>{scope}</pre>
               </ul>
-
+              <span>
+                {'Look we\'re not 100% sure what they do but we know the app uses them somehow. The redo to this page isn\'t done yet, but we\'re focused on functionality first.'}
+              </span>
+              <div>
+                <img alt="deal with it" src="/static/images/dealwithit.jpg" />
+              </div>
               <form
                 ref={this._formRef}
                 action={`/api/oauth2/authorize?bearer=${accessToken}`}
