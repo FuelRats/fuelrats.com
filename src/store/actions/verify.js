@@ -10,14 +10,6 @@ export const verifyEmailToken = (token) => {
   )
 }
 
-export const verifySessionToken = (token) => {
-  return frApiRequest(
-    actionTypes.verify.session,
-    {
-      url: `/sessions/${token}`,
-    },
-  )
-}
 
 export const verifyResetToken = (token) => {
   return frApiRequest(

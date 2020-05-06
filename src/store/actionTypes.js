@@ -119,7 +119,6 @@ const stripe = {
 const verify = {
   email: 'verify/email',
   reset: 'verify/reset',
-  session: 'verify/session',
 }
 
 

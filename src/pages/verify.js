@@ -89,12 +89,6 @@ class Verify extends React.Component {
           destination = '/profile'
         }
         break
-      case 'session':
-        response = await store.dispatch(actions.verifySessionToken(token))
-        if (response.status === actionStatus.SUCCESS) {
-          destination = '/?authenticate=true'
-        }
-        break
       default:
         destination = '/'
         break
