@@ -45,6 +45,7 @@ export const login = (options) => {
       route,
       routeParams,
       remember,
+      verify,
     } = options
 
     const response = await frApi.request({
@@ -57,6 +58,7 @@ export const login = (options) => {
         grant_type: 'password', /* eslint-disable-line camelcase */ // name required by api
         password,
         username: email,
+        verify,
       },
     })
 
@@ -92,10 +94,22 @@ export const login = (options) => {
 
 export const getClientOAuthPage = (params) => {
   return frApiRequest(
-    actionTypes.session.readClientOAuthPage,
+    actionTypes.oauth.authorize.read,
     {
       url: '/oauth2/authorize',
       params,
+    },
+  )
+}
+
+
+export const submitOAuthDecision = (data) => {
+  return frApiRequest(
+    actionTypes.oauth.authorize.create,
+    {
+      url: '/oauth2/authorize',
+      method: 'post',
+      data,
     },
   )
 }
