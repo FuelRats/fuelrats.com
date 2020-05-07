@@ -46,6 +46,9 @@ const generateBuildId = () => {
 
 module.exports = withWorkers({
   distDir: path.join('dist', 'next'),
+  experimental: {
+    reactRefresh: true,
+  },
   generateBuildId,
   publicRuntimeConfig: {
     local: {

@@ -11,8 +11,9 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ## [Unreleased]
 
 ### ✨ Added
+* Support for APIv3. - [#191][], [#238][], [#240][], [#241][]
+* Add support for 2FA login flow. - [#240][], [#241][]
 * Disable profile function which soft deletes a user. - [#220][]
-* Add support for 2FA login flow. - [#240][]
 
 
 ### ⚡ Changed
@@ -22,11 +23,15 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ### 🐛 Fixed
 * Fixed removal of the accessToken cookie when the token is revoked. - [#240][]
 * Fixed error that occured when user is not authorized to view a page. - [#240][]
+* fixed bold font tag (`<b/>`) not doing anything to text. - [#241][]
 
 ### ⚙ Tasks
 
 
+[#191]: https://github.com/fuelrats/fuelrats.com/pull/191
+[#238]: https://github.com/fuelrats/fuelrats.com/pull/238
 [#240]: https://github.com/fuelrats/fuelrats.com/pull/240
+[#241]: https://github.com/fuelrats/fuelrats.com/pull/241
 
 
 

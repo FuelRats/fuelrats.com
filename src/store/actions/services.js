@@ -1,3 +1,5 @@
+/* globals $IS_DEVELOPMENT:false */
+
 import { HttpStatus } from '../../helpers/HttpStatus'
 import isRequired from '../../helpers/isRequired'
 import frApi from '../../services/fuelrats'
@@ -28,6 +30,13 @@ export const createAxiosAction = (type, response) => {
 
   if (config.headers['Content-Type'] === 'application/json') {
     requestBody = JSON.parse(requestBody)
+  }
+
+  if ($IS_DEVELOPMENT && headers['set-cookie']) {
+    // The API sends these cookies as secure & httponly, this breaks them in a development environment
+    headers['set-cookie'] = headers['set-cookie'].map((cookieString) => {
+      return cookieString.replace('; secure; httponly', '')
+    })
   }
 
   return {

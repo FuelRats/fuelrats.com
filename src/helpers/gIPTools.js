@@ -40,6 +40,10 @@ export const pageRedirect = (ctx, route) => {
     })
     ctx.res.end()
     ctx.res.finished = true
+  } else if (route.startsWith('http')) {
+    if (typeof window !== 'undefined') {
+      window.location.replace(route)
+    }
   } else {
     Router.replace(route)
   }
@@ -56,6 +60,8 @@ export const deleteCookie = (cookieName, ctx = {}) => {
     jsCookie.remove(cookieName)
   }
 }
+
+
 
 
 
