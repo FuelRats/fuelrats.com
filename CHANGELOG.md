@@ -25,6 +25,18 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
+## [2.11.3] - 2020-05-09
+
+### 🐛 Fixed
+* Resolved issues with our CSS processing config. - [#242][]
+
+
+[#242]: https://github.com/fuelrats/fuelrats.com/pull/242
+
+
+
+
+
 ## [2.11.2] - 2020-04-16
 
 ### 🐛 Fixed
