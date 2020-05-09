@@ -1,6 +1,19 @@
 /* eslint-disable global-require */
 module.exports = {
   plugins: [
-    ['postcss-easy-import', { prefix: '_' }], // inline @imports
+    ['postcss-easy-import', { prefix: '_' }],
+    'postcss-flexbugs-fixes',
+    [
+      'postcss-preset-env',
+      {
+        autoprefixer: {
+          flexbox: 'no-2009',
+        },
+        stage: 3,
+        features: {
+          'custom-properties': false,
+        },
+      },
+    ],
   ],
 }
