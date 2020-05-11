@@ -285,11 +285,13 @@ class Paperwork extends React.Component {
 
         <div className="rescue-tags">
           <div className="tag status-group">
-            <span className={`status ${status}`}>{status}</span>
+            <span className={['status', status]}>{status}</span>
             <span className="outcome">{outcome || 'unfiled'}</span>
           </div>
 
-          <div className={`tag platform ${rescue.attributes.platform || 'none'}`}>{rescue.attributes.platform || 'No Platform'}</div>
+          <div className={['tag platform', rescue.attributes.platform ?? 'none']}>
+            {rescue.attributes.platform || 'No Platform'}
+          </div>
 
           {
             (rescue.attributes.codeRed) && (

@@ -2,8 +2,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-// Component imports
-import classNames from '../helpers/classNames'
 
 
 
@@ -57,12 +55,6 @@ class ValidatedFormSelect extends React.Component {
       required,
     } = this.props
 
-    const classes = classNames(
-      'form-select',
-      ['required', required],
-      [className, className],
-    )
-
     return (
       <fieldset>
         {renderLabel && <label htmlFor={id}>{label}</label>}
@@ -70,7 +62,7 @@ class ValidatedFormSelect extends React.Component {
           <select
             autoComplete="country-name"
             {...this.selectProps}
-            className={classes}
+            className={['form-select', { required }, className]}
             onChange={this._handleChange}>
             {!renderLabel && (<option value="">{label}</option>)}
             {

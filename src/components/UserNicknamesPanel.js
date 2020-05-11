@@ -77,7 +77,7 @@ class UserNicknamesPanel extends React.Component {
             <span className="nickname-count">{`${user.attributes.nicknames.length}/${MAXNICKS}`}</span>
             <button
               aria-label="add nickname"
-              className={`icon ${this.state.formOpen ? '' : 'green'}`}
+              className={['icon', { green: !this.state.formOpen }]}
               disabled={maxNicksReached}
               title={maxNicksReached ? 'You\'ve used all your nicknames' : 'Add new nickname'}
               type="button"

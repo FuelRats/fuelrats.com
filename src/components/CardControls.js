@@ -6,20 +6,11 @@ import React from 'react'
 
 
 
-// Component imports
-import classNames from '../helpers/classNames'
-
-
-
-
-
 function CardControls (props) {
   const {
     canDelete = true,
     canSubmit,
-    deleteConfirmMessage = () => {
-      return null
-    },
+    deleteConfirmMessage,
     deleteMode = false,
     editMode = false,
     controlType,
@@ -41,20 +32,23 @@ function CardControls (props) {
     editModeCancelTitle = `No, don't delete ${controlType}`
   }
 
-  const classes = classNames(
-    'card-controls',
-    ['has-message', deleteMode],
-  )
-
   return (
-    <div className={classes}>
-      {deleteMode && (deleteConfirmMessage() || (<small>{'Are you sure? '}</small>))}
+    <div
+      className={['card-controls', { 'has-message': deleteMode }]}>
+
+      {
+        deleteMode && (
+          deleteConfirmMessage?.() ?? (
+            <small>{'Are you sure? '}</small>
+          )
+        )
+      }
 
       {
         !(editMode || deleteMode) && (
           <>
             <button
-              className={`icon ${editMode || deleteMode ? 'green' : ''}`}
+              className={['icon', { green: editMode || deleteMode }]}
               name="edit"
               title={`Edit ${controlType}`}
               type="button"

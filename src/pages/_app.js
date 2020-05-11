@@ -17,7 +17,6 @@ import Header from '../components/Header'
 import LoginModal from '../components/LoginModal'
 import NProgress from '../components/NProgress'
 import UserMenu from '../components/UserMenu'
-import classNames from '../helpers/classNames'
 import * as faIcons from '../helpers/faIconLibrary'
 import { resolvePageMeta } from '../helpers/gIPTools'
 import frApi from '../services/fuelrats'
@@ -92,14 +91,11 @@ class FuelRatsApp extends App {
       noLayout,
     } = pageMeta
 
-    const mainClasses = classNames(
-      'page',
-      pageMeta.className,
-      title.toLowerCase().replace(/\s/gu, '-'),
-    )
-
     return (
-      <animated.main key={key} className={mainClasses} style={props}>
+      <animated.main
+        key={key}
+        className={['page', title.toLowerCase().replace(/\s/gu, '-'), pageMeta.className]}
+        style={props}>
         {
           !noHeader && !noLayout && (
             <header className="page-header">

@@ -9,12 +9,12 @@ import React from 'react'
 import PasswordField from '../components/PasswordField'
 import RadioInput from '../components/RadioInput'
 import WordpressTermsModal from '../components/TermsModal'
+import platformRadioOptions from '../data/platformRadioOptions'
 import {
   commanderPattern,
   ircNickPattern,
   passwordPattern,
 } from '../data/RegExpr'
-import platformRadioOptions from '../data/platformRadioOptions'
 import { Link } from '../routes'
 import { actions, connect } from '../store'
 
@@ -167,7 +167,7 @@ class Register extends React.Component {
     return (
       <>
         <form
-          className={`${submitting ? 'loading force' : ''}`}
+          className={{ 'loading force': submitting }}
           data-loader-text="Submitting"
           onSubmit={this._handleSubmit}>
 

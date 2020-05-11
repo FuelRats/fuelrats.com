@@ -23,10 +23,11 @@ class RatTagsInput extends TagsInput {
   }
 
   static renderValue (rat) {
-    const badgeClasses = ['badge', 'platform', 'short', rat.attributes.platform]
-
     return (
-      <span><span className={badgeClasses.join(' ')} /> {rat.attributes.name}</span>
+      <span>
+        <span className={['badge platform short', rat.attributes.platform]} />
+        {rat.attributes.name}
+      </span>
     )
   }
 

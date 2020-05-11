@@ -6,13 +6,6 @@ import React from 'react'
 
 
 
-// Component imports
-import classNames from '../../helpers/classNames'
-
-
-
-
-
 function RadioInputOption (props) {
   const {
     as: Element = 'div',
@@ -25,16 +18,8 @@ function RadioInputOption (props) {
 
   const optionId = `${inputProps.name}-${value}`
 
-
-  const classes = classNames(
-    'option',
-    className,
-    ['disabled', inputProps.disabled],
-    ['checked', inputProps.checked],
-  )
-
   return (
-    <Element className={classes}>
+    <Element className={['option', { disabled: inputProps.disabled, checked: inputProps.checked }, className]}>
       <input
         {...inputProps}
         aria-hidden={false}

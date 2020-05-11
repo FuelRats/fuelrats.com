@@ -194,7 +194,7 @@ class Carousel extends React.Component {
     } = this.state
 
     return (
-      <div className={`carousel ${className}`} id={id}>
+      <div className={['carousel', className]} id={id}>
         {this.renderSlide()}
         {this.renderSlideText()}
         <div className="carousel-slide-picker">
@@ -204,7 +204,7 @@ class Carousel extends React.Component {
                 <button
                   key={slideId}
                   aria-label={`Image carousel slide ${slideId}`}
-                  className={`circle-button${curSlide === slideId ? ' active' : ''}`}
+                  className={['circle-button', { active: curSlide === slideId }]}
                   name={slideId}
                   type="button"
                   onClick={this._handleSlideButtonClick} />
