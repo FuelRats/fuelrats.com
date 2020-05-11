@@ -1,5 +1,3 @@
-/* eslint-disable max-classes-per-file */// I know what I'm doing. shut up.
-
 const decals = {
   read: 'decals/read',
   redeem: 'decals/redeem',

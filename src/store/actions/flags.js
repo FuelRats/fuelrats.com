@@ -4,7 +4,8 @@ import initialState from '../initialState'
 
 
 
-/* eslint-disable import/prefer-default-export */
+
+
 // prefer export member for consistency
 export const setFlag = (name, _value) => {
   return (dispatch) => {
