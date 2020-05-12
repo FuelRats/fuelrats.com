@@ -15,7 +15,7 @@
     "build": "yarn build:server && yarn build:next",
     "start": "yarn node --inspect --harmony -r dotenv/config dist/server.mjs",
     "dev": "yarn build:server && yarn start",
-    "utoc": "doctoc ./docs",
+    "utoc": "doctoc $(grep --include=\\*.md --exclude-dir=node_modules -Rwl . -e 'START doctoc')",
     "eslint": "eslint .",
     "eslint:ci": "eslint --max-warnings 1 .",
     "stylelint": "stylelint \"src/**/*.scss\"",
