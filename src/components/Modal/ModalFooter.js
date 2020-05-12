@@ -5,26 +5,14 @@ import React from 'react'
 
 
 
-// Component imports
-import classNames from '../../helpers/classNames'
-
-
-
-
-
 function ModalFooter (props) {
   const {
     className,
     children,
   } = props
 
-  const classes = classNames(
-    'modal-footer',
-    [className, className],
-  )
-
   return (
-    <footer className={classes}>
+    <footer className={['modal-footer', className]}>
       <menu type="toolbar">
         {children}
       </menu>

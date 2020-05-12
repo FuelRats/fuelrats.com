@@ -71,7 +71,6 @@ class Verify extends React.Component {
 
   static async getInitialProps (ctx) {
     const { query, store } = ctx
-    // eslint-disable-next-line id-length
     const { type, t: token } = query
     let destination = null
     let response = null

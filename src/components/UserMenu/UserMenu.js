@@ -6,7 +6,6 @@ import React from 'react'
 
 
 // Component imports
-import classNames from '../../helpers/classNames'
 import { connect } from '../../store'
 import {
   selectSession,
@@ -105,14 +104,8 @@ class UserMenu extends React.Component {
       userId,
     } = this.props
 
-    const classes = classNames(
-      'user-menu',
-      ['logged-in', loggedIn],
-      ['logging-in', loggedIn && !userId],
-    )
-
     return (
-      <div className={classes}>
+      <div className={['user-menu', { 'logged-in': loggedIn, 'logging-in': loggedIn && !userId }]}>
         {
           Boolean(loggedIn) && (
             <>

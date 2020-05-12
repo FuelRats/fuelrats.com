@@ -151,9 +151,11 @@ class DisableProfileModal extends React.Component {
         <ModalFooter>
           <div className="secondary" />
           <div className="primary">
-            <div className={!confirming && 'hidden'}>{'Are you sure?'}</div>
+            <div className={{ hidden: !confirming }}>
+              {'Are you sure?'}
+            </div>
             <button
-              className={confirming ? 'green' : 'hidden'}
+              className={{ green: confirming, hidden: !confirming }}
               disabled={!this.isValid || submitting}
               type="submit">
               {submitting ? 'Submitting...' : 'Disable Profile'}

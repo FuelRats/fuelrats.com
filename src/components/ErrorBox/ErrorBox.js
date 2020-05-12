@@ -1,6 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
-import classNames from '../../helpers/classNames'
 import styles from './ErrorBox.module.scss'
 
 
@@ -15,14 +14,14 @@ export default function ErrorBox (props) {
     title,
   } = props
   return (
-    <div className={classNames(styles.error, className)}>
+    <div className={[styles.error, className]}>
       <FontAwesomeIcon
         className={styles.icon}
         icon={icon}
         size="lg" />
       {
         title && (
-          <h5 className={`${styles.section} error-title`}>{title}</h5>
+          <h5 className={[styles.section, 'error-title']}>{title}</h5>
         )
       }
       <span className={styles.section}>

@@ -1,6 +1,6 @@
 // Component imports
-import { HttpStatus } from '../../helpers/HttpStatus'
 import { configureRequest, deleteCookie } from '../../helpers/gIPTools'
+import { HttpStatus } from '../../helpers/HttpStatus'
 import frApi from '../../services/fuelrats'
 import actionStatus from '../actionStatus'
 import actionTypes from '../actionTypes'

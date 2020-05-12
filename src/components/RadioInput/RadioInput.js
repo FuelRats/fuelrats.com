@@ -6,13 +6,7 @@ import React from 'react'
 
 
 // Component imports
-import classNames from '../../helpers/classNames'
 import RadioInputOption from './RadioInputOption'
-
-
-
-
-// Component Constants
 
 
 
@@ -50,14 +44,8 @@ class RadioInput extends React.Component {
       value,
     } = this.props
 
-    const classes = classNames(
-      'radio-input',
-      className,
-      ['disabled', disabled],
-    )
-
     return (
-      <Element className={classes}>
+      <Element className={['radio-input', { disabled }, className]}>
         {
           options.map((option) => {
             return (

@@ -68,7 +68,7 @@ class ConfirmActionButton extends React.Component {
       children,
       confirmButtonText,
       confirmSubText,
-      containerClassName,
+      className,
       denyButtonText,
       onConfirmText,
     } = this.props
@@ -80,7 +80,7 @@ class ConfirmActionButton extends React.Component {
     } = this.state
 
     return (
-      <div className={`action-confirmation-button${containerClassName ? ` ${containerClassName}` : ''}`}>
+      <div className={['action-confirmation-button', className]}>
         {confirmingAction && (<span>{confirmSubText}</span>)}
         {
           confirmingAction && (
@@ -94,7 +94,7 @@ class ConfirmActionButton extends React.Component {
           )
         }
         <button
-          className={confirmingAction ? 'compact green' : 'compact'}
+          className={['compact', { green: confirmingAction }]}
           data-action="confirm"
           type="button"
           onClick={this._handleClick}
@@ -117,9 +117,9 @@ class ConfirmActionButton extends React.Component {
     const newProps = { ...this.props }
 
     delete newProps.children
+    delete newProps.className
     delete newProps.confirmSubText
     delete newProps.confirmButtonText
-    delete newProps.containerClassName
     delete newProps.denyButtonText
     delete newProps.onClick
     delete newProps.onConfirm
@@ -137,7 +137,6 @@ class ConfirmActionButton extends React.Component {
   static defaultProps = {
     confirmButtonText: 'Yes',
     confirmSubText: 'Are you sure?',
-    containerClassName: null,
     denyButtonText: 'No',
     onConfirmText: 'Applying Magic...',
   }
@@ -145,7 +144,6 @@ class ConfirmActionButton extends React.Component {
   static propTypes = {
     confirmButtonText: PropTypes.string,
     confirmSubText: PropTypes.string,
-    containerClassName: PropTypes.string,
     denyButtonText: PropTypes.string,
     onConfirm: PropTypes.func.isRequired,
     onConfirmText: PropTypes.string,

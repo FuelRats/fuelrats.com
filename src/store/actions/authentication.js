@@ -55,7 +55,7 @@ export const login = (options) => {
         'X-Fingerprint': fingerprint,
       },
       data: {
-        grant_type: 'password', /* eslint-disable-line camelcase */ // name required by api
+        grant_type: 'password',
         password,
         username: email,
         verify,

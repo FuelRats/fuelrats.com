@@ -6,7 +6,6 @@ import React from 'react'
 
 
 // Component imports
-import classNames from '../../helpers/classNames'
 import { formatAsEliteDate } from '../../helpers/formatTime'
 import { connect, actionStatus } from '../../store'
 import {
@@ -38,7 +37,7 @@ class RatCard extends React.Component {
     validity: {
       name: false,
     },
-    editMode: false,
+    editing: false,
     submitting: false,
   }
 
@@ -104,7 +103,7 @@ class RatCard extends React.Component {
 
     this.setState({
       changes: {},
-      editMode: false,
+      editing: false,
       submitting: false,
       validity: {
         name: false,
@@ -114,7 +113,7 @@ class RatCard extends React.Component {
 
   _handleEdit = () => {
     this.setState({
-      editMode: true,
+      editing: true,
     })
   }
 
@@ -132,7 +131,7 @@ class RatCard extends React.Component {
     }
 
     this.setState({
-      editMode: false,
+      editing: false,
       changes: {},
       validity: {
         name: false,
@@ -181,6 +180,7 @@ class RatCard extends React.Component {
     } = this
 
     const {
+      className,
       rat,
       // ships,
       rescueCount,
@@ -188,7 +188,7 @@ class RatCard extends React.Component {
 
     const {
       deleteConfirm,
-      editMode,
+      editing,
       changes,
       shipsExpanded,
       submitting,
@@ -200,24 +200,18 @@ class RatCard extends React.Component {
 
     const createdAt = formatAsEliteDate(rat.attributes.createdAt)
 
-    const classes = classNames(
-      'panel',
-      'rat-panel',
-      ['expanded', shipsExpanded],
-      ['editing', editMode],
-      ['submitting', submitting],
-    )
-
     const cmdrNameValue = typeof changes.name === 'string' ? changes.name : rat.attributes.name
     const submitText = submitting === 'delete' ? 'Deleting...' : 'Updating...'
 
     return (
-      <div className={classes} data-loader-text={submitting ? submitText : null}>
+      <div
+        className={['panel rat-panel', { expanded: shipsExpanded, editing, submitting }, className]}
+        data-loader-text={submitting ? submitText : null}>
         <header>
           <div>
             <span>{'CMDR '}</span>
             <InlineEditSpan
-              canEdit={editMode}
+              canEdit={editing}
               inputClassName="dark"
               maxLength={22}
               minLength={1}
@@ -268,7 +262,7 @@ class RatCard extends React.Component {
             canSubmit={this.canSubmit}
             controlType="rat"
             deleteMode={deleteConfirm}
-            editMode={editMode}
+            editMode={editing}
             onCancelClick={this._handleCancel}
             onDeleteClick={this._handleDelete}
             onEditClick={this._handleEdit}
@@ -364,7 +358,6 @@ class RatCard extends React.Component {
   static defaultProps = {}
 
   static propTypes = {
-    /* eslint-disable-next-line react/no-unused-prop-types */// Used in such a way that eslint cannot detect it's use
     ratId: PropTypes.string.isRequired,
   }
 }

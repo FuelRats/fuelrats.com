@@ -23,15 +23,19 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ### 🐛 Fixed
 * Fixed removal of the accessToken cookie when the token is revoked. - [#240][]
 * Fixed error that occured when user is not authorized to view a page. - [#240][]
-* fixed bold font tag (`<b/>`) not doing anything to text. - [#241][]
+* Fixed bold font tag (`<b/>`) not doing anything to text. - [#241][]
+
 
 ### ⚙ Tasks
+* Add `babel-plugin-classnames` into our babel toolchain. see [documentation](docs/css_classes_in_jsx.md) - [#243][]
+* Add tool for generating TOCs in md files - [#243][]
 
 
 [#191]: https://github.com/fuelrats/fuelrats.com/pull/191
 [#238]: https://github.com/fuelrats/fuelrats.com/pull/238
 [#240]: https://github.com/fuelrats/fuelrats.com/pull/240
 [#241]: https://github.com/fuelrats/fuelrats.com/pull/241
+[#243]: https://github.com/fuelrats/fuelrats.com/pull/243
 
 
 

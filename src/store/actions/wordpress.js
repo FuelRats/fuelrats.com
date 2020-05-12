@@ -8,7 +8,6 @@ import { createAxiosAction } from './services'
 
 
 
-/* eslint-disable import/prefer-default-export */
 // prefer export member for consistency
 export const getWordpressPage = (slug) => {
   return async (dispatch) => {

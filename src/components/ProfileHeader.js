@@ -41,7 +41,7 @@ class ProfileHeader extends React.Component {
       this.props.user.relationships.groups.data && (
         this.props.user.relationships.groups.data.map((item) => {
           return (
-            <li key={item.id} className={`badge ${item.id}`}>
+            <li key={item.id} className={['badge', item.id]}>
               {item.id}
             </li>
           )

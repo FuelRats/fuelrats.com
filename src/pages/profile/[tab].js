@@ -12,8 +12,8 @@ import ProfileHeader from '../../components/ProfileHeader'
 import TabbedPanel from '../../components/TabbedPanel'
 import UserOverview from '../../components/UserOverview'
 import UserRatsPanel from '../../components/UserRatsPanel'
-import { HttpStatus } from '../../helpers/HttpStatus'
 import { setError } from '../../helpers/gIPTools'
+import { HttpStatus } from '../../helpers/HttpStatus'
 import { Router } from '../../routes'
 
 
