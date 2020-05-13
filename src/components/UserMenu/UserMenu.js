@@ -6,14 +6,14 @@ import React from 'react'
 
 
 // Component imports
-import { connect } from '../../store'
+import NavSection from './NavSection'
+import { connect } from '~/store'
 import {
   selectSession,
   selectUserById,
   selectAvatarByUserId,
   withCurrentUserId,
-} from '../../store/selectors'
-import NavSection from './NavSection'
+} from '~/store/selectors'
 
 
 

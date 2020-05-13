@@ -8,12 +8,12 @@ import React from 'react'
 
 // Component imports
 import { createStructuredSelector } from 'reselect'
-import getMoney from '../helpers/getMoney'
-import { HttpStatus } from '../helpers/HttpStatus'
-import { connect, actionStatus } from '../store'
-import { withCurrentUserId, selectUserById } from '../store/selectors'
 import RadioInput from './RadioInput'
 import StripeBadgeSvg from './svg/StripeBadgeSvg'
+import getMoney from '~/helpers/getMoney'
+import { HttpStatus } from '~/helpers/HttpStatus'
+import { connect, actionStatus } from '~/store'
+import { withCurrentUserId, selectUserById } from '~/store/selectors'
 
 
 

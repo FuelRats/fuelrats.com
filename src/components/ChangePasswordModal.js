@@ -6,14 +6,14 @@ import { createStructuredSelector } from 'reselect'
 
 
 // Component imports
-import {
-  passwordPattern,
-} from '../data/RegExpr'
-import { HttpStatus } from '../helpers/HttpStatus'
-import { connect } from '../store'
-import { selectCurrentUserId } from '../store/selectors'
 import asModal, { ModalContent, ModalFooter } from './Modal'
 import PasswordField from './PasswordField'
+import {
+  passwordPattern,
+} from '~/data/RegExpr'
+import { HttpStatus } from '~/helpers/HttpStatus'
+import { connect } from '~/store'
+import { selectCurrentUserId } from '~/store/selectors'
 
 
 @asModal({

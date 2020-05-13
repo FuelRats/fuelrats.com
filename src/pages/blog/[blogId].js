@@ -5,9 +5,9 @@ import React from 'react'
 
 
 // Component imports
-import ArticleCard from '../../components/Blog/ArticleCard'
-import { actions } from '../../store'
-import { selectBlogById } from '../../store/selectors'
+import ArticleCard from '~/components/Blog/ArticleCard'
+import { actions } from '~/store'
+import { selectBlogById } from '~/store/selectors'
 
 
 

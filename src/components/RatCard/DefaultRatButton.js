@@ -8,12 +8,12 @@ import React from 'react'
 
 
 // Component imports
-import { connect } from '../../store'
+import { connect } from '~/store'
 import {
   selectCurrentUserId,
   selectDisplayRatIdByUserId,
   withCurrentUserId,
-} from '../../store/selectors'
+} from '~/store/selectors'
 
 
 

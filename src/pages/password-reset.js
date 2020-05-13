@@ -6,10 +6,10 @@ import React from 'react'
 
 
 // Component imports
-import PasswordField from '../components/PasswordField'
-import { passwordPattern } from '../data/RegExpr'
-import { Link } from '../routes'
-import { connect, actions } from '../store'
+import PasswordField from '~/components/PasswordField'
+import { passwordPattern } from '~/data/RegExpr'
+import { Link } from '~/routes'
+import { connect, actions } from '~/store'
 
 
 

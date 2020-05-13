@@ -6,12 +6,12 @@ import React from 'react'
 
 
 // Component imports
-import { connect } from '../store'
+import AddNicknameForm from './AddNicknameForm'
+import { connect } from '~/store'
 import {
   selectUserById,
   withCurrentUserId,
-} from '../store/selectors'
-import AddNicknameForm from './AddNicknameForm'
+} from '~/store/selectors'
 // import ConfirmActionButton from './ConfirmActionButton'
 
 // Component constants

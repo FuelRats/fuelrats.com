@@ -1224,10 +1224,10 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@scarf/scarf@^0.1.5":
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/@scarf/scarf/-/scarf-0.1.7.tgz#e6ffb3660bda77f96037f8c4e21174177fed2d97"
-  integrity sha512-XUBa8nl9J1XGyyA+wul1ko5v5ioNU1s/pUPODnPzJ4+uUOwwYZm197KQoxxzOAsypldlFGnAlQ8nkjTjoQV9GQ==
+"@scarf/scarf@^1.0.4":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@scarf/scarf/-/scarf-1.0.5.tgz#accee0bce88a9047672f7c8faf3cada59c996b81"
+  integrity sha512-9WKaGVpQH905Aqkk+BczFEeLQxS07rl04afFRPUG9IcSlOwmo5EVVuuNu0d4M9LMYucObvK0LoAe+5HfMW2QhQ==
 
 "@stylelint/postcss-css-in-js@^0.37.1":
   version "0.37.1"
@@ -3305,6 +3305,11 @@ escape-string-regexp@^1.0.2, escape-string-regexp@^1.0.5:
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
 
+eslint-import-resolver-alias@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/eslint-import-resolver-alias/-/eslint-import-resolver-alias-1.1.2.tgz#297062890e31e4d6651eb5eba9534e1f6e68fc97"
+  integrity sha512-WdviM1Eu834zsfjHtcGHtGfcu+F30Od3V7I9Fi57uhBEwPkjDcii7/yW8jAT+gOhn4P/vOxxNAXbFAKsrrc15w==
+
 eslint-import-resolver-node@^0.3.2, eslint-import-resolver-node@^0.3.3:
   version "0.3.3"
   resolved "https://registry.yarnpkg.com/eslint-import-resolver-node/-/eslint-import-resolver-node-0.3.3.tgz#dbaa52b6b2816b50bc6711af75422de808e98404"
@@ -3357,10 +3362,10 @@ eslint-plugin-import@^2.20.2:
     read-pkg-up "^2.0.0"
     resolve "^1.12.0"
 
-eslint-plugin-jsdoc@^25.2.1:
-  version "25.2.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-25.2.1.tgz#f4d1d6e3f4e78dc549ffd3bbb28dacdbd390bda9"
-  integrity sha512-xVf6asIk/Rp4NmX392K72002Dj8GdPW5dKWYu/tzT86H+Yi3Djeee0VF3Y94Wcj7xTH08C3hGpmtJJdtWnMiqQ==
+eslint-plugin-jsdoc@^25.4.0:
+  version "25.4.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-25.4.0.tgz#e5a7296eccbbf7d9bf0125936a26c7c3175238a2"
+  integrity sha512-FQgEALA8nmxyBORBinKJ7kM2fMcF6pXRdLgPfj0H3q5lalVAcgNxmeuLXownAGiS9Z3jU/fD2VX1gykR77qvfw==
   dependencies:
     comment-parser "^0.7.4"
     debug "^4.1.1"
@@ -3390,10 +3395,10 @@ eslint-plugin-react-hooks@^4.0.1:
   resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-4.0.1.tgz#c90fbb8726e35aadff94c9613ebd5c4de375412b"
   integrity sha512-toTyfu0gFyZD9Ru3QEeVwfeK8T0lf31bZaknmbFRSDbiJdrzHKNBOh2NIwlepLLpvnhwMWWNbq3t+x0VoyQ1iw==
 
-eslint-plugin-react@^7.19.0:
-  version "7.19.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.19.0.tgz#6d08f9673628aa69c5559d33489e855d83551666"
-  integrity sha512-SPT8j72CGuAP+JFbT0sJHOB80TX/pu44gQ4vXH/cq+hQTiY2PuZ6IHkqXJV6x1b28GDdo1lbInjKUrrdUf0LOQ==
+eslint-plugin-react@^7.20.0:
+  version "7.20.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.20.0.tgz#f98712f0a5e57dfd3e5542ef0604b8739cd47be3"
+  integrity sha512-rqe1abd0vxMjmbPngo4NaYxTcR3Y4Hrmc/jg4T+sYz63yqlmJRknpEQfmWY+eDWPuMmix6iUIK+mv0zExjeLgA==
   dependencies:
     array-includes "^3.1.1"
     doctrine "^2.1.0"
@@ -3404,7 +3409,6 @@ eslint-plugin-react@^7.19.0:
     object.values "^1.1.1"
     prop-types "^15.7.2"
     resolve "^1.15.1"
-    semver "^6.3.0"
     string.prototype.matchall "^4.0.2"
     xregexp "^4.3.0"
 
@@ -5524,10 +5528,10 @@ next-cookies@^2.0.3:
   dependencies:
     universal-cookie "^4.0.2"
 
-next-redux-wrapper@6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/next-redux-wrapper/-/next-redux-wrapper-6.0.0.tgz#079a142a1178b44034ffbb72a4247e05cd1ac125"
-  integrity sha512-M+8bglQKZ/IDY98xMkDvXvLRK6N86F6z9suzpGcktOy1ImV18KH8iIiusC8t6PiZxMLIb9FyHX1I3mEgM4Bt2Q==
+next-redux-wrapper@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/next-redux-wrapper/-/next-redux-wrapper-5.0.0.tgz#0f36f94ea00581fbdc94f2405594f6360beb08dc"
+  integrity sha512-jw893pPRJ4DCwskChp8iB+OjzfvblkEEw7frO3+u/jgZxlQ2yLaTAIRyEBjdCxTf7AOQGYb8aiWdC5toZOHJjg==
 
 next-tick@~1.0.0:
   version "1.0.0"
@@ -7073,12 +7077,12 @@ react-refresh@0.8.2:
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.8.2.tgz#24bb0858eac92b0d7b0dd561747f0c9fd6c60327"
   integrity sha512-n8GXxo3DwM2KtFEL69DAVhGc4A1THn2qjmfvSo3nze0NLCoPbywazeJPqdp0RdSGLmyhQzeyA+XPXOobbYlkzg==
 
-react-table@7.0.4:
-  version "7.0.4"
-  resolved "https://registry.yarnpkg.com/react-table/-/react-table-7.0.4.tgz#456838661982c83c3682f156c59a41b4339a2120"
-  integrity sha512-Uqpj+VnUIvsNWNtNFD1z2i7OCHdlhoJtQt0DWx3XOkZnvDyI/eCghK8YBfA9mY4TW7vEgCDLaRCcREC/fmcx6Q==
+react-table@7.0.5:
+  version "7.0.5"
+  resolved "https://registry.yarnpkg.com/react-table/-/react-table-7.0.5.tgz#619c069dc585bb1dbfaa2ad4384de8d267267054"
+  integrity sha512-zm6NvcHlg3r4E4le6ESXKneaHEpPHAZJn+FAZDCleS0++JEKs1rPq9AtHMcZmiiqxKkerM4wco9mH2ztaX0zYQ==
   dependencies:
-    "@scarf/scarf" "^0.1.5"
+    "@scarf/scarf" "^1.0.4"
 
 react@^16.13.0, react@^16.13.1:
   version "16.13.1"

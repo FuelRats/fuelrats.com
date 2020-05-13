@@ -1,11 +1,11 @@
 /* globals $IS_DEVELOPMENT:false */
 
-import { HttpStatus } from '../../helpers/HttpStatus'
-import isRequired from '../../helpers/isRequired'
-import frApi from '../../services/fuelrats'
-import stApi from '../../services/stripe'
-import wpApi from '../../services/wordpress'
 import actionStatus from '../actionStatus'
+import { HttpStatus } from '~/helpers/HttpStatus'
+import isRequired from '~/helpers/isRequired'
+import frApi from '~/services/fuelrats'
+import stApi from '~/services/stripe'
+import wpApi from '~/services/wordpress'
 
 
 

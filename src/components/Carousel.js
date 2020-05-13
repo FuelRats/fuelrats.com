@@ -9,8 +9,8 @@ import { createSelector, createStructuredSelector } from 'reselect'
 
 
 // Component imports
-import { connect } from '../store'
-import { selectImageById } from '../store/selectors'
+import { connect } from '~/store'
+import { selectImageById } from '~/store/selectors'
 
 
 

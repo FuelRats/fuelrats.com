@@ -6,7 +6,7 @@ import React from 'react'
 
 
 // Component imports
-import RatLeaderboardTable from '../components/RatLeaderboardTable'
+import RatLeaderboardTable from '~/components/RatLeaderboardTable'
 
 
 

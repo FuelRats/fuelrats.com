@@ -7,10 +7,10 @@ import React from 'react'
 
 
 // Component imports
-import { authenticated } from '../../../components/AppLayout'
-import { formatAsEliteDateTime } from '../../../helpers/formatTime'
-import { Link, Router } from '../../../routes'
-import { actions, connect } from '../../../store'
+import { authenticated } from '~/components/AppLayout'
+import { formatAsEliteDateTime } from '~/helpers/formatTime'
+import { Link, Router } from '~/routes'
+import { actions, connect } from '~/store'
 import {
   selectRatsByRescueId,
   selectRescueById,
@@ -18,7 +18,7 @@ import {
   withCurrentUserId,
   selectUserByIdHasScope,
   selectUserCanEditAllRescues,
-} from '../../../store/selectors'
+} from '~/store/selectors'
 
 
 
