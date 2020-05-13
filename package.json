@@ -91,7 +91,7 @@
     "moment": "^2.25.3",
     "next": "9.4.0",
     "next-cookies": "^2.0.3",
-    "next-redux-wrapper": "6.0.0",
+    "next-redux-wrapper": "^5.0.0",
     "nprogress": "^0.2.0",
     "postcss-easy-import": "^3.0.0",
     "postcss-flexbugs-fixes": "^4.2.1",
