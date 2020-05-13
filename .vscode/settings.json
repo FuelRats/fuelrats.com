@@ -4,5 +4,8 @@
   "scss.validate": false,
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
-  "editor.rulers": [180]
+  "editor.rulers": [180],
+  "path-autocomplete.pathMappings": {
+    "~": "${folder}/src", // alias for /src
+  }
 }

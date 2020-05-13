@@ -74,6 +74,7 @@
     "classnames": "^2.2.6",
     "content-security-policy-builder": "^2.1.0",
     "dotenv": "^8.2.0",
+    "eslint-import-resolver-alias": "^1.1.2",
     "fingerprintjs2": "^2.1.0",
     "hoist-non-react-statics": "^3.3.2",
     "immer": "^6.0.5",
