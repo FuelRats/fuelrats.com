@@ -6,7 +6,7 @@ import React from 'react'
 
 
 // Component imports
-import { connect } from '../../store'
+import { connect } from '~/store'
 
 
 

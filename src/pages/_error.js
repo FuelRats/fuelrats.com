@@ -1,8 +1,8 @@
 // Module imports
 import NextError from 'next/error'
 import React from 'react'
-import { HttpStatusText } from '../helpers/HttpStatus'
-import styles from '../scss/pages/error.module.scss'
+import { HttpStatusText } from '~/helpers/HttpStatus'
+import styles from '~/scss/pages/error.module.scss'
 
 
 

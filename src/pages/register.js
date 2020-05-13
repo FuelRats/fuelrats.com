@@ -6,17 +6,17 @@ import React from 'react'
 
 
 // Component imports
-import PasswordField from '../components/PasswordField'
-import RadioInput from '../components/RadioInput'
-import WordpressTermsModal from '../components/TermsModal'
-import platformRadioOptions from '../data/platformRadioOptions'
+import PasswordField from '~/components/PasswordField'
+import RadioInput from '~/components/RadioInput'
+import WordpressTermsModal from '~/components/TermsModal'
+import platformRadioOptions from '~/data/platformRadioOptions'
 import {
   commanderPattern,
   ircNickPattern,
   passwordPattern,
-} from '../data/RegExpr'
-import { Link } from '../routes'
-import { actions, connect } from '../store'
+} from '~/data/RegExpr'
+import { Link } from '~/routes'
+import { actions, connect } from '~/store'
 
 
 

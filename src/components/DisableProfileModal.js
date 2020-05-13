@@ -6,11 +6,11 @@ import React from 'react'
 
 
 // Component imports
-import { HttpStatus } from '../helpers/HttpStatus'
-import { connect } from '../store'
-import { selectUserById, withCurrentUserId } from '../store/selectors'
 import asModal, { ModalContent, ModalFooter } from './Modal'
 import PasswordField from './PasswordField'
+import { HttpStatus } from '~/helpers/HttpStatus'
+import { connect } from '~/store'
+import { selectUserById, withCurrentUserId } from '~/store/selectors'
 
 
 @asModal({

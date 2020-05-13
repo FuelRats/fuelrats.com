@@ -1,7 +1,7 @@
 // Module imports
 import React from 'react'
-import { HttpStatus, HttpStatusText } from '../helpers/HttpStatus'
-import styles from '../scss/pages/error.module.scss'
+import { HttpStatus, HttpStatusText } from '~/helpers/HttpStatus'
+import styles from '~/scss/pages/error.module.scss'
 
 
 

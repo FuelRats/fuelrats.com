@@ -6,9 +6,9 @@ import React from 'react'
 
 
 // Component imports
-import { authenticated } from '../components/AppLayout'
-import { pageRedirect } from '../helpers/gIPTools'
-import { actions, connect } from '../store'
+import { authenticated } from '~/components/AppLayout'
+import { pageRedirect } from '~/helpers/gIPTools'
+import { actions, connect } from '~/store'
 
 
 // For Testing

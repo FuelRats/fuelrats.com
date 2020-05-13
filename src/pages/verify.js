@@ -6,11 +6,11 @@ import React from 'react'
 
 
 // Component imports
-import PasswordField from '../components/PasswordField'
-import { passwordPattern } from '../data/RegExpr'
-import { pageRedirect } from '../helpers/gIPTools'
-import { Router, Link } from '../routes'
-import { actions, connect, actionStatus } from '../store'
+import PasswordField from '~/components/PasswordField'
+import { passwordPattern } from '~/data/RegExpr'
+import { pageRedirect } from '~/helpers/gIPTools'
+import { Router, Link } from '~/routes'
+import { actions, connect, actionStatus } from '~/store'
 
 
 

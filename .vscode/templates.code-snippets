@@ -27,7 +27,7 @@
 			"",
 			"",
 			"// Component imports",
-			"import { connect } from '../store'",
+			"import { connect } from '~/store'",
 			"",
 			"",
 			"",

@@ -1,5 +1,5 @@
-import imageLoader from '../../services/imageLoader'
 import actionTypes from '../actionTypes'
+import imageLoader from '~/services/imageLoader'
 
 
 

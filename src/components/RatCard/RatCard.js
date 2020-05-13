@@ -6,8 +6,11 @@ import React from 'react'
 
 
 // Component imports
-import { formatAsEliteDate } from '../../helpers/formatTime'
-import { connect, actionStatus } from '../../store'
+import CardControls from '../CardControls'
+import InlineEditSpan from '../InlineEditSpan'
+import DefaultRatButton from './DefaultRatButton'
+import { formatAsEliteDate } from '~/helpers/formatTime'
+import { connect, actionStatus } from '~/store'
 import {
   selectRatById,
   selectShipsByRatId,
@@ -15,10 +18,7 @@ import {
   selectDisplayRatIdByUserId,
   selectPageViewMetaById,
   withCurrentUserId,
-} from '../../store/selectors'
-import CardControls from '../CardControls'
-import InlineEditSpan from '../InlineEditSpan'
-import DefaultRatButton from './DefaultRatButton'
+} from '~/store/selectors'
 
 
 

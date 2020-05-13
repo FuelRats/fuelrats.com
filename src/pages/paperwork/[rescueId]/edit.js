@@ -7,21 +7,21 @@ import { createSelector } from 'reselect'
 
 
 // Component imports
-import { authenticated } from '../../../components/AppLayout'
-import FirstLimpetInput from '../../../components/FirstLimpetInput'
-import RadioInput from '../../../components/RadioInput'
-import RatTagsInput from '../../../components/RatTagsInput'
-import SystemTagsInput from '../../../components/SystemTagsInput'
-import platformRadioOptions from '../../../data/platformRadioOptions'
-import { formatAsEliteDateTime } from '../../../helpers/formatTime'
-import getRatTag from '../../../helpers/getRatTag'
-import { Router } from '../../../routes'
-import { actions, connect } from '../../../store'
+import { authenticated } from '~/components/AppLayout'
+import FirstLimpetInput from '~/components/FirstLimpetInput'
+import RadioInput from '~/components/RadioInput'
+import RatTagsInput from '~/components/RatTagsInput'
+import SystemTagsInput from '~/components/SystemTagsInput'
+import platformRadioOptions from '~/data/platformRadioOptions'
+import { formatAsEliteDateTime } from '~/helpers/formatTime'
+import getRatTag from '~/helpers/getRatTag'
+import { Router } from '~/routes'
+import { actions, connect } from '~/store'
 import {
   selectRatsByRescueId,
   selectRescueById,
   selectUserCanEditRescue,
-} from '../../../store/selectors'
+} from '~/store/selectors'
 
 
 

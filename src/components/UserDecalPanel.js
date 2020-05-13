@@ -2,19 +2,19 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 import { createStructuredSelector } from 'reselect'
-import { formatAsEliteDate } from '../helpers/formatTime'
+import { formatAsEliteDate } from '~/helpers/formatTime'
 
 
 
 
 
 // Module imports
-import { connect } from '../store'
+import { connect } from '~/store'
 import {
   selectDecalEligibility,
   selectDecalsByUserId,
   withCurrentUserId,
-} from '../store/selectors'
+} from '~/store/selectors'
 
 
 

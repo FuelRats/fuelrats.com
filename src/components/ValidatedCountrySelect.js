@@ -7,7 +7,7 @@ import React from 'react'
 
 
 // Component imports
-import countryList from '../data/CountryList'
+import countryList from '~/data/CountryList'
 
 
 

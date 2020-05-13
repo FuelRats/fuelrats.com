@@ -6,10 +6,10 @@ import React from 'react'
 
 
 // Component imports
-import { setError } from '../helpers/gIPTools'
-import { HttpStatus } from '../helpers/HttpStatus'
-import { actions, connect, actionStatus } from '../store'
-import { selectWordpressPageBySlug } from '../store/selectors'
+import { setError } from '~/helpers/gIPTools'
+import { HttpStatus } from '~/helpers/HttpStatus'
+import { actions, connect, actionStatus } from '~/store'
+import { selectWordpressPageBySlug } from '~/store/selectors'
 
 
 

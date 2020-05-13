@@ -7,11 +7,11 @@ import React from 'react'
 
 
 // Component imports
-import { ircNickPattern } from '../data/RegExpr'
-import { connect } from '../store'
-import { selectUserById, withCurrentUserId } from '../store/selectors'
 import InfoBubble from './InfoBubble'
 import ValidatedFormInput from './ValidatedFormInput'
+import { ircNickPattern } from '~/data/RegExpr'
+import { connect } from '~/store'
+import { selectUserById, withCurrentUserId } from '~/store/selectors'
 
 
 
