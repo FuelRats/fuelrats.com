@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": "src",
     "experimentalDecorators": true,
     "module": "esnext",
     "target": "esnext",
@@ -8,13 +9,11 @@
     "jsx": "react"
   },
   "include": [
+    "src/**/*",
     "typings/**/*",
-    "client/**/*",
-    "server/**/*"
   ],
   "exclude": [
     "node_modules",
-    ".next",
-    "public"
+    "dist",
   ]
 }
