@@ -4,8 +4,8 @@ import React from 'react'
 
 
 // Component imports
-import { withStripe } from '../../components/AppLayout'
-import DonateForm from '../../components/DonateForm'
+import { withStripe } from '~/components/AppLayout'
+import DonateForm from '~/components/DonateForm'
 
 
 

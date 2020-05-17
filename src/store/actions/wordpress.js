@@ -1,14 +1,13 @@
 // Component imports
-import wpApi from '../../services/wordpress'
 import actionStatus from '../actionStatus'
 import actionTypes from '../actionTypes'
 import { createAxiosAction } from './services'
+import wpApi from '~/services/wordpress'
 
 
 
 
 
-/* eslint-disable import/prefer-default-export */
 // prefer export member for consistency
 export const getWordpressPage = (slug) => {
   return async (dispatch) => {

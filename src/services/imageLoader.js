@@ -1,13 +1,13 @@
 // Component imports
-import actionStatus from '../store/actionStatus'
-import actionTypes from '../store/actionTypes'
+import actionStatus from '~/store/actionStatus'
+import actionTypes from '~/store/actionTypes'
 
 
 
 
 
 // Worker imports
-import ImageLoaderWorker from '../workers/image-loader.worker'
+import ImageLoaderWorker from '~/workers/image-loader.worker'
 
 
 

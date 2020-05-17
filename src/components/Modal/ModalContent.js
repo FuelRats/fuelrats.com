@@ -5,13 +5,6 @@ import React from 'react'
 
 
 
-// Component imports
-import classNames from '../../helpers/classNames'
-
-
-
-
-
 function ModalContent (props) {
   const {
     as: Element,
@@ -20,18 +13,12 @@ function ModalContent (props) {
     ...restProps
   } = props
 
-  const classes = classNames(
-    'modal-content',
-    [className, className],
-  )
-
   return (
     <Element
-      className={classes}
+      className={['modal-content', className]}
       {...restProps}>
 
       {children}
-
     </Element>
   )
 }

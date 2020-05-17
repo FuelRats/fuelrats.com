@@ -7,21 +7,21 @@ import { createSelector } from 'reselect'
 
 
 // Component imports
-import { authenticated } from '../../../components/AppLayout'
-import FirstLimpetInput from '../../../components/FirstLimpetInput'
-import RadioInput from '../../../components/RadioInput'
-import RatTagsInput from '../../../components/RatTagsInput'
-import SystemTagsInput from '../../../components/SystemTagsInput'
-import platformRadioOptions from '../../../data/platformRadioOptions'
-import { formatAsEliteDateTime } from '../../../helpers/formatTime'
-import getRatTag from '../../../helpers/getRatTag'
-import { Router } from '../../../routes'
-import { actions, connect } from '../../../store'
+import { authenticated } from '~/components/AppLayout'
+import FirstLimpetInput from '~/components/FirstLimpetInput'
+import RadioInput from '~/components/RadioInput'
+import RatTagsInput from '~/components/RatTagsInput'
+import SystemTagsInput from '~/components/SystemTagsInput'
+import platformRadioOptions from '~/data/platformRadioOptions'
+import { formatAsEliteDateTime } from '~/helpers/formatTime'
+import getRatTag from '~/helpers/getRatTag'
+import { Router } from '~/routes'
+import { actions, connect } from '~/store'
 import {
   selectRatsByRescueId,
   selectRescueById,
   selectUserCanEditRescue,
-} from '../../../store/selectors'
+} from '~/store/selectors'
 
 
 
@@ -340,13 +340,8 @@ class Paperwork extends React.Component {
       submitting,
     } = this.state
 
-    const classes = ['page-content']
-
-    if (submitting) {
-      classes.push('loading', 'force')
-    }
-
     const fieldValues = this.getFieldValues()
+    const pwValidity = this.validate(fieldValues)
 
     const {
       codeRed,
@@ -358,11 +353,9 @@ class Paperwork extends React.Component {
       system,
     } = fieldValues
 
-    const pwValidity = this.validate(fieldValues)
-
     return (
       <form
-        className={classes.join(' ')}
+        className={['page-content', { 'loading force': submitting }]}
         onSubmit={this._handleSubmit}>
         <header className="paperwork-header">
           {
@@ -497,7 +490,10 @@ class Paperwork extends React.Component {
 
         <menu type="toolbar">
           <div className="primary">
-            <div className={`invalidity-explainer ${pwValidity.noChange ? 'no-change' : ''} ${pwValidity.valid ? '' : 'show'}`}>{pwValidity.reason}</div>
+            <div
+              className={['invalidity-explainer', { show: !pwValidity.valid, 'no-change': pwValidity.noChange }]}>
+              {pwValidity.reason}
+            </div>
             <button
               className="green"
               disabled={submitting || !pwValidity.valid}

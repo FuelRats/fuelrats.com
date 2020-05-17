@@ -8,7 +8,6 @@ import React, { useEffect, useCallback } from 'react'
 
 
 // Component imports
-import classNames from '../../helpers/classNames'
 import ModalHeader from './ModalHeader'
 import ModalPortal from './ModalPortal'
 
@@ -42,15 +41,10 @@ function renderModal ({ item, key, props: style }) {
 
   const RootElement = animated[as]
 
-  const rootClasses = classNames(
-    'modal',
-    [className, className],
-  )
-
   return isOpen && (
     <RootElement
       key={key}
-      className={rootClasses}
+      className={['modal', className]}
       role="dialog"
       style={{ transform: style.pos.to(translate3dHeight) }}>
 

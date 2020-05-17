@@ -8,11 +8,10 @@ import React from 'react'
 
 
 // Component imports
-import classNames from '../helpers/classNames'
-import { connect } from '../store'
-import { selectCurrentUserId } from '../store/selectors'
 import ValidatedFormInput from './ValidatedFormInput'
 import ValidatedFormSelect from './ValidatedFormSelect'
+import { connect } from '~/store'
+import { selectCurrentUserId } from '~/store/selectors'
 
 
 
@@ -125,14 +124,8 @@ class AddRatForm extends React.Component {
       formOpen,
     } = this.state
 
-    const classes = classNames(
-      'add-rat',
-      'compact',
-      ['form-open', formOpen],
-    )
-
     return (
-      <form className={classes}>
+      <form className={['add-rat compact', { 'form-open': formOpen }]}>
         {
           formOpen && (
             <div className="form-row submit-row flex align-center">
@@ -180,7 +173,7 @@ class AddRatForm extends React.Component {
           }
           <button
             aria-label={formOpen ? 'cancel new commander creation' : 'add commander'}
-            className={`compact square ${formOpen ? '' : 'green'}`}
+            className={['compact square', { green: formOpen }]}
             title={formOpen ? 'Cancel' : 'Add new commander'}
             type="button"
             onClick={this._handleToggle}>

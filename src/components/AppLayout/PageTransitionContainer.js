@@ -4,8 +4,8 @@ import { useTransition } from '@react-spring/web'
 
 
 
-import { connect } from '../../store'
-import { notifyPageDestroyed } from '../../store/actions'
+import { connect } from '~/store'
+import { notifyPageDestroyed } from '~/store/actions'
 
 
 

@@ -7,10 +7,10 @@ import React from 'react'
 
 
 // Component imports
-import { authenticated } from '../../../components/AppLayout'
-import { formatAsEliteDateTime } from '../../../helpers/formatTime'
-import { Link, Router } from '../../../routes'
-import { actions, connect } from '../../../store'
+import { authenticated } from '~/components/AppLayout'
+import { formatAsEliteDateTime } from '~/helpers/formatTime'
+import { Link, Router } from '~/routes'
+import { actions, connect } from '~/store'
 import {
   selectRatsByRescueId,
   selectRescueById,
@@ -18,7 +18,7 @@ import {
   withCurrentUserId,
   selectUserByIdHasScope,
   selectUserCanEditAllRescues,
-} from '../../../store/selectors'
+} from '~/store/selectors'
 
 
 
@@ -285,11 +285,13 @@ class Paperwork extends React.Component {
 
         <div className="rescue-tags">
           <div className="tag status-group">
-            <span className={`status ${status}`}>{status}</span>
+            <span className={['status', status]}>{status}</span>
             <span className="outcome">{outcome || 'unfiled'}</span>
           </div>
 
-          <div className={`tag platform ${rescue.attributes.platform || 'none'}`}>{rescue.attributes.platform || 'No Platform'}</div>
+          <div className={['tag platform', rescue.attributes.platform ?? 'none']}>
+            {rescue.attributes.platform || 'No Platform'}
+          </div>
 
           {
             (rescue.attributes.codeRed) && (

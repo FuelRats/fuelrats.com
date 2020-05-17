@@ -6,11 +6,11 @@ import React from 'react'
 
 
 // Component imports
-import PasswordField from '../components/PasswordField'
-import { passwordPattern } from '../data/RegExpr'
-import { pageRedirect } from '../helpers/gIPTools'
-import { Router, Link } from '../routes'
-import { actions, connect, actionStatus } from '../store'
+import PasswordField from '~/components/PasswordField'
+import { passwordPattern } from '~/data/RegExpr'
+import { pageRedirect } from '~/helpers/gIPTools'
+import { Router, Link } from '~/routes'
+import { actions, connect, actionStatus } from '~/store'
 
 
 
@@ -71,7 +71,6 @@ class Verify extends React.Component {
 
   static async getInitialProps (ctx) {
     const { query, store } = ctx
-    // eslint-disable-next-line id-length
     const { type, t: token } = query
     let destination = null
     let response = null
@@ -87,12 +86,6 @@ class Verify extends React.Component {
         response = await store.dispatch(actions.verifyEmailToken(token))
         if (response.status === actionStatus.SUCCESS) {
           destination = '/profile'
-        }
-        break
-      case 'session':
-        response = await store.dispatch(actions.verifySessionToken(token))
-        if (response.status === actionStatus.SUCCESS) {
-          destination = '/?authenticate=true'
         }
         break
       default:

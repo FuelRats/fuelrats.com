@@ -5,12 +5,6 @@ import React from 'react'
 
 
 
-// Component imports
-import classNames from '../helpers/classNames'
-
-
-
-
 class TabbedPanel extends React.Component {
   /***************************************************************************\
     Private Methods
@@ -32,15 +26,11 @@ class TabbedPanel extends React.Component {
 
   _renderTab = ([key, tab]) => {
     const { activeTab } = this.props
-    const classes = classNames(
-      'tab',
-      ['active', key === activeTab],
-    )
 
     return (
       <li
         key={key}
-        className={classes}
+        className={['tab', { active: key === activeTab }]}
         name={key}
         onClick={this._handleTabClick}
         onKeyPress={this._handleTabClick}>

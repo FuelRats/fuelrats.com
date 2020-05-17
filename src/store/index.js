@@ -14,8 +14,8 @@ import thunkMiddleware from 'redux-thunk'
 
 
 // Component imports
-import actionStatus from './actionStatus'
 import * as actions from './actions'
+import actionStatus from './actionStatus'
 import initialState from './initialState'
 import reducer from './reducers'
 
@@ -26,7 +26,6 @@ import reducer from './reducers'
 const middlewares = [thunkMiddleware]
 
 if ($IS_DEVELOPMENT) {
-  /* eslint-disable-next-line global-require */// Dev mode conditional import
   middlewares.unshift(require('redux-immutable-state-invariant').default())
 }
 

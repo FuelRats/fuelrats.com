@@ -1,9 +1,3 @@
-/* eslint-disable no-magic-numbers */// Defining named constants in this case actually hurts readability
-
-
-
-
-
 import moment from 'moment'
 import React from 'react'
 

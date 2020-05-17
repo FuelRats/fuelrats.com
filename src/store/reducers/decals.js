@@ -22,7 +22,7 @@ const decalsReducer = produce((draftState, action) => {
   switch (type) {
     case actionTypes.session.read:
       if (status === actionStatus.SUCCESS) {
-        draftState.eligible = payload.meta?.eligible
+        draftState.eligible = payload?.meta?.eligible
       }
       break
 

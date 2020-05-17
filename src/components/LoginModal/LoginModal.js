@@ -7,20 +7,22 @@ import React from 'react'
 
 
 // Component imports
-import classNames from '../../helpers/classNames'
-import getFingerprint from '../../helpers/getFingerprint'
-import { Router } from '../../routes'
-import { connect } from '../../store'
-import { login } from '../../store/actions/authentication'
-import { setFlag } from '../../store/actions/flags'
-import { getUserProfile } from '../../store/actions/user'
-import { selectFlagByName, selectSession } from '../../store/selectors'
 import ErrorBox from '../ErrorBox'
 import asModal, { ModalContent, ModalFooter } from '../Modal'
 import Switch from '../Switch'
 import ValidatedFormInput from '../ValidatedFormInput'
-
 import styles from './LoginModal.module.scss'
+import getFingerprint from '~/helpers/getFingerprint'
+import { Router } from '~/routes'
+import { connect } from '~/store'
+import { login } from '~/store/actions/authentication'
+import { setFlag } from '~/store/actions/flags'
+import { getUserProfile } from '~/store/actions/user'
+import { selectFlagByName, selectSession } from '~/store/selectors'
+
+
+
+const VERIFY_TOKEN_LENGTH = 6
 
 
 @connect
@@ -39,6 +41,7 @@ class LoginModal extends React.Component {
     fingerprint: null,
     loggingIn: false,
     password: '',
+    verify: '',
     remember: false,
     validity: {
       email: false,
@@ -87,12 +90,18 @@ class LoginModal extends React.Component {
 
     this.setState({ loggingIn: true })
 
-    const { status, payload } = await this.props.login({
+    const opts = {
       email: this.state.email,
       fingerprint: this.state.fingerprint,
       password: this.state.password,
       remember: this.state.remember,
-    })
+    }
+
+    if (this.verifying) {
+      opts.verify = this.state.verify
+    }
+
+    const { status, payload } = await this.props.login(opts)
 
     if (status === 'success') {
       this.props.getUserProfile()
@@ -135,6 +144,7 @@ class LoginModal extends React.Component {
       email,
       error,
       loggingIn,
+      verify,
       password,
       remember,
     } = this.state
@@ -150,7 +160,10 @@ class LoginModal extends React.Component {
                 (() => {
                   switch (error.status) {
                     case 'verification_required':
-                      return 'Looks like you\'re logging in from a new location.\nPlease check your email to confirm your identity!'
+                      if (error.source?.pointer === 'verify') {
+                        return 'That verification token was incorrect.\nPlease try again.\n'
+                      }
+                      return 'It appears you\'re logging in from a new device.\nA verification code has been sent to your email.'
                     case 'unauthorized':
                       return 'Invalid Username or Password'
                     default:
@@ -162,51 +175,77 @@ class LoginModal extends React.Component {
           )
         }
 
-        <ValidatedFormInput
-          required
-          aria-label="Fuel rats account e-mail"
-          autoComplete="username"
-          className="email dark"
-          disabled={loggingIn}
-          doubleValidate={isFirefox}
-          id="email"
-          inputRef={this.emailInput}
-          label="Email"
-          name="email"
-          type="email"
-          value={email}
-          onChange={this._handleChange} />
-
-        <ValidatedFormInput
-          required
-          aria-label="Fuel rats account password"
-          autoComplete="current-password"
-          className="password dark"
-          disabled={loggingIn}
-          doubleValidate={isFirefox}
-          id="password"
-          label="Password"
-          name="password"
-          pattern="^.{5,42}$"
-          type="password"
-          value={password}
-          onChange={this._handleChange} />
-        <fieldset>
-          <div className="switch-form-container">
-            <Switch
-              aria-label="Remember me on this computer"
-              checked={remember}
+        {
+          this.verifying === true && (
+            <ValidatedFormInput
+              required
+              aria-label="Verification code from email"
+              className="dark"
               disabled={loggingIn}
-              id="remember"
-              label="Remember me"
-              name="remember"
-              onChange={this._handleSwitchChange} />
-          </div>
-        </fieldset>
+              id="verify"
+              label="Verification Code"
+              maxlength={6}
+              name="verify"
+              pattern="^[A-Z0-9]{6}$"
+              type="text"
+              value={verify}
+              onChange={this._handleChange} />
+          )
+        }
+
+        {
+          this.verifying === false && (
+            <>
+              <ValidatedFormInput
+                required
+                aria-label="Fuel rats account e-mail"
+                autoComplete="username"
+                className="email dark"
+                disabled={loggingIn}
+                doubleValidate={isFirefox}
+                id="email"
+                inputRef={this.emailInput}
+                label="Email"
+                name="email"
+                type="email"
+                value={email}
+                onChange={this._handleChange} />
+
+              <ValidatedFormInput
+                required
+                aria-label="Fuel rats account password"
+                autoComplete="current-password"
+                className="password dark"
+                disabled={loggingIn}
+                doubleValidate={isFirefox}
+                id="password"
+                label="Password"
+                name="password"
+                pattern="^.{5,42}$"
+                type="password"
+                value={password}
+                onChange={this._handleChange} />
+
+              <fieldset>
+                <div className="switch-form-container">
+                  <Switch
+                    aria-label="Remember me on this computer"
+                    checked={remember}
+                    disabled={loggingIn}
+                    id="remember"
+                    label="Remember me"
+                    name="remember"
+                    onChange={this._handleSwitchChange} />
+                </div>
+              </fieldset>
+            </>
+          )
+        }
+
         <ModalFooter className={styles.footer}>
           <div className={styles.secondary}>
             <button
-              className={classNames(styles.button, 'secondary')}
+              className={[styles.button, 'secondary']}
               type="button"
               onClick={this._handleRegisterClick}>
               {'Become a Rat'}
@@ -214,9 +253,11 @@ class LoginModal extends React.Component {
           </div>
 
           <div className={styles.primary}>
-            <a className={styles.linkButton} href="/forgot-password">{'Forgot password?'}</a>
+            <a className={styles.linkButton} href="/forgot-password">
+              {'Forgot password?'}
+            </a>
             <button
-              className={classNames(styles.button, 'green')}
+              className={[styles.button, 'green']}
               disabled={!this.isValid}
               type="submit">
               {loggingIn ? 'Submitting...' : 'Login'}
@@ -244,12 +285,18 @@ class LoginModal extends React.Component {
       return false
     }
 
+    if (this.verifying) {
+      return this.state.verify.length === VERIFY_TOKEN_LENGTH
+    }
+
     return !Object.values(this.state.validity).filter((value) => {
       return value !== true
     }).length
   }
 
-
+  get verifying () {
+    return this.state.error?.status === 'verification_required'
+  }
 
 
 

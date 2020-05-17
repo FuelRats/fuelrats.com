@@ -2,9 +2,13 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
+
+
+
+
 // Component imports
-import countryList from '../data/CountryList'
-import classNames from '../helpers/classNames'
+import countryList from '~/data/CountryList'
+
 
 
 
@@ -57,12 +61,6 @@ class ValidatedCountrySelect extends React.Component {
       required,
     } = this.props
 
-    const classes = classNames(
-      'country-select',
-      ['required', required],
-      [className, Boolean(className)],
-    )
-
     return (
       <fieldset>
         {renderLabel && <label htmlFor={id}>{label}</label>}
@@ -70,7 +68,7 @@ class ValidatedCountrySelect extends React.Component {
           <select
             autoComplete="country-name"
             {...this.selectProps}
-            className={classes}
+            className={['country-select', { required }, className]}
             onChange={this._handleChange}>
             {!renderLabel && (<option value="">{label}</option>)}
             {

@@ -6,7 +6,7 @@ import React from 'react'
 
 
 // Component imports
-import { Router } from '../routes'
+import { Router } from '~/routes'
 
 
 

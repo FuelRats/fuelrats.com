@@ -112,13 +112,3 @@ input.large[type='checkbox'] {
   height: 16px;
   vertical-align: middle;
 }
-
-
-/* stylelint-disable-next-line selector-class-pattern */
-.ReactTable .rt-thead.-filters input {
-  @extend %text-input;
-
-  border-radius: 0;
-
-  color: $black;
-}

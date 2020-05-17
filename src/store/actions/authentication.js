@@ -6,12 +6,12 @@ import Cookies from 'js-cookie'
 
 
 // Component imports
-import { HttpStatus } from '../../helpers/HttpStatus'
-import { presentApiRequestBody } from '../../helpers/presenters'
-import { Router } from '../../routes'
-import frApi from '../../services/fuelrats'
 import actionTypes from '../actionTypes'
 import { frApiRequest, createAxiosAction } from './services'
+import { HttpStatus } from '~/helpers/HttpStatus'
+import { presentApiRequestBody } from '~/helpers/presenters'
+import { Router } from '~/routes'
+import frApi from '~/services/fuelrats'
 
 
 
@@ -45,6 +45,7 @@ export const login = (options) => {
       route,
       routeParams,
       remember,
+      verify,
     } = options
 
     const response = await frApi.request({
@@ -54,9 +55,10 @@ export const login = (options) => {
         'X-Fingerprint': fingerprint,
       },
       data: {
-        grant_type: 'password', /* eslint-disable-line camelcase */ // name required by api
+        grant_type: 'password',
         password,
         username: email,
+        verify,
       },
     })
 
@@ -92,10 +94,22 @@ export const login = (options) => {
 
 export const getClientOAuthPage = (params) => {
   return frApiRequest(
-    actionTypes.session.readClientOAuthPage,
+    actionTypes.oauth.authorize.read,
     {
       url: '/oauth2/authorize',
       params,
+    },
+  )
+}
+
+
+export const submitOAuthDecision = (data) => {
+  return frApiRequest(
+    actionTypes.oauth.authorize.create,
+    {
+      url: '/oauth2/authorize',
+      method: 'post',
+      data,
     },
   )
 }

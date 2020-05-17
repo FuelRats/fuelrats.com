@@ -8,11 +8,11 @@ import React from 'react'
 
 
 // Component imports
-import { authenticated } from '../../../components/AppLayout'
-import { formatAsEliteDateTime } from '../../../helpers/formatTime'
-import { Link } from '../../../routes'
-import { connect, actions } from '../../../store'
-import { selectPageViewDataById, selectPageViewMetaById } from '../../../store/selectors'
+import { authenticated } from '~/components/AppLayout'
+import { formatAsEliteDateTime } from '~/helpers/formatTime'
+import { Link } from '~/routes'
+import { connect, actions } from '~/store'
+import { selectPageViewDataById, selectPageViewMetaById } from '~/store/selectors'
 
 
 

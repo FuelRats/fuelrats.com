@@ -6,10 +6,10 @@ import React from 'react'
 
 
 // Component imports
-import PasswordField from '../components/PasswordField'
-import { passwordPattern } from '../data/RegExpr'
-import { Link } from '../routes'
-import { connect, actions } from '../store'
+import PasswordField from '~/components/PasswordField'
+import { passwordPattern } from '~/data/RegExpr'
+import { Link } from '~/routes'
+import { connect, actions } from '~/store'
 
 
 
@@ -46,7 +46,6 @@ class PasswordReset extends React.Component {
     event.preventDefault()
 
     const {
-      /* eslint-disable-next-line id-length */// https://github.com/eslint/eslint/issues/12827
       t: token,
     } = this.props.query
 
@@ -77,7 +76,6 @@ class PasswordReset extends React.Component {
 
   static async getInitialProps ({ query, store }) {
     const {
-      /* eslint-disable-next-line id-length */// https://github.com/eslint/eslint/issues/12827
       t: token,
     } = query
     let tokenIsValid = false

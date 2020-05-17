@@ -6,16 +6,9 @@ import React from 'react'
 
 
 // Component imports
-import classNames from '../helpers/classNames'
-import { connect } from '../store'
-import { selectWordpressPageBySlug } from '../store/selectors'
 import asModal, { ModalContent, ModalFooter } from './Modal'
-
-
-
-
-
-// Component constants
+import { connect } from '~/store'
+import { selectWordpressPageBySlug } from '~/store/selectors'
 
 
 
@@ -131,14 +124,9 @@ class WordpressTermsModal extends React.Component {
       page,
     } = this.props
 
-    const classes = classNames(
-      ['loading', loading],
-      ['error', !loading && !page],
-    )
-
     return (
       <>
-        <ModalContent className={classes}>
+        <ModalContent className={{ loading, error: !loading && !page }}>
           {this.renderWordpressPage(page)}
         </ModalContent>
         {this.renderFooter()}

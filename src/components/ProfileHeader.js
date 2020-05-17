@@ -2,16 +2,16 @@
 import React from 'react'
 
 // Component imports
-import { formatAsEliteDateLong } from '../helpers/formatTime'
-import { connect } from '../store'
+import ChangePasswordModal from './ChangePasswordModal'
+import DisableProfileModal from './DisableProfileModal'
+import { formatAsEliteDateLong } from '~/helpers/formatTime'
+import { connect } from '~/store'
 import {
   selectUserById,
   selectDisplayRatByUserId,
   selectAvatarByUserId,
   withCurrentUserId,
-} from '../store/selectors'
-import ChangePasswordModal from './ChangePasswordModal'
-import DisableProfileModal from './DisableProfileModal'
+} from '~/store/selectors'
 
 
 
@@ -41,7 +41,7 @@ class ProfileHeader extends React.Component {
       this.props.user.relationships.groups.data && (
         this.props.user.relationships.groups.data.map((item) => {
           return (
-            <li key={item.id} className={`badge ${item.id}`}>
+            <li key={item.id} className={['badge', item.id]}>
               {item.id}
             </li>
           )

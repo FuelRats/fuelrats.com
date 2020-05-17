@@ -6,13 +6,6 @@ import React from 'react'
 
 
 
-// Component imports
-import classNames from '../helpers/classNames'
-
-
-
-
-
 class SwitchInput extends React.Component {
   /***************************************************************************\
     Public Methods
@@ -28,16 +21,10 @@ class SwitchInput extends React.Component {
       label,
     } = this.props
 
-    const containerClasses = classNames(
-      'switch-container',
-      ['checked', checked],
-      ['disabled', disabled],
-      [className, className],
-    )
     return (
       <div
         {...containerProps}
-        className={containerClasses}>
+        className={['switch-container', { checked, disabled }, className]}>
         <div className="switch-background" />
         <div className="switch-handle">
           <FontAwesomeIcon fixedWidth icon={checked ? 'check' : 'times'} />

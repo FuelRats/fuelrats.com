@@ -6,11 +6,11 @@ import React from 'react'
 
 
 // Component imports
-import { HttpStatus } from '../helpers/HttpStatus'
-import { connect } from '../store'
-import { selectUserById, withCurrentUserId } from '../store/selectors'
 import asModal, { ModalContent, ModalFooter } from './Modal'
 import PasswordField from './PasswordField'
+import { HttpStatus } from '~/helpers/HttpStatus'
+import { connect } from '~/store'
+import { selectUserById, withCurrentUserId } from '~/store/selectors'
 
 
 @asModal({
@@ -75,15 +75,15 @@ class DisableProfileModal extends React.Component {
 
     this.setState({ submitting: true })
 
-    const response = await this.props.updateUser({ id: userId, attributes: { status: 'deactivated' } }, password)
+    const response = await this.props.updateUser(userId, { status: 'deactivated' }, password)
 
     let error = null
 
-    if (HttpStatus.isClientError(response.payload.errors[0].code)) {
-      error = response.payload.errors && response.payload.errors.length ? response.payload.errors[0].detail : 'Client communication error'
+    if (HttpStatus.isClientError(response.errors.code)) {
+      error = response.errors && response.errors.length ? response.errors[0].detail : 'Client communication error'
     }
 
-    if (HttpStatus.isServerError(response.payload.errors[0].code)) {
+    if (HttpStatus.isServerError(response.errors.code)) {
       error = 'Server communication error'
     }
 
@@ -151,9 +151,11 @@ class DisableProfileModal extends React.Component {
         <ModalFooter>
           <div className="secondary" />
           <div className="primary">
-            <div className={confirming ? undefined : 'hidden'}>{'Are you sure?'}</div>
+            <div className={{ hidden: !confirming }}>
+              {'Are you sure?'}
+            </div>
             <button
-              className={confirming ? 'green' : 'hidden'}
+              className={{ green: confirming, hidden: !confirming }}
               disabled={!this.isValid || submitting}
               type="submit">
               {submitting ? 'Submitting...' : 'Disable Profile'}

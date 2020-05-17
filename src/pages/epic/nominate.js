@@ -6,13 +6,12 @@ import React from 'react'
 
 
 // Component imports
-import { authenticated } from '../../components/AppLayout'
-import RadioInput from '../../components/RadioInput'
-import RatTagsInput from '../../components/RatTagsInput'
-import RescuesTagsInput from '../../components/RescuesTagsInput'
-import classNames from '../../helpers/classNames'
-import getRatTag from '../../helpers/getRatTag'
-import { connect } from '../../store'
+import { authenticated } from '~/components/AppLayout'
+import RadioInput from '~/components/RadioInput'
+import RatTagsInput from '~/components/RatTagsInput'
+import RescuesTagsInput from '~/components/RescuesTagsInput'
+import getRatTag from '~/helpers/getRatTag'
+import { connect } from '~/store'
 
 
 // Component constants
@@ -163,12 +162,6 @@ class EpicNominate extends React.Component {
       notes,
     } = this.state
 
-    const classes = classNames(
-      'page-content',
-      ['loading', submitting],
-      ['force', submitting],
-    )
-
     return (
       <>
 
@@ -185,7 +178,7 @@ class EpicNominate extends React.Component {
         {
           !submitted && (
             <form
-              className={classes}
+              className={['page-content', { loading: submitting, force: submitting }]}
               onSubmit={this._handleSubmit}>
               <fieldset>
                 <label htmlFor="epic-type">{'Who are you nominating for an epic today?'}</label>

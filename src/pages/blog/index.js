@@ -6,14 +6,14 @@ import React from 'react'
 
 
 // Component imports
-import ArticleCard from '../../components/Blog/ArticleCard'
-import safeParseInt from '../../helpers/safeParseInt'
-import { Link } from '../../routes'
-import { connect } from '../../store'
+import ArticleCard from '~/components/Blog/ArticleCard'
+import safeParseInt from '~/helpers/safeParseInt'
+import { Link } from '~/routes'
+import { connect } from '~/store'
 import {
   selectBlogs,
   selectBlogStatistics,
-} from '../../store/selectors'
+} from '~/store/selectors'
 
 
 
