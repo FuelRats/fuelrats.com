@@ -11,6 +11,7 @@ const epics = {
 
 const groups = {
   read: 'groups/read',
+  search: 'groups/search',
 }
 
 

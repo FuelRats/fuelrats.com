@@ -3,7 +3,7 @@ import { frApiRequest } from './services'
 
 export const getGroups = (params) => {
   return frApiRequest(
-    actionTypes.groups.read,
+    actionTypes.groups.search,
     {
       url: '/groups',
       params,
