@@ -184,7 +184,7 @@ class LoginModal extends React.Component {
               disabled={loggingIn}
               id="verify"
               label="Verification Code"
-              maxlength={6}
+              maxLength={6}
               name="verify"
               pattern="^[A-Z0-9]{6}$"
               type="text"
