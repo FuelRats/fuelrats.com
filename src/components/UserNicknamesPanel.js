@@ -60,7 +60,7 @@ class UserNicknamesPanel extends React.Component {
     const {
       user,
     } = this.props
-    const maxNicksReached = (user.attributes.nicknames.length >= MAXNICKS)
+    const maxNicksReached = (user.relationships.nicknames?.data.length >= MAXNICKS)
 
     return (
       <div className="panel user-nicknames">
@@ -74,7 +74,7 @@ class UserNicknamesPanel extends React.Component {
             )
           }
           <div className="controls">
-            <span className="nickname-count">{`${user.attributes.nicknames.length}/${MAXNICKS}`}</span>
+            <span className="nickname-count">{`${user.relationships.nicknames?.data.length}/${MAXNICKS}`}</span>
             <button
               aria-label="add nickname"
               className={['icon', { green: !this.state.formOpen }]}
@@ -90,17 +90,17 @@ class UserNicknamesPanel extends React.Component {
         <div className="panel-content">
           <ul>
             {
-              user?.attributes.nicknames.map((nickname) => {
+              user?.relationships.nicknames?.data.map((nickname) => {
                 return (
                   <li key={nickname}>
                     <span>{nickname}</span>
-                    {/* <ConfirmActionButton
+                    {/* { <ConfirmActionButton
                       name={nickname}
                       onConfirm={this._handleDeleteNickname}
                       className="icon">
                       <FontAwesomeIcon icon="trash" fixedWidth />
                     </ConfirmActionButton>
-                    */}
+                    } */}
                   </li>
                 )
               }) ?? null
