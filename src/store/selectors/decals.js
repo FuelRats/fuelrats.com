@@ -31,7 +31,7 @@ export const selectDecalsByUserId = createSelector(
   [selectDecals, getUserId],
   (decals, userId) => {
     return Object.values(decals).filter((decal) => {
-      return decal.attributes && decal.attributes.userId === userId
+      return decal?.attributes?.userId === userId
     })
   },
 )
