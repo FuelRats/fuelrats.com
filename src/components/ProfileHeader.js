@@ -7,6 +7,7 @@ import DisableProfileModal from './DisableProfileModal'
 import { formatAsEliteDateLong } from '~/helpers/formatTime'
 import { connect } from '~/store'
 import {
+  selectGroupsByUserId,
   selectUserById,
   selectDisplayRatByUserId,
   selectAvatarByUserId,
@@ -38,11 +39,11 @@ class ProfileHeader extends React.Component {
 
   _renderUserGroups = () => {
     return (
-      this.props.user.relationships.groups.data && (
-        this.props.user.relationships.groups.data.map((item) => {
+      this.props.groups && (
+        this.props.groups.map((group) => {
           return (
-            <li key={item.id} className={['badge', item.id]}>
-              {item.id}
+            <li key={group.id} className={['badge', group.attributes.name]}>
+              {group.attributes.name}
             </li>
           )
         })))
@@ -140,6 +141,7 @@ class ProfileHeader extends React.Component {
 
   static mapStateToProps = (state) => {
     return {
+      groups: withCurrentUserId(selectGroupsByUserId)(state),
       user: withCurrentUserId(selectUserById)(state),
       userAvatar: withCurrentUserId(selectAvatarByUserId)(state),
       displayRat: withCurrentUserId(selectDisplayRatByUserId)(state),
