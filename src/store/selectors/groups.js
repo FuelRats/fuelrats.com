@@ -28,7 +28,7 @@ export const selectGroups = (state) => {
 
 
 export const selectGroupById = (state, { groupId }) => {
-  return state.groups[groupId]
+  return state.groups?.[groupId]
 }
 
 
