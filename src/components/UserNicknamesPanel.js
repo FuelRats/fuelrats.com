@@ -1,5 +1,4 @@
 // Module imports
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 
 
@@ -60,30 +59,15 @@ class UserNicknamesPanel extends React.Component {
     const {
       user,
     } = this.props
-    const maxNicksReached = (user?.relationships.nicknames.data?.length >= MAXNICKS)
+    const nickCount = user?.relationships.nicknames.data?.length
+    const maxNicksReached = (nickCount >= MAXNICKS)
 
     return (
       <div className="panel user-nicknames">
         <header>
           {'IRC Nicknames'}
-          {
-            (this.state.formOpen) && (
-              <div className="add-nickname-float">
-                <AddNicknameForm />
-              </div>
-            )
-          }
           <div className="controls">
-            <span className="nickname-count">{`${user?.relationships.nicknames.data?.length}/${MAXNICKS}`}</span>
-            <button
-              aria-label="add nickname"
-              className={['icon', { green: !this.state.formOpen }]}
-              disabled={maxNicksReached}
-              title={maxNicksReached ? 'You\'ve used all your nicknames' : 'Add new nickname'}
-              type="button"
-              onClick={this._handleFormVisibilityToggle}>
-              <FontAwesomeIcon fixedWidth icon={this.state.formOpen ? 'times' : 'plus'} />
-            </button>
+            <span className="nickname-count">{`${nickCount}/${MAXNICKS}`}</span>
           </div>
         </header>
 
@@ -106,6 +90,10 @@ class UserNicknamesPanel extends React.Component {
               }) ?? null
             }
           </ul>
+
+          <AddNicknameForm
+            disabled={maxNicksReached}
+            title={maxNicksReached ? 'You\'ve used all your nicknames' : 'Add new nickname'} />
         </div>
       </div>
     )
