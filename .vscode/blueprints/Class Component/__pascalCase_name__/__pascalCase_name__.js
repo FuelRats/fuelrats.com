@@ -82,7 +82,9 @@ class {{pascalCase name}} extends React.Component {
     Prop Definitions
   \***************************************************************************/
 
-  static defaultProps = {}
+  static defaultProps = {
+    className: undefined,
+  }
 
   static propTypes = {
     className: PropTypes.string,
