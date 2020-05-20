@@ -5,3 +5,4 @@
 dist
 deploy_dist
 node_modules
+.vscode/blueprints
