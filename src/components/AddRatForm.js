@@ -173,7 +173,7 @@ class AddRatForm extends React.Component {
           }
           <button
             aria-label={formOpen ? 'cancel new commander creation' : 'add commander'}
-            className={['compact square', { green: formOpen }]}
+            className={['compact square', { green: !formOpen }]}
             title={formOpen ? 'Cancel' : 'Add new commander'}
             type="button"
             onClick={this._handleToggle}>

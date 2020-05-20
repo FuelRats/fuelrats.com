@@ -9,6 +9,11 @@ const epics = {
   create: 'epics/create',
 }
 
+const groups = {
+  read: 'groups/read',
+  search: 'groups/search',
+}
+
 
 const leaderboard = {
   read: 'leaderboard/read',
@@ -147,6 +152,7 @@ const actionTypes = {
   // API Resources
   decals,
   epics,
+  groups,
   leaderboard,
   nicknames,
   oauth,
