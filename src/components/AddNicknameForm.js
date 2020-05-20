@@ -80,12 +80,14 @@ class AddNicknameForm extends React.Component {
         className="add-nickname-form"
         onSubmit={this._handleSubmit}>
         <ValidatedFormInput
+          disabled={this.props.disabled}
           id="AddNickname"
           label="Nickname"
           name="nickname"
           pattern={ircNickPattern}
           patternMessage="Nickname must start with a letter, contain no spaces, and be between 2-30 characters"
           placeholder="Add a nickname..."
+          title={this.props.title}
           type="text"
           value={nickname}
           onChange={this._handleChange}>
