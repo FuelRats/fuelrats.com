@@ -1,46 +1,22 @@
-div.user-nicknames {
-  form.add-nickname-form {
+div.user-nicknames .panel-content {
+  padding: 0;
+
+  overflow: visible;
+
+  ul > li {
     display: flex;
 
-    flex-flow: row nowrap;
     align-items: center;
+    justify-content: space-between;
 
-    padding: 1rem;
+    padding: 0.5rem 1rem;
 
-    fieldset {
-      flex: 2 0;
-
-      margin-right: 0.5rem;
-      padding: 0;
+    &:nth-child(even) {
+      background-color: $light-grey;
     }
 
-    button[type='submit'] {
-      flex: 0 0 auto;
-
-      margin-right: 0.2rem;
-    }
-  }
-
-  .panel-content {
-    padding: 0;
-
-    overflow: visible;
-
-    ul > li {
-      display: flex;
-
-      align-items: center;
-      justify-content: space-between;
-
-      padding: 0.5rem 1rem;
-
-      &:nth-child(even) {
-        background-color: $light-grey;
-      }
-
-      span {
-        word-break: break-word;
-      }
+    span {
+      word-break: break-word;
     }
   }
 }
