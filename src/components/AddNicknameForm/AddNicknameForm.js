@@ -7,7 +7,7 @@ import React from 'react'
 
 
 // Component imports
-import InfoBubble from '../infoBubble/InfoBubble'
+import InfoBubble from '../infoBubble'
 import ValidatedFormInput from '../ValidatedFormInput'
 import styles from './AddNicknameForm.module.scss'
 import { ircNickPattern } from '~/data/RegExpr'
