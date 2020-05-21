@@ -1,17 +1,19 @@
 // Module imports
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 
 
 
 
 // Component imports
-import AddNicknameForm from './AddNicknameForm'
+import AddNicknameForm from '../AddNicknameForm/AddNicknameForm'
+import ConfirmActionButton from '../ConfirmActionButton'
+import styles from './UserNicknamesPanel.module.scss'
 import { connect } from '~/store'
 import {
   selectUserById,
   withCurrentUserId,
 } from '~/store/selectors'
-// import ConfirmActionButton from './ConfirmActionButton'
 
 // Component constants
 const MAXNICKS = 16 // Maximum IRC Nicknames allowed
@@ -63,37 +65,40 @@ class UserNicknamesPanel extends React.Component {
     const maxNicksReached = (nickCount >= MAXNICKS)
 
     return (
-      <div className="panel user-nicknames">
+      <div className="panel">
         <header>
           {'IRC Nicknames'}
+
           <div className="controls">
             <span className="nickname-count">{`${nickCount}/${MAXNICKS}`}</span>
           </div>
         </header>
 
-        <div className="panel-content">
+        <div className={styles.userNicknames}>
           <ul>
+            {(nickCount <= 0) && (<li className="text-center">{'You do not have any nicknames registered yet.'}</li>)}
             {
               user?.relationships.nicknames.data?.map((nickname) => {
                 return (
                   <li key={nickname}>
                     <span>{nickname}</span>
-                    {/* { <ConfirmActionButton
+                    <ConfirmActionButton
+                      className="icon"
                       name={nickname}
-                      onConfirm={this._handleDeleteNickname}
-                      className="icon">
-                      <FontAwesomeIcon icon="trash" fixedWidth />
+                      onConfirm={this._handleDeleteNickname}>
+                      <FontAwesomeIcon fixedWidth icon="trash" />
                     </ConfirmActionButton>
-                    } */}
                   </li>
                 )
               }) ?? null
             }
           </ul>
 
-          <AddNicknameForm
-            disabled={maxNicksReached}
-            title={maxNicksReached ? 'You\'ve used all your nicknames' : 'Add new nickname'} />
+          <div className={styles.addNicknameFloat}>
+            <AddNicknameForm
+              disabled={maxNicksReached}
+              title={maxNicksReached ? 'You\'ve used all your nicknames' : 'Add new nickname'} />
+          </div>
         </div>
       </div>
     )

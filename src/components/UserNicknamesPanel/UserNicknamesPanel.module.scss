@@ -1,0 +1,29 @@
+@import '../../scss/colors';
+
+.userNicknames {
+  composes: panel-content from global;
+
+  min-height: 6rem;
+  padding: 0 !important; /* TEMPORARY until CSS Modules is implemented */
+
+  overflow: visible !important; /* TEMPORARY until CSS Modules is implemented */
+
+
+  ul > li {
+    padding: 0.5rem 1rem;
+
+    &:nth-child(even) {
+      background-color: $light-grey;
+    }
+
+    span {
+      word-break: break-word;
+    }
+  }
+}
+
+.addNicknameFloat {
+  position: relative;
+
+  height: 5rem;
+}
