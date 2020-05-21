@@ -1,0 +1,51 @@
+@import '../../scss/fonts';
+@import '../../scss/colors';
+
+.infoBubble {
+  position: absolute;
+  z-index: 98;
+
+  padding: 1rem;
+
+  border: 0.2rem solid $red;
+
+  background: $black;
+  box-shadow: 0 0 4px 0 rgba(26, 26, 26, 0.4);
+
+  line-height: 1.5;
+}
+
+.infoBubbleHeader {
+  display: block;
+
+  margin: 0.25rem 0 0;
+
+  color: $red-lightened;
+
+  text-transform: uppercase;
+  font-size: 0.85em;
+}
+
+.infoBubbleBody {
+  display: inline-block;
+
+  margin: 0.5rem 1rem 0;
+
+  color: $white;
+
+  font-family: $paragraph-fonts;
+}
+
+.nicknamesInfo {
+  pointer-events: none;
+
+  position: absolute;
+  top: 5rem;
+
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+input:focus ~ .nicknamesInfo {
+  opacity: 1;
+}
