@@ -20,7 +20,7 @@ import { actions, connect } from '~/store'
 import {
   selectRatsByRescueId,
   selectRescueById,
-  selectUserCanEditRescue,
+  selectCurrentUserCanEditRescue,
 } from '~/store/selectors'
 
 
@@ -669,7 +669,7 @@ class Paperwork extends React.Component {
     return {
       rats: selectFormattedRatsByRescueId(state, query),
       rescue: selectRescueById(state, query),
-      userCanEdit: selectUserCanEditRescue(state, query),
+      userCanEdit: selectCurrentUserCanEditRescue(state, query),
     }
   }
 }

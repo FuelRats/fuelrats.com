@@ -14,10 +14,8 @@ import { actions, connect } from '~/store'
 import {
   selectRatsByRescueId,
   selectRescueById,
-  selectUserCanEditRescue,
-  withCurrentUserId,
-  selectUserByIdHasScope,
-  selectUserCanEditAllRescues,
+  selectCurrentUserCanEditRescue,
+  selectCurrentUserHasScope,
 } from '~/store/selectors'
 
 
@@ -51,7 +49,7 @@ class Paperwork extends React.Component {
       await this.props.deleteRescue(this.props.rescue.id)
 
       Router.pushRoute(
-        this.props.userCanEditAllRescues
+        this.props.userCanWriteAll
           ? 'admin rescues list'
           : '/',
       )
@@ -170,7 +168,7 @@ class Paperwork extends React.Component {
     const {
       rescue,
       userCanEdit,
-      userCanDelete,
+      userCanWriteAll,
     } = this.props
 
     const {
@@ -229,24 +227,24 @@ class Paperwork extends React.Component {
               !deleteConfirm && (
                 <>
                   {
-                  userCanEdit && (
-                    <Link params={{ rescueId: rescue.id }} route="paperwork edit">
-                      <a className="button compact">
-                        {'Edit'}
-                      </a>
-                    </Link>
-                  )
-                }
+                    userCanEdit && (
+                      <Link params={{ rescueId: rescue.id }} route="paperwork edit">
+                        <a className="button compact">
+                          {'Edit'}
+                        </a>
+                      </Link>
+                    )
+                  }
                   {
-                  userCanDelete && (
-                    <button
-                      className="compact"
-                      type="button"
-                      onClick={this._handleDeleteClick}>
-                      {'Delete'}
-                    </button>
-                  )
-                }
+                    userCanWriteAll && (
+                      <button
+                        className="compact"
+                        type="button"
+                        onClick={this._handleDeleteClick}>
+                        {'Delete'}
+                      </button>
+                    )
+                  }
                 </>
               )
             }
@@ -397,9 +395,8 @@ class Paperwork extends React.Component {
     return {
       rats: selectRatsByRescueId(state, query) || [],
       rescue: selectRescueById(state, query),
-      userCanEdit: selectUserCanEditRescue(state, query),
-      userCanDelete: withCurrentUserId(selectUserByIdHasScope)(state, { scope: 'rescue.delete' }),
-      userCanEditAllRescues: withCurrentUserId(selectUserCanEditAllRescues)(state),
+      userCanEdit: selectCurrentUserCanEditRescue(state, query),
+      userCanWriteAll: selectCurrentUserHasScope(state, { scope: 'rescues.write' }),
     }
   }
 }
