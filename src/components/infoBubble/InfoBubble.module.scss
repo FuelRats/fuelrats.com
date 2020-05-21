@@ -35,17 +35,3 @@
 
   font-family: $paragraph-fonts;
 }
-
-.nicknamesInfo {
-  pointer-events: none;
-
-  position: absolute;
-  top: 5rem;
-
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-
-input:focus ~ .nicknamesInfo {
-  opacity: 1;
-}
