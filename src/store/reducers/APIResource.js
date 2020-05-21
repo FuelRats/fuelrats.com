@@ -26,7 +26,8 @@ const createJSONAPIResourceReducer = (sourceIdent, initialState, resourceTypes) 
 
   const updateResource = withResourceType((draftState, resource, resourceType) => {
     const { target, resourceReducer } = resourceType
-    draftState[target][resource.id] = resourceReducer ? resourceReducer(resource) : resource
+    const newResource = resourceReducer ? resourceReducer(resource) : resource
+    draftState[target][resource.id] = Object.assign(draftState[target][resource.id] ?? {}, newResource)
   })
 
   const createResource = withResourceType((draftState, resource, resourceType) => {
