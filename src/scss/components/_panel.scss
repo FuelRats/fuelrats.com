@@ -18,12 +18,6 @@
     }
   }
 
-  .panel-content {
-    padding: 1rem;
-
-    overflow: auto;
-  }
-
   header,
   footer,
   .panel-header,
@@ -41,4 +35,10 @@
       color: $white;
     }
   }
+}
+
+.panel-content {
+  padding: 1rem;
+
+  overflow: auto;
 }

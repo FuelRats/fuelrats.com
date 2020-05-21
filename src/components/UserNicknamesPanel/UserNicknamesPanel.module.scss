@@ -4,9 +4,9 @@
   composes: panel-content from global;
 
   min-height: 6rem;
-  padding: 0 !important; /* TEMPORARY until CSS Modules is implemented */
+  padding: 0;
 
-  overflow: visible !important; /* TEMPORARY until CSS Modules is implemented */
+  overflow: visible;
 
 
   ul > li {
