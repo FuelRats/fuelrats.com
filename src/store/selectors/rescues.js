@@ -4,9 +4,9 @@ import { createSelector } from 'reselect'
 
 
 
-import { selectUserByIdHasScope } from './groups'
 import { selectRats } from './rats'
-import { selectCurrentUserId, withCurrentUserId } from './session'
+import { selectCurrentUserId } from './session'
+import { selectCurrentUserHasScope } from './users'
 
 
 
@@ -42,13 +42,13 @@ export const selectRatsByRescueId = createSelector(
 )
 
 
-export const selectUserCanEditAllRescues = (state) => {
-  return withCurrentUserId(selectUserByIdHasScope)(state, { scope: 'rescue.write' })
+export const selectCurrentUserCanEditAllRescues = (state) => {
+  return selectCurrentUserHasScope(state, { scope: 'rescues.write' })
 }
 
 
-export const selectUserCanEditRescue = createSelector(
-  [selectRescueById, selectRatsByRescueId, selectCurrentUserId, selectUserCanEditAllRescues],
+export const selectCurrentUserCanEditRescue = createSelector(
+  [selectRescueById, selectRatsByRescueId, selectCurrentUserId, selectCurrentUserCanEditAllRescues],
   (rescue, rescueRats, userId, userCanEditAllRescues) => {
     if (!rescue || !userId) {
       return false
