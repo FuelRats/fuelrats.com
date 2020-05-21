@@ -1,6 +1,10 @@
-.add-nickname-form {
+.addNicknameForm {
   display: flex;
-  position: relative;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 
   flex-flow: row nowrap;
   align-items: center;
@@ -20,17 +24,7 @@
     margin-right: 0.2rem;
   }
 
-  .info-bubble {
-    pointer-events: none;
-
-    position: absolute;
-    top: 5rem;
-
-    opacity: 0;
-    transition: opacity 0.2s;
-  }
-
-  #AddNickname:focus ~ #NickRegisterReminder {
-    opacity: 1;
+  .thinInput {
+    padding: 0.5rem 1rem;
   }
 }

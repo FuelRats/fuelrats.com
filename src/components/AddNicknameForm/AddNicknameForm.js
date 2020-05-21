@@ -7,8 +7,9 @@ import React from 'react'
 
 
 // Component imports
-import InfoBubble from './InfoBubble'
-import ValidatedFormInput from './ValidatedFormInput'
+import InfoBubble from '../infoBubble/InfoBubble'
+import ValidatedFormInput from '../ValidatedFormInput'
+import styles from './AddNicknameForm.module.scss'
 import { ircNickPattern } from '~/data/RegExpr'
 import { connect } from '~/store'
 import { selectUserById, withCurrentUserId } from '~/store/selectors'
@@ -77,9 +78,10 @@ class AddNicknameForm extends React.Component {
 
     return (
       <form
-        className="add-nickname-form"
+        className={styles.addNicknameForm}
         onSubmit={this._handleSubmit}>
         <ValidatedFormInput
+          className={styles.thinInput}
           disabled={this.props.disabled}
           id="AddNickname"
           label="Nickname"
