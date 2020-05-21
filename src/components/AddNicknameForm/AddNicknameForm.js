@@ -8,6 +8,7 @@ import React from 'react'
 
 // Component imports
 import InfoBubble from '../infoBubble'
+import bubbleStyles from '../infoBubble/InfoBubble.module.scss'
 import ValidatedFormInput from '../ValidatedFormInput'
 import styles from './AddNicknameForm.module.scss'
 import { ircNickPattern } from '~/data/RegExpr'
@@ -93,7 +94,7 @@ class AddNicknameForm extends React.Component {
           type="text"
           value={nickname}
           onChange={this._handleChange}>
-          <InfoBubble header="reminder" id="NickRegisterReminder">
+          <InfoBubble className={bubbleStyles.nicknameInfo} header="reminder" id="NickRegisterReminder">
             {"You cannot register a nick that's in use on IRC. Switch to a temporary one before registering!"}
           </InfoBubble>
         </ValidatedFormInput>
