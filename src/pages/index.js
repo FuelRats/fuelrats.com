@@ -62,7 +62,7 @@ class Index extends React.Component {
 
         <footer className="call-to-action">
           <Link route="rescue-landing">
-            <a className="button tall">{'Get Help'}</a>
+            <a className="button tall">{'Get Fuel'}</a>
           </Link>
         </footer>
 

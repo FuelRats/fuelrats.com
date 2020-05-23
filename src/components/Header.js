@@ -165,8 +165,8 @@ function Header (props) {
         <div className="join-actions">
 
           <Link route="rescue-landing">
-            <a className="button">
-              {'Get Help'}
+            <a className="button get-fuel">
+              {'Get Fuel'}
             </a>
           </Link>
 
