@@ -38,9 +38,9 @@ const CarouselSlides = {
     filename: 'light.jpg',
   },
   5: {
-    text: 'CMDR Wolfger',
-    position: '100% 100%',
-    filename: 'wolfger.jpg',
+    text: 'CMDR Fenrishi',
+    position: '40% 50%',
+    filename: 'fenrishi.jpg',
   },
 }
 
