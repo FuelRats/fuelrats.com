@@ -23,9 +23,9 @@ const CarouselSlides = {
     filename: 'pi.jpg',
   },
   2: {
-    text: 'CMDR Zibadian',
+    text: 'CMDR RafaBC',
     position: '20% 50%',
-    filename: 'zibadian.jpg',
+    filename: 'rafa.jpg',
   },
   3: {
     text: 'CMDR Vanya Pavlovich',
