@@ -79,7 +79,7 @@ class Carousel extends React.Component {
 
   _setSlide = (slideId) => {
     clearTimeout(this.timer)
-    // this.timer = setTimeout(this._setSlide, this.props.interval)
+    this.timer = setTimeout(this._setSlide, this.props.interval)
 
     if (document.visibilityState === 'hidden') {
       return
@@ -105,7 +105,7 @@ class Carousel extends React.Component {
   \***************************************************************************/
 
   componentDidMount () {
-    // this.timer = setTimeout(this._setSlide, this.props.interval)
+    this.timer = setTimeout(this._setSlide, this.props.interval)
 
     Object.values(this.props.slides).forEach((slide) => {
       if (!slide.image) {
