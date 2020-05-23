@@ -13,24 +13,34 @@ import { connect } from '../store'
 
 const CarouselSlides = {
   0: {
-    text: 'CMDR Highwaywarrior',
-    position: '55% 25%',
+    text: 'CMDR Dr Chives',
+    position: '13% 50%',
+    filename: 'chives.jpg',
   },
   1: {
-    text: 'CMDR Zibadian',
-    position: '20% 50%',
+    text: 'CMDR NumberPi',
+    position: '50% 50%',
+    filename: 'pi.jpg',
   },
   2: {
-    text: 'CMDR Vanya Pavlovich',
-    position: '70% 50%',
+    text: 'CMDR Zibadian',
+    position: '20% 50%',
+    filename: 'zibadian.jpg',
   },
   3: {
-    text: 'CMDR MarathonDog',
-    position: '68% 100%',
+    text: 'CMDR Vanya Pavlovich',
+    position: '70% 50%',
+    filename: 'vanya.jpg',
   },
   4: {
-    text: 'CMDR NumberPi',
+    text: 'CMDR Light13c',
+    position: '70% 100%',
+    filename: 'light.jpg',
+  },
+  5: {
+    text: 'CMDR Wolfger',
     position: '100% 100%',
+    filename: 'wolfger.jpg',
   },
 }
 
