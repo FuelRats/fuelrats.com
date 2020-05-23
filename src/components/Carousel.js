@@ -41,7 +41,7 @@ const selectConnectedSlides = createSelector(
         [slideId]: {
           ...slide,
           id: slideId,
-          url: `${publicUrl}/static/images/${slide.imageName || `slide_${key}.jpg`}`,
+          url: `${publicUrl}/static/images/${slide.filename || `slide_${key}.jpg`}`,
           image: selectImageById(state, { imageId: slideId }),
         },
       }
@@ -79,7 +79,7 @@ class Carousel extends React.Component {
 
   _setSlide = (slideId) => {
     clearTimeout(this.timer)
-    this.timer = setTimeout(this._setSlide, this.props.interval)
+    // this.timer = setTimeout(this._setSlide, this.props.interval)
 
     if (document.visibilityState === 'hidden') {
       return
@@ -105,7 +105,7 @@ class Carousel extends React.Component {
   \***************************************************************************/
 
   componentDidMount () {
-    this.timer = setTimeout(this._setSlide, this.props.interval)
+    // this.timer = setTimeout(this._setSlide, this.props.interval)
 
     Object.values(this.props.slides).forEach((slide) => {
       if (!slide.image) {
@@ -268,7 +268,7 @@ class Carousel extends React.Component {
     id: PropTypes.string.isRequired,
     interval: PropTypes.number,
     slides: PropTypes.objectOf(PropTypes.shape({
-      imageName: PropTypes.string,
+      filename: PropTypes.string,
       position: PropTypes.string,
       text: PropTypes.any,
     })).isRequired,
