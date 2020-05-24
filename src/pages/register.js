@@ -114,9 +114,9 @@ class Register extends React.Component {
     const { status: regStatus } = await this.props.register({
       email,
       password,
-      name: ratName,
+      name: ratName.trim(),
       platform: ratPlatform,
-      nickname,
+      nickname: nickname.trim(),
       recaptcha: recaptchaResponse,
     })
 
