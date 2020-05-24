@@ -71,7 +71,7 @@ class AddRatForm extends React.Component {
     this.setState({ submitting: true })
 
     await createRat({
-      name,
+      name: name.trim(),
       platform,
       userId,
     })
