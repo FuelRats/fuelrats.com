@@ -15,7 +15,7 @@
   color: $white;
 
   font-family: Raleway, sans-serif;
-  text-shadow: 0 0 0.2rem rgba($black, 0.5);
+  text-shadow: 0 0 0.2rem rgba($black, 0.66);
 
   overflow: hidden;
 
@@ -31,7 +31,7 @@
   header {
     z-index: 50;
 
-    text-shadow: 2px 2px 4px #000000AA;
+    text-shadow: 2px 2px 4px rgba($black, 0.66);
   }
 
   .call-to-action {
@@ -40,6 +40,7 @@
     margin-top: 5rem;
 
     .button {
+      --text-color-hover: #FFFFFF;
       padding: 1rem 4rem;
 
       box-shadow: 0 0 1rem 0 $black;
@@ -50,6 +51,7 @@
       font-weight: bold;
       font-size: 1.5em;
       text-transform: uppercase;
+      text-shadow: 1px 1px 3px rgba($black, 0.66);
     }
   }
 
