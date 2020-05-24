@@ -27,7 +27,7 @@ const ignoredTypes = [
 const errorReducer = produce((draftState, action) => {
   if (action.status && action.status === 'error') {
     if (!ignoredTypes.includes(action.type)) {
-      console.error('ACTION ERR:', action)
+      console.error('error:', action)
     }
 
     if (IS_DEV_OR_STAGING) {
