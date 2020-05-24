@@ -13,24 +13,34 @@ import { connect } from '../store'
 
 const CarouselSlides = {
   0: {
-    text: 'CMDR Highwaywarrior',
-    position: '55% 25%',
+    text: 'CMDR Dr Chives',
+    position: '13% 50%',
+    filename: 'chives.jpg',
   },
   1: {
-    text: 'CMDR Zibadian',
+    text: 'CMDR RafaBC',
     position: '20% 50%',
+    filename: 'rafa.jpg',
   },
   2: {
-    text: 'CMDR Vanya Pavlovich',
-    position: '70% 50%',
+    text: 'CMDR NumberPi',
+    position: '50% 50%',
+    filename: 'pi.jpg',
   },
   3: {
-    text: 'CMDR MarathonDog',
-    position: '68% 100%',
+    text: 'CMDR Worthy Alpaca',
+    position: '25% 50%',
+    filename: 'worthyalpaca.jpg',
   },
   4: {
-    text: 'CMDR NumberPi',
-    position: '100% 100%',
+    text: 'CMDR Light1c3',
+    position: '70% 100%',
+    filename: 'light.jpg',
+  },
+  5: {
+    text: 'CMDR Fenrishi',
+    position: '40% 50%',
+    filename: 'fenrishi.jpg',
   },
 }
 
@@ -62,7 +72,7 @@ class Index extends React.Component {
 
         <footer className="call-to-action">
           <Link route="rescue-landing">
-            <a className="button tall">{'Get Help'}</a>
+            <a className="button tall">{'Get Fuel'}</a>
           </Link>
         </footer>
 

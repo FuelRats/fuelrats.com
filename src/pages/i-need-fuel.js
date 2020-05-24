@@ -34,7 +34,7 @@ function INeedFuel (props) {
           src="https://wordpress.fuelrats.com/wp-content/uploads/2016/07/vig_rescue_250-200x126.jpg?resize=200%2C126&ssl=1" />
 
         <h4>
-          {'DO YOU SEE A BLUE COUNTDOWN TIMER?'}
+          {'DO YOU SEE A "OXYGEN DEPLETED IN" TIMER?'}
           <br />
           {'If so, quit to the main menu of the game immediately!'}
         </h4>
@@ -72,7 +72,7 @@ function INeedFuel (props) {
 
               <br />
 
-              <small>
+              <strong>
                 {'By connecting to our IRC and using our services, you agree to our '}
                 <Link params={{ slug: 'terms-of-service' }} route="wordpress">
                   <a>{'Terms of Service'}</a>
@@ -82,7 +82,7 @@ function INeedFuel (props) {
                   <a>{'Privacy Policy'}</a>
                 </Link>
                 {'.'}
-              </small>
+              </strong>
             </>
           )
         }

@@ -79,6 +79,12 @@ module.exports = withWorkers({
       $NODE_VERSION: JSON.stringify(process.version),
     }))
 
+    config.module.rules.push({
+      exclude: /node_modules/u,
+      test: /\.svg$/u,
+      loader: '@svgr/webpack',
+    })
+
     /* ESLint reporting */
     if (options.dev) {
       config.module.rules.unshift({

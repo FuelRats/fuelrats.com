@@ -11,7 +11,7 @@ import React from 'react'
 
 
 
-import FirstYearSvg from '../svg/FirstYearSvg'
+import FirstYearSvg from '../../../public/static/svg/firstYear.svg'
 
 
 
