@@ -18,19 +18,19 @@ const CarouselSlides = {
     filename: 'chives.jpg',
   },
   1: {
-    text: 'CMDR NumberPi',
-    position: '50% 50%',
-    filename: 'pi.jpg',
-  },
-  2: {
     text: 'CMDR RafaBC',
     position: '20% 50%',
     filename: 'rafa.jpg',
   },
+  2: {
+    text: 'CMDR NumberPi',
+    position: '50% 50%',
+    filename: 'pi.jpg',
+  },
   3: {
-    text: 'CMDR Vanya Pavlovich',
-    position: '70% 50%',
-    filename: 'vanya.jpg',
+    text: 'CMDR Worthy Alpaca',
+    position: '25% 50%',
+    filename: 'worthyalpaca.jpg',
   },
   4: {
     text: 'CMDR Light13c',
