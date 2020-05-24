@@ -71,8 +71,6 @@ class ScopeView extends React.PureComponent {
       scopes,
     } = this.props
 
-    console.log(accessibleScopes)
-
     const groupedScopes = groupScopes(scopes, accessibleScopes)
 
     return (

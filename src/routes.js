@@ -1,12 +1,10 @@
 import routes from '@fuelrats/next-named-routes'
-import NextLink from 'next/link'
-import * as NextRouter from 'next/router'
 
 
 
 
 
-const { Link, Router } = routes(NextLink, NextRouter)
+const { Link, Router, useRouter, withRouter } = routes()
 
   // Front Page
   .add('home', '/')
@@ -95,4 +93,6 @@ const { Link, Router } = routes(NextLink, NextRouter)
 export {
   Link,
   Router,
+  useRouter,
+  withRouter,
 }
