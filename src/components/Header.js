@@ -9,8 +9,8 @@ import React from 'react'
 
 
 // Component imports
+import Brand from '../../public/static/svg/brand.svg'
 import Nav from './Nav'
-import BrandSvg from './svg/BrandSvg'
 import { Link } from '~/routes'
 import { connect } from '~/store'
 import { selectSession } from '~/store/selectors'
@@ -49,7 +49,7 @@ function Header (props) {
         <Link route="home">
           <a className="brand" title="Home">
             <div className="brand-animation-wrapper">
-              <BrandSvg />
+              <Brand id="brandSvg" />
             </div>
           </a>
         </Link>
@@ -165,8 +165,8 @@ function Header (props) {
         <div className="join-actions">
 
           <Link route="rescue-landing">
-            <a className="button">
-              {'Get Help'}
+            <a className="button get-fuel">
+              {'Get Fuel'}
             </a>
           </Link>
 

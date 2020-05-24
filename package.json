@@ -1,6 +1,6 @@
 {
   "name": "fuelrats.com",
-  "version": "2.11.3",
+  "version": "2.11.4",
   "description": "The primary website of The Fuel Rats!",
   "main": "dist/server.mjs",
   "license": "BSD-3-Clause",
@@ -40,6 +40,7 @@
     "@fuelrats/eslint-config-react": "^2.2.0-canary.0",
     "@fuelrats/stylelint-config": "^1.1.0",
     "@rollup/plugin-node-resolve": "^8.0.0",
+    "@svgr/webpack": "^5.4.0",
     "babel-eslint": "^10.1.0",
     "babel-loader": "8.1.0",
     "babel-plugin-classnames": "https://github.com/FuelRats/babel-plugin-classnames.git#9e50fc0c07bdb8aa5b72f7160301c3bc9db0f837",

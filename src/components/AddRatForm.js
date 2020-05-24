@@ -71,7 +71,7 @@ class AddRatForm extends React.Component {
 
     await createRat({
       attributes: {
-        name,
+        name: name.trim(),
         platform,
       },
       relationships: {

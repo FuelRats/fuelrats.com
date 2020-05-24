@@ -9,7 +9,7 @@ import React from 'react'
 // Component imports
 import { createStructuredSelector } from 'reselect'
 import RadioInput from './RadioInput'
-import StripeBadgeSvg from './svg/StripeBadgeSvg'
+import StripeBadge from './StripeBadge'
 import getMoney from '~/helpers/getMoney'
 import { HttpStatus } from '~/helpers/HttpStatus'
 import { connect, actionStatus } from '~/store'
@@ -276,7 +276,7 @@ class DonateForm extends React.Component {
               {Boolean(this.canSubmit) && getMoney(this.stripeAmount, currency)}
             </button>
           </div>
-          <StripeBadgeSvg className="donation-info-badge" />
+          <StripeBadge className="donation-info-badge" />
         </form>
       </>
     )
