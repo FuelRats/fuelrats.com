@@ -172,7 +172,7 @@ class Register extends React.Component {
           onSubmit={this._handleSubmit}>
 
           <fieldset data-name="Email">
-            <h5>{'This registration page is to become a Fuel Rat!'}<br />{'Need fuel? No need to register! Just click "Get Help" in the sidebar!'}</h5>
+            <h5>{'This registration page is to become a Fuel Rat!'}<br />{'Need fuel? No need to register! Just click "Get Fuel" in the sidebar!'}</h5>
 
             <br />
 
