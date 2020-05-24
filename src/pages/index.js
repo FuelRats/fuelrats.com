@@ -33,7 +33,7 @@ const CarouselSlides = {
     filename: 'worthyalpaca.jpg',
   },
   4: {
-    text: 'CMDR Light13c',
+    text: 'CMDR Light1c3',
     position: '70% 100%',
     filename: 'light.jpg',
   },
