@@ -10,7 +10,7 @@ import React from 'react'
 
 
 
-import CodeRedSvg from '../svg/CodeRedSvg'
+import CodeRedSvg from '../../../public/static/svg/codeRed.svg'
 
 
 

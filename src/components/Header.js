@@ -9,11 +9,11 @@ import React from 'react'
 
 
 // Component imports
+import Brand from '../../public/static/svg/brand.svg'
 import { Link } from '../routes'
 import { connect } from '../store'
 import { selectSession } from '../store/selectors'
 import Nav from './Nav'
-import BrandSvg from './svg/BrandSvg'
 
 
 
@@ -49,7 +49,7 @@ function Header (props) {
         <Link route="home">
           <a className="brand" title="Home">
             <div className="brand-animation-wrapper">
-              <BrandSvg />
+              <Brand id="brandSvg" />
             </div>
           </a>
         </Link>

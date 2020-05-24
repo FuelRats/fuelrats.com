@@ -6,7 +6,7 @@ import React from 'react'
 
 
 // Component imports
-import BrandSvg from '../../components/svg/BrandSvg'
+import BrandSvg from '../../../public/static/svg/brand.svg'
 
 
 

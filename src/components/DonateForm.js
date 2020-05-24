@@ -13,7 +13,7 @@ import getMoney from '../helpers/getMoney'
 import { connect, actionStatus } from '../store'
 import { withCurrentUserId, selectUserById } from '../store/selectors'
 import RadioInput from './RadioInput'
-import StripeBadgeSvg from './svg/StripeBadgeSvg'
+import StripeBadge from './StripeBadge'
 
 
 
@@ -276,7 +276,7 @@ class DonateForm extends React.Component {
               {Boolean(this.canSubmit) && getMoney(this.stripeAmount, currency)}
             </button>
           </div>
-          <StripeBadgeSvg className="donation-info-badge" />
+          <StripeBadge className="donation-info-badge" />
         </form>
       </>
     )

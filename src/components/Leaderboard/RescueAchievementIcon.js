@@ -10,12 +10,12 @@ import React from 'react'
 
 
 
-import Rescue1000Svg from '../svg/Rescue1000Svg'
-import Rescue100Svg from '../svg/Rescue100Svg'
-import Rescue200Svg from '../svg/Rescue200Svg'
-import Rescue300Svg from '../svg/Rescue300Svg'
-import Rescue400Svg from '../svg/Rescue400Svg'
-import Rescue500Svg from '../svg/Rescue500Svg'
+import Rescue100 from '../../../public/static/svg/rescue100.svg'
+import Rescue1000 from '../../../public/static/svg/rescue1000.svg'
+import Rescue200 from '../../../public/static/svg/rescue200.svg'
+import Rescue300 from '../../../public/static/svg/rescue300.svg'
+import Rescue400 from '../../../public/static/svg/rescue400.svg'
+import Rescue500 from '../../../public/static/svg/rescue500.svg'
 
 
 
@@ -26,22 +26,22 @@ function RescueAchievementIcon ({ rescueCount, ...iconProps }) {
   let count = 0
 
   if (rescueCount >= 1000) {
-    Icon = Rescue1000Svg
+    Icon = Rescue1000
     count = 1000
   } else if (rescueCount >= 500) {
-    Icon = Rescue500Svg
+    Icon = Rescue500
     count = 500
   } else if (rescueCount >= 400) {
-    Icon = Rescue400Svg
+    Icon = Rescue400
     count = 400
   } else if (rescueCount >= 300) {
-    Icon = Rescue300Svg
+    Icon = Rescue300
     count = 300
   } else if (rescueCount >= 200) {
-    Icon = Rescue200Svg
+    Icon = Rescue200
     count = 200
   } else if (rescueCount >= 100) {
-    Icon = Rescue100Svg
+    Icon = Rescue100
     count = 100
   }
 
