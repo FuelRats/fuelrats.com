@@ -17,6 +17,7 @@ import PageTransitionContainer from '~/components/AppLayout/PageTransitionContai
 import Header from '~/components/Header'
 import LoginModal from '~/components/LoginModal'
 import NProgress from '~/components/NProgress'
+import SilentBoundary from '~/components/SilentBoundary'
 import UserMenu from '~/components/UserMenu'
 import * as faIcons from '~/helpers/faIconLibrary'
 import { resolvePageMeta } from '~/helpers/gIPTools'
@@ -80,23 +81,21 @@ class FuelRatsApp extends App {
     return initialProps
   }
 
-  renderPage = ({ item, key, props }) => {
+  renderPage = (style, item) => {
     const { Page, pageProps, pageMeta } = item
 
     const {
       title,
       displayTitle,
       noHeader,
-      noLayout,
     } = pageMeta
 
     return (
       <animated.main
-        key={key}
         className={['page', title.toLowerCase().replace(/\s/gu, '-'), pageMeta.className]}
-        style={props}>
+        style={style}>
         {
-          !noHeader && !noLayout && (
+          !noHeader && (
             <header className="page-header">
               <h1>
                 {displayTitle ?? title}
@@ -104,7 +103,9 @@ class FuelRatsApp extends App {
             </header>
           )
         }
-        <Page {...pageProps} />
+        <SilentBoundary>
+          <Page {...pageProps} />
+        </SilentBoundary>
       </animated.main>
     )
   }
@@ -125,15 +126,9 @@ class FuelRatsApp extends App {
         </NextHead>
         <div role="application">
           <Provider store={store}>
-            {
-              !pageMeta.noLayout && (
-                <>
-                  <NProgress />
-                  <Header />
-                  <UserMenu />
-                </>
-              )
-            }
+            <NProgress />
+            <Header />
+            <UserMenu />
 
             <PageTransitionContainer {...this.pageData}>
               {this.renderPage}

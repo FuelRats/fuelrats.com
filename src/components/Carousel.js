@@ -127,20 +127,22 @@ class Carousel extends React.Component {
         initial={{ opacity: 1 }}
         leave={{ opacity: 0 }}>
         {
-          (slide) => {
-            return slide.image && ((style) => {
-              const divStyle = {
-                ...style,
-                backgroundImage: `url(${slide.image})`,
-                backgroundPosition: slide.position || 'center',
-              }
+          (style, slide) => {
+            if (!slide.image) {
+              return null
+            }
 
-              return (
-                <animated.div
-                  className="carousel-slide"
-                  style={divStyle} />
-              )
-            })
+            return (
+              <animated.div
+                className="carousel-slide"
+                style={
+                  {
+                    ...style,
+                    backgroundImage: `url(${slide.image})`,
+                    backgroundPosition: slide.position || 'center',
+                  }
+                } />
+            )
           }
         }
       </Transition>
@@ -156,26 +158,24 @@ class Carousel extends React.Component {
         initial={{ xPos: 0 }}
         leave={{ xPos: 100 }}>
         {
-          (slide) => {
-            return slide.image && (({ xPos }) => {
-              const spanStyle = {
-                transform: xPos.to((value) => {
-                  return (value ? `translate3d(${value}%,0,0)` : undefined)
-                }),
-              }
+          ({ xPos }, slide) => {
+            if (!slide.image || !slide.text) {
+              return null
+            }
 
-              return (
-                slide.text
-                  ? (
-                    <animated.span
-                      className="carousel-slide-text"
-                      style={spanStyle}>
-                      {slide.text}
-                    </animated.span>
-                  )
-                  : null
-              )
-            })
+            const spanStyle = {
+              transform: xPos.to((value) => {
+                return (value ? `translate3d(${value}%,0,0)` : undefined)
+              }),
+            }
+
+            return (
+              <animated.span
+                className="carousel-slide-text"
+                style={spanStyle}>
+                {slide.text}
+              </animated.span>
+            )
           }
         }
       </Transition>

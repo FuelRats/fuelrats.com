@@ -23,7 +23,7 @@ const translate3dHeight = (value) => {
 
 
 
-function renderModal ({ item, key, props: style }) {
+function renderModal (style, item) {
   const {
     as,
     className,
@@ -43,7 +43,6 @@ function renderModal ({ item, key, props: style }) {
 
   return isOpen && (
     <RootElement
-      key={key}
       className={['modal', className]}
       role="dialog"
       style={{ transform: style.pos.to(translate3dHeight) }}>
@@ -91,7 +90,8 @@ function OuterModal (props) {
     }
   }, [handleGlobalKeyDown, hideClose, isOpen])
 
-  const modalTransition = useTransition(props, JSON.stringify(props), {
+  const modalTransition = useTransition(props, {
+    key: JSON.stringify(props),
     from: { pos: -100 },
     enter: { pos: 0 },
     leave: { pos: -100 },
@@ -104,7 +104,7 @@ function OuterModal (props) {
 
   return (
     <ModalPortal isOpen={isOpen}>
-      {modalTransition.map(renderModal)}
+      {modalTransition(renderModal)}
     </ModalPortal>
   )
 }
