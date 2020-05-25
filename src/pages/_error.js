@@ -34,19 +34,45 @@ class ErrorPage extends React.Component {
     } = this.props
 
     return (
-      <div className={styles.errorInfo}>
-        {
-          Boolean(statusCode) && (
-            <h1 className={styles.errorCode}>{statusCode}</h1>
-          )
-        }
-
-        <h3 className={styles.errorText}>{title}</h3>
-
-        <small className={styles.subtext}>
-          {'If you believe this is an error, please open a ticket or contact: '}
-          <a href="mailto:support@fuelrats.com">{'support@fuelrats.com'}</a>
-        </small>
+      <div className={styles.container}>
+        <div className={[styles.postit, styles.topLeft]}>
+          <p className={styles.note}>
+            <strong>{`Mary,  ${title}`}</strong>
+            {'Mary, Mary, quite contrary, How does your garden grow? With silver bells, and cockle shells, And pretty maids all in a row.'}
+          </p>
+        </div>
+        <div className={styles.topRight}>
+          <p className={styles.note}>
+            <strong>{'Mary, Mary'}</strong>
+            {'Mary, Mary, quite contrary, How does your garden grow? With silver bells, and cockle shells, And pretty maids all in a row.'}
+          </p>
+        </div>
+        <div className={styles.btmRight}>
+          <p className={styles.note}>
+            <strong>{'Mary, Mary'}</strong>
+            {'Mary, Mary, quite contrary, How does your garden grow? With silver bells, and cockle shells, And pretty maids all in a row.'}
+          </p>
+        </div>
+        <div className={styles.sidePolo}>
+          <div className={styles.polaroidImg}>
+            <div className={styles.gloss} />
+            <img alt="error_image" src="/static/images/errorpage/side-image.png" />
+          </div>
+          <p>
+            {'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'}
+          </p>
+        </div>
+        <div className={styles.errorPolo}>
+          <div className={styles.polaroidImg}>
+            <div className={styles.gloss} />
+            <img alt="error_image" src="/static/images/errorpage/404error.jpg" />
+          </div>
+          {
+            Boolean(statusCode) && (
+              <p className={styles.errorCode}>{statusCode}</p>
+            )
+          }
+        </div>
       </div>
     )
   }
