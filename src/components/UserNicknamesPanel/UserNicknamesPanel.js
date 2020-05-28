@@ -13,6 +13,7 @@ import { connect } from '~/store'
 import {
   selectUserById,
   withCurrentUserId,
+  selectNicknamesByUserId,
 } from '~/store/selectors'
 
 // Component constants
@@ -59,9 +60,10 @@ class UserNicknamesPanel extends React.Component {
 
   render () {
     const {
-      user,
+      nicknames,
     } = this.props
-    const nickCount = user?.relationships.nicknames.data?.length
+
+    const nickCount = nicknames?.length
     const maxNicksReached = (nickCount >= MAXNICKS)
 
     return (
@@ -78,13 +80,13 @@ class UserNicknamesPanel extends React.Component {
           <ul>
             {(nickCount <= 0) && (<li className="text-center">{'You do not have any nicknames registered yet.'}</li>)}
             {
-              user?.relationships.nicknames.data?.map((nickname) => {
+              nicknames?.map((nickname) => {
                 return (
-                  <li key={nickname}>
-                    <span>{nickname}</span>
+                  <li key={nickname.id}>
+                    <span>{nickname.attributes?.nick}</span>
                     <ConfirmActionButton
                       className="icon"
-                      name={nickname}
+                      name={nickname.attributes.nick}
                       onConfirm={this._handleDeleteNickname}>
                       <FontAwesomeIcon fixedWidth icon="trash" />
                     </ConfirmActionButton>
@@ -115,6 +117,7 @@ class UserNicknamesPanel extends React.Component {
 
   static mapStateToProps = (state) => {
     return {
+      nicknames: withCurrentUserId(selectNicknamesByUserId)(state),
       user: withCurrentUserId(selectUserById)(state),
     }
   }
