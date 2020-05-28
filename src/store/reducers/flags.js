@@ -21,18 +21,13 @@ const flagsReducer = produce((draftState, action) => {
   switch (type) {
     case actionTypes.session.setFlag:
       if (status === 'success') {
-        return {
-          ...draftState,
-          ...payload,
-        }
+        Object.assign(draftState, payload)
       }
       break
 
     default:
       break
   }
-
-  return draftState
 }, initialState.flags)
 
 

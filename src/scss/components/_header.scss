@@ -231,24 +231,8 @@
 
     overflow: hidden;
 
-    .get-help {
-      width: 100%;
-      max-height: 0;
-
-      animation-direction: reverse;
-      animation-duration: 1s;
-      animation-fill-mode: both;
-      animation-name: grow-height;
-
-      &.hide {
-        animation-duration: 0s;
-      }
-
-      &.show {
-        max-height: 100vh;
-
-        animation-direction: normal;
-      }
+    .get-fuel {
+      text-transform: uppercase;
     }
 
     button,

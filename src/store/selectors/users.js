@@ -1,5 +1,6 @@
 // Module imports
 import { createSelector } from 'reselect'
+import { withCurrentUserId } from './session'
 
 
 
@@ -35,3 +36,14 @@ export const selectNicknamesByUserId = createSelector(
     return []
   },
 )
+
+export const selectCurrentUserScopes = (state) => {
+  return withCurrentUserId(selectUserById)(state)?.meta?.permissions ?? []
+}
+
+
+export const selectCurrentUserHasScope = (state, { scope }) => {
+  const scopes = selectCurrentUserScopes(state)
+
+  return scopes.includes(scope)
+}

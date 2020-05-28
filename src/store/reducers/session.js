@@ -68,8 +68,6 @@ const sessionReducer = produce((draftState, action) => {
     default:
       break
   }
-
-  return undefined
 }, initialState.session)
 
 

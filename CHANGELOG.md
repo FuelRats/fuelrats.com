@@ -53,6 +53,41 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
+
+## [2.11.4] - 2020-05-24
+
+### ✨ Added
+* Add `.trim()` in to various inputs to prevent issues with spaces in names. - [#249][]
+
+
+### ⚡ Changed
+* Reword all instances of "get help" to "get fuel". - [#249][]
+* Change out old carousel for a new set of images. - [#249][]
+* Make TOS/PP notice more obvious on /i-need-fuel. - [#249][]
+
+
+### ⚙ Tasks
+* Switch to new SVG implementation. - [#249][]
+
+
+[#249]: https://github.com/fuelrats/fuelrats.com/pull/249
+
+
+
+
+
+## [2.11.3] - 2020-05-09
+
+### 🐛 Fixed
+* Resolved issues with our CSS processing config. - [#242][]
+
+
+[#242]: https://github.com/fuelrats/fuelrats.com/pull/242
+
+
+
+
+
 ## [2.11.2] - 2020-04-16
 
 ### 🐛 Fixed

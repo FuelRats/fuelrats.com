@@ -1,0 +1,27 @@
+.scopeView {
+  margin: 1rem 1.5rem 0;
+}
+
+.namespace {
+  .title {
+    text-transform: capitalize;
+  }
+
+  .content {
+    margin: 0 1rem 1.5rem;
+
+    list-style: inside;
+
+    .permission {
+      &.inaccessible {
+        &::after {
+          content: ' (Not Applicable)';
+        }
+
+        span {
+          text-decoration: line-through;
+        }
+      }
+    }
+  }
+}

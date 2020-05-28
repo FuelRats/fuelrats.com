@@ -7,6 +7,7 @@ import React from 'react'
 
 // Component imports
 import { authenticated } from '~/components/AppLayout'
+import ScopeView from '~/components/ScopeView'
 import { pageRedirect } from '~/helpers/gIPTools'
 import { actions, connect } from '~/store'
 
@@ -95,23 +96,14 @@ class Authorize extends React.Component {
         {
           client && (
             <>
-              <h3>
-                {`${client.clientName} is requesting access to your FuelRats account`}
-              </h3>
-
-              <p><strong>{'This application will be able to:'}</strong></p>
-
-              <ul>
-                {'Do things that relate to these scopes:'}
-                <pre>{client.scopes.join(', ')}</pre>
-              </ul>
-              <span>
-                {'Look we\'re not 100% sure what they do but we know the app uses them somehow. The redo to this page isn\'t done yet, but we\'re focused on functionality first.'}
-              </span>
+              <h4>
+                {`${client.clientName} is requesting access to your Fuel Rats account`}
+              </h4>
               <br />
-              <div>
-                <img alt="deal with it" src="/static/images/dealwithit.jpg" />
-              </div>
+              <span><b>{'This application will be able to:'}</b></span>
+
+              <ScopeView scopes={client.scopes} />
+
               <form>
                 <div className="primary">
                   <button
@@ -124,14 +116,19 @@ class Authorize extends React.Component {
                     {submitting ? 'Submitting...' : 'Allow'}
                   </button>
 
-                  <button
-                    disabled={submitting}
-                    name="cancel"
-                    type="button"
-                    value="true"
-                    onClick={this._handleSubmit}>
-                    {submitting ? 'Submitting...' : 'Deny'}
-                  </button>
+                  {' '}
+                  {
+                    !submitting && (
+                      <button
+                        disabled={submitting}
+                        name="cancel"
+                        type="button"
+                        value="true"
+                        onClick={this._handleSubmit}>
+                        {'Deny'}
+                      </button>
+                    )
+                  }
                 </div>
               </form>
             </>

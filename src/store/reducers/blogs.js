@@ -20,13 +20,13 @@ const blogsReducer = produce((draftState, action) => {
   switch (type) {
     case actionTypes.wordpress.authors.read:
       if (status === 'success') {
-        draftState.authors[payload.id] = { ...payload }
+        draftState.authors[payload.id] = payload
       }
       break
 
     case actionTypes.wordpress.categories.read:
       if (status === 'success') {
-        draftState.categories[payload.id] = { ...payload }
+        draftState.categories[payload.id] = payload
       }
       break
 
@@ -45,7 +45,7 @@ const blogsReducer = produce((draftState, action) => {
           break
 
         case 'success':
-          draftState.blogs = [...payload]
+          draftState.blogs = payload
           draftState.totalPages = parseInt(action.response.headers['x-wp-totalpages'], 10)
           break
 
