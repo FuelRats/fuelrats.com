@@ -79,13 +79,15 @@ class ConfirmActionButton extends React.Component {
       performingAction,
     } = this.state
 
+    const buttonSize = className.includes('icon') ? 'icon' : 'compact'
+
     return (
       <div className={['action-confirmation-button', className]}>
         {confirmingAction && (<span>{confirmSubText}</span>)}
         {
           confirmingAction && (
             <button
-              className="compact"
+              className={buttonSize}
               data-action="deny"
               type="button"
               onClick={this._handleClick}>
@@ -94,7 +96,7 @@ class ConfirmActionButton extends React.Component {
           )
         }
         <button
-          className={['compact', { green: confirmingAction }]}
+          className={[buttonSize, { green: confirmingAction }]}
           data-action="confirm"
           type="button"
           onClick={this._handleClick}
