@@ -1,15 +1,17 @@
 @import '../../scss/colors';
 
 .userNicknames {
-  composes: panel-content from global;
-
   min-height: 6rem;
-  padding: 0;
+  padding: 0.5rem 0 0;
 
   overflow: visible;
 
 
   ul > li {
+    display: flex;
+
+    justify-content: space-between;
+
     padding: 0.5rem 1rem;
 
     &:nth-child(even) {
