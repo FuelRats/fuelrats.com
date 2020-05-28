@@ -1,14 +1,62 @@
 {
-  "css.validate": false,
-  "less.validate": false,
-  "scss.validate": false,
-  "editor.tabSize": 2,
-  "editor.insertSpaces": true,
-  "editor.rulers": [180],
-  "path-autocomplete.pathMappings": {
-    "~": "${folder}/src", // alias for /src
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "stylelint.vscode-stylelint"
   },
   "blueprint.templatesPath": [
     "./.vscode/blueprints"
-  ]
+  ],
+  "css.validate": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll.stylelint": true
+  },
+  "editor.insertSpaces": true,
+  "editor.rulers": [
+    180
+  ],
+  "editor.tabSize": 2,
+  "editor.wordWrapColumn": 180,
+  "eslint.format.enable": true,
+  "eslint.lintTask.enable": true,
+  "eslint.packageManager": "yarn",
+  "files.associations": {
+    "*.js": "javascriptreact",
+    ".all-contributorsrc": "json",
+    ".stylelintrc": "json"
+  },
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+  "html.format.wrapLineLength": 180,
+  "javascript.implicitProjectConfig.experimentalDecorators": true,
+  "javascript.suggest.paths": false,
+  "less.validate": false,
+  "path-autocomplete.enableFolderTrailingSlash": false,
+  "path-autocomplete.extensionOnImport": true,
+  "path-autocomplete.pathMappings": {
+    "~": "${folder}/src"
+  },
+  "path-autocomplete.transformations": [
+    {
+      "parameters": [
+        "\\.(m)?js(x)?$",
+        ""
+      ],
+      "type": "replace",
+      "when": {
+        "fileName": "\\.(m)?js(x)?$"
+      }
+    }
+  ],
+  "scss.validate": false,
+  "search.exclude": {
+    "**/dist": true
+  },
+  "stylelint.packageManager": "yarn",
+  "stylelint.reportNeedlessDisables": true,
+  "typescript.suggest.paths": false
 }
