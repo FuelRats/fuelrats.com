@@ -28,6 +28,8 @@ const initialState = {
     statistics: [],
   },
 
+  nicknames: {},
+
   pageViews: {},
 
   rats: {},

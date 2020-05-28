@@ -13,8 +13,8 @@ import initialState from '../initialState'
 
 const usersReducer = produce((draftState, action) => {
   const {
-    nickname,
-    userId,
+    // nickname,
+    // userId,
     status,
     type,
   } = action
@@ -22,7 +22,7 @@ const usersReducer = produce((draftState, action) => {
   switch (type) {
     case actionTypes.nicknames.create:
       if (status === 'success') {
-        draftState[userId].attributes.nicknames.push(nickname)
+        // draftState[userId].attributes.nicknames.push(nickname)
       }
       break
 

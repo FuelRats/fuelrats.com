@@ -21,7 +21,9 @@ const leaderboard = {
 
 
 const nicknames = {
+  read: 'nicknames/read',
   create: 'nicknames/create',
+  delete: 'nicknames/delete',
 }
 
 

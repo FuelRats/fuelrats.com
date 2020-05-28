@@ -7,21 +7,21 @@ import { presentApiRequestBody } from '~/helpers/presenters'
 
 
 
+export const getNickname = (nickId) => {
+  return frApiRequest(
+    actionTypes.nicknames.read,
+    { url: `/groups/${nickId}` },
+  )
+}
 
-export const addNickname = (userId, nickname, password) => {
+
+export const addNickname = (data) => {
   return frApiRequest(
     actionTypes.nicknames.create,
     {
       url: '/nicknames',
       method: 'post',
-      data: {
-        nickname,
-        password,
-      },
-    },
-    {
-      nickname,
-      userId,
+      data: presentApiRequestBody('nicknames', data),
     },
   )
 }
@@ -33,9 +33,6 @@ export const deleteNickname = (nickname) => {
     {
       url: `/nicknames/${nickname}`,
       method: 'delete',
-    },
-    {
-      nickname,
     },
   )
 }

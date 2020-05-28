@@ -37,6 +37,13 @@ const apiResourceReducer = createJSONAPIResourceReducer(localApiUrl, initialStat
   decals: 'decals',
   epics: 'epics',
   groups: 'groups',
+  nicknames: {
+    target: 'nicknames',
+    dependencies: [{
+      type: 'users',
+      idAttribute: 'userId',
+    }],
+  },
   rats: {
     target: 'rats',
     dependencies: [{
