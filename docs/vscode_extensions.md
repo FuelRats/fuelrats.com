@@ -26,7 +26,7 @@ While you could write effective code with just the extensions above, having thes
 * **[Path Autocomplete](https://marketplace.visualstudio.com/items?itemName=ionutvmi.path-autocomplete)**
   * While VSCode has it's own path completions, it does not have the same level of control this extension has. Along with some performance benefit, this extension also has support for the path aliases, which we use in fuelrats.com code.
 * **[DotENV](https://marketplace.visualstudio.com/items?itemName=mikestead.dotenv)**
-  * `.env` file syntax support. We use dotenv files for development enviornment setup.
+  * `.env` file syntax support. We use dotenv files for development environment setup.
 
 
 
