@@ -1,4 +1,5 @@
 // Module imports
+import { isError } from 'flux-standard-action'
 import PropTypes from 'prop-types'
 import React from 'react'
 
@@ -101,18 +102,19 @@ class LoginModal extends React.Component {
       opts.verify = this.state.verify
     }
 
-    const { status, payload } = await this.props.login(opts)
+    const response = await this.props.login(opts)
 
-    if (status === 'success') {
-      this.props.getUserProfile()
-      this.props.onClose()
-      this.setState({ loggingIn: false })
-    } else {
+    if (isError(response)) {
       this.setState({
         loggingIn: false,
-        error: payload?.errors?.[0] ?? 'unknown',
+        error: response.payload?.errors?.[0] ?? 'unknown',
       })
+      return
     }
+    this.setState({ loggingIn: false })
+
+    this.props.getUserProfile()
+    this.props.onClose()
   }
 
   _handleRegisterClick = () => {

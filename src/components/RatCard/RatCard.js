@@ -1,4 +1,5 @@
 // Module imports
+import { isError } from 'flux-standard-action'
 import PropTypes from 'prop-types'
 import React from 'react'
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -10,7 +11,7 @@ import CardControls from '../CardControls'
 import InlineEditSpan from '../InlineEditSpan'
 import DefaultRatButton from './DefaultRatButton'
 import { formatAsEliteDate } from '~/helpers/formatTime'
-import { connect, actionStatus } from '~/store'
+import { connect } from '~/store'
 import {
   selectRatById,
   selectShipsByRatId,
@@ -144,7 +145,7 @@ class RatCard extends React.Component {
   }
 
   _handleDisplayRatUpdate = (res) => {
-    if (res.status === actionStatus.SUCCESS) {
+    if (!isError(res)) {
       this.setState({ submitting: false })
     }
   }

@@ -107,8 +107,6 @@ class ScopeView extends React.PureComponent {
     Redux Properties
   \***************************************************************************/
 
-  static mapDispatchToProps = []
-
   static mapStateToProps = createStructuredSelector({
     accessibleScopes: selectCurrentUserScopes,
   })

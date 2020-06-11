@@ -1,5 +1,8 @@
 // Component imports
+import { defineRelationship } from '@fuelrats/web-util/redux-json-api'
+
 import actionTypes from '../actionTypes'
+import { deletesResource, deletesRelationship, createsRelationship, RESOURCE } from '../reducers/frAPIResources'
 import { withCurrentUserId, selectUserById } from '../selectors'
 import { frApiRequest } from './services'
 import { presentApiRequestBody } from '~/helpers/presenters'
@@ -14,8 +17,8 @@ export const getNickname = (nickId) => {
   )
 }
 
-
-export const addNickname = (data) => {
+// TODO: remove argument from this and deleteNickname when API bugs are fixed.
+export const addNickname = (user, data) => {
   return frApiRequest(
     actionTypes.nicknames.create,
     {
@@ -23,17 +26,27 @@ export const addNickname = (data) => {
       method: 'post',
       data: presentApiRequestBody('nicknames', data),
     },
+    createsRelationship(
+      defineRelationship(user, { nicknames: [RESOURCE] }),
+    ),
   )
 }
 
 
-export const deleteNickname = (nickname) => {
+export const deleteNickname = (user, nickname) => {
   return frApiRequest(
     actionTypes.nicknames.delete,
     {
-      url: `/nicknames/${nickname}`,
+      url: `/nicknames/${nickname.id}`,
       method: 'delete',
     },
+    deletesResource(nickname),
+    deletesRelationship(
+      defineRelationship(
+        user,
+        { nicknames: [nickname] },
+      ),
+    ),
   )
 }
 

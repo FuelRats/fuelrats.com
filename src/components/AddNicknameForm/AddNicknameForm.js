@@ -40,6 +40,7 @@ class AddNicknameForm extends React.Component {
   _handleSubmit = async (event) => {
     const {
       addNickname,
+      user,
     } = this.props
     const {
       nickname,
@@ -49,7 +50,7 @@ class AddNicknameForm extends React.Component {
 
     this.setState({ submitting: true })
 
-    await addNickname({ attributes: { nick: nickname } })
+    await addNickname(user, { attributes: { nick: nickname } })
 
     this.setState({
       nickname: '',

@@ -1,4 +1,5 @@
 // Module imports
+import { isError } from 'flux-standard-action'
 import React from 'react'
 import { createStructuredSelector } from 'reselect'
 
@@ -14,6 +15,9 @@ import {
 import { HttpStatus } from '~/helpers/HttpStatus'
 import { connect } from '~/store'
 import { selectCurrentUserId } from '~/store/selectors'
+
+
+
 
 
 @asModal({
@@ -76,28 +80,29 @@ class ChangePasswordModal extends React.Component {
 
     this.setState({ submitting: true })
 
-    const { payload, response } = await this.props.changePassword({
+    const response = await this.props.changePassword({
       id: userId,
       password,
       newPassword,
     })
 
-    let error = null
+    if (isError(response)) {
+      const { meta, payload } = response
+      let errorMessage = 'Unknown error occured.'
 
-    if (HttpStatus.isClientError(response.status)) {
-      error = payload.errors && payload.errors.length ? payload.errors[0].detail : 'Client communication error'
-    }
+      if (HttpStatus.isClientError(meta.response.status)) {
+        errorMessage = payload.errors && payload.errors.length ? payload.errors[0].detail : 'Client communication error'
+      }
 
-    if (HttpStatus.isServerError(response.status)) {
-      error = 'Server communication error'
-    }
+      if (HttpStatus.isServerError(meta.response.status)) {
+        errorMessage = 'Server communication error'
+      }
 
-    this.setState({
-      error,
-      submitting: false,
-    })
-
-    if (!error) {
+      this.setState({
+        error: errorMessage,
+        submitting: false,
+      })
+    } else {
       this.props.onClose()
     }
   }

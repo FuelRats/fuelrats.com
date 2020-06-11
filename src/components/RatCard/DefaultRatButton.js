@@ -18,9 +18,9 @@ import {
 
 
 
-
+// TODO Check Usage of onUpdate
 @connect
-class ClassName extends React.Component {
+class DefaultRatButton extends React.Component {
   /***************************************************************************\
     Class Properties
   \***************************************************************************/
@@ -130,4 +130,4 @@ class ClassName extends React.Component {
 
 
 
-export default ClassName
+export default DefaultRatButton

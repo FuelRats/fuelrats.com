@@ -1,3 +1,4 @@
+import { isError } from 'flux-standard-action'
 import { produce } from 'immer'
 
 
@@ -14,13 +15,12 @@ import initialState from '../initialState'
 const flagsReducer = produce((draftState, action) => {
   const {
     payload,
-    status,
     type,
   } = action
 
   switch (type) {
     case actionTypes.session.setFlag:
-      if (status === 'success') {
+      if (!isError(action)) {
         Object.assign(draftState, payload)
       }
       break

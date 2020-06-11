@@ -17,7 +17,6 @@ export const disposeImage = ({ id, url }) => {
 
     return dispatch({
       type: actionTypes.images.dispose,
-      status: 'success',
       payload: id,
     })
   }

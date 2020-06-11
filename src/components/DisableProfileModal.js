@@ -1,4 +1,5 @@
 // Module imports
+import { isError } from 'flux-standard-action'
 import React from 'react'
 
 
@@ -75,24 +76,28 @@ class DisableProfileModal extends React.Component {
 
     this.setState({ submitting: true })
 
-    const response = await this.props.updateUser(userId, { status: 'deactivated' }, password)
+    const response = await this.props.updateUser({
+      id: userId,
+      status: 'deactivated',
+    }, password)
 
-    let error = null
+    if (isError(response)) {
+      const { meta, payload } = response
+      let errorMessage = 'Unknown error occured.'
 
-    if (HttpStatus.isClientError(response.errors.code)) {
-      error = response.errors && response.errors.length ? response.errors[0].detail : 'Client communication error'
-    }
+      if (HttpStatus.isClientError(meta.response.status)) {
+        errorMessage = payload.errors && payload.errors.length ? payload.errors[0].detail : 'Client communication error'
+      }
 
-    if (HttpStatus.isServerError(response.errors.code)) {
-      error = 'Server communication error'
-    }
+      if (HttpStatus.isServerError(meta.response.status)) {
+        errorMessage = 'Server communication error'
+      }
 
-    this.setState({
-      error,
-      submitting: false,
-    })
-
-    if (!error) {
+      this.setState({
+        error: errorMessage,
+        submitting: false,
+      })
+    } else {
       this.props.onClose()
     }
   }

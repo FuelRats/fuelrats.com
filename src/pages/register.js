@@ -1,4 +1,5 @@
 // Module imports
+import { isError } from 'flux-standard-action'
 import React from 'react'
 
 
@@ -111,7 +112,7 @@ class Register extends React.Component {
 
     this.setState({ submitting: true })
 
-    const { status: regStatus } = await this.props.register({
+    const response = await this.props.register({
       email,
       password,
       name: ratName.trim(),
@@ -120,16 +121,16 @@ class Register extends React.Component {
       recaptcha: recaptchaResponse,
     })
 
-    if (regStatus === 'success') {
+    if (!isError(response)) {
       await this.props.login({
         email,
         password,
         route: 'profile',
         routeParams: { tab: 'overview', fl: '1' },
       })
-    } else {
-      this.setState({ submitting: false })
     }
+
+    this.setState({ submitting: false })
   }
 
 

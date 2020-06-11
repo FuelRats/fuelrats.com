@@ -1,5 +1,4 @@
 // Component imports
-import actionStatus from '~/store/actionStatus'
 import actionTypes from '~/store/actionTypes'
 
 
@@ -25,8 +24,11 @@ const getImageLoader = (dispatch) => {
     worker.addEventListener('message', (event) => {
       dispatch({
         type: actionTypes.images.read,
-        status: actionStatus.SUCCESS,
-        ...event.data,
+        error: !event.data.payload,
+        payload: event.data.payload,
+        meta: {
+          id: event.data.id,
+        },
       })
     })
     window.addEventListener('beforeunload', () => {
