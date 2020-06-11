@@ -18,6 +18,7 @@ const babelConfig = {
         },
         bugfixes: true,
         shippedProposals: true,
+        loose: true,
       },
     ],
   ],
