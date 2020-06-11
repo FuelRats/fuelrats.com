@@ -1,8 +1,8 @@
 // Module imports
 
+import { createAxiosFSA } from '@fuelrats/web-util/actions'
 import { isError } from 'flux-standard-action'
 import Cookies from 'js-cookie'
-import { createAxiosFSA } from '@fuelrats/web-util/actions'
 
 
 

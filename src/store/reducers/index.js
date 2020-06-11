@@ -1,5 +1,5 @@
-import { combineReducers } from 'redux'
 import { chainReducers, withDefaultReducers } from '@fuelrats/web-util/reducers'
+import { combineReducers } from 'redux'
 
 
 
