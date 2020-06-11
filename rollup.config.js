@@ -16,6 +16,7 @@ const babelConfig = {
         targets: {
           node: '13',
         },
+        bugfixes: true,
         shippedProposals: true,
       },
     ],
