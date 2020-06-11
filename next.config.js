@@ -1,9 +1,4 @@
 /* eslint-env node */
-
-
-
-
-
 // Module imports
 const withWorkers = require('@zeit/next-workers')
 const crypto = require('crypto')
