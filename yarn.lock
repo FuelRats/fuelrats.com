@@ -1325,6 +1325,11 @@
   resolved "https://registry.yarnpkg.com/@fuelrats/argument-validator-utils/-/argument-validator-utils-1.1.0-canary.4.tgz#0cb8f862286e4dab8390a0c0597de170cf256155"
   integrity sha512-wnARO22lR2uKYZ87qc+Et5b+DstE4O7vf8Ejr+22BBjhxm07kC3VfNQ7icQdjwLtQDNRGUFuLEzsh+PITK3OfQ==
 
+"@fuelrats/babel-plugin-classnames@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@fuelrats/babel-plugin-classnames/-/babel-plugin-classnames-0.3.0.tgz#dd2116bc37c45919a4dcb3ee7ccfe4c15733f219"
+  integrity sha512-qoiY3beWbrl9y9gAgIANoZLgokjBrcHAJMcOX+4A6JzRdez3/3opN53p3/tOS4zA7QHcBG4FTQFU6mh5a0AtPg==
+
 "@fuelrats/eslint-config-react@^2.2.0-canary.2":
   version "2.2.0-canary.2"
   resolved "https://registry.yarnpkg.com/@fuelrats/eslint-config-react/-/eslint-config-react-2.2.0-canary.2.tgz#a54401aab881af16059bc2f30340dbff2418d625"
@@ -1350,9 +1355,13 @@
   resolved "https://registry.yarnpkg.com/@fuelrats/stylelint-config/-/stylelint-config-1.1.0.tgz#22cf1feca1d41e71cd460d0c5de1c04b17f16a62"
   integrity sha512-RlxuFrOafpUv6kpuCU1T4ZRrMvMXx3qXS9OBKrZIq9Gr3Zbn7r30tw4piLtxjhyl8bmLYRdNvFoWksxNuxmiwA==
 
-"@fuelrats/web-util@link:../fuelrats.com-utils/dist":
-  version "0.0.0"
-  uid ""
+"@fuelrats/web-util@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@fuelrats/web-util/-/web-util-0.1.0.tgz#61753153eaf2cd68660b06d3821615a5165d4f4d"
+  integrity sha512-yzunQgmr5KAS5N7bBQ4HkGLeQlExJJxyUf0mSqY0INgFbcCJXr5KY7pIN963Wyd7YZCpFnnQe0D1RKK11X+4ig==
+  dependencies:
+    "@fuelrats/argument-validator-utils" "^1.1.0-canary.4"
+    immer "^7.0.0"
 
 "@koa/router@^9.0.1":
   version "9.0.1"
@@ -2199,10 +2208,6 @@ babel-loader@8.1.0:
     mkdirp "^0.5.3"
     pify "^4.0.1"
     schema-utils "^2.6.5"
-
-"babel-plugin-classnames@https://github.com/FuelRats/babel-plugin-classnames.git#9e50fc0c07bdb8aa5b72f7160301c3bc9db0f837":
-  version "0.2.0"
-  resolved "https://github.com/FuelRats/babel-plugin-classnames.git#9e50fc0c07bdb8aa5b72f7160301c3bc9db0f837"
 
 babel-plugin-dynamic-import-node@^2.3.3:
   version "2.3.3"

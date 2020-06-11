@@ -17,6 +17,6 @@
     "@babel/plugin-proposal-export-default-from",
     "@babel/plugin-proposal-export-namespace-from",
     "@babel/plugin-proposal-optional-catch-binding",
-    ["babel-plugin-classnames", { "transformObjects": true }]
+    ["@fuelrats/babel-plugin-classnames", { "transformObjects": true }]
   ]
 }
