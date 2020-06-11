@@ -18,7 +18,7 @@ const CarouselSlides = {
     filename: 'chives.jpg',
   },
   1: {
-    text: 'CMDR RafaBC',
+    text: 'CMDR rafaBC_',
     position: '20% 50%',
     filename: 'rafa.jpg',
   },
