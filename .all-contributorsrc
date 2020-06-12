@@ -3,6 +3,7 @@
   "projectOwner": "FuelRats",
   "imageSize": 80,
   "commit": false,
+  "contributorsPerLine": 5,
   "contributors": [
     {
       "login": "UncleClapton",
