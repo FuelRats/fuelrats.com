@@ -1,4 +1,5 @@
 // Module imports
+import { isError } from 'flux-standard-action'
 import React from 'react'
 
 
@@ -78,15 +79,16 @@ class PasswordReset extends React.Component {
     const {
       t: token,
     } = query
-    let tokenIsValid = false
+
+    let validateError = true
 
     if (token) {
-      const { status } = await store.dispatch(actions.validatePasswordResetToken(token))
-      tokenIsValid = status === 'success'
+      const response = await store.dispatch(actions.validatePasswordResetToken(token))
+      validateError = isError(response)
     }
 
     return {
-      tokenIsValid,
+      validateError,
     }
   }
 
@@ -98,7 +100,7 @@ class PasswordReset extends React.Component {
 
   render () {
     const {
-      tokenIsValid,
+      validateError,
     } = this.props
     const {
       password,
@@ -114,7 +116,7 @@ class PasswordReset extends React.Component {
             )
           }
         {
-            (!submitted && tokenIsValid) && (
+            (!submitted && !validateError) && (
               <form onSubmit={this._handleSubmit}>
                 <fieldset>
                   <label htmlFor="password">
@@ -150,7 +152,7 @@ class PasswordReset extends React.Component {
             )
           }
         {
-            (!submitted && !tokenIsValid) && (
+            (!submitted && validateError) && (
               <div>
                 <header>
                   <h3>{'Invalid Token'}</h3>

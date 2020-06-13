@@ -1,5 +1,6 @@
 /* globals $IS_DEVELOPMENT:false */
 // Module imports
+import { isFSA } from 'flux-standard-action'
 import { connect } from 'react-redux'
 import {
   bindActionCreators,
@@ -12,10 +13,8 @@ import thunkMiddleware from 'redux-thunk'
 
 
 
-
 // Component imports
 import * as actions from './actions'
-import actionStatus from './actionStatus'
 import initialState from './initialState'
 import reducer from './reducers'
 
@@ -25,8 +24,28 @@ import reducer from './reducers'
 
 const middlewares = [thunkMiddleware]
 
+
+
+
+
+const FSAComplianceMiddleware = () => {
+  return (next) => {
+    return (action) => {
+      const finalAction = next(action)
+
+      if (!isFSA(finalAction)) {
+        console.error('WARNING! non-compliant action object was dispatched.', finalAction)
+        throw new Error('STOP IT! Get some help. (An action was non-compliant. check console.)')
+      }
+
+      return finalAction
+    }
+  }
+}
+
 if ($IS_DEVELOPMENT) {
   middlewares.unshift(require('redux-immutable-state-invariant').default())
+  middlewares.push(FSAComplianceMiddleware)
 }
 
 
@@ -106,7 +125,6 @@ const getActionCreators = (action, dispatch) => {
 
 export {
   actions,
-  actionStatus,
   getActionCreators,
   connectDecorator as connect,
   initStore,

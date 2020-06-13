@@ -46,7 +46,9 @@ class UserNicknamesPanel extends React.Component {
   }
 
   _handleDeleteNickname = async (event) => {
-    await this.props.deleteNickname(event.target.name)
+    await this.props.deleteNickname(this.props.user, this.props.nicknames.find((nick) => {
+      return nick.id === event.target.name
+    }))
     return 'Deleted!'
   }
 
@@ -86,7 +88,7 @@ class UserNicknamesPanel extends React.Component {
                     <span>{nickname.attributes?.nick}</span>
                     <ConfirmActionButton
                       className="icon"
-                      name={nickname.attributes.nick}
+                      name={nickname.id}
                       onConfirm={this._handleDeleteNickname}>
                       <FontAwesomeIcon fixedWidth icon="trash" />
                     </ConfirmActionButton>

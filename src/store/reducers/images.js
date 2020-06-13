@@ -1,3 +1,4 @@
+import { isError } from 'flux-standard-action'
 import { produce } from 'immer'
 
 
@@ -13,23 +14,22 @@ import initialState from '../initialState'
 
 const imageReducer = produce((draftState, action) => {
   const {
-    id,
     payload,
-    status,
+    meta,
     type,
   } = action
 
   switch (type) {
     case actionTypes.images.dispose:
-      if (status === 'success') {
-        delete draftState[id]
+      if (!isError(action)) {
+        delete draftState[meta.id]
       }
       break
 
 
     case actionTypes.images.read:
-      if (status === 'success') {
-        draftState[id] = payload
+      if (!isError(action)) {
+        draftState[meta.id] = payload
       }
       break
 

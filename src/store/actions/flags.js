@@ -21,11 +21,11 @@ export const setFlag = (name, _value) => {
     }
 
     return dispatch({
+      type: actionTypes.session.setFlag,
       payload: {
         [name]: value,
       },
-      status: success ? 'success' : 'error',
-      type: actionTypes.session.setFlag,
+      error: !success,
     })
   }
 }

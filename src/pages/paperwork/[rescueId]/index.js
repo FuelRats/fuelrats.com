@@ -45,8 +45,8 @@ class Paperwork extends React.Component {
   _handleDeleteClick = async () => {
     if (this.state.deleteConfirm) {
       this.setState({ deleting: true })
-
-      await this.props.deleteRescue(this.props.rescue.id)
+      // TODO: Add error handling
+      await this.props.deleteRescue(this.props.rescue)
 
       Router.pushRoute(
         this.props.userCanWriteAll
@@ -197,11 +197,13 @@ class Paperwork extends React.Component {
               deleteConfirm && (
                 <>
                   {
-                    deleting ? (
-                      <span>{'Deleting... '}<FontAwesomeIcon fixedWidth pulse icon="spinner" /> </span>
-                    ) : (
-                      <span>{'Delete this rescue? (This cannot be undone!) '}</span>
-                    )
+                    deleting
+                      ? (
+                        <span>{'Deleting... '}<FontAwesomeIcon fixedWidth pulse icon="spinner" /> </span>
+                      )
+                      : (
+                        <span>{'Delete this rescue? (This cannot be undone!) '}</span>
+                      )
                 }
 
                   <button
@@ -389,7 +391,7 @@ class Paperwork extends React.Component {
     Redux Properties
   \***************************************************************************/
 
-  static mapDispatchToProps = ['getRescue', 'deleteRescue']
+  static mapDispatchToProps = ['deleteRescue']
 
   static mapStateToProps = (state, { query }) => {
     return {

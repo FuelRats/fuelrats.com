@@ -1,5 +1,7 @@
 // Component imports
+import { defineRelationship } from '@fuelrats/web-util/redux-json-api'
 import actionTypes from '../actionTypes'
+import { createsRelationship, RESOURCE, deletesResource, deletesRelationship } from '../reducers/frAPIResources'
 import { frApiRequest } from './services'
 import { presentApiRequestBody } from '~/helpers/presenters'
 
@@ -36,6 +38,9 @@ export const createShip = (data) => {
       method: 'post',
       data: presentApiRequestBody('ships', data),
     },
+    createsRelationship(
+      defineRelationship(data.relationships?.rat?.data, { ships: [RESOURCE] }),
+    ),
   )
 }
 
@@ -47,6 +52,10 @@ export const deleteShip = (ship) => {
       url: `/ships/${ship.id}`,
       method: 'delete',
     },
+    deletesResource(ship),
+    deletesRelationship(
+      defineRelationship(ship.relationships?.rat?.data, { ships: [ship] }),
+    ),
   )
 }
 

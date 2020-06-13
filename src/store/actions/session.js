@@ -1,5 +1,5 @@
 // Component imports
-import actionStatus from '../actionStatus'
+import { createFSA } from '@fuelrats/web-util/actions'
 import actionTypes from '../actionTypes'
 import {
   selectPageRequiresAuth,
@@ -24,13 +24,14 @@ export const logout = (ctx) => {
     deleteCookie('access_token', ctx)
     delete frApi.defaults.headers.common.Authorization
 
-    return dispatch({
-      status: 'success',
-      type: actionTypes.session.logout,
-      payload: {
-        waitForDestroy: Boolean(selectPageRequiresAuth(getState())),
-      },
-    })
+    return dispatch(
+      createFSA(
+        actionTypes.session.logout,
+        {
+          waitForDestroy: Boolean(selectPageRequiresAuth(getState())),
+        },
+      ),
+    )
   }
 }
 
@@ -53,33 +54,33 @@ export const initUserSession = (ctx) => {
       userAgent = window.navigator.userAgent.toLowerCase()
     }
 
-    const result = {
-      type: actionTypes.session.initialize,
-      status: actionStatus.SUCCESS,
-      error: null,
-      accessToken,
-      userAgent,
-    }
+    const action = createFSA(
+      actionTypes.session.initialize,
+      {
+        accessToken,
+        userAgent,
+      },
+    )
 
     if (accessToken) {
       if (!user && !session.error) {
-        const profileReq = await dispatch(getUserProfile())
+        const { meta } = await dispatch(getUserProfile())
 
-        if (!HttpStatus.isSuccess(profileReq.response.status)) {
-          result.error = profileReq.response.status
-          result.status = actionStatus.ERROR
+        if (!HttpStatus.isSuccess(meta.response.status)) {
+          action.error = true
+          action.meta.error = meta.response.status
 
-          if (profileReq.response.status === HttpStatus.UNAUTHORIZED) {
+          if (meta.response.status === HttpStatus.UNAUTHORIZED) {
             dispatch(logout(ctx))
-            result.accessToken = null
+            action.payload.accessToken = null
             ctx.accessToken = null
           }
         }
 
-        dispatch(result)
+        dispatch(action)
       }
     }
-    return result
+    return action
   }
 }
 
@@ -88,7 +89,6 @@ export const notifyPageLoading = ({ Component }) => {
   return (dispatch) => {
     return dispatch({
       type: actionTypes.session.pageLoading,
-      status: actionStatus.SUCCESS,
       payload: {
         requiresAuth: Boolean(Component.requiresAuthentication),
       },
@@ -103,7 +103,6 @@ export const notifyPageDestroyed = (result) => {
     if (result.finished && result?.value?.opacity === 0) {
       return dispatch({
         type: actionTypes.session.pageDestroyed,
-        status: actionStatus.SUCCESS,
       })
     }
     return {}

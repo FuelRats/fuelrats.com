@@ -1,4 +1,5 @@
 // Module imports
+import { isError } from 'flux-standard-action'
 import React from 'react'
 
 
@@ -50,9 +51,9 @@ class ForgotPassword extends React.Component {
       error: false,
     })
 
-    const { status } = await this.props.sendPasswordResetEmail(email)
+    const response = await this.props.sendPasswordResetEmail(email)
 
-    if (status === 'error') {
+    if (isError(response)) {
       this.setState({
         submitting: false,
         error: true,

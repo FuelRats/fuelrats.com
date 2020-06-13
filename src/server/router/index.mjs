@@ -1,5 +1,5 @@
 // Module imports
-import Router from 'koa-router'
+import Router from '@koa/router'
 
 
 
@@ -36,7 +36,7 @@ const configureRouter = (nextApp, koaServer) => {
   \***************************************************************************/
 
   const nextRequestHandler = nextApp.getRequestHandler()
-  router.get('*', async (ctx) => {
+  router.get('(.*)', async (ctx) => {
     ctx.respond = false
     await nextRequestHandler(ctx.req, ctx.res)
   })

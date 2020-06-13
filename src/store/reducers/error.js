@@ -1,5 +1,6 @@
 /* globals $IS_DEVELOPMENT:false, $IS_STAGING:false */
 // Module imports
+import { isError } from 'flux-standard-action'
 import { produce } from 'immer'
 
 
@@ -23,9 +24,9 @@ const ignoredTypes = [
 
 
 
-
+// TODO turn into middleware
 const errorReducer = produce((draftState, action) => {
-  if (action.status && action.status === 'error') {
+  if (isError(action)) {
     if (!ignoredTypes.includes(action.type)) {
       console.error('GIVE THIS TO YOUR TECHRAT:', action)
     }
