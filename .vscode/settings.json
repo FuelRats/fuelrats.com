@@ -26,6 +26,7 @@
   "eslint.packageManager": "yarn",
   "files.associations": {
     "*.js": "javascriptreact",
+    "*.mjs": "javascript",
     ".all-contributorsrc": "json",
     ".stylelintrc": "json"
   },
@@ -34,31 +35,11 @@
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
   "html.format.wrapLineLength": 180,
-  "javascript.implicitProjectConfig.experimentalDecorators": true,
-  "javascript.suggest.paths": false,
+  "javascript.suggest.paths": true,
   "less.validate": false,
-  "path-autocomplete.enableFolderTrailingSlash": false,
-  "path-autocomplete.extensionOnImport": true,
-  "path-autocomplete.pathMappings": {
-    "~": "${folder}/src"
-  },
-  "path-autocomplete.transformations": [
-    {
-      "parameters": [
-        "\\.(m)?js(x)?$",
-        ""
-      ],
-      "type": "replace",
-      "when": {
-        "fileName": "\\.(m)?js(x)?$"
-      }
-    }
-  ],
-  "scss.validate": false,
   "search.exclude": {
     "**/dist": true
   },
   "stylelint.packageManager": "yarn",
-  "stylelint.reportNeedlessDisables": true,
-  "typescript.suggest.paths": false
+  "stylelint.reportNeedlessDisables": true
 }
