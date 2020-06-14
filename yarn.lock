@@ -1355,6 +1355,11 @@
   resolved "https://registry.yarnpkg.com/@fuelrats/stylelint-config/-/stylelint-config-1.1.0.tgz#22cf1feca1d41e71cd460d0c5de1c04b17f16a62"
   integrity sha512-RlxuFrOafpUv6kpuCU1T4ZRrMvMXx3qXS9OBKrZIq9Gr3Zbn7r30tw4piLtxjhyl8bmLYRdNvFoWksxNuxmiwA==
 
+"@fuelrats/validation-util@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@fuelrats/validation-util/-/validation-util-1.1.2.tgz#cda434bc92c292b681dad8d29840ecf2152dd399"
+  integrity sha512-sqobLeQO3yMGnIh2k1jRM7/zL28h/vDLQMJwHRyb37FnrWtnkLIJ5IhquqIFynHZtLxNi6qsQyKSHnz3QOrCLA==
+
 "@fuelrats/web-util@^0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@fuelrats/web-util/-/web-util-0.1.0.tgz#61753153eaf2cd68660b06d3821615a5165d4f4d"
