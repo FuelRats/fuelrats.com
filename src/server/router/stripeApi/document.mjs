@@ -1,4 +1,4 @@
-import { HttpStatus } from '../../../helpers/HttpStatus'
+import { HttpStatus } from '@fuelrats/web-util/http'
 import { ApiError, InternalServerError } from './error'
 
 

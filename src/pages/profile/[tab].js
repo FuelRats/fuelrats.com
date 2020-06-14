@@ -1,4 +1,5 @@
 // Module imports
+import { HttpStatus } from '@fuelrats/web-util/http'
 import React from 'react'
 
 
@@ -13,7 +14,6 @@ import TabbedPanel from '~/components/TabbedPanel'
 import UserOverview from '~/components/UserOverview'
 import UserRatsPanel from '~/components/UserRatsPanel'
 import { setError } from '~/helpers/gIPTools'
-import { HttpStatus } from '~/helpers/HttpStatus'
 import { Router } from '~/routes'
 
 

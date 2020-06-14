@@ -1,4 +1,5 @@
 // Module imports
+import { HttpStatus } from '@fuelrats/web-util/http'
 import { isError } from 'flux-standard-action'
 import React from 'react'
 
@@ -8,7 +9,6 @@ import React from 'react'
 
 // Component imports
 import { setError } from '~/helpers/gIPTools'
-import { HttpStatus } from '~/helpers/HttpStatus'
 import { actions, connect } from '~/store'
 import { selectWordpressPageBySlug } from '~/store/selectors'
 

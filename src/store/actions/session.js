@@ -1,5 +1,11 @@
 // Component imports
 import { createFSA } from '@fuelrats/web-util/actions'
+import { HttpStatus } from '@fuelrats/web-util/http'
+
+
+
+
+
 import actionTypes from '../actionTypes'
 import {
   selectPageRequiresAuth,
@@ -9,7 +15,6 @@ import {
 } from '../selectors'
 import { getUserProfile } from './user'
 import { configureRequest, deleteCookie } from '~/helpers/gIPTools'
-import { HttpStatus } from '~/helpers/HttpStatus'
 import frApi from '~/services/fuelrats'
 
 

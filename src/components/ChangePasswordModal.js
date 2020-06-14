@@ -1,4 +1,5 @@
 // Module imports
+import { HttpStatus } from '@fuelrats/web-util/http'
 import { isError } from 'flux-standard-action'
 import React from 'react'
 import { createStructuredSelector } from 'reselect'
@@ -12,7 +13,6 @@ import PasswordField from './PasswordField'
 import {
   passwordPattern,
 } from '~/data/RegExpr'
-import { HttpStatus } from '~/helpers/HttpStatus'
 import { connect } from '~/store'
 import { selectCurrentUserId } from '~/store/selectors'
 

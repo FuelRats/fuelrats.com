@@ -1,4 +1,5 @@
 // Module imports
+import { HttpStatus } from '@fuelrats/web-util/http'
 import { isError } from 'flux-standard-action'
 import { produce } from 'immer'
 import PropTypes from 'prop-types'
@@ -12,7 +13,6 @@ import { createStructuredSelector } from 'reselect'
 import RadioInput from './RadioInput'
 import StripeBadge from './StripeBadge'
 import getMoney from '~/helpers/getMoney'
-import { HttpStatus } from '~/helpers/HttpStatus'
 import { connect } from '~/store'
 import { withCurrentUserId, selectUserById } from '~/store/selectors'
 

@@ -1,11 +1,11 @@
 /* global $IS_DEVELOPMENT:false */
+import { HttpStatus } from '@fuelrats/web-util/http'
 import jsCookie from 'js-cookie'
 import nextCookies from 'next-cookies'
 
 
 
 
-import { HttpStatus } from './HttpStatus'
 import { Router } from '~/routes'
 import frApi from '~/services/fuelrats'
 

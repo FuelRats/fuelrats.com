@@ -1,5 +1,5 @@
+import { HttpStatus } from '@fuelrats/web-util/http'
 import { makeStaticErrorPage } from './404'
-import { HttpStatus } from '~/helpers/HttpStatus'
 
 
 
