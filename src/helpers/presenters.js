@@ -1,4 +1,4 @@
-import isRequired from './isRequired'
+import isRequired from '@fuelrats/validation-util/require'
 
 export function presentApiRequestBody (
   type = isRequired('resourceType'),

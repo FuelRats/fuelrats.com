@@ -8,7 +8,6 @@ import { createStructuredSelector } from 'reselect'
 // Component imports
 import NamespaceDetails from './NamespaceDetails'
 import styles from './ScopeView.module.scss'
-import isRequired from '~/helpers/isRequired'
 import { connect } from '~/store'
 import { selectCurrentUserScopes } from '~/store/selectors'
 
@@ -18,7 +17,7 @@ import { selectCurrentUserScopes } from '~/store/selectors'
 // Component Constants
 
 
-const groupScopes = (scopes = isRequired('scopes'), accessibleScopes = []) => {
+const groupScopes = (scopes, accessibleScopes = []) => {
   return scopes.reduce((acc, scopeStr) => {
     const [namespace, action, isSelf] = scopeStr.split('.')
 
