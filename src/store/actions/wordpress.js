@@ -1,12 +1,8 @@
-// Component imports
 import { createAxiosFSA } from '@fuelrats/web-util/actions'
 
-
-
-
+import wpApi from '~/services/wordpress'
 
 import actionTypes from '../actionTypes'
-import wpApi from '~/services/wordpress'
 
 
 

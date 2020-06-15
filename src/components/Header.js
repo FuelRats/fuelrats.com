@@ -9,11 +9,12 @@ import React from 'react'
 
 
 // Component imports
-import Brand from '../../public/static/svg/brand.svg'
-import Nav from './Nav'
 import { Link } from '~/routes'
 import { connect } from '~/store'
 import { selectSession } from '~/store/selectors'
+
+import Brand from '../../public/static/svg/brand.svg'
+import Nav from './Nav'
 
 
 

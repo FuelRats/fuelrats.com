@@ -1,11 +1,4 @@
-// Component imports
 import actionTypes from '~/store/actionTypes'
-
-
-
-
-
-// Worker imports
 import ImageLoaderWorker from '~/workers/image-loader.worker'
 
 

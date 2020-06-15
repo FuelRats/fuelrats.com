@@ -9,11 +9,12 @@ import Cookies from 'js-cookie'
 
 
 // Component imports
-import actionTypes from '../actionTypes'
-import { frApiPlainRequest } from './services'
 import { presentApiRequestBody } from '~/helpers/presenters'
 import { Router } from '~/routes'
 import frApi from '~/services/fuelrats'
+
+import actionTypes from '../actionTypes'
+import { frApiPlainRequest } from './services'
 
 
 

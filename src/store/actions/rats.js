@@ -1,8 +1,6 @@
 import { defineRelationship } from '@fuelrats/web-util/redux-json-api'
 
-
-
-
+import { presentApiRequestBody } from '~/helpers/presenters'
 
 import actionTypes from '../actionTypes'
 import {
@@ -12,7 +10,6 @@ import {
   RESOURCE,
 } from '../reducers/frAPIResources'
 import { frApiRequest } from './services'
-import { presentApiRequestBody } from '~/helpers/presenters'
 
 
 

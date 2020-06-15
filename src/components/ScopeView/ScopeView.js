@@ -1,21 +1,18 @@
-// Module imports
 import PropTypes from 'prop-types'
 import React from 'react'
 import { createStructuredSelector } from 'reselect'
 
-
-
-// Component imports
-import NamespaceDetails from './NamespaceDetails'
-import styles from './ScopeView.module.scss'
 import { connect } from '~/store'
 import { selectCurrentUserScopes } from '~/store/selectors'
+
+import NamespaceDetails from './NamespaceDetails'
+import styles from './ScopeView.module.scss'
+
 
 
 
 
 // Component Constants
-
 
 const groupScopes = (scopes, accessibleScopes = []) => {
   return scopes.reduce((acc, scopeStr) => {
@@ -36,6 +33,8 @@ const groupScopes = (scopes, accessibleScopes = []) => {
     return acc
   }, {})
 }
+
+
 
 
 

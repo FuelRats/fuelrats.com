@@ -1,18 +1,7 @@
-// Module imports
 import { isError } from 'flux-standard-action'
 import PropTypes from 'prop-types'
 import React from 'react'
 
-
-
-
-
-// Component imports
-import ErrorBox from '../ErrorBox'
-import asModal, { ModalContent, ModalFooter } from '../Modal'
-import Switch from '../Switch'
-import ValidatedFormInput from '../ValidatedFormInput'
-import styles from './LoginModal.module.scss'
 import getFingerprint from '~/helpers/getFingerprint'
 import { Router } from '~/routes'
 import { connect } from '~/store'
@@ -20,6 +9,12 @@ import { login } from '~/store/actions/authentication'
 import { setFlag } from '~/store/actions/flags'
 import { getUserProfile } from '~/store/actions/user'
 import { selectFlagByName, selectSession } from '~/store/selectors'
+
+import ErrorBox from '../ErrorBox'
+import asModal, { ModalContent, ModalFooter } from '../Modal'
+import Switch from '../Switch'
+import ValidatedFormInput from '../ValidatedFormInput'
+import styles from './LoginModal.module.scss'
 
 
 

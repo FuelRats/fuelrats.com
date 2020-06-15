@@ -35,7 +35,7 @@ const configureCSP = () => {
 
     const nonce = (new UUID(UUID_VERSION_4)).format()
 
-    ctx.res.nonce = nonce /* eslint-disable-line no-param-reassign */
+    ctx.res.nonce = nonce
 
     const policyString = buildCSP({
       directives: {

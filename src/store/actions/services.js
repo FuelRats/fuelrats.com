@@ -1,10 +1,10 @@
 import { axiosRequest } from '@fuelrats/web-util/actions'
 
-import { updatesResources } from '../reducers/frAPIResources'
-
 import frApi from '~/services/fuelrats'
 import stApi from '~/services/stripe'
 import wpApi from '~/services/wordpress'
+
+import { updatesResources } from '../reducers/frAPIResources'
 
 
 

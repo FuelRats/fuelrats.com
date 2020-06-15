@@ -6,7 +6,6 @@ import React from 'react'
 
 
 // Component imports
-import NavSection from './NavSection'
 import { connect } from '~/store'
 import {
   selectSession,
@@ -14,6 +13,8 @@ import {
   selectAvatarByUserId,
   withCurrentUserId,
 } from '~/store/selectors'
+
+import NavSection from './NavSection'
 
 
 

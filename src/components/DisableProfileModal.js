@@ -1,17 +1,15 @@
-// Module imports
 import { HttpStatus } from '@fuelrats/web-util/http'
 import { isError } from 'flux-standard-action'
 import React from 'react'
 
-
-
-
-
-// Component imports
-import asModal, { ModalContent, ModalFooter } from './Modal'
-import PasswordField from './PasswordField'
 import { connect } from '~/store'
 import { selectUserById, withCurrentUserId } from '~/store/selectors'
+
+import asModal, { ModalContent, ModalFooter } from './Modal'
+import PasswordField from './PasswordField'
+
+
+
 
 
 @asModal({

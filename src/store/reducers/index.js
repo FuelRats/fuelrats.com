@@ -1,13 +1,7 @@
 import { chainReducers, withDefaultReducers } from '@fuelrats/web-util/reducers'
 import { combineReducers } from 'redux'
 
-
-
-
-
 import initialState from '../initialState'
-
-
 import blogs from './blogs'
 import error from './error'
 import flags from './flags'

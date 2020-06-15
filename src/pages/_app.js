@@ -7,12 +7,6 @@ import NextHead from 'next/head'
 import React from 'react'
 import { Provider } from 'react-redux'
 
-
-
-
-
-// Component imports
-import ErrorPage from './_error'
 import PageTransitionContainer from '~/components/AppLayout/PageTransitionContainer'
 import Header from '~/components/Header'
 import LoginModal from '~/components/LoginModal'
@@ -25,11 +19,8 @@ import frApi from '~/services/fuelrats'
 import { initStore } from '~/store'
 import { initUserSession, notifyPageLoading } from '~/store/actions/session'
 
+import ErrorPage from './_error'
 
-
-
-
-// Style imports
 import '~/scss/app.scss'
 
 

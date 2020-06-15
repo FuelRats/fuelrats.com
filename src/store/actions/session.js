@@ -2,9 +2,8 @@
 import { createFSA } from '@fuelrats/web-util/actions'
 import { HttpStatus } from '@fuelrats/web-util/http'
 
-
-
-
+import { configureRequest, deleteCookie } from '~/helpers/gIPTools'
+import frApi from '~/services/fuelrats'
 
 import actionTypes from '../actionTypes'
 import {
@@ -14,8 +13,7 @@ import {
   withCurrentUserId,
 } from '../selectors'
 import { getUserProfile } from './user'
-import { configureRequest, deleteCookie } from '~/helpers/gIPTools'
-import frApi from '~/services/fuelrats'
+
 
 
 

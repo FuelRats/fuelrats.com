@@ -1,9 +1,10 @@
-// Component imports
+import { presentApiRequestBody } from '~/helpers/presenters'
+
 import actionTypes from '../actionTypes'
 import { deletesResource } from '../reducers/frAPIResources'
 import { getPageViewPartial } from './partials'
 import { frApiRequest } from './services'
-import { presentApiRequestBody } from '~/helpers/presenters'
+
 
 
 

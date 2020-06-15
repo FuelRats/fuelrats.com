@@ -2,17 +2,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 
-
-
-
-
-// Component imports
-import InfoBubble from '../infoBubble'
-import ValidatedFormInput from '../ValidatedFormInput'
-import styles from './AddNicknameForm.module.scss'
 import { ircNickPattern } from '~/data/RegExpr'
 import { connect } from '~/store'
 import { selectUserById, withCurrentUserId } from '~/store/selectors'
+
+import InfoBubble from '../infoBubble'
+import ValidatedFormInput from '../ValidatedFormInput'
+import styles from './AddNicknameForm.module.scss'
 
 
 

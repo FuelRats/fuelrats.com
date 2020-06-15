@@ -8,10 +8,11 @@ import React from 'react'
 
 
 // Component imports
-import ValidatedFormInput from './ValidatedFormInput'
-import ValidatedFormSelect from './ValidatedFormSelect'
 import { connect } from '~/store'
 import { selectCurrentUserId } from '~/store/selectors'
+
+import ValidatedFormInput from './ValidatedFormInput'
+import ValidatedFormSelect from './ValidatedFormSelect'
 
 
 

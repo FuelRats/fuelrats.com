@@ -5,10 +5,8 @@ import React from 'react'
 
 
 
+
 // Component imports
-import AddNicknameForm from '../AddNicknameForm/AddNicknameForm'
-import ConfirmActionButton from '../ConfirmActionButton'
-import styles from './UserNicknamesPanel.module.scss'
 import { connect } from '~/store'
 import {
   selectUserById,
@@ -16,8 +14,18 @@ import {
   selectNicknamesByUserId,
 } from '~/store/selectors'
 
+import AddNicknameForm from '../AddNicknameForm/AddNicknameForm'
+import ConfirmActionButton from '../ConfirmActionButton'
+import styles from './UserNicknamesPanel.module.scss'
+
+
+
+
+
 // Component constants
 const MAXNICKS = 16 // Maximum IRC Nicknames allowed
+
+
 
 
 
