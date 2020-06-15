@@ -17,11 +17,11 @@ class RadioInput extends React.Component {
     Private Methods
   \***************************************************************************/
 
-  _handleOptionClick = ({ target }) => {
+  _handleOptionClick = (event) => {
     const { value, onChange } = this.props
 
-    if (value !== target.value) {
-      onChange({ target })
+    if (value !== event?.target?.value) {
+      onChange(event)
     }
   }
 
