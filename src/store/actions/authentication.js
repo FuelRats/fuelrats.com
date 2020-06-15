@@ -121,12 +121,15 @@ export const submitOAuthDecision = (data) => {
 }
 
 
-export const register = (data) => {
+export const register = (data, fingerprint) => {
   return frApiPlainRequest(
     actionTypes.session.register,
     {
       url: '/register',
       method: 'post',
+      headers: {
+        'X-Fingerprint': fingerprint,
+      },
       data: presentApiRequestBody('users', data),
     },
   )
