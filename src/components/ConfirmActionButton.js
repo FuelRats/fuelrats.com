@@ -13,7 +13,6 @@ class ConfirmActionButton extends React.Component {
   \***************************************************************************/
 
   state = {
-    actionResult: null,
     confirmingAction: false,
     performingAction: false,
   }
@@ -42,7 +41,7 @@ class ConfirmActionButton extends React.Component {
       this.setState({ confirmingAction: false, performingAction: true })
       const result = await onConfirm(event)
       if (result) {
-        this.setState({ performingAction: false, actionResult: result })
+        this.setState({ performingAction: false })
       }
     } else if (confirmingAction && action === 'deny') {
       this.setState({ confirmingAction: false })
@@ -74,7 +73,6 @@ class ConfirmActionButton extends React.Component {
     } = this.props
 
     const {
-      actionResult,
       confirmingAction,
       performingAction,
     } = this.state
@@ -97,7 +95,7 @@ class ConfirmActionButton extends React.Component {
             )
           }
           {confirmingAction && <FontAwesomeIcon fixedWidth icon="check" />}
-          {(!performingAction && !confirmingAction) && (actionResult || children)}
+          {(!performingAction && !confirmingAction) && (children)}
         </button>
         {
           confirmingAction && (

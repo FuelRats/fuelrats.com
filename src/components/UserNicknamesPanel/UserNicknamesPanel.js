@@ -1,5 +1,7 @@
 // Module imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { HttpStatus } from '@fuelrats/web-util/http'
+import { isError } from 'flux-standard-action'
 import React from 'react'
 
 
@@ -16,6 +18,7 @@ import {
 
 import AddNicknameForm from '../AddNicknameForm/AddNicknameForm'
 import ConfirmActionButton from '../ConfirmActionButton'
+import ErrorBox from '../ErrorBox'
 import styles from './UserNicknamesPanel.module.scss'
 
 
@@ -36,6 +39,7 @@ class UserNicknamesPanel extends React.Component {
   \***************************************************************************/
 
   state = {
+    error: null,
     formOpen: false,
   }
 
@@ -54,9 +58,28 @@ class UserNicknamesPanel extends React.Component {
   }
 
   _handleDeleteNickname = async (event) => {
-    await this.props.deleteNickname(this.props.user, this.props.nicknames.find((nick) => {
+    const response = await this.props.deleteNickname(this.props.user, this.props.nicknames.find((nick) => {
       return nick.id === event.target.name
     }))
+
+    if (isError(response)) {
+      const { meta, payload } = response
+      let errorMessage = 'Unknown error occured.'
+
+      if (HttpStatus.isClientError(meta.response.status)) {
+        errorMessage = payload.errors && payload.errors.length ? payload.errors[0].detail : 'Client communication error'
+      }
+
+      if (HttpStatus.isServerError(meta.response.status)) {
+        errorMessage = 'Server communication error'
+      }
+
+      this.setState({
+        error: errorMessage,
+      })
+      return errorMessage
+    }
+
     return 'Deleted!'
   }
 
@@ -73,6 +96,8 @@ class UserNicknamesPanel extends React.Component {
       nicknames,
     } = this.props
 
+    const { error } = this.state
+
     const nickCount = nicknames?.length
     const maxNicksReached = (nickCount >= MAXNICKS)
 
@@ -87,6 +112,11 @@ class UserNicknamesPanel extends React.Component {
         </header>
 
         <div className={styles.userNicknames}>
+          {
+            error && (
+              <ErrorBox className={styles.errorBox}>{error}</ErrorBox>
+            )
+          }
           <ul>
             {(nickCount <= 0) && (<li className="text-center">{'You do not have any nicknames registered yet.'}</li>)}
             {
