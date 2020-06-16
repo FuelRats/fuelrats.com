@@ -69,7 +69,7 @@ export const login = (options) => {
     )
 
     if (!isError(action)) {
-      const token = action.meta.response.data.access_token
+      const token = action.payload.access_token
 
       Cookies.set('access_token', token, { expires: remember ? SESSION_TOKEN_LENGTH : null })
       frApi.defaults.headers.common.Authorization = `Bearer ${token}`
