@@ -1,5 +1,7 @@
 // Module imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { HttpStatus } from '@fuelrats/web-util/http'
+import { isError } from 'flux-standard-action'
 import React from 'react'
 
 import { ircNickPattern } from '~/data/RegExpr'
@@ -21,6 +23,7 @@ class AddNicknameForm extends React.Component {
   \***************************************************************************/
 
   state = {
+    error: null,
     nickname: '',
     submitting: false,
   }
@@ -41,12 +44,40 @@ class AddNicknameForm extends React.Component {
     const {
       nickname,
     } = this.state
-
+    const httpErrors = {
+      conflict: 409,
+      unprocessableEntity: 422,
+    }
     event.preventDefault()
 
     this.setState({ submitting: true })
 
-    await addNickname(user, { attributes: { nick: nickname } })
+    const response = await addNickname(user, { attributes: { nick: nickname } })
+
+    if (isError(response)) {
+      const { meta, payload } = response
+      let errorMessage = 'Unknown error occured.'
+
+      if (HttpStatus.isClientError(meta.response.status)) {
+        errorMessage = payload.errors && payload.errors.length ? payload.errors[0].title : 'Client communication error'
+      }
+
+      if (HttpStatus.isServerError(meta.response.status)) {
+        errorMessage = 'Server communication error'
+      }
+
+      if (meta.response.status === httpErrors.conflict) {
+        errorMessage = 'Nickname already registered'
+      }
+
+      if (meta.response.status === httpErrors.unprocessableEntity) {
+        errorMessage = 'Nickname invalid'
+      }
+
+      this.setState({
+        error: errorMessage,
+      })
+    }
 
     this.setState({
       nickname: '',
@@ -68,6 +99,7 @@ class AddNicknameForm extends React.Component {
 
   render () {
     const {
+      error,
       nickname,
       submitting,
     } = this.state
@@ -77,14 +109,14 @@ class AddNicknameForm extends React.Component {
         className={styles.addNicknameForm}
         onSubmit={this._handleSubmit}>
         <ValidatedFormInput
-          className={styles.thinInput}
+          className={[styles.thinInput, error && styles.error]}
           disabled={this.props.disabled}
           id="AddNickname"
           label="Nickname"
           name="nickname"
           pattern={ircNickPattern}
           patternMessage="Nickname must start with a letter, contain no spaces, and be between 2-30 characters"
-          placeholder="Add a nickname..."
+          placeholder={error || 'Add a nickname...'}
           title={this.props.title}
           type="text"
           value={nickname}
