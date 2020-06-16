@@ -96,8 +96,12 @@ class UserNicknamesPanel extends React.Component {
                     <span>{nickname.attributes?.nick}</span>
                     <ConfirmActionButton
                       className="icon"
+                      confirmButtonText={`Delete nickname '${nickname.attributes?.nick}'`}
+                      confirmSubText=""
+                      denyButtonText="Cancel"
                       name={nickname.id}
-                      onConfirm={this._handleDeleteNickname}>
+                      onConfirm={this._handleDeleteNickname}
+                      onConfirmText="">
                       <FontAwesomeIcon fixedWidth icon="trash" />
                     </ConfirmActionButton>
                   </li>
