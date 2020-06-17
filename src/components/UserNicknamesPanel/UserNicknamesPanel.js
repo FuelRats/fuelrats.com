@@ -80,7 +80,7 @@ class UserNicknamesPanel extends React.Component {
       return errorMessage
     }
 
-    return 'Deleted!'
+    return undefined
   }
 
 
