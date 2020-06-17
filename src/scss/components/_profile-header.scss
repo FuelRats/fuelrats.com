@@ -66,10 +66,10 @@
 
   @media screen and (max-width: 768px) {
     grid-template-areas:
-      'avatar avatar'
-      'info   info'
-      'badges badges'
-      'controls controls';
+      'avatar   avatar   avatar'
+      'info     info     info'
+      'badges   badges   badges'
+      'controls controls controls';
     justify-items: center;
     justify-content: center;
 
