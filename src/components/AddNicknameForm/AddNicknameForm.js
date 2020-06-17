@@ -44,10 +44,6 @@ class AddNicknameForm extends React.Component {
     const {
       nickname,
     } = this.state
-    const httpErrors = {
-      conflict: 409,
-      unprocessableEntity: 422,
-    }
     event.preventDefault()
 
     this.setState({ submitting: true })
@@ -66,11 +62,11 @@ class AddNicknameForm extends React.Component {
         errorMessage = 'Server communication error'
       }
 
-      if (meta.response.status === httpErrors.conflict) {
+      if (meta.response.status === HttpStatus.CONFLICT) {
         errorMessage = 'Nickname already registered'
       }
 
-      if (meta.response.status === httpErrors.unprocessableEntity) {
+      if (meta.response.status === HttpStatus.UNPROCESSABLE_ENTITY) {
         errorMessage = 'Nickname invalid'
       }
 
