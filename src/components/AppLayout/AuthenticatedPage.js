@@ -1,3 +1,4 @@
+import { HttpStatus } from '@fuelrats/web-util/http'
 import hoistNonReactStatics from 'hoist-non-react-statics'
 import React from 'react'
 
@@ -6,7 +7,6 @@ import React from 'react'
 
 
 import { pageRedirect, setError } from '~/helpers/gIPTools'
-import { HttpStatus } from '~/helpers/HttpStatus'
 import userHasPermission from '~/helpers/userHasPermission'
 import { selectSession, withCurrentUserId, selectGroupsByUserId } from '~/store/selectors'
 

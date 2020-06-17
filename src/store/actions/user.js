@@ -1,42 +1,52 @@
-// Component imports
-import actionTypes from '../actionTypes'
-import { withCurrentUserId, selectUserById } from '../selectors'
-import { frApiRequest } from './services'
+import { defineRelationship } from '@fuelrats/web-util/redux-json-api'
+
 import { presentApiRequestBody } from '~/helpers/presenters'
 
+import actionTypes from '../actionTypes'
+import { deletesResource, deletesRelationship, createsRelationship, RESOURCE } from '../reducers/frAPIResources'
+import { withCurrentUserId, selectUserById } from '../selectors'
+import { frApiRequest } from './services'
 
 
 
 
-export const addNickname = (userId, nickname, password) => {
+export const getNickname = (nickId) => {
+  return frApiRequest(
+    actionTypes.nicknames.read,
+    { url: `/groups/${nickId}` },
+  )
+}
+
+// TODO: remove argument from this and deleteNickname when API bugs are fixed.
+export const addNickname = (user, data) => {
   return frApiRequest(
     actionTypes.nicknames.create,
     {
       url: '/nicknames',
       method: 'post',
-      data: {
-        nickname,
-        password,
-      },
+      data: presentApiRequestBody('nicknames', data),
     },
-    {
-      nickname,
-      userId,
-    },
+    createsRelationship(
+      defineRelationship(user, { nicknames: [RESOURCE] }),
+    ),
   )
 }
 
 
-export const deleteNickname = (nickname) => {
+export const deleteNickname = (user, nickname) => {
   return frApiRequest(
     actionTypes.nicknames.delete,
     {
-      url: `/nicknames/${nickname}`,
+      url: `/nicknames/${nickname.id}`,
       method: 'delete',
     },
-    {
-      nickname,
-    },
+    deletesResource(nickname),
+    deletesRelationship(
+      defineRelationship(
+        user,
+        { nicknames: [nickname] },
+      ),
+    ),
   )
 }
 

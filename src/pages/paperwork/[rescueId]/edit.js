@@ -1,4 +1,5 @@
 // Module imports
+import { isError } from 'flux-standard-action'
 import React from 'react'
 import { createSelector } from 'reselect'
 
@@ -241,9 +242,9 @@ class Paperwork extends React.Component {
       }
     }
 
-    const { status } = await this.props.updateRescue(updateData)
+    const response = await this.props.updateRescue(updateData)
 
-    if (status === 'error') {
+    if (isError(response)) {
       this.setState({ error: true })
       return
     }

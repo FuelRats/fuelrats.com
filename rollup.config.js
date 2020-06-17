@@ -1,14 +1,23 @@
 /* eslint-env node */
-import resolve from '@rollup/plugin-node-resolve'
+import babel from '@rollup/plugin-babel'
+import commonjs from '@rollup/plugin-commonjs'
+import node from '@rollup/plugin-node-resolve'
 import path from 'path'
-import autoExternal from 'rollup-plugin-auto-external'
-import babel from 'rollup-plugin-babel'
+import externals from 'rollup-plugin-node-externals'
+
+
+
+
 
 const isDev = process.env.NODE_ENV !== 'production'
 
+
+
+
+
 const babelConfig = {
   babelrc: false,
-  externalHelpers: true,
+  babelHelpers: 'bundled',
   presets: [
     [
       '@babel/env',
@@ -16,7 +25,9 @@ const babelConfig = {
         targets: {
           node: '13',
         },
+        bugfixes: true,
         shippedProposals: true,
+        loose: true,
       },
     ],
   ],
@@ -49,11 +60,18 @@ const babelConfig = {
 const config = {
   input: path.resolve(__dirname, 'src', 'server', 'server.mjs'),
   output: {
-    file: path.resolve(__dirname, 'dist', 'server.mjs'),
-    format: 'esm',
+    file: path.resolve(__dirname, 'dist', 'server.js'),
+    format: 'cjs',
     sourcemap: isDev,
   },
-  plugins: [autoExternal(), resolve(), babel(babelConfig)],
+  plugins: [
+    externals({
+      deps: true,
+    }),
+    node(),
+    commonjs(),
+    babel(babelConfig),
+  ],
 }
 
 export default config

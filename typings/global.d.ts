@@ -9,45 +9,45 @@
  * process.env.NODE_ENV !== 'production'
  * ```
  */
-declare const $IS_DEVELOPMENT: boolean;
+declare const $IS_DEVELOPMENT: Readonly<boolean>;
 
 /**
  * Was CI build built from a staging branch.
  */
-declare const $IS_STAGING: boolean;
+declare const $IS_STAGING: Readonly<boolean>;
 
 /**
  * Branch the CI build is based on.
  *
  * `'develop'` in development.
  */
-declare const $BUILD_BRANCH: string;
+declare const $BUILD_BRANCH: Readonly<string>;
 
 /**
  * Full hash of the git commit used for the CI build.
  *
  * `null` in development.
  */
-declare const $BUILD_COMMIT: string;
+declare const $BUILD_COMMIT: Readonly<string>;
 
 /**
  * Shortened git commit hash.
  *
  * `'develop'` in development.
  */
-declare const $BUILD_COMMIT_SHORT: string;
+declare const $BUILD_COMMIT_SHORT: Readonly<string>;
 
 /**
  * ISO 8601 UTC timestamp representing the Date & Time of the build.
  */
-declare const $BUILD_DATE: string;
+declare const $BUILD_DATE: Readonly<string>;
 
 /**
  * Web URL leading to build details page.
  *
  * `null` in development.
  */
-declare const $BUILD_URL: string;
+declare const $BUILD_URL: Readonly<string>;
 
 /**
  * ID which represents the current build.
@@ -56,9 +56,9 @@ declare const $BUILD_URL: string;
  * A randomly generated 16 digit ID is used in development.
  *
  */
-declare const $NEXT_BUILD_ID: string;
+declare const $NEXT_BUILD_ID: Readonly<string>;
 
 /**
  * NodeJS version used to build the project.
  */
-declare const $NODE_VERSION: string;
+declare const $NODE_VERSION: Readonly<string>;

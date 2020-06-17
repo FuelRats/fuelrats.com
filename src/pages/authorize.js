@@ -1,4 +1,5 @@
 // Module imports
+import { isError } from 'flux-standard-action'
 import React from 'react'
 
 
@@ -42,13 +43,13 @@ class Authorize extends React.Component {
 
     this.setState({ submitting: true })
 
-    const { payload, status } = await submitOAuthDecision({
+    const response = await submitOAuthDecision({
       transactionId: client.transactionId,
       allow: event.target.name === 'allow',
     })
 
-    if (status === 'success' && payload.redirect) {
-      window.location.href = payload.redirect
+    if (!isError(response) && response.payload.redirect) {
+      window.location.href = response.payload.redirect
     }
 
     this.setState({ submitting: false })
@@ -65,16 +66,18 @@ class Authorize extends React.Component {
   static async getInitialProps (ctx) {
     const { query, res, store } = ctx
 
-    const { payload, response, status } = await store.dispatch(actions.getClientOAuthPage(query))
+    const response = await store.dispatch(actions.getClientOAuthPage(query))
 
-    if (status === 'success') {
+    if (!isError(response)) {
+      const { meta, payload } = response
+
       if (payload.redirect) {
         pageRedirect(ctx, payload.redirect)
         return {}
       }
 
-      if (res && response.headers['set-cookie']) {
-        res.setHeader('set-cookie', response.headers['set-cookie'])
+      if (res && meta.response.headers['set-cookie']) {
+        res.setHeader('set-cookie', meta.response.headers['set-cookie'])
       }
 
       return { client: payload }

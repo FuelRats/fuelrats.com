@@ -1,9 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 
+import permissionNamespaces from '~/data/permissionNamespaces'
 
 import styles from './ScopeView.module.scss'
-import permissionNamespaces from '~/data/permissionNamespaces'
+
 
 
 

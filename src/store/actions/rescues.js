@@ -1,24 +1,28 @@
-// Component imports
-import actionTypes from '../actionTypes'
-import { getPageViewPartial } from './partials'
-import { frApiRequest } from './services'
 import { presentApiRequestBody } from '~/helpers/presenters'
 
+import actionTypes from '../actionTypes'
+import { deletesResource } from '../reducers/frAPIResources'
+import { getPageViewPartial } from './partials'
+import { frApiRequest } from './services'
 
 
 
-export const deleteRescue = (rescueId) => {
+
+
+export const deleteRescue = (rescue) => {
   return frApiRequest(
     actionTypes.rescues.delete,
     {
-      url: `/rescues/${rescueId}`,
+      url: `/rescues/${rescue.id}`,
       method: 'delete',
     },
+    deletesResource(rescue),
   )
 }
 
 
-export const getRescues = (params, opts) => {
+// TODO: redo page views
+export const getRescues = (params, opts = {}) => {
   return frApiRequest(
     actionTypes.rescues.search,
     {

@@ -1,8 +1,8 @@
-// Component imports
-import actionStatus from '../actionStatus'
-import actionTypes from '../actionTypes'
-import { createAxiosAction } from './services'
+import { createAxiosFSA } from '@fuelrats/web-util/actions'
+
 import wpApi from '~/services/wordpress'
+
+import actionTypes from '../actionTypes'
 
 
 
@@ -11,16 +11,19 @@ import wpApi from '~/services/wordpress'
 // prefer export member for consistency
 export const getWordpressPage = (slug) => {
   return async (dispatch) => {
-    const response = await wpApi.request({
-      url: '/pages',
-      params: {
-        slug,
-      },
-    })
+    const action = createAxiosFSA(
+      actionTypes.wordpress.pages.read,
+      await wpApi.request({
+        url: '/pages',
+        params: {
+          slug,
+        },
+      }),
+    )
 
     return dispatch({
-      ...createAxiosAction(actionTypes.wordpress.pages.read, response),
-      status: response.data && response.data.length ? actionStatus.SUCCESS : actionStatus.ERROR,
+      ...action,
+      error: action.error || !action.payload?.length,
     })
   }
 }

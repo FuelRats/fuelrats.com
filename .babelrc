@@ -1,16 +1,22 @@
 {
   "presets": [
-    ["next/babel", {
-      "class-properties": {
-        "loose": true
+    [
+      "next/babel",
+      {
+        "preset-env": {
+          "bugfixes": true
+        },
+        "class-properties": {
+          "loose": true
+        }
       }
-    }]
+    ]
   ],
   "plugins": [
     ["@babel/plugin-proposal-decorators", { "legacy": true }],
     "@babel/plugin-proposal-export-default-from",
     "@babel/plugin-proposal-export-namespace-from",
     "@babel/plugin-proposal-optional-catch-binding",
-    ["babel-plugin-classnames", { "transformObjects": true }]
+    ["@fuelrats/babel-plugin-classnames", { "transformObjects": true }]
   ]
 }

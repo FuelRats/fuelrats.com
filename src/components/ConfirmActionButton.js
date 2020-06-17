@@ -13,7 +13,6 @@ class ConfirmActionButton extends React.Component {
   \***************************************************************************/
 
   state = {
-    actionResult: null,
     confirmingAction: false,
     performingAction: false,
   }
@@ -42,7 +41,7 @@ class ConfirmActionButton extends React.Component {
       this.setState({ confirmingAction: false, performingAction: true })
       const result = await onConfirm(event)
       if (result) {
-        this.setState({ performingAction: false, actionResult: result })
+        this.setState({ performingAction: false })
       }
     } else if (confirmingAction && action === 'deny') {
       this.setState({ confirmingAction: false })
@@ -74,28 +73,19 @@ class ConfirmActionButton extends React.Component {
     } = this.props
 
     const {
-      actionResult,
       confirmingAction,
       performingAction,
     } = this.state
 
+    const buttonSize = className.includes('icon') ? 'icon' : 'compact'
+
     return (
       <div className={['action-confirmation-button', className]}>
         {confirmingAction && (<span>{confirmSubText}</span>)}
-        {
-          confirmingAction && (
-            <button
-              className="compact"
-              data-action="deny"
-              type="button"
-              onClick={this._handleClick}>
-              {denyButtonText}
-            </button>
-          )
-        }
         <button
-          className={['compact', { green: confirmingAction }]}
+          className={[buttonSize, { green: confirmingAction }]}
           data-action="confirm"
+          title={confirmButtonText}
           type="button"
           onClick={this._handleClick}
           {...this.renderProps}>
@@ -104,9 +94,21 @@ class ConfirmActionButton extends React.Component {
               <span name="confirm"><FontAwesomeIcon pulse icon="spinner" /> {onConfirmText}</span>
             )
           }
-          {confirmingAction && confirmButtonText}
-          {(!performingAction && !confirmingAction) && (actionResult || children)}
+          {confirmingAction && <FontAwesomeIcon fixedWidth icon="check" />}
+          {(!performingAction && !confirmingAction) && (children)}
         </button>
+        {
+          confirmingAction && (
+            <button
+              className={buttonSize}
+              data-action="deny"
+              title={denyButtonText}
+              type="button"
+              onClick={this._handleClick}>
+              <FontAwesomeIcon fixedWidth icon="times" />
+            </button>
+          )
+        }
       </div>
     )
   }

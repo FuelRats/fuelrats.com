@@ -1,5 +1,9 @@
 .action-confirmation-button {
   button {
     margin-left: 0.5rem;
+
+    svg {
+      pointer-events: none;
+    }
   }
 }

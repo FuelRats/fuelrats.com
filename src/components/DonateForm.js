@@ -1,19 +1,16 @@
-// Module imports
+import { HttpStatus } from '@fuelrats/web-util/http'
+import { isError } from 'flux-standard-action'
 import { produce } from 'immer'
 import PropTypes from 'prop-types'
 import React from 'react'
-
-
-
-
-// Component imports
 import { createStructuredSelector } from 'reselect'
+
+import getMoney from '~/helpers/getMoney'
+import { connect } from '~/store'
+import { withCurrentUserId, selectUserById } from '~/store/selectors'
+
 import RadioInput from './RadioInput'
 import StripeBadge from './StripeBadge'
-import getMoney from '~/helpers/getMoney'
-import { HttpStatus } from '~/helpers/HttpStatus'
-import { connect, actionStatus } from '~/store'
-import { withCurrentUserId, selectUserById } from '~/store/selectors'
 
 
 
@@ -150,7 +147,7 @@ class DonateForm extends React.Component {
 
     const response = await createDonationSession(sessionData)
 
-    if (response.status === actionStatus.ERROR) {
+    if (isError(response)) {
       this.setState({
         error: response.payload?.errors?.[0] ?? true,
         submitting: false,
@@ -196,7 +193,8 @@ class DonateForm extends React.Component {
                     {'If you believe this is an error, Please appeal via email: '}
                     <a href="mailto:ops@fuelrats.com">{'ops@fuelrats.com'}</a>
                   </>
-                ) : (
+                )
+                : (
                   <>
                     {'If the problem persists, please contact a techrat via email: '}
                     <a href="mailto:support@fuelrats.com">{'support@fuelrats.com'}</a>

@@ -1,0 +1,53 @@
+@import '../../scss/colors';
+
+.addNicknameForm {
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  flex-flow: row nowrap;
+  align-items: center;
+
+  padding: 1rem;
+
+  fieldset {
+    flex: 2 0;
+
+    margin-right: 0.5rem;
+    padding: 0;
+  }
+
+  button[type='submit'] {
+    flex: 0 0 auto;
+  }
+
+  .thinInput {
+    padding: 0.6rem 1rem;
+  }
+
+  .error,
+  .error:focus {
+    border-color: $red;
+
+    &::placeholder {
+      color: $red;
+    }
+  }
+}
+
+.nicknamesInfo {
+  pointer-events: none;
+
+  position: absolute;
+  top: 5rem;
+
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+input:focus ~ .nicknamesInfo {
+  opacity: 1;
+}

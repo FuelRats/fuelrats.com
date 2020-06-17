@@ -1,12 +1,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 
-
-import TextPlaceholder from '../TextPlaceholder'
 import { formatAsEliteDateTime } from '~/helpers/formatTime'
 import { Link } from '~/routes'
 import { connect } from '~/store'
 import { selectAuthorByBlogId, selectBlogById, selectCategoriesByBlogId } from '~/store/selectors'
+
+import TextPlaceholder from '../TextPlaceholder'
+
 
 
 

@@ -230,8 +230,6 @@ class Nav extends React.Component {
     Redux Properties
   \***************************************************************************/
 
-  static mapDispatchToProps = ['setFlag']
-
   static mapStateToProps = (state) => {
     return selectSession(state)
   }

@@ -1,8 +1,17 @@
-// Component imports
-import actionTypes from '../actionTypes'
-import { getResourceDeletePartial } from './partials'
-import { frApiRequest } from './services'
+import { defineRelationship } from '@fuelrats/web-util/redux-json-api'
+
 import { presentApiRequestBody } from '~/helpers/presenters'
+
+import actionTypes from '../actionTypes'
+import {
+  createsRelationship,
+  deletesRelationship,
+  deletesResource,
+  RESOURCE,
+} from '../reducers/frAPIResources'
+import { frApiRequest } from './services'
+
+
 
 
 
@@ -35,20 +44,28 @@ export const createRat = (data) => {
       method: 'post',
       data: presentApiRequestBody('rats', data),
     },
+    createsRelationship(
+      defineRelationship(data.relationships?.user?.data, { rats: [RESOURCE] }),
+    ),
   )
 }
 
 
-export const deleteRat = (ratId) => {
+export const deleteRat = (rat) => {
   return frApiRequest(
     actionTypes.rats.delete,
     {
-      url: `/rats/${ratId}`,
+      url: `/rats/${rat.id}`,
       method: 'delete',
     },
-    getResourceDeletePartial('rats', ratId),
+    deletesResource(rat),
+    deletesRelationship(
+      defineRelationship(rat.relationships?.user?.data?.id, { rats: [rat] }),
+    ),
   )
 }
+
+
 
 
 export const updateRat = (data) => {

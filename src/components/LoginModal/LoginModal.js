@@ -1,17 +1,7 @@
-// Module imports
+import { isError } from 'flux-standard-action'
 import PropTypes from 'prop-types'
 import React from 'react'
 
-
-
-
-
-// Component imports
-import ErrorBox from '../ErrorBox'
-import asModal, { ModalContent, ModalFooter } from '../Modal'
-import Switch from '../Switch'
-import ValidatedFormInput from '../ValidatedFormInput'
-import styles from './LoginModal.module.scss'
 import getFingerprint from '~/helpers/getFingerprint'
 import { Router } from '~/routes'
 import { connect } from '~/store'
@@ -19,6 +9,12 @@ import { login } from '~/store/actions/authentication'
 import { setFlag } from '~/store/actions/flags'
 import { getUserProfile } from '~/store/actions/user'
 import { selectFlagByName, selectSession } from '~/store/selectors'
+
+import ErrorBox from '../ErrorBox'
+import asModal, { ModalContent, ModalFooter } from '../Modal'
+import Switch from '../Switch'
+import ValidatedFormInput from '../ValidatedFormInput'
+import styles from './LoginModal.module.scss'
 
 
 
@@ -101,18 +97,19 @@ class LoginModal extends React.Component {
       opts.verify = this.state.verify
     }
 
-    const { status, payload } = await this.props.login(opts)
+    const response = await this.props.login(opts)
 
-    if (status === 'success') {
-      this.props.getUserProfile()
-      this.props.onClose()
-      this.setState({ loggingIn: false })
-    } else {
+    if (isError(response)) {
       this.setState({
         loggingIn: false,
-        error: payload?.errors?.[0] ?? 'unknown',
+        error: response.payload?.errors?.[0] ?? 'unknown',
       })
+      return
     }
+    this.setState({ loggingIn: false })
+
+    this.props.getUserProfile()
+    this.props.onClose()
   }
 
   _handleRegisterClick = () => {

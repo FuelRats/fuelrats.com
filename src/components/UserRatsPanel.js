@@ -5,13 +5,14 @@ import React from 'react'
 
 
 // Component imports
-import AddRatForm from './AddRatForm'
-import RatCard from './RatCard'
 import { connect } from '~/store'
 import {
   selectUserById,
   withCurrentUserId,
 } from '~/store/selectors'
+
+import AddRatForm from './AddRatForm'
+import RatCard from './RatCard'
 
 
 

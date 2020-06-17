@@ -1,0 +1,31 @@
+@import '../../scss/colors';
+
+.userNicknames {
+  min-height: 6rem;
+  padding: 0.5rem 0 0;
+
+  overflow: visible;
+
+
+  ul > li {
+    display: flex;
+
+    justify-content: space-between;
+
+    padding: 0.5rem 1rem;
+
+    &:nth-child(even) {
+      background-color: $light-grey;
+    }
+
+    span {
+      word-break: break-word;
+    }
+  }
+}
+
+.addNicknameFloat {
+  position: relative;
+
+  height: 5rem;
+}

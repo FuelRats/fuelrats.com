@@ -1,17 +1,16 @@
 // Module imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { HttpStatus } from '@fuelrats/web-util/http'
+import { isError } from 'flux-standard-action'
 import React from 'react'
 
-
-
-
-
-// Component imports
-import InfoBubble from './InfoBubble'
-import ValidatedFormInput from './ValidatedFormInput'
 import { ircNickPattern } from '~/data/RegExpr'
 import { connect } from '~/store'
 import { selectUserById, withCurrentUserId } from '~/store/selectors'
+
+import InfoBubble from '../infoBubble'
+import ValidatedFormInput from '../ValidatedFormInput'
+import styles from './AddNicknameForm.module.scss'
 
 
 
@@ -24,8 +23,8 @@ class AddNicknameForm extends React.Component {
   \***************************************************************************/
 
   state = {
+    error: null,
     nickname: '',
-    password: '',
     submitting: false,
   }
 
@@ -44,18 +43,40 @@ class AddNicknameForm extends React.Component {
     } = this.props
     const {
       nickname,
-      password,
     } = this.state
-
     event.preventDefault()
 
     this.setState({ submitting: true })
 
-    await addNickname(user.id, nickname, password)
+    const response = await addNickname(user, { attributes: { nick: nickname } })
+
+    if (isError(response)) {
+      const { meta, payload } = response
+      let errorMessage = 'Unknown error occured.'
+
+      if (HttpStatus.isClientError(meta.response.status)) {
+        errorMessage = payload.errors && payload.errors.length ? payload.errors[0].title : 'Client communication error'
+      }
+
+      if (HttpStatus.isServerError(meta.response.status)) {
+        errorMessage = 'Server communication error'
+      }
+
+      if (meta.response.status === HttpStatus.CONFLICT) {
+        errorMessage = 'Nickname already registered'
+      }
+
+      if (meta.response.status === HttpStatus.UNPROCESSABLE_ENTITY) {
+        errorMessage = 'Nickname invalid'
+      }
+
+      this.setState({
+        error: errorMessage,
+      })
+    }
 
     this.setState({
       nickname: '',
-      password: '',
       submitting: false,
     })
   }
@@ -74,48 +95,37 @@ class AddNicknameForm extends React.Component {
 
   render () {
     const {
+      error,
       nickname,
-      password,
       submitting,
     } = this.state
 
     return (
       <form
-        className="add-nickname-form"
+        className={styles.addNicknameForm}
         onSubmit={this._handleSubmit}>
         <ValidatedFormInput
-          className="dark"
+          className={[styles.thinInput, error && styles.error]}
+          disabled={this.props.disabled}
           id="AddNickname"
           label="Nickname"
           name="nickname"
           pattern={ircNickPattern}
           patternMessage="Nickname must start with a letter, contain no spaces, and be between 2-30 characters"
-          placeholder="Add a nickname..."
+          placeholder={error || 'Add a nickname...'}
+          title={this.props.title}
           type="text"
           value={nickname}
           onChange={this._handleChange}>
-          <InfoBubble header="reminder" id="NickRegisterReminder">
+          <InfoBubble className={styles.nicknamesInfo} header="reminder" id="NickRegisterReminder">
             {"You cannot register a nick that's in use on IRC. Switch to a temporary one before registering!"}
           </InfoBubble>
         </ValidatedFormInput>
 
-
-
-        <ValidatedFormInput
-          className="dark"
-          id="AddNicknamePass"
-          label="NicknamePass"
-          name="password"
-          placeholder="IRC Password"
-          title="This is the password you use to identify with in IRC"
-          type="password"
-          value={password}
-          onChange={this._handleChange} />
-
         <button
           aria-label="submit new nickname"
-          className="green icon"
-          disabled={!nickname || !password || submitting}
+          className="green compact"
+          disabled={!nickname || submitting}
           type="submit">
           <FontAwesomeIcon fixedWidth icon="check" />
         </button>

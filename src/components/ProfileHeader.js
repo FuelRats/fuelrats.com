@@ -2,8 +2,6 @@
 import React from 'react'
 
 // Component imports
-import ChangePasswordModal from './ChangePasswordModal'
-import DisableProfileModal from './DisableProfileModal'
 import { formatAsEliteDateLong } from '~/helpers/formatTime'
 import { connect } from '~/store'
 import {
@@ -13,6 +11,9 @@ import {
   selectAvatarByUserId,
   withCurrentUserId,
 } from '~/store/selectors'
+
+import ChangePasswordModal from './ChangePasswordModal'
+import DisableProfileModal from './DisableProfileModal'
 
 
 

@@ -1,4 +1,5 @@
 // Module imports
+import { isError } from 'flux-standard-action'
 import React from 'react'
 
 
@@ -10,7 +11,7 @@ import PasswordField from '~/components/PasswordField'
 import { passwordPattern } from '~/data/RegExpr'
 import { pageRedirect } from '~/helpers/gIPTools'
 import { Router, Link } from '~/routes'
-import { actions, connect, actionStatus } from '~/store'
+import { actions, connect } from '~/store'
 
 
 
@@ -45,12 +46,12 @@ class Verify extends React.Component {
 
     this.setState({ submitting: true })
 
-    const resetResponse = await this.props.resetPassword({
+    const response = await this.props.resetPassword({
       password,
       token,
     })
 
-    if (resetResponse.status === actionStatus.SUCCESS) {
+    if (isError(response)) {
       this.setState({
         submitted: true,
         submitting: false,
@@ -78,13 +79,13 @@ class Verify extends React.Component {
     switch (type) {
       case 'reset':
         response = await store.dispatch(actions.verifyResetToken(token))
-        if (response.status === actionStatus.SUCCESS) {
+        if (!isError(response)) {
           destination = null
         }
         break
       case 'email':
         response = await store.dispatch(actions.verifyEmailToken(token))
-        if (response.status === actionStatus.SUCCESS) {
+        if (!isError(response)) {
           destination = '/profile'
         }
         break
@@ -92,12 +93,10 @@ class Verify extends React.Component {
         destination = '/'
         break
     }
+
     if (destination) {
       pageRedirect(ctx, destination)
     }
-
-
-
 
     return {
       tokenIsValid: response.status,

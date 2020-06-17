@@ -1,18 +1,20 @@
 {
   "[javascriptreact]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true,
+    },
   },
   "[scss]": {
-    "editor.defaultFormatter": "stylelint.vscode-stylelint"
+    "editor.defaultFormatter": "stylelint.vscode-stylelint",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.stylelint": true
+    },
   },
   "blueprint.templatesPath": [
     "./.vscode/blueprints"
   ],
   "css.validate": false,
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true,
-    "source.fixAll.stylelint": true
-  },
   "editor.insertSpaces": true,
   "editor.rulers": [
     180
@@ -24,6 +26,7 @@
   "eslint.packageManager": "yarn",
   "files.associations": {
     "*.js": "javascriptreact",
+    "*.mjs": "javascript",
     ".all-contributorsrc": "json",
     ".stylelintrc": "json"
   },
@@ -32,31 +35,11 @@
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
   "html.format.wrapLineLength": 180,
-  "javascript.implicitProjectConfig.experimentalDecorators": true,
-  "javascript.suggest.paths": false,
+  "javascript.suggest.paths": true,
   "less.validate": false,
-  "path-autocomplete.enableFolderTrailingSlash": false,
-  "path-autocomplete.extensionOnImport": true,
-  "path-autocomplete.pathMappings": {
-    "~": "${folder}/src"
-  },
-  "path-autocomplete.transformations": [
-    {
-      "parameters": [
-        "\\.(m)?js(x)?$",
-        ""
-      ],
-      "type": "replace",
-      "when": {
-        "fileName": "\\.(m)?js(x)?$"
-      }
-    }
-  ],
-  "scss.validate": false,
   "search.exclude": {
     "**/dist": true
   },
   "stylelint.packageManager": "yarn",
-  "stylelint.reportNeedlessDisables": true,
-  "typescript.suggest.paths": false
+  "stylelint.reportNeedlessDisables": true
 }

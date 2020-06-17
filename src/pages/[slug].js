@@ -1,4 +1,6 @@
 // Module imports
+import { HttpStatus } from '@fuelrats/web-util/http'
+import { isError } from 'flux-standard-action'
 import React from 'react'
 
 
@@ -7,8 +9,7 @@ import React from 'react'
 
 // Component imports
 import { setError } from '~/helpers/gIPTools'
-import { HttpStatus } from '~/helpers/HttpStatus'
-import { actions, connect, actionStatus } from '~/store'
+import { actions, connect } from '~/store'
 import { selectWordpressPageBySlug } from '~/store/selectors'
 
 
@@ -26,9 +27,9 @@ class WordpressProxy extends React.Component {
     const { slug } = query
 
     if (!selectWordpressPageBySlug(store.getState(), { slug })) {
-      const { status } = await store.dispatch(actions.getWordpressPage(slug))
+      const response = await store.dispatch(actions.getWordpressPage(slug))
 
-      if (status === actionStatus.ERROR) {
+      if (isError(response)) {
         setError(ctx, HttpStatus.NOT_FOUND)
       }
     }

@@ -133,8 +133,8 @@ class EpicNominate extends React.Component {
         notes,
       })
     }))
-    responses = responses.filter(({ status }) => {
-      return status === 'error'
+    responses = responses.filter((response) => {
+      return response?.error === true
     })
 
     if (responses.length) {

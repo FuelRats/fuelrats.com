@@ -1,24 +1,20 @@
-// Module imports
 import PropTypes from 'prop-types'
 import React from 'react'
 import { createStructuredSelector } from 'reselect'
 
-
-
-// Component imports
-import NamespaceDetails from './NamespaceDetails'
-import styles from './ScopeView.module.scss'
-import isRequired from '~/helpers/isRequired'
 import { connect } from '~/store'
 import { selectCurrentUserScopes } from '~/store/selectors'
+
+import NamespaceDetails from './NamespaceDetails'
+import styles from './ScopeView.module.scss'
+
 
 
 
 
 // Component Constants
 
-
-const groupScopes = (scopes = isRequired('scopes'), accessibleScopes = []) => {
+const groupScopes = (scopes, accessibleScopes = []) => {
   return scopes.reduce((acc, scopeStr) => {
     const [namespace, action, isSelf] = scopeStr.split('.')
 
@@ -37,6 +33,8 @@ const groupScopes = (scopes = isRequired('scopes'), accessibleScopes = []) => {
     return acc
   }, {})
 }
+
+
 
 
 
@@ -106,8 +104,6 @@ class ScopeView extends React.PureComponent {
   /***************************************************************************\
     Redux Properties
   \***************************************************************************/
-
-  static mapDispatchToProps = []
 
   static mapStateToProps = createStructuredSelector({
     accessibleScopes: selectCurrentUserScopes,
