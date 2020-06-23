@@ -178,7 +178,7 @@ class EpicNominate extends React.Component {
         {
           !submitted && (
             <form
-              className={['page-content', { loading: submitting, force: submitting }]}
+              className={['page-content', { 'loading loader-force': submitting }]}
               onSubmit={this._handleSubmit}>
               <fieldset>
                 <label htmlFor="epic-type">{'Who are you nominating for an epic today?'}</label>

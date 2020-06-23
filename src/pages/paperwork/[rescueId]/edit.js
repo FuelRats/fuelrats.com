@@ -356,7 +356,7 @@ class Paperwork extends React.Component {
 
     return (
       <form
-        className={['page-content', { 'loading force': submitting }]}
+        className={['page-content', { 'loading loader-force': submitting }]}
         onSubmit={this._handleSubmit}>
         <header className="paperwork-header">
           {
