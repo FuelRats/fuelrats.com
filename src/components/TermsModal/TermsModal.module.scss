@@ -1,0 +1,6 @@
+.content {
+  composes: loading from global;
+  composes: loader-dark from global;
+
+  min-height: 250px;
+}
