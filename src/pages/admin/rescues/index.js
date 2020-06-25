@@ -11,7 +11,8 @@ import React from 'react'
 import { authenticated } from '~/components/AppLayout'
 import { formatAsEliteDateTime } from '~/helpers/formatTime'
 import { Link } from '~/routes'
-import { connect, actions } from '~/store'
+import { connect } from '~/store'
+import { getRescues } from '~/store/actions/rescues'
 import { selectPageViewDataById, selectPageViewMetaById } from '~/store/selectors'
 
 
@@ -85,7 +86,7 @@ class ListRescues extends React.Component {
 
   static async getInitialProps ({ store }) {
     await store.dispatch(
-      actions.getRescues(
+      getRescues(
         { 'status[ne]': 'closed' },
         { pageView: pageViewId },
       ),

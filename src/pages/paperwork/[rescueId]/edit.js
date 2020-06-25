@@ -17,7 +17,8 @@ import platformRadioOptions from '~/data/platformRadioOptions'
 import { formatAsEliteDateTime } from '~/helpers/formatTime'
 import getRatTag from '~/helpers/getRatTag'
 import { Router } from '~/routes'
-import { actions, connect } from '~/store'
+import { connect } from '~/store'
+import { getRescue } from '~/store/actions/rescues'
 import {
   selectRatsByRescueId,
   selectRescueById,
@@ -322,7 +323,7 @@ class Paperwork extends React.Component {
     const state = store.getState()
 
     if (!selectRescueById(state, query)) {
-      await store.dispatch(actions.getRescue(query.rescueId))
+      await store.dispatch(getRescue(query.rescueId))
     }
   }
 

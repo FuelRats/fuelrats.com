@@ -17,7 +17,8 @@ import {
   passwordPattern,
 } from '~/data/RegExpr'
 import { Link } from '~/routes'
-import { actions, connect } from '~/store'
+import { connect } from '~/store'
+import { getWordpressPage } from '~/store/actions/wordpress'
 
 
 
@@ -142,8 +143,8 @@ class Register extends React.Component {
   \***************************************************************************/
 
   static async getInitialProps ({ store }) {
-    await store.dispatch(actions.getWordpressPage('terms-of-service'))
-    await store.dispatch(actions.getWordpressPage('privacy-policy'))
+    await store.dispatch(getWordpressPage('terms-of-service'))
+    await store.dispatch(getWordpressPage('privacy-policy'))
   }
 
   static getPageMeta () {

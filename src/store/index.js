@@ -14,12 +14,44 @@ import thunkMiddleware from 'redux-thunk'
 
 
 // Component imports
-import * as actions from './actions'
+
+import * as authenticationActions from './actions/authentication'
+import * as blogActions from './actions/blogs'
+import * as decalActions from './actions/decals'
+import * as epicActions from './actions/epics'
+import * as flagActions from './actions/flags'
+import * as imageActions from './actions/images'
+import * as leaderboardActions from './actions/leaderboard'
+import * as ratActions from './actions/rats'
+import * as rescueActions from './actions/rescues'
+import * as serviceActions from './actions/services'
+import * as sessionActions from './actions/session'
+import * as shipActions from './actions/ships'
+import * as stripeActions from './actions/stripe'
+import * as userActions from './actions/user'
+import * as verifyActions from './actions/verify'
+import * as wordpressActions from './actions/wordpress'
 import initialState from './initialState'
 import reducer from './reducers'
 
-
-
+const actions = {
+  ...authenticationActions,
+  ...blogActions,
+  ...decalActions,
+  ...epicActions,
+  ...flagActions,
+  ...imageActions,
+  ...leaderboardActions,
+  ...ratActions,
+  ...rescueActions,
+  ...serviceActions,
+  ...sessionActions,
+  ...shipActions,
+  ...stripeActions,
+  ...userActions,
+  ...verifyActions,
+  ...wordpressActions,
+}
 
 
 const middlewares = [thunkMiddleware]
@@ -124,7 +156,6 @@ const getActionCreators = (action, dispatch) => {
 
 
 export {
-  actions,
   getActionCreators,
   connectDecorator as connect,
   initStore,

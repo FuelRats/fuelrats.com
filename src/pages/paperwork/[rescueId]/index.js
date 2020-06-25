@@ -10,7 +10,8 @@ import React from 'react'
 import { authenticated } from '~/components/AppLayout'
 import { formatAsEliteDateTime } from '~/helpers/formatTime'
 import { Link, Router } from '~/routes'
-import { actions, connect } from '~/store'
+import { connect } from '~/store'
+import { getRescue } from '~/store/actions/rescues'
 import {
   selectRatsByRescueId,
   selectRescueById,
@@ -108,7 +109,7 @@ class Paperwork extends React.Component {
     const state = store.getState()
 
     if (!selectRescueById(state, query)) {
-      await store.dispatch(actions.getRescue(query.rescueId))
+      await store.dispatch(getRescue(query.rescueId))
     }
   }
 

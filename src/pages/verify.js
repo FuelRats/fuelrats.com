@@ -11,7 +11,8 @@ import PasswordField from '~/components/PasswordField'
 import { passwordPattern } from '~/data/RegExpr'
 import { pageRedirect } from '~/helpers/gIPTools'
 import { Router, Link } from '~/routes'
-import { actions, connect } from '~/store'
+import { connect } from '~/store'
+import { verifyResetToken, verifyEmailToken } from '~/store/actions/verify'
 
 
 
@@ -78,13 +79,13 @@ class Verify extends React.Component {
 
     switch (type) {
       case 'reset':
-        response = await store.dispatch(actions.verifyResetToken(token))
+        response = await store.dispatch(verifyResetToken(token))
         if (!isError(response)) {
           destination = null
         }
         break
       case 'email':
-        response = await store.dispatch(actions.verifyEmailToken(token))
+        response = await store.dispatch(verifyEmailToken(token))
         if (!isError(response)) {
           destination = '/profile'
         }

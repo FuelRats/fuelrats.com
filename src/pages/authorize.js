@@ -10,7 +10,8 @@ import React from 'react'
 import { authenticated } from '~/components/AppLayout'
 import ScopeView from '~/components/ScopeView'
 import { pageRedirect } from '~/helpers/gIPTools'
-import { actions, connect } from '~/store'
+import { connect } from '~/store'
+import { getClientOAuthPage } from '~/store/actions/authentication'
 
 
 // For Testing
@@ -66,7 +67,7 @@ class Authorize extends React.Component {
   static async getInitialProps (ctx) {
     const { query, res, store } = ctx
 
-    const response = await store.dispatch(actions.getClientOAuthPage(query))
+    const response = await store.dispatch(getClientOAuthPage(query))
 
     if (!isError(response)) {
       const { meta, payload } = response
