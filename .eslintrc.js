@@ -19,6 +19,9 @@ module.exports = {
       ...importRules.rules['import/order'][1],
       'newlines-between': 'always',
     }],
+    'react-hooks/exhaustive-deps': ['warn', {
+      additionalHooks: 'useDebouncedCallback',
+    }],
   },
   settings: {
     'import/ignore': [
