@@ -28,50 +28,13 @@ class ErrorPage extends React.Component {
   }
 
   render () {
-    const {
-      statusCode,
-      title,
-    } = this.props
-
     return (
       <div className={styles.container}>
-        <div className={[styles.postit, styles.topLeft]}>
-          <p className={styles.note}>
-            <strong>{`Mary,  ${title}`}</strong>
-            {'Mary, Mary, quite contrary, How does your garden grow? With silver bells, and cockle shells, And pretty maids all in a row.'}
-          </p>
-        </div>
-        <div className={styles.topRight}>
-          <p className={styles.note}>
-            <strong>{'Mary, Mary'}</strong>
-            {'Mary, Mary, quite contrary, How does your garden grow? With silver bells, and cockle shells, And pretty maids all in a row.'}
-          </p>
-        </div>
-        <div className={styles.btmRight}>
-          <p className={styles.note}>
-            <strong>{'Mary, Mary'}</strong>
-            {'Mary, Mary, quite contrary, How does your garden grow? With silver bells, and cockle shells, And pretty maids all in a row.'}
-          </p>
-        </div>
-        <div className={styles.sidePolo}>
-          <div className={styles.polaroidImg}>
-            <div className={styles.gloss} />
-            <img alt="error_image" src="/static/images/errorpage/side-image.png" />
-          </div>
-          <p>
-            {'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'}
-          </p>
-        </div>
-        <div className={styles.errorPolo}>
-          <div className={styles.polaroidImg}>
-            <div className={styles.gloss} />
-            <img alt="error_image" src="/static/images/errorpage/404error.jpg" />
-          </div>
-          {
-            Boolean(statusCode) && (
-              <p className={styles.errorCode}>{statusCode}</p>
-            )
-          }
+        <video autoPlay loop muted className={styles.myVideo}>
+          <source src="/static/videos/ErrorBGElite.mp4" type="video/mp4" />
+        </video>
+        <div className={`${styles.error} ${styles.glitchWrapper}`}>
+          <header><p className={styles.glitch} data-text="Error 404">{'Error 404'}</p></header>
         </div>
       </div>
     )
