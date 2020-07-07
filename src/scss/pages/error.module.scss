@@ -3,7 +3,7 @@
 
 .myVideo {
   position: fixed;
-  right: 0;
+  right: -10%;
   bottom: 0;
 
   min-width: 100%;
@@ -25,6 +25,8 @@
 .error {
   position: relative;
 
+  top: 30%;
+  right: -15%;
   width: 40rem;
   height: 20rem;
   padding: 1rem;
@@ -304,8 +306,6 @@
 
   align-items: center;
   justify-content: center;
-
-  height: 100%;
 }
 
 .glitch {
