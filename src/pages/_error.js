@@ -29,25 +29,14 @@ class ErrorPage extends React.Component {
   }
 
   render () {
-    const {
-      statusCode,
-      title,
-    } = this.props
-
     return (
-      <div className={styles.errorInfo}>
-        {
-          Boolean(statusCode) && (
-            <h1 className={styles.errorCode}>{statusCode}</h1>
-          )
-        }
-
-        <h3 className={styles.errorText}>{title}</h3>
-
-        <small className={styles.subtext}>
-          {'If you believe this is an error, please open a ticket or contact: '}
-          <a href="mailto:support@fuelrats.com">{'support@fuelrats.com'}</a>
-        </small>
+      <div className={styles.container}>
+        <video autoPlay loop muted className={styles.myVideo}>
+          <source src="/static/videos/ErrorBGElite.mp4" type="video/mp4" />
+        </video>
+        <div className={`${styles.error} ${styles.glitchWrapper}`}>
+          <header><p className={styles.glitch} data-text="Error 404">{'Error 404'}</p></header>
+        </div>
       </div>
     )
   }
