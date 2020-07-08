@@ -1,0 +1,42 @@
+@import '../../scss/colors';
+
+.inputMessages {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  left: 0;
+  z-index: 10;
+
+  min-height: 42px;
+
+  border: 1px solid rgba($black, 0.2);
+
+  background: rgba($white, 0.9);
+  box-shadow: 0 0 1rem rgba(26, 26, 26, 0.1);
+  transition: opacity 0.2s;
+
+  font-size: 0.9em;
+
+  backdrop-filter: blur(4px);
+  pointer-events: none;
+}
+
+
+
+.message {
+  padding: 0.75rem 1rem;
+
+  &.error {
+    color: $red;
+  }
+
+  &.warning {
+    [data-icon] {
+      color: $yellow-darker;
+    }
+  }
+
+  [data-icon] {
+    margin-right: 0.5rem;
+  }
+}
