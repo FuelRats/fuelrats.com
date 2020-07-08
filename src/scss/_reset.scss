@@ -138,3 +138,9 @@ table {
 b {
   font-weight: bold;
 }
+
+
+input {
+  /* MS Edge Sucks */
+  border-radius: 0;
+}
