@@ -128,6 +128,7 @@
     "reselect": "^4.0.0",
     "stripe": "^8.64.0",
     "ua-parser-js": "^0.7.21",
+    "use-immer": "^0.4.0",
     "webpack": "4.43.0",
     "worker-loader": "^2.0.0",
     "zxcvbn": "^4.4.2"
