@@ -18,7 +18,7 @@ import {
 
 import AddNicknameForm from '../AddNicknameForm/AddNicknameForm'
 import ConfirmActionButton from '../ConfirmActionButton'
-import ErrorBox from '../ErrorBox'
+import MessageBox from '../MessageBox'
 import styles from './UserNicknamesPanel.module.scss'
 
 
@@ -26,7 +26,7 @@ import styles from './UserNicknamesPanel.module.scss'
 
 
 // Component constants
-const MAXNICKS = 16 // Maximum IRC Nicknames allowed
+const MAX_NICKS = 16 // Maximum IRC Nicknames allowed
 
 
 
@@ -64,7 +64,7 @@ class UserNicknamesPanel extends React.Component {
 
     if (isError(response)) {
       const { meta, payload } = response
-      let errorMessage = 'Unknown error occured.'
+      let errorMessage = 'Unknown error occurred.'
 
       if (HttpStatus.isClientError(meta.response.status)) {
         errorMessage = payload.errors && payload.errors.length ? payload.errors[0].detail : 'Client communication error'
@@ -99,7 +99,7 @@ class UserNicknamesPanel extends React.Component {
     const { error } = this.state
 
     const nickCount = nicknames?.length
-    const maxNicksReached = (nickCount >= MAXNICKS)
+    const maxNicksReached = (nickCount >= MAX_NICKS)
 
     return (
       <div className="panel">
@@ -107,14 +107,14 @@ class UserNicknamesPanel extends React.Component {
           {'IRC Nicknames'}
 
           <div className="controls">
-            <span className="nickname-count">{`${nickCount}/${MAXNICKS}`}</span>
+            <span className="nickname-count">{`${nickCount}/${MAX_NICKS}`}</span>
           </div>
         </header>
 
         <div className={styles.userNicknames}>
           {
             error && (
-              <ErrorBox className={styles.errorBox}>{error}</ErrorBox>
+              <MessageBox>{error}</MessageBox>
             )
           }
           <ul>

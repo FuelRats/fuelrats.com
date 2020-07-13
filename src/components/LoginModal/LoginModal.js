@@ -10,7 +10,7 @@ import { setFlag } from '~/store/actions/flags'
 import { getUserProfile } from '~/store/actions/user'
 import { selectFlagByName, selectSession } from '~/store/selectors'
 
-import ErrorBox from '../ErrorBox'
+import MessageBox from '../MessageBox'
 import asModal, { ModalContent, ModalFooter } from '../Modal'
 import Switch from '../Switch'
 import ValidatedFormInput from '../ValidatedFormInput'
@@ -152,7 +152,7 @@ class LoginModal extends React.Component {
       <ModalContent as="form" className="dialog no-pad" onSubmit={this._handleSubmit}>
         {
           error && !loggingIn && (
-            <ErrorBox className={styles.errorBox}>
+            <MessageBox className={styles.errorBox}>
               {
                 (() => {
                   switch (error.status) {
@@ -168,7 +168,7 @@ class LoginModal extends React.Component {
                   }
                 })()
               }
-            </ErrorBox>
+            </MessageBox>
           )
         }
 
