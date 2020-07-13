@@ -42,6 +42,7 @@ class WordpressProxy extends React.Component {
     return {
       className: 'wordpress-page',
       title: page.title.rendered,
+      pageKey: query.slug,
     }
   }
 
