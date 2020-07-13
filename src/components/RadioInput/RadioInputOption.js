@@ -24,7 +24,7 @@ function RadioInputOption (props) {
   const optionId = `${inputProps.name}-${value}`
 
   return (
-    <Element className={[styles.option, { disabled: inputProps.disabled, checked: inputProps.checked }, className]}>
+    <Element className={[styles.option, { [styles.disabled]: inputProps.disabled, [styles.checked]: inputProps.checked }, className]}>
       <input
         {...inputProps}
         aria-hidden={false}

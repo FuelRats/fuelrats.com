@@ -31,7 +31,7 @@ function RadioInput (props) {
   }, [onChange, value])
 
   return (
-    <Element className={[styles.RadioInput, { disabled }, className]}>
+    <Element className={[styles.radioInput, { disabled }, className]}>
       {
         options.map((option) => {
           return (
