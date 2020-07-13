@@ -20,7 +20,7 @@ module.exports = {
       'newlines-between': 'always',
     }],
     'react-hooks/exhaustive-deps': ['warn', {
-      additionalHooks: '(useDebouncedCallback|useComposedValidate)',
+      additionalHooks: 'use.+Callback',
     }],
   },
   settings: {
