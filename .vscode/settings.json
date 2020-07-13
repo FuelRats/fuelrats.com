@@ -15,6 +15,7 @@
     "./.vscode/blueprints"
   ],
   "css.validate": false,
+  "scss.validate": false,
   "editor.insertSpaces": true,
   "editor.rulers": [
     180
@@ -52,5 +53,6 @@
     "**/dist": true
   },
   "stylelint.packageManager": "yarn",
-  "stylelint.reportNeedlessDisables": true
+  "stylelint.reportNeedlessDisables": true,
+  "cSpell.language": "en,en-US"
 }
