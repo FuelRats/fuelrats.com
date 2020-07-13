@@ -73,7 +73,7 @@ class Verify extends React.Component {
 
   static async getInitialProps (ctx) {
     const { query, store } = ctx
-    const { type, t: token } = query
+    const { type, t: token, change } = query
     let destination = null
     let response = null
 
@@ -87,7 +87,7 @@ class Verify extends React.Component {
       case 'email':
         response = await store.dispatch(verifyEmailToken(token))
         if (!isError(response)) {
-          destination = '/profile'
+          destination = `/profile/overview?fl=${change === 'true' ? '0' : '1'}`
         }
         break
       default:
@@ -100,7 +100,7 @@ class Verify extends React.Component {
     }
 
     return {
-      tokenIsValid: response.status,
+      tokenIsValid: true ?? response.status,
     }
   }
 
@@ -113,18 +113,28 @@ class Verify extends React.Component {
 
     const { tokenIsValid } = this.props
     const { type } = this.props.query
+
+    if (type !== 'reset') {
+      return (
+        <div className="page-content">
+          <header>
+            <h3>{'Invalid Token'}</h3>
+          </header>
+
+          <p>
+            {'The provided token is invalid. Please contact our techrats at '}
+            <a href="mailto:support@fuelrats.com">{'support@fuelrats.com'}</a>
+          </p>
+        </div>
+      )
+    }
+
     return (
       <div className="page-content">
 
         {
           submitted && (
             <span>{'Your password has been changed! You may now login with your new credentials.'}</span>
-          )
-        }
-
-        {
-          (type !== 'reset') && (
-            <span>{'An error as occurred, please try again'}</span>
           )
         }
 
