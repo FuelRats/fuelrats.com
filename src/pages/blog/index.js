@@ -124,6 +124,15 @@ class Blogs extends React.Component {
     Public Methods
   \***************************************************************************/
 
+  componentDidUpdate (prevProps) {
+    if (
+      prevProps.page !== this.props.page
+      || prevProps.category !== this.props.category
+      || prevProps.author !== this.props.author) {
+      this._getBlogs()
+    }
+  }
+
   componentDidMount () {
     this._getBlogs()
   }
@@ -147,6 +156,7 @@ class Blogs extends React.Component {
   static getPageMeta () {
     return {
       title: 'Blog',
+      pageKey: 'blog-list',
     }
   }
 
