@@ -27,7 +27,7 @@ import '~/scss/app.scss'
 
 
 
-// Configure and populate FontAweomse library
+// Configure and populate FontAwesome library
 faConfig.autoAddCss = false
 faLibrary.add(faIcons)
 
@@ -151,7 +151,7 @@ class FuelRatsApp extends App {
 
     return {
       items: { Page, pageProps, pageMeta },
-      keys: router.asPath,
+      keys: pageMeta.pageKey ?? router.pathname,
     }
   }
 }
