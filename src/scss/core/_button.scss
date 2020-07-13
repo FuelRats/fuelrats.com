@@ -25,11 +25,9 @@
 }
 
 
-/* stylelint-disable selector-class-pattern */
 button,
 input[type='button'],
 .button {
-  /* stylelint-enable selector-class-pattern */
   --text-color: #{$white};
   --text-color-hover: #{$red};
   --background-color: #{$red};
