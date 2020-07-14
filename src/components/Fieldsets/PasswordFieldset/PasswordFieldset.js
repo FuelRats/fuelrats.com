@@ -31,7 +31,6 @@ function PasswordFieldset (props) {
 
   const [showPassword, handlePasswordVisibility] = useReducer((state) => {
     inputRef.current?.focus()
-    inputRef.current?.select()
     return !state
   }, false)
 
