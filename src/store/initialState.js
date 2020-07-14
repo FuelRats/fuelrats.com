@@ -8,11 +8,6 @@ const initialState = {
 
   decals: {},
 
-  error: {
-    errors: [],
-    hasError: false,
-  },
-
   epics: {},
 
   flags: {

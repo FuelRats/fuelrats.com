@@ -1,6 +1,7 @@
 /* globals $IS_DEVELOPMENT:false */
 // Module imports
 import { isFSA } from 'flux-standard-action'
+import { isError } from 'lodash'
 import { connect } from 'react-redux'
 import {
   bindActionCreators,
@@ -31,6 +32,7 @@ import * as stripeActions from './actions/stripe'
 import * as userActions from './actions/user'
 import * as verifyActions from './actions/verify'
 import * as wordpressActions from './actions/wordpress'
+import actionTypes from './actionTypes'
 import initialState from './initialState'
 import reducer from './reducers'
 
@@ -54,10 +56,6 @@ const actions = {
 }
 
 
-const middlewares = [thunkMiddleware]
-
-
-
 
 
 const FSAComplianceMiddleware = () => {
@@ -74,6 +72,28 @@ const FSAComplianceMiddleware = () => {
     }
   }
 }
+
+
+const ignoredTypes = [
+  // This pops up on every 404 page due to how our fallback system works.
+  // It's not generally helpful to log
+  actionTypes.wordpress.pages.read,
+]
+
+const errorLoggerMiddleware = () => {
+  return (next) => {
+    return (action) => {
+      const finalAction = next(action)
+
+      if (isError(finalAction) && !ignoredTypes.includes(finalAction.type)) {
+        console.error('GIVE THIS TO YOUR TECHRAT:', finalAction)
+      }
+    }
+  }
+}
+
+
+const middlewares = [thunkMiddleware, errorLoggerMiddleware]
 
 if ($IS_DEVELOPMENT) {
   middlewares.unshift(require('redux-immutable-state-invariant').default())
