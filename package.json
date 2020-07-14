@@ -116,7 +116,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
-    "react-table": "7.2.0",
+    "react-table": "6.11.5",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-immutable-state-invariant": "^2.1.0",
