@@ -80,27 +80,27 @@ class Verify extends React.Component {
     switch (type) {
       case 'reset':
         response = await store.dispatch(verifyResetToken(token))
-        if (!isError(response)) {
-          destination = null
-        }
+        destination = null
         break
+
       case 'email':
         response = await store.dispatch(verifyEmailToken(token))
-        if (!isError(response)) {
-          destination = `/profile/overview?fl=${change === 'true' ? '0' : '1'}`
-        }
+        destination = `/profile/overview?fl=${change === 'true' ? '0' : '1'}`
         break
+
       default:
         destination = '/'
         break
     }
 
-    if (destination) {
+    const tokenIsValid = !isError(response)
+
+    if (tokenIsValid && destination) {
       pageRedirect(ctx, destination)
     }
 
     return {
-      tokenIsValid: true ?? response.status,
+      tokenIsValid,
     }
   }
 
