@@ -18,7 +18,7 @@ import {
 
 
 
-// TODO Check Usage of onUpdate
+
 @connect
 class DefaultRatButton extends React.Component {
   /***************************************************************************\
