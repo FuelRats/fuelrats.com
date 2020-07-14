@@ -22,6 +22,7 @@ module.exports = {
     'react-hooks/exhaustive-deps': ['warn', {
       additionalHooks: 'use.+Callback',
     }],
+    'no-warning-comments': ['off'], // TODO Re-enable no-warning-comments before release
   },
   settings: {
     'import/ignore': [
