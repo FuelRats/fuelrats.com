@@ -43,16 +43,21 @@ function Register () {
     return (
       <div className="page-content flex align-center ">
         <br />
+
         <h3>{'Incoming Mission Critical Message'}</h3>
+
         <span>
           {'A verification email has been sent to '}
           <code>{submitState.data.attributes.email}</code>
         </span>
+
         <span>
           {'Wrong email? Reach out to us by emailing '}
           <a href="mailto:support@fuelrats.com">{'support@fuelrats.com'}</a>
         </span>
+
         <br />
+
         {
           submitState.resend === true && (
             <>
@@ -63,6 +68,7 @@ function Register () {
             </>
           )
         }
+
         <button disabled={submitState?.resend === 'submit'} type="button" onClick={handleResend}>
           {
             submitState.resend === true
@@ -82,12 +88,8 @@ function Register () {
           <br />
           {'Need fuel? No need to register! Just click "Get Fuel" in the sidebar!'}
         </h5>
-        {
-          submitState && submitState.error && (
-            <RegistrationErrorBox error={submitState.error} />
-          )
-        }
       </div>
+      <RegistrationErrorBox error={submitState?.error} />
       <RegistrationForm onSubmit={handleSubmit} />
     </>
   )
