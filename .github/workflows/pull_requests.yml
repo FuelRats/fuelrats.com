@@ -7,7 +7,7 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
-    name: Lint
+    name: ESLint
     steps:
       - uses: actions/checkout@v2
 
