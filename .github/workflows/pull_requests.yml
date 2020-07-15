@@ -1,7 +1,7 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: pull_requests
+name: Tests
 
 on:
   pull_request:
@@ -10,7 +10,7 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
-    name: Lint JS/SCSS
+    name: Lint
     steps:
       - uses: actions/checkout@v2
         
@@ -31,7 +31,9 @@ jobs:
         with:
           github_token: ${{ secrets.github_token }}
           eslint: true
+          eslint_args: "--max-warnings 0"
           stylelint: true
+          stylelint_args: "--max-warnings 0"
         
   build:
     runs-on: ubuntu-latest
