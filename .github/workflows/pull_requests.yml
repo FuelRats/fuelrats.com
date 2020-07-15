@@ -48,8 +48,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     name: Build
-    env:
-      NODE_ENV: production
     steps:
       - uses: actions/checkout@v2
 
@@ -79,4 +77,6 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Build
-        run: npm run-script build
+        run: yarn build
+        env:
+          NODE_ENV: production
