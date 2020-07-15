@@ -10,16 +10,14 @@
   "engineStrict": true,
   "scripts": {
     "add-contributor": "all-contributors add",
-    "build:next": "yarn run next build",
-    "build:server": "yarn rollup --config",
+    "build:next": "next build",
+    "build:server": "rollup --config",
     "build": "yarn build:server && yarn build:next",
     "start": "yarn node --inspect --harmony -r dotenv/config dist/server.js",
     "dev": "yarn build:server && yarn start",
-    "utoc": "yarn doctoc $(grep --include=\\*.md --exclude-dir=node_modules -Rwl . -e 'START doctoc')",
-    "eslint": "yarn eslint .",
-    "eslint:ci": "eslint --max-warnings 1 .",
-    "stylelint": "stylelint \"src/**/*.scss\"",
-    "stylelint:ci": "stylelint --max-warnings 1 \"src/**/*.scss\""
+    "utoc": "doctoc $(grep --include=\\*.md --exclude-dir=node_modules -Rwl . -e 'START doctoc')",
+    "eslint": "eslint .",
+    "stylelint": "stylelint \"src/**/*.scss\""
   },
   "devDependencies": {
     "@babel/core": "7.10.2",
