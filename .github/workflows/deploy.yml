@@ -47,7 +47,7 @@ jobs:
       - name: Publish artifact
         uses: actions/upload-artifact@v2
         with:
-          name: fuelrats-com-${{ github.ref }}
+          name: fuelrats-com
           path: |
             dist/
             public/
