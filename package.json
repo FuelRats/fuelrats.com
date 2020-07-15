@@ -17,9 +17,7 @@
     "dev": "yarn build:server && yarn start",
     "utoc": "doctoc $(grep --include=\\*.md --exclude-dir=node_modules -Rwl . -e 'START doctoc')",
     "eslint": "eslint .",
-    "eslint:ci": "eslint --max-warnings 1 .",
-    "stylelint": "stylelint \"src/**/*.scss\"",
-    "stylelint:ci": "stylelint --max-warnings 1 \"src/**/*.scss\""
+    "stylelint": "stylelint \"src/**/*.scss\""
   },
   "devDependencies": {
     "@babel/core": "7.10.2",
