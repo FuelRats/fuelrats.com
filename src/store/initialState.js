@@ -24,8 +24,8 @@ const initialState = {
   images: {},
 
   leaderboard: {
-    loading: false,
-    statistics: [],
+    statistics: {},
+    entries: [],
   },
 
   nicknames: {},
