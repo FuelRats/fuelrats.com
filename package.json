@@ -100,7 +100,7 @@
     "koa-logger": "^3.2.1",
     "koa-no-trailing-slash": "^2.1.0",
     "koa-proxies": "0.11.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "moment": "^2.26.0",
     "next": "9.4.4",
     "next-cookies": "^2.0.3",
