@@ -6,10 +6,10 @@ import blogs from './blogs'
 import flags from './flags'
 import { reduceJSONAPIResources } from './frAPIResources'
 import images from './images'
+import leaderboard from './leaderboard'
 import pageViews from './pageViews'
 import session from './session'
 import wordpress from './wordpress'
-
 
 
 
@@ -22,6 +22,7 @@ export default chainReducers(
       blogs,
       flags,
       images,
+      leaderboard,
       pageViews,
       session,
       wordpress,

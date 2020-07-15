@@ -6,11 +6,12 @@ import { frApiRequest } from './services'
 
 
 
-export const getRatLeaderboard = () => {
+export const getRatLeaderboard = (params) => {
   return frApiRequest(
     actionTypes.leaderboard.read,
     {
       url: '/leaderboard',
+      params,
     },
   )
 }
