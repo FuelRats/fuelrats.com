@@ -79,4 +79,4 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Build
-        run: npm build
+        run: npm run-script build
