@@ -1,0 +1,46 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: pull_requests
+
+on:
+  pull_request:
+    branches: [ develop, release ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        
+      - name: Use nvm
+        shell: bash
+        run: nvm install
+        
+      - name: yarn install
+        run: yarn install --frozen-lockfile --non-interactive 
+      
+      - name: Lint Action
+        uses: samuelmeuli/lint-action@v1.5.3
+        with:
+          github_token: ${{ secrets.github_token }}
+          eslint: true
+          stylelint: true
+        
+  build:
+    runs-on: ubuntu-latest
+    
+    env:
+      NODE_ENV: production
+      
+    steps:
+      - uses: actions/checkout@v2
+    
+      - name: Use nvm
+        shell: bash
+        run: nvm install
+      
+      - name: yarn install
+        run: yarn install --frozen-lockfile --non-interactive 
+    
+      - run: yarn build
