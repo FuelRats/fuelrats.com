@@ -10,17 +10,23 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
+    name: Lint JS/SCSS
     steps:
       - uses: actions/checkout@v2
         
-      - name: Use nvm
-        shell: bash -l {0}
-        run: nvm install
+      - name: Read .nvmrc
+        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+        id: nvm
+
+      - name: Use Node.js (.nvmrc)
+        uses: actions/setup-node@v1
+        with:
+          node-version: "${{ steps.nvm.outputs.NVMRC }}"
         
       - name: yarn install
         run: yarn install --frozen-lockfile --non-interactive 
       
-      - name: Lint Action
+      - name: Lint
         uses: samuelmeuli/lint-action@v1.5.3
         with:
           github_token: ${{ secrets.github_token }}
@@ -29,16 +35,20 @@ jobs:
         
   build:
     runs-on: ubuntu-latest
-    
+    name: Build
     env:
       NODE_ENV: production
-      
     steps:
       - uses: actions/checkout@v2
     
-      - name: Use nvm
-        shell: bash
-        run: nvm install
+      - name: Read .nvmrc
+        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+        id: nvm
+
+      - name: Use Node.js (.nvmrc)
+        uses: actions/setup-node@v1
+        with:
+          node-version: "${{ steps.nvm.outputs.NVMRC }}"
       
       - name: yarn install
         run: yarn install --frozen-lockfile --non-interactive 
