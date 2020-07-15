@@ -2,27 +2,26 @@ name: Deploy
 
 on:
   push:
-    branches: [ develop, release, use-github-actions ]
+    branches: [ use-github-actions ]
 
 
 jobs:
   publish:
     runs-on: ubuntu-latest
-
     name: Publish
 
     steps:
       - name: Checkout
-      - uses: actions/checkout@v2
+        uses: actions/checkout@v2
 
       - name: Read `.nvmrc`
-        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+        run: echo "::set-output name=nvmrc::$(cat .nvmrc)"
         id: nvm
 
       - name: Use Node.js (.nvmrc)
         uses: actions/setup-node@v1
         with:
-          node-version: "${{ steps.nvm.outputs.NVMRC }}"
+          node-version: "${{ steps.nvm.outputs.nvmrc }}"
 
       - name: Read `yarn cache dir`
         id: yarn-cache-dir-path
