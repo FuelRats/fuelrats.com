@@ -36,6 +36,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
+      - name: Load Next.js cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ github.workspace }}/dist/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-
+
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
@@ -46,7 +54,7 @@ jobs:
 
       - name: Prepare artifact
         run: |
-          tar -czvf fuelrats-com.tar.gz \
+          tar -czf fuelrats-com.tar.gz \
             dist \
             public \
             scripts \
@@ -80,7 +88,7 @@ jobs:
 
       - name: Extract artifact
         run: |
-          tar -xzvf fuelrats-com.tar.gz
+          tar -xzf fuelrats-com.tar.gz
           rm fuelrats-com.tar.gz
 
       - name: Read `.nvmrc`
