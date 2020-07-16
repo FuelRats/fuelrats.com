@@ -80,7 +80,7 @@ jobs:
 
       - name: Extract artifact
         run: |
-          tar -xzvf fuelrats-com.tar.gz ./
+          tar -xzvf fuelrats-com.tar.gz
           rm fuelrats-com.tar.gz
 
       - name: Read `.nvmrc`
