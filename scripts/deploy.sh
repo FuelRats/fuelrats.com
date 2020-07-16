@@ -21,10 +21,6 @@ case $GITHUB_REF in
   SERVICE_NAME="fr-web"
   ;;
 
-"refs/heads/gha-deploy")
-  SERVICE_NAME="VOID"
-  ;;
-
 *)
   echo "Current branch is not configured for auto-deploy. skipping deployment..."
   exit 1
