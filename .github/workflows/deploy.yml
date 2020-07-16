@@ -1,55 +1,15 @@
-name: Test
+name: Deploy
 
 on:
-  pull_request:
+  push:
     branches: [ develop, release ]
 
+
 jobs:
-  lint:
+  publish:
+    name: Publish
     runs-on: ubuntu-latest
-    name: Lint
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
 
-      - name: Read `.nvmrc`
-        run: echo "::set-output name=nvmrc::$(cat .nvmrc)"
-        id: nvm
-
-      - name: Use Node.js (.nvmrc)
-        uses: actions/setup-node@v1
-        with:
-          node-version: "${{ steps.nvm.outputs.nvmrc }}"
-
-      - name: Read `yarn cache dir`
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - name: Load yarn cache
-        uses: actions/cache@v2
-        id: yarn-cache
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
-
-      - name: Lint
-        uses: samuelmeuli/lint-action@v1.5.3
-        with:
-          github_token: ${{ secrets.github_token }}
-          eslint: true
-          # TODO: Re-enable max-warnings before release
-          # eslint_args: "--max-warnings 0"
-          stylelint: true
-          # stylelint_args: "--max-warnings 0"
-
-  build:
-    runs-on: ubuntu-latest
-    name: Build Test
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -91,3 +51,76 @@ jobs:
         run: yarn build
         env:
           NODE_ENV: production
+
+      - name: Prepare artifact
+        run: |
+          tar -czf fuelrats-com.tar.gz \
+            dist \
+            public \
+            scripts \
+            .nvmrc \
+            CHANGELOG.md \
+            LICENSE \
+            next.config.js \
+            package.json \
+            README.md \
+            yarn.lock
+
+      - name: Publish artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: fuelrats-com
+          path: fuelrats-com.tar.gz
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: publish
+
+    env:
+      NODE_ENV: production
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: fuelrats-com
+
+      - name: Extract artifact
+        run: |
+          tar -xzf fuelrats-com.tar.gz
+          rm fuelrats-com.tar.gz
+
+      - name: Read `.nvmrc`
+        run: echo "::set-output name=nvmrc::$(cat .nvmrc)"
+        id: nvm
+
+      - name: Use Node.js (.nvmrc)
+        uses: actions/setup-node@v1
+        with:
+          node-version: "${{ steps.nvm.outputs.nvmrc }}"
+
+      - name: Read `yarn cache dir`
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Load yarn cache
+        uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.FR_SSH_KEY }}
+          known_hosts: ${{ secrets.FR_KNOWN_HOSTS }}
+
+      - name: Deploy
+        run: sh ./scripts/deploy.sh

@@ -11,31 +11,33 @@ const webpack = require('webpack')
 
 // Component constants
 const {
-  BUILD_VCS_BRANCH,
-  BUILD_VCS_NUMBER,
+  GITHUB_REF,
+  GITHUB_SHA,
   FRDC_API_URL,
   FRDC_PUBLIC_URL,
   FRDC_STRIPE_API_PK,
   PORT,
-  TEAMCITY,
-  TEAMCITY_BUILD_URL,
+  CI,
+  GITHUB_SERVER_URL,
+  GITHUB_RUN_ID,
 } = process.env
 
 
 const DEFAULT_PORT = 3000
 const COMMIT_HASH_LENGTH = 10
 const DEV_BUILD_ID_LENGTH = 16
+const GIT_BRANCH = (GITHUB_REF || 'develop').replace(/^refs\/heads\//u, '').replace(/\//gu, '-')
 
 
 const FINAL_PUBLIC_URL = FRDC_PUBLIC_URL || `http://localhost:${PORT || DEFAULT_PORT}`
 
 
 const generateBuildId = () => {
-  return (
-    TEAMCITY
-      ? BUILD_VCS_NUMBER.toLowerCase()
-      : `DEV_${crypto.randomBytes(DEV_BUILD_ID_LENGTH).toString('hex').toLowerCase()}`
-  )
+  const buildId = CI
+    ? GITHUB_SHA.toLowerCase()
+    : crypto.randomBytes(DEV_BUILD_ID_LENGTH).toString('hex').toLowerCase()
+
+  return `${GIT_BRANCH}_${buildId}`
 }
 
 
@@ -64,12 +66,12 @@ module.exports = withWorkers({
     /* Define Plugin */
     config.plugins.push(new webpack.DefinePlugin({
       $IS_DEVELOPMENT: JSON.stringify(options.dev),
-      $IS_STAGING: JSON.stringify(['develop', 'beta'].includes(BUILD_VCS_BRANCH)),
-      $BUILD_BRANCH: JSON.stringify(BUILD_VCS_BRANCH || 'develop'),
-      $BUILD_COMMIT: JSON.stringify(BUILD_VCS_NUMBER || null),
-      $BUILD_COMMIT_SHORT: JSON.stringify((BUILD_VCS_NUMBER && BUILD_VCS_NUMBER.slice(0, COMMIT_HASH_LENGTH)) || BUILD_VCS_BRANCH || 'develop'),
+      $IS_STAGING: JSON.stringify(['develop', 'beta'].includes(GIT_BRANCH)),
+      $BUILD_BRANCH: JSON.stringify(GIT_BRANCH),
+      $BUILD_COMMIT: JSON.stringify(GITHUB_SHA || null),
+      $BUILD_COMMIT_SHORT: JSON.stringify((GITHUB_SHA && GITHUB_SHA.slice(0, COMMIT_HASH_LENGTH)) || GIT_BRANCH),
       $BUILD_DATE: JSON.stringify((new Date()).toISOString()),
-      $BUILD_URL: JSON.stringify(TEAMCITY_BUILD_URL || null),
+      $BUILD_URL: JSON.stringify(`${GITHUB_SERVER_URL}/fuelrats/fuelrats.com/actions/runs/${GITHUB_RUN_ID}` || null),
       $NEXT_BUILD_ID: JSON.stringify(options.buildId),
       $NODE_VERSION: JSON.stringify(process.version),
     }))
