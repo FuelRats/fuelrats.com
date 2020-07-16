@@ -108,4 +108,4 @@ jobs:
       - name: Deploy
         run: |
           ls -la
-          ./scripts/deploy.sh
+          sh ./scripts/deploy.sh
