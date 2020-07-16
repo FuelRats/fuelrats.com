@@ -5,9 +5,6 @@
 DEPLOY_DIR="trash"
 SERVICE_NAME=""
 
-# output branch name for testing just to make sure
-echo $GITHUB_REF
-
 # Find deploy target and service name
 case $GITHUB_REF in
 "refs/heads/develop")
@@ -28,7 +25,7 @@ case $GITHUB_REF in
 esac
 
 # Move built project files to server
-rsync -r --delete-after ./ fuelrats@emmental.fuelrats.com:/var/www/$DEPLOY_DIR/
+rsync -rvlz --delete-after ./ fuelrats@emmental.fuelrats.com:/var/www/$DEPLOY_DIR/
 
 # restart service
-# ssh -t fuelrats@emmental.fuelrats.com "sudo systemctl restart $SERVICE_NAME.service"
+ssh -t fuelrats@emmental.fuelrats.com "sudo systemctl restart $SERVICE_NAME.service"
