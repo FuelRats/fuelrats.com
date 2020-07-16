@@ -18,10 +18,6 @@ case $GITHUB_REF in
   SERVICE_NAME="fr-web"
   ;;
 
-"refs/heads/gha-deploy")
-  echo "nothing to see here!"
-  ;;
-
 *)
   echo "Current branch is not configured for auto-deploy. skipping deployment..."
   exit 1
@@ -32,4 +28,4 @@ esac
 rsync -rlz --delete-after ./ fuelrats@emmental.fuelrats.com:/var/www/$DEPLOY_DIR/
 
 # restart service
-#ssh -t fuelrats@emmental.fuelrats.com "sudo systemctl restart $SERVICE_NAME.service"
+ssh -t fuelrats@emmental.fuelrats.com "sudo systemctl restart $SERVICE_NAME.service"
