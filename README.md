@@ -1,9 +1,6 @@
 # Fuelrats.com
 
-![Fuelrats.com build status on TeamCity][TCCI-badge]
 [![Fuelrats.com dependencies on David DM][daviddm-badge]][daviddm]
-
-
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-15-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
@@ -81,4 +78,3 @@ This project follows the [all-contributors](https://github.com/kentcdodds/all-co
 [irc]: https://kiwi.fuelrats.com:7778/
 [prs]: CONTRIBUTING.md
 [prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
-[TCCI-badge]: https://img.shields.io/teamcity/build/s/FuelratsCom_NextJsBuild?server=https%3A%2F%2Fteamcity.fuelrats.com&style=flat-square
