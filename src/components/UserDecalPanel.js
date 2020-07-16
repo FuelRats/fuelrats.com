@@ -8,6 +8,7 @@ import { connect } from '~/store'
 import {
   selectDecalEligibility,
   selectDecalsByUserId,
+  selectUserById,
   withCurrentUserId,
 } from '~/store/selectors'
 
@@ -34,7 +35,7 @@ class UserDetailsPanel extends React.Component {
 
     this.setState({ redeeming: true })
 
-    await redeemDecal()
+    await redeemDecal(this.props.user.id)
 
     this.setState({ redeeming: false })
   }
@@ -140,6 +141,7 @@ class UserDetailsPanel extends React.Component {
   static mapStateToProps = createStructuredSelector({
     decals: withCurrentUserId(selectDecalsByUserId),
     eligible: selectDecalEligibility,
+    user: withCurrentUserId(selectUserById),
   })
 }
 

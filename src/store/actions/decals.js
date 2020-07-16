@@ -6,9 +6,12 @@ import { frApiRequest } from './services'
 
 
 
-export const redeemDecal = () => {
+export const redeemDecal = (user) => {
   return frApiRequest(
     actionTypes.decals.redeem,
-    { url: '/decals/redeem' },
+    {
+      url: `/users/${user.id}/decals`,
+      method: 'post',
+    },
   )
 }
