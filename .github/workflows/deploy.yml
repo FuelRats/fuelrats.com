@@ -47,16 +47,16 @@ jobs:
       - name: Prepare artifact
         run: |
           tar -czvf fuelrats-com.tar.gz \
-            ./dist \
-            ./public \
-            ./scripts \
-            ./.nvmrc \
-            ./CHANGELOG.md \
-            ./LICENSE \
-            ./next.config.js \
-            ./package.json \
-            ./README.md \
-            ./yarn.lock
+            dist \
+            public \
+            scripts \
+            .nvmrc \
+            CHANGELOG.md \
+            LICENSE \
+            next.config.js \
+            package.json \
+            README.md \
+            yarn.lock
 
       - name: Publish artifact
         uses: actions/upload-artifact@v2
