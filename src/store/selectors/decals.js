@@ -28,6 +28,6 @@ export const selectDecalsByUserId = createSelector(
         return decals[id]
       })
     }
-    return []
+    return undefined
   },
 )
