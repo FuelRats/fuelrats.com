@@ -30,8 +30,8 @@ class Register extends React.Component {
 
   state = {
     checkedTOS: false,
-    acceptTerms: true,
-    acceptPrivacy: true,
+    acceptTerms: false,
+    acceptPrivacy: false,
     email: '',
     nickname: '',
     password: '',
