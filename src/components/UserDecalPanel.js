@@ -34,7 +34,6 @@ class UserDetailsPanel extends React.Component {
 
     this.setState({ redeeming: true })
 
-    console.log(this.props.user)
     await redeemDecal(this.props.user.id)
 
     this.setState({ redeeming: false })
@@ -108,7 +107,7 @@ class UserDetailsPanel extends React.Component {
 
   render () {
     const { decals } = this.props
-    console.log(this.props)
+
     const {
       redeeming,
     } = this.state
