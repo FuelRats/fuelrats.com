@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import { connect } from '~/store'
-
 import styles from './{{pascalCase name}}.module.scss'
 
 
@@ -24,14 +22,6 @@ function {{pascalCase name}} (props) {
   )
 }
 
-
-{{pascalCase name}}.mapDispatchToProps = []
-
-{{pascalCase name}}.mapStateToProps = () => {
-  return {}
-}
-
-
 {{pascalCase name}}.propTypes = {
   className: PropTypes.string,
 }
@@ -40,4 +30,4 @@ function {{pascalCase name}} (props) {
 
 
 
-export default connect({{pascalCase name}})
+export default {{pascalCase name}}

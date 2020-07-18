@@ -1,6 +1,7 @@
 /* globals $IS_DEVELOPMENT:false */
 // Module imports
 import { isFSA } from 'flux-standard-action'
+import { isError } from 'lodash'
 import { connect } from 'react-redux'
 import {
   bindActionCreators,
@@ -14,16 +15,45 @@ import thunkMiddleware from 'redux-thunk'
 
 
 // Component imports
-import * as actions from './actions'
+
+import * as authenticationActions from './actions/authentication'
+import * as blogActions from './actions/blogs'
+import * as decalActions from './actions/decals'
+import * as epicActions from './actions/epics'
+import * as flagActions from './actions/flags'
+import * as imageActions from './actions/images'
+import * as leaderboardActions from './actions/leaderboard'
+import * as ratActions from './actions/rats'
+import * as rescueActions from './actions/rescues'
+import * as serviceActions from './actions/services'
+import * as sessionActions from './actions/session'
+import * as shipActions from './actions/ships'
+import * as stripeActions from './actions/stripe'
+import * as userActions from './actions/user'
+import * as verifyActions from './actions/verify'
+import * as wordpressActions from './actions/wordpress'
+import actionTypes from './actionTypes'
 import initialState from './initialState'
 import reducer from './reducers'
 
-
-
-
-
-const middlewares = [thunkMiddleware]
-
+const actions = {
+  ...authenticationActions,
+  ...blogActions,
+  ...decalActions,
+  ...epicActions,
+  ...flagActions,
+  ...imageActions,
+  ...leaderboardActions,
+  ...ratActions,
+  ...rescueActions,
+  ...serviceActions,
+  ...sessionActions,
+  ...shipActions,
+  ...stripeActions,
+  ...userActions,
+  ...verifyActions,
+  ...wordpressActions,
+}
 
 
 
@@ -42,6 +72,28 @@ const FSAComplianceMiddleware = () => {
     }
   }
 }
+
+
+const ignoredTypes = [
+  // This pops up on every 404 page due to how our fallback system works.
+  // It's not generally helpful to log
+  actionTypes.wordpress.pages.read,
+]
+
+const errorLoggerMiddleware = () => {
+  return (next) => {
+    return (action) => {
+      const finalAction = next(action)
+
+      if (isError(finalAction) && !ignoredTypes.includes(finalAction.type)) {
+        console.error('GIVE THIS TO YOUR TECHRAT:', finalAction)
+      }
+    }
+  }
+}
+
+
+const middlewares = [thunkMiddleware, errorLoggerMiddleware]
 
 if ($IS_DEVELOPMENT) {
   middlewares.unshift(require('redux-immutable-state-invariant').default())
@@ -124,7 +176,6 @@ const getActionCreators = (action, dispatch) => {
 
 
 export {
-  actions,
   getActionCreators,
   connectDecorator as connect,
   initStore,

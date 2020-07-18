@@ -27,7 +27,7 @@ import '~/scss/app.scss'
 
 
 
-// Configure and populate FontAweomse library
+// Configure and populate FontAwesome library
 faConfig.autoAddCss = false
 faLibrary.add(faIcons)
 
@@ -61,6 +61,7 @@ class FuelRatsApp extends App {
     }
 
     if (ctx.err) {
+      initialProps.isError = true
       initialProps.pageProps = (await ErrorPage.getInitialProps?.(ctx)) ?? {}
       initialProps.pageMeta = await resolvePageMeta(ErrorPage, ctx, initialProps.pageProps)
     } else {
@@ -136,7 +137,7 @@ class FuelRatsApp extends App {
   get pageData () {
     const {
       Component,
-      err,
+      isError,
       pageMeta,
       pageProps,
       router,
@@ -144,13 +145,13 @@ class FuelRatsApp extends App {
 
     let Page = Component
 
-    if (err) {
+    if (isError) {
       Page = ErrorPage
     }
 
     return {
       items: { Page, pageProps, pageMeta },
-      keys: router.asPath,
+      keys: pageMeta.pageKey ?? router.asPath,
     }
   }
 }

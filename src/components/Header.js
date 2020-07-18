@@ -1,4 +1,4 @@
-/* globals $IS_DEVELOPMENT:false, $IS_STAGING:false, $BUILD_COMMIT:false, $BUILD_COMMIT_SHORT:false */
+/* globals $IS_DEVELOPMENT:false, $IS_STAGING:false, $BUILD_COMMIT_SHORT:false */
 
 // Module imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -22,7 +22,6 @@ import Nav from './Nav'
 
 // Component constants
 const IS_DEV_OR_STAGING = $IS_DEVELOPMENT || $IS_STAGING
-const BUILD_COMMIT = $BUILD_COMMIT
 const BUILD_COMMIT_SHORT = $BUILD_COMMIT_SHORT
 
 
@@ -89,14 +88,12 @@ function Header (props) {
           {
             IS_DEV_OR_STAGING && (
               <li>
-                <a
-                  className="button link"
-                  href={`https://www.github.com/fuelrats/fuelrats.com${BUILD_COMMIT ? `/commit/${BUILD_COMMIT}` : ''}`}
-                  rel="noopener noreferrer"
-                  target="_blank">
-                  <FontAwesomeIcon fixedWidth icon="code-branch" />
-                  {BUILD_COMMIT_SHORT}
-                </a>
+                <Link route="about version">
+                  <a className="button link">
+                    <FontAwesomeIcon fixedWidth icon="code-branch" />
+                    {BUILD_COMMIT_SHORT}
+                  </a>
+                </Link>
               </li>
             )
           }

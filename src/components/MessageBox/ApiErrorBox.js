@@ -1,0 +1,45 @@
+import PropTypes from 'prop-types'
+import React from 'react'
+
+import MessageBox from './MessageBox'
+
+
+
+
+
+// Component Constants
+
+
+function ApiErrorBox (props) {
+  const {
+    error,
+    renderError,
+    ...messageProps
+  } = props
+
+  return (
+    <MessageBox {...messageProps}>
+      {
+        renderError(error) ?? (
+          <>
+            {'An unknown error occurred while processing your request. \n Please contact us at '}
+            <a href="mailto:support@fuelrats.com">{'support@fuelrats.com'}</a>
+            {', and include this error ID in your email: \n'}
+            <code>{error.id}</code>
+          </>
+        )
+      }
+    </MessageBox>
+  )
+}
+
+ApiErrorBox.propTypes = {
+  error: PropTypes.object.isRequired,
+  renderError: PropTypes.func.isRequired,
+}
+
+
+
+
+
+export default ApiErrorBox

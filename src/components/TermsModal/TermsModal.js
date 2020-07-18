@@ -9,16 +9,11 @@ import React from 'react'
 import { connect } from '~/store'
 import { selectWordpressPageBySlug } from '~/store/selectors'
 
-import asModal, { ModalContent, ModalFooter } from './Modal'
+import asModal, { ModalContent, ModalFooter } from '../Modal'
+import styles from './TermsModal.module.scss'
 
 
-
-
-
-@asModal({
-  className: 'terms-dialog',
-  hideClose: true,
-})
+@asModal({ className: 'terms-dialog' })
 @connect
 class WordpressTermsModal extends React.Component {
   /***************************************************************************\
@@ -26,7 +21,7 @@ class WordpressTermsModal extends React.Component {
   \***************************************************************************/
 
   state = {
-    termsAgreed: false,
+    termsAccepted: false,
     loading: true,
   }
 
@@ -39,7 +34,13 @@ class WordpressTermsModal extends React.Component {
   \***************************************************************************/
 
   _handleCheckboxChange = ({ target }) => {
-    return this.setState({ termsAgreed: target.checked })
+    return this.setState({ termsAccepted: target.checked })
+  }
+
+  _handleAccept = () => {
+    if (this.state.termsAccepted) {
+      this.props.onAccept?.()
+    }
   }
 
 
@@ -69,12 +70,11 @@ class WordpressTermsModal extends React.Component {
   renderFooter () {
     const {
       checkboxLabel,
-      onClose,
       title,
     } = this.props
 
     const {
-      termsAgreed,
+      termsAccepted,
     } = this.state
 
     const checkboxId = `termsDialog-${title.replace(/\s/gu, '')}-checkbox`
@@ -86,7 +86,7 @@ class WordpressTermsModal extends React.Component {
           <span key="AgreeCheckbox">
             <input
               aria-label={checkboxLabel}
-              checked={termsAgreed}
+              checked={termsAccepted}
               className="large"
               id={checkboxId}
               type="checkbox"
@@ -95,9 +95,9 @@ class WordpressTermsModal extends React.Component {
           </span>
           <button
             key="NextButton"
-            disabled={!termsAgreed}
+            disabled={!termsAccepted}
             type="button"
-            onClick={onClose}>
+            onClick={this._handleAccept}>
             {'Next'}
           </button>
         </div>
@@ -109,9 +109,8 @@ class WordpressTermsModal extends React.Component {
   renderWordpressPage () {
     const { page } = this.props
 
-    return (
-      <div
-        dangerouslySetInnerHTML={page && { __html: page.content.rendered.replace(/<ul>/giu, '<ul class="bulleted">').replace(/<ol>/giu, '<ol class="numbered">') }} />
+    return Boolean(page) && (
+      <div dangerouslySetInnerHTML={page && { __html: page.content.rendered.replace(/<ul>/giu, '<ul class="bulleted">').replace(/<ol>/giu, '<ol class="numbered">') }} />
     )
   }
   /* eslint-enable react/no-danger */
@@ -127,7 +126,7 @@ class WordpressTermsModal extends React.Component {
 
     return (
       <>
-        <ModalContent className={{ loading, error: !loading && !page }}>
+        <ModalContent className={[styles.content, { error: !loading && !page }]}>
           {this.renderWordpressPage(page)}
         </ModalContent>
         {this.renderFooter()}

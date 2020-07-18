@@ -1,4 +1,4 @@
-/* eslint-disable no-magic-numbers */// Defining named constants in this case actually hurts readability
+/* eslint-disable no-magic-numbers -- Defining named constants in this case actually hurts readability */
 
 
 

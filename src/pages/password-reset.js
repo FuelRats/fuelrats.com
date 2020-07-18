@@ -10,7 +10,8 @@ import React from 'react'
 import PasswordField from '~/components/PasswordField'
 import { passwordPattern } from '~/data/RegExpr'
 import { Link } from '~/routes'
-import { connect, actions } from '~/store'
+import { connect } from '~/store'
+import { validatePasswordResetToken } from '~/store/actions/authentication'
 
 
 
@@ -83,7 +84,7 @@ class PasswordReset extends React.Component {
     let validateError = true
 
     if (token) {
-      const response = await store.dispatch(actions.validatePasswordResetToken(token))
+      const response = await store.dispatch(validatePasswordResetToken(token))
       validateError = isError(response)
     }
 

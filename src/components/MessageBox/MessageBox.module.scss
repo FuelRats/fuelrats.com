@@ -1,15 +1,27 @@
 @import '../../scss/colors';
 
-.error {
+.message {
+  --message-color: #{$red};
+
   position: relative;
 
   max-width: 500px;
   margin: 0;
   padding: 1rem 0;
 
-  border: 1px solid $red;
+  border: 1px solid var(--message-color);
 
-  background: rgba(255, 127, 127, 0.15);
+  background: rgba($red, 0.15);
+
+  &.infoType {
+    --message-color: #{$blue};
+    background: rgba($blue, 0.15);
+  }
+
+  &.warnType {
+    --message-color: #{$yellow};
+    background: rgba($yellow, 0.15);
+  }
 }
 
 .icon {
@@ -18,7 +30,7 @@
 
   margin: 0.5rem 0 0 1rem;
 
-  color: $red;
+  color: var(--message-color);
 }
 
 .section {

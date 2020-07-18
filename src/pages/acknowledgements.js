@@ -10,7 +10,7 @@ import { dependencies } from '../../package.json'
 
 
 // Component constants
-/* eslint-disable max-len */// descriptions should be single lines.
+/* eslint-disable max-len -- descriptions should be single lines. */
 const brands = [
   {
     key: 'atlassian',

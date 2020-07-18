@@ -10,6 +10,7 @@ export {
   faClock,
   faCodeBranch,
   faExclamationTriangle,
+  faExclamationCircle,
   faEye,
   faEyeSlash,
   faFirstAid,

@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "mgmcdermott.vscode-language-babel",
+    "dbaeumer.vscode-eslint",
+    "stylelint.vscode-stylelint",
+    "teamchilla.blueprint",
+    "ionutvmi.path-autocomplete"
+  ]
+}

@@ -1,6 +1,11 @@
-// Module imports
 import PropTypes from 'prop-types'
 import React from 'react'
+
+
+
+
+
+import styles from './RadioInputOption.module.scss'
 
 
 
@@ -19,33 +24,25 @@ function RadioInputOption (props) {
   const optionId = `${inputProps.name}-${value}`
 
   return (
-    <Element className={['option', { disabled: inputProps.disabled, checked: inputProps.checked }, className]}>
+    <Element className={[styles.option, { [styles.disabled]: inputProps.disabled, [styles.checked]: inputProps.checked }, className]}>
       <input
         {...inputProps}
         aria-hidden={false}
         aria-label={label}
-        className="option-input"
+        className={styles.optionInput}
         id={optionId}
         type="radio"
         value={value} />
       <label
-        className="option-label"
+        className={styles.optionLabel}
         htmlFor={optionId}
         title={title}>
-        <span className="option-label-text">
+        <span className={styles.optionLabelText}>
           {label}
         </span>
       </label>
     </Element>
   )
-}
-
-
-RadioInputOption.defaultProps = {
-  as: 'div',
-  checked: false,
-  className: null,
-  disabled: false,
 }
 
 RadioInputOption.propTypes = {

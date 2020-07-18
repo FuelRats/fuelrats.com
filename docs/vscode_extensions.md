@@ -24,7 +24,8 @@ While you could write effective code with just the extensions above, having thes
 * **[Blueprint](https://marketplace.visualstudio.com/items?itemName=teamchilla.blueprint)**
   * Advanced templates for new files and directories. We use them to make quick work of creating new component directories.
 * **[Path Autocomplete](https://marketplace.visualstudio.com/items?itemName=ionutvmi.path-autocomplete)**
-  * While VSCode has it's own path completions, it does not have the same level of control this extension has. Along with some performance benefit, this extension also has support for the path aliases, which we use in fuelrats.com code.
+  * VSCode has it's own path completions for JS/TS imports, however it's severely lacking in customization and ability. We use path-autocomplete to add file types not suggested from TSserver's own completions.
+  * Since installing this normally without configuration would result in duplicate suggestion items, it is recommended to copy the config from this workspace's settings, or disable this extension globally and leave it enabled for just this workspace.
 * **[DotENV](https://marketplace.visualstudio.com/items?itemName=mikestead.dotenv)**
   * `.env` file syntax support. We use dotenv files for development environment setup.
 

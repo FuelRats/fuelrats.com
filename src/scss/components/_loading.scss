@@ -1,6 +1,6 @@
 .loading {
   &:empty,
-  &.force {
+  &.loader-force {
     position: relative;
 
     &::after,
@@ -55,11 +55,22 @@
 
       border-color: transparent;
 
-      background-color: rgba(#FFFFFF, 0.8);
+      background-color: rgba($white, 0.8);
     }
 
     &[data-loader-text]::before {
       content: attr(data-loader-text);
+    }
+
+    &.loader-dark {
+      &::after,
+      &::before {
+        color: $white;
+      }
+
+      &::before {
+        background-color: rgba($black, 0.5);
+      }
     }
   }
 }

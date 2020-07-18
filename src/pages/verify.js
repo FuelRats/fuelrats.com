@@ -11,7 +11,8 @@ import PasswordField from '~/components/PasswordField'
 import { passwordPattern } from '~/data/RegExpr'
 import { pageRedirect } from '~/helpers/gIPTools'
 import { Router, Link } from '~/routes'
-import { actions, connect } from '~/store'
+import { connect } from '~/store'
+import { verifyResetToken, verifyEmailToken } from '~/store/actions/verify'
 
 
 
@@ -72,34 +73,34 @@ class Verify extends React.Component {
 
   static async getInitialProps (ctx) {
     const { query, store } = ctx
-    const { type, t: token } = query
+    const { type, t: token, change } = query
     let destination = null
     let response = null
 
     switch (type) {
       case 'reset':
-        response = await store.dispatch(actions.verifyResetToken(token))
-        if (!isError(response)) {
-          destination = null
-        }
+        response = await store.dispatch(verifyResetToken(token))
+        destination = null
         break
+
       case 'email':
-        response = await store.dispatch(actions.verifyEmailToken(token))
-        if (!isError(response)) {
-          destination = '/profile'
-        }
+        response = await store.dispatch(verifyEmailToken(token))
+        destination = `/profile/overview?fl=${change === 'true' ? '0' : '1'}`
         break
+
       default:
         destination = '/'
         break
     }
 
-    if (destination) {
+    const tokenIsValid = !isError(response)
+
+    if (tokenIsValid && destination) {
       pageRedirect(ctx, destination)
     }
 
     return {
-      tokenIsValid: response.status,
+      tokenIsValid,
     }
   }
 
@@ -112,18 +113,28 @@ class Verify extends React.Component {
 
     const { tokenIsValid } = this.props
     const { type } = this.props.query
+
+    if (type !== 'reset') {
+      return (
+        <div className="page-content">
+          <header>
+            <h3>{'Invalid Token'}</h3>
+          </header>
+
+          <p>
+            {'The provided token is invalid. Please contact our techrats at '}
+            <a href="mailto:support@fuelrats.com">{'support@fuelrats.com'}</a>
+          </p>
+        </div>
+      )
+    }
+
     return (
       <div className="page-content">
 
         {
           submitted && (
             <span>{'Your password has been changed! You may now login with your new credentials.'}</span>
-          )
-        }
-
-        {
-          (type !== 'reset') && (
-            <span>{'An error as occurred, please try again'}</span>
           )
         }
 

@@ -3,7 +3,6 @@ import { combineReducers } from 'redux'
 
 import initialState from '../initialState'
 import blogs from './blogs'
-import error from './error'
 import flags from './flags'
 import { reduceJSONAPIResources } from './frAPIResources'
 import images from './images'
@@ -21,7 +20,6 @@ export default chainReducers(
     reduceJSONAPIResources,
     withDefaultReducers(combineReducers)(initialState, {
       blogs,
-      error,
       flags,
       images,
       leaderboard,
