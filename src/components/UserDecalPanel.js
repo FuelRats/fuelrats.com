@@ -6,8 +6,8 @@ import { createStructuredSelector } from 'reselect'
 import { formatAsEliteDate } from '~/helpers/formatTime'
 import { connect } from '~/store'
 import {
-  selectDecalEligibility,
   selectDecalsByUserId,
+  selectUserById,
   withCurrentUserId,
 } from '~/store/selectors'
 
@@ -34,7 +34,7 @@ class UserDetailsPanel extends React.Component {
 
     this.setState({ redeeming: true })
 
-    await redeemDecal()
+    await redeemDecal(this.props.user.id)
 
     this.setState({ redeeming: false })
   }
@@ -60,7 +60,7 @@ class UserDetailsPanel extends React.Component {
   \***************************************************************************/
 
   renderNoDataText () {
-    if (!this.props.eligible) {
+    if (!this.props.user.meta.redeemable) {
       return <div className="no-decal">{"Sorry, you're not eligible for a decal."}</div>
     }
 
@@ -139,7 +139,7 @@ class UserDetailsPanel extends React.Component {
 
   static mapStateToProps = createStructuredSelector({
     decals: withCurrentUserId(selectDecalsByUserId),
-    eligible: selectDecalEligibility,
+    user: withCurrentUserId(selectUserById),
   })
 }
 
