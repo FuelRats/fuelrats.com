@@ -82,7 +82,7 @@
     "@fortawesome/react-fontawesome": "^0.1.11",
     "@fuelrats/next-named-routes": "3.1.1",
     "@fuelrats/validation-util": "^1.1.2",
-    "@fuelrats/web-util": "0.1.1",
+    "@fuelrats/web-util": "^0.2.1",
     "@koa/router": "^9.3.1",
     "@react-spring/web": "9.0.0-rc.3",
     "@zeit/next-workers": "1.0.1-canary.1",
