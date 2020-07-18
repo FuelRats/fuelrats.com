@@ -225,8 +225,10 @@ class Paperwork extends React.Component {
 
     if (firstLimpetId?.length && firstLimpetId[0].id !== rescue.relationships.firstLimpet?.data?.id) {
       updateData.relationships.firstLimpet = {
-        type: 'rats',
-        id: firstLimpetId[0].id,
+        data: {
+          type: 'rats',
+          id: firstLimpetId[0].id,
+        },
       }
     }
 
