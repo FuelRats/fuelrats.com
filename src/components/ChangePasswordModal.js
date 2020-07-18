@@ -89,7 +89,7 @@ class ChangePasswordModal extends React.Component {
 
     if (isError(response)) {
       const { meta, payload } = response
-      let errorMessage = 'Unknown error occured.'
+      let errorMessage = 'Unknown error occurred.'
 
       if (HttpStatus.isClientError(meta.response.status)) {
         errorMessage = payload.errors && payload.errors.length ? payload.errors[0].detail : 'Client communication error'
