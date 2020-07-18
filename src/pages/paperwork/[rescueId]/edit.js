@@ -71,12 +71,12 @@ const outcomeRadioOptions = [
   {
     value: 'invalid',
     label: 'Invalid',
-    title: 'Fuel wasn\'t delievered because the request was illegitimate. (Cats / Trolling)',
+    title: 'Fuel wasn\'t delivered because the request was illegitimate. (Cats / Trolling)',
   },
   {
     value: 'other',
     label: 'Other',
-    title: 'Fuel wasn\'t delievered because the client was able to get out of trouble without it. (Explain)',
+    title: 'Fuel wasn\'t delivered because the client was able to get out of trouble without it. (Explain)',
   },
 ]
 
