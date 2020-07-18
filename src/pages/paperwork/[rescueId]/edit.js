@@ -201,19 +201,12 @@ class Paperwork extends React.Component {
     const { rescue } = this.props
     const {
       rats,
+      firstLimpetId,
       ...changes
     } = this.state.changes
 
     if (!rescue.attributes.outcome && !changes.outcome) {
       return
-    }
-
-    if (changes.firstLimpetId) {
-      if (changes.firstLimpetId.length && changes.firstLimpetId[0].id !== rescue.attributes.firstLimpetId) {
-        changes.firstLimpetId = changes.firstLimpetId[0].id
-      } else {
-        changes.firstLimpetId = undefined
-      }
     }
 
     if (changes.system) {
@@ -227,18 +220,24 @@ class Paperwork extends React.Component {
     const updateData = {
       id: rescue.id,
       attributes: changes,
+      relationships: {},
+    }
+
+    if (firstLimpetId?.length && firstLimpetId[0].id !== rescue.relationships.firstLimpet?.data?.id) {
+      updateData.relationships.firstLimpet = {
+        type: 'rats',
+        id: firstLimpetId[0].id,
+      }
     }
 
     if (rats) {
-      updateData.relationships = {
-        rats: {
-          data: rats.map(({ type, id }) => {
-            return {
-              type,
-              id,
-            }
-          }),
-        },
+      updateData.relationships.rats = {
+        data: rats.map(({ type, id }) => {
+          return {
+            type,
+            id,
+          }
+        }),
       }
     }
 
@@ -637,22 +636,22 @@ class Paperwork extends React.Component {
     const { rescue, rats } = this.props
     const { changes } = this.state
 
-    const isDefined = (value, fallback) => {
+    const ifDefined = (value, fallback) => {
       return typeof value === 'undefined' ? fallback : value
     }
 
     const getValue = (value) => {
-      return isDefined(changes[value], rescue.attributes[value])
+      return ifDefined(changes[value], rescue.attributes[value])
     }
 
     return {
       codeRed: getValue('codeRed'),
-      firstLimpetId: isDefined(changes.firstLimpetId, rats[rescue.attributes.firstLimpetId]) ?? null,
+      firstLimpetId: ifDefined(changes.firstLimpetId, rats[rescue.relationships.firstLimpet.data?.id]) ?? null,
       notes: getValue('notes'),
       outcome: getValue('outcome'),
       platform: getValue('platform'),
-      rats: Object.values(isDefined(changes.rats, rats) ?? {}),
-      system: isDefined(changes.system, rescue.attributes.system ? { value: rescue.attributes.system.toUpperCase() } : null),
+      rats: Object.values(ifDefined(changes.rats, rats) ?? {}),
+      system: ifDefined(changes.system, rescue.attributes.system ? { value: rescue.attributes.system.toUpperCase() } : null),
     }
   }
 
