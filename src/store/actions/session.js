@@ -71,9 +71,9 @@ export const initUserSession = (ctx) => {
 
       if (isError(response)) {
         action.error = true
-        action.meta.error = response?.meta?.response?.status
+        action.meta.error = response.meta.response.status
 
-        if (response?.meta?.response?.status === HttpStatus.UNAUTHORIZED) {
+        if (response.meta.response.status === HttpStatus.UNAUTHORIZED) {
           dispatch(logout(ctx))
           action.payload.accessToken = null
           ctx.accessToken = null
