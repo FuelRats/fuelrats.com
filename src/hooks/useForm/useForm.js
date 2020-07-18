@@ -20,7 +20,7 @@ export default function useForm (config = {}) {
   const {
     data: initialState = {},
     onSubmit: parentSubmit,
-    isEdit,
+    trackDelta,
   } = config
 
   const [submitting, setSubmit] = useState(false)
@@ -34,7 +34,7 @@ export default function useForm (config = {}) {
     (action) => {
       if (Reflect.has(action, 'value')) {
         dispatchState(action)
-        if (isEdit) {
+        if (trackDelta) {
           dispatchDelta(action)
         }
       }
@@ -42,7 +42,7 @@ export default function useForm (config = {}) {
         dispatchValidity(action)
       }
     },
-    [dispatchDelta, dispatchState, dispatchValidity, isEdit],
+    [dispatchDelta, dispatchState, dispatchValidity, trackDelta],
   )
 
   const setValidationMethod = useCallback(
