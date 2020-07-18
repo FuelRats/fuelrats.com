@@ -230,7 +230,6 @@ class Paperwork extends React.Component {
           type: 'rats',
           id: firstLimpetId[0].id,
         },
-      }
     }
 
     if (rats) {
