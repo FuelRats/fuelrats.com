@@ -1348,13 +1348,15 @@
   resolved "https://registry.yarnpkg.com/@fuelrats/validation-util/-/validation-util-1.1.2.tgz#cda434bc92c292b681dad8d29840ecf2152dd399"
   integrity sha512-sqobLeQO3yMGnIh2k1jRM7/zL28h/vDLQMJwHRyb37FnrWtnkLIJ5IhquqIFynHZtLxNi6qsQyKSHnz3QOrCLA==
 
-"@fuelrats/web-util@0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@fuelrats/web-util/-/web-util-0.1.1.tgz#cb1a86e53e74ec6ea00f9338da771b50ab7a10dc"
-  integrity sha512-jQMBu0Luweeq7oRTpjVaWVcLlH0Vu1l5Qgiwdo+/j9htGJDGuwnikxj4y8GkEYhy6oxjpKVL2eY6IJhZiVvkhQ==
+"@fuelrats/web-util@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@fuelrats/web-util/-/web-util-0.2.1.tgz#86f1f26d4346175a8ebf4a4a72a02d6eae3e1332"
+  integrity sha512-HTnDFItvppQkztghBpg+mJ4j3bLCc7OqdCdWLevlhzOUpLXEbU3MYh2H88QaMvi+Bswpaf9GFZcem4aUy1av0Q==
   dependencies:
     "@fuelrats/validation-util" "^1.1.2"
-    immer "^7.0.0"
+    flux-standard-action "^2.1.1"
+    immer "^7.0.5"
+    redux-thunk "^2.3.0"
 
 "@koa/router@^9.3.1":
   version "9.3.1"
@@ -4907,7 +4909,7 @@ ignore@^5.1.4, ignore@^5.1.8:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.1.8.tgz#f150a8b50a34289b33e22f5889abd4d8016f0e57"
   integrity sha512-BMpfD7PpiETpBl/A6S498BaIJ6Y/ABT93ETbby2fP00v4EbvPBXWEoaR1UBPKs3iR53pJY7EtZk5KACI57i1Uw==
 
-immer@^7.0.0, immer@^7.0.5:
+immer@^7.0.5:
   version "7.0.5"
   resolved "https://registry.yarnpkg.com/immer/-/immer-7.0.5.tgz#8af347db5b60b40af8ae7baf1784ea4d35b5208e"
   integrity sha512-TtRAKZyuqld2eYjvWgXISLJ0ZlOl1OOTzRmrmiY8SlB0dnAhZ1OiykIDL5KDFNaPHDXiLfGQFNJGtet8z8AEmg==

@@ -1,7 +1,7 @@
 /* globals $IS_DEVELOPMENT:false */
 // Module imports
-import { isFSA } from 'flux-standard-action'
-import { isError } from 'lodash'
+
+import { errorLoggerMiddleware, FSAComplianceMiddleware } from '@fuelrats/web-util/redux-middleware'
 import { connect } from 'react-redux'
 import {
   bindActionCreators,
@@ -10,6 +10,7 @@ import {
 } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import thunkMiddleware from 'redux-thunk'
+
 
 
 
@@ -58,43 +59,13 @@ const actions = {
 
 
 
-const FSAComplianceMiddleware = () => {
-  return (next) => {
-    return (action) => {
-      const finalAction = next(action)
-
-      if (!isFSA(finalAction)) {
-        console.error('WARNING! non-compliant action object was dispatched.', finalAction)
-        throw new Error('STOP IT! Get some help. (An action was non-compliant. check console.)')
-      }
-
-      return finalAction
-    }
-  }
-}
-
 
 const ignoredTypes = [
-  // This pops up on every 404 page due to how our fallback system works.
-  // It's not generally helpful to log
+  // This pops up on every 404 page due to how our fallback system works, therefore it's not generally helpful to log.
   actionTypes.wordpress.pages.read,
 ]
 
-const errorLoggerMiddleware = () => {
-  return (next) => {
-    return (action) => {
-      const finalAction = next(action)
-
-      if (isError(finalAction) && !ignoredTypes.includes(finalAction.type)) {
-        console.error('GIVE THIS TO YOUR TECHRAT:', finalAction)
-      }
-    }
-  }
-}
-
-
-const middlewares = [thunkMiddleware, errorLoggerMiddleware]
-
+const middlewares = [thunkMiddleware, errorLoggerMiddleware(ignoredTypes)]
 if ($IS_DEVELOPMENT) {
   middlewares.unshift(require('redux-immutable-state-invariant').default())
   middlewares.push(FSAComplianceMiddleware)
