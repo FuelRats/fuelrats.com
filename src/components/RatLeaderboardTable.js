@@ -55,8 +55,6 @@ class RatLeaderboardTable extends React.Component {
       entries,
     } = this.props
 
-    console.log(this.props)
-
     const {
       loading,
     } = this.state
