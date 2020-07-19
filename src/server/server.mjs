@@ -1,5 +1,4 @@
 /* eslint-env node */
-/* eslint-disable strict, global-require */
 'use strict'
 
 
@@ -22,6 +21,7 @@ import createNextServer from 'next'
 import env from './environment'
 import configureCSP from './middlewares/csp'
 import proxies from './middlewares/proxy'
+import uaRedirect from './middlewares/ua-redirect'
 import router from './router'
 
 
@@ -43,6 +43,9 @@ const nextApp = createNextServer({
 ;(async function init () {
   // Prepare nextApp
   await nextApp.prepare()
+
+  // Redirect any incompatible browsers to fallback website
+  server.use(uaRedirect({ IE: true }, env.fallbackUrl))
 
   // Inject env into context.
   server.use(async (ctx, next) => {

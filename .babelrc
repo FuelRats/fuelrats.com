@@ -4,7 +4,8 @@
       "next/babel",
       {
         "preset-env": {
-          "bugfixes": true
+          "bugfixes": true,
+          "targets": "defaults, not IE 11, not IE_mob 11, node 13"
         },
         "class-properties": {
           "loose": true
