@@ -141,7 +141,7 @@ class Paperwork extends React.Component {
       <li key={rat.id} className="first-limpet">
         {rat.attributes.name}
         {
-          (rat.id === rescue.attributes.firstLimpetId) && (
+          (rat.id === rescue.relationships.firstLimpet.data?.id) && (
             <span className="badge first-limpet">{'1st'}</span>
           )
         }
@@ -258,8 +258,8 @@ class Paperwork extends React.Component {
 
         <header className="paperwork-header">
           {
-            (rescue.attributes.status !== 'closed') && (rescue.attributes.data) && (
-              <div className="board-index"><span>{`#${rescue.attributes.data.boardIndex}`}</span></div>
+            (rescue.attributes.status !== 'closed') && (typeof rescue.attributes.commandIdentifier === 'number') && (
+              <div className="board-index"><span>{`#${rescue.attributes.commandIdentifier}`}</span></div>
             )
           }
           <div className="title">
@@ -301,15 +301,14 @@ class Paperwork extends React.Component {
           }
 
           {
-            rescue.attributes.data?.markedForDeletion?.marked && (
+            rescue.attributes.outcome === 'purge' && (
               <div className="md-group">
                 <div className="marked-for-deletion">{'Marked for Deletion'}</div>
                 <div className="md-reason">
-                  {`"${rescue.attributes.data.markedForDeletion?.reason}"`}
-                  <div className="md-reporter">{` - ${rescue.attributes.data.markedForDeletion.reporter}`}</div>
+                  {`"${rescue.attributes.notes}"`}
                 </div>
               </div>
-          )
+            )
           }
         </div>
 
@@ -328,16 +327,10 @@ class Paperwork extends React.Component {
           <span className="date-created content">{formatAsEliteDateTime(rescue.attributes.createdAt)}</span>
           <span className="label">{'Updated'}</span>
           <span className="date-updated content">{formatAsEliteDateTime(rescue.attributes.updatedAt)}</span>
-          {
-            Boolean(rescue.attributes.data) && (
-              <>
-                <span className="label">{'IRC Nick'}</span>
-                <span className="irc-nick content">{rescue.attributes.data.IRCNick}</span>
-                <span className="label">{'Language'}</span>
-                <span className="language content">{rescue.attributes.data.langID}</span>
-              </>
-            )
-          }
+          <span className="label">{'IRC Nick'}</span>
+          <span className="irc-nick content">{rescue.attributes.clientNick}</span>
+          <span className="label">{'Language'}</span>
+          <span className="language content">{rescue.attributes.clientLanguage}</span>
         </div>
 
         <div className="panel rats">
@@ -350,10 +343,16 @@ class Paperwork extends React.Component {
           <div className="panel-content">{this.renderQuotes()}</div>
         </div>
 
-        <div className="panel notes">
-          <header>{'Notes'}</header>
-          <div className="panel-content">{rescue.attributes.notes}</div>
-        </div>
+        {
+          rescue.attributes.outcome !== 'purge' && (
+            <div className="panel notes">
+              <header>{'Notes'}</header>
+              <div className="panel-content">{rescue.attributes.notes}</div>
+            </div>
+          )
+        }
+
+
       </>
     )
   }
