@@ -11,24 +11,29 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ## [Unreleased]
 
 ### ✨ Added
-* Support for APIv3. - [#191][], [#238][], [#240][], [#241][]
+* Support for APIv3. - [#191][], [#238][], [#240][], [#241][], [#245][], [#248][], [#251][], [#254][], [#255][], [#260][]
 * Add support for 2FA login flow. - [#240][], [#241][]
 * Disable profile function which soft deletes a user. - [#220][]
-
+* Add new system for generating forms which is more robust than any of our previous solutions. - [#254][]
 
 ### ⚡ Changed
 * Reworked error page so it integrates better into the website. - [#240][]
+* Redesign oauth authorize page for better context into what access apps request. - [#247][]
+* Updated styles for checkboxes - [#253][]
 
 
 ### 🐛 Fixed
 * Fixed removal of the accessToken cookie when the token is revoked. - [#240][]
-* Fixed error that occured when user is not authorized to view a page. - [#240][]
+* Fixed error that occurred when user is not authorized to view a page. - [#240][]
 * Fixed bold font tag (`<b/>`) not doing anything to text. - [#241][]
 
 
 ### ⚙ Tasks
 * Add `babel-plugin-classnames` into our babel toolchain. see [documentation](docs/css_classes_in_jsx.md) - [#243][]
 * Add tool for generating TOCs in md files - [#243][]
+* Add new blueprints (which are even cooler than snippets) for defining components in our website  - [#246][], [#254][]
+* Use github actions for our CI/CD solution - [#256][], [#258][]
+* Drop basic support for IE 11. We will now redirect IE 11 users to our fallback website which will get them help. - [#262][]
 
 
 [#191]: https://github.com/fuelrats/fuelrats.com/pull/191
@@ -36,6 +41,17 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 [#240]: https://github.com/fuelrats/fuelrats.com/pull/240
 [#241]: https://github.com/fuelrats/fuelrats.com/pull/241
 [#243]: https://github.com/fuelrats/fuelrats.com/pull/243
+[#245]: https://github.com/fuelrats/fuelrats.com/pull/245
+[#247]: https://github.com/fuelrats/fuelrats.com/pull/247
+[#248]: https://github.com/fuelrats/fuelrats.com/pull/248
+[#251]: https://github.com/fuelrats/fuelrats.com/pull/251
+[#253]: https://github.com/fuelrats/fuelrats.com/pull/253
+[#254]: https://github.com/fuelrats/fuelrats.com/pull/254
+[#255]: https://github.com/fuelrats/fuelrats.com/pull/255
+[#256]: https://github.com/fuelrats/fuelrats.com/pull/256
+[#258]: https://github.com/fuelrats/fuelrats.com/pull/258
+[#260]: https://github.com/fuelrats/fuelrats.com/pull/260
+[#262]: https://github.com/fuelrats/fuelrats.com/pull/262
 
 
 
