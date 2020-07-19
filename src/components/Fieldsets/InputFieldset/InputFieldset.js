@@ -76,13 +76,19 @@ const InputFieldset = React.forwardRef((props, forwardRef) => {
     return result.valid
   }, [displayName, inputRef, parentValidate, props.required, skipWarnings])
 
-  const { value = '', validating, handleChange } = useField(props.name, { onValidate: handleValidate, onChange, validateOpts })
+  const {
+    value = '',
+    validating,
+    submitting,
+    handleChange,
+  } = useField(props.name, { onValidate: handleValidate, onChange, validateOpts })
 
   return (
     <fieldset>
       <label htmlFor={props.id}>{label}</label>
       <div className={[styles.inputGroup, className]}>
         <input
+          disabled={submitting}
           type="text"
           {...inputProps}
           ref={inputRef}

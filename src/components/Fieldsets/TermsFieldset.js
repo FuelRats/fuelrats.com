@@ -26,7 +26,7 @@ export default function TermsFieldset (props) {
     return Boolean(value) || !props.required
   }, [props.required])
 
-  const { value, ctx } = useField(props.name, { onValidate })
+  const { value, ctx, submitting } = useField(props.name, { onValidate })
   const { dispatchField } = ctx
 
   const handleCheckboxClick = useCallback((event) => {
@@ -70,6 +70,7 @@ export default function TermsFieldset (props) {
       <span>
         <input
           aria-label="Terms of Service Agreement Button"
+          disabled={submitting}
           {...inputProps}
           checked={Boolean(value)}
           className={['large', className]}
