@@ -45,6 +45,7 @@
     "@types/fingerprintjs2": "^2.0.0",
     "@types/hoist-non-react-statics": "^3.3.1",
     "@types/ip6addr": "^0.2.0",
+    "@types/js-cookie": "^2.2.6",
     "@types/jsonfile": "^6.0.0",
     "@types/koa": "^2.11.3",
     "@types/koa-compress": "^4.0.0",
