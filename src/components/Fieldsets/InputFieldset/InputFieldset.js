@@ -20,6 +20,7 @@ const InputFieldset = React.forwardRef((props, forwardRef) => {
     className,
     displayName = 'Input',
     skipWarnings = false,
+    inputClassName,
     label,
     patternMessage,
     onChange,
@@ -92,6 +93,7 @@ const InputFieldset = React.forwardRef((props, forwardRef) => {
           type="text"
           {...inputProps}
           ref={inputRef}
+          className={inputClassName}
           data-pattern-message={patternMessage}
           value={value}
           onBlur={onBlur}
