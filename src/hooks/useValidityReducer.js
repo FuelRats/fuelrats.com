@@ -13,7 +13,11 @@ export default function useValidityReducer (initialState = {}) {
     if (fragment) {
       mergeReducer(draftState, fragment)
     } else if (draftState[name] !== valid) {
-      draftState[name] = valid
+      if (typeof valid === 'undefined') {
+        delete draftState[name]
+      } else {
+        draftState[name] = valid
+      }
     }
   }, [])
 
