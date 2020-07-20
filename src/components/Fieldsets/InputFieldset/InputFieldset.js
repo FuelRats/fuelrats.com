@@ -45,7 +45,7 @@ const InputFieldset = React.forwardRef((props, forwardRef) => {
     const { errors = [], warnings = [] } = (await parentValidate?.(value, target)) ?? {}
 
     // Browsers consider an input with only whitespace "filled", but we don't.
-    if (props.required && target.value && target.value.trim() === '') {
+    if (props.required && target.value && target.value.replace(/[\s_]/gu, '') === '') {
       errors.push(`${displayName} is a required field.`)
     }
 
