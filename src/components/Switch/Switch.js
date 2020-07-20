@@ -1,0 +1,54 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import PropTypes from 'prop-types'
+import React from 'react'
+
+import styles from './Switch.module.scss'
+
+
+
+
+
+function Switch (props) {
+  const {
+    alignRight,
+    containerProps,
+    className,
+    id,
+    label,
+    ...inputProps
+  } = props
+
+
+
+  return (
+    <label {...containerProps} className={[styles.switch, { [styles.checked]: props.checked, [styles.disabled]: props.disabled }, className]} htmlFor={id}>
+      <input
+        {...inputProps}
+        className={styles.input}
+        id={id}
+        type="checkbox" />
+
+      <span className={styles.slider} />
+      <FontAwesomeIcon fixedWidth className={styles.handle} icon={props.checked ? 'check' : 'times'} />
+
+      {
+        label && (
+          <span className={styles.label}>{label}</span>
+        )
+      }
+    </label>
+  )
+}
+
+Switch.propTypes = {
+  className: PropTypes.string,
+  containerProps: PropTypes.object,
+  id: PropTypes.string.isRequired,
+  label: PropTypes.node,
+}
+
+
+
+
+
+export default Switch

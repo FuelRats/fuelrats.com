@@ -1,0 +1,85 @@
+@import '../../scss/colors';
+
+.switch {
+  display: block;
+  position: relative;
+
+  line-height: 2.2rem;
+
+  &.checked {
+    &:not(.disabled) .label {
+      color: $white;
+    }
+
+    /* global selector required for specificity */
+    /* stylelint-disable-next-line selector-class-pattern */
+    .handle:global(.svg-inline--fa.fa-fw) {
+      background: $green;
+
+      transform: translateX(100%);
+    }
+  }
+
+  &.disabled .handle {
+    background: $grey-lightened;
+  }
+
+  .slider {
+    display: inline-block;
+
+    vertical-align: top;
+
+    width: 3.6rem;
+    height: 1.8rem;
+    margin: 0.2rem 0.4rem 0;
+
+    border-radius: 1rem;
+
+    background: $black-lightened;
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .handle:global(.svg-inline--fa.fa-fw) {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 2.2rem;
+    height: 2.2rem;
+    padding: 0.4rem;
+
+    border-radius: 50%;
+
+    will-change: transform;
+
+    color: $black-lightened;
+    background: $red;
+    transition: 0.2s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+  .label {
+    margin-left: 0.5rem;
+
+    vertical-align: top;
+
+    color: $grey;
+
+    line-height: 1.5em;
+    white-space: nowrap;
+
+    user-select: none;
+  }
+
+  .input {
+    position: absolute;
+
+    width: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+
+    border: 0;
+
+    opacity: 0;
+  }
+}
