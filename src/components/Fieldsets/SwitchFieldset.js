@@ -12,18 +12,17 @@ import Switch from '../Switch'
 function SwitchFieldset (props) {
   const {
     onChange,
-    onValidate:
-    parentValidate,
+    onValidate: parentValidate,
     ...inputProps
   } = props
 
 
   const onValidate = useCallback((value) => {
-    return onValidate?.(value) ?? (Boolean(value) || !props.required)
-  }, [props.required])
+    return parentValidate?.(value) ?? (Boolean(value) || !props.required)
+  }, [parentValidate, props.required])
 
 
-  const { value, handleChange } = useField(props.name, { onChange, onValidate })
+  const { value = false, handleChange } = useField(props.name, { onChange, onValidate })
 
   return (
     <fieldset>
