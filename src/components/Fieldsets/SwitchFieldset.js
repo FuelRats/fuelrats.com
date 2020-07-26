@@ -18,11 +18,13 @@ function SwitchFieldset (props) {
 
 
   const onValidate = useCallback((value) => {
-    return parentValidate?.(value) ?? (Boolean(value) || !props.required)
-  }, [parentValidate, props.required])
+    return parentValidate?.(value) ?? Boolean(value)
+  }, [parentValidate])
 
-
-  const { value = false, handleChange } = useField(props.name, { onChange, onValidate })
+  const { value = false, handleChange } = useField(props.name, {
+    onChange,
+    onValidate: inputProps.required ? onValidate : undefined,
+  })
 
   return (
     <fieldset>
