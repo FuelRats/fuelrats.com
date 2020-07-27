@@ -144,9 +144,12 @@ class ConfirmActionButton extends React.Component {
   }
 
   static propTypes = {
+    children: PropTypes.node,
+    className: PropTypes.string,
     confirmButtonText: PropTypes.string,
     confirmSubText: PropTypes.string,
     denyButtonText: PropTypes.string,
+    onClick: PropTypes.func,
     onConfirm: PropTypes.func.isRequired,
     onConfirmText: PropTypes.string,
   }

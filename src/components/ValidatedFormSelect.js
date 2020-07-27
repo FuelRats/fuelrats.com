@@ -110,6 +110,7 @@ class ValidatedFormSelect extends React.Component {
   }
 
   static propTypes = {
+    className: PropTypes.string,
     id: PropTypes.string.isRequired,
     invalidMessage: PropTypes.string,
     label: PropTypes.string.isRequired,

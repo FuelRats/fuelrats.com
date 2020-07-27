@@ -52,6 +52,8 @@ function RadioInput (props) {
 
 RadioInput.propTypes = {
   as: PropTypes.elementType,
+  className: PropTypes.string,
+  disabled: PropTypes.any,
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   OptionElement: PropTypes.elementType,

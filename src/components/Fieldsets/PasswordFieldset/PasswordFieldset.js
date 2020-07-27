@@ -100,6 +100,10 @@ function PasswordFieldset (props) {
 }
 
 PasswordFieldset.propTypes = {
+  displayName: PropTypes.string,
+  maxLength: PropTypes.number,
+  onValidate: PropTypes.func,
+  showStrength: PropTypes.any,
   showWarnings: PropTypes.any,
   skipValidation: PropTypes.any,
 }

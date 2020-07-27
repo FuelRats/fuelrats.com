@@ -346,7 +346,9 @@ class DonateForm extends React.Component {
   }
 
   static propTypes = {
+    createDonationSession: PropTypes.func,
     stripe: PropTypes.object,
+    user: PropTypes.object,
   }
 }
 
