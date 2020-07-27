@@ -20,12 +20,18 @@ function ApiErrorBox (props) {
   return (
     <MessageBox {...messageProps}>
       {
-        renderError(error) ?? (
+        renderError?.(error) ?? (
           <>
             {'An unknown error occurred while processing your request. \n Please contact us at '}
             <a href="mailto:support@fuelrats.com">{'support@fuelrats.com'}</a>
-            {', and include this error ID in your email: \n'}
-            <code>{error.id}</code>
+            {
+              error.id && (
+                <>
+                  {', and include this error ID in your email: \n'}
+                  <code>{error.id}</code>
+                </>
+              )
+            }
           </>
         )
       }
