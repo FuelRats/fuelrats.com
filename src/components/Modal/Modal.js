@@ -1,13 +1,16 @@
 // Module imports
 import { animated, useTransition } from '@react-spring/web'
 import hoistNonReactStatics from 'hoist-non-react-statics'
-import React, { useEffect, useCallback } from 'react'
+import React, { useCallback, useMemo, useContext } from 'react'
 
 
 
 
 
 // Component imports
+import useEventListener from '~/hooks/useEventListener'
+import useMergeReducer from '~/hooks/useMergeReducer'
+
 import ModalHeader from './ModalHeader'
 import ModalPortal from './ModalPortal'
 
@@ -25,7 +28,7 @@ const translate3dHeight = (value) => {
 
 function renderModal (style, item) {
   const {
-    as,
+    as = 'div',
     className,
     hideClose,
     isOpen,
@@ -65,58 +68,58 @@ function renderModal (style, item) {
 
 function OuterModal (props) {
   const {
-    hideClose,
-    isOpen,
     onClose,
-    onSafeUnmount,
+    isOpen,
+    initialState = {},
   } = props
 
+  const [state, setState] = useMergeReducer(initialState)
+  const innerProps = {
+    ...props,
+    hideClose: state.hideClose ?? props.hideClose,
+  }
 
   const handleGlobalKeyDown = useCallback((event) => {
     if (event.code === 'Escape') {
       onClose()
     }
   }, [onClose])
+  useEventListener('keydown', handleGlobalKeyDown, { listen: isOpen && !innerProps.hideClose })
 
-  useEffect(() => {
-    if (isOpen && !hideClose && typeof window !== undefined) {
-      window.addEventListener('keydown', handleGlobalKeyDown)
-    }
 
-    return () => {
-      if (typeof window !== undefined) {
-        window.removeEventListener('keydown', handleGlobalKeyDown)
-      }
-    }
-  }, [handleGlobalKeyDown, hideClose, isOpen])
-
-  const modalTransition = useTransition(props, {
+  const modalTransition = useTransition(innerProps, {
     key: JSON.stringify(props),
     from: { pos: -100 },
     enter: { pos: 0 },
     leave: { pos: -100 },
-    onDestroyed: onSafeUnmount,
     unique: true,
     config: {
       tension: 350,
     },
   })
 
+  const sharedContext = useMemo(() => {
+    return [{
+      hideClose: innerProps.hideClose,
+      ...state,
+      onClose,
+    }, setState]
+  }, [innerProps.hideClose, state, onClose, setState])
+
   return (
     <ModalPortal isOpen={isOpen}>
-      {modalTransition(renderModal)}
+      <ModalContext.Provider value={sharedContext}>
+        {modalTransition(renderModal)}
+      </ModalContext.Provider>
     </ModalPortal>
   )
 }
 
-OuterModal.defaultProps = {
-  as: 'div',
-}
 
 
 
 
-
+const ModalContext = React.createContext({})
 const asModal = (options) => {
   return (Component) => {
     return hoistNonReactStatics(({ children, ...props }) => {
@@ -131,8 +134,27 @@ const asModal = (options) => {
   }
 }
 
+function useModalContext () {
+  return useContext(ModalContext)
+}
+
+function withModalContext (Component) {
+  return hoistNonReactStatics(({ children, ...props }) => {
+    const context = useContext(ModalContext)
+    return (
+      <Component {...props} modalContext={context}>
+        {children}
+      </Component>
+    )
+  }, Component)
+}
+
 
 
 
 
 export default asModal
+export {
+  useModalContext,
+  withModalContext,
+}
