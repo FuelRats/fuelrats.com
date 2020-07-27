@@ -29,13 +29,3 @@ export const verifyEmailToken = (token) => {
     },
   )
 }
-
-
-export const verifyResetToken = (token) => {
-  return frApiRequest(
-    actionTypes.verify.reset,
-    {
-      url: `/resets/${token}`,
-    },
-  )
-}
