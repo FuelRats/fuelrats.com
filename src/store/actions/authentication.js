@@ -39,16 +39,11 @@ export const changePassword = ({ id, ...data }) => {
 }
 
 
-export const login = (options) => {
+export const login = (options, fingerprint) => {
   return async (dispatch) => {
     const {
-      password,
-      email,
-      fingerprint,
-      route,
-      routeParams,
       remember,
-      verify,
+      data,
     } = options
 
     const action = createAxiosFSA(
@@ -59,12 +54,7 @@ export const login = (options) => {
         headers: {
           'X-Fingerprint': fingerprint,
         },
-        data: {
-          grant_type: 'password',
-          password,
-          username: email,
-          verify,
-        },
+        data,
       }),
     )
 
@@ -87,10 +77,8 @@ export const login = (options) => {
         const destination = searchParams.destination ? decodeURIComponent(searchParams.destination) : '/profile'
 
         Router.push(destination)
-      } else if (route) {
-        Router.pushRoute(route, routeParams)
       }
-    /* eslint-enable no-restricted-globals */
+      /* eslint-enable no-restricted-globals */
     }
 
     return dispatch(action)
