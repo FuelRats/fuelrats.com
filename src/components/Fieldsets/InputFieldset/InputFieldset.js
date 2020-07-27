@@ -145,7 +145,7 @@ InputFieldset.propTypes = {
  * @param {Function} parent
  * @returns {Function}
  */
-function useValidationCallback (callback, deps, parent) {
+function useValidationCallback (callback, deps = [], parent) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const _callback = useCallback(callback, deps)
 
