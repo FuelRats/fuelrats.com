@@ -1,4 +1,4 @@
-import { isRequired } from '@fuelrats/validation-util/dist/isRequired'
+import { isRequired } from '@fuelrats/validation-util/require'
 import _get from 'lodash/get'
 import {
   useCallback,
