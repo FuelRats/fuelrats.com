@@ -29,7 +29,7 @@ function useField (name = isRequired('name'), opts = {}) {
       setQueueState(false)
     },
     [validateField, name],
-    validateOpts ?? { wait: 500 },
+    validateOpts ?? { wait: 250 },
   )
 
   const queueValidation = useCallback((value, curState) => {
