@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React, { useCallback, useState } from 'react'
 
 import InputSuggestions from '~/components/InputMessages'
+import extPropType from '~/helpers/extPropTypes'
 import getValidityErrors from '~/helpers/getValidityErrors'
 import useFocusState from '~/hooks/useFocusState'
 import { useField, fieldPropTypes } from '~/hooks/useForm'
@@ -86,7 +87,13 @@ const InputFieldset = React.forwardRef((props, forwardRef) => {
 
   return (
     <fieldset>
-      <label htmlFor={props.id}>{label}</label>
+
+      {
+        Boolean(label) && (
+          <label htmlFor={props.id}>{label}</label>
+        )
+      }
+
       <div className={[styles.inputGroup, className]}>
         <input
           disabled={submitting}
@@ -113,22 +120,15 @@ const InputFieldset = React.forwardRef((props, forwardRef) => {
   )
 })
 
-InputFieldset.defaultProps = {
-  displayName: 'Input',
-  patternMessage: null,
-  skipWarnings: false,
-}
-
 InputFieldset.propTypes = {
+  'aria-label': extPropType(PropTypes.string).isRequiredIf('label', 'undefined'),
   displayName: PropTypes.string,
   id: PropTypes.string.isRequired,
-  label: PropTypes.node.isRequired,
+  label: PropTypes.node,
   patternMessage: PropTypes.string,
   skipWarnings: PropTypes.bool,
   ...fieldPropTypes,
 }
-
-
 
 
 /**
