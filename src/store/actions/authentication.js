@@ -124,7 +124,7 @@ export const register = (data, fingerprint) => {
 }
 
 
-export const resetPassword = ({ token, ...data }) => {
+export const resetPassword = (token, data) => {
   return frApiPlainRequest(
     actionTypes.passwords.reset,
     {
@@ -136,13 +136,13 @@ export const resetPassword = ({ token, ...data }) => {
 }
 
 
-export const sendPasswordResetEmail = (email) => {
+export const sendPasswordResetEmail = (data) => {
   return frApiPlainRequest(
     actionTypes.passwords.requestReset,
     {
       url: '/reset',
       method: 'post',
-      data: presentApiRequestBody('resets', { email }),
+      data: presentApiRequestBody('resets', data),
     },
   )
 }
