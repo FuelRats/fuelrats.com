@@ -17,7 +17,7 @@ function getWindow () {
  * @param {boolean} options.passive see [addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#Parameters)
  * @param {EventTarget?} target EventTarget to attach the listener to. Defaults to `window`
  */
-export default function useEventListener (type, listener, options, target = getWindow()) {
+export default function useEventListener (type, listener, options = {}, target = getWindow()) {
   const { listen = true, capture = false, once = false, passive = false } = options
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export default function useEventListener (type, listener, options, target = getW
     }
 
     return () => {
-      if (typeof target !== undefined) {
+      if (listen && typeof target !== undefined) {
         target.removeEventListener(type, listener, { capture, once, passive })
       }
     }
