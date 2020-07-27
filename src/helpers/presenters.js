@@ -7,16 +7,17 @@ export function presentApiRequestBody (
 ) {
   const {
     id,
+    type: _, // strip type from data if it's given. We will always prefer the predefined type.
     attributes = {},
     relationships,
     links, // API doesn't understand links or meta in resources we send to it, so we strip them here.
     meta,
-    ...restAttributes
+    ...restAttributes // Interpret all other keys in data as attributes (This is for backwards compatibility with old components)
   } = data
 
   return {
     data: {
-      type: data.type ?? type,
+      type,
       id,
       attributes: {
         ...attributes,
