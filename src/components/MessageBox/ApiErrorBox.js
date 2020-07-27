@@ -41,7 +41,7 @@ function ApiErrorBox (props) {
 
 ApiErrorBox.propTypes = {
   error: PropTypes.object.isRequired,
-  renderError: PropTypes.func.isRequired,
+  renderError: PropTypes.func,
 }
 
 
