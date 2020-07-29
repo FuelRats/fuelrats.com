@@ -1,13 +1,7 @@
-// Module imports
 import { animated, useTransition } from '@react-spring/web'
 import hoistNonReactStatics from 'hoist-non-react-statics'
 import React, { useCallback, useMemo, useContext } from 'react'
 
-
-
-
-
-// Component imports
 import useEventListener from '~/hooks/useEventListener'
 import useMergeReducer from '~/hooks/useMergeReducer'
 
@@ -17,17 +11,22 @@ import ModalPortal from './ModalPortal'
 
 
 
+// Component constants
 const translate3dHeight = (value) => {
   return (value ? `translate3d(0,${value}vh,0)` : undefined)
 }
 
 const ModalContext = React.createContext({})
+
+
+
+
+
 function ModalComponent (props) {
   const {
     as = 'div',
     className,
     onClose,
-    title,
     initialState,
     style,
   } = props
@@ -35,14 +34,14 @@ function ModalComponent (props) {
   const [state, setState] = useMergeReducer(initialState)
 
   const hideClose = state.hideClose ?? props.hideClose
+  const title = state.title ?? props.title
 
   const sharedContext = useMemo(() => {
     return [{
-      hideClose,
       ...state,
       onClose,
     }, setState]
-  }, [hideClose, state, onClose, setState])
+  }, [state, onClose, setState])
 
   const handleGlobalKeyDown = useCallback((event) => {
     if (event.code === 'Escape') {
