@@ -9,6 +9,7 @@ import Cookies from 'js-cookie'
 
 
 // Component imports
+import getFingerprint from '~/helpers/getFingerprint'
 import { presentApiRequestBody } from '~/helpers/presenters'
 import { Router } from '~/routes'
 import frApi from '~/services/fuelrats'
@@ -39,12 +40,14 @@ export const changePassword = ({ id, ...data }) => {
 }
 
 
-export const login = (options, fingerprint) => {
+export const login = (options) => {
   return async (dispatch) => {
     const {
       remember,
       data,
     } = options
+
+    const fingerprint = await getFingerprint()
 
     const action = createAxiosFSA(
       actionTypes.session.login,
@@ -109,18 +112,24 @@ export const submitOAuthDecision = (data) => {
 }
 
 
-export const register = (data, fingerprint) => {
-  return frApiPlainRequest(
-    actionTypes.session.register,
-    {
-      url: '/register',
-      method: 'post',
-      headers: {
-        'X-Fingerprint': fingerprint,
-      },
-      data: presentApiRequestBody('users', data),
-    },
-  )
+export const register = (data) => {
+  return async (dispatch) => {
+    const fingerprint = await getFingerprint()
+
+    return dispatch(
+      frApiPlainRequest(
+        actionTypes.session.register,
+        {
+          url: '/register',
+          method: 'post',
+          headers: {
+            'X-Fingerprint': fingerprint,
+          },
+          data: presentApiRequestBody('users', data),
+        },
+      ),
+    )
+  }
 }
 
 
