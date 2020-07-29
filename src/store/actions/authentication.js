@@ -137,7 +137,7 @@ export const resetPassword = (token, data) => {
   return frApiPlainRequest(
     actionTypes.passwords.reset,
     {
-      url: `/reset/${token}`,
+      url: `/resets/${token}`,
       method: 'post',
       data: presentApiRequestBody('resets', data),
     },
@@ -149,7 +149,7 @@ export const sendPasswordResetEmail = (data) => {
   return frApiPlainRequest(
     actionTypes.passwords.requestReset,
     {
-      url: '/reset',
+      url: '/resets',
       method: 'post',
       data: presentApiRequestBody('resets', data),
     },
@@ -161,7 +161,7 @@ export const validatePasswordResetToken = (token) => {
   return frApiPlainRequest(
     actionTypes.passwords.validateReset,
     {
-      url: `/reset/${token}`,
+      url: `/resets/${token}`,
     },
   )
 }
