@@ -6,7 +6,7 @@ import useEventListener from './useEventListener'
 
 
 
-export default function useConfirmUnload (message) {
+export default function useUnloadConfirmation (message) {
   const confirmUnload = useCallback((event) => {
     // eslint-disable-next-line no-alert
     if (!window.confirm(message)) {
