@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux'
 
 import RegistrationForm, { RegistrationErrorBox } from '~/components/Forms/RegistrationForm'
 import MessageBox from '~/components/MessageBox'
-import getFingerprint from '~/helpers/getFingerprint'
 import getResponseError from '~/helpers/getResponseError'
 import useMergeReducer from '~/hooks/useMergeReducer'
 import { register } from '~/store/actions/authentication'
@@ -16,9 +15,7 @@ function Register () {
 
   const handleSubmit = useCallback(
     async (data) => {
-      const fingerprint = await getFingerprint()
-
-      const response = await dispatch(register(data, fingerprint))
+      const response = await dispatch(register(data))
 
       setSubmitState({
         error: getResponseError(response),
