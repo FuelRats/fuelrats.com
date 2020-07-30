@@ -1,5 +1,4 @@
 import { isError } from 'flux-standard-action'
-import { Router } from 'next/router'
 import React, { useState, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 
@@ -8,6 +7,7 @@ import MessageBox from '~/components/MessageBox'
 import ApiErrorBox from '~/components/MessageBox/ApiErrorBox'
 import getResponseError from '~/helpers/getResponseError'
 import { pageRedirect } from '~/helpers/gIPTools'
+import { Router } from '~/routes'
 import { validatePasswordResetToken, resetPassword } from '~/store/actions/authentication'
 import { verifyEmailToken } from '~/store/actions/verify'
 
@@ -15,7 +15,7 @@ import { verifyEmailToken } from '~/store/actions/verify'
 
 
 
-const RESET_SUCCESS_REDIRECT_WAIT = 3000 // 3 Seconds
+const RESET_SUCCESS_REDIRECT_WAIT = 6000 // 6 Seconds
 
 
 
