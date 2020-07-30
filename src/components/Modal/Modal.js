@@ -27,7 +27,7 @@ function ModalComponent (props) {
     as = 'div',
     className,
     onClose,
-    initialState,
+    initialState = {},
     style,
   } = props
 
