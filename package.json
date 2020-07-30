@@ -19,6 +19,9 @@
     "eslint": "eslint .",
     "stylelint": "stylelint \"src/**/*.scss\""
   },
+  "resolutions": {
+    "webpack": "~4.43.0"
+  },
   "devDependencies": {
     "@babel/core": "7.10.5",
     "@babel/plugin-proposal-class-properties": "7.10.4",
@@ -129,7 +132,7 @@
     "stripe": "^8.80.0",
     "ua-parser-js": "^0.7.21",
     "use-immer": "^0.4.1",
-    "webpack": "^4.44.0",
+    "webpack": "4.43.0",
     "worker-loader": "^2.0.0",
     "zxcvbn": "^4.4.2"
   }
