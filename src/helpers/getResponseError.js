@@ -1,7 +1,4 @@
 import { isError } from 'flux-standard-action'
-import UUID from 'pure-uuid'
-
-const UUID_VERSION_4 = 4
 
 export default function getResponseError (action) {
   if (!isError(action)) {
@@ -17,7 +14,6 @@ export default function getResponseError (action) {
   }
 
   return {
-    id: (new UUID(UUID_VERSION_4)).format(),
     links: {
       about: 'https://httpstatuses.com/500',
     },
