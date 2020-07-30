@@ -25,29 +25,19 @@ function getErrorText (error) {
           return undefined
       }
 
-    case HttpStatus.UNPROCESSABLE_ENTITY:
-      return 'Somehow, you managed to send an invalid platform.\n Quit fooling around!'
-
     default:
       return undefined
   }
 }
 
 function RegistrationErrorBox (props) {
-  const {
-    error,
-  } = props
+  const { error } = props
 
   if (!error) {
     return null
   }
 
-  return (
-    <>
-      <br />
-      <ApiErrorBox error={error} renderError={getErrorText} />
-    </>
-  )
+  return (<ApiErrorBox error={error} renderError={getErrorText} />)
 }
 
 RegistrationErrorBox.propTypes = {
