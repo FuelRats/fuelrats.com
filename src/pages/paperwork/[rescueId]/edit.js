@@ -243,6 +243,17 @@ class Paperwork extends React.Component {
       }
     }
 
+    if (rats) {
+      updateData.relationships.rats = {
+        data: rats.map(({ type, id }) => {
+          return {
+            type,
+            id,
+          }
+        }),
+      }
+    }
+
     const response = await this.props.updateRescue(updateData)
 
     if (isError(response)) {
