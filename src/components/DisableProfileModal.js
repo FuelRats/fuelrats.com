@@ -1,7 +1,9 @@
 import { HttpStatus } from '@fuelrats/web-util/http'
-import { isError } from 'flux-standard-action'
 import React from 'react'
+import { createStructuredSelector } from 'reselect'
 
+import getResponseError from '~/helpers/getResponseError'
+import { Router } from '~/routes'
 import { connect } from '~/store'
 import { selectUserById, withCurrentUserId } from '~/store/selectors'
 
@@ -23,7 +25,6 @@ class DisableProfileModal extends React.Component {
   \***************************************************************************/
 
   state = {
-    userId: this.props.user.id,
     password: '',
     error: null,
     validity: {
@@ -66,25 +67,29 @@ class DisableProfileModal extends React.Component {
 
   _handleSubmit = async (event) => {
     event.preventDefault()
+    const {
+      user,
+    } = this.props
 
     const {
       password,
-      userId,
     } = this.state
 
     this.setState({ submitting: true })
 
     const response = await this.props.updateUser({
-      id: userId,
+      id: user.id,
       status: 'deactivated',
     }, password)
 
-    if (isError(response)) {
-      const { meta, payload } = response
-      let errorMessage = 'Unknown error occured.'
+    const error = getResponseError(response)
+
+    if (error) {
+      const { meta } = response
+      let errorMessage = 'Unknown error occurred.'
 
       if (HttpStatus.isClientError(meta.response.status)) {
-        errorMessage = payload.errors && payload.errors.length ? payload.errors[0].detail : 'Client communication error'
+        errorMessage = error.detail ?? 'Client communication error'
       }
 
       if (HttpStatus.isServerError(meta.response.status)) {
@@ -97,6 +102,8 @@ class DisableProfileModal extends React.Component {
       })
     } else {
       this.props.onClose()
+      this.props.logout()
+      Router.push('/')
     }
   }
 
@@ -199,12 +206,10 @@ class DisableProfileModal extends React.Component {
     Redux Properties
   \***************************************************************************/
 
-  static mapDispatchToProps = ['updateUser']
-  static mapStateToProps = (state) => {
-    return {
-      user: withCurrentUserId(selectUserById)(state),
-    }
-  }
+  static mapDispatchToProps = ['updateUser', 'logout']
+  static mapStateToProps = createStructuredSelector({
+    user: withCurrentUserId(selectUserById),
+  })
 }
 
 
