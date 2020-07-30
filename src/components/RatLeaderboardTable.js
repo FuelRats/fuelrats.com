@@ -31,7 +31,10 @@ class RatLeaderboardTable extends React.Component {
   _handlePageChange = async (state) => {
     this.setState({ loading: true })
 
-    await this.props.getRatLeaderboard({ offset: state.page * state.pageSize, limit: state.pageSize })
+    await this.props.getRatLeaderboard({
+      'page[offset]': state.page * state.pageSize,
+      'page[limit]': state.pageSize,
+    })
 
     this.setState({ loading: false })
   }
@@ -54,8 +57,6 @@ class RatLeaderboardTable extends React.Component {
       statistics,
       entries,
     } = this.props
-
-    console.log(this.props)
 
     const {
       loading,
