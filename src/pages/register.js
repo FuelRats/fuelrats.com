@@ -85,8 +85,9 @@ function Register () {
           <br />
           {'Need fuel? No need to register! Just click "Get Fuel" in the sidebar!'}
         </h5>
+        <br />
+        <RegistrationErrorBox error={submitState?.error} />
       </div>
-      <RegistrationErrorBox error={submitState?.error} />
       <RegistrationForm onSubmit={handleSubmit} />
     </>
   )

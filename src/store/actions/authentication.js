@@ -125,7 +125,7 @@ export const register = (data) => {
           headers: {
             'X-Fingerprint': fingerprint,
           },
-          data: presentApiRequestBody('users', data),
+          data: presentApiRequestBody('registrations', data),
         },
       ),
     )
