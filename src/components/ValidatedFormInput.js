@@ -153,8 +153,10 @@ class ValidatedFormInput extends React.Component {
 
   static propTypes = {
     as: PropTypes.elementType,
+    children: PropTypes.node,
     doubleValidate: PropTypes.bool,
     id: PropTypes.string.isRequired,
+    inputRef: PropTypes.any,
     invalidMessage: PropTypes.string,
     label: PropTypes.string.isRequired,
     name: PropTypes.string,
@@ -162,7 +164,9 @@ class ValidatedFormInput extends React.Component {
     pattern: PropTypes.string,
     patternMessage: PropTypes.string,
     renderLabel: PropTypes.bool,
+    required: PropTypes.bool,
     type: PropTypes.string,
+    value: PropTypes.string,
   }
 }
 

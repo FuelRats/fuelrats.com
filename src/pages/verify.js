@@ -1,232 +1,127 @@
-// Module imports
 import { isError } from 'flux-standard-action'
-import React from 'react'
+import React, { useState, useCallback } from 'react'
+import { useDispatch } from 'react-redux'
 
-
-
-
-
-// Component imports
-import PasswordField from '~/components/PasswordField'
-import { passwordPattern } from '~/data/RegExpr'
+import PasswordResetForm from '~/components/Forms/PasswordResetForm'
+import MessageBox from '~/components/MessageBox'
+import ApiErrorBox from '~/components/MessageBox/ApiErrorBox'
+import getResponseError from '~/helpers/getResponseError'
 import { pageRedirect } from '~/helpers/gIPTools'
-import { Router, Link } from '~/routes'
-import { connect } from '~/store'
-import { verifyResetToken, verifyEmailToken } from '~/store/actions/verify'
+import { Router } from '~/routes'
+import { validatePasswordResetToken, resetPassword } from '~/store/actions/authentication'
+import { verifyEmailToken } from '~/store/actions/verify'
 
 
 
 
-@connect
-class Verify extends React.Component {
-  /***************************************************************************\
-    Class Properties
-  \***************************************************************************/
 
-  state = {
-    password: '',
-    submitted: false,
-    submitting: false,
-  }
-
-  _passwordRef = React.createRef()
+const RESET_SUCCESS_REDIRECT_WAIT = 6000 // 6 Seconds
 
 
 
-  /***************************************************************************\
-    Private Methods
-  \***************************************************************************/
 
-  _handleSubmit = async (event) => {
-    const {
-      password,
-      token,
-    } = this.state
+function Verify ({ token }) {
+  const [{ submitted, error }, setSubmitState] = useState({ submitted: false })
 
-    event.preventDefault()
+  const dispatch = useDispatch()
 
-    this.setState({ submitting: true })
+  const onSubmit = useCallback(async (formData) => {
+    const response = await dispatch(resetPassword(token.value, formData))
 
-    const response = await this.props.resetPassword({
-      password,
-      token,
-    })
+    const resError = getResponseError(response)
+    setSubmitState({ submitted: true, error: resError })
 
-    if (isError(response)) {
-      this.setState({
-        submitted: true,
-        submitting: false,
-      })
-      Router.pushRoute('home', { authenticate: true })
+    if (!resError) {
+      setTimeout(() => {
+        Router.pushRoute('home', { authenticate: true })
+      }, RESET_SUCCESS_REDIRECT_WAIT)
     }
-  }
+  }, [dispatch, token.value])
 
-  _handlePasswordInputChange = (event) => {
-    this.setState({ password: event.target.value })
-  }
-
-
-
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
-
-  static async getInitialProps (ctx) {
-    const { query, store } = ctx
-    const { type, t: token, change } = query
-    let destination = null
-    let response = null
-
-    switch (type) {
-      case 'reset':
-        response = await store.dispatch(verifyResetToken(token))
-        destination = null
-        break
-
-      case 'email':
-        response = await store.dispatch(verifyEmailToken(token))
-        destination = `/profile/overview?fl=${change === 'true' ? '0' : '1'}`
-        break
-
-      default:
-        destination = '/'
-        break
-    }
-
-    const tokenIsValid = !isError(response)
-
-    if (tokenIsValid && destination) {
-      pageRedirect(ctx, destination)
-    }
-
-    return {
-      tokenIsValid,
-    }
-  }
-
-  render () {
-    const {
-      password,
-      submitted,
-      submitting,
-    } = this.state
-
-    const { tokenIsValid } = this.props
-    const { type } = this.props.query
-
-    if (type !== 'reset') {
-      return (
-        <div className="page-content">
-          <header>
-            <h3>{'Invalid Token'}</h3>
-          </header>
-
-          <p>
-            {'The provided token is invalid. Please contact our techrats at '}
-            <a href="mailto:support@fuelrats.com">{'support@fuelrats.com'}</a>
-          </p>
-        </div>
-      )
-    }
-
+  if (!token.valid) {
     return (
       <div className="page-content">
-
-        {
-          submitted && (
-            <span>{'Your password has been changed! You may now login with your new credentials.'}</span>
-          )
-        }
-
-        {
-          (!submitted && tokenIsValid && type === 'reset') && (
-            <form onSubmit={this._handleSubmit}>
-              <fieldset>
-                <label htmlFor="password">
-                  {'New Password'}
-                </label>
-
-                <PasswordField
-                  ref={this._passwordRef}
-                  required
-                  showStrength
-                  showSuggestions
-                  disabled={submitting}
-                  id="password"
-                  name="password"
-                  pattern={passwordPattern}
-                  placeholder="Use a strong password to keep your account secure"
-                  value={password}
-                  onChange={this._handlePasswordInputChange} />
-              </fieldset>
-
-              <menu type="toolbar">
-                <div className="primary">
-                  <button
-                    disabled={submitting || !this.canSubmit}
-                    type="submit">
-                    {submitting ? 'Submitting...' : 'Submit'}
-                  </button>
-                </div>
-
-                <div className="secondary" />
-              </menu>
-            </form>
-          )
-        }
-
-        {
-          (!submitted && !tokenIsValid) && (
-            <div>
-              <header>
-                <h3>{'Invalid Token'}</h3>
-              </header>
-
-              <p>
-                {'Your token is invalid, which probably just means it expired. '}
-                <Link href="/forgot-password">
-                  <a>
-                    {'Click here'}
-                  </a>
-                </Link>
-                {' to try resetting your password again.'}
-              </p>
-            </div>
-          )
-        }
+        <MessageBox title="Invalid Token">
+          {token.type === 'reset' && 'Your token is invalid, which probably just means it expired. Please try resetting your password again. If the problem persists, please'}
+          {token.type !== 'reset' && 'The provided token is invalid. Please'}
+          {' contact us via email: '}
+          <a href="mailto:support@fuelrats.com">{'support@fuelrats.com'}</a>
+        </MessageBox>
       </div>
     )
   }
 
+  return (
+    <div className="page-content">
+      {
+        // Render on submission error
+        submitted && error && (
+          <ApiErrorBox error={error} />
+        )
+      }
 
+      {
+        // Render when password is successfully reset!
+        submitted && !error && (
+          <MessageBox title="Password Changed" type="info">
+            <span>{'Your password has been changed! You may now login with your new credentials.'}</span>
+            <span>{'You will soon be redirected to the front page...'}</span>
+          </MessageBox>
+        )
+      }
 
+      {
+        // Render when not submitted or if there is an error to allow re-submission
+        Boolean(!submitted || error) && (
+          <PasswordResetForm onSubmit={onSubmit} />
+        )
+      }
+    </div>
+  )
+}
 
+Verify.getInitialProps = async (ctx) => {
+  const { query, store } = ctx
+  const { type, t: token, change } = query
+  let destination = null
+  let response = null
 
-  /***************************************************************************\
-    Getters
-  \***************************************************************************/
+  switch (type) {
+    case 'reset':
+      response = await store.dispatch(validatePasswordResetToken(token))
+      destination = null
+      break
 
-  get canSubmit () {
-    if (!this._password) {
-      return false
-    }
+    case 'email':
+      response = await store.dispatch(verifyEmailToken(token))
+      destination = `/profile/overview?fl=${change === 'true' ? '0' : '1'}`
+      break
 
-    if (!this._password.validity.valid) {
-      return false
-    }
-
-    return true
+    default:
+      destination = '/'
+      break
   }
 
+  const valid = !isError(response)
 
+  if (valid && destination) {
+    pageRedirect(ctx, destination)
+  }
 
+  return {
+    token: {
+      type,
+      value: token,
+      valid,
+    },
+  }
+}
 
-
-  /***************************************************************************\
-    Redux Properties
-  \***************************************************************************/
-
-  static mapDispatchToProps = ['resetPassword', 'validatePasswordResetToken']
+Verify.getPageMeta = ({ query }) => {
+  return {
+    className: 'verify-page',
+    title: query?.type === 'reset' ? 'Reset Password' : 'Verification',
+  }
 }
 
 

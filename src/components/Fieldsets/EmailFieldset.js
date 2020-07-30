@@ -1,6 +1,6 @@
 /* global $IS_DEVELOPMENT, $IS_STAGING */
 
-import React from 'react'
+import React, { forwardRef } from 'react'
 
 import InputFieldset, { useValidationCallback } from './InputFieldset'
 
@@ -8,7 +8,7 @@ import InputFieldset, { useValidationCallback } from './InputFieldset'
 const isProduction = !$IS_DEVELOPMENT && !$IS_STAGING
 
 
-export default function EmailFieldset (props) {
+const EmailFieldset = forwardRef((props, ref) => {
   const {
     onValidate: parentValidate,
     ...inputProps
@@ -28,10 +28,13 @@ export default function EmailFieldset (props) {
 
   return (
     <InputFieldset
+      ref={ref}
       displayName="E-Mail"
       placeholder="surly_badger@fuelrats.com"
       {...inputProps}
       type="email"
       onValidate={handleValidate} />
   )
-}
+})
+
+export default EmailFieldset

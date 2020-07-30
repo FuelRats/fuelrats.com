@@ -265,10 +265,12 @@ class Carousel extends React.Component {
 
   static propTypes = {
     className: PropTypes.string,
+    getImage: PropTypes.func,
     id: PropTypes.string.isRequired,
     interval: PropTypes.number,
     slides: PropTypes.objectOf(PropTypes.shape({
       filename: PropTypes.string,
+      image: PropTypes.string,
       position: PropTypes.string,
       text: PropTypes.any,
     })).isRequired,

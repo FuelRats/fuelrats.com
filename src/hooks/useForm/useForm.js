@@ -1,4 +1,4 @@
-import { isRequired } from '@fuelrats/validation-util/dist/isRequired'
+import { isRequired } from '@fuelrats/validation-util/require'
 import _get from 'lodash/get'
 import {
   useCallback,
@@ -25,7 +25,7 @@ export default function useForm (config = {}) {
 
   const [submitting, setSubmit] = useState(false)
 
-  const [isValid, dispatchValidity] = useValidityReducer()
+  const [isValid, dispatchValidity] = useValidityReducer({ __init: false })
   const [stateDelta, dispatchDelta] = useDeltaReducer(initialState)
   const [state, dispatchState] = useObjectReducer(initialState)
   const validationMethods = useRef({})
@@ -58,7 +58,7 @@ export default function useForm (config = {}) {
 
   const validateAll = useCallback(
     async (curState) => {
-      const fragment = {}
+      const fragment = { __init: true }
 
       await Promise.all(Object.entries(validationMethods.current).map(
         async ([name, func]) => {

@@ -1,5 +1,5 @@
 // Module imports
-import { useMemo, useEffect } from 'react'
+import React from 'react'
 import { createPortal } from 'react-dom'
 
 
@@ -7,45 +7,48 @@ import { createPortal } from 'react-dom'
 
 
 // Component constants
-const modalRoot = typeof document === 'undefined'
-  ? null
-  : document.getElementById('ModalContainer')
+class ModalPortal extends React.Component {
+  modalRoot = null
 
-
-
-
-
-const ModalPortal = ({ children, isOpen }) => {
-  const portalRoot = useMemo(() => {
-    return modalRoot && document.createElement('div')
-  }, [])
-
-  useEffect(() => {
-    if (portalRoot) {
-      modalRoot.appendChild(portalRoot)
+  componentWillUnmount () {
+    if (this.modalRoot) {
+      this.container.removeChild(this.modalRoot)
     }
+    this.modalRoot = null
+  }
 
-    return () => {
-      if (portalRoot) {
-        modalRoot.removeChild(portalRoot)
-      }
-    }
-  }, [portalRoot])
-
-  useEffect(() => {
-    if (portalRoot) {
-      if (isOpen) {
-        portalRoot.classList.add('open')
+  componentDidUpdate () {
+    if (this.modalRoot) {
+      if (this.props.isOpen) {
+        this.modalRoot.classList.add('open')
       } else {
-        portalRoot.classList.remove('open')
+        this.modalRoot.classList.remove('open')
       }
     }
-  }, [isOpen, portalRoot])
+  }
 
-  return portalRoot && createPortal(children, portalRoot)
+  render () {
+    const { container } = this
+    if (!container) {
+      return null
+    }
+
+    if (!this.modalRoot) {
+      this.modalRoot = document.createElement('div')
+      container.appendChild(this.modalRoot)
+    }
+
+    return createPortal(this.props.children, this.modalRoot)
+  }
+
+  get container () {
+    if (typeof document !== 'undefined') {
+      return document.getElementById('ModalContainer')
+    }
+
+    return undefined
+  }
 }
-
-
 
 
 

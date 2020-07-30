@@ -24,8 +24,6 @@ class FuelRatsWebsite extends Document {
     return (
       <html lang="en">
         <Head nonce={nonce}>
-          <meta content="initial-scale=1.0, viewport-fit=cover, width=device-width" name="viewport" />
-
           <meta content="Fuel Rats" name="application-name" />
           <meta content="#d65050" name="theme-color" />
 

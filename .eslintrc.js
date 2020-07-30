@@ -13,14 +13,10 @@ module.exports = {
   ],
   rules: {
     'jsx-a11y/no-noninteractive-element-interactions': ['off'], // We intend to enable this once we refactor certain key components.
-    'react/prop-types': ['off'], // We're not quite ready to enforce prop-types for all files yet.
     'jsdoc/require-jsdoc': ['off'], // we'll get to it someday...
     'import/order': ['error', {
       ...importRules.rules['import/order'][1],
       'newlines-between': 'always',
-    }],
-    'react-hooks/exhaustive-deps': ['warn', {
-      additionalHooks: 'use.+Callback',
     }],
     'no-warning-comments': ['off'], // TODO Re-enable no-warning-comments before release
   },

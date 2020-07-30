@@ -51,6 +51,7 @@ function MessageBox (props) {
 
 MessageBox.propTypes = {
   children: PropTypes.node.isRequired,
+  className: PropTypes.string,
   footer: PropTypes.node,
   icon: PropTypes.string,
   title: PropTypes.node,

@@ -52,6 +52,7 @@ RadioInputOption.propTypes = {
   disabled: PropTypes.any,
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  title: PropTypes.string,
   value: PropTypes.string.isRequired,
 }
 

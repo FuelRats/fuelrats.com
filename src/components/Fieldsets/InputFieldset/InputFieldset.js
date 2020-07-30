@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React, { useCallback, useState } from 'react'
 
 import InputSuggestions from '~/components/InputMessages'
+import extPropType from '~/helpers/extPropTypes'
 import getValidityErrors from '~/helpers/getValidityErrors'
 import useFocusState from '~/hooks/useFocusState'
 import { useField, fieldPropTypes } from '~/hooks/useForm'
@@ -20,6 +21,7 @@ const InputFieldset = React.forwardRef((props, forwardRef) => {
     className,
     displayName = 'Input',
     skipWarnings = false,
+    inputClassName,
     label,
     patternMessage,
     onChange,
@@ -44,7 +46,7 @@ const InputFieldset = React.forwardRef((props, forwardRef) => {
     const { errors = [], warnings = [] } = (await parentValidate?.(value, target)) ?? {}
 
     // Browsers consider an input with only whitespace "filled", but we don't.
-    if (props.required && target.value && target.value.trim() === '') {
+    if (props.required && target.value && target.value.replace(/[\s_]/gu, '') === '') {
       errors.push(`${displayName} is a required field.`)
     }
 
@@ -76,16 +78,29 @@ const InputFieldset = React.forwardRef((props, forwardRef) => {
     return result.valid
   }, [displayName, inputRef, parentValidate, props.required, skipWarnings])
 
-  const { value = '', validating, handleChange } = useField(props.name, { onValidate: handleValidate, onChange, validateOpts })
+  const {
+    value = '',
+    validating,
+    submitting,
+    handleChange,
+  } = useField(props.name, { onValidate: handleValidate, onChange, validateOpts })
 
   return (
     <fieldset>
-      <label htmlFor={props.id}>{label}</label>
+
+      {
+        Boolean(label) && (
+          <label htmlFor={props.id}>{label}</label>
+        )
+      }
+
       <div className={[styles.inputGroup, className]}>
         <input
+          disabled={submitting}
           type="text"
           {...inputProps}
           ref={inputRef}
+          className={inputClassName}
           data-pattern-message={patternMessage}
           value={value}
           onBlur={onBlur}
@@ -105,22 +120,15 @@ const InputFieldset = React.forwardRef((props, forwardRef) => {
   )
 })
 
-InputFieldset.defaultProps = {
-  displayName: 'Input',
-  patternMessage: null,
-  skipWarnings: false,
-}
-
 InputFieldset.propTypes = {
+  'aria-label': extPropType(PropTypes.string).isRequiredIf('label', 'undefined'),
   displayName: PropTypes.string,
   id: PropTypes.string.isRequired,
-  label: PropTypes.node.isRequired,
+  label: PropTypes.node,
   patternMessage: PropTypes.string,
   skipWarnings: PropTypes.bool,
   ...fieldPropTypes,
 }
-
-
 
 
 /**
@@ -137,7 +145,7 @@ InputFieldset.propTypes = {
  * @param {Function} parent
  * @returns {Function}
  */
-function useValidationCallback (callback, deps, parent) {
+function useValidationCallback (callback, deps = [], parent) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const _callback = useCallback(callback, deps)
 

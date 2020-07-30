@@ -18,7 +18,7 @@ function useField (name = isRequired('name'), opts = {}) {
 
   const context = useContext(FormContext)
   const { setValidationMethod, validateField, ctx } = context
-  const { state, dispatchField, dispatchValidity } = ctx
+  const { state, dispatchField, dispatchValidity, submitting } = ctx
 
   const inputValue = _get(state, name)
   const [validating, setQueueState] = useState(false)
@@ -77,6 +77,7 @@ function useField (name = isRequired('name'), opts = {}) {
     handleChange,
     queueValidation,
     validating,
+    submitting,
     ctx,
   }
 }

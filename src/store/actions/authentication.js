@@ -9,6 +9,7 @@ import Cookies from 'js-cookie'
 
 
 // Component imports
+import getFingerprint from '~/helpers/getFingerprint'
 import { presentApiRequestBody } from '~/helpers/presenters'
 import { Router } from '~/routes'
 import frApi from '~/services/fuelrats'
@@ -42,14 +43,11 @@ export const changePassword = ({ id, ...data }) => {
 export const login = (options) => {
   return async (dispatch) => {
     const {
-      password,
-      email,
-      fingerprint,
-      route,
-      routeParams,
       remember,
-      verify,
+      data,
     } = options
+
+    const fingerprint = await getFingerprint()
 
     const action = createAxiosFSA(
       actionTypes.session.login,
@@ -59,12 +57,7 @@ export const login = (options) => {
         headers: {
           'X-Fingerprint': fingerprint,
         },
-        data: {
-          grant_type: 'password',
-          password,
-          username: email,
-          verify,
-        },
+        data,
       }),
     )
 
@@ -87,10 +80,8 @@ export const login = (options) => {
         const destination = searchParams.destination ? decodeURIComponent(searchParams.destination) : '/profile'
 
         Router.push(destination)
-      } else if (route) {
-        Router.pushRoute(route, routeParams)
       }
-    /* eslint-enable no-restricted-globals */
+      /* eslint-enable no-restricted-globals */
     }
 
     return dispatch(action)
@@ -121,26 +112,32 @@ export const submitOAuthDecision = (data) => {
 }
 
 
-export const register = (data, fingerprint) => {
-  return frApiPlainRequest(
-    actionTypes.session.register,
-    {
-      url: '/register',
-      method: 'post',
-      headers: {
-        'X-Fingerprint': fingerprint,
-      },
-      data: presentApiRequestBody('users', data),
-    },
-  )
+export const register = (data) => {
+  return async (dispatch) => {
+    const fingerprint = await getFingerprint()
+
+    return dispatch(
+      frApiPlainRequest(
+        actionTypes.session.register,
+        {
+          url: '/register',
+          method: 'post',
+          headers: {
+            'X-Fingerprint': fingerprint,
+          },
+          data: presentApiRequestBody('users', data),
+        },
+      ),
+    )
+  }
 }
 
 
-export const resetPassword = ({ token, ...data }) => {
+export const resetPassword = (token, data) => {
   return frApiPlainRequest(
     actionTypes.passwords.reset,
     {
-      url: `/reset/${token}`,
+      url: `/resets/${token}`,
       method: 'post',
       data: presentApiRequestBody('resets', data),
     },
@@ -148,13 +145,13 @@ export const resetPassword = ({ token, ...data }) => {
 }
 
 
-export const sendPasswordResetEmail = (email) => {
+export const sendPasswordResetEmail = (data) => {
   return frApiPlainRequest(
     actionTypes.passwords.requestReset,
     {
-      url: '/reset',
+      url: '/resets',
       method: 'post',
-      data: presentApiRequestBody('resets', { email }),
+      data: presentApiRequestBody('resets', data),
     },
   )
 }
@@ -164,7 +161,7 @@ export const validatePasswordResetToken = (token) => {
   return frApiPlainRequest(
     actionTypes.passwords.validateReset,
     {
-      url: `/reset/${token}`,
+      url: `/resets/${token}`,
     },
   )
 }

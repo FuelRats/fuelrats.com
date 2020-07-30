@@ -17,12 +17,13 @@ function RadioFieldset (props) {
     return Boolean(value) || !required
   }, [required])
 
-  const { value = '', handleChange } = useField(props.name, { onChange, onValidate })
+  const { value = '', handleChange, submitting } = useField(props.name, { onChange, onValidate })
 
   return (
     <fieldset>
       <label htmlFor={props.id}>{label}</label>
       <RadioInput
+        disabled={submitting}
         {...inputProps}
         value={value}
         onChange={handleChange} />

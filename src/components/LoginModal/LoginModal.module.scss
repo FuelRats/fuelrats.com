@@ -1,5 +1,7 @@
-.errorBox {
-  margin: 0 auto 1rem;
+@import '../../scss/colors';
+
+.loginModal .errorBox {
+  margin: 0.5rem auto;
 }
 
 .primary {
@@ -16,6 +18,27 @@
 
 .linkButton {
   composes: button link secondary mobile-button from global;
+}
+
+.loginForm {
+  position: relative;
+}
+
+.verifyToggle {
+  position: absolute;
+  right: 0;
+  z-index: 5;
+
+  padding: 0 2rem 0.2rem;
+
+
+  &:hover small {
+    color: $white;
+  }
+
+  small {
+    transition: 0.2s ease;
+  }
 }
 
 @media screen and (max-width: 768px) {

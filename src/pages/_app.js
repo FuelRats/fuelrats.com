@@ -112,6 +112,7 @@ class FuelRatsApp extends App {
       <React.StrictMode>
         <NextHead>
           <title>{`${pageMeta.title} | The Fuel Rats`}</title>
+          <meta content="initial-scale=1.0, viewport-fit=cover, width=device-width" name="viewport" />
           <meta content={pageMeta.title} property="og:title" />
           <meta content={pageMeta.description} name="description" />
           <meta content={pageMeta.description} property="og:description" />

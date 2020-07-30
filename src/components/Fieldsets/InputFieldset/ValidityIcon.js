@@ -55,6 +55,7 @@ function ValidityIcon (props) {
 }
 
 ValidityIcon.propTypes = {
+  className: PropTypes.string,
   hasMessages: PropTypes.any,
   valid: PropTypes.any,
   validating: PropTypes.any,

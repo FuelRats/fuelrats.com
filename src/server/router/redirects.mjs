@@ -49,7 +49,8 @@ const configureRedirects = (router) => {
 
     if (dayIsValid && monthIsValid && yearIsValid) {
       ctx.status = 301
-      await ctx.redirect(`/blog/${slug}`)
+      ctx.redirect(`/blog/${slug}`)
+      return
     }
 
     await next()

@@ -179,8 +179,6 @@ input[type='checkbox'] {
   }
 }
 
-
-/* stylelint-disable-next-line selector-class-pattern */
 .ReactTable .rt-thead.-filters input {
   @extend %text-input;
 

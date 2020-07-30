@@ -122,7 +122,12 @@ class DefaultRatButton extends React.Component {
   static defaultProps = {}
 
   static propTypes = {
+    displayRatId: PropTypes.string,
+    onClick: PropTypes.func,
+    onUpdate: PropTypes.func,
     ratId: PropTypes.string.isRequired,
+    updateUser: PropTypes.func,
+    userId: PropTypes.string,
   }
 }
 

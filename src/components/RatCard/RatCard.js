@@ -341,7 +341,7 @@ class RatCard extends React.Component {
       userDisplayRatId: withCurrentUserId(selectDisplayRatIdByUserId)(state),
       rat: selectRatById(state, props),
       ships: selectShipsByRatId(state, props),
-      rescueCount: rescueCountPageViewMeta && rescueCountPageViewMeta.total,
+      rescueCount: rescueCountPageViewMeta?.total ?? 0,
       rescueCountPageViewId: pageViewId,
     }
   }
@@ -357,7 +357,16 @@ class RatCard extends React.Component {
   static defaultProps = {}
 
   static propTypes = {
+    className: PropTypes.string,
+    deleteRat: PropTypes.func,
+    getRescues: PropTypes.func,
+    rat: PropTypes.object,
     ratId: PropTypes.string.isRequired,
+    rescueCount: PropTypes.number,
+    rescueCountPageViewId: PropTypes.string,
+    updateRat: PropTypes.func,
+    user: PropTypes.object,
+    userDisplayRatId: PropTypes.string,
   }
 }
 
