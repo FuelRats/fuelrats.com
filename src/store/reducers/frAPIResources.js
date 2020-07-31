@@ -21,6 +21,7 @@ const {
   rats: { },
   rescues: { },
   ships: { },
+  'user-statistics': { },
   users: {
     mergeMethod: (state, target, source) => {
       if (state?.session?.userId === target.id) {
