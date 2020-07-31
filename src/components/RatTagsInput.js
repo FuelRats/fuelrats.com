@@ -35,16 +35,22 @@ class RatTagsInput extends TagsInput {
     this.setState({ loading: true })
 
     const queryParams = [
-      'limit=10',
-      this.props['data-platform'] ? `platform=${this.props['data-platform']}` : '',
-      `name.ilike=${query}%`,
+      'page[limit]=10',
+      `filter=${
+        JSON.stringify({
+          and: [
+            { name: { startsWith: query } },
+            { platform: this.props['data-platform'] },
+          ],
+        })
+      }`,
     ]
 
     if (query) {
       const response = await fetch(`/api/rats?${queryParams.join('&')}`)
       const { data } = await response.json()
 
-      if (!data.length) {
+      if (!data?.length) {
         return this.updateOptions([])
       }
 
