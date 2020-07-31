@@ -1,7 +1,7 @@
 // Module Imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import qs from 'qs'
 import React from 'react'
-
 
 
 
@@ -34,20 +34,20 @@ class RatTagsInput extends TagsInput {
   async search (query) {
     this.setState({ loading: true })
 
-    const queryParams = [
-      'page[limit]=10',
-      `filter=${
-        JSON.stringify({
-          and: [
-            { name: { startsWith: query } },
-            { platform: this.props['data-platform'] },
-          ],
-        })
-      }`,
-    ]
+    const queryParams = qs.stringify({
+      page: {
+        limit: 10,
+      },
+      filter: {
+        and: [
+          { name: { iLike: `${query}%` } },
+          { platform: this.props['data-platform'] },
+        ],
+      },
+    })
 
     if (query) {
-      const response = await fetch(`/api/rats?${queryParams.join('&')}`)
+      const response = await fetch(`/api/rats?${queryParams}`)
       const { data } = await response.json()
 
       if (!data?.length) {
