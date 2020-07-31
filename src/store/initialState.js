@@ -44,6 +44,8 @@ const initialState = {
 
   users: {},
 
+  'user-statistics': {},
+
   wordpress: {
     pages: {},
   },
