@@ -72,12 +72,12 @@ const outcomeRadioOptions = [
   {
     value: 'invalid',
     label: 'Invalid',
-    title: 'Fuel wasn\'t delievered because the request was illegitimate. (Cats / Trolling)',
+    title: 'Fuel wasn\'t delivered because the request was illegitimate. (Cats / Trolling)',
   },
   {
     value: 'other',
     label: 'Other',
-    title: 'Fuel wasn\'t delievered because the client was able to get out of trouble without it. (Explain)',
+    title: 'Fuel wasn\'t delivered because the client was able to get out of trouble without it. (Explain)',
   },
 ]
 
@@ -149,14 +149,14 @@ class Paperwork extends React.Component {
 
   _handleFirstLimpetChange = (value) => {
     // Because tagsInput sometimes decides to randomly call onChange when it hasn't changed.
-    if (typeof this.state.changes.firstLimpetId === 'undefined' && value.length && value[0].id === this.props.rescue.attributes.firstLimpetId) {
+    if (typeof this.state.changes.firstLimpetId === 'undefined' && value.length && value[0].id === this.props.rescue.relationships.firstLimpet?.data?.id) {
       return
     }
 
     let newValue = null
 
     if (value.length) {
-      if (value[0].id === this.props.rescue.attributes.firstLimpetId) {
+      if (value[0].id === this.props.rescue.relationships.firstLimpet?.data?.id) {
         newValue = undefined
       } else {
         newValue = value
@@ -190,8 +190,8 @@ class Paperwork extends React.Component {
   }
 
   _handleRatsRemove = (rat) => {
-    const firstLimpetId = (this.state.changes.firstLimpetId && this.state.changes.firstLimpetId[0].id) || this.props.rescue.attributes.firstLimpetId
-    if (rat.id === firstLimpetId) {
+    const firstLimpetId = this.state.changes.firstLimpetId?.[0]?.id ?? this.props.rescue.relationships?.firstLimpet?.data?.id ?? null
+    if (rat?.id === firstLimpetId) {
       this._handleFirstLimpetChange([])
     }
   }
@@ -202,19 +202,12 @@ class Paperwork extends React.Component {
     const { rescue } = this.props
     const {
       rats,
+      firstLimpetId,
       ...changes
     } = this.state.changes
 
     if (!rescue.attributes.outcome && !changes.outcome) {
       return
-    }
-
-    if (changes.firstLimpetId) {
-      if (changes.firstLimpetId.length && changes.firstLimpetId[0].id !== rescue.attributes.firstLimpetId) {
-        changes.firstLimpetId = changes.firstLimpetId[0].id
-      } else {
-        changes.firstLimpetId = undefined
-      }
     }
 
     if (changes.system) {
@@ -228,18 +221,26 @@ class Paperwork extends React.Component {
     const updateData = {
       id: rescue.id,
       attributes: changes,
+      relationships: {},
+    }
+
+    if (firstLimpetId?.length && firstLimpetId[0].id !== rescue.relationships.firstLimpet?.data?.id) {
+      updateData.relationships.firstLimpet = {
+        data: {
+          type: 'rats',
+          id: firstLimpetId[0].id,
+        },
+      }
     }
 
     if (rats) {
-      updateData.relationships = {
-        rats: {
-          data: rats.map(({ type, id }) => {
-            return {
-              type,
-              id,
-            }
-          }),
-        },
+      updateData.relationships.rats = {
+        data: rats.map(({ type, id }) => {
+          return {
+            type,
+            id,
+          }
+        }),
       }
     }
 
@@ -362,7 +363,7 @@ class Paperwork extends React.Component {
         <header className="paperwork-header">
           {
             (rescue.attributes.status !== 'closed') && (
-              <div className="board-index"><span>{`#${rescue.attributes.data.boardIndex}`}</span></div>
+              <div className="board-index"><span>{`#${rescue.attributes.commandIdentifier}`}</span></div>
             )
           }
           <div className="title">
@@ -638,22 +639,22 @@ class Paperwork extends React.Component {
     const { rescue, rats } = this.props
     const { changes } = this.state
 
-    const isDefined = (value, fallback) => {
+    const ifDefined = (value, fallback) => {
       return typeof value === 'undefined' ? fallback : value
     }
 
     const getValue = (value) => {
-      return isDefined(changes[value], rescue.attributes[value])
+      return ifDefined(changes[value], rescue.attributes[value])
     }
 
     return {
       codeRed: getValue('codeRed'),
-      firstLimpetId: isDefined(changes.firstLimpetId, rats[rescue.attributes.firstLimpetId]) ?? null,
+      firstLimpetId: ifDefined(changes.firstLimpetId, rats[rescue.relationships.firstLimpet.data?.id]) ?? null,
       notes: getValue('notes'),
       outcome: getValue('outcome'),
       platform: getValue('platform'),
-      rats: Object.values(isDefined(changes.rats, rats) ?? {}),
-      system: isDefined(changes.system, rescue.attributes.system ? { value: rescue.attributes.system.toUpperCase() } : null),
+      rats: Object.values(ifDefined(changes.rats, rats) ?? {}),
+      system: ifDefined(changes.system, rescue.attributes.system ? { value: rescue.attributes.system.toUpperCase() } : null),
     }
   }
 
