@@ -149,14 +149,14 @@ class Paperwork extends React.Component {
 
   _handleFirstLimpetChange = (value) => {
     // Because tagsInput sometimes decides to randomly call onChange when it hasn't changed.
-    if (typeof this.state.changes.firstLimpetId === 'undefined' && value.length && value[0].id === this.props.rescue.attributes.firstLimpetId) {
+    if (typeof this.state.changes.firstLimpetId === 'undefined' && value.length && value[0].id === this.props.rescue.relationships.firstLimpet?.data?.id) {
       return
     }
 
     let newValue = null
 
     if (value.length) {
-      if (value[0].id === this.props.rescue.attributes.firstLimpetId) {
+      if (value[0].id === this.props.rescue.relationships.firstLimpet?.data?.id) {
         newValue = undefined
       } else {
         newValue = value
@@ -363,7 +363,7 @@ class Paperwork extends React.Component {
         <header className="paperwork-header">
           {
             (rescue.attributes.status !== 'closed') && (
-              <div className="board-index"><span>{`#${rescue.attributes.data.boardIndex}`}</span></div>
+              <div className="board-index"><span>{`#${rescue.attributes.commandIdentifier}`}</span></div>
             )
           }
           <div className="title">
