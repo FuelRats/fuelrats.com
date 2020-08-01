@@ -4,12 +4,15 @@ import React from 'react'
 import ApiErrorBox from '~/components/MessageBox/ApiErrorBox'
 
 function getErrorText (error) {
+  // Bad verification tokens are returned as oauth errors, which is weird but okay.
+  if (error.error_description === 'verify') {
+    return 'That verification token was incorrect. Please try again.'
+  }
+
   switch (error.status) {
     case 'verification_required':
-      if (error.source?.pointer === 'verify') {
-        return 'That verification token was incorrect.\nPlease try again.\n'
-      }
       return 'It appears you\'re logging in from a new device.\nA verification code has been sent to your email.'
+
     case 'unauthorized':
       return 'Invalid Username or Password'
 
