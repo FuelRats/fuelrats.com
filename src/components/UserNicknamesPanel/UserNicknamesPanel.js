@@ -124,16 +124,21 @@ class UserNicknamesPanel extends React.Component {
                 return (
                   <li key={nickname.id}>
                     <span>{nickname.attributes?.nick}</span>
-                    <ConfirmActionButton
-                      className="icon"
-                      confirmButtonText={`Delete nickname '${nickname.attributes?.nick}'`}
-                      confirmSubText=""
-                      denyButtonText="Cancel"
-                      name={nickname.id}
-                      onConfirm={this._handleDeleteNickname}
-                      onConfirmText="">
-                      <FontAwesomeIcon fixedWidth icon="trash" />
-                    </ConfirmActionButton>
+                    {
+                      // Only render for additional nicks, prevent for display nick.
+                      nickname.attributes?.display !== nickname.attributes?.nick && (
+                        <ConfirmActionButton
+                          className="icon"
+                          confirmButtonText={`Delete nickname '${nickname.attributes?.nick}'`}
+                          confirmSubText=""
+                          denyButtonText="Cancel"
+                          name={nickname.id}
+                          onConfirm={this._handleDeleteNickname}
+                          onConfirmText="">
+                          <FontAwesomeIcon fixedWidth icon="trash" />
+                        </ConfirmActionButton>
+                      )
+                    }
                   </li>
                 )
               }) ?? null
