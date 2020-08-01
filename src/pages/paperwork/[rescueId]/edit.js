@@ -190,8 +190,8 @@ class Paperwork extends React.Component {
   }
 
   _handleRatsRemove = (rat) => {
-    const firstLimpetId = (this.state.changes.firstLimpetId && this.state.changes.firstLimpetId[0].id) || this.props.rescue.attributes.firstLimpetId
-    if (rat.id === firstLimpetId) {
+    const firstLimpetId = this.state.changes.firstLimpetId?.[0]?.id ?? this.props.rescue.relationships?.firstLimpet?.data?.id ?? null
+    if (rat?.id === firstLimpetId) {
       this._handleFirstLimpetChange([])
     }
   }
