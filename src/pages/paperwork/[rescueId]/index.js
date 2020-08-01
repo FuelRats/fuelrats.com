@@ -141,7 +141,7 @@ class Paperwork extends React.Component {
       <li key={rat.id} className="first-limpet">
         {rat.attributes.name}
         {
-          (rat.id === rescue.relationships.firstLimpet.data?.id) && (
+          (rat.id === rescue.relationships.firstLimpet?.data?.id) && (
             <span className="badge first-limpet">{'1st'}</span>
           )
         }
