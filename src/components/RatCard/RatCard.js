@@ -1,4 +1,3 @@
-// Module imports
 import { isError } from 'flux-standard-action'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -11,8 +10,8 @@ import {
   selectShipsByRatId,
   selectUserById,
   selectDisplayRatIdByUserId,
-  selectPageViewMetaById,
   withCurrentUserId,
+  selectRatStatisticsById,
 } from '~/store/selectors'
 
 import CardControls from '../CardControls'
@@ -154,24 +153,6 @@ class RatCard extends React.Component {
     Public Methods
   \***************************************************************************/
 
-  componentDidMount () {
-    const {
-      ratId,
-      getRescues,
-      rescueCount,
-      rescueCountPageViewId,
-    } = this.props
-
-    if (!rescueCount) {
-      getRescues({
-        firstLimpetId: ratId,
-        limit: 1,
-      }, {
-        pageView: rescueCountPageViewId,
-      })
-    }
-  }
-
   render () {
     const {
       ratIsDisplayRat,
@@ -182,7 +163,7 @@ class RatCard extends React.Component {
       className,
       rat,
       // ships,
-      rescueCount,
+      statistics,
     } = this.props
 
     const {
@@ -239,7 +220,7 @@ class RatCard extends React.Component {
           <div className="rat-stats">
             <small>
               <span className="text-muted">{'Rescues: '}</span>
-              {typeof rescueCount === 'number' ? rescueCount : '...'}
+              {statistics ? statistics.attributes.firstLimpet : '...'}
             </small>
             <small>
               <span className="text-muted">{'Created: '}</span>
@@ -257,7 +238,7 @@ class RatCard extends React.Component {
           </div>
           */}
           <CardControls
-            canDelete={userHasMultipleRats && !ratIsDisplayRat && !rescueCount}
+            canDelete={userHasMultipleRats && !ratIsDisplayRat && (statistics && !statistics?.attributes.firstLimpet)}
             canSubmit={this.canSubmit}
             controlType="rat"
             deleteMode={deleteConfirm}
@@ -327,22 +308,17 @@ class RatCard extends React.Component {
 
   static mapDispatchToProps = [
     'deleteRat',
-    'getRescues',
     'updateRat',
   ]
 
 
   static mapStateToProps = (state, props) => {
-    const pageViewId = `ratcard-rescuecount-${props.ratId}`
-    const rescueCountPageViewMeta = selectPageViewMetaById(state, { pageViewId })
-
     return {
       user: withCurrentUserId(selectUserById)(state),
       userDisplayRatId: withCurrentUserId(selectDisplayRatIdByUserId)(state),
       rat: selectRatById(state, props),
       ships: selectShipsByRatId(state, props),
-      rescueCount: rescueCountPageViewMeta?.total ?? 0,
-      rescueCountPageViewId: pageViewId,
+      statistics: selectRatStatisticsById(state, props),
     }
   }
 
@@ -354,16 +330,13 @@ class RatCard extends React.Component {
     Prop Definitions
   \***************************************************************************/
 
-  static defaultProps = {}
-
   static propTypes = {
     className: PropTypes.string,
     deleteRat: PropTypes.func,
-    getRescues: PropTypes.func,
     rat: PropTypes.object,
+    // eslint-disable-next-line react/no-unused-prop-types -- ratId is used in state mapping
     ratId: PropTypes.string.isRequired,
-    rescueCount: PropTypes.number,
-    rescueCountPageViewId: PropTypes.string,
+    statistics: PropTypes.object,
     updateRat: PropTypes.func,
     user: PropTypes.object,
     userDisplayRatId: PropTypes.string,

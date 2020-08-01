@@ -23,12 +23,12 @@ import * as decalActions from './actions/decals'
 import * as epicActions from './actions/epics'
 import * as flagActions from './actions/flags'
 import * as imageActions from './actions/images'
-import * as leaderboardActions from './actions/leaderboard'
 import * as ratActions from './actions/rats'
 import * as rescueActions from './actions/rescues'
 import * as serviceActions from './actions/services'
 import * as sessionActions from './actions/session'
 import * as shipActions from './actions/ships'
+import * as statisticsActions from './actions/statistics'
 import * as stripeActions from './actions/stripe'
 import * as userActions from './actions/user'
 import * as verifyActions from './actions/verify'
@@ -44,12 +44,12 @@ const actions = {
   ...epicActions,
   ...flagActions,
   ...imageActions,
-  ...leaderboardActions,
   ...ratActions,
   ...rescueActions,
   ...serviceActions,
   ...sessionActions,
   ...shipActions,
+  ...statisticsActions,
   ...stripeActions,
   ...userActions,
   ...verifyActions,

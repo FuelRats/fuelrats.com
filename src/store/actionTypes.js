@@ -58,6 +58,9 @@ const ships = {
 const users = {
   delete: 'users/delete',
   update: 'users/update',
+  statistics: {
+    read: 'users/statistics/read',
+  },
 }
 
 

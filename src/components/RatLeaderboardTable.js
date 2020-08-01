@@ -5,7 +5,8 @@ import { createStructuredSelector } from 'reselect'
 
 import { connect } from '~/store'
 import {
-  selectLeaderboard, selectLeaderboardStatistics,
+  selectLeaderboard,
+  selectLeaderboardStatistics,
 } from '~/store/selectors'
 
 import CodeRedIcon from './Leaderboard/CodeRedIcon'
@@ -31,7 +32,7 @@ class RatLeaderboardTable extends React.Component {
   _handlePageChange = async (state) => {
     this.setState({ loading: true })
 
-    await this.props.getRatLeaderboard({
+    await this.props.getLeaderboard({
       'page[offset]': state.page * state.pageSize,
       'page[limit]': state.pageSize,
     })
@@ -46,7 +47,7 @@ class RatLeaderboardTable extends React.Component {
 
   async componentDidMount () {
     if (!this.props.entries.length) {
-      await this.props.getRatLeaderboard()
+      await this.props.getLeaderboard()
     }
 
     this.setState({ loading: false })
@@ -140,7 +141,7 @@ class RatLeaderboardTable extends React.Component {
     return this._columns
   }
 
-  static mapDispatchToProps = ['getRatLeaderboard']
+  static mapDispatchToProps = ['getLeaderboard']
 
   static mapStateToProps = createStructuredSelector({
     statistics: selectLeaderboardStatistics,
