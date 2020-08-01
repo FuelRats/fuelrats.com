@@ -91,7 +91,7 @@ class ConfirmActionButton extends React.Component {
           {...this.renderProps}>
           {
             performingAction && (
-              <span name="confirm"><FontAwesomeIcon pulse icon="spinner" /> {onConfirmText}</span>
+              <span name="confirm"><FontAwesomeIcon fixedWidth pulse icon="spinner" /> {onConfirmText}</span>
             )
           }
           {confirmingAction && <FontAwesomeIcon fixedWidth icon="check" />}
