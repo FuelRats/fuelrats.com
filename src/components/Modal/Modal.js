@@ -110,7 +110,7 @@ function ModalTransitionContainer (props) {
 
 const asModal = (options) => {
   return (Component) => {
-    return hoistNonReactStatics(({ children, ...props }) => {
+    function ModalWrapper ({ children, ...props }) {
       return (
         <ModalTransitionContainer
           {...props}
@@ -118,7 +118,10 @@ const asModal = (options) => {
           {{ Component, children, props }}
         </ModalTransitionContainer>
       )
-    }, Component)
+    }
+    ModalWrapper.displayName = `asModal(${Component.displayName ?? Component.name ?? 'Component'})`
+
+    return hoistNonReactStatics(ModalWrapper, Component)
   }
 }
 
@@ -126,23 +129,7 @@ function useModalContext () {
   return useContext(ModalContext)
 }
 
-function withModalContext (Component) {
-  return hoistNonReactStatics(({ children, ...props }) => {
-    const context = useContext(ModalContext)
-    return (
-      <Component {...props} modalContext={context}>
-        {children}
-      </Component>
-    )
-  }, Component)
-}
-
-
-
-
-
 export default asModal
 export {
   useModalContext,
-  withModalContext,
 }
