@@ -24,6 +24,8 @@ const withStripe = (Component) => {
       stripe: null,
     }
 
+    static displayName = `StripePage(${Component.displayName ?? Component.name ?? 'Component'})`
+
     componentDidMount () {
       if (!this.state.stripe) {
         if (window.Stripe) {
