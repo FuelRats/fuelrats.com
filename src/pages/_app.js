@@ -117,7 +117,7 @@ class FuelRatsApp extends App {
           <meta content={pageMeta.description} name="description" />
           <meta content={pageMeta.description} property="og:description" />
         </NextHead>
-        <div role="application">
+        <div className={{ forceDrawer: pageMeta.forceDrawer }} id="FuelRatsApp" role="application">
           <Provider store={store}>
             <NProgress />
             <Header />
