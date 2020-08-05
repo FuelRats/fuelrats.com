@@ -20,7 +20,7 @@
     "stylelint": "stylelint \"src/**/*.scss\""
   },
   "resolutions": {
-    "webpack": "4.43.0"
+    "webpack": "~4.43.0"
   },
   "devDependencies": {
     "@babel/core": "7.11.1",
@@ -59,27 +59,31 @@
     "@types/react-dom": "^16.9.8",
     "@types/react-redux": "^7.1.9",
     "@types/ua-parser-js": "^0.7.33",
+    "@types/webpack": "^4.41.21",
     "@types/zxcvbn": "^4.4.0",
     "babel-eslint": "^10.1.0",
     "babel-loader": "8.1.0",
     "builtin-modules": "^3.1.0",
     "doctoc": "^1.4.0",
     "eslint": "^7.6.0",
+    "eslint-import-resolver-alias": "^1.1.2",
     "eslint-import-resolver-node": "^0.3.4",
-    "eslint-loader": "^4.0.2",
     "eslint-plugin-babel": "^5.3.1",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsdoc": "^30.2.1",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.20.5",
     "eslint-plugin-react-hooks": "^4.0.8",
+    "eslint-webpack-plugin": "^2.1.0",
     "rollup": "^2.23.0",
     "rollup-plugin-cleaner": "^1.0.0",
     "rollup-plugin-node-externals": "^2.2.0",
     "sass": "^1.26.10",
     "stylelint": "^13.6.1",
     "stylelint-order": "^4.1.0",
-    "stylelint-scss": "^3.18.0"
+    "stylelint-scss": "^3.18.0",
+    "webpack": "4.43.0",
+    "worker-loader": "^3.0.1"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.30",
@@ -91,12 +95,10 @@
     "@fuelrats/web-util": "^0.2.2",
     "@koa/router": "^9.3.1",
     "@react-spring/web": "9.0.0-rc.3",
-    "@zeit/next-workers": "1.0.1-canary.1",
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
     "content-security-policy-builder": "^2.1.0",
     "dotenv": "^8.2.0",
-    "eslint-import-resolver-alias": "^1.1.2",
     "fingerprintjs2": "^2.1.2",
     "flux-standard-action": "^2.1.1",
     "hoist-non-react-statics": "^3.3.2",
@@ -133,8 +135,6 @@
     "stripe": "^8.82.0",
     "ua-parser-js": "^0.7.21",
     "use-immer": "^0.4.1",
-    "webpack": "4.43.0",
-    "worker-loader": "^3.0.1",
     "zxcvbn": "^4.4.2"
   }
 }
