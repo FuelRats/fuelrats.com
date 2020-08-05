@@ -78,13 +78,14 @@ class FuelRatsApp extends App {
 
     const {
       title,
+      className,
       displayTitle,
       noHeader,
     } = pageMeta
 
     return (
       <animated.main
-        className={['page', title.toLowerCase().replace(/\s/gu, '-'), pageMeta.className]}
+        className={['page', title.toLowerCase().replace(/\s/gu, '-'), className]}
         style={style}>
         {
           !noHeader && (
