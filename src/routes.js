@@ -12,12 +12,13 @@ const { Link, Router, useRouter, withRouter } = routes()
 
   // Paperwork
   .add('paperwork', '/paperwork/[rescueId]')
-
-
   .add('paperwork edit', '/paperwork/[rescueId]/edit')
 
   // Profile
   .add('profile', '/profile/[tab]')
+
+  // Dispatch
+  .add('dispatch', '/dispatch')
 
   // Register
   .add('register', '/register')
