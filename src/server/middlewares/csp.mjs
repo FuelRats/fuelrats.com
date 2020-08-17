@@ -31,6 +31,7 @@ const configureCSP = () => {
     const {
       isDev,
       publicUrl,
+      api,
     } = ctx.state.env
 
     const nonce = (new UUID(UUID_VERSION_4)).format()
@@ -43,12 +44,9 @@ const configureCSP = () => {
         connectSrc: [
           "'self'",
           'wss://*.fuelrats.com',
-          ...(isDev
-            ? [
-              publicUrl,
-              'webpack://*',
-            ]
-            : []),
+          api.url,
+          publicUrl,
+          ...(isDev ? ['webpack://*'] : []),
         ],
         baseUri: ["'none'"],
         scriptSrc: [
