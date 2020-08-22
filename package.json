@@ -5,7 +5,7 @@
   "main": "dist/server.js",
   "license": "BSD-3-Clause",
   "engines": {
-    "node": "^13.8.0"
+    "node": "^14.0.0"
   },
   "engineStrict": true,
   "scripts": {
