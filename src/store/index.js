@@ -1,5 +1,4 @@
 /* globals $IS_DEVELOPMENT:false */
-// Module imports
 
 import { errorLoggerMiddleware, FSAComplianceMiddleware } from '@fuelrats/web-util/redux-middleware'
 import { connect } from 'react-redux'
@@ -12,10 +11,8 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import thunkMiddleware from 'redux-thunk'
 
 
+import frSocket from '~/services/frSocket'
 
-
-
-// Component imports
 
 import * as authenticationActions from './actions/authentication'
 import * as blogActions from './actions/blogs'
@@ -65,7 +62,7 @@ const ignoredTypes = [
   actionTypes.wordpress.pages.read,
 ]
 
-const middlewares = [thunkMiddleware, errorLoggerMiddleware(ignoredTypes)]
+const middlewares = [thunkMiddleware, frSocket.createMiddleware(), errorLoggerMiddleware(ignoredTypes)]
 if ($IS_DEVELOPMENT) {
   middlewares.unshift(require('redux-immutable-state-invariant').default())
   middlewares.push(FSAComplianceMiddleware)
