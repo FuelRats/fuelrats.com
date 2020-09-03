@@ -82,6 +82,11 @@ const navItems = [
     condition: userIsLoggedIn,
     subnav: [
       {
+        key: 'dispatch',
+        title: 'Dispatch Board',
+        route: 'dispatch',
+      },
+      {
         external: true,
         key: 'confluence',
         title: 'Knowledge Base',
