@@ -84,7 +84,7 @@ export const selectCurrentUserCanEditRescue = createCachedSelector(
         }
         return acc
       },
-      []
+      [],
     )
 
     if (usersAssignedRats.length) {
@@ -109,7 +109,20 @@ export const createSelectRenderedRatList = (renderer) => {
   return createCachedSelector(
     [selectRatsByRescueId, selectRescueUnidentifiedRats],
     (rats = [], unidentifiedRats = []) => {
-      return rats.concat(unidentifiedRats).map(renderer)
+      return rats.concat(unidentifiedRats).map((rat, ...args) => {
+        // Unidentified rats are a string, so lets make that a resource-like object
+        if (typeof rat === 'string') {
+          return renderer({
+            id: rat,
+            type: 'unidentified-rats',
+            attributes: {
+              name: rat,
+            },
+          }, ...args)
+        }
+
+        return renderer(rat, ...args)
+      })
     },
   )(getRescueId)
 }
