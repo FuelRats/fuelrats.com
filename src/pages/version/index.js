@@ -8,13 +8,14 @@
 */
 
 // Module imports
-import moment from 'moment'
 import React from 'react'
 
 
 
 
 // Component imports
+import { formatAsEliteDateTime } from '~/helpers/formatTime'
+
 import { version } from '../../../package.json'
 
 
@@ -53,7 +54,7 @@ function Version () {
         <span>
           {'Built On: '}
           <a href={BUILD_URL} rel="noopener noreferrer" target="_blank">
-            <time dateTime={BUILD_DATE}>{moment.utc(BUILD_DATE).format('MMMM Do YYYY, hh:mm z')}</time>
+            <time dateTime={BUILD_DATE}>{formatAsEliteDateTime(BUILD_DATE)}</time>
           </a>
         </span>
         <span>
