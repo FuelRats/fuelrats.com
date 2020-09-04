@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-const importRules = require('@fuelrats/eslint-config/rules/plugin-import')
+const importRules = require('@fuelrats/eslint-config/core/plugin-import')
 const importExtensions = require('@fuelrats/eslint-config/util/importExtensions')
 
 module.exports = {
@@ -9,6 +9,7 @@ module.exports = {
   },
   extends: [
     '@fuelrats/eslint-config',
+    '@fuelrats/eslint-config/plugins/fuelrats',
     '@fuelrats/eslint-config-react',
   ],
   rules: {
