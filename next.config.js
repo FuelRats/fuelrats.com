@@ -16,10 +16,11 @@ const {
   GITHUB_SHA,
   FRDC_API_URL,
   FRDC_PUBLIC_URL,
+  FRDC_SOCKET_URL,
   FRDC_STRIPE_API_PK,
   PORT,
   CI,
-  GITHUB_SERVER_URL,
+  GITHUB_SERVER_URL = 'https://github.com',
   GITHUB_RUN_ID,
 } = process.env
 
@@ -53,6 +54,7 @@ module.exports = {
       fuelRats: {
         local: `${FINAL_PUBLIC_URL}/api`,
         server: FRDC_API_URL || 'http://localhost:8080',
+        socket: FRDC_SOCKET_URL || 'wss://localhost:8080',
       },
       wordpress: {
         url: `${FINAL_PUBLIC_URL}/wp-api`,
