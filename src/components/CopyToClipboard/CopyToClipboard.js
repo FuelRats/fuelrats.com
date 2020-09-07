@@ -46,7 +46,7 @@ function CopyToClipboard (props) {
 
 
   return (
-    <CopyComponent text={text} onCopy={handleCopy}>
+    <CopyComponent text={String(text)} onCopy={handleCopy}>
       <Component aria-label={`Click to copy: ${text}`} className={[styles.copyToClipboard, className, { [styles.copied]: copied }]} role="button">
         {children}
         {
@@ -66,7 +66,7 @@ CopyToClipboard.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   doHint: PropTypes.bool,
-  text: PropTypes.string,
+  text: PropTypes.any.isRequired,
 }
 
 
