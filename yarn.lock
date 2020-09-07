@@ -1436,10 +1436,10 @@
   resolved "https://registry.yarnpkg.com/@fuelrats/babel-plugin-classnames/-/babel-plugin-classnames-0.3.0.tgz#dd2116bc37c45919a4dcb3ee7ccfe4c15733f219"
   integrity sha512-qoiY3beWbrl9y9gAgIANoZLgokjBrcHAJMcOX+4A6JzRdez3/3opN53p3/tOS4zA7QHcBG4FTQFU6mh5a0AtPg==
 
-"@fuelrats/eslint-config-react@^2.2.0-rc.5":
-  version "2.2.0-rc.5"
-  resolved "https://registry.yarnpkg.com/@fuelrats/eslint-config-react/-/eslint-config-react-2.2.0-rc.5.tgz#e17eb27f5c94502a2c86422f264bed14cf7cc400"
-  integrity sha512-3JQ9UcnQTgqzjwloG3qv+mvTsygdIImfCmdQSh1n2Fms2wPE/VDC57ANTbJt28/SE6NBd0S4iOEXR3OWaSbThQ==
+"@fuelrats/eslint-config-react@^2.2.0-rc.6":
+  version "2.2.0-rc.6"
+  resolved "https://registry.yarnpkg.com/@fuelrats/eslint-config-react/-/eslint-config-react-2.2.0-rc.6.tgz#684bc043106fedadfd83a9d83bdf7202e61df72a"
+  integrity sha512-h04wIw4brFbFNnDd1JzjrjNnO9TbDZz6NSAxxMf+n/YphQI42fvn/ArA3jvthix/p50GwqaX3uf04+s+ECq0xw==
 
 "@fuelrats/eslint-config@^2.2.0-rc.5":
   version "2.2.0-rc.5"
