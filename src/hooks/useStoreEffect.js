@@ -12,10 +12,10 @@ function getStateAt (getState, path) {
 }
 
 /**
- *
- * @param {*} callback Function to call on update
- * @param {*} deps
- * @param {*} path
+ * Executes an effect when state changes in redux
+ * @param {Function} callback Function to call on update of state
+ * @param {any[]} deps dependencies for callback.
+ * @param {string?} path Optional state path to listen to changes on
  */
 export default function useStoreEffect (callback, deps, path) {
   const { subscribe, getState } = useStore()
