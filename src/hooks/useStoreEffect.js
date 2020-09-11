@@ -28,7 +28,7 @@ export default function useStoreEffect (callback, deps, path) {
     const unsubscribe = subscribe(() => {
       const nextState = getStateAt(getState, path)
       if (prevState.current !== nextState) {
-        memoCB()
+        memoCB(nextState)
       }
 
       prevState.current = nextState
