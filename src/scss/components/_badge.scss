@@ -125,6 +125,10 @@ $pc-background-gradients:
       }
     }
   }
+
+  &.warn {
+    background-color: $yellow-darker;
+  }
 }
 
 .icon-badge {
