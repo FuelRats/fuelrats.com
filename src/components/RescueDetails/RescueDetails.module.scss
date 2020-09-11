@@ -1,0 +1,141 @@
+@import '../../scss/fonts';
+@import '../../scss/colors';
+
+.rescueDetails {
+  --table-border-color: #3C3C3C;
+
+  padding: 1rem 1.5rem;
+
+  border: 1px solid var(--table-border-color);
+
+  background-color: $black;
+}
+
+
+
+.header {
+  display: flex;
+
+  justify-content: space-between;
+
+  padding: 0 0 1.5rem;
+
+  font-size: 1.75em;
+
+  div {
+    display: inline;
+    vertical-align: middle;
+  }
+
+  .title {
+    font-family: $title-fonts;
+  }
+
+  .label {
+    position: relative;
+    top: -3px;
+
+    padding: 0.2em 0.6em;
+  }
+
+  :global(.badge) {
+    margin: 0 0 0 1rem;
+
+    font-family: $paragraph-fonts;
+    font-weight: bold;
+  }
+}
+
+.body {
+  width: 100%;
+  margin-bottom: 0.5rem;
+
+  border: none;
+  border-spacing: 0;
+  border-collapse: collapse;
+
+  tbody > tr {
+    &:last-child {
+      > td.infoValue {
+        border-width: 1px 0;
+
+        &.infoGroup {
+          border-width: 1px;
+        }
+      }
+    }
+
+    > td {
+      padding: 8px;
+
+      border: 0 solid var(--table-border-color);
+
+      line-height: 27px;
+      vertical-align: middle;
+
+      &.infoTitle {
+        padding-left: 0;
+
+        border-width: 0;
+
+        font-weight: bold;
+        font-family: $title-fonts;
+
+        &::after {
+          content: ':';
+        }
+      }
+
+      &.infoValue {
+        display: flex;
+
+        flex-wrap: nowrap;
+        align-items: baseline;
+
+        border-width: 1px 0 0;
+
+        &.infoGroup {
+          border-width: 1px 1px 0;
+        }
+
+        > :first-child {
+          width: 100%;
+        }
+
+        button,
+        :global(.button) {
+          --background-color-hover: #{$red-darker};
+          --text-color-hover: #{$white};
+
+          margin-left: 1rem;
+          padding: 0.15rem 0.25rem;
+
+          font-size: 0.78em;
+          font-weight: bold;
+          line-height: 1;
+
+          &:hover {
+            border-color: var(--background-color-hover);
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+.infoEmpty {
+  border: none;
+}
+
+.quoteTime {
+  opacity: 0.75;
+
+  font-size: 0.85em;
+  vertical-align: top;
+}
+
+.quoteMessage {
+  font-style: italic;
+}
