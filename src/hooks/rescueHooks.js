@@ -13,6 +13,7 @@ export const useQuoteString = (rescue) => {
     return rescue.attributes.quotes.reduce((acc, quote) => {
       return `${acc}[${formatAsEliteDateTime(quote.createdAt)}] "${quote.message}" - ${quote.author}\n`
     }, [])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rescue?.attributes?.quotes])
 }
 
