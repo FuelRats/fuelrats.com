@@ -1,10 +1,9 @@
 import { presentApiRequestBody } from '~/helpers/presenters'
 
 import actionTypes from '../actionTypes'
+import { DISPATCH_VIEW } from '../reducers/dispatch'
 import { deletesResource } from '../reducers/frAPIResources'
-import { getPageViewPartial } from './partials'
 import { frApiRequest } from './services'
-
 
 
 
@@ -21,15 +20,27 @@ export const deleteRescue = (rescue) => {
 }
 
 
-// TODO: redo page views
-export const getRescues = (params, opts = {}) => {
+
+export const getRescues = (params, ...meta) => {
   return frApiRequest(
     actionTypes.rescues.search,
     {
       url: '/rescues',
       params,
     },
-    getPageViewPartial('rescues', opts.pageView),
+    ...meta,
+  )
+}
+
+
+export const getDispatchBoard = () => {
+  return getRescues(
+    {
+      filter: {
+        status: { ne: 'closed' },
+      },
+    },
+    { [DISPATCH_VIEW]: true },
   )
 }
 

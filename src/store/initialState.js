@@ -8,6 +8,12 @@ const initialState = {
 
   decals: {},
 
+  dispatch: {
+    board: [],
+    closed: [],
+    connected: false,
+  },
+
   epics: {},
 
   flags: {
@@ -44,7 +50,7 @@ const initialState = {
 
   users: {},
 
-  'user-statistics': {},
+  'rat-statistics': {},
 
   wordpress: {
     pages: {},

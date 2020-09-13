@@ -60,6 +60,7 @@ input[type='button'],
   overflow: hidden;
   cursor: pointer;
 
+  &.active,
   &:hover {
     background-color: var(--background-color-hover);
     color: var(--text-color-hover);

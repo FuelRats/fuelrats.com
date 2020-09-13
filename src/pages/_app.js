@@ -78,13 +78,14 @@ class FuelRatsApp extends App {
 
     const {
       title,
+      className,
       displayTitle,
       noHeader,
     } = pageMeta
 
     return (
       <animated.main
-        className={['page', title.toLowerCase().replace(/\s/gu, '-'), pageMeta.className]}
+        className={['page', title.toLowerCase().replace(/\s/gu, '-'), className]}
         style={style}>
         {
           !noHeader && (
@@ -117,7 +118,7 @@ class FuelRatsApp extends App {
           <meta content={pageMeta.description} name="description" />
           <meta content={pageMeta.description} property="og:description" />
         </NextHead>
-        <div role="application">
+        <div className={{ forceDrawer: pageMeta.forceDrawer }} id="FuelRatsApp" role="application">
           <Provider store={store}>
             <NProgress />
             <Header />

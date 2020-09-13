@@ -120,6 +120,8 @@ const InputFieldset = React.forwardRef((props, forwardRef) => {
   )
 })
 
+InputFieldset.displayName = 'InputFieldset'
+
 InputFieldset.propTypes = {
   'aria-label': extPropType(PropTypes.string).isRequiredIf('label', 'undefined'),
   displayName: PropTypes.string,

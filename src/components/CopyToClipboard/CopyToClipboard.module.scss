@@ -1,0 +1,51 @@
+@import '../../scss/colors';
+
+
+.copyToClipboard {
+  position: relative;
+
+  cursor: pointer;
+
+  &.copied::after {
+    opacity: 1;
+  }
+
+  &::after {
+    display: block;
+    position: absolute;
+    top: 3rem;
+    left: 0.5rem;
+    z-index: 1000;
+
+    content: 'Copied!';
+    padding: 0 0.8rem;
+
+    border-radius: 4px;
+    pointer-events: none;
+
+    color: rgb(255 255 255);
+    background: rgb(0 0 0);
+    opacity: 0;
+    transition: opacity 0.2s;
+    box-shadow: 0 2px 8px 2px rgba($black, 0.5);
+
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 0.85em;
+    text-align: center;
+  }
+
+  &:hover {
+    .icon {
+      opacity: 1;
+    }
+  }
+
+  .icon {
+    position: relative;
+    float: right;
+
+    opacity: 0;
+    color: $red;
+    transition: opacity 0.2s ease;
+  }
+}

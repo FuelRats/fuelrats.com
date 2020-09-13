@@ -1,6 +1,6 @@
-import { createSelector } from 'reselect'
+import { createCachedSelector } from 're-reselect'
 
-import { selectUserById } from './users'
+import { selectUserRatsRelationship, getUserId } from './users'
 
 export const selectLeaderboard = (state) => {
   return state.leaderboard.entries
@@ -12,7 +12,7 @@ export const selectLeaderboardStatistics = (state) => {
 
 
 export const selectRatStatistics = (state) => {
-  return state['user-statistics']
+  return state['rat-statistics']
 }
 
 export const selectRatStatisticsById = (state, { ratId }) => {
@@ -20,12 +20,12 @@ export const selectRatStatisticsById = (state, { ratId }) => {
 }
 
 
-export const selectUserStatisticsById = createSelector([
-  [selectUserById, selectRatStatistics],
-  (user, ratStatistics) => {
+export const selectUserStatisticsById = createCachedSelector(
+  [getUserId, selectUserRatsRelationship, selectRatStatistics],
+  (userId, userRats, ratStatistics) => {
     // if the user doesn't exist, or there's no rat data, or there's no statistics for the first rat, return null.
     // Since the only way of getting a rat's statistics is by requesting for all rats of a user, we can assume we don't have any if we're missing one.
-    if (!user?.relationships?.rats?.data || !ratStatistics[user.relationships.rata.data[0].id]) {
+    if (!userRats || !ratStatistics[userRats[0].id]) {
       return null
     }
 
@@ -33,8 +33,8 @@ export const selectUserStatisticsById = createSelector([
     // The API does not provide statistics like this so we need to sum them up ourselves.
     return {
       type: 'user-statistics',
-      id: user.id,
-      attributes: user?.relationships?.rats?.data?.reduce((acc, rat) => {
+      id: userId,
+      attributes: userRats.reduce((acc, rat) => {
         const ratStat = ratStatistics[rat.id]
 
         if (ratStat?.attributes) {
@@ -54,4 +54,4 @@ export const selectUserStatisticsById = createSelector([
       }, {}),
     }
   },
-])
+)(getUserId)

@@ -10,7 +10,7 @@ import { createSelector, createStructuredSelector } from 'reselect'
 
 // Component imports
 import { connect } from '~/store'
-import { selectImageById } from '~/store/selectors'
+import { selectImages } from '~/store/selectors'
 
 
 
@@ -20,19 +20,16 @@ const { publicRuntimeConfig } = getConfig()
 const { publicUrl } = publicRuntimeConfig.local
 
 
-const getState = (state) => {
-  return state
-}
-const getSlides = (state, props) => {
+const getSlides = (_, props) => {
   return props.slides
 }
-const getId = (state, props) => {
+const getId = (_, props) => {
   return props.id
 }
 
 const selectConnectedSlides = createSelector(
-  [getState, getSlides, getId],
-  (state, slides, compId) => {
+  [selectImages, getSlides, getId],
+  (images, slides, compId) => {
     return Object.entries(slides).reduce((acc, [key, slide]) => {
       const slideId = `${compId}-${key}`
 
@@ -42,7 +39,7 @@ const selectConnectedSlides = createSelector(
           ...slide,
           id: slideId,
           url: `${publicUrl}/static/images/${slide.filename || `slide_${key}.jpg`}`,
-          image: selectImageById(state, { imageId: slideId }),
+          image: images[slideId],
         },
       }
     }, {})

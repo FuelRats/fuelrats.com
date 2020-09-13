@@ -2,14 +2,14 @@
   display: inline-block;
   position: absolute;
   top: 1.5rem;
-  left: 2rem;
+  left: 23rem;
   z-index: 150;
 
   min-width: 5.625rem;
   padding: 0.55rem 2rem;
 
   cursor: pointer;
-  transform: translateX(0);
+  transform: translateX(-21rem);
 
   &:hover {
     background-color: $red;
@@ -36,13 +36,27 @@
   ~ header {
     position: fixed;
     top: 0;
-    right: 100%;
     bottom: 0;
     z-index: 200;
 
     transition: transform 0.2s, box-shadow 0.2s;
+  }
+}
 
-    transform: translateX(21rem);
+#FuelRatsApp.forceDrawer {
+  #NavControl {
+    &:checked {
+      ~ header,
+      ~ #Burger {
+        transform: translateX(0);
+      }
+    }
+
+    ~ header {
+      box-shadow: 0 0 4px 0 rgba($black, 0.4);
+
+      transform: translateX(-21rem);
+    }
   }
 }
 
@@ -51,16 +65,14 @@
     &:checked {
       ~ header,
       ~ #Burger {
-        transform: translateX(21rem);
+        transform: translateX(0);
       }
     }
 
     ~ header {
-      right: 100%;
-
       box-shadow: 0 0 4px 0 rgba($black, 0.4);
 
-      transform: translateX(0);
+      transform: translateX(-21rem);
     }
   }
 }

@@ -1,9 +1,10 @@
+/* eslint-disable import/no-extraneous-dependencies -- required dev dependencies are only loaded in development context */
+/* eslint-disable no-param-reassign -- reassign is intended for changing configs */
+
 /* eslint-env node */
 // Module imports
-const withWorkers = require('@zeit/next-workers')
 const crypto = require('crypto')
 const path = require('path')
-const webpack = require('webpack')
 
 
 
@@ -15,10 +16,11 @@ const {
   GITHUB_SHA,
   FRDC_API_URL,
   FRDC_PUBLIC_URL,
+  FRDC_SOCKET_URL,
   FRDC_STRIPE_API_PK,
   PORT,
   CI,
-  GITHUB_SERVER_URL,
+  GITHUB_SERVER_URL = 'https://github.com',
   GITHUB_RUN_ID,
 } = process.env
 
@@ -41,7 +43,7 @@ const generateBuildId = () => {
 }
 
 
-module.exports = withWorkers({
+module.exports = {
   distDir: path.join('dist', 'next'),
   generateBuildId,
   publicRuntimeConfig: {
@@ -52,6 +54,7 @@ module.exports = withWorkers({
       fuelRats: {
         local: `${FINAL_PUBLIC_URL}/api`,
         server: FRDC_API_URL || 'http://localhost:8080',
+        socket: FRDC_SOCKET_URL || 'wss://localhost:8080',
       },
       wordpress: {
         url: `${FINAL_PUBLIC_URL}/wp-api`,
@@ -62,37 +65,41 @@ module.exports = withWorkers({
       },
     },
   },
-  webpack: (config, options) => {
+  webpack: (config, opt) => {
     /* Define Plugin */
-    config.plugins.push(new webpack.DefinePlugin({
-      $IS_DEVELOPMENT: JSON.stringify(options.dev),
+    const { DefinePlugin } = require('webpack')
+    config.plugins.push(new DefinePlugin({
+      $IS_DEVELOPMENT: JSON.stringify(opt.dev),
       $IS_STAGING: JSON.stringify(['develop', 'beta'].includes(GIT_BRANCH)),
       $BUILD_BRANCH: JSON.stringify(GIT_BRANCH),
       $BUILD_COMMIT: JSON.stringify(GITHUB_SHA || null),
       $BUILD_COMMIT_SHORT: JSON.stringify((GITHUB_SHA && GITHUB_SHA.slice(0, COMMIT_HASH_LENGTH)) || GIT_BRANCH),
       $BUILD_DATE: JSON.stringify((new Date()).toISOString()),
       $BUILD_URL: JSON.stringify(`${GITHUB_SERVER_URL}/fuelrats/fuelrats.com/actions/runs/${GITHUB_RUN_ID}` || null),
-      $NEXT_BUILD_ID: JSON.stringify(options.buildId),
+      $NEXT_BUILD_ID: JSON.stringify(opt.buildId),
       $NODE_VERSION: JSON.stringify(process.version),
     }))
 
+
+    /* worker-loader */
+    config.module.rules.unshift({
+      test: /\.worker\.js$/u,
+      loader: require.resolve('worker-loader'),
+      options: {
+        filename: 'static/[hash].worker.js',
+        publicPath: '/_next/',
+      },
+    })
+    config.output.globalObject = 'self'
+
+
+    /* SVGR */
     config.module.rules.push({
       exclude: /node_modules/u,
       test: /\.svg$/u,
-      loader: '@svgr/webpack',
+      loader: require.resolve('@svgr/webpack'),
     })
-
-    /* ESLint reporting */
-    if (options.dev) {
-      config.module.rules.unshift({
-        test: /\.js$/u,
-        exclude: /node_modules/u,
-        enforce: 'pre',
-        loader: require.resolve('eslint-loader'),
-      })
-    }
 
     return config
   },
-  workerLoaderOptions: { inline: true },
-})
+}

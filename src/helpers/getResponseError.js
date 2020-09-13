@@ -12,7 +12,10 @@ export default function getResponseError (action) {
   }
 
   // oAuth 2.0 error object
-  if (typeof action.payload?.error === 'string' && typeof action.payload?.['error_description'] === 'string') {
+  if (
+    typeof action.payload?.error === 'string'
+    && typeof action.payload?.error_description === 'string'
+  ) {
     return action.payload
   }
 

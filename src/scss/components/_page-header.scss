@@ -12,7 +12,7 @@
 
   background-color: $red;
   color: $white;
-  transition: min-width 0.2s;
+  transition: min-width 0.2s, padding 0.2s;
 
   &::after {
     display: block;
@@ -53,5 +53,11 @@
     &::after {
       transform: skewX(0) translateX(0);
     }
+  }
+}
+
+@media only screen and (min-width: 769px) {
+  #FuelRatsApp.forceDrawer .page-header {
+    padding-left: 9.5rem;
   }
 }

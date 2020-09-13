@@ -37,6 +37,7 @@ export default function useFormComponent (formContext) {
         </form>
       )
     }
+    FormRef.current.displayName = 'Form'
   }
 
   return FormRef.current
