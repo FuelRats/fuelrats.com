@@ -6,9 +6,8 @@ main.dispatchBoard {
   width: 100vw;
 
   color: $white;
-  background-color: $black;
-  background-image: url('/static/images/dispatch/dispatchbg.jpg');
-  background-size: cover;
+  background: fixed $black url('/static/images/dispatch/ratdecal.png') center no-repeat;
+  background-size: auto 75%;
 
   overflow-x: hidden;
 }
@@ -62,6 +61,19 @@ main.dispatchBoard {
     }
   }
 
+  .clock {
+    align-self: flex-end;
+
+    margin: 0 1rem 0.5rem;
+  }
+
+  @media screen and (min-width: 769px) {
+    .clock {
+      position: absolute;
+      top: 2.4rem;
+      right: 8.5rem;
+    }
+  }
   @media screen and (max-width: 1190px) {
     flex-direction: column;
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 import { authenticated } from '~/components/AppLayout'
+import Clock from '~/components/Clock'
 import DispatchTable from '~/components/DispatchTable'
 import RescueDetails from '~/components/RescueDetails'
 import styles from '~/scss/pages/dispatch.module.scss'
@@ -26,6 +27,7 @@ function DispatchBoard ({ query }) {
 
   return (
     <div className={[styles.layout, { [styles.openDetail]: Boolean(query.rId) }, 'page-content loading loader-dark']}>
+      <Clock className={styles.clock} />
       {
         loaded && (
           <>
