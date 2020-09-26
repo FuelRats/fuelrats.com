@@ -94,6 +94,7 @@ export const getClientOAuthPage = (params) => {
     actionTypes.oauth.authorize.read,
     {
       url: '/oauth2/authorize',
+      timeout: 45000, // Temporary until xlex fixes his crap
       params,
     },
   )
