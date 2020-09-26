@@ -1,4 +1,4 @@
-import { isRequired } from '@fuelrats/validation-util/require'
+import { isRequired } from '@fuelrats/validation-util'
 import { useCallback, useState } from 'react'
 
 /**

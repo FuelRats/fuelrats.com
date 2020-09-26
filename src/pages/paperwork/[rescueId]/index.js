@@ -46,7 +46,6 @@ class Paperwork extends React.Component {
   _handleDeleteClick = async () => {
     if (this.state.deleteConfirm) {
       this.setState({ deleting: true })
-      // TODO: Add error handling
       await this.props.deleteRescue(this.props.rescue)
 
       Router.pushRoute(

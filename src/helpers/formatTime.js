@@ -19,8 +19,8 @@ function getEliteTimeFromLocalTime (timestamp) {
   return addYears(new Date(timestamp), ELITE_GAME_YEAR_DISPARITY)
 }
 
-export function formatAsEliteDateTime (timestamp) {
-  return format(getEliteTimeFromLocalTime(timestamp), 'dd MMM yyyy HH:mm').toUpperCase()
+export function formatAsEliteDateTime (timestamp, withSeconds) {
+  return format(getEliteTimeFromLocalTime(timestamp), `dd MMM yyyy HH:mm${withSeconds ? ':ss' : ''}`).toUpperCase()
 }
 
 export function formatAsEliteDate (timestamp) {

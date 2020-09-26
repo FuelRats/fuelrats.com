@@ -48,7 +48,18 @@ class DefaultRatButton extends React.Component {
       await onClick(event)
     }
 
-    const response = await updateUser(userId, { displayRatId: ratId })
+    const response = await updateUser({
+      id: userId,
+      attributes: {},
+      relationships: {
+        displayRat: {
+          data: {
+            type: 'rats',
+            id: ratId,
+          },
+        },
+      },
+    })
 
     if (onUpdate) {
       onUpdate(response)

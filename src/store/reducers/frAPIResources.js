@@ -1,9 +1,5 @@
 import createJSONAPIReducer from '@fuelrats/web-util/redux-json-api'
 
-import deepMergeResource from '~/helpers/deepMergeResource'
-
-
-
 
 
 const {
@@ -22,15 +18,7 @@ const {
   rescues: { },
   ships: { },
   'rat-statistics': { },
-  users: {
-    mergeMethod: (state, target, source) => {
-      if (state?.session?.userId === target.id) {
-        return deepMergeResource(target, source)
-      }
-
-      return Object.assign(target, source)
-    },
-  },
+  users: { },
   profiles: {
     target: 'users',
     reducer: (resource) => {

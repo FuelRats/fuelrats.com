@@ -33,7 +33,6 @@ function Register () {
 
       setSubmitState({ resend: getResponseError(response) ?? true })
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [dispatch, setSubmitState, submitState?.data?.attributes?.email],
   )
 

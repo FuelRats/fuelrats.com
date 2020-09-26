@@ -5,21 +5,45 @@ All changes relative to the previous version of fuelrats.com shall be documented
 For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
-
-
-
-## [Unreleased]
+## [Unreleased][]
 
 ### ✨ Added
-* Support for APIv3. - [#191][], [#238][], [#240][], [#241][], [#245][], [#248][], [#251][], [#254][], [#255][], [#260][]
+*
+
+
+### ⚡ Changed
+*
+
+
+### 🐛 Fixed
+*
+
+
+### ⚙ Tasks
+*
+
+
+[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.0...HEAD
+
+
+
+
+
+## [v2.12.0] - 2020-09-26
+
+### ✨ Added
+* Support for APIv3. - [#191][], [#238][], [#240][], [#241][], [#245][], [#248][], [#251][], [#254][], [#255][], [#260][], [#263][], [#264][], [#266][], [#267][], [#268][], [#270][]
 * Add support for 2FA login flow. - [#240][], [#241][]
-* Disable profile function which soft deletes a user. - [#220][]
-* Add new system for generating forms which is more robust than any of our previous solutions. - [#254][]
+* Disable profile function which soft deletes a user. - [#220][], [#265][]
+* Add new system for generating forms which is more robust than any of our previous solutions. - [#254][], [#263][]
+* Integrate dispatch board. - [#271][]
+
 
 ### ⚡ Changed
 * Reworked error page so it integrates better into the website. - [#240][]
-* Redesign oauth authorize page for better context into what access apps request. - [#247][]
-* Updated styles for checkboxes - [#253][]
+* Redesign oauth authorize page for better context into what access apps request. - [#247][], [#269][]
+* Updated styles for checkboxes. - [#253][]
+* Rewrite `<LoginForm />` and `<Switch />`. - [#263][]
 
 
 ### 🐛 Fixed
@@ -29,14 +53,18 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 ### ⚙ Tasks
-* Add `babel-plugin-classnames` into our babel toolchain. see [documentation](docs/css_classes_in_jsx.md) - [#243][]
-* Add tool for generating TOCs in md files - [#243][]
-* Add new blueprints (which are even cooler than snippets) for defining components in our website  - [#246][], [#254][]
-* Use github actions for our CI/CD solution - [#256][], [#258][]
+* Add `babel-plugin-classnames` into our babel toolchain. see [documentation](docs/css_classes_in_jsx.md). - [#243][]
+* Add tool for generating TOCs in md files. - [#243][]
+* Add new blueprints (which are even cooler than snippets) for defining components in our website. - [#246][], [#254][]
+* Use github actions for our CI/CD solution. - [#256][], [#258][]
 * Drop basic support for IE 11. We will now redirect IE 11 users to our fallback website which will get them help. - [#262][]
+* Upgrade to Next 9.5. - [#263][]
+* use `.env.local` over `.env`. - [#263][]
 
 
+[2.12.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.11.5...v2.12.0
 [#191]: https://github.com/fuelrats/fuelrats.com/pull/191
+[#220]: https://github.com/fuelrats/fuelrats.com/pull/220
 [#238]: https://github.com/fuelrats/fuelrats.com/pull/238
 [#240]: https://github.com/fuelrats/fuelrats.com/pull/240
 [#241]: https://github.com/fuelrats/fuelrats.com/pull/241
@@ -52,17 +80,26 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 [#258]: https://github.com/fuelrats/fuelrats.com/pull/258
 [#260]: https://github.com/fuelrats/fuelrats.com/pull/260
 [#262]: https://github.com/fuelrats/fuelrats.com/pull/262
+[#263]: https://github.com/fuelrats/fuelrats.com/pull/263
+[#264]: https://github.com/fuelrats/fuelrats.com/pull/264
+[#265]: https://github.com/fuelrats/fuelrats.com/pull/265
+[#266]: https://github.com/fuelrats/fuelrats.com/pull/266
+[#267]: https://github.com/fuelrats/fuelrats.com/pull/267
+[#268]: https://github.com/fuelrats/fuelrats.com/pull/268
+[#269]: https://github.com/fuelrats/fuelrats.com/pull/269
+[#270]: https://github.com/fuelrats/fuelrats.com/pull/270
+[#271]: https://github.com/fuelrats/fuelrats.com/pull/271
 
 
 
 
 
-## [2.11.3] - 2020-05-09
+## [2.11.5][] - 2020-05-09
 
 ### 🐛 Fixed
 * Resolved issues with our CSS processing config. - [#242][]
 
-
+[2.11.5]: https://github.com/FuelRats/fuelrats.com/compare/v2.11.4...v2.11.5
 [#242]: https://github.com/fuelrats/fuelrats.com/pull/242
 
 
@@ -70,7 +107,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.11.4] - 2020-05-24
+## [2.11.4][] - 2020-05-24
 
 ### ✨ Added
 * Add `.trim()` in to various inputs to prevent issues with spaces in names. - [#249][]
@@ -85,38 +122,40 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ### ⚙ Tasks
 * Switch to new SVG implementation. - [#249][]
 
-
+[2.11.4]: https://github.com/FuelRats/fuelrats.com/compare/v2.11.3...v2.11.4
 [#249]: https://github.com/fuelrats/fuelrats.com/pull/249
 
 
 
 
 
-## [2.11.3] - 2020-05-09
+## [2.11.3][] - 2020-05-09
 
 ### 🐛 Fixed
 * Resolved issues with our CSS processing config. - [#242][]
 
 
+[2.11.3]: https://github.com/FuelRats/fuelrats.com/compare/v2.11.2...v2.11.3
 [#242]: https://github.com/fuelrats/fuelrats.com/pull/242
 
 
 
 
 
-## [2.11.2] - 2020-04-16
+## [2.11.2][] - 2020-04-16
 
 ### 🐛 Fixed
 * Fixed a 404 error that occurred after signing in when attempting to access an authenticated page. - [#236][]
 
 
+[2.11.2]: https://github.com/FuelRats/fuelrats.com/compare/v2.11.1...v2.11.2
 [#236]: https://github.com/fuelrats/fuelrats.com/pull/236
 
 
 
 
 
-## [2.11.1] - 2020-04-13
+## [2.11.1][] - 2020-04-13
 
 ### 🐛 Fixed
 * Resolved client error that occurs when attempting to authorize an external application - [#233][]
@@ -124,13 +163,14 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Fixed an issue where the description and image associated with a donation amount - [#233][]
 
 
+[2.11.1]: https://github.com/FuelRats/fuelrats.com/compare/v2.11.0...v2.11.1
 [#233]: https://github.com/fuelRats/fuelrats.com/pull/233
 
 
 
 
 
-## [2.11.0] - 2020-04-13
+## [2.11.0][] - 2020-04-13
 
 ### ✨ Added
 * IP blocking for Donation API - [#230][]
@@ -167,6 +207,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Upgrade Node to v13.x - [#223][]
 
 
+[2.11.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.10.0...v2.11.0
 [#221]: https://github.com/FuelRats/fuelrats.com/pull/221
 [#222]: https://github.com/FuelRats/fuelrats.com/pull/222
 [#223]: https://github.com/FuelRats/fuelrats.com/pull/223
@@ -207,7 +248,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.10.0] - 2020-01-28
+## [2.10.0][] - 2020-01-28
 
 ### ✨ Added
 * Add donation page and it's subsequent donation result page - [#210][]
@@ -238,6 +279,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Remove do-expressions since they're kinda too new - [#216][]
 
 
+[2.10.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.9.2...v2.10.0
 [#209]: https://github.com/FuelRats/fuelrats.com/pull#209
 [#215]: https://github.com/FuelRats/fuelrats.com/pull/215
 [#216]: https://github.com/FuelRats/fuelrats.com/pull/216
@@ -246,7 +288,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.9.2] - 2020-01-12
+## [2.9.2][] - 2020-01-12
 
 ### 🐛 Fixed
 * Fix user session not being properly initialized after registration. - [#213][]
@@ -255,6 +297,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Upgrade to Node 12 LTS - [#210][], [#213][]
 
 
+[2.9.2]: https://github.com/FuelRats/fuelrats.com/compare/v2.9.1...v2.9.2
 [#210]: https://github.com/FuelRats/fuelrats.com/pull/210
 [#213]: https://github.com/FuelRats/fuelrats.com/pull/213
 
@@ -262,7 +305,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.9.1] - 2019-12-14
+## [2.9.1][] - 2019-12-14
 
 ### 🐛 Fixed
 * Fix decal panel not displaying redeemed decals - [#207][]
@@ -271,13 +314,14 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Fix registration page improperly checking platform input for value - [#207][]
 
 
+[2.9.1]: https://github.com/FuelRats/fuelrats.com/compare/v2.9.0...v2.9.1
 [#207]: https://github.com/FuelRats/fuelrats.com/pull/207
 
 
 
 
 
-## [2.9.0] - 2019-12-14
+## [2.9.0][] - 2019-12-14
 
 ### ✨ Added
 * Allow `<TagsInput />` component to be disabled
@@ -323,10 +367,13 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Update README badges.
 
 
+[2.9.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.8.0...v2.9.0
 
 
 
-## [2.8.0] - 2019-07-15
+
+
+## [2.8.0][] - 2019-07-15
 
 ### ⚡ Changed
 * Version page no longer links to github commit comparison as that information is not easily accessible via teamcity :(
@@ -341,19 +388,25 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * We added stylelint to our tool chain, so our css is more betterer
 
 
+[2.8.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.7.3...v2.8.0
 
 
 
-## [2.7.3] - 2019-06-27
+
+
+## [2.7.3][] - 2019-06-27
 
 ### 🐛 Fixed
 * Fix nickname password input.. we broke it.. oops...
 
 
+[2.7.3]: https://github.com/FuelRats/fuelrats.com/compare/v2.7.2...v2.7.3
 
 
 
-## [2.7.2] - 2019-06-26
+
+
+## [2.7.2][] - 2019-06-26
 
 ### ✨ Added
 * Add rat honors to leaderboard
@@ -374,19 +427,25 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Fix SSR rendering breaking on pages (react-spring bug fixed in v9)
 
 
+[2.7.2]: https://github.com/FuelRats/fuelrats.com/compare/v2.7.1...v2.7.2
 
 
 
-## [2.7.1] - 2019-06-16
+
+
+## [2.7.1][] - 2019-06-16
 
 ### 🐛 Fixed
 * Fix nickname input styles
 
 
+[2.7.1]: https://github.com/FuelRats/fuelrats.com/compare/v2.7.0...v2.7.1
 
 
 
-## [2.7.0] - 2019-06-11
+
+
+## [2.7.0][] - 2019-06-11
 
 ### ✨ Added
 * Front page slideshow/carousel
@@ -422,10 +481,13 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Update project code style
 
 
+[2.7.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.6.3...v2.7.0
 
 
 
-## [2.6.3] - 2018-12-19
+
+
+## [2.6.3][] - 2018-12-19
 
 ### ⚡ Changed
 * Clean up helper functions
@@ -437,10 +499,13 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Update various dependencies
 
 
+[2.6.3]: https://github.com/FuelRats/fuelrats.com/compare/v2.6.2...v2.6.3
 
 
 
-## [2.6.2] - 2018-11-17
+
+
+## [2.6.2][] - 2018-11-17
 
 ### ⚡ Changed
 * Hide layout on authorize page when the user is pre-authorized
@@ -452,20 +517,26 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Fix login dialog min password length requirements
 
 
+[2.6.2]: https://github.com/FuelRats/fuelrats.com/compare/v2.6.1...v2.6.2
 
 
 
-## [2.6.1] - 2018-11-11
+
+
+## [2.6.1][] - 2018-11-11
 
 ### 🐛 Fixed
 * Fix rat global state filters
 * Fix style-src CSP
 
 
+[2.6.1]: https://github.com/FuelRats/fuelrats.com/compare/v2.6.0...v2.6.1
 
 
 
-## [2.6.0] - 2018-11-10
+
+
+## [2.6.0][] - 2018-11-10
 
 ### ✨ Added
 * Add dark input fields
@@ -483,10 +554,13 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Restructure project files
 
 
+[2.6.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.5.2...v2.6.0
 
 
 
-## [2.5.2] - 2018-10-13
+
+
+## [2.5.2][] - 2018-10-13
 
 ### ⚡ Changed
 * Adjust code style to comply with updated ESLint stuff
@@ -495,10 +569,13 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Update ESLint stuff
 
 
+[2.5.2]: https://github.com/FuelRats/fuelrats.com/compare/v2.5.1...v2.5.2
 
 
 
-## [2.5.1] - 2018-10-11
+
+
+## [2.5.1][] - 2018-10-11
 
 ### ⚡ Changed
 * Move billing info from shipping info stage to order summary page
@@ -519,10 +596,13 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * rewrite blog retrieval logic AGAIN so we can fully remove isomorphic-fetch from the project
 
 
+[2.5.1]: https://github.com/FuelRats/fuelrats.com/compare/v2.5.0...v2.5.1
 
 
 
-## [2.5.0] - 2018-10-10
+
+
+## [2.5.0][] - 2018-10-10
 
 ### ✨ Added
 * Storefront + accompanying management pages
@@ -558,10 +638,13 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Add `<React.StrictMode />` to the app root so we can identify problematic components.
 
 
+[2.5.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.4.3...v2.5.0
 
 
 
-## [2.4.3] - 2018-08-27
+
+
+## [2.4.3][] - 2018-08-27
 
 ### ⚡ Changed
 * update rat kiwi link
@@ -570,10 +653,13 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Properly display inaccessible oAuth scopes
 
 
+[2.4.3]: https://github.com/FuelRats/fuelrats.com/compare/v2.4.2...v2.4.3
 
 
 
-## [2.4.2] - 2018-08-24
+
+
+## [2.4.2][] - 2018-08-24
 
 ### ✨ Added
 * Add "rat links" nav section for logged in rats
@@ -596,10 +682,13 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Fix ADD_NICKNAME and CREATE_RAT reducers so they actually update lists properly
 
 
+[2.4.2]: https://github.com/FuelRats/fuelrats.com/compare/v2.4.1...v2.4.2
 
 
 
-## [2.4.1] - 2018-07-27
+
+
+## [2.4.1][] - 2018-07-27
 
 ### ⚡ Changed
 * Remove some unused code
@@ -611,10 +700,13 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Prevent crash on paperwork page when system is null
 
 
+[2.4.1]: https://github.com/FuelRats/fuelrats.com/compare/v2.4.0...v2.4.1
 
 
 
-## [2.4.0] - 2018-05-28
+
+
+## [2.4.0][] - 2018-05-28
 
 ### ✨ Added
 * Attempt to display wordpress page of the same slug when the page does not exist on the website
@@ -624,19 +716,25 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Rewrite Page component to a wrapper child element
 
 
+[2.4.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.3.2...v2.4.0
 
 
 
-## [2.3.2] - 2018-05-24
+
+
+## [2.3.2][] - 2018-05-24
 
 ### 🐛 Fixed
 * Fix oauth page error caused by sending the wrong args to function
 
 
+[2.3.2]: https://github.com/FuelRats/fuelrats.com/compare/v2.3.1...v2.3.2
 
 
 
-## [2.3.1] - 2018-05-23
+
+
+## [2.3.1][] - 2018-05-23
 
 ### ⚡ Changed
 * Only show rats with rescues on the leaderboard
@@ -646,10 +744,13 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * properly provide browserconfig, sitemap, and manifest files
 
 
+[2.3.1]: https://github.com/FuelRats/fuelrats.com/compare/v2.3.0...v2.3.1
 
 
 
-## [2.3.0] - 2018-05-22
+
+
+## [2.3.0][] - 2018-05-22
 
 ### ✨ Added
 * Add paperwork edit button
@@ -664,10 +765,13 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Introduce server-side data fetching, starting with paperwork
 
 
+[2.3.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.2.0...v2.3.0
 
 
 
-## [2.2.0] - 2018-05-13
+
+
+## [2.2.0][] - 2018-05-13
 
 ### ✨ Added
 * New Privacy Policy
@@ -680,28 +784,37 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Improve mobile support
 
 
+[2.2.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.1.9...v2.2.0
 
 
 
-## [2.1.9] - 2018-04-16
+
+
+## [2.1.9][] - 2018-04-16
 
 ### 🐛 Fixed
 * Fix errors that occur during password resets and registration
 
 
+[2.1.9]: https://github.com/FuelRats/fuelrats.com/compare/v2.1.8...v2.1.9
 
 
 
-## [2.1.8] - 2018-03-27
+
+
+## [2.1.8][] - 2018-03-27
 
 ### ✨ Added
 * Donation page
 
 
+[2.1.8]: https://github.com/FuelRats/fuelrats.com/compare/v2.1.7...v2.1.8
 
 
 
-## [2.1.7] - 2018-04-11
+
+
+## [2.1.7][] - 2018-04-11
 
 ### ✨ Added
 * Add link directly to the blog's art category
@@ -716,10 +829,13 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Prefer token cookies over LocalForage
 
 
+[2.1.7]: https://github.com/FuelRats/fuelrats.com/compare/v2.1.6...v2.1.7
 
 
 
-## [2.1.6] - 2018-01-18
+
+
+## [2.1.6][] - 2018-01-18
 
 ### ⚡ Changed
 * Change all instances of the word "Login" to "Rat Login"
@@ -727,28 +843,38 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
     * Both of these changes were made in interest of removing confusion for clients
 
 
+[2.1.6]: https://github.com/FuelRats/fuelrats.com/compare/v2.1.5...v2.1.6
 
 
 
-## [2.1.5] - 2018-01-17
+
+
+## [2.1.5][] - 2018-01-17
 
 ### ✨ Added
 * Introduce acknowledgements page to credit those who have helped us so much
 
 
+[2.1.5]: https://github.com/FuelRats/fuelrats.com/compare/v2.1.4...v2.1.5
 
 
 
-## [2.1.4] - 2018-01-10
+
+
+## [2.1.4][] - 2018-01-10
 
 ### 🐛 Fixed
 * Correctly set CR and system fields in paperwork
 
 
+[2.1.4]: https://github.com/FuelRats/fuelrats.com/compare/v2.1.3...v2.1.4
 
 
 
-## [2.1.3] - 2017-11-14
+
+
+
+## [2.1.3][] - 2017-11-14
 
 ### ⚡ Changed
 * Swap to new TravisCI webhook
@@ -758,10 +884,13 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Send correct oAuth decision to API when denying oAuth authorization
 
 
+[2.1.3]: https://github.com/FuelRats/fuelrats.com/compare/v2.1.2...v2.1.3
 
 
 
-## [2.1.2] - 2017-10-09
+
+
+## [2.1.2][] - 2017-10-09
 
 ### ✨ Added
 * Restore IRC nick registration
@@ -771,29 +900,39 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Fix hero display on small screens
 
 
+[2.1.2]: https://github.com/FuelRats/fuelrats.com/compare/v2.1.1...v2.1.2
 
 
 
-## [2.1.1] - 2017-10-05
+
+
+## [2.1.1][] - 2017-10-05
 
 ### ⚡ Changed
 * Temporarily disable nickname registration
 
 
 
+[2.1.1]: https://github.com/FuelRats/fuelrats.com/compare/v2.1.0...v2.1.1
 
 
-## [2.1.0] - 2017-10-05
+
+
+
+## [2.1.0][] - 2017-10-05
 
 ### ✨ Added
 * OAuth page
 * IRC Nickname registration
 
 
+[2.1.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.0.1...v2.1.0
 
 
 
-## [2.0.1] - 2017-09-11
+
+
+## [2.0.1][] - 2017-09-11
 
 ### ✨ Added
 * Password field suggestions and warnings
@@ -802,11 +941,19 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Made  - Thanks @Spansh
 
 
+[2.0.1]: https://github.com/FuelRats/fuelrats.com/compare/v2.0.0...v2.0.1
 
 
 
-## [2.0.0] - 2017-09-09
+
+
+## [2.0.0][] - 2017-09-09
 * Initial Release
+
+
+[2.0.0]: https://github.com/FuelRats/fuelrats.com/releases/tag/v2.0.0
+
+
 
 
 
@@ -836,46 +983,3 @@ basic format:
     * **⚡ Changed** - For any changes to existing features, or removal of old ones.
     * **🐛 Fixed** - For bug fixes
     * **⚙ Tasks** - Chores relating to the upkeep of the project or repository. (documentation, dependencies, etc.)
-
-
-
-
-
-[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.11.0...HEAD
-[2.11.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.11.0...v2.10.0
-[2.10.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.9.2...v2.10.0
-[2.9.2]: https://github.com/FuelRats/fuelrats.com/compare/v2.9.1...v2.9.2
-[2.9.1]: https://github.com/FuelRats/fuelrats.com/compare/v2.9.0...v2.9.1
-[2.9.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.8.0...v2.9.0
-[2.8.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.7.3...v2.8.0
-[2.7.3]: https://github.com/FuelRats/fuelrats.com/compare/v2.7.2...v2.7.3
-[2.7.2]: https://github.com/FuelRats/fuelrats.com/compare/v2.7.1...v2.7.2
-[2.7.1]: https://github.com/FuelRats/fuelrats.com/compare/v2.7.0...v2.7.1
-[2.7.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.6.3...v2.7.0
-[2.6.3]: https://github.com/FuelRats/fuelrats.com/compare/v2.6.2...v2.6.3
-[2.6.2]: https://github.com/FuelRats/fuelrats.com/compare/v2.6.1...v2.6.2
-[2.6.1]: https://github.com/FuelRats/fuelrats.com/compare/v2.6.0...v2.6.1
-[2.6.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.5.2...v2.6.0
-[2.5.2]: https://github.com/FuelRats/fuelrats.com/compare/v2.5.1...v2.5.2
-[2.5.1]: https://github.com/FuelRats/fuelrats.com/compare/v2.5.0...v2.5.1
-[2.5.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.4.3...v2.5.0
-[2.4.3]: https://github.com/FuelRats/fuelrats.com/compare/v2.4.2...v2.4.3
-[2.4.2]: https://github.com/FuelRats/fuelrats.com/compare/v2.4.1...v2.4.2
-[2.4.1]: https://github.com/FuelRats/fuelrats.com/compare/v2.4.0...v2.4.1
-[2.4.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.3.2...v2.4.0
-[2.3.2]: https://github.com/FuelRats/fuelrats.com/compare/v2.3.1...v2.3.2
-[2.3.1]: https://github.com/FuelRats/fuelrats.com/compare/v2.3.0...v2.3.1
-[2.3.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.2.0...v2.3.0
-[2.2.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.1.9...v2.2.0
-[2.1.9]: https://github.com/FuelRats/fuelrats.com/compare/v2.1.8...v2.1.9
-[2.1.8]: https://github.com/FuelRats/fuelrats.com/compare/v2.1.7...v2.1.8
-[2.1.7]: https://github.com/FuelRats/fuelrats.com/compare/v2.1.6...v2.1.7
-[2.1.6]: https://github.com/FuelRats/fuelrats.com/compare/v2.1.5...v2.1.6
-[2.1.5]: https://github.com/FuelRats/fuelrats.com/compare/v2.1.4...v2.1.5
-[2.1.4]: https://github.com/FuelRats/fuelrats.com/compare/v2.1.3...v2.1.4
-[2.1.3]: https://github.com/FuelRats/fuelrats.com/compare/v2.1.2...v2.1.3
-[2.1.2]: https://github.com/FuelRats/fuelrats.com/compare/v2.1.1...v2.1.2
-[2.1.1]: https://github.com/FuelRats/fuelrats.com/compare/v2.1.0...v2.1.1
-[2.1.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.0.1...v2.1.0
-[2.0.1]: https://github.com/FuelRats/fuelrats.com/compare/v2.0.0...v2.0.1
-[2.0.0]: https://github.com/FuelRats/fuelrats.com/releases/tag/v2.0.0

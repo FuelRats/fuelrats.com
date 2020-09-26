@@ -17,7 +17,6 @@ export const getNickname = (nickId) => {
   )
 }
 
-// TODO: remove argument from this and deleteNickname when API bugs are fixed.
 export const addNickname = (user, data) => {
   return frApiRequest(
     actionTypes.nicknames.create,
