@@ -1,0 +1,43 @@
+@import '../../../scss/colors';
+
+.inputGroup {
+  position: relative;
+}
+
+
+.validityIconGroup {
+  composes: validityIconGroup from global;
+
+  position: absolute;
+  top: 1px;
+  right: 1px;
+
+  padding: 1rem;
+
+  transition: opacity 0.2s;
+
+  line-height: normal;
+
+  .validityIcon {
+    color: $red;
+
+    &.valid {
+      color: $green;
+    }
+  }
+
+  .warningIcon {
+    position: absolute;
+    top: 20px;
+    right: 5px;
+
+    color: $yellow-darker;
+
+    font-size: 0.75em;
+  }
+}
+
+.hidden {
+  /* stylelint-disable-next-line declaration-no-important */
+  opacity: 0 !important;
+}

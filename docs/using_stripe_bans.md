@@ -1,5 +1,20 @@
 # Using Stripe Bans File
 
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+## Table of Contents
+
+- [Introduction](#introduction)
+- [File structure & How to ban someone.](#file-structure--how-to-ban-someone)
+- [Technical details](#technical-details)
+- [Ban system TODO](#ban-system-todo)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+
+## Introduction
+
 The Stripe Bans file restricts IP addresses from creating stripe checkout sessions.
 
 To use it, create a JSON file anywhere on your file system (that the webserver user can read), and point to it using the ENV variable `FRDC_STRIPE_BANS_FILE`.

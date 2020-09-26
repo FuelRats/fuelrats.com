@@ -1,7 +1,6 @@
-/* eslint-disable global-require */
 module.exports = {
   plugins: [
-    ['postcss-easy-import', { prefix: '_' }],
+    ['postcss-easy-import', { prefix: '_', extensions: ['.css', '.scss'] }],
     'postcss-flexbugs-fixes',
     [
       'postcss-preset-env',

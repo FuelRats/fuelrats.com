@@ -1,3 +1,4 @@
+import { isError } from 'flux-standard-action'
 import { produce } from 'immer'
 
 
@@ -13,44 +14,37 @@ import initialState from '../initialState'
 const blogsReducer = produce((draftState, action) => {
   const {
     payload,
-    status,
     type,
+    meta,
   } = action
 
   switch (type) {
     case actionTypes.wordpress.authors.read:
-      if (status === 'success') {
-        draftState.authors[payload.id] = { ...payload }
+      if (!isError(action)) {
+        draftState.authors[payload.id] = payload
       }
       break
 
     case actionTypes.wordpress.categories.read:
-      if (status === 'success') {
-        draftState.categories[payload.id] = { ...payload }
+      if (!isError(action)) {
+        draftState.categories[payload.id] = payload
       }
       break
 
     case actionTypes.wordpress.posts.read:
-      if (status === 'success') {
+      if (!isError(action)) {
         draftState.blogs.push(payload)
         draftState.totalPages = null
       }
       break
 
     case actionTypes.wordpress.posts.search:
-      switch (status) {
-        case 'error':
-          draftState.blogs = []
-          draftState.totalPages = 0
-          break
-
-        case 'success':
-          draftState.blogs = [...payload]
-          draftState.totalPages = parseInt(action.response.headers['x-wp-totalpages'], 10)
-          break
-
-        default:
-          break
+      if (isError(action)) {
+        draftState.blogs = []
+        draftState.totalPages = 0
+      } else {
+        draftState.blogs = payload
+        draftState.totalPages = parseInt(meta.response.headers['x-wp-totalpages'], 10)
       }
       break
 

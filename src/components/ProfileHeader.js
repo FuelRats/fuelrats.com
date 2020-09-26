@@ -2,15 +2,18 @@
 import React from 'react'
 
 // Component imports
-import { formatAsEliteDateLong } from '../helpers/formatTime'
-import { connect } from '../store'
+import { formatAsEliteDateLong } from '~/helpers/formatTime'
+import { connect } from '~/store'
 import {
+  selectGroupsByUserId,
   selectUserById,
   selectDisplayRatByUserId,
   selectAvatarByUserId,
   withCurrentUserId,
-} from '../store/selectors'
+} from '~/store/selectors'
+
 import ChangePasswordModal from './ChangePasswordModal'
+import DisableProfileModal from './DisableProfileModal'
 
 
 
@@ -24,6 +27,7 @@ class ProfileHeader extends React.Component {
 
   state = {
     showChangePassword: false,
+    showDisableProfile: false,
   }
 
 
@@ -36,11 +40,11 @@ class ProfileHeader extends React.Component {
 
   _renderUserGroups = () => {
     return (
-      this.props.user.relationships.groups.data && (
-        this.props.user.relationships.groups.data.map((item) => {
+      this.props.groups && (
+        this.props.groups.map((group) => {
           return (
-            <li key={item.id} className={`badge ${item.id}`}>
-              {item.id}
+            <li key={group.id} className={['badge', group.attributes.name]}>
+              {group.attributes.name}
             </li>
           )
         })))
@@ -49,6 +53,12 @@ class ProfileHeader extends React.Component {
   _handleToggleChangePassword = () => {
     this.setState((state) => {
       return { showChangePassword: !state.showChangePassword }
+    })
+  }
+
+  _handleToggleDisableProfile = () => {
+    this.setState((state) => {
+      return { showDisableProfile: !state.showDisableProfile }
     })
   }
 
@@ -61,6 +71,7 @@ class ProfileHeader extends React.Component {
   render () {
     const {
       showChangePassword,
+      showDisableProfile,
     } = this.state
     const {
       displayRat,
@@ -104,11 +115,19 @@ class ProfileHeader extends React.Component {
               onClick={this._handleToggleChangePassword}>
               {'Change Password'}
             </button>
+            <button
+              type="button"
+              onClick={this._handleToggleDisableProfile}>
+              {'Disable Profile'}
+            </button>
           </div>
         </div>
         <ChangePasswordModal
           isOpen={showChangePassword}
           onClose={this._handleToggleChangePassword} />
+        <DisableProfileModal
+          isOpen={showDisableProfile}
+          onClose={this._handleToggleDisableProfile} />
       </>
     )
   }
@@ -123,6 +142,7 @@ class ProfileHeader extends React.Component {
 
   static mapStateToProps = (state) => {
     return {
+      groups: withCurrentUserId(selectGroupsByUserId)(state),
       user: withCurrentUserId(selectUserById)(state),
       userAvatar: withCurrentUserId(selectAvatarByUserId)(state),
       displayRat: withCurrentUserId(selectDisplayRatByUserId)(state),

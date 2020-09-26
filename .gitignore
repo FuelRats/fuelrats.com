@@ -12,7 +12,7 @@
 
 # Sensitive Files
 /.env
-
+/.env.local
 
 # Package Manager Files
 .yarn/unplugged

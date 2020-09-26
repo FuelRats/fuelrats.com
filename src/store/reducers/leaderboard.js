@@ -1,8 +1,5 @@
+import { isError } from 'flux-standard-action'
 import { produce } from 'immer'
-
-
-
-
 
 import actionTypes from '../actionTypes'
 import initialState from '../initialState'
@@ -12,29 +9,14 @@ import initialState from '../initialState'
 
 
 const leaderboardReducer = produce((draftState, action) => {
-  const {
-    payload,
-    status,
-    type,
-  } = action
+  if (isError(action)) {
+    return
+  }
 
-  switch (type) {
+  switch (action.type) {
     case actionTypes.leaderboard.read:
-      switch (status) {
-        case 'success':
-          draftState.loading = false
-          draftState.statistics = payload.data
-          break
-
-        case 'error':
-          draftState.loading = false
-          draftState.statistics = []
-          break
-
-        default:
-          draftState.loading = true
-          break
-      }
+      draftState.entries = action.payload.data
+      draftState.statistics = action.payload.meta
       break
 
     default:

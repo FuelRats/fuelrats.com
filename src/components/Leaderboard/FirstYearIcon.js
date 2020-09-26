@@ -1,10 +1,4 @@
-/* eslint-disable no-magic-numbers */// Defining named constants in this case actually hurts readability
-
-
-
-
-
-import moment from 'moment'
+import isBefore from 'date-fns/isBefore'
 import React from 'react'
 
 
@@ -18,7 +12,10 @@ import FirstYearSvg from '../../../public/static/svg/firstYear.svg'
 
 
 function FirstYearIcon ({ createdAt, ...iconProps }) {
-  return moment(createdAt).isBefore('2016-01-01', 'year') && (
+  return isBefore(
+    new Date(createdAt),
+    new Date('2016-01-01T00:00:00Z'),
+  ) && (
     <div
       className="achievement first-year"
       title="This rat joined in our first year of operation!">

@@ -1,4 +1,5 @@
-import imageLoader from '../../services/imageLoader'
+import imageLoader from '~/services/imageLoader'
+
 import actionTypes from '../actionTypes'
 
 
@@ -17,7 +18,6 @@ export const disposeImage = ({ id, url }) => {
 
     return dispatch({
       type: actionTypes.images.dispose,
-      status: 'success',
       payload: id,
     })
   }

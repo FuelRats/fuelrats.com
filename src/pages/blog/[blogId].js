@@ -5,9 +5,9 @@ import React from 'react'
 
 
 // Component imports
-import ArticleCard from '../../components/Blog/ArticleCard'
-import { actions } from '../../store'
-import { selectBlogById } from '../../store/selectors'
+import ArticleCard from '~/components/Blog/ArticleCard'
+import { getBlog } from '~/store/actions/blogs'
+import { selectBlogById } from '~/store/selectors'
 
 
 
@@ -21,7 +21,7 @@ class Blog extends React.Component {
   static async getInitialProps ({ query, store }) {
     const state = store.getState()
     if (!selectBlogById(state, query)) {
-      await actions.getBlog(query.blogId)(store.dispatch)
+      await store.dispatch(getBlog(query.blogId))
     }
   }
 

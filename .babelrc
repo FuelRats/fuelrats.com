@@ -1,12 +1,20 @@
 {
   "presets": [
-    ["next/babel", {
-      "class-properties": {
-        "loose": true
+    [
+      "next/babel",
+      {
+        "preset-env": {
+          "bugfixes": true,
+          "targets": "defaults, not IE 11, not IE_mob 11, node 13"
+        },
+        "class-properties": {
+          "loose": true
+        }
       }
-    }]
+    ]
   ],
   "plugins": [
+    ["@fuelrats/babel-plugin-classnames", { "transformObjects": true }],
     ["@babel/plugin-proposal-decorators", { "legacy": true }],
     "@babel/plugin-proposal-export-default-from",
     "@babel/plugin-proposal-export-namespace-from",

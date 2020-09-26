@@ -1,9 +1,8 @@
 // Component imports
-import HttpStatus from '../../helpers/HttpStatus'
-import wpApi from '../../services/wordpress'
+import { isError } from 'flux-standard-action'
+
 import actionTypes from '../actionTypes'
-import initialState from '../initialState'
-import { wpApiRequest, createAxiosAction } from './services'
+import { wpApiRequest } from './services'
 
 
 
@@ -27,63 +26,69 @@ export const getCategory = (categoryId) => {
 
 export const getBlog = (id) => {
   return async (dispatch, getState) => {
-    const response = await wpApi.request({
-      url: `/posts/${id}`,
-    })
+    const action = await dispatch(wpApiRequest(
+      actionTypes.wordpress.posts.read,
+      {
+        url: `/posts/${id}`,
+      },
+    ))
 
-    if (HttpStatus.isSuccess(response.status)) {
+    if (!isError(action)) {
       const {
         author: authorId,
         categories: categoryIds,
-      } = response.data
+      } = action.payload
 
-      const state = getState ? getState() : { ...initialState }
+      const state = getState()
       const { authors, categories } = state.blogs
 
       if (!authors[authorId]) {
-        await getAuthor(authorId)(dispatch)
+        await dispatch(getAuthor(authorId))
       }
 
       await Promise.all(categoryIds.map((categoryId) => {
         if (!categories[categoryId]) {
-          return getCategory(categoryId)(dispatch)
+          return dispatch(getCategory(categoryId))
         }
         return Promise.resolve()
       }))
     }
 
-    return dispatch(createAxiosAction(actionTypes.wordpress.posts.read, response))
+    return dispatch(action)
   }
 }
 
 
 export const getBlogs = (params) => {
   return async (dispatch, getState) => {
-    const response = await wpApi.request({
-      url: '/posts',
-      params,
-    })
+    const action = await dispatch(wpApiRequest(
+      actionTypes.wordpress.posts.search,
+      {
+        url: '/posts',
+        params,
+      },
+    ))
 
-    if (HttpStatus.isSuccess(response.status)) {
-      const state = getState ? getState() : { ...initialState }
+    if (!isError(action)) {
+      const state = getState()
       const authorCache = { ...state.blogs.authors }
       const categoryCache = { ...state.blogs.categories }
 
-      Object.values(response.data).forEach(({ author: authorId, categories: categoryIds }) => {
+      Object.values(action.payload).forEach(({ author: authorId, categories: categoryIds }) => {
         if (!authorCache[authorId]) {
           authorCache[authorId] = {}
-          getAuthor(authorId)(dispatch)
+          dispatch(getAuthor(authorId))
         }
 
         categoryIds.forEach((categoryId) => {
           if (!categoryCache[categoryId]) {
             categoryCache[categoryId] = {}
-            getCategory(categoryId)(dispatch)
+            dispatch(getCategory(categoryId))
           }
         })
       })
     }
 
-    return dispatch(createAxiosAction(actionTypes.wordpress.posts.search, response))
+    return action
   }
 }

@@ -7,18 +7,17 @@ import React from 'react'
 
 
 // Component imports
-import { authenticated } from '../../../components/AppLayout'
-import { formatAsEliteDateTime } from '../../../helpers/formatTime'
-import { Link, Router } from '../../../routes'
-import { actions, connect } from '../../../store'
+import { authenticated } from '~/components/AppLayout'
+import { formatAsEliteDateTime } from '~/helpers/formatTime'
+import { Link, Router } from '~/routes'
+import { connect } from '~/store'
+import { getRescue } from '~/store/actions/rescues'
 import {
   selectRatsByRescueId,
   selectRescueById,
-  selectUserCanEditRescue,
-  withCurrentUserId,
-  selectUserByIdHasScope,
-  selectUserCanEditAllRescues,
-} from '../../../store/selectors'
+  selectCurrentUserCanEditRescue,
+  selectCurrentUserHasScope,
+} from '~/store/selectors'
 
 
 
@@ -47,11 +46,10 @@ class Paperwork extends React.Component {
   _handleDeleteClick = async () => {
     if (this.state.deleteConfirm) {
       this.setState({ deleting: true })
-
-      await this.props.deleteRescue(this.props.rescue.id)
+      await this.props.deleteRescue(this.props.rescue)
 
       Router.pushRoute(
-        this.props.userCanEditAllRescues
+        this.props.userCanWriteAll
           ? 'admin rescues list'
           : '/',
       )
@@ -110,7 +108,7 @@ class Paperwork extends React.Component {
     const state = store.getState()
 
     if (!selectRescueById(state, query)) {
-      await actions.getRescue(query.rescueId)(store.dispatch)
+      await store.dispatch(getRescue(query.rescueId))
     }
   }
 
@@ -142,7 +140,7 @@ class Paperwork extends React.Component {
       <li key={rat.id} className="first-limpet">
         {rat.attributes.name}
         {
-          (rat.id === rescue.attributes.firstLimpetId) && (
+          (rat.id === rescue.relationships.firstLimpet?.data?.id) && (
             <span className="badge first-limpet">{'1st'}</span>
           )
         }
@@ -170,7 +168,7 @@ class Paperwork extends React.Component {
     const {
       rescue,
       userCanEdit,
-      userCanDelete,
+      userCanWriteAll,
     } = this.props
 
     const {
@@ -199,11 +197,13 @@ class Paperwork extends React.Component {
               deleteConfirm && (
                 <>
                   {
-                    deleting ? (
-                      <span>{'Deleting... '}<FontAwesomeIcon fixedWidth pulse icon="spinner" /> </span>
-                    ) : (
-                      <span>{'Delete this rescue? (This cannot be undone!) '}</span>
-                    )
+                    deleting
+                      ? (
+                        <span>{'Deleting... '}<FontAwesomeIcon fixedWidth pulse icon="spinner" /> </span>
+                      )
+                      : (
+                        <span>{'Delete this rescue? (This cannot be undone!) '}</span>
+                      )
                 }
 
                   <button
@@ -229,24 +229,24 @@ class Paperwork extends React.Component {
               !deleteConfirm && (
                 <>
                   {
-                  userCanEdit && (
-                    <Link params={{ rescueId: rescue.id }} route="paperwork edit">
-                      <a className="button compact">
-                        {'Edit'}
-                      </a>
-                    </Link>
-                  )
-                }
+                    userCanEdit && (
+                      <Link params={{ rescueId: rescue.id }} route="paperwork edit">
+                        <a className="button compact">
+                          {'Edit'}
+                        </a>
+                      </Link>
+                    )
+                  }
                   {
-                  userCanDelete && (
-                    <button
-                      className="compact"
-                      type="button"
-                      onClick={this._handleDeleteClick}>
-                      {'Delete'}
-                    </button>
-                  )
-                }
+                    userCanWriteAll && (
+                      <button
+                        className="compact"
+                        type="button"
+                        onClick={this._handleDeleteClick}>
+                        {'Delete'}
+                      </button>
+                    )
+                  }
                 </>
               )
             }
@@ -257,8 +257,8 @@ class Paperwork extends React.Component {
 
         <header className="paperwork-header">
           {
-            (rescue.attributes.status !== 'closed') && (rescue.attributes.data) && (
-              <div className="board-index"><span>{`#${rescue.attributes.data.boardIndex}`}</span></div>
+            (rescue.attributes.status !== 'closed') && (typeof rescue.attributes.commandIdentifier === 'number') && (
+              <div className="board-index"><span>{`#${rescue.attributes.commandIdentifier}`}</span></div>
             )
           }
           <div className="title">
@@ -285,11 +285,13 @@ class Paperwork extends React.Component {
 
         <div className="rescue-tags">
           <div className="tag status-group">
-            <span className={`status ${status}`}>{status}</span>
+            <span className={['status', status]}>{status}</span>
             <span className="outcome">{outcome || 'unfiled'}</span>
           </div>
 
-          <div className={`tag platform ${rescue.attributes.platform || 'none'}`}>{rescue.attributes.platform || 'No Platform'}</div>
+          <div className={['tag platform', rescue.attributes.platform ?? 'none']}>
+            {rescue.attributes.platform || 'No Platform'}
+          </div>
 
           {
             (rescue.attributes.codeRed) && (
@@ -298,15 +300,14 @@ class Paperwork extends React.Component {
           }
 
           {
-            rescue.attributes.data?.markedForDeletion?.marked && (
+            rescue.attributes.outcome === 'purge' && (
               <div className="md-group">
                 <div className="marked-for-deletion">{'Marked for Deletion'}</div>
                 <div className="md-reason">
-                  {`"${rescue.attributes.data.markedForDeletion?.reason}"`}
-                  <div className="md-reporter">{` - ${rescue.attributes.data.markedForDeletion.reporter}`}</div>
+                  {`"${rescue.attributes.notes}"`}
                 </div>
               </div>
-          )
+            )
           }
         </div>
 
@@ -325,16 +326,10 @@ class Paperwork extends React.Component {
           <span className="date-created content">{formatAsEliteDateTime(rescue.attributes.createdAt)}</span>
           <span className="label">{'Updated'}</span>
           <span className="date-updated content">{formatAsEliteDateTime(rescue.attributes.updatedAt)}</span>
-          {
-            Boolean(rescue.attributes.data) && (
-              <>
-                <span className="label">{'IRC Nick'}</span>
-                <span className="irc-nick content">{rescue.attributes.data.IRCNick}</span>
-                <span className="label">{'Language'}</span>
-                <span className="language content">{rescue.attributes.data.langID}</span>
-              </>
-            )
-          }
+          <span className="label">{'IRC Nick'}</span>
+          <span className="irc-nick content">{rescue.attributes.clientNick}</span>
+          <span className="label">{'Language'}</span>
+          <span className="language content">{rescue.attributes.clientLanguage}</span>
         </div>
 
         <div className="panel rats">
@@ -347,10 +342,16 @@ class Paperwork extends React.Component {
           <div className="panel-content">{this.renderQuotes()}</div>
         </div>
 
-        <div className="panel notes">
-          <header>{'Notes'}</header>
-          <div className="panel-content">{rescue.attributes.notes}</div>
-        </div>
+        {
+          rescue.attributes.outcome !== 'purge' && (
+            <div className="panel notes">
+              <header>{'Notes'}</header>
+              <div className="panel-content">{rescue.attributes.notes}</div>
+            </div>
+          )
+        }
+
+
       </>
     )
   }
@@ -389,15 +390,14 @@ class Paperwork extends React.Component {
     Redux Properties
   \***************************************************************************/
 
-  static mapDispatchToProps = ['getRescue', 'deleteRescue']
+  static mapDispatchToProps = ['deleteRescue']
 
   static mapStateToProps = (state, { query }) => {
     return {
       rats: selectRatsByRescueId(state, query) || [],
       rescue: selectRescueById(state, query),
-      userCanEdit: selectUserCanEditRescue(state, query),
-      userCanDelete: withCurrentUserId(selectUserByIdHasScope)(state, { scope: 'rescue.delete' }),
-      userCanEditAllRescues: withCurrentUserId(selectUserCanEditAllRescues)(state),
+      userCanEdit: selectCurrentUserCanEditRescue(state, query),
+      userCanWriteAll: selectCurrentUserHasScope(state, { scope: 'rescues.write' }),
     }
   }
 }

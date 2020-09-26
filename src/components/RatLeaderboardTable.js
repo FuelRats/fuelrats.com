@@ -1,29 +1,17 @@
 // Module imports
 import React from 'react'
 import ReactTable from 'react-table'
+import { createStructuredSelector } from 'reselect'
 
-
-
-
-
-// Module imports
-import safeParseInt from '../helpers/safeParseInt'
-import { connect } from '../store'
+import { connect } from '~/store'
 import {
   selectLeaderboard,
-} from '../store/selectors'
+  selectLeaderboardStatistics,
+} from '~/store/selectors'
+
 import CodeRedIcon from './Leaderboard/CodeRedIcon'
 import FirstYearIcon from './Leaderboard/FirstYearIcon'
 import RescueAchievementIcon from './Leaderboard/RescueAchievementIcon'
-
-
-
-
-
-const caseInsensitiveFilter = (filter, row) => {
-  const id = filter.pivotId || filter.id
-  return row[id] === undefined ? true : String(row[id]).toLowerCase().startsWith(filter.value.toLowerCase())
-}
 
 
 
@@ -41,6 +29,16 @@ class RatLeaderboardTable extends React.Component {
 
 
 
+  _handlePageChange = async (state) => {
+    this.setState({ loading: true })
+
+    await this.props.getLeaderboard({
+      'page[offset]': state.page * state.pageSize,
+      'page[limit]': state.pageSize,
+    })
+
+    this.setState({ loading: false })
+  }
 
 
   /***************************************************************************\
@@ -48,15 +46,17 @@ class RatLeaderboardTable extends React.Component {
   \***************************************************************************/
 
   async componentDidMount () {
-    if (!this.props.statistics.length) {
-      await this.props.getRatLeaderboard()
+    if (!this.props.entries.length) {
+      await this.props.getLeaderboard()
     }
+
     this.setState({ loading: false })
   }
 
   render () {
     const {
       statistics,
+      entries,
     } = this.props
 
     const {
@@ -66,16 +66,15 @@ class RatLeaderboardTable extends React.Component {
     return (
       <section className="panel">
         <ReactTable
-          filterable
+          manual
           className="rat-leaderboard -striped"
           columns={this.columns}
-          data={statistics}
-          defaultFilterMethod={caseInsensitiveFilter}
-          defaultPageSize={75}
+          data={entries ?? []}
           loading={loading}
-          resizable={false}
-          showPageSizeOptions={false}
-          sortable={false} />
+          pages={statistics.lastPage}
+          pageSize={statistics?.limit ?? 100}
+          sortable={false}
+          onFetchData={this._handlePageChange} />
       </section>
     )
   }
@@ -92,9 +91,7 @@ class RatLeaderboardTable extends React.Component {
     if (!this._columns) {
       this._columns = [
         {
-          accessor: (datum) => {
-            return datum.attributes['user.displayRat.name'] || datum.attributes.rats[0]
-          },
+          accessor: 'attributes.preferredName',
           className: 'name',
           Header: 'Name',
           headerClassName: 'name-header',
@@ -124,16 +121,16 @@ class RatLeaderboardTable extends React.Component {
           filterable: false,
           Cell: ({ value }) => {
             const {
-              codeRed,
-              createdAt,
+              codeRedCount,
+              joinedAt,
               rescueCount,
             } = value.attributes
 
             return (
               <div className="badge-list">
                 <RescueAchievementIcon className="size-32 fixed" rescueCount={rescueCount} />
-                <CodeRedIcon className="size-32 fixed" codeRedCount={safeParseInt(codeRed)} />
-                <FirstYearIcon className="size-32 fixed" createdAt={createdAt} />
+                <CodeRedIcon className="size-32 fixed" codeRedCount={codeRedCount} />
+                <FirstYearIcon className="size-32 fixed" createdAt={joinedAt} />
               </div>
             )
           },
@@ -144,13 +141,12 @@ class RatLeaderboardTable extends React.Component {
     return this._columns
   }
 
-  static mapDispatchToProps = ['getRatLeaderboard']
+  static mapDispatchToProps = ['getLeaderboard']
 
-  static mapStateToProps = (state) => {
-    return {
-      statistics: selectLeaderboard(state),
-    }
-  }
+  static mapStateToProps = createStructuredSelector({
+    statistics: selectLeaderboardStatistics,
+    entries: selectLeaderboard,
+  })
 }
 
 

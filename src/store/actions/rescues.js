@@ -1,31 +1,46 @@
-// Component imports
+import { presentApiRequestBody } from '~/helpers/presenters'
+
 import actionTypes from '../actionTypes'
-import { getPageViewPartial } from './partials'
+import { DISPATCH_VIEW } from '../reducers/dispatch'
+import { deletesResource } from '../reducers/frAPIResources'
 import { frApiRequest } from './services'
 
 
 
 
-
-export const deleteRescue = (rescueId) => {
+export const deleteRescue = (rescue) => {
   return frApiRequest(
     actionTypes.rescues.delete,
     {
-      url: `/rescues/${rescueId}`,
+      url: `/rescues/${rescue.id}`,
       method: 'delete',
     },
+    deletesResource(rescue),
   )
 }
 
 
-export const getRescues = (params, opts) => {
+
+export const getRescues = (params, ...meta) => {
   return frApiRequest(
     actionTypes.rescues.search,
     {
       url: '/rescues',
       params,
     },
-    getPageViewPartial('rescues', opts.pageView),
+    ...meta,
+  )
+}
+
+
+export const getDispatchBoard = () => {
+  return getRescues(
+    {
+      filter: {
+        status: { ne: 'closed' },
+      },
+    },
+    { [DISPATCH_VIEW]: true },
   )
 }
 
@@ -33,30 +48,20 @@ export const getRescues = (params, opts) => {
 export const getRescue = (rescueId) => {
   return frApiRequest(
     actionTypes.rescues.read,
-    { url: `/rescues/${rescueId}` },
-  )
-}
-
-
-export const updateRescue = (rescueId, data) => {
-  return frApiRequest(
-    actionTypes.rescues.update,
     {
       url: `/rescues/${rescueId}`,
-      method: 'put',
-      data,
     },
   )
 }
 
 
-export const updateRescueRats = (rescueId, data) => {
+export const updateRescue = (data) => {
   return frApiRequest(
-    actionTypes.rescues.patchRats,
+    actionTypes.rescues.update,
     {
-      url: `/rescues/${rescueId}/rats`,
-      method: 'patch',
-      data,
+      url: `/rescues/${data.id}`,
+      method: 'put',
+      data: presentApiRequestBody('rescues', data),
     },
   )
 }

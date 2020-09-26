@@ -1,12 +1,10 @@
 import routes from '@fuelrats/next-named-routes'
-import NextLink from 'next/link'
-import * as NextRouter from 'next/router'
 
 
 
 
 
-const { Link, Router } = routes(NextLink, NextRouter)
+const { Link, Router, useRouter, withRouter } = routes()
 
   // Front Page
   .add('home', '/')
@@ -14,12 +12,13 @@ const { Link, Router } = routes(NextLink, NextRouter)
 
   // Paperwork
   .add('paperwork', '/paperwork/[rescueId]')
-
-
   .add('paperwork edit', '/paperwork/[rescueId]/edit')
 
   // Profile
   .add('profile', '/profile/[tab]')
+
+  // Dispatch
+  .add('dispatch', '/dispatch')
 
   // Register
   .add('register', '/register')
@@ -74,10 +73,13 @@ const { Link, Router } = routes(NextLink, NextRouter)
 
   .add('about version', ({ raw, ...query }) => {
     return {
-      href: `/version/${raw ? 'raw' : 'index'}`,
+      href: `/version/${raw ? 'raw' : ''}`,
       query,
     }
   })
+
+  // Verify
+  .add('verify', '/verify')
 
   // Epics
   .add('epic nominate', '/epic/nominate')
@@ -92,4 +94,6 @@ const { Link, Router } = routes(NextLink, NextRouter)
 export {
   Link,
   Router,
+  useRouter,
+  withRouter,
 }

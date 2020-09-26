@@ -34,7 +34,14 @@
 
     height: min-content;
 
+    ul {
+      display: flex;
+
+      flex-flow: row wrap;
+    }
+
     .badge {
+      margin: 0.25rem;
       padding: 0 0.75rem;
 
       background-color: #878787;
@@ -59,23 +66,28 @@
 
   @media screen and (max-width: 768px) {
     grid-template-areas:
-      'avatar avatar'
-      'info   info'
-      'badges badges'
-      'controls controls';
+      'avatar   avatar   avatar'
+      'info     info     info'
+      'badges   badges   badges'
+      'controls controls controls';
     justify-items: center;
     justify-content: center;
 
     text-align: center;
 
+    .profile-user-badges ul {
+      justify-content: center;
+    }
+
     .profile-controls {
-      flex-direction: row;
+      flex-flow: row wrap;
+      justify-content: center;
+
+      margin-top: 0.5rem;
 
       button,
       .button {
-        &:not(:last-child) {
-          margin-right: 1rem;
-        }
+        margin: 0.5rem;
       }
     }
   }

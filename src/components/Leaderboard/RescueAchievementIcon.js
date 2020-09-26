@@ -1,4 +1,4 @@
-/* eslint-disable no-magic-numbers */// Defining named constants in this case actually hurts readability
+/* eslint-disable no-magic-numbers -- Defining named constants in this case actually hurts readability */
 
 
 
@@ -48,7 +48,7 @@ function RescueAchievementIcon ({ rescueCount, ...iconProps }) {
 
   return Icon && (
     <div
-      className={`achievement rescue-count${count >= 500 ? ' crown' : ''}`}
+      className={['achievement rescue-count', { crown: count >= 500 }]}
       title={`This rat has completed at least ${count} rescues!`}>
       <Icon {...iconProps} />
     </div>

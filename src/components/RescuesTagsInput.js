@@ -22,9 +22,7 @@ class RescuesTagsInput extends TagsInput {
     )
   }
 
-  /* eslint-disable class-methods-use-this */
   renderValue (rescue) {
-  /* eslint-enable class-methods-use-this */
     const operationName = rescue.attributes.title ? `Operation ${rescue.attributes.title}` : null
     const clientDetails = `Rescue of ${rescue.attributes.client || 'unknown'} [${rescue.attributes.platform || 'N/A'}] in ${rescue.attributes.system || 'unknown'}`
 

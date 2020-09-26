@@ -6,9 +6,9 @@ import React from 'react'
 
 
 // Component imports
-import { Link } from '../routes'
-import { connect } from '../store'
-import { selectSession } from '../store/selectors'
+import { Link } from '~/routes'
+import { connect } from '~/store'
+import { selectSession } from '~/store/selectors'
 
 
 
@@ -81,6 +81,11 @@ const navItems = [
     title: 'Rat Links',
     condition: userIsLoggedIn,
     subnav: [
+      {
+        key: 'dispatch',
+        title: 'Dispatch Board',
+        route: 'dispatch',
+      },
       {
         external: true,
         key: 'confluence',
@@ -229,8 +234,6 @@ class Nav extends React.Component {
   /***************************************************************************\
     Redux Properties
   \***************************************************************************/
-
-  static mapDispatchToProps = ['setFlag']
 
   static mapStateToProps = (state) => {
     return selectSession(state)

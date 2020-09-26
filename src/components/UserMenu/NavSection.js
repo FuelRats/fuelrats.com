@@ -5,10 +5,12 @@ import { createSelector } from 'reselect'
 
 
 
+
 // Component imports
-import userHasPermission from '../../helpers/userHasPermission'
-import { connect } from '../../store'
-import { withCurrentUserId, selectGroupsByUserId } from '../../store/selectors'
+import userHasPermission from '~/helpers/userHasPermission'
+import { connect } from '~/store'
+import { withCurrentUserId, selectGroupsByUserId } from '~/store/selectors'
+
 import NavItem from './NavItem'
 
 

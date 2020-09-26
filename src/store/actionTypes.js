@@ -1,5 +1,3 @@
-/* eslint-disable max-classes-per-file */// I know what I'm doing. shut up.
-
 const decals = {
   read: 'decals/read',
   redeem: 'decals/redeem',
@@ -11,6 +9,11 @@ const epics = {
   create: 'epics/create',
 }
 
+const groups = {
+  read: 'groups/read',
+  search: 'groups/search',
+}
+
 
 const leaderboard = {
   read: 'leaderboard/read',
@@ -18,7 +21,9 @@ const leaderboard = {
 
 
 const nicknames = {
+  read: 'nicknames/read',
   create: 'nicknames/create',
+  delete: 'nicknames/delete',
 }
 
 
@@ -51,7 +56,11 @@ const ships = {
 
 
 const users = {
+  delete: 'users/delete',
   update: 'users/update',
+  statistics: {
+    read: 'users/statistics/read',
+  },
 }
 
 
@@ -67,6 +76,17 @@ const images = {
 
 
 
+const oauth = {
+  authorize: {
+    read: 'oauth/authorize/read',
+    create: 'oauth/authorize/create',
+  },
+}
+
+
+
+
+
 const passwords = {
   reset: 'passwords/reset',
   requestReset: 'passwords/requestReset',
@@ -75,15 +95,17 @@ const passwords = {
 }
 
 
+
+
+
 const session = {
   login: 'session/login',
   logout: 'session/logout',
   register: 'session/register',
   initialize: 'session/initialize',
   read: 'session/read',
-  readClientOAuthPage: 'session/readClientOAuthPage',
-  pageLoading: 'session/pageLoading',
-  pageDestroyed: 'session/pageDestroyed',
+  pageLoading: 'session/page/loading',
+  pageDestroyed: 'session/page/destroyed',
   setFlag: 'session/setFlag',
 }
 
@@ -102,19 +124,27 @@ const stripe = {
 
 
 
+const verify = {
+  email: 'verify/email',
+}
+
+
+
+
+
 const wordpress = {
   authors: {
-    read: 'wordpressAuthors/read',
+    read: 'wordpress/authors/read',
   },
   categories: {
-    read: 'wordpressCategories/read',
+    read: 'wordpress/categories/read',
   },
   pages: {
-    read: 'wordpressPages/read',
+    read: 'wordpress/pages/read',
   },
   posts: {
-    read: 'wordpressPosts/read',
-    search: 'wordpressPosts/search',
+    read: 'wordpress/posts/read',
+    search: 'wordpress/posts/search',
   },
 }
 
@@ -126,8 +156,10 @@ const actionTypes = {
   // API Resources
   decals,
   epics,
+  groups,
   leaderboard,
   nicknames,
+  oauth,
   passwords,
   rats,
   rescues,
@@ -137,6 +169,7 @@ const actionTypes = {
   // Special
   images,
   session,
+  verify,
 
   // Services
   stripe,

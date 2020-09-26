@@ -6,21 +6,12 @@ import React from 'react'
 
 
 
-// Component imports
-import classNames from '../helpers/classNames'
-
-
-
-
-
 function TextPlaceholder ({ size, loading }) {
-  const classes = classNames(
-    'text-placeholder',
-    ['loading', Boolean(loading)],
-  )
   return (
     <span className="text-placeholder-wrapper">
-      <span className={classes}>{'\u00A0'.repeat(size)}</span>
+      <span className={['text-placeholder', { loading }]}>
+        {'\u00A0'.repeat(size)}
+      </span>
     </span>
   )
 }

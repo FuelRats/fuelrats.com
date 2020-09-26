@@ -16,7 +16,12 @@ main.page {
   background: #FFFFFF;
   transition: margin 0.2s;
 
-  @media only screen and (max-width: 769px) {
+  @media only screen and (max-width: 768px) {
     margin-left: 0;
   }
+}
+
+
+#FuelRatsApp.forceDrawer main.page {
+  margin-left: 0;
 }

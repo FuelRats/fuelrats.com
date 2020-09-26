@@ -1,4 +1,5 @@
 // Module imports
+import { HttpStatus } from '@fuelrats/web-util/http'
 import React from 'react'
 
 
@@ -6,15 +7,14 @@ import React from 'react'
 
 
 // Component imports
-import { authenticated } from '../../components/AppLayout'
-import FirstLoginModal from '../../components/FirstLoginModal'
-import ProfileHeader from '../../components/ProfileHeader'
-import TabbedPanel from '../../components/TabbedPanel'
-import UserOverview from '../../components/UserOverview'
-import UserRatsPanel from '../../components/UserRatsPanel'
-import HttpStatus from '../../helpers/HttpStatus'
-import { setError } from '../../helpers/gIPTools'
-import { Router } from '../../routes'
+import { authenticated } from '~/components/AppLayout'
+import FirstLoginModal from '~/components/FirstLoginModal'
+import ProfileHeader from '~/components/ProfileHeader'
+import TabbedPanel from '~/components/TabbedPanel'
+import UserOverview from '~/components/UserOverview'
+import UserRatsPanel from '~/components/UserRatsPanel'
+import { setError } from '~/helpers/gIPTools'
+import { Router } from '~/routes'
 
 
 
@@ -22,25 +22,11 @@ import { Router } from '../../routes'
 @authenticated
 class Profile extends React.Component {
   /***************************************************************************\
-    Class Properties
-  \***************************************************************************/
-
-  state = {
-    showFirstLoginDialog: this.props.query.fl === '1',
-
-  }
-
-
-
-
-
-  /***************************************************************************\
     Private Methods
   \***************************************************************************/
 
   _handleFLDClose = () => {
-    this.setState({ showFirstLoginDialog: false })
-    Router.replaceRoute('profile', { tab: this.props.query.tab }, { shallow: true })
+    Router.replaceRoute('profile', { tab: this.props.query.tab })
   }
 
   _handleTabClick = (newTab) => {
@@ -65,15 +51,14 @@ class Profile extends React.Component {
     return {
       title: 'Profile',
       displayTitle: this.tabs[ctx.query.tab].pageTitle,
+      pageKey: 'profile',
     }
   }
 
   render () {
     const {
-      showFirstLoginDialog,
-    } = this.state
-    const {
       tab,
+      fl,
     } = this.props.query
 
     return (
@@ -88,7 +73,7 @@ class Profile extends React.Component {
         </div>
 
         <FirstLoginModal
-          isOpen={showFirstLoginDialog}
+          isOpen={fl === '1'}
           onClose={this._handleFLDClose} />
 
       </>

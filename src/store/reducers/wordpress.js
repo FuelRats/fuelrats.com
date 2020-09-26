@@ -1,3 +1,4 @@
+import { isError } from 'flux-standard-action'
 import { produce } from 'immer'
 
 
@@ -14,14 +15,13 @@ import initialState from '../initialState'
 const wordpressReducer = produce((draftState, action) => {
   const {
     payload,
-    status,
     type,
   } = action
 
   switch (type) {
     case actionTypes.wordpress.pages.read:
     case actionTypes.wordpress.pages.search:
-      if (status === 'success') {
+      if (!isError(action)) {
         payload.forEach((page) => {
           draftState.pages[page.slug] = page
         })

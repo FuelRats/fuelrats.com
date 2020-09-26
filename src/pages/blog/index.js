@@ -6,14 +6,14 @@ import React from 'react'
 
 
 // Component imports
-import ArticleCard from '../../components/Blog/ArticleCard'
-import safeParseInt from '../../helpers/safeParseInt'
-import { Link } from '../../routes'
-import { connect } from '../../store'
+import ArticleCard from '~/components/Blog/ArticleCard'
+import safeParseInt from '~/helpers/safeParseInt'
+import { Link } from '~/routes'
+import { connect } from '~/store'
 import {
   selectBlogs,
   selectBlogStatistics,
-} from '../../store/selectors'
+} from '~/store/selectors'
 
 
 
@@ -124,6 +124,15 @@ class Blogs extends React.Component {
     Public Methods
   \***************************************************************************/
 
+  componentDidUpdate (prevProps) {
+    if (
+      prevProps.page !== this.props.page
+      || prevProps.category !== this.props.category
+      || prevProps.author !== this.props.author) {
+      this._getBlogs()
+    }
+  }
+
   componentDidMount () {
     this._getBlogs()
   }
@@ -147,6 +156,7 @@ class Blogs extends React.Component {
   static getPageMeta () {
     return {
       title: 'Blog',
+      pageKey: 'blog-list',
     }
   }
 

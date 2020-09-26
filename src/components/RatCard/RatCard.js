@@ -1,22 +1,19 @@
-// Module imports
+import { isError } from 'flux-standard-action'
 import PropTypes from 'prop-types'
 import React from 'react'
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-
-
-// Component imports
-import classNames from '../../helpers/classNames'
-import { formatAsEliteDate } from '../../helpers/formatTime'
-import { connect, actionStatus } from '../../store'
+import { formatAsEliteDate } from '~/helpers/formatTime'
+import { connect } from '~/store'
 import {
   selectRatById,
   selectShipsByRatId,
   selectUserById,
   selectDisplayRatIdByUserId,
-  selectPageViewMetaById,
   withCurrentUserId,
-} from '../../store/selectors'
+  selectRatStatisticsById,
+} from '~/store/selectors'
+
 import CardControls from '../CardControls'
 import InlineEditSpan from '../InlineEditSpan'
 import DefaultRatButton from './DefaultRatButton'
@@ -38,7 +35,7 @@ class RatCard extends React.Component {
     validity: {
       name: false,
     },
-    editMode: false,
+    editing: false,
     submitting: false,
   }
 
@@ -97,11 +94,14 @@ class RatCard extends React.Component {
 
     this.setState({ submitting: true })
 
-    await updateRat(rat.id, changes)
+    await updateRat({
+      id: rat.id,
+      attributes: changes,
+    })
 
     this.setState({
       changes: {},
-      editMode: false,
+      editing: false,
       submitting: false,
       validity: {
         name: false,
@@ -111,7 +111,7 @@ class RatCard extends React.Component {
 
   _handleEdit = () => {
     this.setState({
-      editMode: true,
+      editing: true,
     })
   }
 
@@ -129,7 +129,7 @@ class RatCard extends React.Component {
     }
 
     this.setState({
-      editMode: false,
+      editing: false,
       changes: {},
       validity: {
         name: false,
@@ -142,7 +142,7 @@ class RatCard extends React.Component {
   }
 
   _handleDisplayRatUpdate = (res) => {
-    if (res.status === actionStatus.SUCCESS) {
+    if (!isError(res)) {
       this.setState({ submitting: false })
     }
   }
@@ -153,24 +153,6 @@ class RatCard extends React.Component {
     Public Methods
   \***************************************************************************/
 
-  componentDidMount () {
-    const {
-      ratId,
-      getRescues,
-      rescueCount,
-      rescueCountPageViewId,
-    } = this.props
-
-    if (!rescueCount) {
-      getRescues({
-        firstLimpetId: ratId,
-        limit: 1,
-      }, {
-        pageView: rescueCountPageViewId,
-      })
-    }
-  }
-
   render () {
     const {
       ratIsDisplayRat,
@@ -178,14 +160,15 @@ class RatCard extends React.Component {
     } = this
 
     const {
+      className,
       rat,
       // ships,
-      rescueCount,
+      statistics,
     } = this.props
 
     const {
       deleteConfirm,
-      editMode,
+      editing,
       changes,
       shipsExpanded,
       submitting,
@@ -197,24 +180,18 @@ class RatCard extends React.Component {
 
     const createdAt = formatAsEliteDate(rat.attributes.createdAt)
 
-    const classes = classNames(
-      'panel',
-      'rat-panel',
-      ['expanded', shipsExpanded],
-      ['editing', editMode],
-      ['submitting', submitting],
-    )
-
     const cmdrNameValue = typeof changes.name === 'string' ? changes.name : rat.attributes.name
     const submitText = submitting === 'delete' ? 'Deleting...' : 'Updating...'
 
     return (
-      <div className={classes} data-loader-text={submitting ? submitText : null}>
+      <div
+        className={['panel rat-panel', { expanded: shipsExpanded, editing, submitting }, className]}
+        data-loader-text={submitting ? submitText : null}>
         <header>
           <div>
             <span>{'CMDR '}</span>
             <InlineEditSpan
-              canEdit={editMode}
+              canEdit={editing}
               inputClassName="dark"
               maxLength={22}
               minLength={1}
@@ -243,7 +220,7 @@ class RatCard extends React.Component {
           <div className="rat-stats">
             <small>
               <span className="text-muted">{'Rescues: '}</span>
-              {typeof rescueCount === 'number' ? rescueCount : '...'}
+              {statistics ? statistics.attributes.firstLimpet : '...'}
             </small>
             <small>
               <span className="text-muted">{'Created: '}</span>
@@ -261,11 +238,11 @@ class RatCard extends React.Component {
           </div>
           */}
           <CardControls
-            canDelete={userHasMultipleRats && !ratIsDisplayRat && !rescueCount}
+            canDelete={userHasMultipleRats && !ratIsDisplayRat && (statistics && !statistics?.attributes.firstLimpet)}
             canSubmit={this.canSubmit}
             controlType="rat"
             deleteMode={deleteConfirm}
-            editMode={editMode}
+            editMode={editing}
             onCancelClick={this._handleCancel}
             onDeleteClick={this._handleDelete}
             onEditClick={this._handleEdit}
@@ -331,22 +308,17 @@ class RatCard extends React.Component {
 
   static mapDispatchToProps = [
     'deleteRat',
-    'getRescues',
     'updateRat',
   ]
 
 
   static mapStateToProps = (state, props) => {
-    const pageViewId = `ratcard-rescuecount-${props.ratId}`
-    const rescueCountPageViewMeta = selectPageViewMetaById(state, { pageViewId })
-
     return {
       user: withCurrentUserId(selectUserById)(state),
       userDisplayRatId: withCurrentUserId(selectDisplayRatIdByUserId)(state),
       rat: selectRatById(state, props),
       ships: selectShipsByRatId(state, props),
-      rescueCount: rescueCountPageViewMeta && rescueCountPageViewMeta.total,
-      rescueCountPageViewId: pageViewId,
+      statistics: selectRatStatisticsById(state, props),
     }
   }
 
@@ -358,11 +330,16 @@ class RatCard extends React.Component {
     Prop Definitions
   \***************************************************************************/
 
-  static defaultProps = {}
-
   static propTypes = {
-    /* eslint-disable-next-line react/no-unused-prop-types */// Used in such a way that eslint cannot detect it's use
+    className: PropTypes.string,
+    deleteRat: PropTypes.func,
+    rat: PropTypes.object,
+    // eslint-disable-next-line react/no-unused-prop-types -- ratId is used in state mapping
     ratId: PropTypes.string.isRequired,
+    statistics: PropTypes.object,
+    updateRat: PropTypes.func,
+    user: PropTypes.object,
+    userDisplayRatId: PropTypes.string,
   }
 }
 

@@ -1,12 +1,15 @@
+import { isError } from 'flux-standard-action'
 import { produce } from 'immer'
 
 
 
 
 
-import actionStatus from '../actionStatus'
 import actionTypes from '../actionTypes'
 import initialState from '../initialState'
+
+
+
 
 
 const clearLoginState = (draftState = initialState.session) => {
@@ -18,33 +21,34 @@ const clearLoginState = (draftState = initialState.session) => {
 
 const sessionReducer = produce((draftState, action) => {
   const {
+    meta,
     payload,
-    status,
+    error,
     type,
   } = action
 
   switch (type) {
     case actionTypes.session.initialize:
-      draftState.loggedIn = Boolean(action.accessToken && !action.error)
-      draftState.userAgent = action.userAgent
-      draftState.error = action.error
+      draftState.loggedIn = Boolean(payload.accessToken && !error)
+      draftState.userAgent = payload.userAgent
+      draftState.error = meta?.error ?? error
       break
 
     case actionTypes.session.read:
-      if (status === actionStatus.SUCCESS) {
+      if (!isError(action)) {
         draftState.userId = payload.data.id
       }
       break
 
     case actionTypes.session.login:
-      if (status === actionStatus.SUCCESS) {
+      if (!isError(action)) {
         draftState.loggedIn = true
       }
       break
 
     case actionTypes.session.logout:
-      if (status === actionStatus.SUCCESS) {
-        if (action.payload?.waitForDestroy) {
+      if (!isError(action)) {
+        if (payload?.waitForDestroy) {
           draftState.loggingOut = true
         } else {
           clearLoginState(draftState)
@@ -59,7 +63,7 @@ const sessionReducer = produce((draftState, action) => {
       break
 
     case actionTypes.session.pageDestroyed:
-      if (status === actionStatus.SUCCESS && draftState.loggingOut) {
+      if (!isError(action) && draftState.loggingOut) {
         clearLoginState(draftState)
       }
       break
@@ -68,8 +72,6 @@ const sessionReducer = produce((draftState, action) => {
     default:
       break
   }
-
-  return undefined
 }, initialState.session)
 
 

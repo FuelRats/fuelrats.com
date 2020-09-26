@@ -1,0 +1,92 @@
+name: Test
+
+on:
+  pull_request:
+    branches: [ develop, release ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    name: Lint
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Read `.nvmrc`
+        run: echo "::set-output name=nvmrc::$(cat .nvmrc)"
+        id: nvm
+
+      - name: Use Node.js (.nvmrc)
+        uses: actions/setup-node@v1
+        with:
+          node-version: "${{ steps.nvm.outputs.nvmrc }}"
+
+      - name: Read `yarn cache dir`
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Load yarn cache
+        uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Lint
+        uses: samuelmeuli/lint-action@v1.5.3
+        with:
+          github_token: ${{ secrets.github_token }}
+          eslint: true
+          eslint_args: "--max-warnings 0"
+          stylelint: true
+          stylelint_args: "--max-warnings 0"
+
+  build:
+    runs-on: ubuntu-latest
+    name: Build Test
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Read `.nvmrc`
+        run: echo "::set-output name=nvmrc::$(cat .nvmrc)"
+        id: nvm
+
+      - name: Use Node.js (.nvmrc)
+        uses: actions/setup-node@v1
+        with:
+          node-version: "${{ steps.nvm.outputs.nvmrc }}"
+
+      - name: Read `yarn cache dir`
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Load yarn cache
+        uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Load Next.js cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ github.workspace }}/dist/next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build
+        run: yarn build
+        env:
+          NODE_ENV: production

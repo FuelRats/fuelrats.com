@@ -1,7 +1,7 @@
 // Module Imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import qs from 'qs'
 import React from 'react'
-
 
 
 
@@ -23,27 +23,34 @@ class RatTagsInput extends TagsInput {
   }
 
   static renderValue (rat) {
-    const badgeClasses = ['badge', 'platform', 'short', rat.attributes.platform]
-
     return (
-      <span><span className={badgeClasses.join(' ')} /> {rat.attributes.name}</span>
+      <span>
+        <span className={['badge platform short', rat.attributes.platform]} />
+        {rat.attributes.name}
+      </span>
     )
   }
 
   async search (query) {
     this.setState({ loading: true })
 
-    const queryParams = [
-      'limit=10',
-      this.props['data-platform'] ? `platform=${this.props['data-platform']}` : '',
-      `name.ilike=${query}%`,
-    ]
+    const queryParams = qs.stringify({
+      page: {
+        limit: 10,
+      },
+      filter: {
+        and: [
+          { name: { iLike: `${query}%` } },
+          { platform: this.props['data-platform'] },
+        ],
+      },
+    })
 
     if (query) {
-      const response = await fetch(`/api/rats?${queryParams.join('&')}`)
+      const response = await fetch(`/api/rats?${queryParams}`)
       const { data } = await response.json()
 
-      if (!data.length) {
+      if (!data?.length) {
         return this.updateOptions([])
       }
 

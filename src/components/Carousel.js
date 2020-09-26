@@ -9,8 +9,8 @@ import { createSelector, createStructuredSelector } from 'reselect'
 
 
 // Component imports
-import { connect } from '../store'
-import { selectImageById } from '../store/selectors'
+import { connect } from '~/store'
+import { selectImages } from '~/store/selectors'
 
 
 
@@ -20,19 +20,16 @@ const { publicRuntimeConfig } = getConfig()
 const { publicUrl } = publicRuntimeConfig.local
 
 
-const getState = (state) => {
-  return state
-}
-const getSlides = (state, props) => {
+const getSlides = (_, props) => {
   return props.slides
 }
-const getId = (state, props) => {
+const getId = (_, props) => {
   return props.id
 }
 
 const selectConnectedSlides = createSelector(
-  [getState, getSlides, getId],
-  (state, slides, compId) => {
+  [selectImages, getSlides, getId],
+  (images, slides, compId) => {
     return Object.entries(slides).reduce((acc, [key, slide]) => {
       const slideId = `${compId}-${key}`
 
@@ -42,7 +39,7 @@ const selectConnectedSlides = createSelector(
           ...slide,
           id: slideId,
           url: `${publicUrl}/static/images/${slide.filename || `slide_${key}.jpg`}`,
-          image: selectImageById(state, { imageId: slideId }),
+          image: images[slideId],
         },
       }
     }, {})
@@ -127,20 +124,22 @@ class Carousel extends React.Component {
         initial={{ opacity: 1 }}
         leave={{ opacity: 0 }}>
         {
-          (slide) => {
-            return slide.image && ((style) => {
-              const divStyle = {
-                ...style,
-                backgroundImage: `url(${slide.image})`,
-                backgroundPosition: slide.position || 'center',
-              }
+          (style, slide) => {
+            if (!slide.image) {
+              return null
+            }
 
-              return (
-                <animated.div
-                  className="carousel-slide"
-                  style={divStyle} />
-              )
-            })
+            return (
+              <animated.div
+                className="carousel-slide"
+                style={
+                  {
+                    ...style,
+                    backgroundImage: `url(${slide.image})`,
+                    backgroundPosition: slide.position || 'center',
+                  }
+                } />
+            )
           }
         }
       </Transition>
@@ -156,26 +155,24 @@ class Carousel extends React.Component {
         initial={{ xPos: 0 }}
         leave={{ xPos: 100 }}>
         {
-          (slide) => {
-            return slide.image && (({ xPos }) => {
-              const spanStyle = {
-                transform: xPos.to((value) => {
-                  return (value ? `translate3d(${value}%,0,0)` : undefined)
-                }),
-              }
+          ({ xPos }, slide) => {
+            if (!slide.image || !slide.text) {
+              return null
+            }
 
-              return (
-                slide.text
-                  ? (
-                    <animated.span
-                      className="carousel-slide-text"
-                      style={spanStyle}>
-                      {slide.text}
-                    </animated.span>
-                  )
-                  : null
-              )
-            })
+            const spanStyle = {
+              transform: xPos.to((value) => {
+                return (value ? `translate3d(${value}%,0,0)` : undefined)
+              }),
+            }
+
+            return (
+              <animated.span
+                className="carousel-slide-text"
+                style={spanStyle}>
+                {slide.text}
+              </animated.span>
+            )
           }
         }
       </Transition>
@@ -194,7 +191,7 @@ class Carousel extends React.Component {
     } = this.state
 
     return (
-      <div className={`carousel ${className}`} id={id}>
+      <div className={['carousel', className]} id={id}>
         {this.renderSlide()}
         {this.renderSlideText()}
         <div className="carousel-slide-picker">
@@ -204,7 +201,7 @@ class Carousel extends React.Component {
                 <button
                   key={slideId}
                   aria-label={`Image carousel slide ${slideId}`}
-                  className={`circle-button${curSlide === slideId ? ' active' : ''}`}
+                  className={['circle-button', { active: curSlide === slideId }]}
                   name={slideId}
                   type="button"
                   onClick={this._handleSlideButtonClick} />
@@ -265,10 +262,12 @@ class Carousel extends React.Component {
 
   static propTypes = {
     className: PropTypes.string,
+    getImage: PropTypes.func,
     id: PropTypes.string.isRequired,
     interval: PropTypes.number,
     slides: PropTypes.objectOf(PropTypes.shape({
       filename: PropTypes.string,
+      image: PropTypes.string,
       position: PropTypes.string,
       text: PropTypes.any,
     })).isRequired,

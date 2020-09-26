@@ -6,14 +6,14 @@ import React from 'react'
 
 
 // Component imports
-import classNames from '../../helpers/classNames'
-import { connect } from '../../store'
+import { connect } from '~/store'
 import {
   selectSession,
   selectUserById,
   selectAvatarByUserId,
   withCurrentUserId,
-} from '../../store/selectors'
+} from '~/store/selectors'
+
 import NavSection from './NavSection'
 
 
@@ -54,7 +54,7 @@ class UserMenu extends React.Component {
        key: 'admin-rescues-list',
        title: 'Rescues',
        route: 'admin rescues list',
-       permission: 'rescue.write',
+       permission: 'rescues.write',
      },
      // {
      //   key: 'admin-users',
@@ -105,14 +105,8 @@ class UserMenu extends React.Component {
       userId,
     } = this.props
 
-    const classes = classNames(
-      'user-menu',
-      ['logged-in', loggedIn],
-      ['logging-in', loggedIn && !userId],
-    )
-
     return (
-      <div className={classes}>
+      <div className={['user-menu', { 'logged-in': loggedIn, 'logging-in': loggedIn && !userId }]}>
         {
           Boolean(loggedIn) && (
             <>

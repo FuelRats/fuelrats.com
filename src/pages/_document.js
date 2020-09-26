@@ -1,12 +1,5 @@
-// Module imports
-import Document, { Head, Main, NextScript } from 'next/document'
+import Document, { Html, Head, Main, NextScript } from 'next/document'
 import React from 'react'
-
-
-
-
-
-// Module imports
 
 
 
@@ -22,10 +15,8 @@ class FuelRatsWebsite extends Document {
   render () {
     const { nonce } = this.props
     return (
-      <html lang="en">
+      <Html lang="en">
         <Head nonce={nonce}>
-          <meta content="initial-scale=1.0, viewport-fit=cover, width=device-width" name="viewport" />
-
           <meta content="Fuel Rats" name="application-name" />
           <meta content="#d65050" name="theme-color" />
 
@@ -73,10 +64,12 @@ class FuelRatsWebsite extends Document {
 
           <div id="alert-container" />
         </body>
-      </html>
+      </Html>
     )
   }
 }
+
+
 
 
 

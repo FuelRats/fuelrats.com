@@ -107,14 +107,78 @@ textarea {
 }
 
 
-input.large[type='checkbox'] {
-  width: 16px;
-  height: 16px;
-  vertical-align: middle;
+input[type='checkbox'] {
+  appearance: none;
+  display: inline-flex;
+  position: relative;
+
+  place-content: center;
+
+  width: 1em;
+  height: 1em;
+
+  border: 0.2rem solid $red;
+
+  background: transparent;
+  outline: none;
+
+  font-size: 13px;
+
+  vertical-align: baseline;
+
+  &:indeterminate {
+    &::before {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+
+      content: '';
+
+      border: 0.2rem solid transparent;
+
+      background: padding-box $red;
+    }
+
+    &::-ms-check {
+      border: 0.2rem solid transparent;
+
+      background: padding-box $red;
+      color: $red;
+    }
+  }
+
+  &:checked {
+    &::-ms-check {
+      border: none;
+
+      background: transparent;
+      color: $red;
+    }
+
+    &::before {
+      display: block;
+      position: absolute;
+      top: 0;
+
+      content: '';
+      width: 0.25em;
+      height: 0.5em;
+
+      border-right: 0.2rem solid $red;
+      border-bottom: 0.2rem solid $red;
+
+      transform: rotate(45deg);
+    }
+  }
+
+  &.large {
+    font-size: 16px;
+    vertical-align: middle;
+  }
 }
 
-
-/* stylelint-disable-next-line selector-class-pattern */
 .ReactTable .rt-thead.-filters input {
   @extend %text-input;
 

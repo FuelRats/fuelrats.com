@@ -8,9 +8,10 @@ const initialState = {
 
   decals: {},
 
-  error: {
-    errors: [],
-    hasError: false,
+  dispatch: {
+    board: [],
+    closed: [],
+    connected: false,
   },
 
   epics: {},
@@ -24,9 +25,11 @@ const initialState = {
   images: {},
 
   leaderboard: {
-    loading: false,
-    statistics: [],
+    statistics: {},
+    entries: [],
   },
+
+  nicknames: {},
 
   pageViews: {},
 
@@ -46,6 +49,8 @@ const initialState = {
   ships: {},
 
   users: {},
+
+  'rat-statistics': {},
 
   wordpress: {
     pages: {},

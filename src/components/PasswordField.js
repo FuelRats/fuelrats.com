@@ -7,12 +7,6 @@ import zxcvbn from 'zxcvbn'
 
 
 
-// Component imports
-import classNames from '../helpers/classNames'
-
-
-
-
 export default class PasswordField extends React.Component {
   /***************************************************************************\
     Class Properties
@@ -123,13 +117,6 @@ export default class PasswordField extends React.Component {
       showSuggestions,
     } = this.props
 
-    const classes = classNames(
-      'password-group',
-      ['show-strength', showStrength],
-      ['show-suggestions', showSuggestions],
-      className,
-    )
-
     const inputProps = { ...this.props }
 
     delete inputProps.onChange
@@ -138,7 +125,7 @@ export default class PasswordField extends React.Component {
 
     return (
       <div
-        className={classes}
+        className={['password-group', { 'show-strength': showStrength, 'show-suggestions': showSuggestions }, className]}
         data-focused={focused}>
         <div className="input-group">
           <input

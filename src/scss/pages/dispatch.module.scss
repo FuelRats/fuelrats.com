@@ -1,0 +1,97 @@
+@import '../colors';
+
+$bounce-bezier: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+main.dispatchBoard {
+  width: 100vw;
+
+  color: $white;
+  background: fixed $black url('/static/images/dispatch/ratdecal.png') center no-repeat;
+  background-size: auto 75%;
+
+  overflow-x: hidden;
+}
+
+.layout {
+  display: flex;
+
+  flex-direction: row;
+
+  width: calc(100vw - 2rem);
+  margin: 0 1rem;
+
+  &.openDetail {
+    > section {
+      &.table,
+      &.detail {
+        max-width: calc(50% - 2rem);
+        margin: 0 1rem 1rem;
+      }
+
+      &.detail {
+        min-width: calc(50% - 2rem);
+
+        opacity: 1;
+      }
+    }
+  }
+
+  > section {
+    transition:
+      max-width 0.2s $bounce-bezier,
+      min-width 0.2s $bounce-bezier,
+      margin 0.2s $bounce-bezier,
+      opacity 0.15s ease 0.2s;
+
+    &.table {
+      flex-grow: 1;
+
+      max-width: 100%;
+      margin: 0 8rem 1rem;
+    }
+
+    &.detail {
+      flex-shrink: 1;
+
+      min-width: 0;
+      max-width: 0;
+      margin: 0;
+
+      opacity: 0;
+    }
+  }
+
+  .clock {
+    align-self: flex-end;
+
+    margin: 0 1rem 0.5rem;
+  }
+
+  @media screen and (min-width: 769px) {
+    .clock {
+      position: absolute;
+      top: 2.4rem;
+      right: 8.5rem;
+    }
+  }
+  @media screen and (max-width: 1190px) {
+    flex-direction: column;
+
+    &.openDetail {
+      > section {
+        &.table,
+        &.detail {
+          flex-grow: 0;
+
+          max-width: 100%;
+        }
+      }
+    }
+
+    > section {
+      &.table {
+        margin: 0 1rem 1rem;
+      }
+    }
+  }
+}

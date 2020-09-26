@@ -4,12 +4,9 @@
     no-negated-condition,
     no-restricted-syntax,
     no-return-assign,
-    prefer-rest-params,
     react/jsx-handler-names,
     react/jsx-no-bind,
-    react/no-deprecated,
     react/state-in-constructor,
-    eqeqeq,
     arrow-body-style,
 */
 
@@ -422,15 +419,6 @@ export default class TagsInputComponent extends React.Component {
       options,
       tags,
     } = this.state
-    let classes = ['tags-input']
-
-    if (tags.length) {
-      classes.push('has-tags')
-    }
-
-    if (className) {
-      classes = classes.concat(className)
-    }
 
     const divProps = { ...this.props }
 
@@ -442,7 +430,7 @@ export default class TagsInputComponent extends React.Component {
     delete divProps.placeholder
 
     return (
-      <div {...divProps} className={classes.join(' ')}>
+      <div {...divProps} className={['tags-input', { 'has-tags': tags.length > 0 }, className]}>
         <ul className="tags">{this.renderTags()}</ul>
 
         <input
@@ -490,16 +478,10 @@ export default class TagsInputComponent extends React.Component {
   renderOption (option, index) {
     const { selectedOption } = this.state
 
-    const classes = ['option']
-
-    if (selectedOption === index) {
-      classes.push('focus')
-    }
-
     return (
       <li
         key={index}
-        className={classes.join(' ')}
+        className={['option', { focus: selectedOption === index }]}
         onBlur={TagsInputComponent.handleOptionMouseOut}
         onFocus={(event) => this.handleOptionMouseOver(event, index)}
         onMouseDown={() => this.addTag(option)}
@@ -521,14 +503,8 @@ export default class TagsInputComponent extends React.Component {
   }
 
   renderReturnPrompt () {
-    const classes = ['return-prompt']
-
-    if (this.input && this.input.value) {
-      classes.push('show')
-    }
-
     return (
-      <div className={classes.join(' ')}>
+      <div className={['return-prompt', { show: this.input && this.input.value }]}>
         <span>{'Press '}<Key>{'Return'}</Key>{' to add'}</span>
       </div>
     )
@@ -537,14 +513,8 @@ export default class TagsInputComponent extends React.Component {
   renderTag (tag, index) {
     const { selectedTag } = this.state
 
-    const classes = ['tag']
-
-    if (selectedTag === index) {
-      classes.push('focus')
-    }
-
     return (
-      <li key={index} className={classes.join(' ')}>
+      <li key={index} className={['tag', { focus: selectedTag === index }]}>
         {this.renderValue(tag)}
 
         <button
@@ -566,7 +536,6 @@ export default class TagsInputComponent extends React.Component {
     return this.getValue(original)
   }
 
-  // eslint-disable-next-line class-methods-use-this
   search () {
     /* To be implemented by extending classes. we just silently return here. */
   }

@@ -1,4 +1,5 @@
 // Module imports
+import { isError } from 'flux-standard-action'
 import React from 'react'
 
 
@@ -6,15 +7,18 @@ import React from 'react'
 
 
 // Component imports
-import { authenticated } from '../components/AppLayout'
-import HiddenFormData from '../components/HiddenFormData'
-import { actions } from '../store'
+import { authenticated } from '~/components/AppLayout'
+import ScopeView from '~/components/ScopeView'
+import { pageRedirect } from '~/helpers/gIPTools'
+import { connect } from '~/store'
+import { getClientOAuthPage } from '~/store/actions/authentication'
 
 
-
-
+// For Testing
+// /authorize?client_id=480f28cf-71cc-454e-b502-959d9a5346fc&redirect_uri=https://dispatch.fuelrats.com/&scope=users.read.me%20rescues.read&response_type=token&state=hello
 
 @authenticated
+@connect
 class Authorize extends React.Component {
   /***************************************************************************\
     Properties
@@ -24,7 +28,33 @@ class Authorize extends React.Component {
     submitting: false,
   }
 
-  _formRef = React.createRef()
+
+
+
+
+  /***************************************************************************\
+    Private Methods
+  \***************************************************************************/
+
+  _handleSubmit = async (event) => {
+    const {
+      client,
+      submitOAuthDecision,
+    } = this.props
+
+    this.setState({ submitting: true })
+
+    const response = await submitOAuthDecision({
+      transactionId: client.transactionId,
+      allow: event.target.name === 'allow',
+    })
+
+    if (!isError(response) && response.payload.redirect) {
+      window.location.href = response.payload.redirect
+    }
+
+    this.setState({ submitting: false })
+  }
 
 
 
@@ -34,117 +64,75 @@ class Authorize extends React.Component {
     Public Methods
   \***************************************************************************/
 
-  static async getInitialProps ({ query, res, store, accessToken }) {
-    const {
-      client_id: clientId,
-      response_type: responseType,
-    } = query
+  static async getInitialProps (ctx) {
+    const { query, res, store } = ctx
 
-    const { payload, response, status } = await actions.getClientOAuthPage(query)(store.dispatch)
+    const response = await store.dispatch(getClientOAuthPage(query))
 
-    if (status === 'success') {
-      const {
-        client,
-        ...oauthProps
-      } = payload
+    if (!isError(response)) {
+      const { meta, payload } = response
 
-      if (res && response.headers['set-cookie']) {
-        res.setHeader('set-cookie', response.headers['set-cookie'])
+      if (payload.redirect) {
+        pageRedirect(ctx, payload.redirect)
+        return {}
       }
 
-      return {
-        accessToken,
-        clientId,
-        responseType,
-        clientName: client.data.attributes.name,
-        redirectUri: client.data.attributes.redirectUri,
-        ...oauthProps,
+      if (res && meta.response.headers['set-cookie']) {
+        res.setHeader('set-cookie', meta.response.headers['set-cookie'])
       }
+
+      return { client: payload }
     }
 
     return {}
   }
 
-  static getPageMeta (_, { preAuthorized }) {
-    return {
-      noLayout: preAuthorized,
-      className: preAuthorized ? 'hidden' : '',
-      title: 'Authorize Application',
-    }
-  }
-
-  componentDidMount () {
-    if (this.props.preAuthorized) {
-      this._formRef.current.submit()
-    }
+  static getPageMeta () {
+    return { title: 'Authorize Application' }
   }
 
   render () {
-    const {
-      accessToken,
-      clientId,
-      clientName,
-      preAuthorized,
-      redirectUri,
-      responseType,
-      scope,
-      scopes,
-      transactionId,
-    } = this.props
+    const { client } = this.props
     const { submitting } = this.state
-
-    const hasRequiredParameters = clientId && scope && responseType
-
-    const formData = {
-      transaction_id: transactionId, /* eslint-disable-line camelcase */// Required by API
-      scope,
-      redirectUri,
-      ...(preAuthorized ? { allow: 'true' } : {}),
-    }
 
     return (
       <div className="page-content">
         {
-          hasRequiredParameters && (
+          client && (
             <>
-              <h3>{`${clientName} is requesting access to your FuelRats account`}</h3>
+              <h4>
+                {`${client.clientName} is requesting access to your Fuel Rats account`}
+              </h4>
+              <br />
+              <span><b>{'This application will be able to:'}</b></span>
 
-              <p><strong>{'This application will be able to:'}</strong></p>
+              <ScopeView scopes={client.scopes} />
 
-              <ul>
-                {
-                  scopes.map(({ permission, accessible }) => {
-                    return (
-                      <li key={permission} className={accessible ? null : 'inaccessible'}>{permission}</li>
-                    )
-                  })
-                }
-              </ul>
-
-              <form
-                ref={this._formRef}
-                action={`/api/oauth2/authorize?bearer=${accessToken}`}
-                method="post">
-
-                <HiddenFormData data={formData} />
-
+              <form>
                 <div className="primary">
                   <button
                     className="green"
                     disabled={submitting}
                     name="allow"
-                    type="submit"
-                    value="true">
+                    type="button"
+                    value="true"
+                    onClick={this._handleSubmit}>
                     {submitting ? 'Submitting...' : 'Allow'}
                   </button>
 
-                  <button
-                    disabled={submitting}
-                    name="cancel"
-                    type="submit"
-                    value="true">
-                    {submitting ? 'Submitting...' : 'Deny'}
-                  </button>
+                  {' '}
+                  {
+                    !submitting && (
+                      <button
+                        disabled={submitting}
+                        name="cancel"
+                        type="button"
+                        value="true"
+                        onClick={this._handleSubmit}>
+                        {'Deny'}
+                      </button>
+                    )
+                  }
                 </div>
               </form>
             </>
@@ -152,7 +140,7 @@ class Authorize extends React.Component {
         }
 
         {
-          !hasRequiredParameters && (
+          !client && (
             <>
               <header>
                 <h3>{'Invalid Authorize Request'}</h3>
@@ -165,6 +153,16 @@ class Authorize extends React.Component {
       </div>
     )
   }
+
+
+
+
+
+  /***************************************************************************\
+    Redux Properties
+  \***************************************************************************/
+
+  static mapDispatchToProps = ['submitOAuthDecision']
 }
 
 

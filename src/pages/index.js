@@ -6,9 +6,9 @@ import React from 'react'
 
 
 // Component imports
-import Carousel from '../components/Carousel'
-import { Link } from '../routes'
-import { connect } from '../store'
+import Carousel from '~/components/Carousel'
+import { Link, Router } from '~/routes'
+import { connect } from '~/store'
 
 
 const CarouselSlides = {
@@ -18,7 +18,7 @@ const CarouselSlides = {
     filename: 'chives.jpg',
   },
   1: {
-    text: 'CMDR RafaBC',
+    text: 'CMDR rafaBC_',
     position: '20% 50%',
     filename: 'rafa.jpg',
   },
@@ -57,6 +57,10 @@ class Index extends React.Component {
   componentDidMount () {
     if (this.props.query.authenticate) {
       this.props.setFlag('showLoginDialog', true)
+      const nextQuery = { ...this.props.query }
+      delete nextQuery.authenticate
+
+      Router.replaceRoute(Router.router.route, nextQuery, { shallow: true })
     }
   }
 

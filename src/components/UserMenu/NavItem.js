@@ -5,7 +5,7 @@ import React from 'react'
 
 
 // Component imports
-import { Link } from '../../routes'
+import { Link } from '~/routes'
 
 
 

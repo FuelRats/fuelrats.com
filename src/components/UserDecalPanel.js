@@ -1,19 +1,15 @@
 // Module imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
-import { formatAsEliteDate } from '../helpers/formatTime'
+import { createStructuredSelector } from 'reselect'
 
-
-
-
-
-// Module imports
-import { connect } from '../store'
+import { formatAsEliteDate } from '~/helpers/formatTime'
+import { connect } from '~/store'
 import {
-  selectDecalEligibility,
   selectDecalsByUserId,
+  selectUserById,
   withCurrentUserId,
-} from '../store/selectors'
+} from '~/store/selectors'
 
 
 
@@ -22,7 +18,6 @@ import {
 @connect
 class UserDetailsPanel extends React.Component {
   state = {
-    checkingEligibility: true,
     redeeming: false,
     decalsVisible: {},
   }
@@ -39,7 +34,7 @@ class UserDetailsPanel extends React.Component {
 
     this.setState({ redeeming: true })
 
-    await redeemDecal()
+    await redeemDecal(this.props.user.id)
 
     this.setState({ redeeming: false })
   }
@@ -64,44 +59,21 @@ class UserDetailsPanel extends React.Component {
     Public Methods
   \***************************************************************************/
 
-  async componentDidMount () {
-    const {
-      checkDecalEligibility,
-      eligible,
-    } = this.props
-
-    if (!eligible) {
-      await checkDecalEligibility()
-    }
-
-    this.setState({ checkingEligibility: false })
-  }
-
   renderNoDataText () {
-    const {
-      eligible,
-    } = this.props
-
-    const { checkingEligibility } = this.state
-
-    if (!checkingEligibility) {
-      if (!eligible) {
-        return <div className="no-decal">{"Sorry, you're not eligible for a decal."}</div>
-      }
-
-      return (
-        <div className="redeem">
-          <p>{"You're eligible for a decal but you haven't redeemed it yet."}</p>
-          <button
-            type="button"
-            onClick={this._handleRedeemDecal}>
-            {'Redeem'}
-          </button>
-        </div>
-      )
+    if (!this.props.user.meta.redeemable) {
+      return <div className="no-decal">{"Sorry, you're not eligible for a decal."}</div>
     }
 
-    return null
+    return (
+      <div className="redeem">
+        <p>{"You're eligible for a decal but you haven't redeemed it yet."}</p>
+        <button
+          type="button"
+          onClick={this._handleRedeemDecal}>
+          {'Redeem'}
+        </button>
+      </div>
+    )
   }
 
   renderDecalCode = (decal) => {
@@ -137,19 +109,16 @@ class UserDetailsPanel extends React.Component {
     const { decals } = this.props
 
     const {
-      checkingEligibility,
       redeeming,
     } = this.state
-
-    const loadingText = checkingEligibility ? 'Checking decal eligibility...' : 'Redeeming decal codes...'
 
     return (
       <div className="panel user-decals">
         <header>{'Decal'}</header>
         <div className="panel-content">
           {
-            (checkingEligibility || redeeming)
-              ? (<div className="loading">{loadingText}</div>)
+            (redeeming)
+              ? (<div className="loading">{'Redeeming decal codes...'}</div>)
               : (this.renderDecalCodes(decals))
           }
           {!decals.length && this.renderNoDataText()}
@@ -166,14 +135,12 @@ class UserDetailsPanel extends React.Component {
     Redux Properties
   \***************************************************************************/
 
-  static mapDispatchToProps = ['checkDecalEligibility', 'redeemDecal']
+  static mapDispatchToProps = ['redeemDecal']
 
-  static mapStateToProps = (state) => {
-    return {
-      decals: withCurrentUserId(selectDecalsByUserId)(state),
-      eligible: selectDecalEligibility(state),
-    }
-  }
+  static mapStateToProps = createStructuredSelector({
+    decals: withCurrentUserId(selectDecalsByUserId),
+    user: withCurrentUserId(selectUserById),
+  })
 }
 
 

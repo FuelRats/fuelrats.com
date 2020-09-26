@@ -1,7 +1,9 @@
 code {
-  padding: 0.2rem;
+  padding: 0.25rem 0.5rem;
 
   border-radius: 0.2rem;
 
-  background-color: $light-grey;
+  background-color: rgba($grey, 0.5);
+
+  font-family: monospace;
 }

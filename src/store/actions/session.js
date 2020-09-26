@@ -1,14 +1,11 @@
-// Module imports
-import JsCookie from 'js-cookie'
-import nextCookies from 'next-cookies'
-
-
-
-
 // Component imports
-import HttpStatus from '../../helpers/HttpStatus'
-import frApi from '../../services/fuelrats'
-import actionStatus from '../actionStatus'
+import { createFSA } from '@fuelrats/web-util/actions'
+import { HttpStatus } from '@fuelrats/web-util/http'
+import { isError } from 'flux-standard-action'
+
+import { configureRequest, deleteCookie } from '~/helpers/gIPTools'
+import frApi from '~/services/fuelrats'
+
 import actionTypes from '../actionTypes'
 import {
   selectPageRequiresAuth,
@@ -22,29 +19,36 @@ import { getUserProfile } from './user'
 
 
 
-export const logout = () => {
+/**
+ * @param {object?} ctx NextJS context. Only required when called from `getInitialProps`
+ * @returns {Function} Redux action thunk
+ */
+export const logout = (ctx) => {
   return (dispatch, getState) => {
-    JsCookie.remove('access_token')
+    deleteCookie('access_token', ctx)
     delete frApi.defaults.headers.common.Authorization
 
-    return dispatch({
-      status: 'success',
-      type: actionTypes.session.logout,
-      payload: {
-        waitForDestroy: Boolean(selectPageRequiresAuth(getState())),
-      },
-    })
+    return dispatch(
+      createFSA(
+        actionTypes.session.logout,
+        {
+          waitForDestroy: Boolean(selectPageRequiresAuth(getState())),
+        },
+      ),
+    )
   }
 }
 
 
 export const initUserSession = (ctx) => {
   return async (dispatch, getState) => {
+    configureRequest(ctx)
+
+    const { accessToken } = ctx
+
     const state = getState()
     const user = withCurrentUserId(selectUserById)(state)
     const session = selectSession(state)
-
-    const { access_token: accessToken } = nextCookies(ctx)
 
     // Get user agent to be used by login modal and i-need-fuel page
     let userAgent = ''
@@ -54,34 +58,31 @@ export const initUserSession = (ctx) => {
       userAgent = window.navigator.userAgent.toLowerCase()
     }
 
-    const result = {
-      type: actionTypes.session.initialize,
-      status: actionStatus.SUCCESS,
-      error: null,
-      accessToken,
-      userAgent,
-    }
+    const action = createFSA(
+      actionTypes.session.initialize,
+      {
+        accessToken,
+        userAgent,
+      },
+    )
 
-    if (accessToken) {
-      frApi.defaults.headers.common.Authorization = `Bearer ${accessToken}`
+    if (accessToken && !user && !session.error) {
+      const response = await dispatch(getUserProfile())
 
-      if (!user && !session.error) {
-        const profileReq = await getUserProfile()(dispatch)
+      if (isError(response)) {
+        action.error = true
+        action.meta.error = response.meta.response.status
 
-        if (!HttpStatus.isSuccess(profileReq.response.status)) {
-          result.error = profileReq.response.status
-          result.status = actionStatus.ERROR
-
-          if (profileReq.response.status === HttpStatus.UNAUTHORIZED) {
-            logout()(dispatch, getState)
-            result.accessToken = null
-          }
+        if (response.meta.response.status === HttpStatus.UNAUTHORIZED) {
+          dispatch(logout(ctx))
+          action.payload.accessToken = null
+          ctx.accessToken = null
         }
-
-        dispatch(result)
       }
+
+      dispatch(action)
     }
-    return result
+    return action
   }
 }
 
@@ -90,7 +91,6 @@ export const notifyPageLoading = ({ Component }) => {
   return (dispatch) => {
     return dispatch({
       type: actionTypes.session.pageLoading,
-      status: actionStatus.SUCCESS,
       payload: {
         requiresAuth: Boolean(Component.requiresAuthentication),
       },
@@ -99,11 +99,14 @@ export const notifyPageLoading = ({ Component }) => {
 }
 
 
-export const notifyPageDestroyed = () => {
+export const notifyPageDestroyed = (result) => {
   return (dispatch) => {
-    return dispatch({
-      type: actionTypes.session.pageDestroyed,
-      status: actionStatus.SUCCESS,
-    })
+    // Prevents double event fire from both pages coming to a rest. we only detect the old page.
+    if (result.finished && result?.value?.opacity === 0) {
+      return dispatch({
+        type: actionTypes.session.pageDestroyed,
+      })
+    }
+    return {}
   }
 }

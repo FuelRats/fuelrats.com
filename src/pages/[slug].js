@@ -1,4 +1,6 @@
 // Module imports
+import { HttpStatus } from '@fuelrats/web-util/http'
+import { isError } from 'flux-standard-action'
 import React from 'react'
 
 
@@ -6,10 +8,10 @@ import React from 'react'
 
 
 // Component imports
-import HttpStatus from '../helpers/HttpStatus'
-import { setError } from '../helpers/gIPTools'
-import { actions, connect, actionStatus } from '../store'
-import { selectWordpressPageBySlug } from '../store/selectors'
+import { setError } from '~/helpers/gIPTools'
+import { connect } from '~/store'
+import { getWordpressPage } from '~/store/actions/wordpress'
+import { selectWordpressPageBySlug } from '~/store/selectors'
 
 
 
@@ -26,9 +28,9 @@ class WordpressProxy extends React.Component {
     const { slug } = query
 
     if (!selectWordpressPageBySlug(store.getState(), { slug })) {
-      const { status } = await actions.getWordpressPage(slug)(store.dispatch)
+      const response = await store.dispatch(getWordpressPage(slug))
 
-      if (status === actionStatus.ERROR) {
+      if (isError(response)) {
         setError(ctx, HttpStatus.NOT_FOUND)
       }
     }
@@ -40,6 +42,7 @@ class WordpressProxy extends React.Component {
     return {
       className: 'wordpress-page',
       title: page.title.rendered,
+      pageKey: query.slug,
     }
   }
 
@@ -75,7 +78,7 @@ class WordpressProxy extends React.Component {
 
   static mapStateToProps = (state, ownProps) => {
     return {
-      page: selectWordpressPageBySlug(state, { slug: ownProps.query.slug }) || ownProps.query.page || null,
+      page: selectWordpressPageBySlug(state, { slug: ownProps.query?.slug }) || ownProps.query.page || null,
     }
   }
 }

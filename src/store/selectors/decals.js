@@ -1,13 +1,6 @@
 import { createSelector } from 'reselect'
 
-
-
-
-
-const getUserId = (_, props) => {
-  return props?.userId ?? null
-}
-
+import { selectUserById } from './users'
 
 
 
@@ -28,10 +21,13 @@ export const selectDecalById = (state, { decalId } = {}) => {
 
 
 export const selectDecalsByUserId = createSelector(
-  [selectDecals, getUserId],
-  (decals, userId) => {
-    return Object.values(decals).filter((decal) => {
-      return decal.attributes && decal.attributes.userId === userId
-    })
+  [selectDecals, selectUserById],
+  (decals, user) => {
+    if (user) {
+      return user.relationships.decals?.data.map(({ id }) => {
+        return decals[id]
+      })
+    }
+    return undefined
   },
 )

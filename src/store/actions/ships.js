@@ -1,5 +1,9 @@
-// Component imports
+import { defineRelationship } from '@fuelrats/web-util/redux-json-api'
+
+import { presentApiRequestBody } from '~/helpers/presenters'
+
 import actionTypes from '../actionTypes'
+import { createsRelationship, RESOURCE, deletesResource, deletesRelationship } from '../reducers/frAPIResources'
 import { frApiRequest } from './services'
 
 
@@ -9,7 +13,9 @@ import { frApiRequest } from './services'
 export const getShip = (shipId) => {
   return frApiRequest(
     actionTypes.ships.read,
-    { url: `/ships/${shipId}` },
+    {
+      url: `/ships/${shipId}`,
+    },
   )
 }
 
@@ -31,30 +37,37 @@ export const createShip = (data) => {
     {
       url: '/ships',
       method: 'post',
-      data,
+      data: presentApiRequestBody('ships', data),
     },
+    createsRelationship(
+      defineRelationship(data.relationships?.rat?.data, { ships: [RESOURCE] }),
+    ),
   )
 }
 
 
-export const deleteShip = (shipId) => {
+export const deleteShip = (ship) => {
   return frApiRequest(
     actionTypes.ships.delete,
     {
-      url: `/ships/${shipId}`,
+      url: `/ships/${ship.id}`,
       method: 'delete',
     },
+    deletesResource(ship),
+    deletesRelationship(
+      defineRelationship(ship.relationships?.rat?.data, { ships: [ship] }),
+    ),
   )
 }
 
 
-export const updateShip = (shipId, data) => {
+export const updateShip = (data) => {
   return frApiRequest(
     actionTypes.ships.update,
     {
-      url: `/ships/${shipId}`,
+      url: `/ships/${data.id}`,
       method: 'put',
-      data,
+      data: presentApiRequestBody('ships', data),
     },
   )
 }

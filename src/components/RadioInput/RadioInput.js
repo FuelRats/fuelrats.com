@@ -1,104 +1,65 @@
-// Module imports
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { useCallback } from 'react'
 
 
 
 
-// Component imports
-import classNames from '../../helpers/classNames'
+
+import styles from './RadioInput.module.scss'
 import RadioInputOption from './RadioInputOption'
 
 
 
 
-// Component Constants
 
+function RadioInput (props) {
+  const {
+    as: Element = 'div',
+    className,
+    disabled,
+    name,
+    options,
+    onChange,
+    OptionElement = RadioInputOption,
+    value,
+  } = props
 
-
-
-
-class RadioInput extends React.Component {
-  /***************************************************************************\
-    Private Methods
-  \***************************************************************************/
-
-  _handleOptionClick = ({ target }) => {
-    const { value, onChange } = this.props
-
-    if (value !== target.value) {
-      onChange({ target })
+  const handleOptionClick = useCallback((event) => {
+    if (value !== event?.target?.value) {
+      onChange(event)
     }
-  }
+  }, [onChange, value])
 
-
-
-
-
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
-
-  render () {
-    const {
-      as: Element,
-      className,
-      disabled,
-      name,
-      options,
-      OptionElement,
-      value,
-    } = this.props
-
-    const classes = classNames(
-      'radio-input',
-      className,
-      ['disabled', disabled],
-    )
-
-    return (
-      <Element className={classes}>
-        {
-          options.map((option) => {
-            return (
-              <OptionElement
-                {...option}
-                key={option.value}
-                checked={option.value === value ?? option.checked}
-                disabled={disabled ?? option.disabled}
-                name={name}
-                onChange={this._handleOptionClick} />
-            )
-          })
-        }
-      </Element>
-    )
-  }
-
-
-
-
-
-  /***************************************************************************\
-    Prop Definitions
-  \***************************************************************************/
-
-  static defaultProps = {
-    as: 'div',
-    OptionElement: RadioInputOption,
-  }
-
-
-  static propTypes = {
-    as: PropTypes.elementType,
-    name: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired,
-    OptionElement: PropTypes.elementType,
-    options: PropTypes.array.isRequired,
-    value: PropTypes.string.isRequired,
-  }
+  return (
+    <Element className={[styles.radioInput, { disabled }, className]}>
+      {
+        options.map((option) => {
+          return (
+            <OptionElement
+              {...option}
+              key={option.value}
+              checked={option.value === value ?? option.checked}
+              disabled={disabled ?? option.disabled}
+              name={name}
+              onChange={handleOptionClick} />
+          )
+        })
+      }
+    </Element>
+  )
 }
 
+
+RadioInput.propTypes = {
+  as: PropTypes.elementType,
+  className: PropTypes.string,
+  disabled: PropTypes.any,
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  OptionElement: PropTypes.elementType,
+  options: PropTypes.array.isRequired,
+  value: PropTypes.string.isRequired,
+}
 
 
 

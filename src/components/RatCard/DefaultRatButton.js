@@ -8,19 +8,19 @@ import React from 'react'
 
 
 // Component imports
-import { connect } from '../../store'
+import { connect } from '~/store'
 import {
   selectCurrentUserId,
   selectDisplayRatIdByUserId,
   withCurrentUserId,
-} from '../../store/selectors'
+} from '~/store/selectors'
 
 
 
 
 
 @connect
-class ClassName extends React.Component {
+class DefaultRatButton extends React.Component {
   /***************************************************************************\
     Class Properties
   \***************************************************************************/
@@ -48,7 +48,18 @@ class ClassName extends React.Component {
       await onClick(event)
     }
 
-    const response = await updateUser(userId, { displayRatId: ratId })
+    const response = await updateUser({
+      id: userId,
+      attributes: {},
+      relationships: {
+        displayRat: {
+          data: {
+            type: 'rats',
+            id: ratId,
+          },
+        },
+      },
+    })
 
     if (onUpdate) {
       onUpdate(response)
@@ -122,7 +133,12 @@ class ClassName extends React.Component {
   static defaultProps = {}
 
   static propTypes = {
+    displayRatId: PropTypes.string,
+    onClick: PropTypes.func,
+    onUpdate: PropTypes.func,
     ratId: PropTypes.string.isRequired,
+    updateUser: PropTypes.func,
+    userId: PropTypes.string,
   }
 }
 
@@ -130,4 +146,4 @@ class ClassName extends React.Component {
 
 
 
-export default ClassName
+export default DefaultRatButton

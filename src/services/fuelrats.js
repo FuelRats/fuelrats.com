@@ -1,7 +1,7 @@
 // Module imports
 import axios from 'axios'
 import getConfig from 'next/config'
-
+import qs from 'qs'
 
 
 
@@ -16,7 +16,9 @@ const localApiUrl = publicRuntimeConfig.apis.fuelRats.local
 const frApi = axios.create({
   baseURL: localApiUrl,
   timeout: 10000,
-  validateStatus: () => {
+  paramsSerializer: qs.stringify,
+
+  validateStatus () {
     return true // Always resolve because it's simpler for the action creators.
   },
 })

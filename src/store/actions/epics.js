@@ -1,7 +1,8 @@
 // Component imports
+import { presentApiRequestBody } from '~/helpers/presenters'
+
 import actionTypes from '../actionTypes'
 import { frApiRequest } from './services'
-
 
 
 
@@ -22,7 +23,7 @@ export const createEpic = (data) => {
     {
       url: '/epics',
       method: 'post',
-      data,
+      data: presentApiRequestBody('epics', data),
     },
   )
 }

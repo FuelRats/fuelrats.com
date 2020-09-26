@@ -37,7 +37,7 @@ By contributing to this repository, you are expected to know and follow the rule
 
 ### Some things you'll need
 
-By default, the website doesn't know much about connecting to the Fuel Rats API or to the Fuel Rats Wordpress. To remedy this, you'll need to set some environment variables. To make this as easy as possible, There is a enviornment variable template file named `.env.template` located in the root directory. Copy this file and rename it to `.env`, then fill in the appropriate values. Unsure of what values to set? Contact a project maintainer!
+By default, the website doesn't know much about connecting to the Fuel Rats API or to the Fuel Rats Wordpress. To remedy this, you'll need to set some environment variables. To make this as easy as possible, There is a enviornment variable template file named `.env.local.template` located in the root directory. Copy this file and rename it to `.env.local`, then fill in the appropriate values. Unsure of what values to set? Contact a project maintainer!
 
 > Tip: Keep your `develop` branch pointing at the original repository and make
 > pull requests from branches on your fork. To do this, run:

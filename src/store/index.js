@@ -1,5 +1,6 @@
 /* globals $IS_DEVELOPMENT:false */
-// Module imports
+
+import { errorLoggerMiddleware, FSAComplianceMiddleware } from '@fuelrats/web-util/redux-middleware'
 import { connect } from 'react-redux'
 import {
   bindActionCreators,
@@ -10,24 +11,61 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import thunkMiddleware from 'redux-thunk'
 
 
+import frSocket from '~/services/frSocket'
 
 
-
-// Component imports
-import actionStatus from './actionStatus'
-import * as actions from './actions'
+import * as authenticationActions from './actions/authentication'
+import * as blogActions from './actions/blogs'
+import * as decalActions from './actions/decals'
+import * as epicActions from './actions/epics'
+import * as flagActions from './actions/flags'
+import * as imageActions from './actions/images'
+import * as ratActions from './actions/rats'
+import * as rescueActions from './actions/rescues'
+import * as serviceActions from './actions/services'
+import * as sessionActions from './actions/session'
+import * as shipActions from './actions/ships'
+import * as statisticsActions from './actions/statistics'
+import * as stripeActions from './actions/stripe'
+import * as userActions from './actions/user'
+import * as verifyActions from './actions/verify'
+import * as wordpressActions from './actions/wordpress'
+import actionTypes from './actionTypes'
 import initialState from './initialState'
 import reducer from './reducers'
 
+const actions = {
+  ...authenticationActions,
+  ...blogActions,
+  ...decalActions,
+  ...epicActions,
+  ...flagActions,
+  ...imageActions,
+  ...ratActions,
+  ...rescueActions,
+  ...serviceActions,
+  ...sessionActions,
+  ...shipActions,
+  ...statisticsActions,
+  ...stripeActions,
+  ...userActions,
+  ...verifyActions,
+  ...wordpressActions,
+}
 
 
 
 
-const middlewares = [thunkMiddleware]
 
+const ignoredTypes = [
+  // This pops up on every 404 page due to how our fallback system works, therefore it's not generally helpful to log.
+  actionTypes.wordpress.pages.read,
+]
+
+const middlewares = [thunkMiddleware, frSocket.createMiddleware(), errorLoggerMiddleware(ignoredTypes)]
 if ($IS_DEVELOPMENT) {
-  /* eslint-disable-next-line global-require */// Dev mode conditional import
   middlewares.unshift(require('redux-immutable-state-invariant').default())
+  middlewares.push(FSAComplianceMiddleware)
 }
 
 
@@ -106,8 +144,6 @@ const getActionCreators = (action, dispatch) => {
 
 
 export {
-  actions,
-  actionStatus,
   getActionCreators,
   connectDecorator as connect,
   initStore,

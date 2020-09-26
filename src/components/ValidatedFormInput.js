@@ -1,7 +1,7 @@
 // Module imports
 import PropTypes from 'prop-types'
 import React from 'react'
-import classNames from '../helpers/classNames'
+
 
 
 
@@ -98,11 +98,6 @@ class ValidatedFormInput extends React.Component {
       renderLabel,
     } = this.props
 
-    const tooltipClasses = classNames(
-      'tooltiptext',
-      ['should-display', value && errorMessage],
-    )
-
     return (
       <Element className="validated-form-input">
         {renderLabel && <label htmlFor={id}>{label}</label>}
@@ -110,7 +105,9 @@ class ValidatedFormInput extends React.Component {
           placeholder={renderLabel ? undefined : label}
           {...this.inputProps}
           onChange={this._handleChange} />
-        <div className={tooltipClasses}>{this.state.errorMessage}</div>
+        <div className={['tooltiptext', { 'should-display': value && errorMessage }]}>
+          {this.state.errorMessage}
+        </div>
         {children}
       </Element>
     )
@@ -156,8 +153,10 @@ class ValidatedFormInput extends React.Component {
 
   static propTypes = {
     as: PropTypes.elementType,
+    children: PropTypes.node,
     doubleValidate: PropTypes.bool,
     id: PropTypes.string.isRequired,
+    inputRef: PropTypes.any,
     invalidMessage: PropTypes.string,
     label: PropTypes.string.isRequired,
     name: PropTypes.string,
@@ -165,7 +164,9 @@ class ValidatedFormInput extends React.Component {
     pattern: PropTypes.string,
     patternMessage: PropTypes.string,
     renderLabel: PropTypes.bool,
+    required: PropTypes.bool,
     type: PropTypes.string,
+    value: PropTypes.string,
   }
 }
 

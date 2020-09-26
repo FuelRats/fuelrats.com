@@ -1,0 +1,9 @@
+.radioInput {
+  composes: radio-input from global;
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  margin-bottom: -0.4rem;
+}

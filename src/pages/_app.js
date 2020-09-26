@@ -7,36 +7,27 @@ import NextHead from 'next/head'
 import React from 'react'
 import { Provider } from 'react-redux'
 
+import PageTransitionContainer from '~/components/AppLayout/PageTransitionContainer'
+import Header from '~/components/Header'
+import LoginModal from '~/components/LoginModal'
+import NProgress from '~/components/NProgress'
+import SilentBoundary from '~/components/SilentBoundary'
+import UserMenu from '~/components/UserMenu'
+import * as faIcons from '~/helpers/faIconLibrary'
+import { resolvePageMeta } from '~/helpers/gIPTools'
+import frApi from '~/services/fuelrats'
+import { initStore } from '~/store'
+import { initUserSession, notifyPageLoading } from '~/store/actions/session'
 
-
-
-
-// Component imports
-import PageTransitionContainer from '../components/AppLayout/PageTransitionContainer'
-import Header from '../components/Header'
-import LoginModal from '../components/LoginModal'
-import NProgress from '../components/NProgress'
-import UserMenu from '../components/UserMenu'
-import classNames from '../helpers/classNames'
-import * as faIcons from '../helpers/faIconLibrary'
-import { resolvePageMeta } from '../helpers/gIPTools'
-import frApi from '../services/fuelrats'
-import { initStore } from '../store'
-import { initUserSession, notifyPageLoading } from '../store/actions/session'
 import ErrorPage from './_error'
 
-
-
-
-
-// Style imports
-import '../scss/app.scss'
+import '~/scss/app.scss'
 
 
 
 
 
-// Configure and populate FontAweomse library
+// Configure and populate FontAwesome library
 faConfig.autoAddCss = false
 faLibrary.add(faIcons)
 
@@ -58,60 +49,46 @@ class FuelRatsApp extends App {
   static async getInitialProps (appCtx) {
     const { Component, ctx } = appCtx
 
-    const {
-      asPath,
-      isServer,
-      query,
-      store,
-    } = ctx
-
-    const { accessToken } = await initUserSession(ctx)(store.dispatch, store.getState)
-    ctx.accessToken = accessToken // Assign for page to access
+    await ctx.store.dispatch(initUserSession(ctx))
 
     const initialProps = {
-      accessToken,
+      accessToken: ctx.accessToken,
       pageProps: {
-        asPath,
-        isServer,
-        query,
+        asPath: ctx.asPath,
+        query: ctx.query,
         ...((await Component.getInitialProps?.(ctx)) ?? {}),
       },
     }
 
     if (ctx.err) {
-      initialProps.err = { ...ctx.err }
+      initialProps.isError = true
       initialProps.pageProps = (await ErrorPage.getInitialProps?.(ctx)) ?? {}
       initialProps.pageMeta = await resolvePageMeta(ErrorPage, ctx, initialProps.pageProps)
-      return initialProps
+    } else {
+      initialProps.pageMeta = await resolvePageMeta(Component, ctx, initialProps.pageProps)
     }
 
-    initialProps.pageMeta = await resolvePageMeta(Component, ctx, initialProps.pageProps)
-
-    await notifyPageLoading(appCtx)(store.dispatch)
+    await ctx.store.dispatch(notifyPageLoading(appCtx))
 
     return initialProps
   }
 
-  renderPage = ({ item, key, props }) => {
+  renderPage = (style, item) => {
     const { Page, pageProps, pageMeta } = item
 
     const {
       title,
+      className,
       displayTitle,
       noHeader,
-      noLayout,
     } = pageMeta
 
-    const mainClasses = classNames(
-      'page',
-      pageMeta.className,
-      title.toLowerCase().replace(/\s/gu, '-'),
-    )
-
     return (
-      <animated.main key={key} className={mainClasses} style={props}>
+      <animated.main
+        className={['page', title.toLowerCase().replace(/\s/gu, '-'), className]}
+        style={style}>
         {
-          !noHeader && !noLayout && (
+          !noHeader && (
             <header className="page-header">
               <h1>
                 {displayTitle ?? title}
@@ -119,7 +96,9 @@ class FuelRatsApp extends App {
             </header>
           )
         }
-        <Page {...pageProps} />
+        <SilentBoundary>
+          <Page {...pageProps} />
+        </SilentBoundary>
       </animated.main>
     )
   }
@@ -134,21 +113,16 @@ class FuelRatsApp extends App {
       <React.StrictMode>
         <NextHead>
           <title>{`${pageMeta.title} | The Fuel Rats`}</title>
+          <meta content="initial-scale=1.0, viewport-fit=cover, width=device-width" name="viewport" />
           <meta content={pageMeta.title} property="og:title" />
           <meta content={pageMeta.description} name="description" />
           <meta content={pageMeta.description} property="og:description" />
         </NextHead>
-        <div role="application">
+        <div className={{ forceDrawer: pageMeta.forceDrawer }} id="FuelRatsApp" role="application">
           <Provider store={store}>
-            {
-              !pageMeta.noLayout && (
-                <>
-                  <NProgress />
-                  <Header />
-                  <UserMenu />
-                </>
-              )
-            }
+            <NProgress />
+            <Header />
+            <UserMenu />
 
             <PageTransitionContainer {...this.pageData}>
               {this.renderPage}
@@ -165,7 +139,7 @@ class FuelRatsApp extends App {
   get pageData () {
     const {
       Component,
-      err,
+      isError,
       pageMeta,
       pageProps,
       router,
@@ -173,13 +147,13 @@ class FuelRatsApp extends App {
 
     let Page = Component
 
-    if (err) {
+    if (isError) {
       Page = ErrorPage
     }
 
     return {
       items: { Page, pageProps, pageMeta },
-      keys: router.asPath,
+      keys: pageMeta.pageKey ?? router.asPath,
     }
   }
 }

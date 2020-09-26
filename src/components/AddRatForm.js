@@ -8,9 +8,9 @@ import React from 'react'
 
 
 // Component imports
-import classNames from '../helpers/classNames'
-import { connect } from '../store'
-import { selectCurrentUserId } from '../store/selectors'
+import { connect } from '~/store'
+import { selectCurrentUserId } from '~/store/selectors'
+
 import ValidatedFormInput from './ValidatedFormInput'
 import ValidatedFormSelect from './ValidatedFormSelect'
 
@@ -71,9 +71,18 @@ class AddRatForm extends React.Component {
     this.setState({ submitting: true })
 
     await createRat({
-      name: name.trim(),
-      platform,
-      userId,
+      attributes: {
+        name: name.trim(),
+        platform,
+      },
+      relationships: {
+        user: {
+          data: {
+            type: 'users',
+            id: userId,
+          },
+        },
+      },
     })
 
     this.setState({ ...initialState })
@@ -116,14 +125,8 @@ class AddRatForm extends React.Component {
       formOpen,
     } = this.state
 
-    const classes = classNames(
-      'add-rat',
-      'compact',
-      ['form-open', formOpen],
-    )
-
     return (
-      <form className={classes}>
+      <form className={['add-rat compact', { 'form-open': formOpen }]}>
         {
           formOpen && (
             <div className="form-row submit-row flex align-center">
@@ -171,7 +174,7 @@ class AddRatForm extends React.Component {
           }
           <button
             aria-label={formOpen ? 'cancel new commander creation' : 'add commander'}
-            className={`compact square ${formOpen ? '' : 'green'}`}
+            className={['compact square', { green: !formOpen }]}
             title={formOpen ? 'Cancel' : 'Add new commander'}
             type="button"
             onClick={this._handleToggle}>

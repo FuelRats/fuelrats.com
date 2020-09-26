@@ -31,11 +31,12 @@ const configureCSP = () => {
     const {
       isDev,
       publicUrl,
+      api,
     } = ctx.state.env
 
     const nonce = (new UUID(UUID_VERSION_4)).format()
 
-    ctx.res.nonce = nonce /* eslint-disable-line no-param-reassign */
+    ctx.res.nonce = nonce
 
     const policyString = buildCSP({
       directives: {
@@ -43,12 +44,9 @@ const configureCSP = () => {
         connectSrc: [
           "'self'",
           'wss://*.fuelrats.com',
-          ...(isDev
-            ? [
-              publicUrl,
-              'webpack://*',
-            ]
-            : []),
+          api.url,
+          publicUrl,
+          ...(isDev ? ['webpack://*'] : []),
         ],
         baseUri: ["'none'"],
         scriptSrc: [

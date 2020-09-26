@@ -6,8 +6,9 @@ import React from 'react'
 
 
 // Component imports
-import { connect } from '../store'
-import { selectDisplayRatByUserId, withCurrentUserId } from '../store/selectors'
+import { connect } from '~/store'
+import { selectDisplayRatByUserId, withCurrentUserId } from '~/store/selectors'
+
 import asModal, { ModalContent, ModalFooter } from './Modal'
 
 

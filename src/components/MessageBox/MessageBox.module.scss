@@ -1,0 +1,53 @@
+@import '../../scss/colors';
+
+.message {
+  --message-color: #{$red};
+
+  position: relative;
+
+  max-width: 52rem;
+  margin: 0;
+  padding: 1rem 0;
+
+  border: 1px solid var(--message-color);
+
+  background: rgba($red, 0.15);
+
+  &.infoType {
+    --message-color: #{$blue};
+    background: rgba($blue, 0.15);
+  }
+
+  &.warnType {
+    --message-color: #{$yellow};
+    background: rgba($yellow, 0.15);
+  }
+}
+
+.icon {
+  display: block;
+  position: fixed;
+
+  margin: 0.5rem 0 0 1rem;
+
+  color: var(--message-color);
+}
+
+.section {
+  display: inline-block;
+
+  padding: 0 1rem 0 4rem;
+
+  white-space: pre-line;
+}
+
+.footer {
+  display: inline-block;
+
+  width: 100%;
+  padding: 1rem 2rem 0;
+
+  font-size: 0.85em;
+  text-align: center;
+  white-space: nowrap;
+}

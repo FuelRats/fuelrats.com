@@ -1,6 +1,8 @@
 // Module imports
+import { HttpStatus } from '@fuelrats/web-util/http'
+import { isError } from 'flux-standard-action'
 import React from 'react'
-
+import { createStructuredSelector } from 'reselect'
 
 
 
@@ -8,11 +10,15 @@ import React from 'react'
 // Component imports
 import {
   passwordPattern,
-} from '../data/RegExpr'
-import HttpStatus from '../helpers/HttpStatus'
-import { connect } from '../store'
+} from '~/data/RegExpr'
+import { connect } from '~/store'
+import { selectCurrentUserId } from '~/store/selectors'
+
 import asModal, { ModalContent, ModalFooter } from './Modal'
 import PasswordField from './PasswordField'
+
+
+
 
 
 @asModal({
@@ -26,11 +32,11 @@ class ChangePasswordModal extends React.Component {
   \***************************************************************************/
 
   state = {
-    currentPassword: '',
+    password: '',
     error: null,
     newPassword: '',
     validity: {
-      currentPassword: false,
+      password: false,
       newPassword: false,
     },
     submitting: false,
@@ -65,30 +71,39 @@ class ChangePasswordModal extends React.Component {
     event.preventDefault()
 
     const {
-      currentPassword,
+      userId,
+    } = this.props
+
+    const {
+      password,
       newPassword,
     } = this.state
 
     this.setState({ submitting: true })
 
-    const { payload, response } = await this.props.changePassword(currentPassword, newPassword)
-
-    let error = null
-
-    if (HttpStatus.isClientError(response.status)) {
-      error = payload.errors && payload.errors.length ? payload.errors[0].detail : 'Client communication error'
-    }
-
-    if (HttpStatus.isServerError(response.status)) {
-      error = 'Server communication error'
-    }
-
-    this.setState({
-      error,
-      submitting: false,
+    const response = await this.props.changePassword({
+      id: userId,
+      password,
+      newPassword,
     })
 
-    if (!error) {
+    if (isError(response)) {
+      const { meta, payload } = response
+      let errorMessage = 'Unknown error occurred.'
+
+      if (HttpStatus.isClientError(meta.response.status)) {
+        errorMessage = payload.errors && payload.errors.length ? payload.errors[0].detail : 'Client communication error'
+      }
+
+      if (HttpStatus.isServerError(meta.response.status)) {
+        errorMessage = 'Server communication error'
+      }
+
+      this.setState({
+        error: errorMessage,
+        submitting: false,
+      })
+    } else {
       this.props.onClose()
     }
   }
@@ -103,7 +118,7 @@ class ChangePasswordModal extends React.Component {
 
   render () {
     const {
-      currentPassword,
+      password,
       error,
       newPassword,
       submitting,
@@ -128,10 +143,10 @@ class ChangePasswordModal extends React.Component {
             autoComplete="current-password"
             className="dark"
             disabled={submitting}
-            id="currentPassword"
-            name="currentPassword"
+            id="password"
+            name="password"
             placeholder="Current Password"
-            value={currentPassword}
+            value={password}
             onChange={this._handleChange} />
         </fieldset>
 
@@ -179,11 +194,11 @@ class ChangePasswordModal extends React.Component {
 
   get isValid () {
     const {
-      currentPassword,
+      password,
       newPassword,
     } = this.state.validity
 
-    return (currentPassword && newPassword)
+    return (password && newPassword)
   }
 
 
@@ -195,6 +210,10 @@ class ChangePasswordModal extends React.Component {
   \***************************************************************************/
 
   static mapDispatchToProps = ['changePassword']
+
+  static mapStateToProps = createStructuredSelector({
+    userId: selectCurrentUserId,
+  })
 }
 
 

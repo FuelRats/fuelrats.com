@@ -33,10 +33,13 @@ export const selectRatsByUserId = createSelector(
 export const selectDisplayRatIdByUserId = createSelector(
   [selectUserById],
   (user) => {
-    return (
-      user?.attributes.displayRatId
-      ?? user?.relationships.rats.data?.[0]?.id
-    ) || null
+    if (!user) {
+      return null
+    }
+
+    return user.relationships.displayRat?.data?.id
+      ?? user.relationships.rats?.data[0]?.id
+      ?? null
   },
 )
 
