@@ -1,4 +1,4 @@
-import { isRequired } from '@fuelrats/validation-util/require'
+import { isRequired } from '@fuelrats/validation-util'
 import _get from 'lodash/get'
 import PropTypes from 'prop-types'
 import {
