@@ -1473,15 +1473,20 @@
   resolved "https://registry.yarnpkg.com/@fuelrats/validation-util/-/validation-util-1.1.2.tgz#cda434bc92c292b681dad8d29840ecf2152dd399"
   integrity sha512-sqobLeQO3yMGnIh2k1jRM7/zL28h/vDLQMJwHRyb37FnrWtnkLIJ5IhquqIFynHZtLxNi6qsQyKSHnz3QOrCLA==
 
-"@fuelrats/web-util@^0.3.0-beta.0":
-  version "0.3.0-beta.0"
-  resolved "https://registry.yarnpkg.com/@fuelrats/web-util/-/web-util-0.3.0-beta.0.tgz#aa809d4eba8c2e746770fb280c8e0fa4ea2e1aec"
-  integrity sha512-3HTBUQx278wZbXiywwMHsia/3ZKIcsL05jftQOIHHwQ4GSzCc0UhmqWbB+gHZCGELDmDh4w08qpp87dfQUrjhw==
+"@fuelrats/validation-util@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@fuelrats/validation-util/-/validation-util-1.2.0.tgz#894414cac5c1d54eca39d89ed0d81b46d96aba35"
+  integrity sha512-MBqCSBaJCYupWAglKvdd8ORA5Hp16IL1Vfc7nA8PrBCQia2J2S1z8DB9TG0g52wZzWWj3spUj6phOAp8MWVPfA==
+
+"@fuelrats/web-util@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@fuelrats/web-util/-/web-util-0.3.0.tgz#2e1a3f1b83c4565b92d386c42d0d36aaa671d39b"
+  integrity sha512-PJzY2rYABUbN9DISlyO4Fu/2EgTkTti3KYXESkncQwti8LhVXOcBQiXtLD2F2N9hyektOX8qym9cfjGGNoRG+Q==
   dependencies:
     "@babel/runtime" "^7.11.2"
-    "@fuelrats/validation-util" "^1.1.2"
+    "@fuelrats/validation-util" "^1.2.0"
     flux-standard-action "^2.1.1"
-    immer "^7.0.7"
+    immer "^7.0.9"
     pure-uuid "^1.6.1"
 
 "@koa/router@^9.4.0":
@@ -5008,11 +5013,6 @@ ignore@^5.1.4, ignore@^5.1.8:
   version "5.1.8"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.1.8.tgz#f150a8b50a34289b33e22f5889abd4d8016f0e57"
   integrity sha512-BMpfD7PpiETpBl/A6S498BaIJ6Y/ABT93ETbby2fP00v4EbvPBXWEoaR1UBPKs3iR53pJY7EtZk5KACI57i1Uw==
-
-immer@^7.0.7:
-  version "7.0.7"
-  resolved "https://registry.yarnpkg.com/immer/-/immer-7.0.7.tgz#9dfe713d49bf871cc59aedfce59b1992fa37a977"
-  integrity sha512-Q8yYwVADJXrNfp1ZUAh4XDHkcoE3wpdpb4mC5abDSajs2EbW8+cGdPyAnglMyLnm7EF6ojD2xBFX7L5i4TIytw==
 
 immer@^7.0.9:
   version "7.0.9"
