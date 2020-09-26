@@ -9,6 +9,7 @@ import React from 'react'
 // Component imports
 import { authenticated } from '~/components/AppLayout'
 import { formatAsEliteDateTime } from '~/helpers/formatTime'
+import { pageRedirect } from '~/helpers/gIPTools'
 import { Link, Router } from '~/routes'
 import { connect } from '~/store'
 import { getRescue } from '~/store/actions/rescues'
@@ -104,7 +105,16 @@ class Paperwork extends React.Component {
     )
   }
 
-  static async getInitialProps ({ query, store }) {
+  static async getInitialProps (ctx) {
+    const { query, store } = ctx
+    const idLower = query.rescueId.toLowerCase()
+    if (query.rescueId !== idLower) {
+      pageRedirect(ctx, {
+        href: '/paperwork/[rescueId]',
+        as: `/paperwork/${idLower}`,
+      })
+    }
+
     const state = store.getState()
 
     if (!selectRescueById(state, query)) {
@@ -395,7 +405,7 @@ class Paperwork extends React.Component {
   static mapStateToProps = (state, { query }) => {
     return {
       rats: selectRatsByRescueId(state, query) || [],
-      rescue: selectRescueById(state, { rescueId: query.rescueId.toLowerCase() }),
+      rescue: selectRescueById(state, query),
       userCanEdit: selectCurrentUserCanEditRescue(state, query),
       userCanWriteAll: selectCurrentUserHasScope(state, { scope: 'rescues.write' }),
     }
