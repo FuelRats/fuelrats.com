@@ -395,7 +395,7 @@ class Paperwork extends React.Component {
   static mapStateToProps = (state, { query }) => {
     return {
       rats: selectRatsByRescueId(state, query) || [],
-      rescue: selectRescueById(state, query),
+      rescue: selectRescueById(state, { rescueId: query.rescueId.toLowerCase() }),
       userCanEdit: selectCurrentUserCanEditRescue(state, query),
       userCanWriteAll: selectCurrentUserHasScope(state, { scope: 'rescues.write' }),
     }
