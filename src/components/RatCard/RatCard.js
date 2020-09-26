@@ -7,7 +7,6 @@ import { formatAsEliteDate } from '~/helpers/formatTime'
 import { connect } from '~/store'
 import {
   selectRatById,
-  selectShipsByRatId,
   selectUserById,
   selectDisplayRatIdByUserId,
   withCurrentUserId,
@@ -317,7 +316,6 @@ class RatCard extends React.Component {
       user: withCurrentUserId(selectUserById)(state),
       userDisplayRatId: withCurrentUserId(selectDisplayRatIdByUserId)(state),
       rat: selectRatById(state, props),
-      ships: selectShipsByRatId(state, props),
       statistics: selectRatStatisticsById(state, props),
     }
   }
