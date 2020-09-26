@@ -133,12 +133,12 @@ class Paperwork extends React.Component {
     const changes = {}
 
     if (attribute === 'platform' && value !== this.props.rescue) {
-      changes.firstLimpetId = null
+      changes.firstLimpetId = []
       changes.rats = {}
     }
 
     if (attribute === 'outcome' && value !== 'success') {
-      changes.firstLimpetId = null
+      changes.firstLimpetId = []
     }
 
     this._setChanges({
@@ -153,7 +153,7 @@ class Paperwork extends React.Component {
       return
     }
 
-    let newValue = null
+    let newValue = []
 
     if (value.length) {
       if (value[0].id === this.props.rescue.relationships.firstLimpet?.data?.id) {
@@ -231,9 +231,13 @@ class Paperwork extends React.Component {
           id: firstLimpetId[0].id,
         },
       }
+    } else if (firstLimpetId?.length === 0) {
+      updateData.relationships.firstLimpet = {
+        data: null,
+      }
     }
 
-    if (rats) {
+    if (Array.isArray(rats)) {
       updateData.relationships.rats = {
         data: rats.map(({ type, id }) => {
           return {
@@ -621,7 +625,7 @@ class Paperwork extends React.Component {
     }
 
     if (values.outcome === 'failure' && !values.notes.replace(/\s/gu, '')) {
-      return 'Invalid cases must have notes explaining why the rescue is invalid.'
+      return 'Failed cases must have notes explaining what went wrong.'
     }
 
     return null
@@ -649,7 +653,14 @@ class Paperwork extends React.Component {
 
     return {
       codeRed: getValue('codeRed'),
-      firstLimpetId: ifDefined(changes.firstLimpetId, rats[rescue.relationships.firstLimpet.data?.id]) ?? null,
+      // Get FirstLimpetId object first, then try to get the firstLimpet from the assigned rat array, THEN try to get the firstLimpet from the new rat array.
+      // Getting firstLimpet from changes is to deal with weird edge cases. This should be resolved by the upcoming major rewrite to paperwork
+      firstLimpetId: ifDefined(
+        changes.firstLimpetId,
+        rats[rescue.relationships.firstLimpet.data?.id] ?? changes.rats?.find((rat) => {
+          return rat.id === rescue?.relationships?.firstLimpet.data?.id
+        }),
+      ) ?? null,
       notes: getValue('notes'),
       outcome: getValue('outcome'),
       platform: getValue('platform'),
