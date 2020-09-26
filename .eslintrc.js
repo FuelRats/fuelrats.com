@@ -19,7 +19,6 @@ module.exports = {
       ...importRules.rules['import/order'][1],
       'newlines-between': 'always',
     }],
-    'no-warning-comments': ['off'], // TODO Re-enable no-warning-comments before release
   },
   settings: {
     'import/ignore': [
