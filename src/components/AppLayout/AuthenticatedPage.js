@@ -8,7 +8,7 @@ import React from 'react'
 
 import { pageRedirect, setError } from '~/helpers/gIPTools'
 import userHasPermission from '~/helpers/userHasPermission'
-import { selectSession, withCurrentUserId, selectGroupsByUserId } from '~/store/selectors'
+import { selectSession, selectCurrentUserScopes } from '~/store/selectors'
 
 
 
@@ -34,9 +34,7 @@ const wrapPage = (PageComponent, scopes) => {
     // Now that we know the user is logged in, lets check if they require any permission scopes to view the page.
     // If they do, check scopes against their groups.
     if (scopes) {
-      const userGroups = withCurrentUserId(selectGroupsByUserId)(state)
-
-      if (!userHasPermission(userGroups, scopes)) {
+      if (!userHasPermission(selectCurrentUserScopes(state), scopes)) {
         setError(ctx, HttpStatus.UNAUTHORIZED)
       }
     }

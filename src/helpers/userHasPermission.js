@@ -1,17 +1,9 @@
-const userHasPermission = (groups, permission) => {
-  if (!Array.isArray(groups) || !groups.length) {
+const userHasPermission = (permissions, permission) => {
+  if (!Array.isArray(permissions) || !permissions.length) {
     return false
   }
 
-  if (permission === 'isAdministrator') {
-    return groups.some((group) => {
-      return group?.attributes?.isAdministrator ?? false
-    })
-  }
-
-  return groups.some((group) => {
-    return group.type === 'groups' && group.attributes.permissions.includes(permission)
-  })
+  return permissions.includes(permission)
 }
 
 
