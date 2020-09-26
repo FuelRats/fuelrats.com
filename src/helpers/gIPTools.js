@@ -34,18 +34,28 @@ const validatePageMeta = (props) => {
 
 
 export const pageRedirect = (ctx, route) => {
+  let href = null
+  let as = null
+
+  if (typeof route === 'object') {
+    href = route.href
+    as = route.as
+  } else if (typeof route === 'string') {
+    as = route
+  }
+
   if (ctx.res) {
     ctx.res.writeHead(HttpStatus.FOUND, {
-      Location: route,
+      Location: as,
     })
     ctx.res.end()
     ctx.res.finished = true
   } else if (route.startsWith('http')) {
     if (typeof window !== 'undefined') {
-      window.location.replace(route)
+      window.location.replace(as)
     }
   } else {
-    Router.replace(route)
+    Router.replace(href ?? as, as)
   }
 }
 

@@ -16,6 +16,7 @@ import SystemTagsInput from '~/components/SystemTagsInput'
 import platformRadioOptions from '~/data/platformRadioOptions'
 import { formatAsEliteDateTime } from '~/helpers/formatTime'
 import getRatTag from '~/helpers/getRatTag'
+import { pageRedirect } from '~/helpers/gIPTools'
 import { Router } from '~/routes'
 import { connect } from '~/store'
 import { getRescue } from '~/store/actions/rescues'
@@ -324,7 +325,16 @@ class Paperwork extends React.Component {
     )
   }
 
-  static async getInitialProps ({ query, store }) {
+  static async getInitialProps (ctx) {
+    const { query, store } = ctx
+    const idLower = query.rescueId.toLowerCase()
+    if (query.rescueId !== idLower) {
+      pageRedirect(ctx, {
+        href: '/paperwork/[rescueId]/edit',
+        as: `/paperwork/${idLower}/edit`,
+      })
+    }
+
     const state = store.getState()
 
     if (!selectRescueById(state, query)) {
