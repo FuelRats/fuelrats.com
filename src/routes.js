@@ -73,7 +73,7 @@ const { Link, Router, useRouter, withRouter } = routes()
 
   .add('about version', ({ raw, ...query }) => {
     return {
-      href: `/version/${raw ? 'raw' : 'index'}`,
+      href: `/version/${raw ? 'raw' : ''}`,
       query,
     }
   })
