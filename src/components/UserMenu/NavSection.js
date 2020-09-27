@@ -56,7 +56,6 @@ NavSection.mapStateToProps = createSelector(
     let permitted = false
 
     const resolvedItems = items.map(({ permission, ...restItem }) => {
-      console.log(permissions, permission, permissions.includes(permission))
       const resolvedPermission = typeof permission === 'string' ? userHasPermission(permissions, permission) : true
 
       if (resolvedPermission) {
