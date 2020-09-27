@@ -25,22 +25,22 @@ function NavSection (props) {
     permitted,
   } = props
 
-  if (permitted) {
-    return (
-      <nav>
-        {header && (<header>{header}</header>)}
-        <ul>
-          {
-            items.map((item) => {
-              return (item.permission && <NavItem key={item.key} item={item} onClick={onItemClick} />)
-            })
-          }
-        </ul>
-      </nav>
-    )
+  if (!permitted) {
+    return null
   }
 
-  return null
+  return (
+    <nav>
+      {header && (<header>{header}</header>)}
+      <ul>
+        {
+          items.map((item) => {
+            return (item.permission && <NavItem key={item.key} item={item} onClick={onItemClick} />)
+          })
+        }
+      </ul>
+    </nav>
+  )
 }
 
 
@@ -53,12 +53,14 @@ NavSection.mapStateToProps = createSelector(
     selectCurrentUserScopes,
   ],
   (items, permissions) => {
-    let permitted = true
+    let permitted = false
+
     const resolvedItems = items.map(({ permission, ...restItem }) => {
+      console.log(permissions, permission, permissions.includes(permission))
       const resolvedPermission = typeof permission === 'string' ? userHasPermission(permissions, permission) : true
 
-      if (!resolvedPermission) {
-        permitted = false
+      if (resolvedPermission) {
+        permitted = true
       }
 
       return {
