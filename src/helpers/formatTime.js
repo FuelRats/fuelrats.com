@@ -1,4 +1,5 @@
-import { format, addYears } from 'date-fns'
+import { addYears } from 'date-fns'
+import { format, utcToZonedTime } from 'date-fns-tz'
 
 
 
@@ -16,19 +17,34 @@ function padNum (number) {
 }
 
 function getEliteTimeFromLocalTime (timestamp) {
-  return addYears(new Date(timestamp), ELITE_GAME_YEAR_DISPARITY)
+  return utcToZonedTime(
+    addYears(new Date(timestamp), ELITE_GAME_YEAR_DISPARITY),
+    'Etc/UTC',
+  )
 }
 
 export function formatAsEliteDateTime (timestamp, withSeconds) {
-  return format(getEliteTimeFromLocalTime(timestamp), `dd MMM yyyy HH:mm${withSeconds ? ':ss' : ''}`).toUpperCase()
+  return format(
+    getEliteTimeFromLocalTime(timestamp),
+    `dd MMM yyyy HH:mm${withSeconds ? ':ss' : ''}`,
+    { timeZone: 'Etc/UTC' },
+  ).toUpperCase()
 }
 
 export function formatAsEliteDate (timestamp) {
-  return format(getEliteTimeFromLocalTime(timestamp), 'dd MMM yyyy').toUpperCase()
+  return format(
+    getEliteTimeFromLocalTime(timestamp),
+    'dd MMM yyyy',
+    { timeZone: 'Etc/UTC' },
+  ).toUpperCase()
 }
 
 export function formatAsEliteDateLong (timestamp) {
-  return format(getEliteTimeFromLocalTime(timestamp), 'dd MMMM yyyy').toUpperCase()
+  return format(
+    getEliteTimeFromLocalTime(timestamp),
+    'dd MMMM yyyy',
+    { timeZone: 'Etc/UTC' },
+  ).toUpperCase()
 }
 
 
