@@ -10,6 +10,20 @@ main.dispatchBoard {
   background-size: auto 75%;
 
   overflow-x: hidden;
+
+  .clock {
+    align-self: flex-end;
+
+    margin: -1rem 1rem 0.5rem;
+  }
+
+  @media screen and (min-width: 769px) {
+    .clock {
+      position: absolute;
+      top: 3.4rem;
+      right: 8.5rem;
+    }
+  }
 }
 
 .layout {
@@ -19,6 +33,10 @@ main.dispatchBoard {
 
   width: calc(100vw - 2rem);
   margin: 0 1rem;
+
+  &:empty {
+    margin-bottom: 10rem;
+  }
 
   &.openDetail {
     > section {
@@ -61,19 +79,6 @@ main.dispatchBoard {
     }
   }
 
-  .clock {
-    align-self: flex-end;
-
-    margin: 0 1rem 0.5rem;
-  }
-
-  @media screen and (min-width: 769px) {
-    .clock {
-      position: absolute;
-      top: 2.4rem;
-      right: 8.5rem;
-    }
-  }
   @media screen and (max-width: 1190px) {
     flex-direction: column;
 
