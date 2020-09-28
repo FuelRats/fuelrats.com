@@ -26,17 +26,19 @@ function DispatchBoard ({ query }) {
   useRatSocket()
 
   return (
-    <div className={[styles.layout, { [styles.openDetail]: Boolean(query.rId) }, 'page-content loading loader-dark']}>
+    <>
       <Clock className={styles.clock} />
-      {
-        loaded && (
-          <>
-            <DispatchTable className={styles.table} />
-            <RescueDetails className={styles.detail} rescueId={query.rId} />
-          </>
-        )
-      }
-    </div>
+      <div className={[styles.layout, { [styles.openDetail]: Boolean(query.rId) }, 'page-content loading loader-dark']}>
+        {
+          loaded && (
+            <>
+              <DispatchTable className={styles.table} />
+              <RescueDetails className={styles.detail} rescueId={query.rId} />
+            </>
+          )
+        }
+      </div>
+    </>
   )
 }
 

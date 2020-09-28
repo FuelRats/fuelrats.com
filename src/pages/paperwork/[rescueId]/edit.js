@@ -200,6 +200,8 @@ class Paperwork extends React.Component {
   _handleSubmit = async (event) => {
     event.preventDefault()
 
+    this.setState({ submitting: true })
+
     const { rescue } = this.props
     const {
       rats,
@@ -252,7 +254,7 @@ class Paperwork extends React.Component {
     const response = await this.props.updateRescue(updateData)
 
     if (isError(response)) {
-      this.setState({ error: true })
+      this.setState({ error: true, submitting: false })
       return
     }
 
