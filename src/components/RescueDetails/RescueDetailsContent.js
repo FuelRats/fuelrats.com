@@ -154,6 +154,9 @@ function RescueDetailsContent (props) {
                 </tr>
                 {
                   quotes.map((quote, index) => {
+                    const [isViaAuthor, quoteSender, quoteMessage] = quote.message.match(/^<(.*)>\s(.*)/u)
+                      ?? [false, quote.lastAuthor ?? quote.author, quote.message]
+
                     return (
                       <tr key={quote.createdAt}>
                         {
@@ -161,14 +164,20 @@ function RescueDetailsContent (props) {
                             ? (<td className={styles.infoTitle}>{'Quotes'}</td>)
                             : (<td />)
                         }
-                        <td className={[styles.infoValue, styles.infoGroup]}>
-                          <span>
-                            <span className={styles.quoteTime}>{`[${formatAsEliteDateTime(quote.createdAt)}] `}</span>
-                            <i>{`"${quote.message}"`}</i>
-                            {` - ${quote.lastAuthor ?? quote.author}`}
+                        <td className={[styles.infoValue, styles.infoGroup, styles.quote]}>
+                          <span className={styles.quoteAuthor}>
+                            {`<${quoteSender}>`}
                           </span>
 
-                          <span />
+                          <span className={styles.quoteMessage}>
+                            {quoteMessage}
+                          </span>
+
+                          <span className={[styles.quoteTime, { [styles.withVia]: isViaAuthor }]}>
+                            <span>{`[${formatAsEliteDateTime(quote.createdAt)}]`}</span>
+                            {isViaAuthor && (<span className={styles.quoteAuthorVia}>{`via ${quote.lastAuthor ?? quote.author}`}</span>)}
+                          </span>
+
                         </td>
                       </tr>
                     )
