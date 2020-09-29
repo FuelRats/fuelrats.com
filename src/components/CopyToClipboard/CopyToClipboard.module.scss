@@ -44,6 +44,8 @@
     position: relative;
     float: right;
 
+    padding-left: 0.5rem;
+
     opacity: 0;
     color: $red;
     transition: opacity 0.2s ease;
