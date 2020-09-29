@@ -23,13 +23,35 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 *
 
 
-[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.0...HEAD
+[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.1...HEAD
 
 
 
 
 
-## [v2.12.0] - 2020-09-26
+## [2.12.1][] - 2020-09-29
+
+### ⚡ Changed
+* Paperwork page now detects and corrects uppercase rescue ids.
+* Dispatch board updating flash animation flashes in grey instead of red.
+* Code Red and Inactive cases on the dispatch board use background colors from the original board.
+* Case quotes on the dispatch board have a new styling and parsing system.
+
+
+### 🐛 Fixed
+* Problems with permission checking have been corrected.
+* Dispatch board displays timestamps in UTC instead of local time as intended.
+* Dispatch board correctly displays loading circle while it's loading.
+* Paperwork page properly enters submitting state when submitted.
+
+
+[2.12.1]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.0...v2.12.1
+
+
+
+
+
+## [2.12.0][] - 2020-09-26
 
 ### ✨ Added
 * Support for APIv3. - [#191][], [#238][], [#240][], [#241][], [#245][], [#248][], [#251][], [#254][], [#255][], [#260][], [#263][], [#264][], [#266][], [#267][], [#268][], [#270][]

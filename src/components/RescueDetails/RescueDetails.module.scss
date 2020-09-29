@@ -66,12 +66,12 @@
     }
 
     > td {
-      padding: 8px;
+      padding: 0.8rem;
 
       border: 0 solid var(--table-border-color);
 
       line-height: 27px;
-      vertical-align: middle;
+      vertical-align: baseline;
 
       &.infoTitle {
         padding-left: 0;
@@ -91,15 +91,12 @@
 
         flex-wrap: nowrap;
         align-items: baseline;
+        justify-content: space-between;
 
         border-width: 1px 0 0;
 
         &.infoGroup {
           border-width: 1px 1px 0;
-        }
-
-        > :first-child {
-          width: 100%;
         }
 
         button,
@@ -129,13 +126,40 @@
   border: none;
 }
 
-.quoteTime {
-  opacity: 0.75;
+.infoValue.infoGroup.quote {
+  padding: 0 0.8rem;
 
-  font-size: 0.85em;
-  vertical-align: top;
-}
+  white-space: nowrap;
 
-.quoteMessage {
-  font-style: italic;
+  .quoteAuthorVia,
+  .quoteAuthor,
+  .quoteTime {
+    opacity: 0.75;
+
+    font-size: 0.875em;
+  }
+
+  .quoteTime {
+    line-height: 1.5;
+    text-align: right;
+
+    &.withVia {
+      align-self: center;
+    }
+  }
+
+  .quoteAuthorVia {
+    display: block;
+
+    font-style: italic;
+  }
+
+  .quoteMessage {
+    flex-grow: 1;
+
+    padding: 0.8rem 0.4rem;
+
+    font-style: italic;
+    white-space: normal;
+  }
 }
