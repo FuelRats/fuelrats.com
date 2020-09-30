@@ -18,9 +18,10 @@ const RegistrationEmailFieldset = forwardRef((props, ref) => {
 
   const handleValidate = useValidationCallback(
     (messages, value) => {
-      if (value === 'surly_badger@fuelrats.com') {
+      const compareValue = value.toLowerCase().trim()
+      if (compareValue === 'surly_badger@fuelrats.com') {
         messages.errors.push('While we appreciate your admiration for our founder, this email is most surely not your own.')
-      } else if (isProduction && value.includes('@fuelrats')) {
+      } else if (isProduction && compareValue.includes('@fuelrats')) {
         messages.errors.push('Fuel rats email accounts cannot be used to register a brand new account, goofball.')
       }
     },
