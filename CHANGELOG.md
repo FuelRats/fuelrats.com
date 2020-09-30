@@ -12,7 +12,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 ### ⚡ Changed
-*
+* Redundant CMDR check on cmdr name input is now case insensitive.
 
 
 ### 🐛 Fixed
