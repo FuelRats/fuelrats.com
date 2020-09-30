@@ -15,6 +15,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Redundant CMDR check on cmdr name input is now case insensitive.
 * Validation status icon on form inputs are no longer interactable.
   * This is to provide some form of support for lastpass popup icon.
+* Improved auto focus function of login form.
 
 ### 🐛 Fixed
 *
