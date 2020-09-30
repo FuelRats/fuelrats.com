@@ -79,7 +79,7 @@ export const selectCurrentUserCanEditRescue = createCachedSelector(
     // Check if current user is assigned to case.
     const usersAssignedRats = rescueRats?.reduce(
       (acc, rat) => {
-        if (rat.attributes.userId === userId) {
+        if (rat.relationships.user?.data?.id === userId) {
           return [...acc, rat]
         }
         return acc
