@@ -1,16 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import PropTypes from 'prop-types'
-import React, { useReducer, useState, useRef } from 'react'
-import zxcvbn from 'zxcvbn'
+import React, { useReducer, useRef } from 'react'
 
-import InputFieldset, { useValidationCallback } from '../InputFieldset'
+import IrnputFieldset from '../InputFieldset'
 import styles from './PasswordFieldset.module.scss'
-
-
-
-
-
-const DEFAULT_MAX_LENGTH = 42
 
 
 
@@ -18,12 +11,9 @@ const DEFAULT_MAX_LENGTH = 42
 
 function PasswordFieldset (props) {
   const {
-    onValidate: parentValidate,
+    children,
     displayName = 'Password',
-    skipValidation,
-    showStrength,
-    showWarnings,
-    maxLength = DEFAULT_MAX_LENGTH,
+    onValidate,
     ...inputProps
   } = props
 
@@ -34,78 +24,30 @@ function PasswordFieldset (props) {
     return !state
   }, false)
 
-  const [passwordStrength, setPasswordStrength] = useState(0)
-
-  const handleValidate = useValidationCallback(
-    (messages, value) => {
-      if (skipValidation) {
-        return
-      }
-
-      if (value.match(/[@&+%~\s]/gu)) {
-        messages.errors.push(`${displayName} must not contain "@", "$", "+", "%", "+", or spaces due to limitations in IRC.`)
-      }
-
-      if (value.length > maxLength) {
-        messages.errors.push(`${displayName} must be no more than ${maxLength} characters long due to limitations in IRC.`)
-      }
-
-      const evaluation = zxcvbn(value)
-
-      if (evaluation.feedback.warning) {
-        messages.errors.push(evaluation.feedback.warning)
-      }
-
-      if (showWarnings) {
-        messages.warnings.push(...evaluation.feedback.suggestions)
-      }
-
-      if (showStrength) {
-        setPasswordStrength(evaluation.score)
-      }
-    },
-    [displayName, maxLength, showStrength, showWarnings, skipValidation],
-    parentValidate,
-  )
-
   return (
-    <InputFieldset
+    <IrnputFieldset
       ref={inputRef}
       className={styles.passwordInput}
       displayName={displayName}
-      minLength={8}
       placeholder="Sup3r-S3cur3-P4ssw0rd"
       {...inputProps}
       type={showPassword ? 'text' : 'password'}
-      onValidate={handleValidate}>
+      onValidate={onValidate}>
 
-      {
-        showStrength && (
-          <meter
-            className={styles.strengthMeter}
-            high="3"
-            low="2"
-            max="4"
-            optimum="4"
-            value={passwordStrength} />
-        )
-      }
+      {children}
 
       <button className={styles.showButton} disabled={inputProps.disabled} tabIndex="-1" type="button" onClick={handlePasswordVisibility}>
         <FontAwesomeIcon fixedWidth icon={showPassword ? 'eye-slash' : 'eye'} />
       </button>
 
-    </InputFieldset>
+    </IrnputFieldset>
   )
 }
 
 PasswordFieldset.propTypes = {
+  children: PropTypes.node,
   displayName: PropTypes.string,
-  maxLength: PropTypes.number,
   onValidate: PropTypes.func,
-  showStrength: PropTypes.any,
-  showWarnings: PropTypes.any,
-  skipValidation: PropTypes.any,
 }
 
 
