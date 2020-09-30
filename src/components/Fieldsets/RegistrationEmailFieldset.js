@@ -11,6 +11,7 @@ const isProduction = !$IS_DEVELOPMENT && !$IS_STAGING
 
 const RegistrationEmailFieldset = forwardRef((props, ref) => {
   const {
+    children,
     onValidate: parentValidate,
     ...inputProps
   } = props
@@ -31,7 +32,9 @@ const RegistrationEmailFieldset = forwardRef((props, ref) => {
     <EmailFieldset
       ref={ref}
       {...inputProps}
-      onValidate={handleValidate} />
+      onValidate={handleValidate}>
+      {children}
+    </EmailFieldset>
   )
 })
 RegistrationEmailFieldset.displayName = 'RegistrationEmailFieldset'
