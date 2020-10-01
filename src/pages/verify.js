@@ -44,8 +44,17 @@ function Verify ({ token }) {
         <MessageBox title="Invalid Token">
           {token.type === 'reset' && 'Your token is invalid, which probably just means it expired. Please try resetting your password again. If the problem persists, please'}
           {token.type !== 'reset' && 'The provided token is invalid. Please'}
-          {' contact us via email: '}
+          {' contact us via email at: '}
           <a href="mailto:support@fuelrats.com">{'support@fuelrats.com'}</a>
+          {
+            token.errorId && (
+              <>
+                {' with the following error ID: '}
+                <br />
+                <code>{token.errorId}</code>
+              </>
+            )
+          }
         </MessageBox>
       </div>
     )
@@ -102,9 +111,9 @@ Verify.getInitialProps = async (ctx) => {
       break
   }
 
-  const valid = !isError(response)
+  const error = getResponseError(response)
 
-  if (valid && destination) {
+  if (!error && destination) {
     pageRedirect(ctx, destination)
   }
 
@@ -112,7 +121,8 @@ Verify.getInitialProps = async (ctx) => {
     token: {
       type,
       value: token,
-      valid,
+      valid: !error,
+      errorId: error.id,
     },
   }
 }
