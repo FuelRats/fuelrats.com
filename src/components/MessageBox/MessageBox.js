@@ -35,9 +35,9 @@ function MessageBox (props) {
           <h5 className={styles.section}>{title}</h5>
         )
       }
-      <span className={styles.section}>
+      <div className={styles.section}>
         {children}
-      </span>
+      </div>
       {
         footer && (
           <span className={styles.footer}>
