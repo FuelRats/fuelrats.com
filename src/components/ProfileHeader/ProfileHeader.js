@@ -2,7 +2,7 @@
 import React from 'react'
 
 // Component imports
-import { formatAsEliteDateLong } from '~/helpers/formatTime'
+import { formatAsEliteDateTime } from '~/helpers/formatTime'
 import { connect } from '~/store'
 import {
   selectGroupsByUserId,
@@ -10,10 +10,12 @@ import {
   selectDisplayRatByUserId,
   selectAvatarByUserId,
   withCurrentUserId,
+  selectCurrentUserHasScope,
 } from '~/store/selectors'
 
-import ChangePasswordModal from './ChangePasswordModal'
-import DisableProfileModal from './DisableProfileModal'
+import ChangePasswordModal from '../ChangePasswordModal'
+import DisableProfileModal from '../DisableProfileModal'
+import UnverifiedUserBanner from './UnverifiedUserBanner'
 
 
 
@@ -76,6 +78,7 @@ class ProfileHeader extends React.Component {
     const {
       displayRat,
       userAvatar,
+      userIsVerified,
     } = this.props
 
     const attributes = this.props.user.attributes || {}
@@ -88,6 +91,11 @@ class ProfileHeader extends React.Component {
     return (
       <>
         <div className="profile-header">
+          {
+            !userIsVerified && (
+              <UnverifiedUserBanner />
+            )
+          }
           <div className="user-avatar">
             <div className="avatar xl"><img alt="User's avatar" src={userAvatar} /></div>
           </div>
@@ -101,7 +109,7 @@ class ProfileHeader extends React.Component {
             </div>
             <div className="member-since">
               <span className="label">{'Date joined: '}</span>
-              <span>{formatAsEliteDateLong(createdAt)}</span>
+              <span>{formatAsEliteDateTime(createdAt)}</span>
             </div>
           </div>
           <div className="profile-user-badges">
@@ -146,6 +154,7 @@ class ProfileHeader extends React.Component {
       user: withCurrentUserId(selectUserById)(state),
       userAvatar: withCurrentUserId(selectAvatarByUserId)(state),
       displayRat: withCurrentUserId(selectDisplayRatByUserId)(state),
+      userIsVerified: selectCurrentUserHasScope(state, { scope: 'users.verified' }),
     }
   }
 }
