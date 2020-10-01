@@ -39,14 +39,6 @@ export function formatAsEliteDate (timestamp) {
   ).toUpperCase()
 }
 
-export function formatAsEliteDateLong (timestamp) {
-  return format(
-    getEliteTimeFromLocalTime(timestamp),
-    'dd MMMM yyyy',
-    { timeZone: 'Etc/UTC' },
-  ).toUpperCase()
-}
-
 
 
 
