@@ -1,4 +1,3 @@
-import { isError } from 'flux-standard-action'
 import React, { useState, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 
