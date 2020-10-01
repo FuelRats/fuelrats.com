@@ -2,12 +2,36 @@
   display: grid;
 
   grid-template:
+    'message message message' auto
     'avatar info controls' 1fr
     'avatar badges controls' min-content
-    / min-content auto max-content;
+    / min-content auto min-content;
   grid-column-gap: 2rem;
 
   margin-bottom: 3rem;
+
+  .message-container {
+    grid-area: message;
+
+    .error {
+      max-width: 100%;
+      margin-bottom: 1rem;
+    }
+
+    .banner {
+      max-width: 100%;
+      margin-bottom: 1rem;
+
+      > div {
+        display: flex;
+
+        align-items: flex-end;
+        justify-content: space-between;
+
+        width: 100%;
+      }
+    }
+  }
 
   .user-avatar {
     grid-area: avatar;
@@ -57,6 +81,8 @@
     justify-content: flex-end;
 
     grid-area: controls;
+
+    white-space: nowrap;
 
     button,
     .button {

@@ -2,9 +2,9 @@ import React from 'react'
 
 import CMDRFieldset from '~/components/Fieldsets/CMDRFieldset'
 import IRCNickFieldset from '~/components/Fieldsets/IRCNickFieldset'
-import PasswordFieldset from '~/components/Fieldsets/PasswordFieldset'
+import { NewPasswordFieldset } from '~/components/Fieldsets/PasswordFieldset'
 import PlatformFieldset from '~/components/Fieldsets/PlatformFieldset'
-import RegistrationEmailFieldset from '~/components/Fieldsets/RegistrationEmailFieldset'
+import NewEmailFieldset from '~/components/Fieldsets/RegistrationEmailFieldset'
 import TermsFieldset from '~/components/Fieldsets/TermsFieldset'
 import useForm from '~/hooks/useForm'
 
@@ -40,17 +40,16 @@ function RegistrationForm ({ onSubmit }) {
 
   return (
     <Form>
-      <RegistrationEmailFieldset
+      <NewEmailFieldset
+        autoFocus
         required
         autoComplete="email"
         id="Email"
         label={labels.email}
         name="attributes.email" />
 
-      <PasswordFieldset
+      <NewPasswordFieldset
         required
-        showStrength
-        showWarnings
         autoComplete="new-password"
         id="Password"
         label={labels.password}

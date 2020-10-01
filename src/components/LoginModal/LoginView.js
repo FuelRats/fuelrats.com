@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useEffect } from 'react'
+import React, { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 
 import getResponseError from '~/helpers/getResponseError'
@@ -60,17 +60,12 @@ function LoginView () {
     setModalState({ error: null, view: 'reset' })
   }, [setModalState])
 
-  const emailRef = useRef()
-  useEffect(() => {
-    emailRef.current?.focus()
-  }, [])
-
   const { Form, canSubmit, submitting } = useForm({ data: data ?? initialData, onSubmit })
 
   return (
     <Form className={[styles.loginForm, 'dialog']}>
       <EmailFieldset
-        ref={emailRef}
+        autoFocus
         required
         aria-label="E-Mail"
         autoComplete="email"
@@ -80,7 +75,6 @@ function LoginView () {
         placeholder="E-Mail" />
       <PasswordFieldset
         required
-        skipValidation
         aria-label="Password"
         autoComplete="current-password"
         id="LoginPassword"

@@ -8,6 +8,8 @@
 .validityIconGroup {
   composes: validityIconGroup from global;
 
+  pointer-events: none;
+
   position: absolute;
   top: 1px;
   right: 1px;

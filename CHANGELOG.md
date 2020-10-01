@@ -23,7 +23,32 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 *
 
 
-[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.1...HEAD
+[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.2...HEAD
+
+
+
+
+
+## [2.12.2][]
+
+### ✨ Added
+* Banner on profile page will appear when the user is not verified.
+
+
+### ⚡ Changed
+* Error ID will now be provided when users encounter a problem with the verifications page.
+* Redundant CMDR check on CMDR name input is now case insensitive.
+* Validation status icon on form inputs are no longer interactable.
+  * This is to provide some form of support for lastpass popup icon.
+* Improve password input and validation for login and registration.
+* Improved auto focus function of login form.
+
+
+### 🐛 Fixed
+* Profile page crash if the user was unverified, but had a decal (somehow).
+
+
+[2.12.2]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.1...v2.12.2
 
 
 

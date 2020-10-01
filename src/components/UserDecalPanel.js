@@ -77,6 +77,10 @@ class UserDetailsPanel extends React.Component {
   }
 
   renderDecalCode = (decal) => {
+    if (!decal.attributes.code) {
+      return null
+    }
+
     return (
       <div key={decal.id} className="decal">
         <div className="code">
@@ -89,10 +93,10 @@ class UserDetailsPanel extends React.Component {
             <FontAwesomeIcon fixedWidth icon={this.state.decalsVisible[decal.id] ? 'eye' : 'eye-slash'} />
           </button>
           {
-          this.state.decalsVisible[decal.id]
-            ? decal.attributes.code
-            : `•••••-•••••-•••••-•••••-${decal.attributes.code.substring(24)}`
-        }
+            this.state.decalsVisible[decal.id]
+              ? decal.attributes.code
+              : `•••••-•••••-•••••-•••••-${decal.attributes.code.substring(24)}`
+          }
         </div>
         <div className="claimed-at">{formatAsEliteDate(decal.attributes.claimedAt)}</div>
       </div>

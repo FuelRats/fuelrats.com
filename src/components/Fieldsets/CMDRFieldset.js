@@ -13,13 +13,14 @@ export default function CMDRFieldset (props) {
   } = props
 
   const handleValidate = useValidationCallback(
-    (messages, value) => {
-      if (value.startsWith('CMDR')) {
-        messages.errors.push('CMDR is redundant here, CMDR. Please input your name as you entered it when you chose your name in-game.')
+    ({ errors, warnings }, value) => {
+      const compareValue = value.toLowerCase().trim()
+      if (compareValue.startsWith('cmdr')) {
+        warnings.push('CMDR is redundant here, CMDR. Be sure to input your name exactly as you first entered it in game.')
       }
 
-      if (value.includes('Surly Badger')) {
-        messages.errors.push('You know... we\'re pretty sure you\'re not Surly!')
+      if (compareValue.includes('surly badger')) {
+        errors.push('You know... we\'re pretty sure you\'re not Surly!')
       }
     },
     [],
