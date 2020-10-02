@@ -121,7 +121,7 @@ Verify.getInitialProps = async (ctx) => {
       type,
       value: token,
       valid: !error,
-      errorId: error.id,
+      errorId: error?.id,
     },
   }
 }
