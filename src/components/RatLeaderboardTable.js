@@ -1,4 +1,5 @@
 // Module imports
+import _debounce from 'lodash/debounce'
 import React from 'react'
 import ReactTable from 'react-table'
 import { createStructuredSelector } from 'reselect'
@@ -17,6 +18,14 @@ import RescueAchievementIcon from './Leaderboard/RescueAchievementIcon'
 
 
 
+// Component constants
+const FETCH_DATA_DEBOUNCE = 500
+const DEFAULT_PAGE_SIZE = 25
+
+
+
+
+
 @connect
 class RatLeaderboardTable extends React.Component {
   /***************************************************************************\
@@ -28,16 +37,28 @@ class RatLeaderboardTable extends React.Component {
   }
 
 
-
-  _handlePageChange = async (state) => {
-    this.setState({ loading: true })
-
+  _fetchData = async (state) => {
     await this.props.getLeaderboard({
-      'page[offset]': state.page * state.pageSize,
-      'page[limit]': state.pageSize,
+      filter: {
+        name: state.filtered.length > 0 ? `%${state.filtered[0]?.value}%` : undefined,
+      },
+      page: {
+        offset: state.page * state.pageSize,
+        limit: state.pageSize,
+      },
     })
 
     this.setState({ loading: false })
+  }
+
+  _queueFetchData = _debounce(this._fetchData, FETCH_DATA_DEBOUNCE)
+
+  _handleFetchData = (state) => {
+    if (!this.state.loading) {
+      this.setState({ loading: true })
+    }
+
+    this._queueFetchData(state)
   }
 
 
@@ -46,8 +67,12 @@ class RatLeaderboardTable extends React.Component {
   \***************************************************************************/
 
   async componentDidMount () {
-    if (!this.props.entries.length) {
-      await this.props.getLeaderboard()
+    if (!this.props.statistics?.page) { // page would be undefined if we haven't grabbed the leaderboard yet.
+      await this.props.getLeaderboard({
+        page: {
+          limit: DEFAULT_PAGE_SIZE,
+        },
+      })
     }
 
     this.setState({ loading: false })
@@ -66,15 +91,16 @@ class RatLeaderboardTable extends React.Component {
     return (
       <section className="panel">
         <ReactTable
+          filterable
           manual
           className="rat-leaderboard -striped"
           columns={this.columns}
           data={entries ?? []}
           loading={loading}
           pages={statistics.lastPage}
-          pageSize={statistics?.limit ?? 100}
+          pageSize={statistics?.limit ?? DEFAULT_PAGE_SIZE}
           sortable={false}
-          onFetchData={this._handlePageChange} />
+          onFetchData={this._handleFetchData} />
       </section>
     )
   }
