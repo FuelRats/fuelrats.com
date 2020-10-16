@@ -1,7 +1,7 @@
 // Module imports
 import { withCurrentUserId } from './session'
 
-
+const AVATAR_DEFAULT_SIZE = 256
 
 export const getUserId = (_, props) => {
   return props.userId
@@ -27,7 +27,7 @@ export const selectAvatarByUserId = (state, props) => {
     return null
   }
 
-  return user.attributes.image ? `/api/users/${user.id}/avatar` : `//api.adorable.io/avatars/${user.id}`
+  return user.attributes.image ? `/api/users/${user.id}/avatar` : `/avatars/${props.size ?? AVATAR_DEFAULT_SIZE}/${user.id}`
 }
 
 

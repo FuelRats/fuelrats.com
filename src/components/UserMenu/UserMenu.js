@@ -165,7 +165,7 @@ class UserMenu extends React.Component {
     return {
       ...selectSession(state),
       user: withCurrentUserId(selectUserById)(state),
-      userAvatar: withCurrentUserId(selectAvatarByUserId)(state),
+      userAvatar: withCurrentUserId(selectAvatarByUserId)(state, { size: 64 }),
     }
   }
 }
