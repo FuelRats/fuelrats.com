@@ -1,4 +1,3 @@
-/* eslint-disable id-length -- framer needs a property named "x" */
 // Module imports
 import { AnimatePresence, motion } from 'framer-motion'
 import getConfig from 'next/config'
@@ -46,6 +45,25 @@ const selectConnectedSlides = createSelector(
     }, {})
   },
 )
+
+/* eslint-disable id-length */
+const slideMotionConfig = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
+}
+
+const slideTextMotionConfig = {
+  initial: { x: '100%' },
+  animate: { x: '0%' },
+  exit: { x: '100%' },
+  transition: {
+    type: 'spring',
+    stiffness: 550,
+    damping: 100,
+  },
+}
+/* eslint-enable id-length */
 
 
 
@@ -135,11 +153,9 @@ class Carousel extends React.Component {
           {
             Boolean(slide.image) && (
               <motion.div
+                {...slideMotionConfig}
                 key={`${curSlide}-img`}
-                animate={{ opacity: 1 }}
                 className="carousel-slide"
-                exit={{ opacity: 0 }}
-                initial={{ opacity: 0 }}
                 src={slide.image}
                 style={
                   {
@@ -152,11 +168,9 @@ class Carousel extends React.Component {
           {
             Boolean(slide.image && slide.text) && (
               <motion.span
+                {...slideTextMotionConfig}
                 key={`${curSlide}-text`}
-                animate={{ x: 0 }}
-                className="carousel-slide-text"
-                exit={{ x: '100%' }}
-                initial={{ x: '100%' }}>
+                className="carousel-slide-text">
                 {slide.text}
               </motion.span>
             )
