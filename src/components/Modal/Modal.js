@@ -14,7 +14,7 @@ import ModalPortal from './ModalPortal'
 // Component constants
 
 /* eslint-disable id-length */
-const modalTransitionConfig = {
+const modalMotionConfig = {
   initial: { y: '-100vh' },
   animate: { y: 0 },
   exit: { y: '-100vh' },
@@ -67,7 +67,7 @@ function ModalComponent (props) {
   return (
     <ModalContext.Provider value={sharedContext}>
       <RootElement
-        {...modalTransitionConfig}
+        {...modalMotionConfig}
         className={['modal', className]}
         role="dialog">
 
