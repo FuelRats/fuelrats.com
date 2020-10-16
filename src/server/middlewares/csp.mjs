@@ -56,7 +56,7 @@ const configureCSP = () => {
           ...(isDev ? ["'unsafe-eval'"] : []),
         ],
         styleSrc: ["'self'", "'unsafe-inline'", ...domainWhitelist],
-        imgSrc: ["'self'", ...domainWhitelist, 'api.adorable.io', '*.wp.com', 'blob:'],
+        imgSrc: ["'self'", ...domainWhitelist, '*.wp.com', 'blob:'],
         mediaSrc: ["'self'"],
         objectSrc: ["'self'"],
         fontSrc: ["'self'", 'fonts.gstatic.com'],
