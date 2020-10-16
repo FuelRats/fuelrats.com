@@ -8,13 +8,14 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ## [Unreleased][]
 
 ### ✨ Added
-* Add AppleAppSiteAssociation for verification with apple devices
-* Add internal avatar generator so we're no longer dependant on an external app
+* Add `apple-app-site-association` page for verification with apple services.
+* Add internal avatar generator to remove dependency on an external API. - [#286][]
 
 
 ### ⚡ Changed
-* re-enable filtering for leaderboard names
-* specify avatar size when loading default avatar to optimize network usage.
+* re-enable filtering for leaderboard names.
+* specify avatar size when loading default avatar to optimize network usage. - [#286][]
+
 
 ### 🐛 Fixed
 *
@@ -24,6 +25,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 *
 
 
+[#286]: https://github.com/fuelrats/fuelrats.com/pull/286
 [Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.2...HEAD
 
 
@@ -31,6 +33,8 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 ## [2.12.2][] - 2020-10-02
+
+This is the second recovery patch from APIv3 release. Changes were committed directly to develop for speed.
 
 ### ✨ Added
 * Banner on profile page will appear when the user is not verified.
@@ -56,6 +60,8 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 ## [2.12.1][] - 2020-09-29
+
+This is the first recovery patch from APIv3 release. Changes were committed directly to develop for speed.
 
 ### ⚡ Changed
 * Paperwork page now detects and corrects uppercase rescue ids.
