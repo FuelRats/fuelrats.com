@@ -8,12 +8,13 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ## [Unreleased][]
 
 ### ✨ Added
-*
+* Add AppleAppSiteAssociation for verification with apple devices
+* Add internal avatar generator so we're no longer dependant on an external app
 
 
 ### ⚡ Changed
-*
-
+* re-enable filtering for leaderboard names
+* specify avatar size when loading default avatar to optimize network usage.
 
 ### 🐛 Fixed
 *
@@ -29,7 +30,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.12.2][]
+## [2.12.2][] - 2020-10-02
 
 ### ✨ Added
 * Banner on profile page will appear when the user is not verified.
