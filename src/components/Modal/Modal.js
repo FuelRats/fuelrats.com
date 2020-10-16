@@ -68,6 +68,7 @@ function ModalComponent (props) {
     <ModalContext.Provider value={sharedContext}>
       <RootElement
         {...modalMotionConfig}
+        key="modal"
         className={['modal', className]}
         role="dialog">
 
