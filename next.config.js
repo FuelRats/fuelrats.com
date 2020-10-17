@@ -86,7 +86,7 @@ module.exports = {
       test: /\.worker\.js$/u,
       loader: require.resolve('worker-loader'),
       options: {
-        filename: 'static/[hash].worker.js',
+        filename: 'static/[contenthash].worker.js',
         publicPath: '/_next/',
       },
     })
