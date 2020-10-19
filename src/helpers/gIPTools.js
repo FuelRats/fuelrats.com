@@ -75,11 +75,11 @@ export const deleteCookie = (cookieName, ctx = {}) => {
 
 
 
-export const setError = (ctx, statusCode) => {
+export const setError = (ctx, statusCode, message) => {
   if (ctx.res) {
     ctx.res.statusCode = statusCode
   }
-  ctx.err = { statusCode }
+  ctx.err = { statusCode, message }
 }
 
 
