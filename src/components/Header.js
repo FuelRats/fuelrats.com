@@ -1,13 +1,17 @@
 /* globals $IS_DEVELOPMENT:false, $IS_STAGING:false, $BUILD_COMMIT_SHORT:false */
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useSelector } from 'react-redux'
 
+import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { Link } from '~/routes'
-import { connect } from '~/store'
-import { selectSession } from '~/store/selectors'
+import { selectCurrentUserHasScope, selectSession } from '~/store/selectors'
 
 import Brand from '../../public/static/svg/brand.svg'
+import ExternalNavItem from './Nav/ExternalNavItem'
 import Nav from './Nav/Nav'
+import NavItem from './Nav/NavItem'
+import SubNav from './Nav/SubNav'
 
 
 
@@ -18,17 +22,34 @@ const IS_DEV_OR_STAGING = $IS_DEVELOPMENT || $IS_STAGING
 const BUILD_COMMIT_SHORT = $BUILD_COMMIT_SHORT
 
 
-
-
-
-function Header (props) {
+function SocialIcon (props) {
   const {
-    loggedIn,
-    userId,
+    href,
+    title,
+    ...restProps
   } = props
+
+  return (
+    <a
+      className="button link"
+      href={href}
+      rel="noopener noreferrer"
+      target="_blank"
+      title={title}>
+      <FontAwesomeIcon
+        fixedWidth
+        {...restProps} />
+    </a>
+  )
+}
+
+
+function Header () {
+  const { loggedIn } = useSelector(selectSession)
+  const userCanDispatch = useSelectorWithProps({ scope: 'dispatch.read' }, selectCurrentUserHasScope)
+
   return (
     <div id="HeaderContainer">
-
       <input
         aria-label="Navigation toggle"
         id="NavControl"
@@ -39,7 +60,6 @@ function Header (props) {
       </label>
 
       <header role="banner">
-
         <Link route="home">
           <a className="brand" title="Home">
             <div className="brand-animation-wrapper">
@@ -48,122 +68,113 @@ function Header (props) {
           </a>
         </Link>
 
-        <Nav />
+        <Nav>
+          <SubNav id="blog" title="Blog">
+            <NavItem route="blog list">
+              {'All'}
+            </NavItem>
+
+            <NavItem params={{ category: 138 }} route="blog list">
+              {'Stories, Art, & Toons'}
+            </NavItem>
+          </SubNav>
+          <SubNav id="states" title="Rat Stats">
+            <ExternalNavItem href="https://grafana.fuelrats.com/d/H-iTUTPmz/public-statistics?refresh=1h&orgname=2">
+              {'General'}
+            </ExternalNavItem>
+
+            <NavItem route="stats leaderboard">
+              {'Leaderboard'}
+            </NavItem>
+          </SubNav>
+          <SubNav id="support" title="Support Us">
+            <NavItem route="donate">
+              {'Donations'}
+            </NavItem>
+
+            <ExternalNavItem className="disabled">
+              {'Merch (Coming soon!)'}
+            </ExternalNavItem>
+          </SubNav>
+
+          {
+            loggedIn && (
+              <SubNav id="ratlinks" title="Rat Links">
+                {
+                  userCanDispatch && (
+                    <NavItem route="dispatch">
+                      {'Dispatch Board'}
+                    </NavItem>
+                  )
+                }
+                <ExternalNavItem href="https://confluence.fuelrats.com/display/FRKB/Fuel+Rats+Knowledge+Base">
+                  {'Knowledge Base'}
+                </ExternalNavItem>
+                <ExternalNavItem href="https://t.fuelr.at/help">
+                  {'Support Desk'}
+                </ExternalNavItem>
+              </SubNav>
+            )
+          }
+        </Nav>
 
         <ul className="about-actions fa-ul">
+          <NavItem className="button link" params={{ slug: 'terms-of-service' }} route="wordpress">
+            <FontAwesomeIcon fixedWidth icon="book" />
+            {'Terms of Service'}
+          </NavItem>
+          <NavItem className="button link" params={{ slug: 'privacy-policy' }} route="wordpress">
+            <FontAwesomeIcon fixedWidth icon="user-secret" />
+            {'Privacy Policy'}
+          </NavItem>
 
-          <li>
-            <Link params={{ slug: 'terms-of-service' }} route="wordpress">
-              <a className="button link">
-                <FontAwesomeIcon fixedWidth icon="book" />
-                {'Terms of Service'}
-              </a>
-            </Link>
-          </li>
-
-          <li>
-            <Link params={{ slug: 'privacy-policy' }} route="wordpress">
-              <a className="button link">
-                <FontAwesomeIcon fixedWidth icon="user-secret" />
-                {'Privacy Policy'}
-              </a>
-            </Link>
-          </li>
-
-          <li>
-            <Link route="about acknowledgements">
-              <a className="button link">
-                <FontAwesomeIcon fixedWidth icon="hands-helping" />
-                {'Acknowledgements'}
-              </a>
-            </Link>
-          </li>
+          <NavItem className="button link" route="about acknowledgements">
+            <FontAwesomeIcon fixedWidth icon="hands-helping" />
+            {'Acknowledgements'}
+          </NavItem>
 
           {
             IS_DEV_OR_STAGING && (
-              <li>
-                <Link route="about version">
-                  <a className="button link">
-                    <FontAwesomeIcon fixedWidth icon="code-branch" />
-                    {BUILD_COMMIT_SHORT}
-                  </a>
-                </Link>
-              </li>
+              <NavItem className="button link" route="about version">
+                <FontAwesomeIcon fixedWidth icon="code-branch" />
+                {BUILD_COMMIT_SHORT}
+              </NavItem>
             )
           }
-
         </ul>
 
         <div className="social-actions">
-
-          <a
-            className="button link"
+          <SocialIcon
             href="https://www.twitter.com/FuelRats/"
-            rel="noopener noreferrer"
-            target="_blank"
-            title="Fuel Rats on Twitter">
-            <FontAwesomeIcon
-              fixedWidth
-              icon={['fab', 'twitter']} />
-          </a>
-
-          <a
-            className="button link"
+            icon={['fab', 'twitter']}
+            title="Fuel Rats on Twitter" />
+          <SocialIcon
             href="https://www.reddit.com/r/FuelRats/"
-            rel="noopener noreferrer"
-            target="_blank"
-            title="Fuel Rats on Reddit">
-            <FontAwesomeIcon
-              fixedWidth
-              icon={['fab', 'reddit-alien']} />
-          </a>
-
-          <a
-            className="button link"
-            href="https://www.twitch.tv/fuelrats/"
-            rel="noopener noreferrer"
-            target="_blank"
-            title="Fuel Rats on Twitch">
-            <FontAwesomeIcon
-              fixedWidth
-              icon={['fab', 'twitch']} />
-          </a>
-
-          <a
-            className="button link"
+            icon={['fab', 'reddit-alien']}
+            title="Fuel Rats on Reddit" />
+          <SocialIcon
+            href="https://www.twitch.tv/fuelrats//"
+            icon={['fab', 'twitch']}
+            title="Fuel Rats on Twitch" />
+          <SocialIcon
             href="https://www.github.com/FuelRats/"
-            rel="noopener noreferrer"
-            target="_blank"
-            title="Tech Rats on GitHub">
-            <FontAwesomeIcon
-              fixedWidth
-              icon={['fab', 'github']} />
-          </a>
-
-          <a
-            className="button link"
+            icon={['fab', 'github']}
+            title="Fuel Rats on GitHub" />
+          <SocialIcon
             href="https://forums.frontier.co.uk/showthread.php/150703-Out-of-Fuel-Explorer-Rescue-Service-The-Fuel-Rats"
-            rel="noopener noreferrer"
-            target="_blank"
-            title="Fuel Rats on Frontier Forums">
-            <FontAwesomeIcon
-              fixedWidth
-              icon="space-shuttle"
-              transform={{ rotate: -45 }} />
-          </a>
-
+            icon="space-shuttle"
+            title="Fuel Rats on Frontier Forums"
+            transform={{ rotate: -45 }} />
         </div>
 
         <div className="join-actions">
-
           <Link route="rescue-landing">
             <a className="button get-fuel">
               {'Get Fuel'}
             </a>
           </Link>
-
           {
-            !loggedIn && !userId && (
+            !loggedIn && (
               <Link route="register">
                 <a className="button secondary">
                   {'Become a Rat'}
@@ -171,7 +182,6 @@ function Header (props) {
               </Link>
             )
           }
-
         </div>
       </header>
     </div>
@@ -182,12 +192,4 @@ function Header (props) {
 
 
 
-Header.mapStateToProps = (state) => {
-  return selectSession(state)
-}
-
-
-
-
-
-export default connect(Header)
+export default Header
