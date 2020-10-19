@@ -1,17 +1,15 @@
 import { Link } from '~/routes'
 
-export default function NavItem (props) {
-  const {
-    as: Element = Link,
-    children,
-    ...linkProps
-  } = props
-
+export default function NavItem ({ children, className, ...restProps }) {
   return (
     <li>
-      <span>
-        <Element {...linkProps}>{children}</Element>
-      </span>
+      <Link {...restProps}>
+        <a className={className}>
+          <span>
+            {children}
+          </span>
+        </a>
+      </Link>
     </li>
   )
 }

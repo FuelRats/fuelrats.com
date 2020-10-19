@@ -1,11 +1,9 @@
-import NavItem from './NavItem'
-
-
-
-
-
-export default function ExternalNavItem (props) {
+export default function ExternalNavItem ({ children, ...restProps }) {
   return (
-    <NavItem {...props} as="a" />
+    <a {...restProps}>
+      <span>
+        {children}
+      </span>
+    </a>
   )
 }
