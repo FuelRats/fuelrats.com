@@ -1,9 +1,3 @@
-import React from 'react'
-
-
-
-
-
 import CodeRedSvg from '../../../public/static/svg/codeRed.svg'
 
 

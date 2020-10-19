@@ -1,4 +1,3 @@
-// Module imports
 import koaProxy from 'koa-proxies'
 
 

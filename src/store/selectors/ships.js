@@ -1,9 +1,5 @@
-// Module imports
 import { createSelector } from 'reselect'
 
-
-
-// Component imports
 import { selectRatById } from './rats'
 
 

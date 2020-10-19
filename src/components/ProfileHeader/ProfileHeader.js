@@ -1,7 +1,5 @@
-// Module imports
 import React from 'react'
 
-// Component imports
 import { formatAsEliteDateTime } from '~/helpers/formatTime'
 import { connect } from '~/store'
 import {
@@ -152,7 +150,7 @@ class ProfileHeader extends React.Component {
     return {
       groups: withCurrentUserId(selectGroupsByUserId)(state),
       user: withCurrentUserId(selectUserById)(state),
-      userAvatar: withCurrentUserId(selectAvatarByUserId)(state),
+      userAvatar: withCurrentUserId(selectAvatarByUserId)(state, { size: 170 }),
       displayRat: withCurrentUserId(selectDisplayRatByUserId)(state),
       userIsVerified: selectCurrentUserHasScope(state, { scope: 'users.verified' }),
     }

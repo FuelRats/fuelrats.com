@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { useStore } from 'react-redux'
 
 import { useField } from '~/hooks/useForm'

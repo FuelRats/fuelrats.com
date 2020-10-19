@@ -25,24 +25,25 @@ By contributing to this repository, you are expected to know and follow the rule
 
 ## Project setup
 
-
-1. install Yarn v2 (if you haven't already). Instructions can be found [here][yarn2install]!
+1. Install Node.js and `npm` (if you haven't already).
+    * [`nvm`](#nvm-install) is recommended for Linux/WSL/macOS.
+    * Node for Windows is available [here](#node-install), but you should probably be using WSL or some other linux-based CLI alternative.
+    * Current version requirement is: `^14.0.0`.
+1. Install Yarn (if you haven't already).
+    * Run: `npm i -g yarn`
 1. Fork and clone the repo
-1. Setup environment variables (detailed in ["Some things you'll need"](#some-things-youll-need))
-1. `$ yarn` to install native dependencies
-1. `$ yarn dev` to start up the dev server
-1. Create a branch for your PR
+    * Hit "Fork" in the upper left corner of the github page.
+    * Run: `git clone https://github.com/<your username>/fuelrats.com`
+1. Setup environment variables (detailed in ["Dev environment setup"](#dev-environment-setup))
+1. In the project directory, run `yarn install` to install dependencies.
+1. Run `yarn dev` to start the dev server.
 
 > Use of NPM is **NOT** supported by this repository.
-
-### Some things you'll need
-
-By default, the website doesn't know much about connecting to the Fuel Rats API or to the Fuel Rats Wordpress. To remedy this, you'll need to set some environment variables. To make this as easy as possible, There is a enviornment variable template file named `.env.local.template` located in the root directory. Copy this file and rename it to `.env.local`, then fill in the appropriate values. Unsure of what values to set? Contact a project maintainer!
 
 > Tip: Keep your `develop` branch pointing at the original repository and make
 > pull requests from branches on your fork. To do this, run:
 >
-> ```
+> ```bash
 > git remote add upstream https://github.com/FuelRats/fuelrats.com.git
 > git fetch upstream
 > git branch --set-upstream-to=upstream/develop develop
@@ -54,6 +55,19 @@ By default, the website doesn't know much about connecting to the Fuel Rats API 
 > Then you can make all of your pull request branches based on this `develop`
 > branch. Whenever you want to update your version of `develop`, do a regular
 > `git pull`.
+
+### Dev environment setup
+
+You'll need to set a few environment variables to get the website running properly. `Next.js` loads environment variables automaitcally for us from a file called `.env.local`. Follow these steps to set that file up:
+
+1. Duplicate the `.env.local.template` enviornment file located in the root directory.
+1. Rename it to `.env.local`.
+1. Replace the following variables with the values provided to you by a project maintainer. Don't have any values to set? Contact the TechRats over IRC!
+    * FRDC_API_KEY
+    * FRDC_API_SECRET
+    * FRDC_STRIPE_API_PK
+    * FRDC_STRIPE_API_SK
+1. Optionally, you can also set `REACT_EDITOR` to the editor of your choice so the website's error overlay can link you directly to erroring code. By default this is set to `code` for VSCode.
 
 ## Being added as a contributor
 
@@ -143,4 +157,5 @@ There is also 1 additional type allowed for branches **only**
 [jira]: https://jira.fuelrats.com/browse/WEB
 [new-pr]: https://github.com/FuelRats/fuelrats.com/compare
 [ops-email]: mailto:ops@fuelrats.com
-[yarn2install]: https://yarnpkg.com/getting-started
+[nvm-install]: https://github.com/nvm-sh/nvm#installing-and-updating
+[node-install]: https://nodejs.org/en/

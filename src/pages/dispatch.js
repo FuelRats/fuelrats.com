@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 import { authenticated } from '~/components/AppLayout'
@@ -8,6 +8,8 @@ import RescueDetails from '~/components/RescueDetails'
 import styles from '~/scss/pages/dispatch.module.scss'
 import { useRatSocket } from '~/services/frSocket'
 import { getDispatchBoard } from '~/store/actions/rescues'
+
+
 
 
 
@@ -54,4 +56,8 @@ DispatchBoard.getPageMeta = () => {
 
 
 
-export default authenticated('dispatch.read')(DispatchBoard)
+
+export default authenticated(
+  'dispatch.read',
+  'Sorry, you must be a drilled rat to access the dispatch board.',
+)(DispatchBoard)

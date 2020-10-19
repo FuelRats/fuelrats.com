@@ -1,11 +1,6 @@
-// Module Imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Cookies from 'js-cookie'
-import React from 'react'
 
-
-
-// Component Imports
 import TagsInput from './TagsInput'
 
 

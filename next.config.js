@@ -2,7 +2,6 @@
 /* eslint-disable no-param-reassign -- reassign is intended for changing configs */
 
 /* eslint-env node */
-// Module imports
 const crypto = require('crypto')
 const path = require('path')
 
@@ -10,7 +9,7 @@ const path = require('path')
 
 
 
-// Component constants
+// Constants
 const {
   GITHUB_REF,
   GITHUB_SHA,
@@ -86,7 +85,7 @@ module.exports = {
       test: /\.worker\.js$/u,
       loader: require.resolve('worker-loader'),
       options: {
-        filename: 'static/[hash].worker.js',
+        filename: 'static/[contenthash].worker.js',
         publicPath: '/_next/',
       },
     })

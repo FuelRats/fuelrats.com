@@ -1,6 +1,5 @@
 import { HttpStatus } from '@fuelrats/web-util/http'
 import PropTypes from 'prop-types'
-import React from 'react'
 
 import ApiErrorBox from '~/components/MessageBox/ApiErrorBox'
 

@@ -1,4 +1,3 @@
-// Component imports
 import actionTypes from '../actionTypes'
 import { stApiRequest } from './services'
 

@@ -1,13 +1,11 @@
-// Module imports
 import { library as faLibrary, config as faConfig } from '@fortawesome/fontawesome-svg-core'
-import { animated } from '@react-spring/web'
+import { AnimatePresence, motion } from 'framer-motion'
 import withRedux from 'next-redux-wrapper'
 import App from 'next/app'
 import NextHead from 'next/head'
-import React from 'react'
+import { StrictMode } from 'react'
 import { Provider } from 'react-redux'
 
-import PageTransitionContainer from '~/components/AppLayout/PageTransitionContainer'
 import Header from '~/components/Header'
 import LoginModal from '~/components/LoginModal'
 import NProgress from '~/components/NProgress'
@@ -17,7 +15,11 @@ import * as faIcons from '~/helpers/faIconLibrary'
 import { resolvePageMeta } from '~/helpers/gIPTools'
 import frApi from '~/services/fuelrats'
 import { initStore } from '~/store'
-import { initUserSession, notifyPageLoading } from '~/store/actions/session'
+import {
+  initUserSession,
+  notifyPageDestroyed,
+  notifyPageLoading,
+} from '~/store/actions/session'
 
 import ErrorPage from './_error'
 
@@ -30,6 +32,18 @@ import '~/scss/app.scss'
 // Configure and populate FontAwesome library
 faConfig.autoAddCss = false
 faLibrary.add(faIcons)
+
+const pageMotionConfig = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
+  transition: {
+    type: 'spring',
+    mass: 2,
+    stiffness: 450,
+    damping: 50,
+  },
+}
 
 
 
@@ -44,7 +58,6 @@ class FuelRatsApp extends App {
       frApi.defaults.headers.common.Authorization = `Bearer ${props.accessToken}`
     }
   }
-
 
   static async getInitialProps (appCtx) {
     const { Component, ctx } = appCtx
@@ -63,6 +76,7 @@ class FuelRatsApp extends App {
     if (ctx.err) {
       initialProps.isError = true
       initialProps.pageProps = (await ErrorPage.getInitialProps?.(ctx)) ?? {}
+      initialProps.pageProps.message = ctx.err.message
       initialProps.pageMeta = await resolvePageMeta(ErrorPage, ctx, initialProps.pageProps)
     } else {
       initialProps.pageMeta = await resolvePageMeta(Component, ctx, initialProps.pageProps)
@@ -73,65 +87,68 @@ class FuelRatsApp extends App {
     return initialProps
   }
 
-  renderPage = (style, item) => {
-    const { Page, pageProps, pageMeta } = item
-
-    const {
-      title,
-      className,
-      displayTitle,
-      noHeader,
-    } = pageMeta
-
-    return (
-      <animated.main
-        className={['page', title.toLowerCase().replace(/\s/gu, '-'), className]}
-        style={style}>
-        {
-          !noHeader && (
-            <header className="page-header">
-              <h1>
-                {displayTitle ?? title}
-              </h1>
-            </header>
-          )
-        }
-        <SilentBoundary>
-          <Page {...pageProps} />
-        </SilentBoundary>
-      </animated.main>
-    )
+  handlePageDestroy = () => {
+    this.props.store.dispatch(notifyPageDestroyed())
   }
 
   render () {
+    const { store } = this.props
+
     const {
+      Page,
+      pageProps,
       pageMeta,
-      store,
-    } = this.props
+      key,
+    } = this.pageData
+
+    const {
+      title,
+      description,
+      forceDrawer,
+      noHeader,
+      className,
+      displayTitle,
+    } = pageMeta
 
     return (
-      <React.StrictMode>
+      <StrictMode>
         <NextHead>
-          <title>{`${pageMeta.title} | The Fuel Rats`}</title>
+          <title>{`${title} | The Fuel Rats`}</title>
           <meta content="initial-scale=1.0, viewport-fit=cover, width=device-width" name="viewport" />
-          <meta content={pageMeta.title} property="og:title" />
-          <meta content={pageMeta.description} name="description" />
-          <meta content={pageMeta.description} property="og:description" />
+          <meta content={title} property="og:title" />
+          <meta content={description} name="description" />
+          <meta content={description} property="og:description" />
         </NextHead>
-        <div className={{ forceDrawer: pageMeta.forceDrawer }} id="FuelRatsApp" role="application">
+        <div className={{ forceDrawer }} id="FuelRatsApp" role="application">
           <Provider store={store}>
             <NProgress />
             <Header />
             <UserMenu />
 
-            <PageTransitionContainer {...this.pageData}>
-              {this.renderPage}
-            </PageTransitionContainer>
+            <AnimatePresence initial={false} onExitComplete={this.handlePageDestroy}>
+              <motion.main
+                {...pageMotionConfig}
+                key={key}
+                className={['page', title.toLowerCase().replace(/\s/gu, '-'), className]}>
+                {
+                  !noHeader && (
+                    <header className="page-header">
+                      <h1>
+                        {displayTitle ?? title}
+                      </h1>
+                    </header>
+                  )
+                }
+                <SilentBoundary>
+                  <Page {...pageProps} />
+                </SilentBoundary>
+              </motion.main>
+            </AnimatePresence>
 
             <LoginModal />
           </Provider>
         </div>
-      </React.StrictMode>
+      </StrictMode>
     )
   }
 
@@ -152,8 +169,10 @@ class FuelRatsApp extends App {
     }
 
     return {
-      items: { Page, pageProps, pageMeta },
-      keys: pageMeta.pageKey ?? router.asPath,
+      Page,
+      pageProps,
+      pageMeta,
+      key: pageMeta.pageKey ?? router.asPath,
     }
   }
 }

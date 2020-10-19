@@ -1,4 +1,3 @@
-// Module imports
 import React from 'react'
 
 

@@ -23,13 +23,43 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 *
 
 
-[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.2...HEAD
+[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.3...HEAD
 
 
 
 
 
-## [2.12.2][]
+## [2.12.3][]
+
+### ✨ Added
+* Add `apple-app-site-association` page for verification with apple services.
+* Add internal avatar generator to remove dependency on an external API. - [#286][]
+* Add message to `/dispatch`'s `401` page so users know why they can't access the board. - [#288][]
+
+
+### ⚡ Changed
+* re-enable filtering for leaderboard names.
+* specify avatar size when loading default avatar to optimize network usage. - [#286][]
+* Replace `react-spring` with `framer-motion` for js animations. - [#287][]
+* Rewrite parts of `Nav`/`Header` code so it's easier to work with. - [#288][]
+
+
+### ⚙ Tasks
+* Remove unused React imports and clean up import formatting. - [#287][]
+
+
+[#286]: https://github.com/fuelrats/fuelrats.com/pull/286
+[#287]: https://github.com/fuelrats/fuelrats.com/pull/287
+[#288]: https://github.com/fuelrats/fuelrats.com/pull/288
+[2.12.3]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.2...v2.12.3
+
+
+
+
+
+## [2.12.2][] - 2020-10-02
+
+This is the second recovery patch from APIv3 release. Changes were committed directly to develop for speed.
 
 ### ✨ Added
 * Banner on profile page will appear when the user is not verified.
@@ -55,6 +85,8 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 ## [2.12.1][] - 2020-09-29
+
+This is the first recovery patch from APIv3 release. Changes were committed directly to develop for speed.
 
 ### ⚡ Changed
 * Paperwork page now detects and corrects uppercase rescue ids.

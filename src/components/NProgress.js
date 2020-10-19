@@ -1,11 +1,6 @@
-// Module imports
 import NProgress from 'nprogress'
 import React from 'react'
 
-
-
-
-// Component imports
 import { Router } from '~/routes'
 
 

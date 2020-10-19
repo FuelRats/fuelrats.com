@@ -1,12 +1,5 @@
-// Module imports
-import React from 'react'
 import { createSelector } from 'reselect'
 
-
-
-
-
-// Component imports
 import userHasPermission from '~/helpers/userHasPermission'
 import { connect } from '~/store'
 import { selectCurrentUserScopes } from '~/store/selectors/users'

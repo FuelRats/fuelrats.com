@@ -1,12 +1,6 @@
-// Module imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
 
-
-
-
-
-// Component imports
 import { authenticated } from '~/components/AppLayout'
 import { formatAsEliteDateTime } from '~/helpers/formatTime'
 import { pageRedirect } from '~/helpers/gIPTools'

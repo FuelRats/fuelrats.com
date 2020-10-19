@@ -1,4 +1,3 @@
-// Module imports
 import axios from 'axios'
 import getConfig from 'next/config'
 import qs from 'qs'

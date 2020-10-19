@@ -1,15 +1,5 @@
-// Module imports
-import React from 'react'
-
-
-
-
-
-// Component imports
-import { connect } from '~/store'
-import { selectDisplayRatByUserId, withCurrentUserId } from '~/store/selectors'
-
 import asModal, { ModalContent, ModalFooter } from './Modal'
+
 
 
 
@@ -33,19 +23,11 @@ function FirstLoginModal () {
   )
 }
 
-FirstLoginModal.mapStateToProps = (state) => {
-  return {
-    displayRat: withCurrentUserId(selectDisplayRatByUserId)(state),
-  }
-}
 
 
 
 
-
-const modalProps = {
+export default asModal({
   className: 'first-login-dialog',
   title: 'Welcome to The Fuel Rats!',
-}
-
-export default asModal(modalProps)(connect(FirstLoginModal))
+})(FirstLoginModal)

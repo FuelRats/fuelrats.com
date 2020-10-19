@@ -1,11 +1,3 @@
-// Module imports
-import React from 'react'
-
-
-
-
-
-// Component imports
 import UserDecalPanel from './UserDecalPanel'
 import UserNicknamesPanel from './UserNicknamesPanel'
 

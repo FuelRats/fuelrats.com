@@ -1,10 +1,5 @@
-// Module imports
 import React from 'react'
 
-
-
-
-// Component imports
 import ArticleCard from '~/components/Blog/ArticleCard'
 import { getBlog } from '~/store/actions/blogs'
 import { selectBlogById } from '~/store/selectors'

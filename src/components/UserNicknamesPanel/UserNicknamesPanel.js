@@ -1,14 +1,8 @@
-// Module imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { HttpStatus } from '@fuelrats/web-util/http'
 import { isError } from 'flux-standard-action'
 import React from 'react'
 
-
-
-
-
-// Component imports
 import { connect } from '~/store'
 import {
   selectUserById,

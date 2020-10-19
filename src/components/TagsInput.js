@@ -10,19 +10,9 @@
     arrow-body-style,
 */
 
-
-
-
-
-// Module imports
 import debounce from 'lodash/debounce'
 import React from 'react'
 
-
-
-
-
-// Component imports
 import Key from './Key'
 
 

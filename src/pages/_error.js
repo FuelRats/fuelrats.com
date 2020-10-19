@@ -1,4 +1,3 @@
-// Module imports
 import { HttpStatusText } from '@fuelrats/web-util/http'
 import NextError from 'next/error'
 import React from 'react'
@@ -30,6 +29,7 @@ class ErrorPage extends React.Component {
 
   render () {
     const {
+      message,
       statusCode,
       title,
     } = this.props
@@ -43,6 +43,12 @@ class ErrorPage extends React.Component {
         }
 
         <h3 className={styles.errorText}>{title}</h3>
+
+        {
+          Boolean(message) && (
+            <div className={styles.errorMessage}>{message}</div>
+          )
+        }
 
         <small className={styles.subtext}>
           {'If you believe this is an error, please open a ticket or contact: '}

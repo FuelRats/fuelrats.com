@@ -1,10 +1,3 @@
-// Module imports
-import React from 'react'
-
-
-
-
-
 function UserStatsOverview () {
   const assistCount = 2
   const firstLimpetCount = 5

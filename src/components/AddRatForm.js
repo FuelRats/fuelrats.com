@@ -1,18 +1,13 @@
-// Module imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { produce } from 'immer'
 import React from 'react'
 
-
-
-
-
-// Component imports
 import { connect } from '~/store'
 import { selectCurrentUserId } from '~/store/selectors'
 
 import ValidatedFormInput from './ValidatedFormInput'
 import ValidatedFormSelect from './ValidatedFormSelect'
+
 
 
 
@@ -36,6 +31,9 @@ const platformSelectOptions = {
   xb: 'XB1',
   ps: 'PS4',
 }
+
+
+
 
 
 @connect

@@ -1,8 +1,8 @@
-// Module imports
 import { HttpStatus, HttpStatusText } from '@fuelrats/web-util/http'
-import React from 'react'
 
 import styles from '~/scss/pages/error.module.scss'
+
+
 
 
 

@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useCallback, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import getResponseError from '~/helpers/getResponseError'
@@ -17,6 +17,7 @@ import ApiErrorBox from '../MessageBox/ApiErrorBox'
 const selectCurrentUserEmail = (state) => {
   return withCurrentUserId(selectUserById)(state)?.attributes.email ?? null
 }
+
 
 
 

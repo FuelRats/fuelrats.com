@@ -1,5 +1,3 @@
-import React from 'react'
-
 import PasswordFieldset from '~/components/Fieldsets/PasswordFieldset'
 import useForm from '~/hooks/useForm'
 

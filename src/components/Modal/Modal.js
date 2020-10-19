@@ -1,4 +1,4 @@
-import { animated, useTransition } from '@react-spring/web'
+import { AnimatePresence, motion } from 'framer-motion'
 import hoistNonReactStatics from 'hoist-non-react-statics'
 import React, { useCallback, useMemo, useContext } from 'react'
 
@@ -11,10 +11,23 @@ import ModalPortal from './ModalPortal'
 
 
 
+
 // Component constants
-const translate3dHeight = (value) => {
-  return (value ? `translate3d(0,${value}vh,0)` : undefined)
+
+/* eslint-disable id-length */
+const modalMotionConfig = {
+  initial: { y: '-100vh' },
+  animate: { y: 0 },
+  exit: { y: '-100vh' },
+  transition: {
+    type: 'spring',
+    stiffness: 400,
+    damping: 25,
+    restDelta: 0.5,
+    restSpeed: 10,
+  },
 }
+/* eslint-enable id-length */
 
 const ModalContext = React.createContext({})
 
@@ -25,10 +38,10 @@ const ModalContext = React.createContext({})
 function ModalComponent (props) {
   const {
     as = 'div',
+    children,
     className,
     onClose,
     initialState = {},
-    style,
   } = props
 
   const [state, setState] = useMergeReducer(initialState)
@@ -50,73 +63,43 @@ function ModalComponent (props) {
   }, [onClose])
   useEventListener('keydown', handleGlobalKeyDown, { listen: !hideClose })
 
-  const {
-    Component,
-    children: innerChildren,
-    props: innerProps,
-  } = props.children
-
-  const RootElement = animated[as]
+  const RootElement = motion[as]
 
   return (
     <ModalContext.Provider value={sharedContext}>
       <RootElement
+        {...modalMotionConfig}
+        key="modal"
         className={['modal', className]}
-        role="dialog"
-        style={{ transform: style.pos.to(translate3dHeight) }}>
+        role="dialog">
 
         <ModalHeader
           hideClose={hideClose}
           title={title}
           onClose={onClose} />
 
-        <Component {...innerProps}>
-          {innerChildren}
-        </Component>
+        {children}
       </RootElement>
     </ModalContext.Provider>
-  )
-}
-
-function renderModal (style, item) {
-  const { children, ...props } = item
-  return item.isOpen && (
-    <ModalComponent {...props} style={style}>
-      {children}
-    </ModalComponent>
-  )
-}
-
-function ModalTransitionContainer (props) {
-  const { isOpen } = props
-
-  const modalTransition = useTransition(props, {
-    key: JSON.stringify(props),
-    from: { pos: -100 },
-    enter: { pos: 0 },
-    leave: { pos: -100 },
-    unique: true,
-    config: {
-      tension: 350,
-    },
-  })
-
-  return (
-    <ModalPortal isOpen={isOpen}>
-      {modalTransition(renderModal)}
-    </ModalPortal>
   )
 }
 
 const asModal = (options) => {
   return (Component) => {
     function ModalWrapper ({ children, ...props }) {
+      const modalProps = { ...props, ...options }
       return (
-        <ModalTransitionContainer
-          {...props}
-          {...options}>
-          {{ Component, children, props }}
-        </ModalTransitionContainer>
+        <ModalPortal isOpen={props.isOpen}>
+          <AnimatePresence>
+            {
+              props.isOpen && (
+                <ModalComponent {...modalProps}>
+                  <Component {...props}>{children}</Component>
+                </ModalComponent>
+              )
+            }
+          </AnimatePresence>
+        </ModalPortal>
       )
     }
     ModalWrapper.displayName = `asModal(${Component.displayName ?? Component.name ?? 'Component'})`

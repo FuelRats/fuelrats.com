@@ -1,11 +1,6 @@
-// Module imports
+import AvatarsRouter from '@fuelrats/koa-adorable-avatars'
 import Router from '@koa/router'
 
-
-
-
-
-// local imports
 import redirects from './redirects'
 import stripeApi from './stripeApi'
 
@@ -27,8 +22,8 @@ const configureRouter = (nextApp, koaServer) => {
   // Stripe Api
   stripeApi(router)
 
-
-
+  // Avatars
+  router.use('/avatars', AvatarsRouter.routes(), AvatarsRouter.allowedMethods())
 
 
   /***************************************************************************\

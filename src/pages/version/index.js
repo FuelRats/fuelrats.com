@@ -7,13 +7,6 @@
      $NEXT_BUILD_ID:false
 */
 
-// Module imports
-import React from 'react'
-
-
-
-
-// Component imports
 import { formatAsEliteDateTime } from '~/helpers/formatTime'
 
 import { version } from '../../../package.json'
@@ -21,13 +14,15 @@ import { version } from '../../../package.json'
 
 
 
-// Component Constants
+
+// Component constants
 const BUILD_BRANCH = $BUILD_BRANCH
 const BUILD_COMMIT = $BUILD_COMMIT
 const BUILD_DATE = $BUILD_DATE
 const BUILD_URL = $BUILD_URL
 const NODE_VERSION = $NODE_VERSION
 const NEXT_BUILD_ID = $NEXT_BUILD_ID
+
 
 
 
