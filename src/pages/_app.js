@@ -76,6 +76,7 @@ class FuelRatsApp extends App {
     if (ctx.err) {
       initialProps.isError = true
       initialProps.pageProps = (await ErrorPage.getInitialProps?.(ctx)) ?? {}
+      initialProps.pageProps.message = ctx.err.message
       initialProps.pageMeta = await resolvePageMeta(ErrorPage, ctx, initialProps.pageProps)
     } else {
       initialProps.pageMeta = await resolvePageMeta(Component, ctx, initialProps.pageProps)

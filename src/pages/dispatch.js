@@ -56,4 +56,8 @@ DispatchBoard.getPageMeta = () => {
 
 
 
-export default authenticated('dispatch.read')(DispatchBoard)
+
+export default authenticated(
+  'dispatch.read',
+  'Sorry, you must be a drilled rat to access the dispatch board.',
+)(DispatchBoard)

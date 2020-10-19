@@ -10,12 +10,15 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ### ✨ Added
 * Add `apple-app-site-association` page for verification with apple services.
 * Add internal avatar generator to remove dependency on an external API. - [#286][]
+* Add message to `/dispatch`'s `401` page so users know why they can't access the board. - [#288][]
 
 
 ### ⚡ Changed
 * re-enable filtering for leaderboard names.
 * specify avatar size when loading default avatar to optimize network usage. - [#286][]
 * Replace `react-spring` with `framer-motion` for js animations. - [#287][]
+* Rewrite parts of `Nav`/`Header` code so it's easier to work with. - [#288][]
+
 
 ### 🐛 Fixed
 *
@@ -27,6 +30,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 [#286]: https://github.com/fuelrats/fuelrats.com/pull/286
 [#287]: https://github.com/fuelrats/fuelrats.com/pull/287
+[#288]: https://github.com/fuelrats/fuelrats.com/pull/288
 [Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.2...HEAD
 
 
