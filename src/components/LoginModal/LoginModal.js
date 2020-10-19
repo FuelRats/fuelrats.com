@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { connect } from '~/store'
 import { setFlag } from '~/store/actions/flags'
 import { selectFlagByName } from '~/store/selectors'

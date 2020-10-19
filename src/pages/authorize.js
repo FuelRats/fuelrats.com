@@ -1,12 +1,6 @@
-// Module imports
 import { isError } from 'flux-standard-action'
 import React from 'react'
 
-
-
-
-
-// Component imports
 import { authenticated } from '~/components/AppLayout'
 import ScopeView from '~/components/ScopeView'
 import { pageRedirect } from '~/helpers/gIPTools'
@@ -14,8 +8,8 @@ import { connect } from '~/store'
 import { getClientOAuthPage } from '~/store/actions/authentication'
 
 
-// For Testing
-// /authorize?client_id=480f28cf-71cc-454e-b502-959d9a5346fc&redirect_uri=https://dispatch.fuelrats.com/&scope=users.read.me%20rescues.read&response_type=token&state=hello
+
+
 
 @authenticated
 @connect

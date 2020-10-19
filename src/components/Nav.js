@@ -1,11 +1,5 @@
-// Module imports
 import React from 'react'
 
-
-
-
-
-// Component imports
 import { Link } from '~/routes'
 import { connect } from '~/store'
 import { selectSession } from '~/store/selectors'

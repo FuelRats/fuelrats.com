@@ -1,16 +1,13 @@
-// Module imports
 import React from 'react'
 
-
-
-
-
-// Component imports
 import { connect } from '~/store'
 import { selectWordpressPageBySlug } from '~/store/selectors'
 
 import asModal, { ModalContent, ModalFooter } from '../Modal'
 import styles from './TermsModal.module.scss'
+
+
+
 
 
 @asModal({ className: 'terms-dialog' })

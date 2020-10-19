@@ -1,4 +1,3 @@
-// Module imports
 import hoistNonReactStatics from 'hoist-non-react-statics'
 import getConfig from 'next/config'
 import React from 'react'

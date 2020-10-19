@@ -1,12 +1,6 @@
-// Module imports
 import { HttpStatus } from '@fuelrats/web-util/http'
 import React from 'react'
 
-
-
-
-
-// Component imports
 import { authenticated } from '~/components/AppLayout'
 import FirstLoginModal from '~/components/FirstLoginModal'
 import ProfileHeader from '~/components/ProfileHeader'
@@ -15,6 +9,7 @@ import UserOverview from '~/components/UserOverview'
 import UserRatsPanel from '~/components/UserRatsPanel'
 import { setError } from '~/helpers/gIPTools'
 import { Router } from '~/routes'
+
 
 
 

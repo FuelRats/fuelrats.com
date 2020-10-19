@@ -1,10 +1,3 @@
-// Module imports
-import React from 'react'
-
-
-
-
-
 function UserRescuesPanel () {
   return (
     <div className="row">

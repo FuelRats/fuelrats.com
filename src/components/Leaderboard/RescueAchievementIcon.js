@@ -4,12 +4,6 @@
 
 
 
-import React from 'react'
-
-
-
-
-
 import Rescue100 from '../../../public/static/svg/rescue100.svg'
 import Rescue1000 from '../../../public/static/svg/rescue1000.svg'
 import Rescue200 from '../../../public/static/svg/rescue200.svg'

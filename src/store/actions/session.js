@@ -1,4 +1,3 @@
-// Component imports
 import { createFSA } from '@fuelrats/web-util/actions'
 import { HttpStatus } from '@fuelrats/web-util/http'
 import { isError } from 'flux-standard-action'
@@ -99,14 +98,8 @@ export const notifyPageLoading = ({ Component }) => {
 }
 
 
-export const notifyPageDestroyed = (result) => {
-  return (dispatch) => {
-    // Prevents double event fire from both pages coming to a rest. we only detect the old page.
-    if (result.finished && result?.value?.opacity === 0) {
-      return dispatch({
-        type: actionTypes.session.pageDestroyed,
-      })
-    }
-    return {}
+export const notifyPageDestroyed = () => {
+  return {
+    type: actionTypes.session.pageDestroyed,
   }
 }

@@ -114,8 +114,19 @@ export const configureRequest = (ctx) => {
 
   // If we're on the server, we should set proxy headers to retain origin IP
   if (ctx.isServer) {
-    frApi.defaults.headers.common['x-real-ip'] = ctx.req.headers['x-real-ip'] ?? ctx.req.client.remoteAddress
-    frApi.defaults.headers.common['x-forwarded-for'] = ctx.req.headers['x-forwarded-for'] ?? ctx.req.client.remoteAddress
-    frApi.defaults.headers.common['x-forwarded-proto'] = ctx.req.headers['x-forwarded-proto'] ?? ctx.req.headers.host
+    const realIp = ctx.req.headers['x-real-ip'] ?? ctx.req.client.remoteAddress
+    if (realIp) {
+      frApi.defaults.headers.common['x-real-ip'] = realIp
+    }
+
+    const forwardedFor = ctx.req.headers['x-forwarded-for'] ?? ctx.req.client.remoteAddress
+    if (forwardedFor) {
+      frApi.defaults.headers.common['x-forwarded-for'] = forwardedFor
+    }
+
+    const forwardedProto = ctx.req.headers['x-forwarded-proto'] ?? ctx.req.headers.host
+    if (forwardedProto) {
+      frApi.defaults.headers.common['x-forwarded-proto'] = forwardedProto
+    }
   }
 }

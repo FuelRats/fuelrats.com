@@ -1,4 +1,3 @@
-// Module imports
 import { HttpStatusText } from '@fuelrats/web-util/http'
 import NextError from 'next/error'
 import React from 'react'

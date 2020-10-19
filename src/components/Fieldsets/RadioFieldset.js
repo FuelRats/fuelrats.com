@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { useCallback } from 'react'
+import { useCallback } from 'react'
 
 import RadioInput from '~/components/RadioInput'
 import { useField, fieldPropTypes } from '~/hooks/useForm'

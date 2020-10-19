@@ -1,17 +1,14 @@
-// Module imports
 import React from 'react'
 
-
-
-
-
-// Component imports
 import { authenticated } from '~/components/AppLayout'
 import RadioInput from '~/components/RadioInput'
 import RatTagsInput from '~/components/RatTagsInput'
 import RescuesTagsInput from '~/components/RescuesTagsInput'
 import getRatTag from '~/helpers/getRatTag'
 import { connect } from '~/store'
+
+
+
 
 
 // Component constants

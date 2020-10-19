@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import PropTypes from 'prop-types'
-import React, { useState, useCallback, useRef, useEffect } from 'react'
+import { useState, useCallback, useRef, useEffect } from 'react'
 import { CopyToClipboard as CopyComponent } from 'react-copy-to-clipboard'
 
 import styles from './CopyToClipboard.module.scss'

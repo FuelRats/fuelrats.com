@@ -1,5 +1,3 @@
-import React from 'react'
-
 import platformRadioOptions from '~/data/platformRadioOptions'
 
 import RadioFieldset from './RadioFieldset'

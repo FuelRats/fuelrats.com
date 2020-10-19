@@ -1,13 +1,8 @@
-// Module imports
 import { HttpStatus } from '@fuelrats/web-util/http'
 import { isError } from 'flux-standard-action'
 import React from 'react'
 import { createStructuredSelector } from 'reselect'
 
-
-
-
-// Component imports
 import {
   passwordPattern,
 } from '~/data/RegExpr'

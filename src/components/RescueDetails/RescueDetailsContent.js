@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types'
-import React from 'react'
 
 import { formatAsEliteDateTime } from '~/helpers/formatTime'
 import { usePlatformData, useLanguageData } from '~/hooks/rescueHooks'
@@ -10,6 +9,10 @@ import { createSelectRenderedRatList } from '~/store/selectors'
 import CopyToClipboard from '../CopyToClipboard'
 import ElapsedTimer from '../ElapsedTimer'
 import styles from './RescueDetails.module.scss'
+
+
+
+
 
 const selectRenderedRatList = createSelectRenderedRatList((rat, index) => {
   const { name } = rat.attributes
@@ -38,6 +41,10 @@ const selectRenderedRatList = createSelectRenderedRatList((rat, index) => {
     </tr>
   )
 })
+
+
+
+
 
 function RescueDetailsContent (props) {
   const { rescue } = props

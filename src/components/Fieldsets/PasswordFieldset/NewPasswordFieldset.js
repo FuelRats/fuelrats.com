@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import zxcvbn from 'zxcvbn'
 
 import { useValidationCallback } from '../InputFieldset'

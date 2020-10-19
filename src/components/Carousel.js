@@ -1,16 +1,12 @@
-// Module imports
-import { Transition, animated } from '@react-spring/web'
+import { AnimatePresence, motion } from 'framer-motion'
 import getConfig from 'next/config'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { createSelector, createStructuredSelector } from 'reselect'
 
-
-
-
-// Component imports
 import { connect } from '~/store'
 import { selectImages } from '~/store/selectors'
+
 
 
 
@@ -18,7 +14,6 @@ import { selectImages } from '~/store/selectors'
 // Component constants
 const { publicRuntimeConfig } = getConfig()
 const { publicUrl } = publicRuntimeConfig.local
-
 
 const getSlides = (_, props) => {
   return props.slides
@@ -45,6 +40,25 @@ const selectConnectedSlides = createSelector(
     }, {})
   },
 )
+
+/* eslint-disable id-length */
+const slideMotionConfig = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
+}
+
+const slideTextMotionConfig = {
+  initial: { x: '100%' },
+  animate: { x: '0%' },
+  exit: { x: '100%' },
+  transition: {
+    type: 'spring',
+    stiffness: 550,
+    damping: 100,
+  },
+}
+/* eslint-enable id-length */
 
 
 
@@ -115,70 +129,6 @@ class Carousel extends React.Component {
     clearTimeout(this.timer)
   }
 
-  renderSlide () {
-    return (
-      <Transition
-        {...this.transitionProps}
-        enter={{ opacity: 1 }}
-        from={{ opacity: 0 }}
-        initial={{ opacity: 1 }}
-        leave={{ opacity: 0 }}>
-        {
-          (style, slide) => {
-            if (!slide.image) {
-              return null
-            }
-
-            return (
-              <animated.div
-                className="carousel-slide"
-                style={
-                  {
-                    ...style,
-                    backgroundImage: `url(${slide.image})`,
-                    backgroundPosition: slide.position || 'center',
-                  }
-                } />
-            )
-          }
-        }
-      </Transition>
-    )
-  }
-
-  renderSlideText () {
-    return (
-      <Transition
-        {...this.transitionProps}
-        enter={{ xPos: 0 }}
-        from={{ xPos: 100 }}
-        initial={{ xPos: 0 }}
-        leave={{ xPos: 100 }}>
-        {
-          ({ xPos }, slide) => {
-            if (!slide.image || !slide.text) {
-              return null
-            }
-
-            const spanStyle = {
-              transform: xPos.to((value) => {
-                return (value ? `translate3d(${value}%,0,0)` : undefined)
-              }),
-            }
-
-            return (
-              <animated.span
-                className="carousel-slide-text"
-                style={spanStyle}>
-                {slide.text}
-              </animated.span>
-            )
-          }
-        }
-      </Transition>
-    )
-  }
-
   render () {
     const {
       className,
@@ -190,10 +140,37 @@ class Carousel extends React.Component {
       curSlide,
     } = this.state
 
+    const slide = this.props.slides[curSlide]
+
     return (
       <div className={['carousel', className]} id={id}>
-        {this.renderSlide()}
-        {this.renderSlideText()}
+        <AnimatePresence>
+          {
+            Boolean(slide.image) && (
+              <motion.div
+                {...slideMotionConfig}
+                key={`${curSlide}-img`}
+                className="carousel-slide"
+                src={slide.image}
+                style={
+                  {
+                    backgroundImage: `url(${slide.image})`,
+                    backgroundPosition: slide.position || 'center',
+                  }
+                } />
+            )
+          }
+          {
+            Boolean(slide.image && slide.text) && (
+              <motion.span
+                {...slideTextMotionConfig}
+                key={`${curSlide}-text`}
+                className="carousel-slide-text">
+                {slide.text}
+              </motion.span>
+            )
+          }
+        </AnimatePresence>
         <div className="carousel-slide-picker">
           {
             Object.keys(slides).map((slideId) => {
@@ -211,26 +188,6 @@ class Carousel extends React.Component {
         </div>
       </div>
     )
-  }
-
-
-
-
-
-  /***************************************************************************\
-    Redux Properties
-  \***************************************************************************/
-
-  get transitionProps () {
-    const { slides } = this.props
-    const { curSlide } = this.state
-    return {
-      items: slides[curSlide],
-      keys: slides[curSlide].image ? curSlide : 'null',
-      native: true,
-      unique: true,
-      config: { tension: 280, friction: 85 },
-    }
   }
 
 

@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { differenceInMinutes } from 'date-fns'
 import PropTypes from 'prop-types'
-import React, { useCallback, useState } from 'react'
+import { useCallback, useState } from 'react'
 
 import { useQuoteString, useLanguageData, usePlatformData } from '~/hooks/rescueHooks'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
@@ -85,15 +85,15 @@ function RescueRow (props) {
 
   return (
     <tr
-      className={
+        className={
         {
           [styles.codeRed]: codeRed,
           [styles.inactive]: status === 'inactive',
           'animate-flash': animating,
         }
       }
-      title={quoteString}
-      onAnimationEnd={handleTransitionEnd}>
+        title={quoteString}
+        onAnimationEnd={handleTransitionEnd}>
       <CopyToClipboard
         as="td"
         text={commandIdentifier ?? '?'}>

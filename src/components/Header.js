@@ -1,14 +1,7 @@
 /* globals $IS_DEVELOPMENT:false, $IS_STAGING:false, $BUILD_COMMIT_SHORT:false */
 
-// Module imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
 
-
-
-
-
-// Component imports
 import { Link } from '~/routes'
 import { connect } from '~/store'
 import { selectSession } from '~/store/selectors'
@@ -23,6 +16,7 @@ import Nav from './Nav'
 // Component constants
 const IS_DEV_OR_STAGING = $IS_DEVELOPMENT || $IS_STAGING
 const BUILD_COMMIT_SHORT = $BUILD_COMMIT_SHORT
+
 
 
 

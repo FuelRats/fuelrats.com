@@ -15,17 +15,18 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ### ⚡ Changed
 * re-enable filtering for leaderboard names.
 * specify avatar size when loading default avatar to optimize network usage. - [#286][]
-
+* Replace `react-spring` with `framer-motion` for js animations. - [#287][]
 
 ### 🐛 Fixed
 *
 
 
 ### ⚙ Tasks
-*
+* Remove unused React imports and clean up import formatting. - [#287][]
 
 
 [#286]: https://github.com/fuelrats/fuelrats.com/pull/286
+[#287]: https://github.com/fuelrats/fuelrats.com/pull/287
 [Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.2...HEAD
 
 
