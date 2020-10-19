@@ -8,6 +8,30 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ## [Unreleased][]
 
 ### ✨ Added
+*
+
+
+### ⚡ Changed
+*
+
+
+### 🐛 Fixed
+*
+
+
+### ⚙ Tasks
+*
+
+
+[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.3...HEAD
+
+
+
+
+
+## [2.12.3][]
+
+### ✨ Added
 * Add `apple-app-site-association` page for verification with apple services.
 * Add internal avatar generator to remove dependency on an external API. - [#286][]
 * Add message to `/dispatch`'s `401` page so users know why they can't access the board. - [#288][]
@@ -20,10 +44,6 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Rewrite parts of `Nav`/`Header` code so it's easier to work with. - [#288][]
 
 
-### 🐛 Fixed
-*
-
-
 ### ⚙ Tasks
 * Remove unused React imports and clean up import formatting. - [#287][]
 
@@ -31,7 +51,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 [#286]: https://github.com/fuelrats/fuelrats.com/pull/286
 [#287]: https://github.com/fuelrats/fuelrats.com/pull/287
 [#288]: https://github.com/fuelrats/fuelrats.com/pull/288
-[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.2...HEAD
+[2.12.3]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.2...v2.12.3
 
 
 
