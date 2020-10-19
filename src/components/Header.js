@@ -7,7 +7,7 @@ import { connect } from '~/store'
 import { selectSession } from '~/store/selectors'
 
 import Brand from '../../public/static/svg/brand.svg'
-import Nav from './Nav'
+import Nav from './Nav/Nav'
 
 
 
