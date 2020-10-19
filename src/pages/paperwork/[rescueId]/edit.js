@@ -1,13 +1,7 @@
-// Module imports
 import { isError } from 'flux-standard-action'
 import React from 'react'
 import { createSelector } from 'reselect'
 
-
-
-
-
-// Component imports
 import { authenticated } from '~/components/AppLayout'
 import FirstLimpetInput from '~/components/FirstLimpetInput'
 import RadioInput from '~/components/RadioInput'
@@ -81,6 +75,7 @@ const outcomeRadioOptions = [
     title: 'Fuel wasn\'t delivered because the client was able to get out of trouble without it. (Explain)',
   },
 ]
+
 
 
 

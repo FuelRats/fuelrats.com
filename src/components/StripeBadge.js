@@ -1,9 +1,3 @@
-import React from 'react'
-
-
-
-
-
 import StripeBadgeSvg from '../../public/static/svg/stripeBadge.svg'
 
 

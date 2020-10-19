@@ -1,11 +1,6 @@
 /* eslint-env node */
 'use strict'
 
-
-
-
-
-// Module imports
 import Koa from 'koa'
 import koaBody from 'koa-body'
 import koaCompress from 'koa-compress'

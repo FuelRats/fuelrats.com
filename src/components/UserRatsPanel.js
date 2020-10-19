@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { connect } from '~/store'
@@ -11,6 +11,8 @@ import {
 
 import AddRatForm from './AddRatForm'
 import RatCard from './RatCard'
+
+
 
 
 

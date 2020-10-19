@@ -1,11 +1,5 @@
-// Module imports
-
 import React from 'react'
 
-
-
-
-// Component imports
 import ArticleCard from '~/components/Blog/ArticleCard'
 import safeParseInt from '~/helpers/safeParseInt'
 import { Link } from '~/routes'

@@ -1,4 +1,3 @@
-// Component imports
 import { createFSA } from '@fuelrats/web-util/actions'
 import { HttpStatus } from '@fuelrats/web-util/http'
 import { isError } from 'flux-standard-action'

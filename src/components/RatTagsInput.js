@@ -1,11 +1,6 @@
-// Module Imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import qs from 'qs'
-import React from 'react'
 
-
-
-// Component Imports
 import TagsInput from './TagsInput'
 
 

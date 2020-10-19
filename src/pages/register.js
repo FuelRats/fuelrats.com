@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 
 import RegistrationForm, { RegistrationErrorBox } from '~/components/Forms/RegistrationForm'
@@ -7,6 +7,10 @@ import getResponseError from '~/helpers/getResponseError'
 import useMergeReducer from '~/hooks/useMergeReducer'
 import { register } from '~/store/actions/authentication'
 import { resendVerificationEmail } from '~/store/actions/verify'
+
+
+
+
 
 function Register () {
   const dispatch = useDispatch()

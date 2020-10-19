@@ -1,16 +1,12 @@
-// Module imports
 import { AnimatePresence, motion } from 'framer-motion'
 import getConfig from 'next/config'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { createSelector, createStructuredSelector } from 'reselect'
 
-
-
-
-// Component imports
 import { connect } from '~/store'
 import { selectImages } from '~/store/selectors'
+
 
 
 
@@ -18,7 +14,6 @@ import { selectImages } from '~/store/selectors'
 // Component constants
 const { publicRuntimeConfig } = getConfig()
 const { publicUrl } = publicRuntimeConfig.local
-
 
 const getSlides = (_, props) => {
   return props.slides

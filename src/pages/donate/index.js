@@ -1,9 +1,3 @@
-// Module imports
-import React from 'react'
-
-
-
-// Component imports
 import { withStripe } from '~/components/AppLayout'
 import DonateForm from '~/components/DonateForm'
 
@@ -36,6 +30,9 @@ Donate.getPageMeta = () => {
     title: 'Donate',
   }
 }
+
+
+
 
 
 export default withStripe(Donate)

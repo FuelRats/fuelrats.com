@@ -1,4 +1,3 @@
-// Component imports
 import { isError } from 'flux-standard-action'
 
 import actionTypes from '../actionTypes'

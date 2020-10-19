@@ -1,11 +1,5 @@
-// Module imports
 import { createSelector } from 'reselect'
 
-
-
-
-
-// Component imports
 import { selectUserById } from './users'
 
 

@@ -1,16 +1,10 @@
-// Module imports
 import React from 'react'
 
-
-
-
-
-// Component imports
 import Carousel from '~/components/Carousel'
 import { Link, Router } from '~/routes'
 import { connect } from '~/store'
 
-
+// Component constants
 const CarouselSlides = {
   0: {
     text: 'CMDR Dr Chives',

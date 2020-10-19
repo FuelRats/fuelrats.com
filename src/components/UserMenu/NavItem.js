@@ -1,10 +1,3 @@
-// Module imports
-import React from 'react'
-
-
-
-
-// Component imports
 import { Link } from '~/routes'
 
 
@@ -30,6 +23,7 @@ function NavItem ({ item, ...linkProps }) {
     </li>
   )
 }
+
 
 
 

@@ -1,4 +1,3 @@
-// Module imports
 import { library as faLibrary, config as faConfig } from '@fortawesome/fontawesome-svg-core'
 import { AnimatePresence, motion } from 'framer-motion'
 import withRedux from 'next-redux-wrapper'
@@ -34,7 +33,6 @@ import '~/scss/app.scss'
 faConfig.autoAddCss = false
 faLibrary.add(faIcons)
 
-/* eslint-disable id-length */
 const pageMotionConfig = {
   initial: { opacity: 0 },
   animate: { opacity: 1 },
@@ -46,7 +44,9 @@ const pageMotionConfig = {
     damping: 50,
   },
 }
-/* eslint-enable id-length */
+
+
+
 
 
 @withRedux(initStore)

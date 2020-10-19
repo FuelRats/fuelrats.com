@@ -1,7 +1,10 @@
-// Module imports
 import { withCurrentUserId } from './session'
 
 const AVATAR_DEFAULT_SIZE = 256
+
+
+
+
 
 export const getUserId = (_, props) => {
   return props.userId

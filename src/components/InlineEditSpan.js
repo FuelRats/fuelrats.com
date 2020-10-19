@@ -1,9 +1,3 @@
-import React from 'react'
-
-
-
-
-
 function InlineEditor ({
   canEdit,
   className,

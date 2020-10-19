@@ -2,7 +2,6 @@
 /* eslint-disable no-param-reassign -- reassign is intended for changing configs */
 
 /* eslint-env node */
-// Module imports
 const crypto = require('crypto')
 const path = require('path')
 
@@ -10,7 +9,7 @@ const path = require('path')
 
 
 
-// Component constants
+// Constants
 const {
   GITHUB_REF,
   GITHUB_SHA,

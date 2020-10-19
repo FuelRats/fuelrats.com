@@ -1,7 +1,5 @@
-// Module imports
 import React from 'react'
 
-// Component imports
 import { formatAsEliteDateTime } from '~/helpers/formatTime'
 import { connect } from '~/store'
 import {

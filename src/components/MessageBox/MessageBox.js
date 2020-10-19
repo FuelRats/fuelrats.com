@@ -1,13 +1,18 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import PropTypes from 'prop-types'
-import React from 'react'
 
 import styles from './MessageBox.module.scss'
 
 
+
+
+// Component Constants
 const typeIcons = {
   info: 'exclamation-circle',
 }
+
+
+
 
 
 function MessageBox (props) {

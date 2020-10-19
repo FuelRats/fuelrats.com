@@ -1,10 +1,3 @@
-// Module imports
-import React from 'react'
-
-
-
-
-
 function ModalContent (props) {
   const {
     as: Element,

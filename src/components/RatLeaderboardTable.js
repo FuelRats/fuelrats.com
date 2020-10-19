@@ -1,4 +1,3 @@
-// Module imports
 import _debounce from 'lodash/debounce'
 import React from 'react'
 import ReactTable from 'react-table-6'

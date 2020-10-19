@@ -1,6 +1,6 @@
 /* global $IS_DEVELOPMENT, $IS_STAGING */
 
-import React, { forwardRef } from 'react'
+import { forwardRef } from 'react'
 
 import EmailFieldset from './EmailFieldset'
 import { useValidationCallback } from './InputFieldset'

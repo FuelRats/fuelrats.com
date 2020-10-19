@@ -1,13 +1,7 @@
-// Module imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import debounce from 'lodash/debounce'
 import React from 'react'
 
-
-
-
-
-// Component imports
 import { authenticated } from '~/components/AppLayout'
 import { formatAsEliteDateTime } from '~/helpers/formatTime'
 import { Link } from '~/routes'
@@ -23,6 +17,8 @@ import { selectPageViewDataById, selectPageViewMetaById } from '~/store/selector
 const viewUpdateDebounceTime = 500
 const viewUpdateMaxWaitTime = 1000
 const pageViewId = 'admin-rescue-list'
+
+
 
 
 

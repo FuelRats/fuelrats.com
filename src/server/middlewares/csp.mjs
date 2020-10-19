@@ -1,4 +1,3 @@
-// Module imports
 import buildCSP from 'content-security-policy-builder'
 import UUID from 'pure-uuid'
 

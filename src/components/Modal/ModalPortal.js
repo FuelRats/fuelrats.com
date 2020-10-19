@@ -1,4 +1,3 @@
-// Module imports
 import React from 'react'
 import { createPortal } from 'react-dom'
 
@@ -6,7 +5,6 @@ import { createPortal } from 'react-dom'
 
 
 
-// Component constants
 class ModalPortal extends React.Component {
   modalRoot = null
 

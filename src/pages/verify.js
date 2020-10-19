@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import { useState, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 
 import PasswordResetForm from '~/components/Forms/PasswordResetForm'
@@ -15,6 +15,7 @@ import { verifyEmailToken } from '~/store/actions/verify'
 
 
 const RESET_SUCCESS_REDIRECT_WAIT = 6000 // 6 Seconds
+
 
 
 

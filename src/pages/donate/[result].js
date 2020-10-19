@@ -1,11 +1,3 @@
-// Module imports
-import React from 'react'
-
-
-
-
-
-// Component imports
 import BrandSvg from '../../../public/static/svg/brand.svg'
 
 
@@ -25,10 +17,6 @@ function DonateResult () {
     </div>
   )
 }
-
-
-
-
 
 DonateResult.getPageMeta = () => {
   return {

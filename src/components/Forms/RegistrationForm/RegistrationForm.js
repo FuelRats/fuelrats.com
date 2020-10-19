@@ -1,5 +1,3 @@
-import React from 'react'
-
 import CMDRFieldset from '~/components/Fieldsets/CMDRFieldset'
 import IRCNickFieldset from '~/components/Fieldsets/IRCNickFieldset'
 import { NewPasswordFieldset } from '~/components/Fieldsets/PasswordFieldset'
