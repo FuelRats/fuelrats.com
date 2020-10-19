@@ -30,6 +30,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 [#286]: https://github.com/fuelrats/fuelrats.com/pull/286
 [#287]: https://github.com/fuelrats/fuelrats.com/pull/287
+[#288]: https://github.com/fuelrats/fuelrats.com/pull/288
 [Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.2...HEAD
 
 
