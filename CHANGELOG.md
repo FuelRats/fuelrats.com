@@ -16,13 +16,14 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 ### 🐛 Fixed
-*
+* Resolve error that would cause password resets to intermittently fail. [#290][]
 
 
 ### ⚙ Tasks
 *
 
 
+[#290]: https://github.com/fuelrats/fuelrats.com/pull/290
 [Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.3...HEAD
 
 
@@ -71,7 +72,7 @@ This is the second recovery patch from APIv3 release. Changes were committed dir
 * Validation status icon on form inputs are no longer interactable.
   * This is to provide some form of support for lastpass popup icon.
 * Improve password input and validation for login and registration.
-* Improved auto focus function of login form.
+* Improve auto focus function of login form.
 
 
 ### 🐛 Fixed
