@@ -76,7 +76,6 @@ function LoginView () {
       <PasswordFieldset
         required
         aria-label="Password"
-        autoComplete="current-password"
         id="LoginPassword"
         inputClassName="dark"
         minLength={8}
