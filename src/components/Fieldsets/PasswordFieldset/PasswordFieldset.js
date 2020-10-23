@@ -27,6 +27,7 @@ function PasswordFieldset (props) {
   return (
     <IrnputFieldset
       ref={inputRef}
+      autoComplete="current-password"
       className={styles.passwordInput}
       displayName={displayName}
       placeholder="Sup3r-S3cur3-P4ssw0rd"
