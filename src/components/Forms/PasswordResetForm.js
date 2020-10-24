@@ -1,4 +1,4 @@
-import PasswordFieldset from '~/components/Fieldsets/PasswordFieldset'
+import { NewPasswordFieldset } from '~/components/Fieldsets/PasswordFieldset'
 import useForm from '~/hooks/useForm'
 
 
@@ -19,11 +19,8 @@ function PasswordResetForm ({ onSubmit }) {
 
   return (
     <Form>
-      <PasswordFieldset
+      <NewPasswordFieldset
         required
-        showStrength
-        showWarnings
-        autoComplete="new-password"
         id="Password"
         label={passwordLabel}
         name="attributes.password" />
