@@ -87,7 +87,7 @@ class RatCard extends React.Component {
         submitting: 'delete',
       })
 
-      deleteRat(rat.id)
+      deleteRat(rat)
       return
     }
 
