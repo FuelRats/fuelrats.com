@@ -28,7 +28,7 @@ function SubNav (props) {
         name={name}
         type="checkbox"
         value={props.id}
-        onClick={handleInputClick} />
+        onChange={handleInputClick} />
       <label htmlFor={id}>
         <span>
           {title}
