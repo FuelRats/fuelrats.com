@@ -1,5 +1,4 @@
-import { addYears } from 'date-fns'
-import { format, utcToZonedTime } from 'date-fns-tz'
+import { format as formatTz } from 'date-fns-tz'
 
 
 
@@ -16,39 +15,86 @@ function padNum (number) {
   return String(number).padStart(2, 0)
 }
 
-function getEliteTimeFromLocalTime (timestamp) {
-  return utcToZonedTime(
-    addYears(new Date(timestamp), ELITE_GAME_YEAR_DISPARITY),
-    'Etc/UTC',
-  )
-}
-
-export function formatAsEliteDateTime (timestamp, withSeconds) {
-  return format(
-    getEliteTimeFromLocalTime(timestamp),
-    `dd MMM yyyy HH:mm${withSeconds ? ':ss' : ''}`,
-    { timeZone: 'Etc/UTC' },
-  ).toUpperCase()
-}
-
-export function formatAsEliteDate (timestamp) {
-  return format(
-    getEliteTimeFromLocalTime(timestamp),
-    'dd MMM yyyy',
-    { timeZone: 'Etc/UTC' },
-  ).toUpperCase()
-}
 
 
 
 
 /**
- *
- * @param {string} timestamp ISO format string representing start time of the elapsed counter.
+ * @param {string | number | Date} value Timestamp string, epoch, or date object.
+ * @returns {Date}
+ */
+export function toEliteDate (value) {
+  const date = new Date(value)
+
+  return new Date(
+    date.getUTCFullYear() + ELITE_GAME_YEAR_DISPARITY,
+    date.getUTCMonth(),
+    date.getUTCDate(),
+    date.getUTCHours(),
+    date.getUTCMinutes(),
+    date.getUTCSeconds(),
+    date.getUTCMilliseconds(),
+  )
+}
+
+
+
+
+
+/**
+ * @param {string | number | Date} value Timestamp string, epoch, or date object.
+ * @param {string} format date-fns format string
+ * @returns {string}
+ */
+export function formatElite (value, format) {
+  return formatTz(
+    toEliteDate(value),
+    format,
+    { timeZone: 'UTC' },
+  )
+}
+
+
+
+
+
+/**
+ * @param {string | number | Date} value Timestamp string, epoch, or date object.
+ * @returns {string}
+ */
+export function formatAsEliteDate (value) {
+  return formatElite(
+    value,
+    'dd MMM yyyy',
+  ).toUpperCase()
+}
+
+
+
+
+
+/**
+ * @param {string | number | Date} value Timestamp string, epoch, or date object.
+ * @param {boolean} withSeconds
+ * @returns {string}
+ */
+export function formatAsEliteDateTime (value, withSeconds) {
+  return formatElite(
+    value,
+    `dd MMM yyyy HH:mm${withSeconds ? ':ss' : ''}`,
+  ).toUpperCase()
+}
+
+
+
+
+
+/**
+ * @param {string | number | Date} value Timestamp string, epoch, or date object.
  * @returns {[string, number]} A tuple containing the formatted string and the remainder amount of milliseconds.
  */
-export function formatTimeElapsed (timestamp) {
-  const startTime = (new Date(timestamp)).getTime()
+export function formatTimeElapsed (value) {
+  const startTime = (new Date(value)).getTime()
   const nowTime = Date.now()
 
   const totalMilliseconds = nowTime - startTime

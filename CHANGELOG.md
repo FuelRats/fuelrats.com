@@ -17,6 +17,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 ### 🐛 Fixed
 * Resolve error that would cause password resets to intermittently fail. [#290][]
+* Resolve issues with DST improperly applying to date/time displays. [#291][]
 
 
 ### ⚙ Tasks
@@ -24,6 +25,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 [#290]: https://github.com/fuelrats/fuelrats.com/pull/290
+[#291]: https://github.com/fuelrats/fuelrats.com/pull/291
 [Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.3...HEAD
 
 
