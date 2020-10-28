@@ -1,14 +1,14 @@
 /* globals $IS_DEVELOPMENT:false, $IS_STAGING:false, $BUILD_COMMIT_SHORT:false */
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Link from 'next/link'
 import { useSelector } from 'react-redux'
 
+import { makeBlogRoute } from '~/helpers/routeGen'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
-import { Link } from '~/routes'
 import { selectCurrentUserHasScope, selectSession } from '~/store/selectors'
 
 import Brand from '../../public/static/svg/brand.svg'
-import ExternalNavItem from './Nav/ExternalNavItem'
 import Nav from './Nav/Nav'
 import NavItem from './Nav/NavItem'
 import SubNav from './Nav/SubNav'
@@ -60,7 +60,7 @@ function Header () {
       </label>
 
       <header role="banner">
-        <Link route="home">
+        <Link href="/">
           <a className="brand" title="Home">
             <div className="brand-animation-wrapper">
               <Brand id="brandSvg" />
@@ -70,31 +70,31 @@ function Header () {
 
         <Nav>
           <SubNav id="blog" title="Blog">
-            <NavItem route="blog list">
+            <NavItem href="/blog">
               {'All'}
             </NavItem>
 
-            <NavItem params={{ category: 138 }} route="blog list">
+            <NavItem href={makeBlogRoute({ category: 138 })}>
               {'Stories, Art, & Toons'}
             </NavItem>
           </SubNav>
           <SubNav id="states" title="Rat Stats">
-            <ExternalNavItem href="https://grafana.fuelrats.com/d/H-iTUTPmz/public-statistics?refresh=1h&orgname=2">
+            <NavItem external href="https://grafana.fuelrats.com/d/H-iTUTPmz/public-statistics?refresh=1h&orgname=2">
               {'General'}
-            </ExternalNavItem>
+            </NavItem>
 
-            <NavItem route="stats leaderboard">
+            <NavItem href="/leaderboard">
               {'Leaderboard'}
             </NavItem>
           </SubNav>
           <SubNav id="support" title="Support Us">
-            <NavItem route="donate">
+            <NavItem href="/donate">
               {'Donations'}
             </NavItem>
 
-            <ExternalNavItem className="disabled">
+            <NavItem disabled external>
               {'Merch (Coming soon!)'}
-            </ExternalNavItem>
+            </NavItem>
           </SubNav>
 
           {
@@ -102,40 +102,40 @@ function Header () {
               <SubNav id="ratlinks" title="Rat Links">
                 {
                   userCanDispatch && (
-                    <NavItem route="dispatch">
+                    <NavItem href="/dispatch">
                       {'Dispatch Board'}
                     </NavItem>
                   )
                 }
-                <ExternalNavItem href="https://confluence.fuelrats.com/display/FRKB/Fuel+Rats+Knowledge+Base">
+                <NavItem external href="https://confluence.fuelrats.com/display/FRKB/Fuel+Rats+Knowledge+Base">
                   {'Knowledge Base'}
-                </ExternalNavItem>
-                <ExternalNavItem href="https://t.fuelr.at/help">
+                </NavItem>
+                <NavItem external href="https://t.fuelr.at/help">
                   {'Support Desk'}
-                </ExternalNavItem>
+                </NavItem>
               </SubNav>
             )
           }
         </Nav>
 
         <ul className="about-actions fa-ul">
-          <NavItem className="button link" params={{ slug: 'terms-of-service' }} route="wordpress">
+          <NavItem className="button link" href="/terms-of-service">
             <FontAwesomeIcon fixedWidth icon="book" />
             {'Terms of Service'}
           </NavItem>
-          <NavItem className="button link" params={{ slug: 'privacy-policy' }} route="wordpress">
+          <NavItem className="button link" href="/privacy-policy">
             <FontAwesomeIcon fixedWidth icon="user-secret" />
             {'Privacy Policy'}
           </NavItem>
 
-          <NavItem className="button link" route="about acknowledgements">
+          <NavItem className="button link" href="/acknowledgements">
             <FontAwesomeIcon fixedWidth icon="hands-helping" />
             {'Acknowledgements'}
           </NavItem>
 
           {
             IS_DEV_OR_STAGING && (
-              <NavItem className="button link" route="about version">
+              <NavItem className="button link" href="/version">
                 <FontAwesomeIcon fixedWidth icon="code-branch" />
                 {BUILD_COMMIT_SHORT}
               </NavItem>
@@ -153,7 +153,7 @@ function Header () {
             icon={['fab', 'reddit-alien']}
             title="Fuel Rats on Reddit" />
           <SocialIcon
-            href="https://www.twitch.tv/fuelrats//"
+            href="https://www.twitch.tv/fuelrats/"
             icon={['fab', 'twitch']}
             title="Fuel Rats on Twitch" />
           <SocialIcon
@@ -167,22 +167,18 @@ function Header () {
             transform={{ rotate: -45 }} />
         </div>
 
-        <div className="join-actions">
-          <Link route="rescue-landing">
-            <a className="button get-fuel">
-              {'Get Fuel'}
-            </a>
-          </Link>
+        <ul className="join-actions">
+          <NavItem className="button get-fuel" href="/i-need-fuel">
+            {'Get Fuel'}
+          </NavItem>
           {
             !loggedIn && (
-              <Link route="register">
-                <a className="button secondary">
-                  {'Become a Rat'}
-                </a>
-              </Link>
+              <NavItem className="button secondary" href="/register">
+                {'Become a Rat'}
+              </NavItem>
             )
           }
-        </div>
+        </ul>
       </header>
     </div>
   )

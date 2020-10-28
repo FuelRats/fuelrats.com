@@ -1,15 +1,38 @@
-import { Link } from '~/routes'
+import Link from 'next/link'
 
-export default function NavItem ({ children, className, ...restProps }) {
+
+
+
+export default function NavItem (props) {
+  const {
+    children,
+    className,
+    disabled,
+    external,
+    ...restProps
+  } = props
+
   return (
     <li>
-      <Link {...restProps}>
-        <a className={className}>
-          <span>
-            {children}
-          </span>
-        </a>
-      </Link>
+      {
+        external
+          ? (
+            <a {...restProps} className={[className, { disabled }]}>
+              <span>
+                {children}
+              </span>
+            </a>
+          )
+          : (
+            <Link {...restProps}>
+              <a className={[className, { disabled }]}>
+                <span>
+                  {children}
+                </span>
+              </a>
+            </Link>
+          )
+      }
     </li>
   )
 }

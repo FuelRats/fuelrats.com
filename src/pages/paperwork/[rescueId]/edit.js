@@ -1,4 +1,5 @@
 import { isError } from 'flux-standard-action'
+import Router from 'next/router'
 import React from 'react'
 import { createSelector } from 'reselect'
 
@@ -11,7 +12,7 @@ import platformRadioOptions from '~/data/platformRadioOptions'
 import { formatAsEliteDateTime } from '~/helpers/formatTime'
 import getRatTag from '~/helpers/getRatTag'
 import { pageRedirect } from '~/helpers/gIPTools'
-import { Router } from '~/routes'
+import { makePaperworkRoute } from '~/helpers/routeGen'
 import { connect } from '~/store'
 import { getRescue } from '~/store/actions/rescues'
 import {
@@ -253,7 +254,7 @@ class Paperwork extends React.Component {
       return
     }
 
-    Router.pushRoute('paperwork', { rescueId: rescue.id })
+    Router.push(makePaperworkRoute({ rescueId: rescue.id }))
   }
 
   _setChanges = (changedFields) => {

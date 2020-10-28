@@ -1,4 +1,4 @@
-import { Link } from '~/routes'
+import Link from 'next/link'
 
 
 
@@ -8,14 +8,13 @@ function NavItem ({ item, ...linkProps }) {
   const {
     onClick,
     className,
-    route,
-    routeParams,
+    href,
     title,
   } = item
 
   return (
     <li className={className}>
-      <Link params={routeParams} route={route}>
+      <Link href={href}>
         <a {...linkProps} {...(onClick ? { href: '#', onClick } : {})}>
           <span>{title}</span>
         </a>

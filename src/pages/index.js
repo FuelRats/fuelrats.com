@@ -1,8 +1,14 @@
+import Link from 'next/link'
+import Router from 'next/router'
 import React from 'react'
 
 import Carousel from '~/components/Carousel'
-import { Link, Router } from '~/routes'
+import { makeRoute } from '~/helpers/routeGen'
 import { connect } from '~/store'
+
+
+
+
 
 // Component constants
 const CarouselSlides = {
@@ -49,12 +55,14 @@ class Index extends React.Component {
   }
 
   componentDidMount () {
+    const {
+      authenticate,
+      ...nextQuery
+    } = this.props.query
+
     if (this.props.query.authenticate) {
       this.props.setFlag('showLoginDialog', true)
-      const nextQuery = { ...this.props.query }
-      delete nextQuery.authenticate
-
-      Router.replaceRoute(Router.router.route, nextQuery, { shallow: true })
+      Router.replace(makeRoute('/', nextQuery), undefined, { shallow: true })
     }
   }
 
@@ -69,7 +77,7 @@ class Index extends React.Component {
         </header>
 
         <footer className="call-to-action">
-          <Link route="rescue-landing">
+          <Link href="/i-need-fuel">
             <a className="button tall">{'Get Fuel'}</a>
           </Link>
         </footer>

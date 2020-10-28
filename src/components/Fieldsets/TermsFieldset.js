@@ -1,8 +1,8 @@
+import Link from 'next/link'
 import { useState, useCallback, useEffect } from 'react'
 import { useStore } from 'react-redux'
 
 import { useField } from '~/hooks/useForm'
-import { Link } from '~/routes'
 import { getWordpressPage } from '~/store/actions/wordpress'
 import { selectWordpressPageBySlug } from '~/store/selectors'
 
@@ -79,11 +79,11 @@ export default function TermsFieldset (props) {
 
         <label htmlFor={props.id}>
           {'I agree that I have read and agree to the  '}
-          <Link params={{ slug: 'terms-of-service' }} route="wordpress">
+          <Link href="/terms-of-service">
             <a>{'Terms of Service'}</a>
           </Link>
           {' and '}
-          <Link params={{ slug: 'privacy-policy' }} route="wordpress">
+          <Link href="/privacy-policy">
             <a>{'Privacy Policy'}</a>
           </Link>
           {', and that I am 13 years of age or older.'}

@@ -26,20 +26,17 @@ class UserMenu extends React.Component {
      {
        key: 'profile',
        title: 'Profile',
-       route: 'profile',
-       routeParams: { tab: 'overview' },
+       href: '/profile/overview',
      },
      {
        key: 'my-rats',
        title: 'My Rats',
-       route: 'profile',
-       routeParams: { tab: 'rats' },
+       href: '/profile/rats',
      },
      // {
      //   key: 'my-rescues',
      //   title: 'My Rescues',
-     //   route: 'profile',
-     //   routeParams: { tab: 'rescues' },
+     //   href: '/profile/rescues',
      // },
    ]
 
@@ -47,7 +44,7 @@ class UserMenu extends React.Component {
      {
        key: 'admin-rescues-list',
        title: 'Rescues',
-       route: 'admin rescues list',
+       href: '/admin/rescues',
        permission: 'rescues.write',
      },
      // {
@@ -61,7 +58,7 @@ class UserMenu extends React.Component {
      {
        key: 'logout',
        title: 'Logout',
-       route: 'home',
+       href: '/',
        className: 'logout',
        onClick: this.props.logout,
      },
