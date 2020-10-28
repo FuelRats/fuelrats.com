@@ -11,11 +11,11 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ## [Unreleased][]
 
 ### ✨ Added
-*
+* Add alert cards which can be used to alert the user of errors, important items, and unfinished paperwork!
 
 
 ### ⚡ Changed
-*
+* Improve OAuth authorize page UX and optimize certain components.
 
 
 ### 🐛 Fixed
