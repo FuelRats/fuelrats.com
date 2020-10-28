@@ -39,7 +39,7 @@ function Alerts (props) {
   const [activeAlerts, overflow] = useSelector(selectActiveAlerts)
 
   if (typeof window === 'undefined') {
-    return null
+    return <div className={[styles.alerts, className]} />
   }
 
   return createPortal(
