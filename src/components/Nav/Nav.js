@@ -29,12 +29,21 @@ function useNavContext () {
 
 
 
-function Nav ({ className, children }) {
+function Nav (props) {
+  const {
+    className,
+    children,
+    onClick,
+  } = props
+
   const [openSubNav, setOpenSubNav] = useReducer(reduceSubNavChange, '')
 
   const ctxValue = useMemo(() => {
-    return [openSubNav, setOpenSubNav]
-  }, [openSubNav, setOpenSubNav])
+    return {
+      globalClick: onClick,
+      subNav: [openSubNav, setOpenSubNav],
+    }
+  }, [onClick, openSubNav])
 
   return (
     <nav className={className}>
@@ -50,6 +59,7 @@ function Nav ({ className, children }) {
 Nav.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
+  onClick: PropTypes.func,
 }
 
 

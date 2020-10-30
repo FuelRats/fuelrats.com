@@ -10,7 +10,7 @@ function SubNav (props) {
     title,
   } = props
 
-  const [openSubNav, setOpenSubNav] = useNavContext()
+  const { subNav: [openSubNav, setOpenSubNav] } = useNavContext()
 
   const handleInputClick = useCallback((event) => {
     setOpenSubNav(event?.target?.id)
