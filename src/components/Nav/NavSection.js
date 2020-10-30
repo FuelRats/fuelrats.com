@@ -1,11 +1,21 @@
-export default function NavSection (props) {
+import PropTypes from 'prop-types'
+
+import { useRenderedChildCount } from '~/hooks/useChildCount'
+
+function NavSection (props) {
   const {
-    title,
     children,
+    className,
+    title,
   } = props
 
+  const childCount = useRenderedChildCount(children)
+  if (childCount === 0) {
+    return null
+  }
+
   return (
-    <li>
+    <li className={className}>
       {
         title && (
           <header>
@@ -19,3 +29,12 @@ export default function NavSection (props) {
     </li>
   )
 }
+
+NavSection.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string,
+  title: PropTypes.node,
+}
+
+
+export default NavSection
