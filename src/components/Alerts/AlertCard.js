@@ -1,5 +1,4 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { motion } from 'framer-motion'
 import PropTypes from 'prop-types'
 import { useCallback, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
@@ -13,10 +12,6 @@ import styles from './Alerts.module.scss'
 
 
 // Component constants
-const cardMotionConfig = {
-
-}
-
 const alertTypeIcons = {
   success: 'thumbs-up',
   info: 'info-circle',
@@ -36,13 +31,19 @@ function AlertCard (props) {
 
   const dispatch = useDispatch()
 
+  const { id } = alert
+
   const handleDismiss = useCallback(() => {
-    dispatch(deleteAlert(alert))
-  }, [alert, dispatch])
+    dispatch(deleteAlert(id))
+  }, [dispatch, id])
 
   useEffect(() => {
-    setTimeout(handleDismiss, alert.attributes.timeout)
-  })
+    const timeoutRef = setTimeout(handleDismiss, alert.attributes.timeout)
+
+    return () => {
+      clearTimeout(timeoutRef)
+    }
+  }, [alert.attributes.timeout, handleDismiss])
 
   const {
     title,
@@ -51,9 +52,9 @@ function AlertCard (props) {
   } = alert.attributes
 
   return (
-    <motion.div key={alert.id} {...cardMotionConfig} className={className}>
+    <div className={[styles.alertCard, className]}>
       <header className={styles.header}>
-        <h4>
+        <h4 className={styles.title}>
           <FontAwesomeIcon fixedWidth icon={alertTypeIcons[alertType]} />
           {title}
         </h4>
@@ -85,7 +86,7 @@ function AlertCard (props) {
           </menu>
         )
       }
-    </motion.div>
+    </div>
   )
 }
 
