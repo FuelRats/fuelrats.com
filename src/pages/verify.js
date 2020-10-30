@@ -1,3 +1,4 @@
+import Router from 'next/router'
 import { useState, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 
@@ -6,7 +7,6 @@ import MessageBox from '~/components/MessageBox'
 import ApiErrorBox from '~/components/MessageBox/ApiErrorBox'
 import getResponseError from '~/helpers/getResponseError'
 import { pageRedirect } from '~/helpers/gIPTools'
-import { Router } from '~/routes'
 import { validatePasswordResetToken, resetPassword } from '~/store/actions/authentication'
 import { verifyEmailToken } from '~/store/actions/verify'
 
@@ -33,7 +33,7 @@ function Verify ({ token }) {
 
     if (!resError) {
       setTimeout(() => {
-        Router.pushRoute('home', { authenticate: true })
+        Router.push('/?authenticate=true')
       }, RESET_SUCCESS_REDIRECT_WAIT)
     }
   }, [dispatch, token.value])

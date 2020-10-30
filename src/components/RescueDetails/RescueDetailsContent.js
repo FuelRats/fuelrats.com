@@ -1,9 +1,10 @@
+import Link from 'next/link'
 import PropTypes from 'prop-types'
 
 import { formatAsEliteDateTime } from '~/helpers/formatTime'
+import { makePaperworkRoute } from '~/helpers/routeGen'
 import { usePlatformData, useLanguageData } from '~/hooks/rescueHooks'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
-import { Link } from '~/routes'
 import { createSelectRenderedRatList } from '~/store/selectors'
 
 import CopyToClipboard from '../CopyToClipboard'
@@ -134,7 +135,7 @@ function RescueDetailsContent (props) {
               <CopyToClipboard doHint text={`https://fuelrats.com/paperwork/${rescue.id}`}>
                 {rescue.id}
               </CopyToClipboard>
-              <Link params={{ rescueId: rescue.id }} route="paperwork edit">
+              <Link href={makePaperworkRoute({ rescueId: rescue.id, edit: true })}>
                 <a className="button icon">
                   {'paperwork'}
                 </a>

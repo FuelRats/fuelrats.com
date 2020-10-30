@@ -1,10 +1,10 @@
 import { createAxiosFSA } from '@fuelrats/web-util/actions'
 import { isError } from 'flux-standard-action'
 import Cookies from 'js-cookie'
+import Router from 'next/router'
 
 import getFingerprint from '~/helpers/getFingerprint'
 import { presentApiRequestBody } from '~/helpers/presenters'
-import { Router } from '~/routes'
 import frApi from '~/services/fuelrats'
 
 import actionTypes from '../actionTypes'

@@ -1,8 +1,9 @@
+import Link from 'next/link'
 import React from 'react'
 
 import ArticleCard from '~/components/Blog/ArticleCard'
+import { makeBlogRoute } from '~/helpers/routeGen'
 import safeParseInt from '~/helpers/safeParseInt'
-import { Link } from '~/routes'
 import { connect } from '~/store'
 import {
   selectBlogs,
@@ -53,7 +54,7 @@ class Blogs extends React.Component {
         <div className="secondary">
           {
             (page > 1) && (
-              <Link params={{ author, category, page: Math.max(1, page - 1) }} route="blog list">
+              <Link href={makeBlogRoute({ author, category, page: Math.max(1, page - 1) })}>
                 <a className="button">{'Previous Page'}</a>
               </Link>
             )
@@ -63,7 +64,7 @@ class Blogs extends React.Component {
         <div className="primary">
           {
             (page < totalPages) && (
-              <Link params={{ author, category, page: Math.min(page + 1, totalPages) }} route="blog list">
+              <Link href={makeBlogRoute({ author, category, page: Math.min(page + 1, totalPages) })}>
                 <a className="button">{'Next Page'}</a>
               </Link>
             )

@@ -1,10 +1,11 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import debounce from 'lodash/debounce'
+import Link from 'next/link'
 import React from 'react'
 
 import { authenticated } from '~/components/AppLayout'
 import { formatAsEliteDateTime } from '~/helpers/formatTime'
-import { Link } from '~/routes'
+import { makePaperworkRoute } from '~/helpers/routeGen'
 import { connect } from '~/store'
 import { getRescues } from '~/store/actions/rescues'
 import { selectPageViewDataById, selectPageViewMetaById } from '~/store/selectors'
@@ -124,7 +125,7 @@ class ListRescues extends React.Component {
     return (
       <div key={rescue.id} className="rescue-list-item">
         <span className="primary-info">
-          <Link params={{ rescueId: rescue.id }} route="paperwork">
+          <Link href={makePaperworkRoute({ rescueId: rescue.id })}>
             <a>
               <small>{'CMDR '}</small>
               {client}

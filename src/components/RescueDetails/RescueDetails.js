@@ -1,8 +1,8 @@
+import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
 import { useEffect } from 'react'
 
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
-import { useRouter } from '~/routes'
 import { selectRescueById } from '~/store/selectors'
 
 import RescueDetailsContent from './RescueDetailsContent'
@@ -17,7 +17,7 @@ function RescueDetails (props) {
   const router = useRouter()
   useEffect(() => {
     if (rescueId && !rescue) {
-      router.replaceRoute('dispatch', { })
+      router.replace('/dispatch')
     }
   }, [router, rescue, rescueId])
 

@@ -1,0 +1,230 @@
+@import '../../scss/colors';
+
+
+$avatar-size: 6.5rem;
+$avatar-top-margin: 0.5rem;
+$avatar-right-margin: 2rem;
+$login-top-margin: 1.5rem;
+$mobile-max-width: 768px;
+$user-menu-border-width-mobile: 0.5rem;
+$user-menu-width-mobile: 21rem;
+
+
+
+
+
+.userMenu {
+  display: flex;
+  position: absolute;
+  top: $login-top-margin;
+  right: $avatar-right-margin;
+  z-index: 100;
+
+  transition: top 0.2s;
+
+  &.loggedIn {
+    top: $avatar-top-margin;
+  }
+}
+
+.nav {
+  display: flex;
+  position: fixed;
+
+  flex-flow: column nowrap;
+  align-items: stretch;
+  align-content: stretch;
+  justify-content: flex-start;
+
+  order: 1;
+  flex-shrink: 0;
+
+  padding: 0;
+
+  border-width: 0.2rem;
+  border-style: solid;
+  border-color: $red;
+
+  background-color: $black;
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  text-align: center;
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  > ul > li:not(:last-child) {
+    border-bottom: 1px solid $black-lightened;
+  }
+
+  @media not screen and (max-width: $mobile-max-width) {
+    top: #{$avatar-top-margin + (($avatar-size - 4rem) / 2)};
+    right: #{$avatar-right-margin + (($avatar-size - 4rem) / 2)};
+
+    max-width: 4rem;
+    max-height: 4rem;
+
+    transition:
+      top 0.2s,
+      right 0.2s,
+      max-height 0.2s,
+      max-width 0.2s;
+  }
+}
+
+.navSection {
+  padding: 1rem 0;
+
+  header {
+    margin-bottom: 0.5rem;
+
+    color: $grey;
+
+    font-size: 0.7em;
+    font-weight: bold;
+  }
+
+  ul > li > a {
+    display: block;
+    position: relative;
+
+    padding: 0.5rem 2rem;
+
+    color: $white;
+
+    text-decoration: none;
+    transition-property: background-color, color;
+    transition-duration: 0.1s;
+
+    &:global(.logout) {
+      color: $red;
+    }
+
+    &::before {
+      position: absolute;
+      top: 0;
+      right: initial;
+      bottom: 0;
+      left: 0%;
+      z-index: 0;
+
+      content: '';
+      width: 0;
+
+      background-color: $red;
+      transition: all 0.2s;
+    }
+
+    &:hover {
+      color: $white;
+
+      &::before {
+        width: 100%;
+      }
+    }
+
+    span {
+      position: relative;
+      z-index: 1;
+    }
+  }
+}
+
+.navInput[type='checkbox'] {
+  display: none;
+
+  @media not screen and (max-width: $mobile-max-width) {
+    &:checked {
+      ~ .nav {
+        top: #{($avatar-size / 2) + 1rem};
+        right: #{($avatar-size / 2) + 2.5rem};
+
+        max-width: 16rem;
+        max-height: 35rem;
+      }
+    }
+  }
+  @media only screen and (max-width: $mobile-max-width) {
+    &:checked {
+      ~ .nav {
+        transform: translateX(-$user-menu-width-mobile);
+      }
+
+      ~ .navHandle {
+        $umt-mobile-translate:
+          translateX(
+            #{
+              -1 * (($user-menu-width-mobile / 2) - ($avatar-size / 2) - $avatar-right-margin - ($user-menu-border-width-mobile / 2))
+            }
+          );
+        transform: $umt-mobile-translate;
+
+        &:active {
+          transform: $umt-mobile-translate scale(0.9);
+          transition-duration: 0.1s;
+        }
+      }
+    }
+
+    &:not(:checked) ~ .navHandle {
+      border-color: $black-lightened;
+    }
+
+    ~ .nav {
+      top: 0;
+      bottom: 0;
+      left: 100%;
+
+      width: $user-menu-width-mobile;
+      padding-top: #{$avatar-size + 1rem};
+
+      border-top: 0;
+      border-right: 0;
+      border-bottom: 0;
+      border-left: $user-menu-border-width-mobile solid $red;
+
+
+      box-shadow: 0 0 4px 0 rgba($black, 0.4);
+
+      transform: translateX(0);
+      overflow: auto;
+    }
+  }
+}
+
+.avatar {
+  composes: avatar medium from global;
+
+  z-index: 5;
+
+  order: 2;
+
+  transition: border-color 0.2s, border-radius 0.2s, border-width 0.2s, transform 0.2s, box-shadow 0.2s;
+
+  cursor: pointer;
+
+  &:hover,
+  &:focus {
+    border-width: 0.4rem;
+  }
+
+  &:active {
+    transform: scale(0.9);
+
+    transition-duration: 0.1s;
+  }
+
+  &:empty {
+    border-color: $red-darkened;
+
+    background-color: $grey-darkened;
+    animation-name: opacity-flutter;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+
+    &::before {
+      color: $red-darkened;
+      background: $grey-darkened;
+    }
+  }
+}
