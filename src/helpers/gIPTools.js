@@ -2,11 +2,8 @@
 import { HttpStatus } from '@fuelrats/web-util/http'
 import jsCookie from 'js-cookie'
 import nextCookies from 'next-cookies'
+import Router from 'next/router'
 
-
-
-
-import { Router } from '~/routes'
 import frApi from '~/services/fuelrats'
 
 

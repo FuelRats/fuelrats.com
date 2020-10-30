@@ -1,9 +1,9 @@
+import Router from 'next/router'
 import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 
 import getResponseError from '~/helpers/getResponseError'
 import useForm from '~/hooks/useForm'
-import { Router } from '~/routes'
 import { login } from '~/store/actions/authentication'
 import { getUserProfile } from '~/store/actions/user'
 
@@ -53,7 +53,7 @@ function LoginView () {
 
   const handleRegisterClick = useCallback(() => {
     onClose()
-    Router.pushRoute('register')
+    Router.push('/register')
   }, [onClose])
 
   const handleForgotPassword = useCallback(() => {
@@ -76,7 +76,6 @@ function LoginView () {
       <PasswordFieldset
         required
         aria-label="Password"
-        autoComplete="current-password"
         id="LoginPassword"
         inputClassName="dark"
         minLength={8}

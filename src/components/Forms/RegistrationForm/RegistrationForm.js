@@ -48,7 +48,6 @@ function RegistrationForm ({ onSubmit }) {
 
       <NewPasswordFieldset
         required
-        autoComplete="new-password"
         id="Password"
         label={labels.password}
         name="attributes.password" />

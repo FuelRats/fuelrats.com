@@ -1,12 +1,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { differenceInMinutes } from 'date-fns'
+import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
 import { useCallback, useState } from 'react'
 
+import { makeRoute } from '~/helpers/routeGen'
 import { useQuoteString, useLanguageData, usePlatformData } from '~/hooks/rescueHooks'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import useStoreEffect from '~/hooks/useStoreEffect'
-import { useRouter } from '~/routes'
 import { selectRescueById, createSelectRenderedRatList } from '~/store/selectors'
 
 import CopyToClipboard from '../CopyToClipboard'
@@ -69,7 +70,7 @@ function RescueRow (props) {
       query.rId = rescue.id
     }
 
-    router.pushRoute('dispatch', query)
+    router.push(makeRoute('/dispatch', query))
   }, [rescue.id, router])
 
   const {
@@ -85,15 +86,15 @@ function RescueRow (props) {
 
   return (
     <tr
-        className={
+      className={
         {
           [styles.codeRed]: codeRed,
           [styles.inactive]: status === 'inactive',
           'animate-flash': animating,
         }
       }
-        title={quoteString}
-        onAnimationEnd={handleTransitionEnd}>
+      title={quoteString}
+      onAnimationEnd={handleTransitionEnd}>
       <CopyToClipboard
         as="td"
         text={commandIdentifier ?? '?'}>

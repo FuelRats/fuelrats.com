@@ -1,7 +1,6 @@
+import Router from 'next/router'
 import NProgress from 'nprogress'
 import React from 'react'
-
-import { Router } from '~/routes'
 
 
 

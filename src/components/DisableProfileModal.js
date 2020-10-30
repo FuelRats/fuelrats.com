@@ -1,9 +1,9 @@
 import { HttpStatus } from '@fuelrats/web-util/http'
+import Router from 'next/router'
 import React from 'react'
 import { createStructuredSelector } from 'reselect'
 
 import getResponseError from '~/helpers/getResponseError'
-import { Router } from '~/routes'
 import { connect } from '~/store'
 import { selectUserById, withCurrentUserId } from '~/store/selectors'
 

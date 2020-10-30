@@ -1,4 +1,5 @@
 import { HttpStatus } from '@fuelrats/web-util/http'
+import Router from 'next/router'
 import React from 'react'
 
 import { authenticated } from '~/components/AppLayout'
@@ -8,7 +9,6 @@ import TabbedPanel from '~/components/TabbedPanel'
 import UserOverview from '~/components/UserOverview'
 import UserRatsPanel from '~/components/UserRatsPanel'
 import { setError } from '~/helpers/gIPTools'
-import { Router } from '~/routes'
 
 
 
@@ -21,11 +21,11 @@ class Profile extends React.Component {
   \***************************************************************************/
 
   _handleFLDClose = () => {
-    Router.replaceRoute('profile', { tab: this.props.query.tab })
+    Router.replace(`/profile/${this.props.query.tab}`)
   }
 
   _handleTabClick = (newTab) => {
-    Router.replaceRoute('profile', { tab: newTab })
+    Router.replace(`/profile/${newTab}`)
   }
 
 

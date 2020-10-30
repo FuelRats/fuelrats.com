@@ -5,6 +5,9 @@ All changes relative to the previous version of fuelrats.com shall be documented
 For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
+
+
+
 ## [Unreleased][]
 
 ### ✨ Added
@@ -23,13 +26,45 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 *
 
 
-[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.3...HEAD
+[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.4...HEAD
 
 
 
 
 
-## [2.12.3][]
+## [2.12.4][] - 2020-10-30
+
+### ✨ Added
+* Hide main menu when a nav item is clicked [#293][]
+
+
+### ⚡ Changed
+* Remove next-named-routes since it's somewhat redundant now. [#293][]
+* rewrite `<UserMenu />` so it reuses the `<Nav />` components made for `<Header />`. [#293][]
+
+
+### 🐛 Fixed
+* Resolve error that would cause password resets to intermittently fail. [#290][]
+* Resolve issues with DST improperly applying to date/time displays. [#291][]
+* fixed a typo that stopped rats from being deleted. [#292][]
+
+
+### ⚙ Tasks
+* Upgrade to Next.JS 10. [#293][]
+* Upgrade to React 17. [#293][]
+
+
+[#290]: https://github.com/fuelrats/fuelrats.com/pull/290
+[#291]: https://github.com/fuelrats/fuelrats.com/pull/291
+[#292]: https://github.com/fuelrats/fuelrats.com/pull/292
+[#293]: https://github.com/fuelrats/fuelrats.com/pull/293
+[2.12.4]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.3...v2.12.4
+
+
+
+
+
+## [2.12.3][] - 2020-10-19
 
 ### ✨ Added
 * Add `apple-app-site-association` page for verification with apple services.
@@ -41,7 +76,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * re-enable filtering for leaderboard names.
 * specify avatar size when loading default avatar to optimize network usage. - [#286][]
 * Replace `react-spring` with `framer-motion` for js animations. - [#287][]
-* Rewrite parts of `Nav`/`Header` code so it's easier to work with. - [#288][]
+* Rewrite parts of `<Nav />` and `<Header />` code so it's easier to work with. - [#288][]
 
 
 ### ⚙ Tasks
@@ -71,7 +106,7 @@ This is the second recovery patch from APIv3 release. Changes were committed dir
 * Validation status icon on form inputs are no longer interactable.
   * This is to provide some form of support for lastpass popup icon.
 * Improve password input and validation for login and registration.
-* Improved auto focus function of login form.
+* Improve auto focus function of login form.
 
 
 ### 🐛 Fixed

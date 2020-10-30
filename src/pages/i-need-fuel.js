@@ -1,6 +1,6 @@
+import Link from 'next/link'
 import { createStructuredSelector } from 'reselect'
 
-import { Link } from '~/routes'
 import { connect } from '~/store'
 import { selectSession } from '~/store/selectors'
 
@@ -72,11 +72,11 @@ function INeedFuel (props) {
 
               <strong>
                 {'By connecting to our IRC and using our services, you agree to our '}
-                <Link params={{ slug: 'terms-of-service' }} route="wordpress">
+                <Link href="/terms-of-service">
                   <a>{'Terms of Service'}</a>
                 </Link>
                 {' and '}
-                <Link params={{ slug: 'privacy-policy' }} route="wordpress">
+                <Link href="/privacy-policy">
                   <a>{'Privacy Policy'}</a>
                 </Link>
                 {'.'}

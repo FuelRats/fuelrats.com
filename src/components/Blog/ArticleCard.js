@@ -1,7 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Link from 'next/link'
 
 import { formatAsEliteDateTime } from '~/helpers/formatTime'
-import { Link } from '~/routes'
+import { makeBlogRoute } from '~/helpers/routeGen'
 import { connect } from '~/store'
 import { selectAuthorByBlogId, selectBlogById, selectCategoriesByBlogId } from '~/store/selectors'
 
@@ -28,7 +29,6 @@ function ArticleCard (props) {
     return null
   }
 
-  const { id } = blog
   const {
     id: authorId,
     name: authorName = (<TextPlaceholder loading size={30} />),
@@ -54,7 +54,7 @@ function ArticleCard (props) {
     <article className={className}>
       <header>
         <h3 className="title">
-          <Link params={{ blogId: id }} route="blog view">
+          <Link href={`/blog/${blog.id}`}>
             <a dangerouslySetInnerHTML={{ __html: blog.title.rendered }} />
           </Link>
         </h3>
@@ -69,7 +69,7 @@ function ArticleCard (props) {
 
         <span className="author">
           <FontAwesomeIcon fixedWidth icon="user" />
-          <Link params={{ author: authorId }} route="blog list">
+          <Link href={makeBlogRoute({ author: authorId })}>
             <a>{authorName}</a>
           </Link>
         </span>
@@ -88,7 +88,7 @@ function ArticleCard (props) {
 
                 return (
                   <li key={categoryId}>
-                    <Link params={{ category: categoryId }} route="blog list">
+                    <Link href={makeBlogRoute({ category: categoryId })}>
                       <a title={description}>{name}</a>
                     </Link>
                   </li>

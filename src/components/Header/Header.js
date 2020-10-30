@@ -1,17 +1,17 @@
 /* globals $IS_DEVELOPMENT:false, $IS_STAGING:false, $BUILD_COMMIT_SHORT:false */
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Link from 'next/link'
+import { useCallback, useRef } from 'react'
 import { useSelector } from 'react-redux'
 
+import { makeBlogRoute } from '~/helpers/routeGen'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
-import { Link } from '~/routes'
 import { selectCurrentUserHasScope, selectSession } from '~/store/selectors'
 
-import Brand from '../../public/static/svg/brand.svg'
-import ExternalNavItem from './Nav/ExternalNavItem'
-import Nav from './Nav/Nav'
-import NavItem from './Nav/NavItem'
-import SubNav from './Nav/SubNav'
+import Brand from '../../../public/static/svg/brand.svg'
+import { Nav, NavUl, NavLink, SubNav } from '../Nav'
+import SocialIcon from './SocialIcon'
 
 
 
@@ -22,35 +22,23 @@ const IS_DEV_OR_STAGING = $IS_DEVELOPMENT || $IS_STAGING
 const BUILD_COMMIT_SHORT = $BUILD_COMMIT_SHORT
 
 
-function SocialIcon (props) {
-  const {
-    href,
-    title,
-    ...restProps
-  } = props
 
-  return (
-    <a
-      className="button link"
-      href={href}
-      rel="noopener noreferrer"
-      target="_blank"
-      title={title}>
-      <FontAwesomeIcon
-        fixedWidth
-        {...restProps} />
-    </a>
-  )
-}
 
 
 function Header () {
   const { loggedIn } = useSelector(selectSession)
   const userCanDispatch = useSelectorWithProps({ scope: 'dispatch.read' }, selectCurrentUserHasScope)
 
+  const checkboxRef = useRef()
+
+  const handleClick = useCallback(() => {
+    checkboxRef.current.checked = false
+  }, [])
+
   return (
     <div id="HeaderContainer">
       <input
+        ref={checkboxRef}
         aria-label="Navigation toggle"
         id="NavControl"
         type="checkbox" />
@@ -60,7 +48,7 @@ function Header () {
       </label>
 
       <header role="banner">
-        <Link route="home">
+        <Link href="/">
           <a className="brand" title="Home">
             <div className="brand-animation-wrapper">
               <Brand id="brandSvg" />
@@ -68,33 +56,33 @@ function Header () {
           </a>
         </Link>
 
-        <Nav>
+        <Nav onClick={handleClick}>
           <SubNav id="blog" title="Blog">
-            <NavItem route="blog list">
+            <NavLink href="/blog">
               {'All'}
-            </NavItem>
+            </NavLink>
 
-            <NavItem params={{ category: 138 }} route="blog list">
+            <NavLink href={makeBlogRoute({ category: 138 })}>
               {'Stories, Art, & Toons'}
-            </NavItem>
+            </NavLink>
           </SubNav>
           <SubNav id="states" title="Rat Stats">
-            <ExternalNavItem href="https://grafana.fuelrats.com/d/H-iTUTPmz/public-statistics?refresh=1h&orgname=2">
+            <NavLink external href="https://grafana.fuelrats.com/d/H-iTUTPmz/public-statistics?refresh=1h&orgname=2">
               {'General'}
-            </ExternalNavItem>
+            </NavLink>
 
-            <NavItem route="stats leaderboard">
+            <NavLink href="/leaderboard">
               {'Leaderboard'}
-            </NavItem>
+            </NavLink>
           </SubNav>
           <SubNav id="support" title="Support Us">
-            <NavItem route="donate">
+            <NavLink href="/donate">
               {'Donations'}
-            </NavItem>
+            </NavLink>
 
-            <ExternalNavItem className="disabled">
+            <NavLink disabled external>
               {'Merch (Coming soon!)'}
-            </ExternalNavItem>
+            </NavLink>
           </SubNav>
 
           {
@@ -102,46 +90,46 @@ function Header () {
               <SubNav id="ratlinks" title="Rat Links">
                 {
                   userCanDispatch && (
-                    <NavItem route="dispatch">
+                    <NavLink href="/dispatch">
                       {'Dispatch Board'}
-                    </NavItem>
+                    </NavLink>
                   )
                 }
-                <ExternalNavItem href="https://confluence.fuelrats.com/display/FRKB/Fuel+Rats+Knowledge+Base">
+                <NavLink external href="https://confluence.fuelrats.com/display/FRKB/Fuel+Rats+Knowledge+Base">
                   {'Knowledge Base'}
-                </ExternalNavItem>
-                <ExternalNavItem href="https://t.fuelr.at/help">
+                </NavLink>
+                <NavLink external href="https://t.fuelr.at/help">
                   {'Support Desk'}
-                </ExternalNavItem>
+                </NavLink>
               </SubNav>
             )
           }
         </Nav>
 
-        <ul className="about-actions fa-ul">
-          <NavItem className="button link" params={{ slug: 'terms-of-service' }} route="wordpress">
+        <NavUl className="about-actions fa-ul" onClick={handleClick}>
+          <NavLink className="button link" href="/terms-of-service">
             <FontAwesomeIcon fixedWidth icon="book" />
             {'Terms of Service'}
-          </NavItem>
-          <NavItem className="button link" params={{ slug: 'privacy-policy' }} route="wordpress">
+          </NavLink>
+          <NavLink className="button link" href="/privacy-policy">
             <FontAwesomeIcon fixedWidth icon="user-secret" />
             {'Privacy Policy'}
-          </NavItem>
+          </NavLink>
 
-          <NavItem className="button link" route="about acknowledgements">
+          <NavLink className="button link" href="/acknowledgements">
             <FontAwesomeIcon fixedWidth icon="hands-helping" />
             {'Acknowledgements'}
-          </NavItem>
+          </NavLink>
 
           {
             IS_DEV_OR_STAGING && (
-              <NavItem className="button link" route="about version">
+              <NavLink className="button link" href="/version">
                 <FontAwesomeIcon fixedWidth icon="code-branch" />
                 {BUILD_COMMIT_SHORT}
-              </NavItem>
+              </NavLink>
             )
           }
-        </ul>
+        </NavUl>
 
         <div className="social-actions">
           <SocialIcon
@@ -153,7 +141,7 @@ function Header () {
             icon={['fab', 'reddit-alien']}
             title="Fuel Rats on Reddit" />
           <SocialIcon
-            href="https://www.twitch.tv/fuelrats//"
+            href="https://www.twitch.tv/fuelrats/"
             icon={['fab', 'twitch']}
             title="Fuel Rats on Twitch" />
           <SocialIcon
@@ -167,22 +155,18 @@ function Header () {
             transform={{ rotate: -45 }} />
         </div>
 
-        <div className="join-actions">
-          <Link route="rescue-landing">
-            <a className="button get-fuel">
-              {'Get Fuel'}
-            </a>
-          </Link>
+        <NavUl className="join-actions" onClick={handleClick}>
+          <NavLink className="button get-fuel" href="/i-need-fuel">
+            {'Get Fuel'}
+          </NavLink>
           {
             !loggedIn && (
-              <Link route="register">
-                <a className="button secondary">
-                  {'Become a Rat'}
-                </a>
-              </Link>
+              <NavLink className="button secondary" href="/register">
+                {'Become a Rat'}
+              </NavLink>
             )
           }
-        </div>
+        </NavUl>
       </header>
     </div>
   )

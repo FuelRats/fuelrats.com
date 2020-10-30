@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import {
   createContext,
   useContext,
@@ -20,24 +21,77 @@ function reduceSubNavChange (state, nextId) {
 
 
 
-export default function Nav ({ children }) {
+function NavUl (props) {
+  const {
+    className,
+    children,
+    onClick,
+  } = props
+
   const [openSubNav, setOpenSubNav] = useReducer(reduceSubNavChange, '')
 
   const ctxValue = useMemo(() => {
-    return [openSubNav, setOpenSubNav]
-  }, [openSubNav, setOpenSubNav])
+    return {
+      globalClick: onClick,
+      subNav: [openSubNav, setOpenSubNav],
+    }
+  }, [onClick, openSubNav])
 
   return (
-    <nav>
-      <ul>
-        <NavContext.Provider value={ctxValue}>
-          {children}
-        </NavContext.Provider>
-      </ul>
+    <ul className={className}>
+      <NavContext.Provider value={ctxValue}>
+        {children}
+      </NavContext.Provider>
+    </ul>
+  )
+}
+
+NavUl.propTypes = {
+  children: PropTypes.node.isRequired,
+  className: PropTypes.string,
+  onClick: PropTypes.func,
+}
+
+
+
+
+
+function Nav (props) {
+  const {
+    className,
+    children,
+    ...restProps
+  } = props
+
+  return (
+    <nav className={className}>
+      <NavUl {...restProps}>
+        {children}
+      </NavUl>
     </nav>
   )
 }
 
-export function useNavContext () {
+Nav.propTypes = {
+  children: PropTypes.node.isRequired,
+  className: PropTypes.string,
+  onClick: PropTypes.func,
+}
+
+
+
+
+
+function useNavContext () {
   return useContext(NavContext)
+}
+
+
+
+
+
+export default Nav
+export {
+  useNavContext,
+  NavUl,
 }

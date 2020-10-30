@@ -1,10 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Link from 'next/link'
+import Router from 'next/router'
 import React from 'react'
 
 import { authenticated } from '~/components/AppLayout'
 import { formatAsEliteDateTime } from '~/helpers/formatTime'
 import { pageRedirect } from '~/helpers/gIPTools'
-import { Link, Router } from '~/routes'
+import { makePaperworkRoute } from '~/helpers/routeGen'
 import { connect } from '~/store'
 import { getRescue } from '~/store/actions/rescues'
 import {
@@ -43,9 +45,9 @@ class Paperwork extends React.Component {
       this.setState({ deleting: true })
       await this.props.deleteRescue(this.props.rescue)
 
-      Router.pushRoute(
+      Router.push(
         this.props.userCanWriteAll
-          ? 'admin rescues list'
+          ? '/admin/rescues'
           : '/',
       )
 
@@ -234,7 +236,7 @@ class Paperwork extends React.Component {
                 <>
                   {
                     userCanEdit && (
-                      <Link params={{ rescueId: rescue.id }} route="paperwork edit">
+                      <Link href={makePaperworkRoute({ rescueId: rescue.id, edit: true })}>
                         <a className="button compact">
                           {'Edit'}
                         </a>
