@@ -21,15 +21,7 @@ function reduceSubNavChange (state, nextId) {
 
 
 
-function useNavContext () {
-  return useContext(NavContext)
-}
-
-
-
-
-
-function Nav (props) {
+function NavUl (props) {
   const {
     className,
     children,
@@ -46,12 +38,36 @@ function Nav (props) {
   }, [onClick, openSubNav])
 
   return (
+    <ul className={className}>
+      <NavContext.Provider value={ctxValue}>
+        {children}
+      </NavContext.Provider>
+    </ul>
+  )
+}
+
+NavUl.propTypes = {
+  children: PropTypes.node.isRequired,
+  className: PropTypes.string,
+  onClick: PropTypes.func,
+}
+
+
+
+
+
+function Nav (props) {
+  const {
+    className,
+    children,
+    ...restProps
+  } = props
+
+  return (
     <nav className={className}>
-      <ul>
-        <NavContext.Provider value={ctxValue}>
-          {children}
-        </NavContext.Provider>
-      </ul>
+      <NavUl {...restProps}>
+        {children}
+      </NavUl>
     </nav>
   )
 }
@@ -64,7 +80,18 @@ Nav.propTypes = {
 
 
 
+
+
+function useNavContext () {
+  return useContext(NavContext)
+}
+
+
+
+
+
 export default Nav
 export {
   useNavContext,
+  NavUl,
 }
