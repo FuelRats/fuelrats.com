@@ -5,7 +5,34 @@ All changes relative to the previous version of fuelrats.com shall be documented
 For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
+
+
+
 ## [Unreleased][]
+
+### ✨ Added
+*
+
+
+### ⚡ Changed
+*
+
+
+### 🐛 Fixed
+*
+
+
+### ⚙ Tasks
+*
+
+
+[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.4...HEAD
+
+
+
+
+
+## [2.12.4][] - 2020-10-30
 
 ### ✨ Added
 * Hide main menu when a nav item is clicked [#293][]
@@ -31,13 +58,13 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 [#291]: https://github.com/fuelrats/fuelrats.com/pull/291
 [#292]: https://github.com/fuelrats/fuelrats.com/pull/292
 [#293]: https://github.com/fuelrats/fuelrats.com/pull/293
-[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.3...HEAD
+[2.12.4]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.3...v2.12.4
 
 
 
 
 
-## [2.12.3][]
+## [2.12.3][] - 2020-10-19
 
 ### ✨ Added
 * Add `apple-app-site-association` page for verification with apple services.
