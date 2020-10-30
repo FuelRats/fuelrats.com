@@ -28,7 +28,10 @@ function SocialIcon (props) {
 
 SocialIcon.propTypes = {
   href: PropTypes.string.isRequired,
-  icon: PropTypes.string.isRequired,
+  icon: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]).isRequired,
   title: PropTypes.string.isRequired,
 }
 
