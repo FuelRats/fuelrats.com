@@ -30,9 +30,9 @@ export function createAlert (data = {}) {
 }
 
 
-export function deleteAlert (data) {
+export function deleteAlert (id) {
   return createFSA(
     actionTypes.alerts.delete,
-    data,
+    { id },
   )
 }
