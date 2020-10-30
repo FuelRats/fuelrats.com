@@ -45,6 +45,7 @@ class Authorize extends React.Component {
 
     if (!isError(response) && response.payload.redirect) {
       window.location.href = response.payload.redirect
+      return
     }
 
     this.setState({ submitting: false })
