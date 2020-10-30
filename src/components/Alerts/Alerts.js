@@ -1,5 +1,5 @@
+import { AnimatePresence } from 'framer-motion'
 import PropTypes from 'prop-types'
-import React from 'react'
 import { createPortal } from 'react-dom'
 import { useSelector } from 'react-redux'
 
@@ -22,11 +22,13 @@ function Alerts (props) {
   return createPortal(
     (
       <div className={[styles.alerts, className]}>
-        {
-          activeAlerts.map((alert) => {
-            return (<AlertCard key={alert.id} alert={alert} />)
-          })
-        }
+        <AnimatePresence>
+          {
+            activeAlerts.map((alert) => {
+              return (<AlertCard key={alert.id} alert={alert} />)
+            })
+          }
+        </AnimatePresence>
       </div>
     ),
     document.getElementById('alert-container'),
