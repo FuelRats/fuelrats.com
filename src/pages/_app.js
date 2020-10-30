@@ -6,6 +6,7 @@ import NextHead from 'next/head'
 import { StrictMode } from 'react'
 import { Provider } from 'react-redux'
 
+import Alerts from '~/components/Alerts'
 import Header from '~/components/Header'
 import LoginModal from '~/components/LoginModal'
 import NProgress from '~/components/NProgress'
@@ -146,6 +147,8 @@ class FuelRatsApp extends App {
             </AnimatePresence>
 
             <LoginModal />
+
+            <Alerts />
           </Provider>
         </div>
       </StrictMode>
