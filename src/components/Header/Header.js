@@ -2,14 +2,16 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
+import { useCallback, useRef } from 'react'
 import { useSelector } from 'react-redux'
 
 import { makeBlogRoute } from '~/helpers/routeGen'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { selectCurrentUserHasScope, selectSession } from '~/store/selectors'
 
-import Brand from '../../public/static/svg/brand.svg'
-import { Nav, NavLink, SubNav } from './Nav'
+import Brand from '../../../public/static/svg/brand.svg'
+import { Nav, NavUl, NavLink, SubNav } from '../Nav'
+import SocialIcon from './SocialIcon'
 
 
 
@@ -20,35 +22,23 @@ const IS_DEV_OR_STAGING = $IS_DEVELOPMENT || $IS_STAGING
 const BUILD_COMMIT_SHORT = $BUILD_COMMIT_SHORT
 
 
-function SocialIcon (props) {
-  const {
-    href,
-    title,
-    ...restProps
-  } = props
 
-  return (
-    <a
-      className="button link"
-      href={href}
-      rel="noopener noreferrer"
-      target="_blank"
-      title={title}>
-      <FontAwesomeIcon
-        fixedWidth
-        {...restProps} />
-    </a>
-  )
-}
 
 
 function Header () {
   const { loggedIn } = useSelector(selectSession)
   const userCanDispatch = useSelectorWithProps({ scope: 'dispatch.read' }, selectCurrentUserHasScope)
 
+  const checkboxRef = useRef()
+
+  const handleClick = useCallback(() => {
+    checkboxRef.current.checked = false
+  }, [])
+
   return (
     <div id="HeaderContainer">
       <input
+        ref={checkboxRef}
         aria-label="Navigation toggle"
         id="NavControl"
         type="checkbox" />
@@ -66,7 +56,7 @@ function Header () {
           </a>
         </Link>
 
-        <Nav>
+        <Nav onClick={handleClick}>
           <SubNav id="blog" title="Blog">
             <NavLink href="/blog">
               {'All'}
@@ -116,7 +106,7 @@ function Header () {
           }
         </Nav>
 
-        <ul className="about-actions fa-ul">
+        <NavUl className="about-actions fa-ul" onClick={handleClick}>
           <NavLink className="button link" href="/terms-of-service">
             <FontAwesomeIcon fixedWidth icon="book" />
             {'Terms of Service'}
@@ -139,7 +129,7 @@ function Header () {
               </NavLink>
             )
           }
-        </ul>
+        </NavUl>
 
         <div className="social-actions">
           <SocialIcon
@@ -165,7 +155,7 @@ function Header () {
             transform={{ rotate: -45 }} />
         </div>
 
-        <ul className="join-actions">
+        <NavUl className="join-actions" onClick={handleClick}>
           <NavLink className="button get-fuel" href="/i-need-fuel">
             {'Get Fuel'}
           </NavLink>
@@ -176,7 +166,7 @@ function Header () {
               </NavLink>
             )
           }
-        </ul>
+        </NavUl>
       </header>
     </div>
   )
