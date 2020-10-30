@@ -10,7 +10,7 @@ import actionTypes from '../actionTypes'
 
 
 // Module constants
-const DEFAULT_TIMEOUT_LENGTH = 1200 // 12 seconds
+const DEFAULT_TIMEOUT_LENGTH = 3000 // 3 seconds
 const UUID_VERSION_4 = 4
 
 
