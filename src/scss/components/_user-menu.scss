@@ -26,11 +26,6 @@ $user-menu-border-width-mobile: 0.5rem;
     animation-name: opacity-flutter;
     animation-duration: 1s;
     animation-iteration-count: infinite;
-
-    &:empty::before {
-      color: $red-darkened;
-      background: $grey-darkened;
-    }
   }
 
   header {
@@ -42,7 +37,7 @@ $user-menu-border-width-mobile: 0.5rem;
     font-weight: bold;
   }
 
-  menu {
+  .menu {
     display: flex;
     position: fixed;
 
@@ -68,10 +63,72 @@ $user-menu-border-width-mobile: 0.5rem;
 
     overflow: hidden;
 
-    > * {
-      flex-shrink: 0;
+    > ul {
+      > li {
+        &:not(:last-child) {
+          border-bottom: 1px solid $black-lightened;
+        }
 
-      padding: 2rem 1rem;
+        ul {
+          background-color: $black;
+
+          &:first-child {
+            padding: 1rem 0;
+          }
+
+          &:not(:first-child) {
+            padding: 0 0 1rem;
+          }
+
+          a {
+            display: block;
+            position: relative;
+
+            padding: 0.5rem 2rem;
+
+            color: $white;
+
+            text-decoration: none;
+            transition-property: background-color, color;
+            transition-duration: 0.1s;
+
+            &::before {
+              position: absolute;
+              top: 0;
+              right: initial;
+              bottom: 0;
+              left: 0%;
+              z-index: 0;
+
+              content: '';
+              width: 0;
+
+              background-color: $red;
+              transition: all 0.2s;
+            }
+
+            span {
+              position: relative;
+              z-index: 1;
+            }
+          }
+
+          .logout a {
+            color: $red;
+          }
+
+          .logout a,
+          a {
+            &:hover {
+              color: $white;
+
+              &::before {
+                width: 100%;
+              }
+            }
+          }
+        }
+      }
     }
 
     @media not screen and (max-width: $mobile-max-width) {
@@ -87,68 +144,6 @@ $user-menu-border-width-mobile: 0.5rem;
         max-height 0.2s,
         max-width 0.2s;
     }
-  }
-
-  nav {
-    padding: 1rem 0;
-
-    background-color: $black;
-
-    &:not(:last-child) {
-      border-bottom: 1px solid $black-lightened;
-    }
-
-    a {
-      display: block;
-      position: relative;
-
-      padding: 0.5rem 2rem;
-
-      color: $white;
-
-      text-decoration: none;
-      transition-property: background-color, color;
-      transition-duration: 0.1s;
-
-      &::before {
-        position: absolute;
-        top: 0;
-        right: initial;
-        bottom: 0;
-        left: 0%;
-        z-index: 0;
-
-        content: '';
-        width: 0;
-
-        background-color: $red;
-        transition: all 0.2s;
-      }
-
-      span {
-        position: relative;
-        z-index: 1;
-      }
-    }
-
-    .logout a {
-      color: $red;
-    }
-
-    .logout a,
-    a {
-      &:hover {
-        color: $white;
-
-        &::before {
-          width: 100%;
-        }
-      }
-    }
-  }
-
-  ul {
-    margin-bottom: 0;
   }
 
   .avatar {
@@ -174,7 +169,7 @@ $user-menu-border-width-mobile: 0.5rem;
 
   @media not screen and (max-width: $mobile-max-width) {
     #UserMenuControl:checked {
-      ~ menu {
+      ~ .menu {
         top: #{($avatar-size / 2) + 1rem};
         right: #{($avatar-size / 2) + 2.5rem};
 
@@ -207,12 +202,17 @@ $user-menu-border-width-mobile: 0.5rem;
 @media only screen and (max-width: $mobile-max-width) {
   #UserMenuControl {
     &:checked {
-      ~ menu {
+      ~ .menu {
         transform: translateX(-$user-menu-width-mobile);
       }
 
       ~ #UserMenuToggle {
-        $umt-mobile-translate: translateX(#{-1 * (($user-menu-width-mobile / 2) - ($avatar-size / 2) - $avatar-right-margin - ($user-menu-border-width-mobile / 2))});
+        $umt-mobile-translate:
+          translateX(
+            #{
+              -1 * (($user-menu-width-mobile / 2) - ($avatar-size / 2) - $avatar-right-margin - ($user-menu-border-width-mobile / 2))
+            }
+          );
         transform: $umt-mobile-translate;
 
         &:active {
@@ -226,7 +226,7 @@ $user-menu-border-width-mobile: 0.5rem;
       border-color: $black-lightened;
     }
 
-    ~ menu {
+    ~ .menu {
       top: 0;
       bottom: 0;
       left: 100%;
