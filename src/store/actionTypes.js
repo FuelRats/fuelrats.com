@@ -1,3 +1,8 @@
+const alerts = {
+  create: 'alerts/create',
+  delete: 'alerts/delete',
+}
+
 const decals = {
   read: 'decals/read',
   redeem: 'decals/redeem',
@@ -167,6 +172,7 @@ const actionTypes = {
   users,
 
   // Special
+  alerts,
   images,
   session,
   verify,

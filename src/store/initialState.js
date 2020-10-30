@@ -1,4 +1,7 @@
 const initialState = {
+
+  alerts: [],
+
   blogs: {
     authors: {},
     blogs: [],
