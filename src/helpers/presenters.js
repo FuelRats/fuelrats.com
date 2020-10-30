@@ -1,9 +1,11 @@
 import { isRequired } from '@fuelrats/validation-util'
 
-export function presentApiRequestBody (
+
+
+
+export function presentJSONAPIResource (
   type = isRequired('resourceType'),
   data = isRequired('data'),
-  documentMeta,
 ) {
   const {
     id,
@@ -16,15 +18,23 @@ export function presentApiRequestBody (
   } = data
 
   return {
-    data: {
-      type,
-      id,
-      attributes: {
-        ...attributes,
-        ...restAttributes,
-      },
-      relationships,
+    type,
+    id,
+    attributes: {
+      ...attributes,
+      ...restAttributes,
     },
+    relationships,
+  }
+}
+
+export function presentApiRequestBody (
+  type = isRequired('resourceType'),
+  data = isRequired('data'),
+  documentMeta,
+) {
+  return {
+    data: presentJSONAPIResource(type, data),
     meta: documentMeta,
   }
 }
