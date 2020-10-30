@@ -1,7 +1,9 @@
 import { chainReducers, withDefaultReducers } from '@fuelrats/web-util/reducers'
 import { combineReducers } from 'redux'
 
+
 import initialState from '../initialState'
+import alerts from './alerts'
 import blogs from './blogs'
 import dispatch from './dispatch'
 import flags from './flags'
@@ -21,6 +23,7 @@ export default chainReducers(
     reduceJSONAPIResources,
     frSSE,
     withDefaultReducers(combineReducers)(initialState, {
+      alerts,
       blogs,
       dispatch,
       flags,
