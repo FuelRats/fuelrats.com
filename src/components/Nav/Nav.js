@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import {
   createContext,
   useContext,
@@ -20,7 +21,15 @@ function reduceSubNavChange (state, nextId) {
 
 
 
-export default function Nav ({ children }) {
+function useNavContext () {
+  return useContext(NavContext)
+}
+
+
+
+
+
+function Nav ({ className, children }) {
   const [openSubNav, setOpenSubNav] = useReducer(reduceSubNavChange, '')
 
   const ctxValue = useMemo(() => {
@@ -28,7 +37,7 @@ export default function Nav ({ children }) {
   }, [openSubNav, setOpenSubNav])
 
   return (
-    <nav>
+    <nav className={className}>
       <ul>
         <NavContext.Provider value={ctxValue}>
           {children}
@@ -38,6 +47,14 @@ export default function Nav ({ children }) {
   )
 }
 
-export function useNavContext () {
-  return useContext(NavContext)
+Nav.propTypes = {
+  children: PropTypes.node.isRequired,
+  className: PropTypes.string,
+}
+
+
+
+export default Nav
+export {
+  useNavContext,
 }
