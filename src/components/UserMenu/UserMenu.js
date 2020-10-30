@@ -1,113 +1,59 @@
-import React from 'react'
+import { useCallback, useRef } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { connect } from '~/store'
+import { setFlag } from '~/store/actions/flags'
+import { logout } from '~/store/actions/session'
 import {
   selectSession,
   selectUserById,
   selectAvatarByUserId,
   withCurrentUserId,
+  selectCurrentUserCanEditAllRescues,
 } from '~/store/selectors'
 
-import NavSection from './NavSection'
+import { Nav, NavLink, NavSection } from '../Nav'
+import styles from './UserMenu.module.scss'
 
 
 
 
 
-@connect
-class UserMenu extends React.Component {
-  /***************************************************************************\
-    Class Properties
-  \***************************************************************************/
+function UserMenu () {
+  const checkboxRef = useRef()
 
-  checkboxRef = React.createRef()
+  const { loggedIn } = useSelector(selectSession)
+  const userCanSeeRescueAdmin = useSelector(selectCurrentUserCanEditAllRescues)
+  const user = useSelector(withCurrentUserId(selectUserById))
+  const userAvatar = useSelector(withCurrentUserId(selectAvatarByUserId))
 
-   userItems = [
-     {
-       key: 'profile',
-       title: 'Profile',
-       href: '/profile/overview',
-     },
-     {
-       key: 'my-rats',
-       title: 'My Rats',
-       href: '/profile/rats',
-     },
-     // {
-     //   key: 'my-rescues',
-     //   title: 'My Rescues',
-     //   href: '/profile/rescues',
-     // },
-   ]
+  const dispatch = useDispatch()
 
-   adminItems = [
-     {
-       key: 'admin-rescues-list',
-       title: 'Rescues',
-       href: '/admin/rescues',
-       permission: 'rescues.write',
-     },
-     // {
-     //   key: 'admin-users',
-     //   title: 'Users',
-     //   permission: 'user.write',
-     // },
-   ]
+  const handleClick = useCallback(() => {
+    checkboxRef.current.checked = false
+  }, [])
 
-   actions = [
-     {
-       key: 'logout',
-       title: 'Logout',
-       href: '/',
-       className: 'logout',
-       onClick: this.props.logout,
-     },
-   ]
+  const handleLogin = useCallback(() => {
+    dispatch(setFlag('showLoginDialog', true))
+  }, [dispatch])
 
+  const handleLogout = useCallback(() => {
+    dispatch(logout())
+  }, [dispatch])
 
-
-
-
-   /***************************************************************************\
-    Private Methods
-  \***************************************************************************/
-
-  _handleItemClick = () => {
-    this.checkboxRef.current.checked = false
-  }
-
-  _handleLoginClick = () => {
-    this.props.setFlag('showLoginDialog', true)
-  }
-
-
-
-
-
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
-
-  render () {
-    const {
-      loggedIn,
-      user,
-      userAvatar,
-      userId,
-    } = this.props
-
-    return (
-      <div className={['user-menu', { 'logged-in': loggedIn, 'logging-in': loggedIn && !userId }]}>
-        {
-          Boolean(loggedIn) && (
+  return (
+    <div className={[styles.userMenu, { [styles.loggedIn]: loggedIn }]}>
+      {
+        loggedIn
+          ? (
             <>
               <input
-                ref={this.checkboxRef}
+                ref={checkboxRef}
                 aria-label="User menu toggle"
+                className={styles.navInput}
                 id="UserMenuControl"
                 type="checkbox" />
 
-              <label className="avatar medium" htmlFor="UserMenuControl" id="UserMenuToggle">
+              <label className={[styles.avatar, styles.navHandle]} htmlFor="UserMenuControl" id="UserMenuToggle">
                 {
                   Boolean(user) && (
                     <img alt="Your avatar" src={userAvatar} />
@@ -116,49 +62,49 @@ class UserMenu extends React.Component {
               </label>
             </>
           )
-        }
-
-        {
-          (loggedIn && user) && (
-            <menu>
-              <NavSection items={this.userItems} onItemClick={this._handleItemClick} />
-              <NavSection header="Admin" items={this.adminItems} onItemClick={this._handleItemClick} />
-              <NavSection items={this.actions} onItemClick={this._handleItemClick} />
-            </menu>
-          )
-        }
-
-        {
-          !loggedIn && (
+          : (
             <button
-              className="login secondary"
+              className="secondary"
               type="button"
-              onClick={this._handleLoginClick}>
+              onClick={handleLogin}>
               {'Rat Login'}
             </button>
           )
-        }
-      </div>
-    )
-  }
+      }
+
+      {
+        Boolean(user) && (
+          <Nav className={styles.nav} onClick={handleClick}>
+            <NavSection className={styles.navSection}>
+              <NavLink href="/profile/overview">
+                {'Profile'}
+              </NavLink>
+              <NavLink href="/profile/rats">
+                {'My Rats'}
+              </NavLink>
+            </NavSection>
+
+            <NavSection className={styles.navSection} title="Admin">
+              {
+                userCanSeeRescueAdmin && (
+                  <NavLink href="/admin/rescues">
+                    {'Rescues'}
+                  </NavLink>
+                )
+              }
+            </NavSection>
 
 
-
-
-
-  /***************************************************************************\
-    Redux Properties
-  \***************************************************************************/
-
-  static mapDispatchToProps = ['logout', 'setFlag']
-
-  static mapStateToProps = (state) => {
-    return {
-      ...selectSession(state),
-      user: withCurrentUserId(selectUserById)(state),
-      userAvatar: withCurrentUserId(selectAvatarByUserId)(state, { size: 64 }),
-    }
-  }
+            <NavSection className={styles.navSection}>
+              <NavLink className="logout" href="/" onClick={handleLogout}>
+                {'Logout'}
+              </NavLink>
+            </NavSection>
+          </Nav>
+        )
+      }
+    </div>
+  )
 }
 
 
