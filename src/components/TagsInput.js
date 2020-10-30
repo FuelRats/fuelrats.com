@@ -4,7 +4,6 @@
     no-negated-condition,
     no-restricted-syntax,
     no-return-assign,
-    react/jsx-handler-names,
     react/jsx-no-bind,
     react/state-in-constructor,
     arrow-body-style,
