@@ -84,4 +84,8 @@ body {
       }
     }
   }
+
+  > #AlertContainer {
+    z-index: 500;
+  }
 }
