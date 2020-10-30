@@ -61,7 +61,7 @@ class FuelRatsWebsite extends Document {
 
           <div id="ModalContainer" />
 
-          <div id="alert-container" />
+          <div id="AlertContainer" />
         </body>
       </Html>
     )
