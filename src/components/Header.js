@@ -9,9 +9,7 @@ import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { selectCurrentUserHasScope, selectSession } from '~/store/selectors'
 
 import Brand from '../../public/static/svg/brand.svg'
-import Nav from './Nav/Nav'
-import NavItem from './Nav/NavItem'
-import SubNav from './Nav/SubNav'
+import { Nav, NavLink, SubNav } from './Nav'
 
 
 
@@ -70,31 +68,31 @@ function Header () {
 
         <Nav>
           <SubNav id="blog" title="Blog">
-            <NavItem href="/blog">
+            <NavLink href="/blog">
               {'All'}
-            </NavItem>
+            </NavLink>
 
-            <NavItem href={makeBlogRoute({ category: 138 })}>
+            <NavLink href={makeBlogRoute({ category: 138 })}>
               {'Stories, Art, & Toons'}
-            </NavItem>
+            </NavLink>
           </SubNav>
           <SubNav id="states" title="Rat Stats">
-            <NavItem external href="https://grafana.fuelrats.com/d/H-iTUTPmz/public-statistics?refresh=1h&orgname=2">
+            <NavLink external href="https://grafana.fuelrats.com/d/H-iTUTPmz/public-statistics?refresh=1h&orgname=2">
               {'General'}
-            </NavItem>
+            </NavLink>
 
-            <NavItem href="/leaderboard">
+            <NavLink href="/leaderboard">
               {'Leaderboard'}
-            </NavItem>
+            </NavLink>
           </SubNav>
           <SubNav id="support" title="Support Us">
-            <NavItem href="/donate">
+            <NavLink href="/donate">
               {'Donations'}
-            </NavItem>
+            </NavLink>
 
-            <NavItem disabled external>
+            <NavLink disabled external>
               {'Merch (Coming soon!)'}
-            </NavItem>
+            </NavLink>
           </SubNav>
 
           {
@@ -102,43 +100,43 @@ function Header () {
               <SubNav id="ratlinks" title="Rat Links">
                 {
                   userCanDispatch && (
-                    <NavItem href="/dispatch">
+                    <NavLink href="/dispatch">
                       {'Dispatch Board'}
-                    </NavItem>
+                    </NavLink>
                   )
                 }
-                <NavItem external href="https://confluence.fuelrats.com/display/FRKB/Fuel+Rats+Knowledge+Base">
+                <NavLink external href="https://confluence.fuelrats.com/display/FRKB/Fuel+Rats+Knowledge+Base">
                   {'Knowledge Base'}
-                </NavItem>
-                <NavItem external href="https://t.fuelr.at/help">
+                </NavLink>
+                <NavLink external href="https://t.fuelr.at/help">
                   {'Support Desk'}
-                </NavItem>
+                </NavLink>
               </SubNav>
             )
           }
         </Nav>
 
         <ul className="about-actions fa-ul">
-          <NavItem className="button link" href="/terms-of-service">
+          <NavLink className="button link" href="/terms-of-service">
             <FontAwesomeIcon fixedWidth icon="book" />
             {'Terms of Service'}
-          </NavItem>
-          <NavItem className="button link" href="/privacy-policy">
+          </NavLink>
+          <NavLink className="button link" href="/privacy-policy">
             <FontAwesomeIcon fixedWidth icon="user-secret" />
             {'Privacy Policy'}
-          </NavItem>
+          </NavLink>
 
-          <NavItem className="button link" href="/acknowledgements">
+          <NavLink className="button link" href="/acknowledgements">
             <FontAwesomeIcon fixedWidth icon="hands-helping" />
             {'Acknowledgements'}
-          </NavItem>
+          </NavLink>
 
           {
             IS_DEV_OR_STAGING && (
-              <NavItem className="button link" href="/version">
+              <NavLink className="button link" href="/version">
                 <FontAwesomeIcon fixedWidth icon="code-branch" />
                 {BUILD_COMMIT_SHORT}
-              </NavItem>
+              </NavLink>
             )
           }
         </ul>
@@ -168,14 +166,14 @@ function Header () {
         </div>
 
         <ul className="join-actions">
-          <NavItem className="button get-fuel" href="/i-need-fuel">
+          <NavLink className="button get-fuel" href="/i-need-fuel">
             {'Get Fuel'}
-          </NavItem>
+          </NavLink>
           {
             !loggedIn && (
-              <NavItem className="button secondary" href="/register">
+              <NavLink className="button secondary" href="/register">
                 {'Become a Rat'}
-              </NavItem>
+              </NavLink>
             )
           }
         </ul>
