@@ -41,7 +41,6 @@ const selectConnectedSlides = createSelector(
   },
 )
 
-/* eslint-disable id-length */
 const slideMotionConfig = {
   initial: { opacity: 0 },
   animate: { opacity: 1 },
@@ -58,7 +57,6 @@ const slideTextMotionConfig = {
     damping: 100,
   },
 }
-/* eslint-enable id-length */
 
 
 

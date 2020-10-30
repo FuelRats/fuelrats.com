@@ -14,7 +14,6 @@ import ModalPortal from './ModalPortal'
 
 // Component constants
 
-/* eslint-disable id-length */
 const modalMotionConfig = {
   initial: { y: '-100vh' },
   animate: { y: 0 },
@@ -27,7 +26,6 @@ const modalMotionConfig = {
     restSpeed: 10,
   },
 }
-/* eslint-enable id-length */
 
 const ModalContext = React.createContext({})
 
