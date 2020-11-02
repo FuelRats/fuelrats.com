@@ -7,6 +7,10 @@ form {
     padding: 0.5rem 2rem;
   }
 
+  &.dialog .error {
+    margin: 0 auto 2rem;
+  }
+
   &.compact .form-row {
     &.submit-row {
       padding: 0.4rem 0;
