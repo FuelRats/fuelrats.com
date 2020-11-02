@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import PropTypes from 'prop-types'
 import { useReducer, useRef } from 'react'
 
-import IrnputFieldset from '../InputFieldset'
+import InputFieldset from '../InputFieldset'
 import styles from './PasswordFieldset.module.scss'
 
 
@@ -25,7 +25,7 @@ function PasswordFieldset (props) {
   }, false)
 
   return (
-    <IrnputFieldset
+    <InputFieldset
       ref={inputRef}
       autoComplete="current-password"
       className={styles.passwordInput}
@@ -41,7 +41,7 @@ function PasswordFieldset (props) {
         <FontAwesomeIcon fixedWidth icon={showPassword ? 'eye-slash' : 'eye'} />
       </button>
 
-    </IrnputFieldset>
+    </InputFieldset>
   )
 }
 
