@@ -80,10 +80,10 @@ function DisableProfileModal (props) {
       </div>
 
       <PasswordFieldset
+        dark
         required
         aria-label="Current Password"
         id="CurrentPassword"
-        inputClassName="dark"
         name="password"
         placeholder="Password" />
 

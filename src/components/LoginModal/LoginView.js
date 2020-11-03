@@ -66,18 +66,18 @@ function LoginView () {
     <Form className={[styles.loginForm, 'dialog']}>
       <EmailFieldset
         autoFocus
+        dark
         required
         aria-label="E-Mail"
         autoComplete="email"
         id="LoginEmail"
-        inputClassName="dark"
         name="data.username"
         placeholder="E-Mail" />
       <PasswordFieldset
+        dark
         required
         aria-label="Password"
         id="LoginPassword"
-        inputClassName="dark"
         minLength={8}
         name="data.password"
         placeholder="Password" />

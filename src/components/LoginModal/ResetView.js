@@ -60,13 +60,14 @@ function ResetView (props) {
         )
       }
       <EmailFieldset
+        dark
         required
         aria-label="E-Mail"
         autoComplete="email"
         id="ResetEmail"
-        inputClassName="dark"
         name="attributes.email"
         placeholder="E-Mail" />
+
       <ModalFooter className={styles.footer}>
         <div className={styles.secondary}>
           <button

@@ -54,10 +54,10 @@ function VerifyView (props) {
   return (
     <Form className={[styles.loginForm, 'dialog', className]}>
       <LoginTokenFieldset
+        dark
         required
         aria-label="Login Verification token from E-Mail"
         id="LoginToken"
-        inputClassName="dark"
         name="data.verify"
         placeholder="Verification Token" />
 
