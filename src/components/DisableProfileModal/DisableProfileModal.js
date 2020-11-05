@@ -9,7 +9,7 @@ import { updateUser } from '~/store/actions/user'
 import { selectCurrentUserId } from '~/store/selectors'
 
 import PasswordFieldset from '../Fieldsets/PasswordFieldset'
-import asModal, { ModalContent, ModalFooter } from '../Modal'
+import asModal, { FooterPrimary, ModalContent, ModalFooter } from '../Modal'
 import DisableProfileErrorBox from './DisableProfileErrorBox'
 
 
@@ -88,8 +88,7 @@ function DisableProfileModal (props) {
         placeholder="Password" />
 
       <ModalFooter>
-        <div className="secondary" />
-        <div className="primary">
+        <FooterPrimary>
           {
             confirming && (
               <>
@@ -110,12 +109,13 @@ function DisableProfileModal (props) {
             )
           }
           <button
+            className={{ green: !confirming }}
             disabled={(!confirming && !canSubmit) || submitting}
             type="button"
             onClick={handleConfirm}>
             {confirming ? 'Cancel' : 'Disable Profile'}
           </button>
-        </div>
+        </FooterPrimary>
       </ModalFooter>
     </ModalContent>
   )

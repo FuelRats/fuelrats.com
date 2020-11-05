@@ -10,7 +10,7 @@ import { login } from '~/store/actions/authentication'
 import { getUserProfile } from '~/store/actions/user'
 
 import LoginTokenFieldset from '../Fieldsets/LoginTokenFieldset'
-import { ModalFooter } from '../Modal'
+import { FooterPrimary, FooterSecondary, ModalFooter } from '../Modal'
 import { useModalContext } from '../Modal/Modal'
 import styles from './LoginModal.module.scss'
 
@@ -62,23 +62,23 @@ function VerifyView (props) {
         placeholder="Verification Token" />
 
       <ModalFooter className={styles.footer}>
-        <div className={styles.secondary}>
+        <FooterSecondary className={styles.secondary}>
           <button
             className={[styles.button, 'secondary']}
             type="button"
             onClick={handleReturnClick}>
             {'Return'}
           </button>
-        </div>
+        </FooterSecondary>
 
-        <div className={styles.primary}>
+        <FooterPrimary className={styles.primary}>
           <button
             className={[styles.button, 'green']}
             disabled={!canSubmit}
             type="submit">
             {submitting ? 'Submitting...' : 'Login'}
           </button>
-        </div>
+        </FooterPrimary>
       </ModalFooter>
     </Form>
   )

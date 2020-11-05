@@ -10,7 +10,7 @@ import { getUserProfile } from '~/store/actions/user'
 import EmailFieldset from '../Fieldsets/EmailFieldset'
 import PasswordFieldset from '../Fieldsets/PasswordFieldset'
 import SwitchFieldset from '../Fieldsets/SwitchFieldset'
-import { ModalFooter } from '../Modal'
+import { FooterPrimary, FooterSecondary, ModalFooter } from '../Modal'
 import { useModalContext } from '../Modal/Modal'
 import styles from './LoginModal.module.scss'
 
@@ -87,16 +87,16 @@ function LoginView () {
         name="remember" />
 
       <ModalFooter className={styles.footer}>
-        <div className={styles.secondary}>
+        <FooterSecondary className={styles.secondary}>
           <button
             className={[styles.button, 'secondary']}
             type="button"
             onClick={handleRegisterClick}>
             {'Become a Rat'}
           </button>
-        </div>
+        </FooterSecondary>
 
-        <div className={styles.primary}>
+        <FooterPrimary className={styles.primary}>
           <button className={styles.linkButton} type="button" onClick={handleForgotPassword}>
             {'Forgot password?'}
           </button>
@@ -106,7 +106,7 @@ function LoginView () {
             type="submit">
             {submitting ? 'Submitting...' : 'Login'}
           </button>
-        </div>
+        </FooterPrimary>
       </ModalFooter>
     </Form>
   )
