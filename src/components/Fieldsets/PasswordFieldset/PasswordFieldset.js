@@ -12,6 +12,7 @@ import styles from './PasswordFieldset.module.scss'
 function PasswordFieldset (props) {
   const {
     children,
+    className,
     displayName = 'Password',
     onValidate,
     ...inputProps
@@ -28,7 +29,7 @@ function PasswordFieldset (props) {
     <InputFieldset
       ref={inputRef}
       autoComplete="current-password"
-      className={styles.passwordInput}
+      className={[styles.passwordInput, className]}
       displayName={displayName}
       placeholder="Sup3r-S3cur3-P4ssw0rd"
       {...inputProps}
@@ -47,6 +48,7 @@ function PasswordFieldset (props) {
 
 PasswordFieldset.propTypes = {
   children: PropTypes.node,
+  className: PropTypes.string,
   displayName: PropTypes.string,
   onValidate: PropTypes.func,
 }
