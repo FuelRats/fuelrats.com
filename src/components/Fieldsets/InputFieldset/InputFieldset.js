@@ -114,7 +114,7 @@ const InputFieldset = React.forwardRef((props, forwardRef) => {
           valid={messages?.valid}
           validating={validating} />
         <InputSuggestions
-          className={{ [styles.hidden]: !messages?.validatedValue?.length || !messages?.hasMessages || validating || !isFocused }}
+          className={{ dark, [styles.hidden]: !messages?.validatedValue?.length || !messages?.hasMessages || validating || !isFocused }}
           messages={messages} />
       </div>
     </fieldset>
