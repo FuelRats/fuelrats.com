@@ -30,6 +30,9 @@ function ChangePasswordModal (props) {
 
   const dispatch = useDispatch()
   const onSubmit = useCallback(async (formData) => {
+    if (result.submitted) {
+      setResult({ submitted: true })
+    }
     const response = await dispatch(changePassword(formData))
 
     const error = getResponseError(response)
@@ -37,6 +40,7 @@ function ChangePasswordModal (props) {
     setResult({
       error,
       success: !error,
+      submitted: true,
     })
 
     if (!error) {
@@ -46,7 +50,7 @@ function ChangePasswordModal (props) {
         }
       }, SUBMIT_AUTO_CLOSE_DELAY_TIME)
     }
-  }, [dispatch, isOpen, onClose])
+  }, [dispatch, isOpen, onClose, result.submitted])
 
 
   const userId = useSelector(selectCurrentUserId)
@@ -65,6 +69,16 @@ function ChangePasswordModal (props) {
   return (
     <ModalContent as={Form} className="dialog no-pad">
       <ChangePasswordMessageBox result={result} />
+
+      {
+        !result.submitted && (
+          <div className="info">
+            {'You are about to change your FuelRats password. This will change your login for'}
+            <u>{' ALL '}</u>
+            {'FuelRats services, including IRC. Be sure to update your IRC client configuration after this change!'}
+          </div>
+        )
+      }
 
       <PasswordFieldset
         dark
