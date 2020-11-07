@@ -3,8 +3,8 @@ import { useState } from 'react'
 import zxcvbn from 'zxcvbn'
 
 import { useValidationCallback } from '../InputFieldset'
-import PasswordFieldset from './PasswordFieldset'
-import styles from './PasswordFieldset.module.scss'
+import PasswordFieldset from '../PasswordFieldset'
+import styles from './NewPasswordFieldset.module.scss'
 
 
 
