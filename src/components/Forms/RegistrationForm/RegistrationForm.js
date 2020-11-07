@@ -9,7 +9,7 @@ import useForm from '~/hooks/useForm'
 
 // Dynamic for bundling optimization
 const NewPasswordFieldset = dynamic(() => {
-  return import('../Fieldsets/NewPasswordFieldset')
+  return import('../../Fieldsets/NewPasswordFieldset')
 })
 
 
