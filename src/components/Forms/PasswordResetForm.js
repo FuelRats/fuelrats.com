@@ -1,5 +1,11 @@
-import { NewPasswordFieldset } from '~/components/Fieldsets/PasswordFieldset'
+import dynamic from 'next/dynamic'
+
 import useForm from '~/hooks/useForm'
+
+// Dynamic for bundling optimization
+const NewPasswordFieldset = dynamic(() => {
+  return import('../Fieldsets/NewPasswordFieldset')
+})
 
 
 

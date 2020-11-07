@@ -1,10 +1,16 @@
+import dynamic from 'next/dynamic'
+
 import CMDRFieldset from '~/components/Fieldsets/CMDRFieldset'
 import IRCNickFieldset from '~/components/Fieldsets/IRCNickFieldset'
-import { NewPasswordFieldset } from '~/components/Fieldsets/PasswordFieldset'
 import PlatformFieldset from '~/components/Fieldsets/PlatformFieldset'
 import NewEmailFieldset from '~/components/Fieldsets/RegistrationEmailFieldset'
 import TermsFieldset from '~/components/Fieldsets/TermsFieldset'
 import useForm from '~/hooks/useForm'
+
+// Dynamic for bundling optimization
+const NewPasswordFieldset = dynamic(() => {
+  return import('../Fieldsets/NewPasswordFieldset')
+})
 
 
 
@@ -17,7 +23,6 @@ const data = Object.freeze({
     termsApproved: false,
   },
 })
-
 
 const labels = Object.freeze({
   email: 'Email',

@@ -1,3 +1,4 @@
+import dynamic from 'next/dynamic'
 import PropTypes from 'prop-types'
 import { useCallback, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -7,11 +8,14 @@ import useForm from '~/hooks/useForm'
 import { changePassword } from '~/store/actions/authentication'
 import { selectCurrentUserId } from '~/store/selectors'
 
-import PasswordFieldset, { NewPasswordFieldset } from '../Fieldsets/PasswordFieldset'
+import PasswordFieldset from '../Fieldsets/PasswordFieldset'
 import asModal, { ModalContent, ModalFooter } from '../Modal'
 import ChangePasswordMessageBox from './ChangePasswordMessageBox'
 
-
+// Dynamic for bundling optimization
+const NewPasswordFieldset = dynamic(() => {
+  return import('../Fieldsets/NewPasswordFieldset')
+})
 
 
 // Component Constants
