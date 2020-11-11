@@ -1,16 +1,10 @@
-import dynamic from 'next/dynamic'
-
 import CMDRFieldset from '~/components/Fieldsets/CMDRFieldset'
 import IRCNickFieldset from '~/components/Fieldsets/IRCNickFieldset'
+import dynamicNewPasswordFieldset from '~/components/Fieldsets/NewPasswordFieldset'
 import PlatformFieldset from '~/components/Fieldsets/PlatformFieldset'
 import NewEmailFieldset from '~/components/Fieldsets/RegistrationEmailFieldset'
 import TermsFieldset from '~/components/Fieldsets/TermsFieldset'
 import useForm from '~/hooks/useForm'
-
-// Dynamic for bundling optimization
-const NewPasswordFieldset = dynamic(() => {
-  return import('../../Fieldsets/NewPasswordFieldset')
-})
 
 
 
@@ -37,6 +31,15 @@ const labels = Object.freeze({
   platform: 'What platform is your CMDR on?',
 })
 
+const passwordFieldProps = {
+  required: true,
+  id: 'Password',
+  label: labels.password,
+  name: 'attributes.password',
+}
+
+const NewPasswordFieldset = dynamicNewPasswordFieldset(passwordFieldProps)
+
 
 function RegistrationForm ({ onSubmit }) {
   const { Form, canSubmit, submitting } = useForm({ data, onSubmit })
@@ -51,11 +54,7 @@ function RegistrationForm ({ onSubmit }) {
         label={labels.email}
         name="attributes.email" />
 
-      <NewPasswordFieldset
-        required
-        id="Password"
-        label={labels.password}
-        name="attributes.password" />
+      <NewPasswordFieldset {...passwordFieldProps} />
 
       <IRCNickFieldset
         required
