@@ -45,7 +45,6 @@
     "@rollup/plugin-commonjs": "^16.0.0",
     "@rollup/plugin-node-resolve": "^10.0.0",
     "@svgr/webpack": "^5.4.0",
-    "@types/classnames": "^2.2.11",
     "@types/hoist-non-react-statics": "^3.3.1",
     "@types/ip6addr": "^0.2.1",
     "@types/js-cookie": "^2.2.6",
@@ -83,7 +82,7 @@
     "worker-loader": "^3.0.5"
   },
   "dependencies": {
-    "@fingerprintjs/fingerprintjs": "^3.0.1",
+    "@fingerprintjs/fingerprintjs": "^3.0.3",
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-brands-svg-icons": "^5.15.1",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
@@ -93,7 +92,7 @@
     "@fuelrats/web-util": "^0.3.2",
     "@koa/router": "^10.0.0",
     "axios": "^0.21.0",
-    "classnames": "^2.2.6",
+    "clsx": "^1.1.1",
     "content-security-policy-builder": "^2.1.0",
     "date-fns": "^2.16.1",
     "date-fns-tz": "^1.0.12",

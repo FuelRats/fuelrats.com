@@ -14,10 +14,10 @@
     ]
   ],
   "plugins": [
-    ["@fuelrats/babel-plugin-classnames", { "transformObjects": true }],
+    ["@fuelrats/classnames", { "transformObjects": true, "packageName": "clsx" }],
     ["@babel/plugin-proposal-decorators", { "legacy": true }],
     "@babel/plugin-proposal-export-default-from",
     "@babel/plugin-proposal-export-namespace-from",
-    "@babel/plugin-proposal-optional-catch-binding"
+    "@babel/plugin-proposal-optional-catch-binding",
   ]
 }
