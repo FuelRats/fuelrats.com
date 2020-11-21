@@ -3,8 +3,8 @@ import { useState } from 'react'
 import zxcvbn from 'zxcvbn'
 
 import { useValidationCallback } from '../InputFieldset'
-import PasswordFieldset from './PasswordFieldset'
-import styles from './PasswordFieldset.module.scss'
+import PasswordFieldset from '../PasswordFieldset'
+import styles from './NewPasswordFieldset.module.scss'
 
 
 
@@ -53,6 +53,7 @@ function NewPasswordFieldset (props) {
   return (
     <PasswordFieldset
       autoComplete="new-password"
+      className={styles.newPasswordInput}
       displayName={displayName}
       minLength={12}
       placeholder="Sup3r-S3cur3-P4ssw0rd"

@@ -13,12 +13,22 @@
 
   background: rgba($red, 0.15);
 
-  &.infoType {
+  &.error {
+    --message-color: #{$red};
+    background: rgba($red, 0.15);
+  }
+
+  &.success {
+    --message-color: #{$green};
+    background: rgba($green, 0.15);
+  }
+
+  &.info {
     --message-color: #{$blue};
     background: rgba($blue, 0.15);
   }
 
-  &.warnType {
+  &.warn {
     --message-color: #{$yellow};
     background: rgba($yellow, 0.15);
   }

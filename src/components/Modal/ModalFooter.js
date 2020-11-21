@@ -13,8 +13,28 @@ function ModalFooter (props) {
   )
 }
 
+function FooterPrimary ({ children, className, ...props }) {
+  return (
+    <div {...props} className={['primary', className]}>
+      {children}
+    </div>
+  )
+}
+
+function FooterSecondary ({ children, className, ...props }) {
+  return (
+    <div {...props} className={['secondary', className]}>
+      {children}
+    </div>
+  )
+}
+
 
 
 
 
 export default ModalFooter
+export {
+  FooterPrimary,
+  FooterSecondary,
+}

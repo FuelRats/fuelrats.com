@@ -6,8 +6,6 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-
-
 ## [Unreleased][]
 
 ### ✨ Added
@@ -26,7 +24,25 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 *
 
 
-[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.4...HEAD
+[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.5...HEAD
+
+
+
+
+
+## [2.12.5][] - 2020-11-21
+
+### ⚡ Changed
+* Rewrite `ChangePasswordModal` and `DisableProfileModal` to use new form handling methods. - [#295][]
+
+
+### 🐛 Fixed
+* Resolve code bundling issue which caused the base bundle size to be more than double the size it should be. - [#295][]
+* Fix race condition that would allow certain requests to be made as someone other than the user making the request. - [#295][]
+
+
+[#295]: https://github.com/fuelrats/fuelrats.com/pull/295
+[2.12.5]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.4...v2.12.5
 
 
 
@@ -35,23 +51,23 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ## [2.12.4][] - 2020-10-30
 
 ### ✨ Added
-* Hide main menu when a nav item is clicked [#293][]
+* Hide main menu when a nav item is clicked. - [#293][]
 
 
 ### ⚡ Changed
-* Remove next-named-routes since it's somewhat redundant now. [#293][]
-* rewrite `<UserMenu />` so it reuses the `<Nav />` components made for `<Header />`. [#293][]
+* Remove next-named-routes since it's somewhat redundant now. - [#293][]
+* rewrite `<UserMenu />` so it reuses the `<Nav />` components made for `<Header />`. - [#293][]
 
 
 ### 🐛 Fixed
-* Resolve error that would cause password resets to intermittently fail. [#290][]
-* Resolve issues with DST improperly applying to date/time displays. [#291][]
-* fixed a typo that stopped rats from being deleted. [#292][]
+* Resolve error that would cause password resets to intermittently fail. - [#290][]
+* Resolve issues with DST improperly applying to date/time displays. - [#291][]
+* fixed a typo that stopped rats from being deleted. - [#292][]
 
 
 ### ⚙ Tasks
-* Upgrade to Next.JS 10. [#293][]
-* Upgrade to React 17. [#293][]
+* Upgrade to Next.JS 10. - [#293][]
+* Upgrade to React 17. - [#293][]
 
 
 [#290]: https://github.com/fuelrats/fuelrats.com/pull/290

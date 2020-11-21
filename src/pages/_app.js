@@ -13,7 +13,6 @@ import SilentBoundary from '~/components/SilentBoundary'
 import UserMenu from '~/components/UserMenu'
 import * as faIcons from '~/helpers/faIconLibrary'
 import { resolvePageMeta } from '~/helpers/gIPTools'
-import frApi from '~/services/fuelrats'
 import { initStore } from '~/store'
 import {
   initUserSession,
@@ -51,14 +50,6 @@ const pageMotionConfig = {
 
 @withRedux(initStore)
 class FuelRatsApp extends App {
-  constructor (props) {
-    super(props)
-
-    if (props.accessToken) {
-      frApi.defaults.headers.common.Authorization = `Bearer ${props.accessToken}`
-    }
-  }
-
   static async getInitialProps (appCtx) {
     const { Component, ctx } = appCtx
 

@@ -16,6 +16,7 @@ const clearLoginState = (draftState = initialState.session) => {
   draftState.loggedIn = false
   draftState.loggingOut = false
   draftState.userId = null
+  draftState.token = null
 }
 
 
@@ -29,13 +30,14 @@ const sessionReducer = produce((draftState, action) => {
 
   switch (type) {
     case actionTypes.session.initialize:
-      draftState.loggedIn = Boolean(payload.accessToken && !error)
+      draftState.token = payload.accessToken
       draftState.userAgent = payload.userAgent
-      draftState.error = meta?.error ?? error
       break
 
     case actionTypes.session.read:
+      draftState.error = meta?.error ?? error
       if (!isError(action)) {
+        draftState.loggedIn = true
         draftState.userId = payload.data.id
       }
       break
@@ -43,6 +45,7 @@ const sessionReducer = produce((draftState, action) => {
     case actionTypes.session.login:
       if (!isError(action)) {
         draftState.loggedIn = true
+        draftState.token = payload.access_token
       }
       break
 

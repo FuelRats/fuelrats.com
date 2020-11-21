@@ -35,5 +35,5 @@ export default function useValidityReducer (initialState = {}) {
     }).length === 0)
   }, [state])
 
-  return [isValid, dispatch]
+  return [state, isValid, dispatch]
 }

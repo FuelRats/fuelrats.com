@@ -13,10 +13,10 @@
   },
   "include": [
     "src/**/*",
-    "typings/**/*",
+    "typings/**/*"
   ],
   "exclude": [
     "node_modules",
-    "dist",
+    "dist"
   ]
 }

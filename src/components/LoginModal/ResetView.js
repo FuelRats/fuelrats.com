@@ -9,7 +9,7 @@ import { sendPasswordResetEmail } from '~/store/actions/authentication'
 
 import EmailFieldset from '../Fieldsets/EmailFieldset'
 import MessageBox from '../MessageBox'
-import { ModalFooter } from '../Modal'
+import { FooterPrimary, FooterSecondary, ModalFooter } from '../Modal'
 import { useModalContext } from '../Modal/Modal'
 import styles from './LoginModal.module.scss'
 
@@ -60,31 +60,32 @@ function ResetView (props) {
         )
       }
       <EmailFieldset
+        dark
         required
         aria-label="E-Mail"
         autoComplete="email"
         id="ResetEmail"
-        inputClassName="dark"
         name="attributes.email"
         placeholder="E-Mail" />
+
       <ModalFooter className={styles.footer}>
-        <div className={styles.secondary}>
+        <FooterSecondary className={styles.secondary}>
           <button
             className={[styles.button, 'secondary']}
             type="button"
             onClick={handleReturnClick}>
             {'Return'}
           </button>
-        </div>
+        </FooterSecondary>
 
-        <div className={styles.primary}>
+        <FooterPrimary className={styles.primary}>
           <button
             className={[styles.button, 'green']}
             disabled={!canSubmit}
             type="submit">
             {submitting ? 'Submitting...' : 'Login'}
           </button>
-        </div>
+        </FooterPrimary>
       </ModalFooter>
     </Form>
   )

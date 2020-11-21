@@ -19,6 +19,7 @@ const InputFieldset = React.forwardRef((props, forwardRef) => {
   const {
     children,
     className,
+    dark,
     displayName = 'Input',
     skipWarnings = false,
     inputClassName,
@@ -100,7 +101,7 @@ const InputFieldset = React.forwardRef((props, forwardRef) => {
           type="text"
           {...inputProps}
           ref={inputRef}
-          className={inputClassName}
+          className={[inputClassName, { dark }]}
           data-pattern-message={patternMessage}
           value={value}
           onBlur={onBlur}
@@ -113,7 +114,7 @@ const InputFieldset = React.forwardRef((props, forwardRef) => {
           valid={messages?.valid}
           validating={validating} />
         <InputSuggestions
-          className={{ [styles.hidden]: !messages?.validatedValue?.length || !messages?.hasMessages || validating || !isFocused }}
+          className={{ dark, [styles.hidden]: !messages?.validatedValue?.length || !messages?.hasMessages || validating || !isFocused }}
           messages={messages} />
       </div>
     </fieldset>
@@ -124,6 +125,7 @@ InputFieldset.displayName = 'InputFieldset'
 
 InputFieldset.propTypes = {
   'aria-label': extPropType(PropTypes.string).isRequiredIf('label', 'undefined'),
+  dark: PropTypes.bool,
   displayName: PropTypes.string,
   id: PropTypes.string.isRequired,
   label: PropTypes.node,

@@ -13,6 +13,10 @@ function ApiErrorBox (props) {
     ...messageProps
   } = props
 
+  if (!error) {
+    return null
+  }
+
   return (
     <MessageBox {...messageProps}>
       {
@@ -36,7 +40,7 @@ function ApiErrorBox (props) {
 }
 
 ApiErrorBox.propTypes = {
-  error: PropTypes.object.isRequired,
+  error: PropTypes.object,
   renderError: PropTypes.func,
 }
 

@@ -19,6 +19,10 @@
 
   backdrop-filter: blur(4px);
   pointer-events: none;
+
+  &:global(.dark) {
+    background: rgba($black-lightened, 0.95);
+  }
 }
 
 
