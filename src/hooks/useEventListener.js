@@ -15,7 +15,7 @@ function getWindow () {
  * @param {boolean} options.capture see [addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#Parameters)
  * @param {boolean} options.once see [addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#Parameters)
  * @param {boolean} options.passive see [addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#Parameters)
- * @param {EventTarget?} target EventTarget to attach the listener to. Defaults to `window`
+ * @param {object?} target EventTarget to attach the listener to. Defaults to `window`
  */
 export default function useEventListener (type, listener, options = {}, target = getWindow()) {
   const { listen = true, capture = false, once = false, passive = false } = options
