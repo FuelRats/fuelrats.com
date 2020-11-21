@@ -6,6 +6,10 @@ export const selectCurrentUserId = (state) => {
   return state.session.userId
 }
 
+export const selectSessionToken = (state) => {
+  return state.session.token
+}
+
 export const selectPageRequiresAuth = (state) => {
   return selectSession(state).pageRequiresAuth
 }

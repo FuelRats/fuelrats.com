@@ -58,7 +58,6 @@ export const login = (options) => {
       const token = action.payload.access_token
 
       Cookies.set('access_token', token, { expires: remember ? SESSION_TOKEN_LENGTH : null })
-      frApi.defaults.headers.common.Authorization = `Bearer ${token}`
 
       /* eslint-disable no-restricted-globals */
       if (location && location.search) {

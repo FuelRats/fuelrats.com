@@ -42,6 +42,7 @@ const initialState = {
     loggedIn: false,
     loggingOut: false,
     pageRequiresAuth: false,
+    token: null,
     userAgent: '',
     userId: null,
   },
