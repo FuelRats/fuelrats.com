@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import PropTypes from 'prop-types'
 import { useReducer, useRef } from 'react'
 
-import IrnputFieldset from '../InputFieldset'
+import InputFieldset from '../InputFieldset'
 import styles from './PasswordFieldset.module.scss'
 
 
@@ -12,6 +12,7 @@ import styles from './PasswordFieldset.module.scss'
 function PasswordFieldset (props) {
   const {
     children,
+    className,
     displayName = 'Password',
     onValidate,
     ...inputProps
@@ -25,10 +26,10 @@ function PasswordFieldset (props) {
   }, false)
 
   return (
-    <IrnputFieldset
+    <InputFieldset
       ref={inputRef}
       autoComplete="current-password"
-      className={styles.passwordInput}
+      className={[styles.passwordInput, className]}
       displayName={displayName}
       placeholder="Sup3r-S3cur3-P4ssw0rd"
       {...inputProps}
@@ -41,12 +42,13 @@ function PasswordFieldset (props) {
         <FontAwesomeIcon fixedWidth icon={showPassword ? 'eye-slash' : 'eye'} />
       </button>
 
-    </IrnputFieldset>
+    </InputFieldset>
   )
 }
 
 PasswordFieldset.propTypes = {
   children: PropTypes.node,
+  className: PropTypes.string,
   displayName: PropTypes.string,
   onValidate: PropTypes.func,
 }

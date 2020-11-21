@@ -9,6 +9,7 @@ import styles from './MessageBox.module.scss'
 // Component Constants
 const typeIcons = {
   info: 'exclamation-circle',
+  success: 'check-circle',
 }
 
 
@@ -30,7 +31,7 @@ function MessageBox (props) {
   }
 
   return (
-    <div className={[styles.message, styles[`${type}Type`], className]}>
+    <div className={[styles.message, styles[type], 'message', className]}>
       <FontAwesomeIcon
         className={styles.icon}
         icon={icon}
@@ -60,7 +61,7 @@ MessageBox.propTypes = {
   footer: PropTypes.node,
   icon: PropTypes.string,
   title: PropTypes.node,
-  type: PropTypes.oneOf(['error', 'warn', 'info']),
+  type: PropTypes.oneOf(['error', 'success', 'warn', 'info']),
 }
 
 

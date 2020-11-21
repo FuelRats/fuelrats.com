@@ -1,4 +1,4 @@
 export { default } from './Modal'
 
 export { default as ModalContent } from './ModalContent'
-export { default as ModalFooter } from './ModalFooter'
+export { default as ModalFooter, FooterPrimary, FooterSecondary } from './ModalFooter'

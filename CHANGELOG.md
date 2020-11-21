@@ -15,11 +15,12 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 ### ⚡ Changed
-*
+* Rewrite `ChangePasswordModal` and `DisableProfileModal` to use new form handling methods.
 
 
 ### 🐛 Fixed
-*
+* Resolve code bundling issue which caused the base bundle size to be more than double the size it should be.
+* Fix race condition that would allow certain requests to be made as someone other than the user making the request.
 
 
 ### ⚙ Tasks

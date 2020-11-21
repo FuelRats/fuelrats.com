@@ -25,7 +25,7 @@ export default function useForm (config = {}) {
 
   const [submitting, setSubmit] = useState(false)
 
-  const [isValid, dispatchValidity] = useValidityReducer({ __init: false })
+  const [{ __init }, isValid, dispatchValidity] = useValidityReducer({ __init: false })
   const [stateDelta, dispatchDelta] = useDeltaReducer(initialState)
   const [state, dispatchState] = useObjectReducer(initialState)
   const validationMethods = useRef({})
@@ -45,7 +45,7 @@ export default function useForm (config = {}) {
     [dispatchDelta, dispatchState, dispatchValidity, trackDelta],
   )
 
-  const setValidationMethod = useCallback(
+  const registerValidator = useCallback(
     (name = isRequired('name'), callback) => {
       if (typeof callback === 'function') {
         validationMethods.current[name] = callback
@@ -100,17 +100,23 @@ export default function useForm (config = {}) {
           state,
           canSubmit: Boolean(isValid && !submitting),
           isValid,
+          isInit: __init !== false,
           submitting,
           dispatchField,
           dispatchValidity,
         },
-        setValidationMethod,
+        registerValidator,
         validateAll,
         validateField,
         handleSubmit,
       }
     },
-    [dispatchField, dispatchValidity, handleSubmit, isValid, setValidationMethod, state, submitting, validateAll, validateField],
+    [
+      __init, dispatchField, dispatchValidity,
+      handleSubmit, isValid, registerValidator,
+      state, submitting, validateAll,
+      validateField,
+    ],
   )
   ctxRef.current.ctx.Form = useFormComponent(ctxRef.current)
 

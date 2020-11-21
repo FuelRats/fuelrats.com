@@ -1,46 +1,39 @@
 import { isRequired } from '@fuelrats/validation-util'
 import _get from 'lodash/get'
 import PropTypes from 'prop-types'
-import {
-  useContext,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 import useDebouncedCallback from '../useDebouncedCallback'
-import { FormContext } from './useFormComponent'
+import { useFormContext } from './useFormComponent'
+
+
 
 
 
 function useField (name = isRequired('name'), opts = {}) {
   const { onValidate, onChange, validateOpts } = opts
 
-  const context = useContext(FormContext)
-  const { setValidationMethod, validateField, ctx } = context
-  const { state, dispatchField, dispatchValidity, submitting } = ctx
+  const ctxRef = useRef(null)
+  ctxRef.current = useFormContext()
 
-  const inputValue = _get(state, name)
-  const [validating, setQueueState] = useState(false)
+  const inputValue = _get(ctxRef.current?.ctx.state, name)
+
+  // Validation state tracking.
+  const [validating, setValidatingState] = useState(false)
+
+  // Use a ref for dirtyState since it only changes on other state changes.
+  // Default state is dirty even if we're on initial mount of the form.
+  const dirtyState = useRef(true)
 
   const debouncedValidate = useDebouncedCallback(
-    async (value, curState) => {
-      await validateField(name, value, curState)
-      setQueueState(false)
+    async (value) => {
+      dirtyState.current = false
+      await ctxRef.current?.validateField(name, value, ctxRef.current?.ctx.state)
+      setValidatingState(false)
     },
-    [validateField, name],
+    [name],
     validateOpts ?? { wait: 250 },
   )
-
-  const queueValidation = useCallback((value, curState) => {
-    if (onValidate) {
-      if (!validating) {
-        setQueueState(true)
-        dispatchValidity({ name, valid: false })
-      }
-      debouncedValidate(value, curState)
-    }
-  }, [onValidate, validating, debouncedValidate, dispatchValidity, name])
 
   const handleChange = useCallback((event) => {
     onChange?.(event)
@@ -54,31 +47,53 @@ function useField (name = isRequired('name'), opts = {}) {
       value = event.target.checked
     }
 
-    dispatchField({ name, value })
+    if (typeof onValidate === 'function') {
+      // Only mark as dirty if we have a validation function to check.
+      // The validation check itself is kicked off by the form state change below.
+      dirtyState.current = true
+    }
 
-    queueValidation(value, state)
-  }, [onChange, dispatchField, name, queueValidation, state])
+    ctxRef.current?.ctx.dispatchField({ name, value })
+  }, [onChange, onValidate, name])
 
+  // Register our validation method for this field
   useEffect(
     () => {
-      if (onValidate) {
-        setValidationMethod(name, onValidate)
+      if (typeof onValidate === 'function') {
+        ctxRef.current?.registerValidator(name, onValidate)
       }
-
       return () => {
-        setValidationMethod(name, undefined)
+        ctxRef.current?.registerValidator(name, undefined)
       }
     },
-    [name, onValidate, setValidationMethod],
+    [name, onValidate],
+  )
+
+  // validate whenever the field is marked as dirty
+  useEffect(
+    () => {
+      if (typeof onValidate !== 'function' || !dirtyState.current || !ctxRef.current?.ctx.isInit) {
+        // Always set dirtyState back to false just to prevent unncessary validation attempts after form initialization.
+        dirtyState.current = false
+        return
+      }
+
+      if (!validating) {
+        setValidatingState(true)
+        ctxRef.current?.ctx.dispatchValidity({ name, valid: false })
+      }
+
+      debouncedValidate(inputValue)
+    },
+    [debouncedValidate, inputValue, name, onValidate, validating],
   )
 
   return {
     value: inputValue,
     handleChange,
-    queueValidation,
     validating,
-    submitting,
-    ctx,
+    submitting: ctxRef.current?.ctx.submitting,
+    ctx: ctxRef.current?.ctx,
   }
 }
 

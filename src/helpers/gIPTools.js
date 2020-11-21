@@ -106,7 +106,6 @@ export const configureRequest = (ctx) => {
   const { access_token: accessToken } = nextCookies(ctx)
   if (accessToken) {
     ctx.accessToken = accessToken
-    frApi.defaults.headers.common.Authorization = `Bearer ${accessToken}`
   }
 
   // If we're on the server, we should set proxy headers to retain origin IP

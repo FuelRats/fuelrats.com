@@ -3,7 +3,6 @@ import { HttpStatus } from '@fuelrats/web-util/http'
 import { isError } from 'flux-standard-action'
 
 import { configureRequest, deleteCookie } from '~/helpers/gIPTools'
-import frApi from '~/services/fuelrats'
 
 import actionTypes from '../actionTypes'
 import {
@@ -25,7 +24,6 @@ import { getUserProfile } from './user'
 export const logout = (ctx) => {
   return (dispatch, getState) => {
     deleteCookie('access_token', ctx)
-    delete frApi.defaults.headers.common.Authorization
 
     return dispatch(
       createFSA(
@@ -43,7 +41,7 @@ export const initUserSession = (ctx) => {
   return async (dispatch, getState) => {
     configureRequest(ctx)
 
-    const { accessToken } = ctx
+    const { accessToken = null } = ctx
 
     const state = getState()
     const user = withCurrentUserId(selectUserById)(state)
@@ -65,22 +63,21 @@ export const initUserSession = (ctx) => {
       },
     )
 
+    if (accessToken !== session.token) {
+      dispatch(action)
+    }
+
     if (accessToken && !user && !session.error) {
       const response = await dispatch(getUserProfile())
 
       if (isError(response)) {
-        action.error = true
-        action.meta.error = response.meta.response.status
-
         if (response.meta.response.status === HttpStatus.UNAUTHORIZED) {
           dispatch(logout(ctx))
-          action.payload.accessToken = null
           ctx.accessToken = null
         }
       }
-
-      dispatch(action)
     }
+
     return action
   }
 }

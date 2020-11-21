@@ -1,9 +1,13 @@
-import { useRef, useEffect, createContext } from 'react'
+import { useRef, useEffect, createContext, useContext } from 'react'
 
 
 
 
 const FormContext = createContext([])
+
+function useFormContext () {
+  return useContext(FormContext)
+}
 
 export default function useFormComponent (formContext) {
   const contextRef = useRef()
@@ -48,5 +52,5 @@ export default function useFormComponent (formContext) {
 
 
 export {
-  FormContext,
+  useFormContext,
 }

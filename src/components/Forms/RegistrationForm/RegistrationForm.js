@@ -1,6 +1,6 @@
 import CMDRFieldset from '~/components/Fieldsets/CMDRFieldset'
 import IRCNickFieldset from '~/components/Fieldsets/IRCNickFieldset'
-import { NewPasswordFieldset } from '~/components/Fieldsets/PasswordFieldset'
+import dynamicNewPasswordFieldset from '~/components/Fieldsets/NewPasswordFieldset'
 import PlatformFieldset from '~/components/Fieldsets/PlatformFieldset'
 import NewEmailFieldset from '~/components/Fieldsets/RegistrationEmailFieldset'
 import TermsFieldset from '~/components/Fieldsets/TermsFieldset'
@@ -18,7 +18,6 @@ const data = Object.freeze({
   },
 })
 
-
 const labels = Object.freeze({
   email: 'Email',
   password: (<>{'Password '}<small>{'This password will be used for both fuelrats.com and our IRC chat.'}</small></>),
@@ -31,6 +30,15 @@ const labels = Object.freeze({
   name: (<>{'What is your CMDR name? '}<small>{'If you have more than one, you can add the rest later.'}</small></>),
   platform: 'What platform is your CMDR on?',
 })
+
+const passwordFieldProps = {
+  required: true,
+  id: 'Password',
+  label: labels.password,
+  name: 'attributes.password',
+}
+
+const NewPasswordFieldset = dynamicNewPasswordFieldset(passwordFieldProps)
 
 
 function RegistrationForm ({ onSubmit }) {
@@ -46,11 +54,7 @@ function RegistrationForm ({ onSubmit }) {
         label={labels.email}
         name="attributes.email" />
 
-      <NewPasswordFieldset
-        required
-        id="Password"
-        label={labels.password}
-        name="attributes.password" />
+      <NewPasswordFieldset {...passwordFieldProps} />
 
       <IRCNickFieldset
         required
