@@ -105,10 +105,11 @@ Below are steps which **MUST** be followed by all Fuel Rats org members. Externa
 Work branches on the **main repo** are expected to follow this branch format:
 
 ```
-type/WEB-###/objective
+<type>[/<page>][/<WEB-###>]/<objective>
 ```
 * **type** - The type of work being done. See below for types.
-* **WEB-###** - Used when the working branch was created to satisfy a ticket on [JIRA][jira]. This should only be included if there is an associated ticket.
+* **page** - Used when the work  (e.g. `dispatch`, `paperwork`, `blog`, etc.)
+* **WEB-###** - Used when the working branch was created to satisfy a ticket on [JIRA][jira]. This is required if there is an associated ticket.
 * **objective** - a simple and breif descriptor of the work being done. words should be hyphen-delimited. e.g. `fix-paperwork`, `redesign-profiles`, `add-avatars`
 
 
@@ -117,18 +118,27 @@ type/WEB-###/objective
 
 ### Commit conventions
 
-We use an interpretation of the angular commit conventions in this project. Generally squeaking, all commits should follow this pattern:
+Generally squeaking, all commits should follow this pattern:
 ```
-type(component): commit message
+<scope>[(<component>)]: <subject>
+
+[body]
+
+[footer]
 ```
 * **type** - The type of work done in the commit. See below for types.
 * **component** - Should follow these rules:
     * If the file is a react component (in the Components directory), no suffix is needed. Just use the file name.
+      * CSS modules don't require
     * If the file is a helper file (in the helpers directory), just simply using `helpers` as the component will suffice.
     * If the file is documentation, no suffix is needed, however docs should **ALWAYS** have a commit type of `docs`.
     * All other files should generally follow the format of `filename-<best-describing-parentdir>` IE: `rescue-actions`, `index-page`, or `badge-scss`.
     * Remain as consistent in naming as possible. Use git history as precedence for the component name given to a file.
-* **commit message** - should quickly summarize changes made. If there are multiple changes, multiline commit messages are allowed to fully summarize changes made.
+* **subject** - should quickly summarize changes made. If there are multiple changes, multiline commit messages are allowed to fully summarize changes made.
+* **body** - The body can include any additional details which might be relevent to the commit. If your commit *must* contain multiple changes which are not covered by the subject, this would be the place to list them. This should be avoided, however.
+* **footer** - The footer should first contain issue references (e.g. `Fixes WEB-100`, `Issue WEB-200`), and then any additional notes.
+    *  If the working branch has a issue reference in it's name, then commit references are not required.
+    * Notes should be separated from issue references with a blank line and then prefixed with the word `NOTE: `.
 
 If in doubt about component naming, try to dive into the commit history for the file in question. Ultimately ask if you're still confused. Use your best judgement, but prefer consistency over enforcing the rules set by this document. the point of these rules is to make searching through commits easier, and consistency helps the most.
 
@@ -137,17 +147,36 @@ Commits should be as samll as possible, with exceptions for large sweeping chang
 If the commit **must** make changes to two or more **completely unrelated** files, the component name and parentheses are not required.
 
 
-### Commit types
-* `feat` - New feature.
-* `fix` - Bug fix.
-* `refactor` - A change in behavior of existing code.
+### Commit/branch types
+* `feat` - A new **user-facing** feature.
+* `fix` -  A bug fix.
+* `refactor` - A change in existing code that does not affect **user-facing** behavior.
 * `docs` - A change in project documentation.
-* `style` - Fixes which **only** fix code style and not behavior.
-* `chore` - Maintenance tasks such as updating dependencies.
+* `style` - A `refactor` which **only** fixes lint issues.
+* `revert` - Reverts a previous commit. See below for more details on formatting a revert commit.
+* `chore` - Maintenance tasks such as updating dependencies and project configs.
 
 There is also 1 additional type allowed for branches **only**
 
 * `experiment` - A new feature idea or major structural change which has a questionable outcome.
+
+### Reverting a commit
+
+Revert commits are a bit special. They should follow the format:
+
+```
+revert[(<original_component>)]: <original_subject>
+
+<original_commit_hash>
+
+<rationale>
+```
+
+* **original_component** - Component of the original commit. If none exists, this can be left out.
+* **original_subject** - Subject of the original commit. Always required.
+* **original_commit_hash** - Commit hash of the commit being reverted.
+* **rationale** - All reverts must have a rationale behind it. This can be as simple as a few words or you can write an entire dissertation on it. Go nuts!
+
 
 [fuelrats-tos]: https://fuelrats.com/terms-of-service
 [all-contributors]: https://github.com/kentcdodds/all-contributors
