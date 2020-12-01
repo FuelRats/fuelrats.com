@@ -50,7 +50,7 @@ function Verify ({ token }) {
       return (
         <div className="page-content">
           <MessageBox title="Already Verified" type="info">
-            {"Your account's E-Mail address is already verified! There's no need to verify again."}
+            {"Your e-mail address has already been verified! There's no need to verify again."}
           </MessageBox>
         </div>
       )
