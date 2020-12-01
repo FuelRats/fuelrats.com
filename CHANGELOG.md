@@ -9,7 +9,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ## [Unreleased][]
 
 ### ✨ Added
-*
+* Added a message to the verification page which appears when a user attempts to verify a e-mail twice. - [#297][]
 
 
 ### ⚡ Changed
@@ -23,7 +23,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ### ⚙ Tasks
 *
 
-
+[#297]: https://github.com/fuelrats/fuelrats.com/pull/297
 [Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.5...HEAD
 
 
