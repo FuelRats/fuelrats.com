@@ -17,13 +17,14 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 ### 🐛 Fixed
-* Change cases sorting to "last created first" on initial dispatch board load.
+* Change cases sorting to "last created first" on initial dispatch board load. - [#298][]
 
 
 ### ⚙ Tasks
 *
 
 [#297]: https://github.com/fuelrats/fuelrats.com/pull/297
+[#298]: https://github.com/fuelRats/fuelrats.com/pull/298
 [Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.5...HEAD
 
 
