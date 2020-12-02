@@ -13,7 +13,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 ### ⚡ Changed
-* 
+*
 
 
 ### 🐛 Fixed
