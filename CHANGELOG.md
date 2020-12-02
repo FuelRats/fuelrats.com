@@ -13,11 +13,11 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 ### ⚡ Changed
-* Change cases sorting to "last created first" on initial dispatch board load.
+* 
 
 
 ### 🐛 Fixed
-*
+* Change cases sorting to "last created first" on initial dispatch board load.
 
 
 ### ⚙ Tasks
