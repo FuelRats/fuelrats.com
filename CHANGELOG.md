@@ -9,7 +9,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ## [Unreleased][]
 
 ### ✨ Added
-* Added a message to the verification page which appears when a user attempts to verify a e-mail twice. - [#297][]
+*
 
 
 ### ⚡ Changed
@@ -17,18 +17,26 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 ### 🐛 Fixed
-* Change cases sorting to "last created first" on initial dispatch board load. - [#298][]
+*
 
 
 ### ⚙ Tasks
 *
 
+[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.6...HEAD
+
+
+## [2.12.6][] - 2020-12-20
+
+### ✨ Added
+* Added a message to the verification page which appears when a user attempts to verify a e-mail twice. - [#297][]
+
+### 🐛 Fixed
+* Change cases sorting to "last created first" on initial dispatch board load. - [#298][]
+
 [#297]: https://github.com/fuelrats/fuelrats.com/pull/297
 [#298]: https://github.com/fuelRats/fuelrats.com/pull/298
-[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.5...HEAD
-
-
-
+[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.5...v2.12.6
 
 
 ## [2.12.5][] - 2020-11-21
