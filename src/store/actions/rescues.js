@@ -39,6 +39,7 @@ export const getDispatchBoard = () => {
       filter: {
         status: { ne: 'closed' },
       },
+      sort: '-createdAt',
     },
     { [DISPATCH_VIEW]: true },
   )

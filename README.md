@@ -2,7 +2,7 @@
 
 [![Fuelrats.com dependencies on David DM][daviddm-badge]][daviddm]
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-15-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-16-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 [![PRs Welcome][prs-badge]][prs]
 
@@ -51,6 +51,9 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
     <td align="center"><a href="https://github.com/noctilucent-dev"><img src="https://avatars3.githubusercontent.com/u/52113097?v=4" width="80px;" alt=""/><br /><sub><b>Nathan</b></sub></a><br /><a href="https://github.com/FuelRats/fuelrats.com/commits?author=noctilucent-dev" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/apps/allcontributors"><img src="https://avatars0.githubusercontent.com/in/23186?v=4" width="80px;" alt=""/><br /><sub><b>allcontributors[bot]</b></sub></a><br /><a href="https://github.com/FuelRats/fuelrats.com/commits?author=allcontributors[bot]" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/apps/dependabot"><img src="https://avatars2.githubusercontent.com/in/29110?v=4" width="80px;" alt=""/><br /><sub><b>dependabot[bot]</b></sub></a><br /><a href="#infra-dependabot[bot]" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="http://selfdecode.com"><img src="https://avatars0.githubusercontent.com/u/108279?v=4" width="80px;" alt=""/><br /><sub><b>Alex</b></sub></a><br /><a href="https://github.com/FuelRats/fuelrats.com/commits?author=diraven" title="Code">💻</a></td>
   </tr>
 </table>
 
