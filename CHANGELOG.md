@@ -36,7 +36,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 [#297]: https://github.com/fuelrats/fuelrats.com/pull/297
 [#298]: https://github.com/fuelRats/fuelrats.com/pull/298
-[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.5...v2.12.6
+[2.12.6]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.5...v2.12.6
 
 
 ## [2.12.5][] - 2020-11-21
