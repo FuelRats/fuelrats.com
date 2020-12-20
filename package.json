@@ -1,6 +1,6 @@
 {
   "name": "fuelrats.com",
-  "version": "2.12.5",
+  "version": "2.12.6",
   "description": "The primary website of The Fuel Rats!",
   "main": "dist/server.js",
   "license": "BSD-3-Clause",
