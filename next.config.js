@@ -4,6 +4,7 @@
 /* eslint-env node */
 const crypto = require('crypto')
 const path = require('path')
+const { DefinePlugin } = require('webpack')
 
 
 
@@ -66,7 +67,6 @@ module.exports = {
   },
   webpack: (config, opt) => {
     /* Define Plugin */
-    const { DefinePlugin } = require('webpack')
     config.plugins.push(new DefinePlugin({
       $IS_DEVELOPMENT: JSON.stringify(opt.dev),
       $IS_STAGING: JSON.stringify(['develop', 'beta'].includes(GIT_BRANCH)),
