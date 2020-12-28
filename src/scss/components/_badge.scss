@@ -85,6 +85,12 @@ $pc-background-gradients:
     display: none;
   }
 
+  &.inline {
+    margin-right: 0;
+
+    font-size: 0.75em;
+  }
+
   &.platform {
     display: inline-block;
 
@@ -128,6 +134,10 @@ $pc-background-gradients:
 
   &.warn {
     background-color: $yellow-darker;
+  }
+
+  &.info {
+    background-color: $grey-darkened;
   }
 }
 
