@@ -66,8 +66,14 @@ export const selectCurrentUserHasScope = createCachedSelector(
     getScope,
   ],
   (userScopes, scope) => {
+    if (!scope) {
+      // falsy scope should be interpreted as no required scope, and threfore always true.
+      return true
+    }
+
     if (typeof scope !== 'string') {
       if (Array.isArray(scope)) {
+        // Arrays should implicity mean "all listed scopes"
         return includesAll(userScopes, scope)
       }
 
@@ -91,10 +97,15 @@ export const selectCurrentUserHasScope = createCachedSelector(
   },
 )(
   (_, props) => {
-    return (
-      typeof props.scope === 'string'
-        ? props.scope
-        : JSON.stringify(props.scope)
-    )
+    switch (typeof props.scope) {
+      case 'string':
+        return props.scope
+
+      case 'undefined':
+        return 'undefined'
+
+      default:
+        return JSON.stringify(props.scope)
+    }
   },
 )
