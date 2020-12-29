@@ -79,7 +79,7 @@
     "stylelint-order": "^4.1.0",
     "stylelint-scss": "^3.18.0",
     "webpack": "^4.44.2",
-    "worker-loader": "^3.0.6"
+    "worker-loader": "^3.0.7"
   },
   "dependencies": {
     "@fingerprintjs/fingerprintjs": "^3.0.4",

@@ -6426,7 +6426,7 @@ fsevents@~2.1.2:
     ua-parser-js: ^0.7.23
     use-immer: ^0.4.2
     webpack: ^4.44.2
-    worker-loader: ^3.0.6
+    worker-loader: ^3.0.7
     zxcvbn: ^4.4.2
   languageName: unknown
   linkType: soft
@@ -13053,7 +13053,7 @@ resolve@^1.19.0:
   languageName: node
   linkType: hard
 
-"worker-loader@npm:^3.0.6":
+"worker-loader@npm:^3.0.7":
   version: 3.0.7
   resolution: "worker-loader@npm:3.0.7"
   dependencies:
