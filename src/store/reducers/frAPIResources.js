@@ -11,6 +11,7 @@ const {
   deletesRelationship,
 } = createJSONAPIReducer('fuelrats', {
   decals: { },
+  clients: { },
   epics: { },
   groups: { },
   nicknames: { },
