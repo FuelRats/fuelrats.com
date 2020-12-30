@@ -1,5 +1,8 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
+import { useCallback } from 'react'
 
 import { formatAsEliteDateTime } from '~/helpers/formatTime'
 import { makePaperworkRoute } from '~/helpers/routeGen'
@@ -67,6 +70,11 @@ function RescueDetailsContent (props) {
   const rescuePlatform = usePlatformData(rescue)
   const rescueRats = useSelectorWithProps({ rescueId: rescue.id }, selectRenderedRatList)
 
+  const router = useRouter()
+  const handleCloseRescueDetails = useCallback(() => {
+    router.push('/dispatch')
+  }, [router])
+
   return (
     <div className={styles.rescueDetails}>
       <div className={styles.header}>
@@ -75,7 +83,20 @@ function RescueDetailsContent (props) {
           {codeRed && <span className="badge">{'CODE RED'}</span>}
           {status === 'inactive' && <span className="badge warn">{'Inactive'}</span>}
         </div>
-        <div><ElapsedTimer from={createdAt} /></div>
+        <div>
+          <ElapsedTimer from={createdAt} />
+          <button
+            readOnly
+            aria-label={`Hide detail view for rescue of ${client}`}
+            className={[styles.closeButton, 'icon']}
+            name="detail"
+            title="Close details"
+            type="button"
+            onClick={handleCloseRescueDetails}>
+            <FontAwesomeIcon fixedWidth icon="times" />
+          </button>
+        </div>
+
       </div>
       <table className={styles.body}>
         <thead>
