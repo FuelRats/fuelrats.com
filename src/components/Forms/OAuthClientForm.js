@@ -37,8 +37,9 @@ function OAuthClientForm (props) {
         placeholder="133t_h4x0r_man's client do not steal" />
 
       <InputFieldset
+        required
         id="ClientRedirectUri"
-        label="Redirect URI (optional)"
+        label="Redirect URI"
         name="attributes.redirectUri"
         placeholder="https://1337.hax0r.dev/callback"
         type="url" />
