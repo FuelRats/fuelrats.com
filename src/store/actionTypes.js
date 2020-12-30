@@ -1,3 +1,9 @@
+const clients = {
+  create: 'clients/create',
+  search: 'clients/search',
+}
+
+
 const decals = {
   read: 'decals/read',
   redeem: 'decals/redeem',
@@ -8,6 +14,7 @@ const epics = {
   read: 'epics/read',
   create: 'epics/create',
 }
+
 
 const groups = {
   read: 'groups/read',
@@ -154,6 +161,7 @@ const wordpress = {
 
 const actionTypes = {
   // API Resources
+  clients,
   decals,
   epics,
   groups,

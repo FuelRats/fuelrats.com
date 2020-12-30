@@ -46,6 +46,9 @@ const generateBuildId = () => {
 module.exports = {
   distDir: path.join('dist', 'next'),
   generateBuildId,
+  images: {
+    domains: ['static-cdn.jtvnw.net'],
+  },
   publicRuntimeConfig: {
     local: {
       publicUrl: FINAL_PUBLIC_URL,

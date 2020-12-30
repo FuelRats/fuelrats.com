@@ -9,11 +9,11 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ## [Unreleased][]
 
 ### ✨ Added
-*
+* Create developer panel on profile so devs can control their clients. - [#302][]
 
 
 ### ⚡ Changed
-*
+* Further improve message displayed when email validation token is invalid.
 
 
 ### 🐛 Fixed
@@ -21,9 +21,14 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 ### ⚙ Tasks
-*
+* Perform some preparation steps for Webpack 5 and Yarn PnP.
+* Upgrade to Yarn 2 (but not PnP, that comes later when the bugs are solved).
 
+[#302]: https://github.com/fuelRats/fuelrats.com/pull/302
 [Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.6...HEAD
+
+
+
 
 
 ## [2.12.6][] - 2020-12-20
@@ -37,6 +42,9 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 [#297]: https://github.com/fuelrats/fuelrats.com/pull/297
 [#298]: https://github.com/fuelRats/fuelrats.com/pull/298
 [2.12.6]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.5...v2.12.6
+
+
+
 
 
 ## [2.12.5][] - 2020-11-21

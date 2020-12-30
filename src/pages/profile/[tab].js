@@ -3,6 +3,7 @@ import Router from 'next/router'
 import React from 'react'
 
 import { authenticated } from '~/components/AppLayout'
+import DeveloperPanel from '~/components/DeveloperPanel'
 import FirstLoginModal from '~/components/FirstLoginModal'
 import ProfileHeader from '~/components/ProfileHeader'
 import TabbedPanel from '~/components/TabbedPanel'
@@ -28,6 +29,9 @@ class Profile extends React.Component {
     Router.replace(`/profile/${newTab}`)
   }
 
+  _handlePermissionError = () => {
+    Router.replace('/profile/overview')
+  }
 
 
 
@@ -64,6 +68,7 @@ class Profile extends React.Component {
             activeTab={tab || 'overview'}
             name="User Tabs"
             tabs={Profile.tabs}
+            onPermissionError={this._handlePermissionError}
             onTabClick={this._handleTabClick} />
         </div>
 
@@ -86,14 +91,26 @@ class Profile extends React.Component {
   static get tabs () {
     return {
       overview: {
-        component: (<UserOverview />),
+        render: () => {
+          return (<UserOverview />)
+        },
         title: 'Overview',
         pageTitle: 'Profile',
       },
       rats: {
-        component: (<UserRatsPanel />),
+        render: () => {
+          return (<UserRatsPanel />)
+        },
         title: 'Rats',
         pageTitle: 'Your Rats',
+      },
+      developer: {
+        render: () => {
+          return (<DeveloperPanel />)
+        },
+        title: 'Developer',
+        pageTitle: 'Developer',
+        permission: 'developer.read',
       },
     }
   }
