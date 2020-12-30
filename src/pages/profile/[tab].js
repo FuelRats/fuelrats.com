@@ -110,7 +110,7 @@ class Profile extends React.Component {
         },
         title: 'Developer',
         pageTitle: 'Developer',
-        permission: 'developer.write',
+        permission: 'developer.read',
       },
     }
   }
