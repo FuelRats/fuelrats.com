@@ -10,6 +10,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 ### ✨ Added
 * Create developer panel on profile so devs can control their clients. - [#302][]
+* Added closing button to RescueDetailsContent so rats and dispatch can close the details on the last case of the board once it has been cleared. - [#303][]
 
 
 ### ⚡ Changed
