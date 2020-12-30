@@ -38,7 +38,7 @@ function MessageBox (props) {
         size="lg" />
       {
         title && (
-          <h5 className={styles.section}>{title}</h5>
+          <h5 className={styles.title}>{title}</h5>
         )
       }
       <div className={styles.section}>

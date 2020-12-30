@@ -1,8 +1,57 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+
+import useSelectorWithProps from '~/hooks/useSelectorWithProps'
+import { selectCurrentUserHasScope } from '~/store/selectors'
 
 
 
+function TabHandle (props) {
+  const {
+    activeTab,
+    name,
+    tab,
+    ...itemProps
+  } = props
 
+  const hasPermission = useSelectorWithProps({ scope: tab.permission }, selectCurrentUserHasScope)
+
+  return hasPermission
+    ? (
+      <li
+        {...itemProps}
+        className={['tab', { active: name === activeTab }]}
+        name={name}>
+        <span className="tab-inner">
+          {tab.title}
+        </span>
+      </li>
+    )
+    : null
+}
+
+function TabPanel (props) {
+  const {
+    onPermissionError,
+    tab,
+  } = props
+
+  const hasPermission = useSelectorWithProps({ scope: tab.permission }, selectCurrentUserHasScope)
+
+  useEffect(() => {
+    if (!hasPermission) {
+      onPermissionError(tab.permission)
+    }
+  }, [tab.permission, onPermissionError, hasPermission])
+
+
+  return hasPermission
+    ? (
+      <div className="tab-pane">
+        {tab.render()}
+      </div>
+    )
+    : null
+}
 
 class TabbedPanel extends React.Component {
   /***************************************************************************\
@@ -14,12 +63,14 @@ class TabbedPanel extends React.Component {
   }
 
   _renderPane = () => {
-    const { tabs, activeTab } = this.props
+    const {
+      activeTab,
+      onPermissionError,
+      tabs,
+    } = this.props
 
     return (
-      <div className="tab-pane">
-        {tabs[activeTab].component}
-      </div>
+      <TabPanel tab={tabs[activeTab]} onPermissionError={onPermissionError} />
     )
   }
 
@@ -27,16 +78,13 @@ class TabbedPanel extends React.Component {
     const { activeTab } = this.props
 
     return (
-      <li
+      <TabHandle
         key={key}
-        className={['tab', { active: key === activeTab }]}
+        activeTab={activeTab}
         name={key}
+        tab={tab}
         onClick={this._handleTabClick}
-        onKeyPress={this._handleTabClick}>
-        <span className="tab-inner">
-          {tab.title}
-        </span>
-      </li>
+        onKeyPress={this._handleTabClick} />
     )
   }
 
