@@ -51,6 +51,12 @@
   white-space: pre-line;
 }
 
+.title {
+  composes: section;
+
+  display: block;
+}
+
 .footer {
   display: inline-block;
 

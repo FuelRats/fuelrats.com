@@ -9,11 +9,12 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ## [Unreleased][]
 
 ### ✨ Added
-*
+* Create developer panel on profile so devs can control their clients. - [#302][]
+* Added closing button to RescueDetailsContent so rats and dispatch can close the details on the last case of the board once it has been cleared. - [#303][]
 
 
 ### ⚡ Changed
-*
+* Further improve message displayed when email validation token is invalid.
 
 
 ### 🐛 Fixed
@@ -21,10 +22,28 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 ### ⚙ Tasks
-*
+* Perform some preparation steps for Webpack 5 and Yarn PnP.
+* Upgrade to Yarn 2 (but not PnP, that comes later when the bugs are solved).
+
+[#303]: https://github.com/fuelRats/fuelrats.com/pull/303
+[#302]: https://github.com/fuelRats/fuelrats.com/pull/302
+[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.6...HEAD
 
 
-[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.5...HEAD
+
+
+
+## [2.12.6][] - 2020-12-20
+
+### ✨ Added
+* Added a message to the verification page which appears when a user attempts to verify a e-mail twice. - [#297][]
+
+### 🐛 Fixed
+* Change cases sorting to "last created first" on initial dispatch board load. - [#298][]
+
+[#297]: https://github.com/fuelrats/fuelrats.com/pull/297
+[#298]: https://github.com/fuelRats/fuelrats.com/pull/298
+[2.12.6]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.5...v2.12.6
 
 
 

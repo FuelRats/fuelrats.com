@@ -1,4 +1,4 @@
-import { dependencies } from '../../package.json'
+import pkg from '../../package.json'
 
 
 
@@ -62,7 +62,7 @@ function Acknowledgements () {
           <ul className="text-mono">
             {
               Object.keys({
-                ...dependencies,
+                ...pkg.dependencies,
               }).map((dep) => {
                 return (
                   <li key={dep}><a href={`https://www.npmjs.com/package/${dep}`} rel="noopener noreferrer" target="_blank">{dep}</a></li>

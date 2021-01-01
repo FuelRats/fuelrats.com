@@ -43,7 +43,7 @@ class ProfileHeader extends React.Component {
       this.props.groups && (
         this.props.groups.map((group) => {
           return (
-            <li key={group.id} className={['badge', group.attributes.name]}>
+            <li key={group.id} className={['badge info', group.attributes.name]}>
               {group.attributes.name}
             </li>
           )

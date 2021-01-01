@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import Router from 'next/router'
 import { useState, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
@@ -7,8 +8,10 @@ import MessageBox from '~/components/MessageBox'
 import ApiErrorBox from '~/components/MessageBox/ApiErrorBox'
 import getResponseError from '~/helpers/getResponseError'
 import { pageRedirect } from '~/helpers/gIPTools'
+import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { validatePasswordResetToken, resetPassword } from '~/store/actions/authentication'
 import { verifyEmailToken } from '~/store/actions/verify'
+import { selectCurrentUserHasScope } from '~/store/selectors'
 
 
 
@@ -16,7 +19,10 @@ import { verifyEmailToken } from '~/store/actions/verify'
 
 const RESET_SUCCESS_REDIRECT_WAIT = 6000 // 6 Seconds
 
-
+const TokenType = Object.freeze({
+  RESET: 'reset',
+  EMAIL: 'email',
+})
 
 
 
@@ -24,6 +30,8 @@ function Verify ({ token }) {
   const [{ submitted, error }, setSubmitState] = useState({ submitted: false })
 
   const dispatch = useDispatch()
+
+  const userIsVerified = useSelectorWithProps({ scope: 'users.verified' }, selectCurrentUserHasScope)
 
   const onSubmit = useCallback(async (formData) => {
     const response = await dispatch(resetPassword(token.value, formData))
@@ -39,11 +47,39 @@ function Verify ({ token }) {
   }, [dispatch, token.value])
 
   if (!token.valid) {
+    let message = 'The provided token is invalid, which probably means it has expired. Please try resetting your password again. If the problem persists,'
+
+
+    if (token.type === TokenType.EMAIL) {
+      if (userIsVerified) {
+        return (
+          <div className="page-content">
+            <MessageBox title="Already Verified" type="info">
+              {"Your e-mail address has already been verified! There's no need to verify again."}
+            </MessageBox>
+          </div>
+        )
+      }
+
+      message = (
+        <>
+          {"The provided token is invalid. This probably means you've already verified your e-mail address."}
+          {' Please try checking your '}
+          <Link href="/profile/overview"><a>{'profile'}</a></Link>
+          {' for a '}
+          <span className="badge info inline">{'verified'}</span>
+          {' badge next to your avatar.'}
+          <br />
+          <br />
+          {"If you're still unverified,"}
+        </>
+      )
+    }
+
     return (
       <div className="page-content">
         <MessageBox title="Invalid Token">
-          {token.type === 'reset' && 'Your token is invalid, which probably just means it expired. Please try resetting your password again. If the problem persists, please'}
-          {token.type !== 'reset' && 'The provided token is invalid. Please'}
+          {message}
           {' contact us via email at: '}
           <a href="mailto:support@fuelrats.com">{'support@fuelrats.com'}</a>
           {
@@ -96,12 +132,12 @@ Verify.getInitialProps = async (ctx) => {
   let response = null
 
   switch (type) {
-    case 'reset':
+    case TokenType.RESET:
       response = await store.dispatch(validatePasswordResetToken(token))
       destination = null
       break
 
-    case 'email':
+    case TokenType.EMAIL:
       response = await store.dispatch(verifyEmailToken(token))
       destination = `/profile/overview?fl=${change === 'true' ? '0' : '1'}`
       break
@@ -128,9 +164,26 @@ Verify.getInitialProps = async (ctx) => {
 }
 
 Verify.getPageMeta = ({ query }) => {
+  let title = ''
+
+  switch (query?.type) {
+    case TokenType.RESET:
+      title = 'Reset Password'
+      break
+
+    case TokenType.EMAIL:
+      title = 'Verification'
+      break
+
+    default:
+      title = 'Error'
+      break
+  }
+
+
   return {
     className: 'verify-page',
-    title: query?.type === 'reset' ? 'Reset Password' : 'Verification',
+    title,
   }
 }
 

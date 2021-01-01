@@ -6,6 +6,8 @@ const initialState = {
     total: null,
   },
 
+  clients: {},
+
   decals: {},
 
   dispatch: {

@@ -5,7 +5,7 @@ import RegistrationForm, { RegistrationErrorBox } from '~/components/Forms/Regis
 import MessageBox from '~/components/MessageBox'
 import getResponseError from '~/helpers/getResponseError'
 import useMergeReducer from '~/hooks/useMergeReducer'
-import { register } from '~/store/actions/authentication'
+import { login, register } from '~/store/actions/authentication'
 import { resendVerificationEmail } from '~/store/actions/verify'
 
 
@@ -21,8 +21,20 @@ function Register () {
     async (data) => {
       const response = await dispatch(register(data))
 
+      const error = getResponseError(response)
+
+      if (!error) {
+        await dispatch(login({
+          remember: false,
+          data: {
+            password: data.attributes.password,
+            username: data.attributes.email,
+          },
+        }))
+      }
+
       setSubmitState({
-        error: getResponseError(response),
+        error,
         data,
       })
     },

@@ -181,6 +181,30 @@
       "contributions": [
         "infra"
       ]
+    },
+    {
+      "login": "diraven",
+      "name": "Alex",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/108279?v=4",
+      "profile": "http://selfdecode.com",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "Master-Guy",
+      "name": "Master-Guy",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/566429?v=4",
+      "profile": "https://github.com/Master-Guy",
+      "contributions": [
+        "code"
+      ]
     }
+  ],
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true,
+  "files": [
+    "README.md"
   ]
 }
