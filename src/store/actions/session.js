@@ -1,11 +1,13 @@
-import { createFSA } from '@fuelrats/web-util/actions'
+import { createFSA, createAxiosFSA } from '@fuelrats/web-util/actions'
 import { HttpStatus } from '@fuelrats/web-util/http'
 import { isError } from 'flux-standard-action'
 
 import { configureRequest, deleteCookie } from '~/helpers/gIPTools'
+import frApi from '~/services/fuelrats'
 
 import actionTypes from '../actionTypes'
 import {
+  selectSessionToken,
   selectPageRequiresAuth,
   selectSession,
   selectUserById,
@@ -22,8 +24,21 @@ import { getUserProfile } from './user'
  * @returns {Function} Redux action thunk
  */
 export const logout = (ctx) => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     deleteCookie('access_token', ctx)
+
+    const token = selectSessionToken(getState())
+
+    await dispatch(createAxiosFSA(
+      actionTypes.oauth.authorize.delete,
+      await frApi.request({
+        url: '/oauth2/revoke',
+        method: 'post',
+        data: {
+          token,
+        },
+      }),
+    ))
 
     return dispatch(
       createFSA(

@@ -34,6 +34,12 @@ const configureProxies = (koaServer, env) => {
     target: env.api.url,
   }))
 
+  koaServer.use(createProxyWithDefaults('/api/oauth2/revoke', {
+    auth: `${env.api.clientId}:${env.api.clientSecret}`,
+    rewrite: stripPathSegment('api'),
+    target: env.api.url,
+  }))
+
   koaServer.use(createProxyWithDefaults('/api', {
     rewrite: stripPathSegment('api'),
     target: env.api.url,
