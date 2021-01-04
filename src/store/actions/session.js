@@ -26,10 +26,11 @@ import { getUserProfile } from './user'
 export const logout = (ctx) => {
   return async (dispatch, getState) => {
     deleteCookie('access_token', ctx)
+    const curState = getState()
 
-    const token = selectSessionToken(getState())
+    const token = selectSessionToken(curState)
 
-    await dispatch(createAxiosFSA(
+    dispatch(createAxiosFSA(
       actionTypes.oauth.authorize.delete,
       await frApi.request({
         url: '/oauth2/revoke',
@@ -44,7 +45,7 @@ export const logout = (ctx) => {
       createFSA(
         actionTypes.session.logout,
         {
-          waitForDestroy: Boolean(selectPageRequiresAuth(getState())),
+          waitForDestroy: Boolean(selectPageRequiresAuth(curState)),
         },
       ),
     )

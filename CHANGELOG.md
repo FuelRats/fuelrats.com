@@ -15,6 +15,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 ### ⚡ Changed
 * Further improve message displayed when email validation token is invalid.
+* Logging out also removes your access token through the API, so your token cannot be used anywhere anymore. - [#305][]
 
 
 ### 🐛 Fixed
@@ -25,6 +26,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Perform some preparation steps for Webpack 5 and Yarn PnP.
 * Upgrade to Yarn 2 (but not PnP, that comes later when the bugs are solved).
 
+[#305]: https://github.com/fuelRats/fuelrats.com/pull/305
 [#303]: https://github.com/fuelRats/fuelrats.com/pull/303
 [#302]: https://github.com/fuelRats/fuelrats.com/pull/302
 [Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.6...HEAD
