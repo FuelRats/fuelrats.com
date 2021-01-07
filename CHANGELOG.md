@@ -16,19 +16,22 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ### ⚡ Changed
 * Further improve message displayed when email validation token is invalid.
 * Logging out also removes your access token through the API, so your token cannot be used anywhere anymore. - [#305][]
+* Improve application stability by using a real non-value in key places. [#306][]
 
 
 ### 🐛 Fixed
-*
+* Decal panel will now properly allow multiple decal redemptions. - [#306][]
+* Fixed dispatch page crash that could occur due to abnormal rescue object states. - [#306][]
 
 
 ### ⚙ Tasks
 * Perform some preparation steps for Webpack 5 and Yarn PnP.
 * Upgrade to Yarn 2 (but not PnP, that comes later when the bugs are solved).
 
-[#305]: https://github.com/fuelRats/fuelrats.com/pull/305
-[#303]: https://github.com/fuelRats/fuelrats.com/pull/303
 [#302]: https://github.com/fuelRats/fuelrats.com/pull/302
+[#303]: https://github.com/fuelRats/fuelrats.com/pull/303
+[#305]: https://github.com/fuelRats/fuelrats.com/pull/305
+[#306]: https://github.com/fuelRats/fuelrats.com/pull/306
 [Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.6...HEAD
 
 

@@ -27,22 +27,22 @@ export const getUserId = (_, props) => {
 
 
 export const selectUserById = (state, props = {}) => {
-  return state.users[props.userId] || null
+  return state.users[props.userId] ?? undefined
 }
 
 export const selectUserRatsRelationship = (state, props) => {
-  return selectUserById(state, props)?.relationships.rats?.data ?? null
+  return selectUserById(state, props)?.relationships.rats?.data ?? undefined
 }
 
 export const selectUserDisplayRatRelationship = (state, props) => {
-  return selectUserById(state, props)?.relationships.displayRat?.data ?? null
+  return selectUserById(state, props)?.relationships.displayRat?.data ?? undefined
 }
 
 export const selectAvatarByUserId = (state, props) => {
   const user = selectUserById(state, props)
 
   if (!user) {
-    return null
+    return undefined
   }
 
   return user.attributes.image ? `/api/users/${user.id}/avatar` : `/avatars/${props.size ?? AVATAR_DEFAULT_SIZE}/${user.id}`

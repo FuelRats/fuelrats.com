@@ -1,6 +1,6 @@
-import { createSelector } from 'reselect'
+import { createCachedSelector } from 're-reselect'
 
-import { selectUserById } from './users'
+import { getUserId, selectUserById } from './users'
 
 
 
@@ -16,7 +16,7 @@ export const selectGroupById = (state, { groupId }) => {
 }
 
 
-export const selectGroupsByUserId = createSelector(
+export const selectGroupsByUserId = createCachedSelector(
   [selectUserById, selectGroups],
   (user, groups) => {
     if (user) {
@@ -26,4 +26,4 @@ export const selectGroupsByUserId = createSelector(
     }
     return []
   },
-)
+)(getUserId)
