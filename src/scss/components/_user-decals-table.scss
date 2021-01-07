@@ -35,8 +35,11 @@
     }
   }
 
-  .redeem,
-  .loading {
-    padding-bottom: 1rem;
+  .redeem {
+    float: right;
+
+    span {
+      padding-right: 1rem;
+    }
   }
 }
