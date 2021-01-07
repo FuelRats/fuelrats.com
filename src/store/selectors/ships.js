@@ -1,6 +1,6 @@
-import { createSelector } from 'reselect'
+import { createCachedSelector } from 're-reselect'
 
-import { selectRatById } from './rats'
+import { getRatId, selectRatById } from './rats'
 
 
 
@@ -16,11 +16,11 @@ export const selectShipById = (state, { shipId }) => {
 }
 
 
-export const selectShipsByRatId = createSelector(
+export const selectShipsByRatId = createCachedSelector(
   [selectRatById, selectShips],
   (rat, ships) => {
     return rat?.relationships.ships.data?.map(({ id }) => {
       return ships[id]
-    }) ?? null
+    }) ?? undefined
   },
-)
+)(getRatId)
