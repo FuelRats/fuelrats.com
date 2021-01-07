@@ -9,6 +9,8 @@ import {
 } from '~/store/selectors'
 
 import DecalRow from './DecalRow'
+import styles from './UserDecalPanel.module.scss'
+
 
 function UserDetailsPanel () {
   const [redeeming, setRedeeming] = useState(false)
@@ -29,14 +31,14 @@ function UserDetailsPanel () {
   }, [dispatch, userId])
 
   return (
-    <div className="panel user-decals">
+    <div className="panel">
       <header>
         {'Decal'}
         <div className="controls">
           {'Redeemed'}
         </div>
       </header>
-      <div className="panel-content">
+      <div className={styles.panelContent}>
         {
           Boolean(decals.length) && decals.map((decal) => {
             return (<DecalRow key={decal.id} decal={decal} />)
@@ -44,12 +46,12 @@ function UserDetailsPanel () {
           }
         {
           Boolean(!decals.length && !redeemable) && (
-            <div className="no-decal">{"Sorry, you're not eligible for a decal."}</div>
+            <div className={styles.noDecal}>{"Sorry, you're not eligible for a decal."}</div>
           )
         }
         {
           Boolean(redeemable) && (
-            <div className="redeem">
+            <div className={styles.redeem}>
               <span>{"You're eligible for a decal but you haven't redeemed it yet!"}</span>
               <button
                 disabled={redeeming}

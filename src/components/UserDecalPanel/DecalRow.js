@@ -4,7 +4,7 @@ import { useReducer } from 'react'
 import { formatAsEliteDate } from '~/helpers/formatTime'
 import reduceToggle from '~/hooks/reducers/reduceToggle'
 
-
+import styles from './UserDecalPanel.module.scss'
 
 
 
@@ -16,11 +16,11 @@ function DecalRow ({ decal }) {
   }
 
   return (
-    <div key={decal.id} className="decal">
-      <div className="code">
+    <div key={decal.id} className={styles.decal}>
+      <div className={styles.decalCode}>
         <button
           aria-label="Show decal code"
-          className="icon toggle"
+          className={['icon', styles.toggle]}
           name={decal.id}
           type="button"
           onClick={handleVisibility}>
@@ -30,9 +30,11 @@ function DecalRow ({ decal }) {
           visible
             ? decal.attributes.code
             : `•••••-•••••-•••••-•••••-${decal.attributes.code.substring(24)}`
-          }
+        }
       </div>
-      <div className="claimed-at">{formatAsEliteDate(decal.attributes.claimedAt)}</div>
+      <div className={styles.decalClaimedAt}>
+        {formatAsEliteDate(decal.attributes.claimedAt)}
+      </div>
     </div>
   )
 }
