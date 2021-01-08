@@ -87,6 +87,7 @@ const oauth = {
   authorize: {
     read: 'oauth/authorize/read',
     create: 'oauth/authorize/create',
+    delete: 'oauth/authorize/delete',
   },
 }
 

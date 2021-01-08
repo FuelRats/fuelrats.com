@@ -36,7 +36,7 @@ export const selectRescueRatRelationship = (state, props) => {
   const rescue = selectRescueById(state, props)
 
   if (!rescue || !rescue.relationships?.rats) {
-    return null
+    return undefined
   }
 
   return rescue.relationships.rats.data ?? []
@@ -52,9 +52,9 @@ export const selectRatsByRescueId = createCachedSelector(
           acc.push(rat)
         }
         return acc
-      }, []) ?? null
+      }, []) ?? undefined
     }
-    return null
+    return undefined
   },
 )(getRescueId)
 
@@ -102,7 +102,7 @@ export const selectCurrentUserCanEditRescue = createCachedSelector(
 )(getRescueId)
 
 export const selectRescueUnidentifiedRats = (state, props) => {
-  return selectRescueById(state, props)?.attributes.unidentifiedRats ?? null
+  return selectRescueById(state, props)?.attributes.unidentifiedRats ?? undefined
 }
 
 export const createSelectRenderedRatList = (renderer) => {

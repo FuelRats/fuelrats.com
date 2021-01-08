@@ -8,7 +8,9 @@ import { selectUserById } from './users'
 
 
 
-
+export const getRatId = (_, { ratId } = {}) => {
+  return ratId
+}
 
 export const selectRats = (state) => {
   return state.rats
@@ -25,7 +27,7 @@ export const selectRatsByUserId = createSelector(
   (user, rats) => {
     return user?.relationships.rats.data?.map(({ id }) => {
       return rats[id]
-    }) || null
+    }) ?? undefined
   },
 )
 
@@ -34,12 +36,12 @@ export const selectDisplayRatIdByUserId = createSelector(
   [selectUserById],
   (user) => {
     if (!user) {
-      return null
+      return undefined
     }
 
     return user.relationships.displayRat?.data?.id
       ?? user.relationships.rats?.data[0]?.id
-      ?? null
+      ?? undefined
   },
 )
 

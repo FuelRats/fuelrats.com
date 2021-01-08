@@ -47,7 +47,7 @@ export const selectAuthorByBlogId = createSelector(
   [selectBlogById, selectBlogAuthors],
   (blog, authors) => {
     if (!blog?.author) {
-      return null
+      return undefined
     }
 
     return authors[blog.author] || {
