@@ -5,5 +5,7 @@
 dist
 deploy_dist
 node_modules
-.vscode/blueprints
 .yarn
+
+# Templates
+.vscode/blueprints
