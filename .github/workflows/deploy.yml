@@ -32,17 +32,19 @@ jobs:
         id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: yarnpkg-${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-
+            yarnpkg-${{ runner.os }}-
+            yarnpkg-
 
       - name: Load Next.js cache
         uses: actions/cache@v2
         with:
           path: ${{ github.workspace }}/dist/next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}
+          key: nextjs-${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-nextjs-
+            nextjs-${{ runner.os }}-
+            nextjs-
 
       - name: Install dependencies
         run: yarn install --immutable
@@ -109,9 +111,10 @@ jobs:
         id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: yarnpkg-${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-
+            yarnpkg-${{ runner.os }}-
+            yarnpkg-
 
       - name: Install dependencies
         run: yarn install --immutable
