@@ -21,6 +21,7 @@ function CopyToClipboard (props) {
     className,
     children,
     text,
+    ...restProps
   } = props
   const [copied, setCopied] = useState(false)
   const timeoutRef = useRef()
@@ -47,7 +48,7 @@ function CopyToClipboard (props) {
 
   return (
     <CopyComponent text={String(text)} onCopy={handleCopy}>
-      <Component aria-label={`Click to copy: ${text}`} className={[styles.copyToClipboard, className, { [styles.copied]: copied }]} role="button">
+      <Component {...restProps} aria-label={`Click to copy: ${text}`} className={[styles.copyToClipboard, className, { [styles.copied]: copied }]} role="button">
         {children}
         {
           doHint && (
