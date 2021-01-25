@@ -55,7 +55,7 @@ class FuelRatsWebsite extends Document {
         <body>
           <noscript>{'Javascript is required to view this site, silly!'}</noscript>
 
-          <Main className="next-wrapper" />
+          <Main />
 
           <NextScript nonce={nonce} />
 
