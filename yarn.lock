@@ -1614,14 +1614,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fuelrats/stylelint-config@npm:^1.2.2":
-  version: 1.2.2
-  resolution: "@fuelrats/stylelint-config@npm:1.2.2"
+"@fuelrats/stylelint-config@npm:^1.2.3":
+  version: 1.2.3
+  resolution: "@fuelrats/stylelint-config@npm:1.2.3"
   peerDependencies:
     stylelint: ^13.8
     stylelint-order: ^4.0
     stylelint-scss: ^3.17
-  checksum: 14f4362d7d1163880c9401a25a2c7ce881cd7987f13e100d4d9843344fb062faaf58104a990c1e4b00e91cf41c140226e053fcf9f628a597d76ceae337d5efce
+  checksum: 8eab8563568df541d07e97dd30ccf29de2e78cf02ad4ac3728a89f8155d1633d8101359fb17087cdda7ded7ded34f7f93022591f05998c90b3d0d0a7ef130f8b
   languageName: node
   linkType: hard
 
@@ -5948,7 +5948,7 @@ fsevents@~2.1.2:
     "@fuelrats/eslint-config-react": ^2.3.0
     "@fuelrats/eslint-plugin": ^2.3.0
     "@fuelrats/koa-adorable-avatars": ^0.1.2
-    "@fuelrats/stylelint-config": ^1.2.2
+    "@fuelrats/stylelint-config": ^1.2.3
     "@fuelrats/validation-util": ^1.2.0
     "@fuelrats/web-util": ^0.3.2
     "@koa/router": ^10.0.0

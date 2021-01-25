@@ -40,7 +40,7 @@
     "@fuelrats/eslint-config": "^2.3.0",
     "@fuelrats/eslint-config-react": "^2.3.0",
     "@fuelrats/eslint-plugin": "^2.3.0",
-    "@fuelrats/stylelint-config": "^1.2.2",
+    "@fuelrats/stylelint-config": "^1.2.3",
     "@rollup/plugin-babel": "^5.2.2",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.1.0",
