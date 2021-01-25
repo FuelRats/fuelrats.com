@@ -12,6 +12,7 @@ export {
   faClock,
   faCodeBranch,
   faEllipsisH,
+  faEllipsisV,
   faExclamationTriangle,
   faExclamationCircle,
   faEye,
