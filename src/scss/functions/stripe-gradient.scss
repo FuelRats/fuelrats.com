@@ -1,19 +1,20 @@
-@function stripe-gradient ($angle, $colorBase, $colorStripe, $stripeCount, $stripeWidth) {
-
+@function stripe-gradient ($angle, $base-color, $stripe-color, $stripe-count, $stripe-width) {
+  $total-stripes: $stripe-count * 2;
   $stops: ();
 
-  @for $idx from 1 through ($stripeCount * 2) {
-    @if $idx == ($stripeCount * 2) {
-      $stops: append($stops, $colorBase #{($idx - 1) * $stripeWidth}px 100%, 'comma');
+  @for $idx from 1 through $total-stripes {
+    $start-pos: (($idx - 1) * $stripe-width);
+    $end-pos: ($idx * $stripe-width);
+    $stripe: $stripe-color $start-pos $end-pos;
+
+    @if $idx == $total-stripes {
+      $stripe: $base-color $start-pos 100%;
     } @else if ($idx % 2) == 0 {
-      $stops: append($stops, $colorBase #{($idx - 1) * $stripeWidth}px #{$idx * $stripeWidth}px, 'comma');
-    } @else {
-      $stops: append($stops, $colorStripe #{($idx - 1) * $stripeWidth}px #{$idx * $stripeWidth}px, 'comma');
+      $stripe: $base-color $start-pos $end-pos;
     }
+
+    $stops: append($stops, $stripe, 'comma');
   }
 
-  @return linear-gradient(
-    $angle,
-    #{$stops}
-  );
+  @return linear-gradient($angle, $stops);
 }
