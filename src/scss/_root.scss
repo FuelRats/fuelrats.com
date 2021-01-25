@@ -33,7 +33,6 @@ body {
   line-height: 2;
 
   /* stylelint-disable selector-id-pattern */
-  .next-wrapper,
   #__next {
     height: 100%;
 
@@ -42,10 +41,6 @@ body {
   /* stylelint-enable selector-id-pattern */
   > div {
     flex-grow: 1;
-
-    &:not([id]):not([class]) {
-      display: none;
-    }
   }
 
   > #ModalContainer {
