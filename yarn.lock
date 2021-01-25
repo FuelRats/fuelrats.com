@@ -3865,7 +3865,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"color-name@npm:^1.0.0, color-name@npm:~1.1.4":
+"color-name@npm:^1.0.0, color-name@npm:^1.1.4, color-name@npm:~1.1.4":
   version: 1.1.4
   resolution: "color-name@npm:1.1.4"
   checksum: 3e1c9a4dee12eada307436f61614dd11fe300469db2b83f80c8b7a7cd8a1015f0f18dd13403f018927b249003777ff60baba4a03c65f12e6bddc0dfd9642021f
@@ -6006,6 +6006,7 @@ fsevents@~2.1.2:
     next-redux-wrapper: 5.0.0
     nprogress: ^0.2.0
     postcss: ^8.2.4
+    postcss-color-functional-notation: ^3.0.2
     postcss-easy-import: ^3.0.0
     postcss-flexbugs-fixes: ^5.0.2
     postcss-preset-env: ^6.7.0
@@ -6725,6 +6726,13 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+"ip-regex@npm:^4.1.0":
+  version: 4.3.0
+  resolution: "ip-regex@npm:4.3.0"
+  checksum: 4f44f34dcfe5cfae3b79bac4b25bec81ea007c24a66a30a3a17d01eebde4fa98bb531f207590ee16e1e4721b4f8ad12f6a64ed9f49bcb4587ff13ebb7cc984a5
+  languageName: node
+  linkType: hard
+
 "ip6addr@npm:^0.2.3":
   version: 0.2.3
   resolution: "ip6addr@npm:0.2.3"
@@ -7062,6 +7070,15 @@ fsevents@~2.1.2:
   version: 1.0.0
   resolution: "is-typedarray@npm:1.0.0"
   checksum: 4e21156e7360a5916eded35c5938adf6278299a8055640864eebb251e4351cd605beccddf9af27477e19f753d453412fe0c21379bb54b55cfdf5add263076959
+  languageName: node
+  linkType: hard
+
+"is-url-superb@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "is-url-superb@npm:3.0.0"
+  dependencies:
+    url-regex: ^5.0.0
+  checksum: 91c0c1e3ac8c70fd2786bd5c3ca25c7d574974616dc30755f74d8f6adc9a8d26ceb140930803fa9c303a16bcbac9b0a5ad23c41fcedd633ac7ed4ec19f7439c3
   languageName: node
   linkType: hard
 
@@ -9098,6 +9115,16 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+"postcss-color-functional-notation@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "postcss-color-functional-notation@npm:3.0.2"
+  dependencies:
+    postcss: ^7.0.27
+    postcss-values-parser: ^3.2.0
+  checksum: b150c6cd6c60c8fb8acc399f8b172fe4a43b750fc521a1d310a7e08c35401e63e0ccca720d0e02e663dfbef0edf5a4b84ce9f5054b71705e4c23cce56aae8c64
+  languageName: node
+  linkType: hard
+
 "postcss-color-gray@npm:^5.0.0":
   version: 5.0.0
   resolution: "postcss-color-gray@npm:5.0.0"
@@ -9614,6 +9641,18 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+"postcss-values-parser@npm:^3.2.0":
+  version: 3.2.1
+  resolution: "postcss-values-parser@npm:3.2.1"
+  dependencies:
+    color-name: ^1.1.4
+    is-url-superb: ^3.0.0
+    postcss: ^7.0.5
+    url-regex: ^5.0.0
+  checksum: 23006ee50fe1b12e38c6101d1120105833fd491fc838fd26ef57f7fb9446371b515a029acfc9153d7da4331d8a7a20b9a4928901bf904c3af0f3e1d93189a0c8
+  languageName: node
+  linkType: hard
+
 "postcss@npm:7.0.21":
   version: 7.0.21
   resolution: "postcss@npm:7.0.21"
@@ -9659,7 +9698,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"postcss@npm:^7.0.14, postcss@npm:^7.0.17, postcss@npm:^7.0.2, postcss@npm:^7.0.21, postcss@npm:^7.0.26, postcss@npm:^7.0.31, postcss@npm:^7.0.32, postcss@npm:^7.0.35, postcss@npm:^7.0.5, postcss@npm:^7.0.6":
+"postcss@npm:^7.0.14, postcss@npm:^7.0.17, postcss@npm:^7.0.2, postcss@npm:^7.0.21, postcss@npm:^7.0.26, postcss@npm:^7.0.27, postcss@npm:^7.0.31, postcss@npm:^7.0.32, postcss@npm:^7.0.35, postcss@npm:^7.0.5, postcss@npm:^7.0.6":
   version: 7.0.35
   resolution: "postcss@npm:7.0.35"
   dependencies:
@@ -11786,6 +11825,15 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+"tlds@npm:^1.203.0":
+  version: 1.216.0
+  resolution: "tlds@npm:1.216.0"
+  bin:
+    tlds: bin.js
+  checksum: ebe0bd84b85e1af589bf7df9e0e6aa12b10bc0b97faf2f36bb16100752116f5ec17b301bdb77a50b1e0828f66fa761b6d8c5ce0c8caf7f00d27534e46eae9428
+  languageName: node
+  linkType: hard
+
 "to-arraybuffer@npm:^1.0.0":
   version: 1.0.1
   resolution: "to-arraybuffer@npm:1.0.1"
@@ -12305,6 +12353,16 @@ fsevents@~2.1.2:
   version: 0.1.0
   resolution: "urix@npm:0.1.0"
   checksum: 6bdfca4e7fb7d035537068a47a04ace1bacfa32e6b1aaf54c5a0340c83125a186d59109a19b9a3a1c1f986d3eb718b82faf9ad03d53cb99cf868068580b15b3b
+  languageName: node
+  linkType: hard
+
+"url-regex@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "url-regex@npm:5.0.0"
+  dependencies:
+    ip-regex: ^4.1.0
+    tlds: ^1.203.0
+  checksum: 8f7e13fc68bb5855c282e73320fb3f398c51c74cfe3409090c781e07d63b444dcc2643f0d2b13a363d1b88ce4b0e50b6a1688ac6a48f262c47e9408232b4643a
   languageName: node
   linkType: hard
 
