@@ -137,5 +137,8 @@
     "ua-parser-js": "^0.7.23",
     "use-immer": "^0.4.2",
     "zxcvbn": "^4.4.2"
+  },
+  "resolutions": {
+    "caniuse-lite": "^1.0.30001179"
   }
 }
