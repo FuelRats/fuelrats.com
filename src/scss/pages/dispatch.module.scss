@@ -6,7 +6,7 @@ main.dispatchBoard {
   width: 100vw;
 
   color: $white;
-  background: fixed $black url('/static/images/dispatch/ratdecal.png') center no-repeat;
+  background: fixed $bg-black url('/static/images/dispatch/ratdecal.png') center no-repeat;
   background-size: auto 75%;
 
   overflow-x: hidden;
