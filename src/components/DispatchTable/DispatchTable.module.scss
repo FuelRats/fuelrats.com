@@ -1,74 +1,99 @@
 @import '../../scss/colors';
-
+@import '../../scss/functions/stripe-gradient';
 
 .dispatchTable {
   --table-border-color: #3C3C3C;
 }
 
+.copyButton {
+  $bg-color: $black-lighter;
 
-.table {
-  min-width: 100%;
-  margin-bottom: 0.5rem;
+
+  padding: 0 0.5rem;
+
+  user-select: none;
+
+  background-color: rgba($bg-color, 0.8);
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: $bg-color;
+  }
+
+  &:active {
+    background-color: rgba($bg-color, 0.6);
+  }
+}
+
+.infoRow {
+  font-size: 0.95em;
+}
+
+.infoValue {
+  composes: copyButton;
+
+  font-size: 1.05em;
+}
+
+/* Global selectors for specificity */
+.rescueRowFocus:global(.button.icon) {
+  position: absolute;
+  right: 0.4rem;
+  bottom: 0.4rem;
+
+  padding: 0 0.4rem;
+}
+
+.statusBadges {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+
+  :global(.badge) {
+    margin: 0 0 0 0.4rem;
+
+    border: 0.2rem solid $red-darkened;
+
+    background: rgba(38, 37, 26, 0.9);
+    box-shadow: 0 2px 8px 2px rgba($black, 0.5);
+
+    font-size: 1em;
+
+    vertical-align: top;
+
+    &:global(.warn) {
+      border-color: $yellow-darkened;
+
+      background: rgba(38, 37, 26, 0.9);
+    }
+  }
+}
+
+.rescue {
+  --gradient-base: #{$black};
+  --gradient-stripe: #{$black};
+
+  width: 100%;
+  margin: 0 0 1rem;
+  padding: 8px;
+
+  backdrop-filter: blur(10px);
 
   border: 1px solid var(--table-border-color);
 
-  background-color: $black;
-  border-spacing: 0;
-  border-collapse: collapse;
-
-  thead {
-    background-color: $black-darkened;
-
-    > tr > th {
-      padding: 4px 8px;
-
-      border: 1px solid var(--table-border-color);
-      border-top: 0;
-      border-bottom-width: 2px;
-
-      text-align: left;
-      vertical-align: bottom;
-    }
-  }
-
-  tbody > tr > td {
-    max-width: 300px;
-    padding: 8px;
-
-    border: 1px solid var(--table-border-color);
-
-    line-height: 27px;
-
-    vertical-align: middle;
-
-    &.rescueRowFocus {
-      height: 4rem;
-      padding: 0.4rem;
-
-      :global(.button) {
-        display: inline-flex;
-
-        align-items: center;
-
-        justify-content: center;
-
-        width: 100%;
-        height: 100%;
-
-        svg {
-          align-items: baseline;
-          vertical-align: middle;
-        }
-      }
-    }
-  }
-}
-
-.codeRed {
-  background-color: rgba(255, 87, 69, 0.25);
+  background: stripe-gradient(225deg, var(--gradient-base), var(--gradient-stripe), 3, 5px);
 }
 
 .inactive {
-  background-color: rgba(240, 230, 140, 0.25);
-  opacity: 0.25;
+  --gradient-base: rgb(38 37 26);
+  --gradient-stripe: #{darken($yellow-darkened, 10%)};
+}
+
+.codeRed {
+  --gradient-base: rgb(47 13 13);
+  --gradient-stripe: #{darken($red-darkened, 10%)};
+
+  &.inactive {
+    --gradient-base: rgb(38 37 26);
+  }
 }

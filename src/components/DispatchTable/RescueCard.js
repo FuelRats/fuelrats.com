@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { useCallback, useState } from 'react'
 
 import { makeRoute } from '~/helpers/routeGen'
-import { useQuoteString, useLanguageData, usePlatformData } from '~/hooks/rescueHooks'
+import { useLanguageData, usePlatformData } from '~/hooks/rescueHooks'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import useStoreEffect from '~/hooks/useStoreEffect'
 import { selectRescueById, createSelectRenderedRatList } from '~/store/selectors'
@@ -37,11 +37,11 @@ const selectRenderedRatList = createSelectRenderedRatList((rat, index, arr) => {
 
 
 
-function RescueRow (props) {
+function RescueCard (props) {
   const rescue = useSelectorWithProps(props, selectRescueById)
   const rescueRats = useSelectorWithProps(props, selectRenderedRatList)
 
-  const quoteString = useQuoteString(rescue)
+  // const quoteString = useQuoteString(rescue)
   const rescueLanguage = useLanguageData(rescue)
   const rescuePlatform = usePlatformData(rescue)
 
@@ -52,15 +52,6 @@ function RescueRow (props) {
     setAnimating(false)
   }, [])
 
-  useStoreEffect(
-    (nextState) => {
-      if (nextState.attributes.status !== 'closed') {
-        setAnimating(true)
-      }
-    },
-    [],
-    `rescues.${rescue.id}`,
-  )
 
   const router = useRouter()
   const handleFocusRescue = useCallback(() => {
@@ -72,6 +63,18 @@ function RescueRow (props) {
 
     router.push(makeRoute('/dispatch', query))
   }, [rescue.id, router])
+
+  useStoreEffect(
+    (nextState) => {
+      if (nextState.attributes.status !== 'closed') {
+        setAnimating(true)
+      } else if (router.query.rId === nextState.id) {
+        router.push('/dispatch')
+      }
+    },
+    [], // eslint-disable-line react-hooks/exhaustive-deps
+    `rescues.${rescue.id}`,
+  )
 
   const {
     codeRed,
@@ -85,69 +88,90 @@ function RescueRow (props) {
   const radioInputId = `rdetail-${rescue.id}`
 
   return (
-    <tr
+    <div
       className={
-        {
+        [styles.rescue, {
           [styles.codeRed]: codeRed,
           [styles.inactive]: status === 'inactive',
           'animate-flash': animating,
-        }
+        }]
       }
-      title={quoteString}
       onAnimationEnd={handleTransitionEnd}>
-      <CopyToClipboard
-        as="td"
-        text={commandIdentifier ?? '?'}>
-        {commandIdentifier ?? '?'}
-      </CopyToClipboard>
-      <CopyToClipboard
-        doHint
-        as="td"
-        text={clientNick ?? client}
-        title={clientNick ?? ''}>
-        {client ?? '?'}
-      </CopyToClipboard>
-      <td
-        className="rescue-row-language"
+
+      <div className={styles.infoRow}>
+        <div className={styles.primaryInfo}>
+          {' '}
+          <CopyToClipboard
+            className={styles.infoValue}
+            text={commandIdentifier ?? '?'}>
+            {commandIdentifier ?? '?'}
+          </CopyToClipboard>
+          {': '}
+          <CopyToClipboard
+            className={styles.infoValue}
+            text={clientNick ?? client}
+            title={clientNick ?? ''}>
+            {client ?? '?'}
+          </CopyToClipboard>
+          {' in '}
+          <CopyToClipboard
+            className={styles.infoValue}
+            text={system ?? 'Unknown'}>
+            {system ?? 'Unknown'}
+          </CopyToClipboard>
+        </div>
+        <div className={styles.statusBadges}>
+          {
+            status === 'inactive' && (
+              <span className="badge warn">{'Inactive'}</span>
+            )
+          }
+          {
+            codeRed && (
+              <span className="badge">{'Code Red'}</span>
+            )
+          }
+        </div>
+      </div>
+
+      <span
+        className="badge rescue-row-language"
         title={rescueLanguage.long}>
         {rescueLanguage.short}
-      </td>
-      <td
-        className="rescue-row-platform"
+      </span>
+      <span
+        className="badge rescue-row-platform"
         title={rescuePlatform.long}>
         {rescuePlatform.short}
-      </td>
-      <CopyToClipboard
-        doHint
-        as="td"
-        text={system ?? 'Unknown'}>
-        {system ?? 'N/A'}
-      </CopyToClipboard>
-      <td className="rescue-row-rats">
-        {rescueRats}
-      </td>
-      <td className={styles.rescueRowFocus}>
-        <label className={['button icon', { active: router.query.rId === rescue.id }]} htmlFor={radioInputId}>
-          <input
-            hidden
-            readOnly
-            aria-label={`Show detail view for rescue of ${client}`}
-            checked={router.query.rId === rescue.id}
-            id={radioInputId}
-            name="detail"
-            title="More details..."
-            type="radio"
-            value={rescue.id}
-            onClick={handleFocusRescue} />
-          <FontAwesomeIcon fixedWidth icon="ellipsis-h" />
-        </label>
-      </td>
+      </span>
 
-    </tr>
+      {
+        rescueRats.length > 0 && (
+          <td className="rescue-row-rats">
+            {'With: '}
+            {rescueRats}
+          </td>
+        )
+      }
+      <label className={[styles.rescueRowFocus, 'button icon', { active: router.query.rId === rescue.id }]} htmlFor={radioInputId}>
+        <input
+          hidden
+          readOnly
+          aria-label={`Show detail view for rescue of ${client}`}
+          checked={router.query.rId === rescue.id}
+          id={radioInputId}
+          name="detail"
+          title="More details..."
+          type="radio"
+          value={rescue.id}
+          onClick={handleFocusRescue} />
+        <FontAwesomeIcon fixedWidth icon="ellipsis-h" />
+      </label>
+    </div>
   )
 }
 
-RescueRow.propTypes = {
+RescueCard.propTypes = {
   // eslint-disable-next-line react/no-unused-prop-types
   rescueId: PropTypes.string.isRequired,
 }
@@ -156,4 +180,4 @@ RescueRow.propTypes = {
 
 
 
-export default RescueRow
+export default RescueCard
