@@ -16,9 +16,9 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 ### ⚡ Changed
 * Further improve message displayed when email validation token is invalid.
-* Rescue details pane will now close if the focused rescue is closed.
+* Rescue details pane will now close if the focused rescue is closed. - [#307][]
 * Logging out also removes your access token through the API, so your token cannot be used anywhere anymore. Thanks @Master-Guy! - [#305][]
-* Improve application stability by using a real non-value in key places. [#306][]
+* Improve application stability by using a real non-value in key places. - [#306][]
 
 
 ### 🐛 Fixed
@@ -36,6 +36,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 [#304]: https://github.com/fuelRats/fuelrats.com/pull/304
 [#305]: https://github.com/fuelRats/fuelrats.com/pull/305
 [#306]: https://github.com/fuelRats/fuelrats.com/pull/306
+[#307]: https://github.com/fuelRats/fuelrats.com/pull/307
 [Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.6...HEAD
 
 
