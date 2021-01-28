@@ -52,17 +52,21 @@ function RescueRow (props) {
     setAnimating(false)
   }, [])
 
+  const router = useRouter()
   useStoreEffect(
     (nextState) => {
-      if (nextState.attributes.status !== 'closed') {
+      if (nextState.attributes.status === 'closed') {
+        if (router.query.rId === nextState.id) {
+          router.push('/dispatch')
+        }
+      } else {
         setAnimating(true)
       }
     },
-    [],
+    [router],
     `rescues.${rescue.id}`,
   )
 
-  const router = useRouter()
   const handleFocusRescue = useCallback(() => {
     const query = {}
 
