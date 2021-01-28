@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux'
 
 import { authenticated } from '~/components/AppLayout'
 import Clock from '~/components/Clock'
+import DispatchDetails from '~/components/DispatchDetails'
 import DispatchTable from '~/components/DispatchTable'
-import RescueDetails from '~/components/RescueDetails'
 import styles from '~/scss/pages/dispatch.module.scss'
 import { useRatSocket } from '~/services/frSocket'
 import { getDispatchBoard } from '~/store/actions/rescues'
@@ -35,7 +35,7 @@ function DispatchBoard ({ query }) {
           loaded && (
             <>
               <DispatchTable className={styles.table} />
-              <RescueDetails className={styles.detail} rescueId={query.rId} />
+              <DispatchDetails className={styles.detail} rescueId={query.rId} />
             </>
           )
         }
