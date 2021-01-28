@@ -9,9 +9,32 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ## [Unreleased][]
 
 ### ✨ Added
+* Added closing button to RescueDetailsContent so rats and dispatch can close the details on the last case of the board once it has been cleared. Thanks @Master-Guy! - [#303][]
+
+
+### ⚡ Changed
+*
+
+
+### 🐛 Fixed
+*
+
+
+### ⚙ Tasks
+*
+
+[#303]: https://github.com/fuelRats/fuelrats.com/pull/303
+[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.6...HEAD
+
+
+
+
+
+## [2.12.7][] - 2021-01-28
+
+### ✨ Added
 * Create developer panel on profile so devs can control their clients. - [#302][]
     * This is a very early working version. The asethetics can come later 😅.
-* Added closing button to RescueDetailsContent so rats and dispatch can close the details on the last case of the board once it has been cleared. Thanks @Master-Guy! - [#303][]
 
 
 ### ⚡ Changed
@@ -31,13 +54,13 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Upgrade to Yarn 2 (but not PnP, that comes later when the bugs are solved).
 * Add @Master-Guy as a contributor! 🥳 - [#304][]
 
+
 [#302]: https://github.com/fuelRats/fuelrats.com/pull/302
-[#303]: https://github.com/fuelRats/fuelrats.com/pull/303
 [#304]: https://github.com/fuelRats/fuelrats.com/pull/304
 [#305]: https://github.com/fuelRats/fuelrats.com/pull/305
 [#306]: https://github.com/fuelRats/fuelrats.com/pull/306
 [#307]: https://github.com/fuelRats/fuelrats.com/pull/307
-[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.6...HEAD
+[2.12.7]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.6...v2.12.7
 
 
 
@@ -48,11 +71,14 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ### ✨ Added
 * Added a message to the verification page which appears when a user attempts to verify a e-mail twice. - [#297][]
 
+
 ### 🐛 Fixed
 * Change cases sorting to "last created first" on initial dispatch board load. Thanks @diraven! - [#298][]
 
+
 ### ⚙ Tasks
 * Add @diraven as a contributor! 🎊 - [#299][]
+
 
 [#297]: https://github.com/fuelrats/fuelrats.com/pull/297
 [#298]: https://github.com/fuelRats/fuelrats.com/pull/298
