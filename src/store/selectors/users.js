@@ -27,22 +27,22 @@ export const getUserId = (_, props) => {
 
 
 export const selectUserById = (state, props = {}) => {
-  return state.users[props.userId] || null
+  return state.users[props.userId] ?? undefined
 }
 
 export const selectUserRatsRelationship = (state, props) => {
-  return selectUserById(state, props)?.relationships.rats?.data ?? null
+  return selectUserById(state, props)?.relationships.rats?.data ?? undefined
 }
 
 export const selectUserDisplayRatRelationship = (state, props) => {
-  return selectUserById(state, props)?.relationships.displayRat?.data ?? null
+  return selectUserById(state, props)?.relationships.displayRat?.data ?? undefined
 }
 
 export const selectAvatarByUserId = (state, props) => {
   const user = selectUserById(state, props)
 
   if (!user) {
-    return null
+    return undefined
   }
 
   return user.attributes.image ? `/api/users/${user.id}/avatar` : `/avatars/${props.size ?? AVATAR_DEFAULT_SIZE}/${user.id}`
@@ -66,8 +66,14 @@ export const selectCurrentUserHasScope = createCachedSelector(
     getScope,
   ],
   (userScopes, scope) => {
+    if (!scope) {
+      // falsy scope should be interpreted as no required scope, and threfore always true.
+      return true
+    }
+
     if (typeof scope !== 'string') {
       if (Array.isArray(scope)) {
+        // Arrays should implicity mean "all listed scopes"
         return includesAll(userScopes, scope)
       }
 
@@ -91,10 +97,15 @@ export const selectCurrentUserHasScope = createCachedSelector(
   },
 )(
   (_, props) => {
-    return (
-      typeof props.scope === 'string'
-        ? props.scope
-        : JSON.stringify(props.scope)
-    )
+    switch (typeof props.scope) {
+      case 'string':
+        return props.scope
+
+      case 'undefined':
+        return 'undefined'
+
+      default:
+        return JSON.stringify(props.scope)
+    }
   },
 )

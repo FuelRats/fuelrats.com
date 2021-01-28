@@ -4,5 +4,5 @@ export const selectImages = (state) => {
 
 
 export const selectImageById = (state, { imageId }) => {
-  return state.images[imageId] || null
+  return state.images[imageId] ?? undefined
 }

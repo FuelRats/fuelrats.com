@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import Router from 'next/router'
 import { useState, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
@@ -46,24 +47,39 @@ function Verify ({ token }) {
   }, [dispatch, token.value])
 
   if (!token.valid) {
-    if (token.type === TokenType.EMAIL && userIsVerified) {
-      return (
-        <div className="page-content">
-          <MessageBox title="Already Verified" type="info">
-            {"Your e-mail address has already been verified! There's no need to verify again."}
-          </MessageBox>
-        </div>
+    let message = 'The provided token is invalid, which probably means it has expired. Please try resetting your password again. If the problem persists,'
+
+
+    if (token.type === TokenType.EMAIL) {
+      if (userIsVerified) {
+        return (
+          <div className="page-content">
+            <MessageBox title="Already Verified" type="info">
+              {"Your e-mail address has already been verified! There's no need to verify again."}
+            </MessageBox>
+          </div>
+        )
+      }
+
+      message = (
+        <>
+          {"The provided token is invalid. This probably means you've already verified your e-mail address."}
+          {' Please try checking your '}
+          <Link href="/profile/overview"><a>{'profile'}</a></Link>
+          {' for a '}
+          <span className="badge info inline">{'verified'}</span>
+          {' badge next to your avatar.'}
+          <br />
+          <br />
+          {"If you're still unverified,"}
+        </>
       )
     }
 
     return (
       <div className="page-content">
         <MessageBox title="Invalid Token">
-          {
-            token.type === TokenType.RESET
-              ? 'Your token is invalid, which probably just means it expired. Please try resetting your password again. If the problem persists, please'
-              : 'The provided token is invalid. Please'
-          }
+          {message}
           {' contact us via email at: '}
           <a href="mailto:support@fuelrats.com">{'support@fuelrats.com'}</a>
           {

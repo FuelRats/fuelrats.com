@@ -1,6 +1,9 @@
-import { createSelector } from 'reselect'
+import { createCachedSelector } from 're-reselect'
 
-import { selectUserById } from './users'
+import safeParseInt from '~/helpers/safeParseInt'
+
+import { withCurrentUserId } from './session'
+import { getUserId, selectUserById } from './users'
 
 
 
@@ -20,9 +23,14 @@ export const selectDecalById = (state, { decalId } = {}) => {
 }
 
 
-export const selectDecalsByUserId = createSelector(
-  [selectDecals, selectUserById],
-  (decals, user) => {
+export const selectUserRedeemableDecals = (state, props) => {
+  return safeParseInt(withCurrentUserId(selectUserById)(state, props)?.meta?.redeemable, undefined, 0)
+}
+
+
+export const selectDecalsByUserId = createCachedSelector(
+  [selectUserById, selectDecals],
+  (user, decals) => {
     if (user) {
       return user.relationships.decals?.data.map(({ id }) => {
         return decals[id]
@@ -30,4 +38,4 @@ export const selectDecalsByUserId = createSelector(
     }
     return undefined
   },
-)
+)(getUserId)

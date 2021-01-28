@@ -7,6 +7,7 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
+    if: ${{ github.event.pull_request.head.repo.owner.login == github.repository_owner }}
     name: Lint
     steps:
       - name: Checkout
@@ -23,7 +24,7 @@ jobs:
 
       - name: Read `yarn cache dir`
         id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
+        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
 
       - name: Load yarn cache
         uses: actions/cache@v2
@@ -35,7 +36,7 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install --immutable
 
       - name: Lint
         uses: samuelmeuli/lint-action@v1.5.3
@@ -64,7 +65,7 @@ jobs:
 
       - name: Read `yarn cache dir`
         id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
+        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
 
       - name: Load yarn cache
         uses: actions/cache@v2
@@ -84,7 +85,7 @@ jobs:
             ${{ runner.os }}-nextjs-
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install --immutable
 
       - name: Build
         run: yarn build

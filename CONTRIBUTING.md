@@ -38,7 +38,7 @@ By contributing to this repository, you are expected to know and follow the rule
 1. In the project directory, run `yarn install` to install dependencies.
 1. Run `yarn dev` to start the dev server.
 
-> Use of NPM is **NOT** supported by this repository.
+> Use of `npm` as a package manager is **NOT** supported by this repository.
 
 > Tip: Keep your `develop` branch pointing at the original repository and make
 > pull requests from branches on your fork. To do this, run:

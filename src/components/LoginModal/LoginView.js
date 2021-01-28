@@ -20,7 +20,6 @@ import styles from './LoginModal.module.scss'
 const initialData = Object.freeze({
   remember: false,
   data: {
-    grant_type: 'password',
     password: '',
     username: '',
   },

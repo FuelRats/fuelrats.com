@@ -1,0 +1,46 @@
+@import '../../scss/colors';
+
+.panelContent {
+  padding: 0;
+}
+
+.decalCode,
+.decalClaimedAt,
+.redeem,
+.noDecal {
+  padding: 0.5rem 1rem;
+}
+
+.decal {
+  display: flex;
+
+  &:nth-child(2n) {
+    background-color: $light-grey;
+  }
+
+  .toggle {
+    margin-right: 1rem;
+
+    svg {
+      pointer-events: none;
+    }
+  }
+
+  .decalCode {
+    flex: 1 0 auto;
+
+    font-family: monospace;
+  }
+
+  .decalClaimedAt {
+    flex: 0 1 auto;
+  }
+}
+
+.redeem {
+  float: right;
+
+  span {
+    padding-right: 1rem;
+  }
+}

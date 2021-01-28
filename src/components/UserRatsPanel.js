@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
+import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { connect } from '~/store'
 import { getUserStatistics } from '~/store/actions/statistics'
 import {
@@ -20,12 +21,10 @@ function UserRatsPanel ({ user }) {
   const { rats } = user.relationships
 
   const dispatch = useDispatch()
-  const hasRatStatistics = useSelector((state) => {
-    return Boolean(selectRatStatisticsById(state, { ratId: rats?.data[0].id }))
-  })
+  const ratStatistics = useSelectorWithProps({ ratId: rats?.data[0].id }, selectRatStatisticsById)
 
   useEffect(() => {
-    if (!hasRatStatistics) {
+    if (!ratStatistics) {
       dispatch(getUserStatistics(user.id))
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps

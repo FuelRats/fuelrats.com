@@ -33,6 +33,9 @@ export const changePassword = ({ id, ...data }) => {
 }
 
 
+
+
+
 export const login = (options) => {
   return async (dispatch) => {
     const {
@@ -50,7 +53,10 @@ export const login = (options) => {
         headers: {
           'X-Fingerprint': fingerprint,
         },
-        data,
+        data: {
+          grant_type: 'password',
+          ...data,
+        },
       }),
     )
 

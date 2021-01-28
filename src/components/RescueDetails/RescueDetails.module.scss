@@ -22,9 +22,24 @@
 
   font-size: 1.75em;
 
-  div {
+  > div {
     display: inline;
-    vertical-align: middle;
+  }
+
+  .closeButton {
+    --background-color-hover: #{$red-darker};
+    --text-color-hover: #{$white};
+    margin-top: 0.5rem;
+    margin-left: 1rem;
+    padding: 0.75rem;
+
+    font-size: 0.78em;
+    line-height: 1;
+    vertical-align: top;
+
+    &:hover {
+      border-color: var(--background-color-hover);
+    }
   }
 
   .title {
