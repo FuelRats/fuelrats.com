@@ -5,9 +5,9 @@ import { useEffect } from 'react'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { selectRescueById } from '~/store/selectors'
 
-import RescueDetailsContent from './RescueDetailsContent'
+import DispatchDetailsContent from './DispatchDetailsContent'
 
-function RescueDetails (props) {
+function DispatchDetails (props) {
   const {
     className,
     rescueId,
@@ -23,12 +23,12 @@ function RescueDetails (props) {
 
   return (
     <section className={className}>
-      {rescue && <RescueDetailsContent rescue={rescue} />}
+      {rescue && <DispatchDetailsContent rescue={rescue} />}
     </section>
   )
 }
 
-RescueDetails.propTypes = {
+DispatchDetails.propTypes = {
   className: PropTypes.string,
   rescueId: PropTypes.string,
 }
@@ -37,4 +37,4 @@ RescueDetails.propTypes = {
 
 
 
-export default RescueDetails
+export default DispatchDetails

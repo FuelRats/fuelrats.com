@@ -12,7 +12,7 @@ import { createSelectRenderedRatList } from '~/store/selectors'
 
 import CopyToClipboard from '../CopyToClipboard'
 import ElapsedTimer from '../ElapsedTimer'
-import styles from './RescueDetails.module.scss'
+import styles from './DispatchDetails.module.scss'
 
 
 
@@ -50,7 +50,7 @@ const selectRenderedRatList = createSelectRenderedRatList((rat, index) => {
 
 
 
-function RescueDetailsContent (props) {
+function DispatchDetailsContent (props) {
   const { rescue } = props
   const {
     commandIdentifier,
@@ -76,7 +76,7 @@ function RescueDetailsContent (props) {
   }, [router])
 
   return (
-    <div className={styles.rescueDetails}>
+    <div className={styles.dispatchDetails}>
       <div className={styles.header}>
         <div className={styles.title}>
           {`${typeof commandIdentifier === 'number' ? `#${commandIdentifier} - ` : ''}${title ?? client}`}
@@ -221,8 +221,8 @@ function RescueDetailsContent (props) {
   )
 }
 
-RescueDetailsContent.propTypes = {
+DispatchDetailsContent.propTypes = {
   rescue: PropTypes.object.isRequired,
 }
 
-export default RescueDetailsContent
+export default DispatchDetailsContent
