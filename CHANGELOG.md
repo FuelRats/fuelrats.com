@@ -10,12 +10,14 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 ### ✨ Added
 * Create developer panel on profile so devs can control their clients. - [#302][]
-* Added closing button to RescueDetailsContent so rats and dispatch can close the details on the last case of the board once it has been cleared. - [#303][]
+    * This is a very early working version. The asethetics can come later 😅.
+* Added closing button to RescueDetailsContent so rats and dispatch can close the details on the last case of the board once it has been cleared. Thanks @Master-Guy! - [#303][]
 
 
 ### ⚡ Changed
 * Further improve message displayed when email validation token is invalid.
-* Logging out also removes your access token through the API, so your token cannot be used anywhere anymore. - [#305][]
+* Rescue details pane will now close if the focused rescue is closed.
+* Logging out also removes your access token through the API, so your token cannot be used anywhere anymore. Thanks @Master-Guy! - [#305][]
 * Improve application stability by using a real non-value in key places. [#306][]
 
 
@@ -27,9 +29,11 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ### ⚙ Tasks
 * Perform some preparation steps for Webpack 5 and Yarn PnP.
 * Upgrade to Yarn 2 (but not PnP, that comes later when the bugs are solved).
+* Add @Master-Guy as a contributor! 🥳 - [#304][]
 
 [#302]: https://github.com/fuelRats/fuelrats.com/pull/302
 [#303]: https://github.com/fuelRats/fuelrats.com/pull/303
+[#304]: https://github.com/fuelRats/fuelrats.com/pull/304
 [#305]: https://github.com/fuelRats/fuelrats.com/pull/305
 [#306]: https://github.com/fuelRats/fuelrats.com/pull/306
 [Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.6...HEAD
@@ -44,10 +48,14 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Added a message to the verification page which appears when a user attempts to verify a e-mail twice. - [#297][]
 
 ### 🐛 Fixed
-* Change cases sorting to "last created first" on initial dispatch board load. - [#298][]
+* Change cases sorting to "last created first" on initial dispatch board load. Thanks @diraven! - [#298][]
+
+### ⚙ Tasks
+* Add @diraven as a contributor! 🎊 - [#299][]
 
 [#297]: https://github.com/fuelrats/fuelrats.com/pull/297
 [#298]: https://github.com/fuelRats/fuelrats.com/pull/298
+[#299]: https://github.com/fuelRats/fuelrats.com/pull/299]
 [2.12.6]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.5...v2.12.6
 
 
