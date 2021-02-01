@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+import { redeemDecal } from '~/store/actions/decals'
 import {
   selectCurrentUserId,
   selectDecalsByUserId,
@@ -24,7 +25,6 @@ function UserDetailsPanel () {
   const handleRedeemDecal = useCallback(async () => {
     setRedeeming(true)
 
-    // eslint-disable-next-line no-undef
     await dispatch(redeemDecal(userId))
 
     setRedeeming(false)
