@@ -23,8 +23,22 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ### ⚙ Tasks
 *
 
+
 [#303]: https://github.com/fuelRats/fuelrats.com/pull/303
-[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.6...HEAD
+[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.8...HEAD
+
+
+
+
+
+## [2.12.8][] - 2021-02-01
+
+### 🐛 Fixed
+* Fix multiple issues with redeeming decals - [#309][]
+
+
+[#309]: https://github.com/fuelRats/fuelrats.com/pull/309
+[2.12.8]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.7...v2.12.8
 
 
 
