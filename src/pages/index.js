@@ -3,6 +3,7 @@ import Router from 'next/router'
 import React from 'react'
 
 import Carousel from '~/components/Carousel'
+import FrontPageNotice from '~/components/FrontPageNotice'
 import { makeRoute } from '~/helpers/routeGen'
 import { connect } from '~/store'
 
@@ -82,7 +83,7 @@ class Index extends React.Component {
           </Link>
         </footer>
 
-
+        <FrontPageNotice />
       </section>
     )
   }
