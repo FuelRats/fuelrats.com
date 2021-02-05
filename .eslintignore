@@ -2,8 +2,12 @@
 !.*
 
 # Compiled sources
-dist
-deploy_dist
-node_modules
+.github
 .vscode/blueprints
 .yarn
+deploy_dist
+dist
+docs
+node_modules
+public
+scripts
