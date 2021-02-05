@@ -1,15 +1,15 @@
 {
   "[javascriptreact]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
     "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": true
+      "source.fixAll.eslint": true,
     },
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
   "[scss]": {
+    "editor.defaultFormatter": "stylelint.vscode-stylelint",
     "editor.codeActionsOnSave": {
       "source.fixAll.stylelint": true
-    },
-    "editor.defaultFormatter": "stylelint.vscode-stylelint"
+    }
   },
   "blueprint.templatesPath": [
     "./.vscode/blueprints"
@@ -22,14 +22,14 @@
   ],
   "editor.tabSize": 2,
   "editor.wordWrapColumn": 180,
-  "eslint.format.enable": true,
   "eslint.lintTask.enable": true,
   "eslint.packageManager": "yarn",
   "files.associations": {
     "*.js": "javascriptreact",
     "*.mjs": "javascript",
     ".all-contributorsrc": "json",
-    ".stylelintrc": "json"
+    ".stylelintrc": "json",
+    "yarn.lock": "yaml",
   },
   "files.eol": "\n",
   "files.insertFinalNewline": true,
@@ -54,5 +54,5 @@
   },
   "stylelint.packageManager": "yarn",
   "stylelint.reportNeedlessDisables": true,
-  "cSpell.language": "en,en-US"
+  "cSpell.language": "en,en-US",
 }
