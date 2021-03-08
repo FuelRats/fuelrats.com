@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { createStructuredSelector } from 'reselect'
 
+import getFingerprint from '~/helpers/getFingerprint'
 import getMoney from '~/helpers/getMoney'
 import { connect } from '~/store'
 import { withCurrentUserId, selectUserById } from '~/store/selectors'
@@ -130,9 +131,12 @@ class DonateForm extends React.Component {
       currency,
     } = this.state
 
+    const fingerprint = await getFingerprint()
+
     const sessionData = {
       amount: this.stripeAmount,
       currency,
+      fingerprint,
     }
 
     if (user) {
