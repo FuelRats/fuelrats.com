@@ -10,6 +10,7 @@ const allowedUnauthenticatedRequestCount = 3
  * @class
  */
 class TrafficControl {
+  unauthenticatedRequests = {}
   #resetTimer = 0
 
   /**
@@ -85,6 +86,7 @@ class TrafficControl {
    * @private
    */
   reset () {
+    this.unauthenticatedRequests = {}
     this.#resetTimer = setTimeout(this.reset.bind(this), this.remainingTimeToNextResetDate)
   }
 }
