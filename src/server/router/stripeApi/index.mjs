@@ -88,7 +88,7 @@ const configureStripeApi = (router) => {
     })
   })
 
-  router.use('/st-api', stApiRouter.routes(), stApiRouter.allowedMethods())
+  router.use('/api/stripe', stApiRouter.routes(), stApiRouter.allowedMethods())
 }
 
 

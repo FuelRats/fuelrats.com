@@ -60,10 +60,10 @@ module.exports = {
         socket: FRDC_SOCKET_URL || 'wss://localhost:8080',
       },
       wordpress: {
-        url: `${FINAL_PUBLIC_URL}/wp-api`,
+        url: `${FINAL_PUBLIC_URL}/api/wp`,
       },
       stripe: {
-        url: `${FINAL_PUBLIC_URL}/st-api`,
+        url: `${FINAL_PUBLIC_URL}/api/stripe`,
         public: FRDC_STRIPE_API_PK || null,
       },
     },
