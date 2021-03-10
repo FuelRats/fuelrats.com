@@ -28,7 +28,15 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 [Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.9...HEAD
 
 
+## [2.12.10][] - 2021-03-10
 
+### 🐛 Fixed
+* Resolved issue preventing api routes from being correctly routed. - [#314][]
+    * Also take steps to ensure that doesn't happen again.
+
+
+[#314]: https://github.com/fuelRats/fuelrats.com/pull/312
+[2.12.10]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.9...v2.12.10
 
 
 ## [2.12.9][] - 2021-03-10
