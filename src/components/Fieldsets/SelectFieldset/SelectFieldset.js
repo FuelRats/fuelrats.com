@@ -79,7 +79,7 @@ function SelectFieldset (props) {
           <FontAwesomeIcon fixedWidth icon="angle-down" size="lg" />
         </div>
         <ValidityIcon
-          required={required && !value.length}
+          className={{ [inputStyles.hidden]: !value.length }}
           valid={validityRef.current}
           validating={validating} />
       </div>

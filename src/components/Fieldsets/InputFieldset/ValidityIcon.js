@@ -18,8 +18,6 @@ function ValidityIcon (props) {
     className,
     hasMessages,
     invalidTitle = 'This input is invalid',
-    required,
-    requiredTitle = 'This input is required',
     valid,
     validating,
     validatingTitle = 'validating...',
@@ -40,19 +38,14 @@ function ValidityIcon (props) {
       nextProps.spin = true
       nextProps.title = validatingTitle
     } else if (!valid) {
-      if (required) {
-        nextProps.icon = 'asterisk'
-        nextProps.title = requiredTitle
-      } else {
-        nextProps.icon = 'exclamation-triangle'
-        nextProps.title = invalidTitle
-      }
+      nextProps.icon = 'exclamation-triangle'
+      nextProps.title = invalidTitle
     } else if (hasMessages) {
       nextProps.title = validWithMessageTitle
     }
 
     return nextProps
-  }, [hasMessages, invalidTitle, required, requiredTitle, valid, validTitle, validWithMessageTitle, validating, validatingTitle])
+  }, [hasMessages, invalidTitle, valid, validTitle, validWithMessageTitle, validating, validatingTitle])
 
 
 
@@ -81,8 +74,6 @@ ValidityIcon.propTypes = {
   className: PropTypes.string,
   hasMessages: PropTypes.any,
   invalidTitle: PropTypes.string,
-  required: PropTypes.bool,
-  requiredTitle: PropTypes.string,
   valid: PropTypes.any,
   validating: PropTypes.any,
   validatingTitle: PropTypes.string,
