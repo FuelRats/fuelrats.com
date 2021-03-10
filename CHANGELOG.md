@@ -41,13 +41,6 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Tightened security on donation session creation (again) - [#312][]
 * Move fuelrats API routes to `/api/fr` to free up the api directory for other things. - [#312][]
 
-### 🐛 Fixed
-*
-
-
-### ⚙ Tasks
-*
-
 
 [#312]: https://github.com/fuelRats/fuelrats.com/pull/312
 [2.12.9]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.8...v2.12.9
