@@ -25,7 +25,32 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 [#303]: https://github.com/fuelRats/fuelrats.com/pull/303
-[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.8...HEAD
+[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.9...HEAD
+
+
+
+
+
+## [2.12.9][] - 20201-03-10
+
+### ✨ Added
+* Add asterisk icon to inputs when they are required, but empty. - [#312][]
+
+
+### ⚡ Changed
+* Tightened security on donation session creation (again) - [#312][]
+* Move fuelrats API routes to `/api/fr` to free up the api directory for other things. - [#312][]
+
+### 🐛 Fixed
+*
+
+
+### ⚙ Tasks
+*
+
+
+[#312]: https://github.com/fuelRats/fuelrats.com/pull/312
+[2.12.9]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.8...v2.12.9
 
 
 
