@@ -659,8 +659,6 @@ class Paperwork extends React.Component {
       return ifDefined(changes[value], rescue.attributes[value])
     }
 
-    console.log(changes.rats)
-
     return {
       codeRed: getValue('codeRed'),
       // Get FirstLimpetId object first, then try to get the firstLimpet from the assigned rat array, THEN try to get the firstLimpet from the new rat array.
