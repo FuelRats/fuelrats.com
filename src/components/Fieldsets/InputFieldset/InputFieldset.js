@@ -111,8 +111,8 @@ const InputFieldset = React.forwardRef((props, forwardRef) => {
           onFocus={onFocus} />
         {children}
         <ValidityIcon
+          className={{ [styles.hidden]: !value.length }}
           hasMessages={messages?.hasMessages}
-          required={props.required && !value.length}
           valid={messages?.valid}
           validating={validating} />
         <InputSuggestions

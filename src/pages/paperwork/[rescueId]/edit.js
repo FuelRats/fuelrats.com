@@ -131,7 +131,7 @@ class Paperwork extends React.Component {
 
     if (attribute === 'platform' && value !== this.props.rescue) {
       changes.firstLimpetId = []
-      changes.rats = {}
+      changes.rats = []
     }
 
     if (attribute === 'outcome' && value !== 'success') {
