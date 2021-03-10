@@ -55,7 +55,7 @@ module.exports = {
     },
     apis: {
       fuelRats: {
-        local: `${FINAL_PUBLIC_URL}/api`,
+        local: `${FINAL_PUBLIC_URL}/api/fr`,
         server: FRDC_API_URL || 'http://localhost:8080',
         socket: FRDC_SOCKET_URL || 'wss://localhost:8080',
       },

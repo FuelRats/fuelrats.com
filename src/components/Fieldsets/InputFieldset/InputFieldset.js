@@ -86,6 +86,8 @@ const InputFieldset = React.forwardRef((props, forwardRef) => {
     handleChange,
   } = useField(props.name, { onValidate: handleValidate, onChange, validateOpts })
 
+  const hideMessages = !messages?.validatedValue?.length || !messages?.hasMessages || validating || !isFocused
+
   return (
     <fieldset>
 
@@ -109,12 +111,12 @@ const InputFieldset = React.forwardRef((props, forwardRef) => {
           onFocus={onFocus} />
         {children}
         <ValidityIcon
-          className={{ [styles.hidden]: !value.length }}
           hasMessages={messages?.hasMessages}
+          required={props.required && !value.length}
           valid={messages?.valid}
           validating={validating} />
         <InputSuggestions
-          className={{ dark, [styles.hidden]: !messages?.validatedValue?.length || !messages?.hasMessages || validating || !isFocused }}
+          className={{ dark, [styles.hidden]: hideMessages }}
           messages={messages} />
       </div>
     </fieldset>

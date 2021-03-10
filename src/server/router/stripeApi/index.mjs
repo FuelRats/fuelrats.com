@@ -71,6 +71,7 @@ const configureStripeApi = (router) => {
       cancel_url: `${ctx.state.env.publicUrl}/donate/cancel`,
       submit_type: 'donate',
       payment_method_types: ['card'],
+      allow_promotion_codes: false,
       customer_email: email,
       customer,
       line_items: [{
@@ -81,6 +82,9 @@ const configureStripeApi = (router) => {
         currency,
         quantity: 1,
       }],
+      metadata: {
+        fr_payment_type: 'donate',
+      },
     })
   })
 
