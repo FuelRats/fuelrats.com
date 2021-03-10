@@ -31,7 +31,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 
-## [2.12.9][] - 20201-03-10
+## [2.12.9][] - 2021-03-10
 
 ### ✨ Added
 * Add asterisk icon to inputs when they are required, but empty. - [#312][]
