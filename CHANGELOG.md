@@ -25,24 +25,32 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 [#303]: https://github.com/fuelRats/fuelrats.com/pull/303
-[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.9...HEAD
+[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.10...HEAD
 
 
 ## [2.12.10][] - 2021-03-10
 
+### ⚡ Changed
+* Removed the asterisk that displays when an input is required. - [#315]
+    * This will be re-introduced with some better visuals at a later date.
+
+
 ### 🐛 Fixed
-* Resolved issue preventing api routes from being correctly routed. - [#314][]
+* Resolved issue preventing api routes from being correctly proxied. - [#314][]
     * Also take steps to ensure that doesn't happen again.
+* Resolved issue prevening donation sessions from being created. - [#315][]
+* Resolved a crash on the paperwork page which would occur when changing the platform in certain situations. - [#315][]
 
 
-[#314]: https://github.com/fuelRats/fuelrats.com/pull/312
+[#314]: https://github.com/fuelRats/fuelrats.com/pull/314
+[#315]: https://github.com/fuelRats/fuelrats.com/pull/315
 [2.12.10]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.9...v2.12.10
 
 
 ## [2.12.9][] - 2021-03-10
 
 ### ✨ Added
-* Add asterisk icon to inputs when they are required, but empty. - [#312][]
+* Added asterisk icon to inputs when they are required, but empty. - [#312][]
 
 
 ### ⚡ Changed
