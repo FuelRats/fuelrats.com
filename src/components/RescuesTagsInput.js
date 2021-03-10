@@ -33,7 +33,7 @@ class RescuesTagsInput extends TagsInput {
       try {
         const token = Cookies.get('access_token')
 
-        let response = await fetch(`/api/rescues/${query}`, {
+        let response = await fetch(`/api/fr/rescues/${query}`, {
           headers: new Headers({
             Authorization: `Bearer ${token}`,
           }),

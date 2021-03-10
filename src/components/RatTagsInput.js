@@ -42,7 +42,7 @@ class RatTagsInput extends TagsInput {
     })
 
     if (query) {
-      const response = await fetch(`/api/rats?${queryParams}`)
+      const response = await fetch(`/api/fr/rats?${queryParams}`)
       const { data } = await response.json()
 
       if (!data?.length) {
