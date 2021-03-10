@@ -131,7 +131,7 @@ class Paperwork extends React.Component {
 
     if (attribute === 'platform' && value !== this.props.rescue) {
       changes.firstLimpetId = []
-      changes.rats = {}
+      changes.rats = []
     }
 
     if (attribute === 'outcome' && value !== 'success') {
@@ -658,6 +658,8 @@ class Paperwork extends React.Component {
     const getValue = (value) => {
       return ifDefined(changes[value], rescue.attributes[value])
     }
+
+    console.log(changes.rats)
 
     return {
       codeRed: getValue('codeRed'),
