@@ -28,19 +28,19 @@ const configureProxies = (koaServer, env) => {
     Proxy Fuelrats API requests
   \***************************************************************************/
 
-  koaServer.use(createProxyWithDefaults('/api/oauth2/token', {
+  koaServer.use(createProxyWithDefaults('/api/fr/oauth2/token', {
     auth: `${env.api.clientId}:${env.api.clientSecret}`,
     rewrite: stripPathSegment('api'),
     target: env.api.url,
   }))
 
-  koaServer.use(createProxyWithDefaults('/api/oauth2/revoke', {
+  koaServer.use(createProxyWithDefaults('/api/fr/oauth2/revoke', {
     auth: `${env.api.clientId}:${env.api.clientSecret}`,
     rewrite: stripPathSegment('api'),
     target: env.api.url,
   }))
 
-  koaServer.use(createProxyWithDefaults('/api', {
+  koaServer.use(createProxyWithDefaults('/api/fr', {
     rewrite: stripPathSegment('api'),
     target: env.api.url,
   }))

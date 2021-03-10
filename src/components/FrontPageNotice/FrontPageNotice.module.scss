@@ -1,0 +1,84 @@
+@import '../../scss/colors';
+
+.frontPageNotice {
+  display: flex;
+  position: fixed;
+  right: 1rem;
+  bottom: 6rem;
+  z-index: 50;
+
+  flex-direction: column;
+
+  width: 256px;
+  max-height: 50rem;
+
+  box-shadow: 0 0 4px 0 #000000;
+  background: rgba($black, 67%);
+  transition: transform 0.2s ease, max-height 0.2s ease-in-out;
+
+  cursor: pointer;
+
+  backdrop-filter: blur(5px);
+
+  transform-origin: bottom right;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
+
+
+  .cardText {
+    height: 100%;
+    margin: 1rem;
+
+
+    .title {
+      color: $grey;
+
+      text-align: center;
+    }
+
+
+    .sub {
+      display: block;
+
+      text-align: right;
+    }
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+  @media
+    (max-width: 1200px),
+    (max-height: 560px) {
+    width: auto;
+    max-height: 15rem;
+
+    img {
+      object-fit: cover;
+      object-position: center 47%;
+    }
+  }
+  @media (max-width: 768px) {
+    right: 2rem;
+    left: 2rem;
+
+    flex-direction: row;
+    justify-content: space-between;
+    transform-origin: bottom center;
+
+    max-height: 7rem;
+
+    div:first-child {
+      flex-basis: 110px;
+    }
+
+    img {
+      object-fit: none;
+    }
+  }
+  @media (max-width: 360px) {
+    display: none;
+  }
+}
