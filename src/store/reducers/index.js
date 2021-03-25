@@ -11,6 +11,7 @@ import images from './images'
 import leaderboard from './leaderboard'
 import pageViews from './pageViews'
 import session from './session'
+import users from './users'
 import wordpress from './wordpress'
 
 
@@ -28,6 +29,7 @@ export default chainReducers(
       leaderboard,
       pageViews,
       session,
+      users,
       wordpress,
     }),
   ],

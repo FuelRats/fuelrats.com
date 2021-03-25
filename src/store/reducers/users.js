@@ -1,0 +1,40 @@
+import { isError } from 'flux-standard-action'
+import { produce } from 'immer'
+
+import safeParseInt from '~/helpers/safeParseInt'
+
+import actionTypes from '../actionTypes'
+import initialState from '../initialState'
+
+const metaKey = '__decals/decrement'
+
+const usersReducer = produce((draftState, action) => {
+  if (isError(action)) {
+    return
+  }
+
+  switch (action.type) {
+    case actionTypes.decals.redeem:
+      if (action.meta[metaKey]) {
+        const user = draftState[action.meta[metaKey]]
+        if (user?.meta) {
+          user.meta.redeemable = Math.max(safeParseInt(user.meta.redeemable) - 1, 0)
+        }
+      }
+      break
+
+    default:
+      break
+  }
+}, initialState.users)
+
+
+
+export function decrementsEligibleDecals (id) {
+  return {
+    [metaKey]: id,
+  }
+}
+
+
+export default usersReducer

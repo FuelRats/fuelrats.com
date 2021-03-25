@@ -1,6 +1,12 @@
-dist
+.github
+.vscode
+.yarn
 deploy_dist
+dist
+docs
 node_modules
+public
+scripts
 **/*.js
 **/*.mjs
 **/*.json

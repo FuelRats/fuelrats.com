@@ -1,8 +1,8 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+// import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
-import { useCallback } from 'react'
+// import { useCallback } from 'react'
 
 import { formatAsEliteDateTime } from '~/helpers/formatTime'
 import { makePaperworkRoute } from '~/helpers/routeGen'
@@ -70,10 +70,10 @@ function DispatchDetailsContent (props) {
   const rescuePlatform = usePlatformData(rescue)
   const rescueRats = useSelectorWithProps({ rescueId: rescue.id }, selectRenderedRatList)
 
-  const router = useRouter()
-  const handleCloseRescueDetails = useCallback(() => {
-    router.push('/dispatch')
-  }, [router])
+  // const router = useRouter()
+  // const handleCloseRescueDetails = useCallback(() => {
+  //   router.push('/dispatch')
+  // }, [router])
 
   return (
     <div className={styles.dispatchDetails}>
@@ -85,7 +85,7 @@ function DispatchDetailsContent (props) {
         </div>
         <div>
           <ElapsedTimer from={createdAt} />
-          <button
+          {/* <button
             readOnly
             aria-label={`Hide detail view for rescue of ${client}`}
             className={[styles.closeButton, 'icon']}
@@ -94,7 +94,7 @@ function DispatchDetailsContent (props) {
             type="button"
             onClick={handleCloseRescueDetails}>
             <FontAwesomeIcon fixedWidth icon="times" />
-          </button>
+          </button> */}
         </div>
 
       </div>

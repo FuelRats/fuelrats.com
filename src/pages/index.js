@@ -81,8 +81,6 @@ class Index extends React.Component {
             <a className="button tall">{'Get Fuel'}</a>
           </Link>
         </footer>
-
-
       </section>
     )
   }

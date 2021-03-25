@@ -2,7 +2,7 @@ import { TooManyRequestsError } from './error'
 
 const hourTimer = 60 * 60 * 1000
 
-const allowedUnauthenticatedRequestCount = 10
+const allowedUnauthenticatedRequestCount = 3
 
 
 /**
@@ -10,6 +10,7 @@ const allowedUnauthenticatedRequestCount = 10
  * @class
  */
 class TrafficControl {
+  unauthenticatedRequests = {}
   #resetTimer = 0
 
   /**
@@ -28,16 +29,22 @@ class TrafficControl {
    * and the total requests
    */
   validateRateLimit ({ connection, increase = true }) {
-    const entity = this.retrieveUnauthenticatedEntity({ remoteAddress: connection.ip })
+    const fingerprint = connection.request.get('X-Fingerprint')
+    let entity = null
+    let valid = false
 
-    const valid = entity.remainingRequests > 0
-    if (valid && increase) {
-      entity.count += 1
+    if (fingerprint) {
+      entity = this.retrieveUnauthenticatedEntity({ remoteAddress: connection.ip, fingerprint })
+      valid = entity.remainingRequests > 0
+      if (valid && increase) {
+        entity.count += 1
+      }
     }
+
     return {
       exceeded: !valid,
-      remaining: entity.remainingRequests,
-      total: entity.totalRequests,
+      remaining: entity?.remainingRequests ?? 0,
+      total: entity?.totalRequests ?? allowedUnauthenticatedRequestCount,
       reset: this.nextResetDate,
     }
   }
@@ -47,11 +54,12 @@ class TrafficControl {
    * @param {string} remoteAddress - The remote address associated with this request
    * @returns {object} an instance of RemoteAddressEntity
    */
-  retrieveUnauthenticatedEntity ({ remoteAddress }) {
-    let entity = this.unauthenticatedRequests[remoteAddress]
+  retrieveUnauthenticatedEntity ({ remoteAddress, fingerprint }) {
+    let entity = this.unauthenticatedRequests[remoteAddress] || this.unauthenticatedRequests[fingerprint]
     if (!entity) {
-      entity = new RemoteAddressEntity({ remoteAddress })
+      entity = new RemoteAddressEntity({ remoteAddress, fingerprint })
       this.unauthenticatedRequests[remoteAddress] = entity
+      this.unauthenticatedRequests[fingerprint] = entity
     }
     return entity
   }
@@ -84,42 +92,22 @@ class TrafficControl {
 }
 
 /**
- * Base class representing a request traffic entity
- * @class
- */
-class TrafficEntity {
-  /**
-   * Get the number of requests made by this entity during the rate limit period
-   * @returns {number} number of requests made by this entity during the rate limit period
-   */
-  get count () {
-    return this.requestCount
-  }
-
-  /**
-   * Set the number of requests made by this entity during the rate limit period
-   * @param {number} count The number of requests made by this entity during the rate limit period
-   */
-  set count (count) {
-    this.requestCount = count
-  }
-}
-
-/**
  * Class representing an unauthenticated remote address containing their requests the last clock hour
  */
-class RemoteAddressEntity extends TrafficEntity {
+class RemoteAddressEntity {
   #remoteAddress = undefined
+  #fingerprint = undefined
 
   /**
    * Create an entity representing the traffic made by a specific unauthenticated remote address
    * @param {object} arg function arguments object
    * @param {string} arg.remoteAddress The remote address this traffic belongs to
+   * @param {string} arg.fingerprint The fingerprint provided by the
    * @param {number} [arg.initialCount] Optional parameter containing the number of requests this entity should start
    */
-  constructor ({ remoteAddress, initialCount = 0 }) {
-    super()
+  constructor ({ remoteAddress, fingerprint, initialCount = 0 }) {
     this.#remoteAddress = remoteAddress
+    this.#fingerprint = fingerprint
     this.requestCount = initialCount
   }
 
@@ -137,6 +125,22 @@ class RemoteAddressEntity extends TrafficEntity {
    */
   get totalRequests () {
     return allowedUnauthenticatedRequestCount
+  }
+
+  /**
+   * Get the number of requests made by this entity during the rate limit period
+   * @returns {number} number of requests made by this entity during the rate limit period
+   */
+  get count () {
+    return this.requestCount
+  }
+
+  /**
+   * Set the number of requests made by this entity during the rate limit period
+   * @param {number} count The number of requests made by this entity during the rate limit period
+   */
+  set count (count) {
+    this.requestCount = count
   }
 }
 

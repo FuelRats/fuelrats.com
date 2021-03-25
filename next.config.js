@@ -55,15 +55,15 @@ module.exports = {
     },
     apis: {
       fuelRats: {
-        local: `${FINAL_PUBLIC_URL}/api`,
+        local: `${FINAL_PUBLIC_URL}/api/fr`,
         server: FRDC_API_URL || 'http://localhost:8080',
         socket: FRDC_SOCKET_URL || 'wss://localhost:8080',
       },
       wordpress: {
-        url: `${FINAL_PUBLIC_URL}/wp-api`,
+        url: `${FINAL_PUBLIC_URL}/api/wp`,
       },
       stripe: {
-        url: `${FINAL_PUBLIC_URL}/st-api`,
+        url: `${FINAL_PUBLIC_URL}/api/stripe`,
         public: FRDC_STRIPE_API_PK || null,
       },
     },

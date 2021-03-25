@@ -48,17 +48,19 @@ const prepareResponse = async (ctx, next) => {
       ? error
       : undefined
 
+    const finalError = error instanceof ApiError
+      ? error
+      : new InternalServerError({
+        internalError,
+      })
+
     ctx.status = typeof error?.code === 'number' ? error.code : HttpStatus.INTERNAL_SERVER_ERROR
     ctx.body = new ResponseDocument({
       ctx,
-      errors: [
-        error instanceof ApiError
-          ? error
-          : new InternalServerError({
-            internalError,
-          }),
-      ],
+      errors: [finalError],
     })
+
+    console.error(error)
   }
 
   ctx.type = 'application/json'

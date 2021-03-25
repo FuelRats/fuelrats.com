@@ -2,9 +2,13 @@ select {
   appearance: none;
 
   width: 100%;
+
+  /* dirty hax for input consistency. maybe fix when we move this to module styles */
+  height: 41px;
   padding: 1rem;
 
   border: 0.1rem solid $grey-lightened;
+  border-radius: 0;
 
   outline: none;
 
@@ -26,7 +30,7 @@ select {
       box-shadow: 0 0 0.5rem 0 rgba($red, 0.5);
     }
 
-    &:valid {
+    &.valid {
       border-color: $green-lightened;
 
       &:focus {

@@ -6,7 +6,7 @@ import koaProxy from 'koa-proxies'
 
 const stripPathSegment = (segmentName, replaceValue = '/') => {
   return (path) => {
-    return path.replace(new RegExp(`\\/${segmentName}\\/`, 'u'), replaceValue)
+    return path.replace(new RegExp(`${segmentName}\\/`, 'u'), replaceValue)
   }
 }
 
@@ -28,20 +28,22 @@ const configureProxies = (koaServer, env) => {
     Proxy Fuelrats API requests
   \***************************************************************************/
 
-  koaServer.use(createProxyWithDefaults('/api/oauth2/token', {
+  const frApiPath = '/api/fr'
+
+  koaServer.use(createProxyWithDefaults(`${frApiPath}/oauth2/token`, {
     auth: `${env.api.clientId}:${env.api.clientSecret}`,
-    rewrite: stripPathSegment('api'),
+    rewrite: stripPathSegment(frApiPath),
     target: env.api.url,
   }))
 
-  koaServer.use(createProxyWithDefaults('/api/oauth2/revoke', {
+  koaServer.use(createProxyWithDefaults(`${frApiPath}/oauth2/revoke`, {
     auth: `${env.api.clientId}:${env.api.clientSecret}`,
-    rewrite: stripPathSegment('api'),
+    rewrite: stripPathSegment(frApiPath),
     target: env.api.url,
   }))
 
-  koaServer.use(createProxyWithDefaults('/api', {
-    rewrite: stripPathSegment('api'),
+  koaServer.use(createProxyWithDefaults(frApiPath, {
+    rewrite: stripPathSegment(frApiPath),
     target: env.api.url,
   }))
 
@@ -53,8 +55,10 @@ const configureProxies = (koaServer, env) => {
     Proxy EDSM API requests
   \***************************************************************************/
 
-  koaServer.use(createProxyWithDefaults('/edsm-api', {
-    rewrite: stripPathSegment('edsm-api'),
+  const edsmApiPath = '/api/edsm'
+
+  koaServer.use(createProxyWithDefaults(edsmApiPath, {
+    rewrite: stripPathSegment(edsmApiPath),
     target: env.edsm.url,
   }))
 
@@ -66,8 +70,10 @@ const configureProxies = (koaServer, env) => {
     Proxy Wordpress requests
   \***************************************************************************/
 
-  koaServer.use(createProxyWithDefaults('/wp-api', {
-    rewrite: stripPathSegment('wp-api', '/wp-json/wp/v2/'),
+  const wpApiPath = '/api/wp'
+
+  koaServer.use(createProxyWithDefaults(wpApiPath, {
+    rewrite: stripPathSegment(wpApiPath, '/wp-json/wp/v2/'),
     target: env.wordpress.url,
   }))
 

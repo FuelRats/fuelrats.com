@@ -52,8 +52,21 @@ function RescueCard (props) {
     setAnimating(false)
   }, [])
 
-
   const router = useRouter()
+  useStoreEffect(
+    (nextState) => {
+      if (nextState.attributes.status === 'closed') {
+        if (router.query.rId === nextState.id) {
+          router.push('/dispatch')
+        }
+      } else {
+        setAnimating(true)
+      }
+    },
+    [router],
+    `rescues.${rescue.id}`,
+  )
+
   const handleFocusRescue = useCallback(() => {
     const query = {}
 
@@ -63,18 +76,6 @@ function RescueCard (props) {
 
     router.push(makeRoute('/dispatch', query))
   }, [rescue.id, router])
-
-  useStoreEffect(
-    (nextState) => {
-      if (nextState.attributes.status !== 'closed') {
-        setAnimating(true)
-      } else if (router.query.rId === nextState.id) {
-        router.push('/dispatch')
-      }
-    },
-    [], // eslint-disable-line react-hooks/exhaustive-deps
-    `rescues.${rescue.id}`,
-  )
 
   const {
     codeRed,

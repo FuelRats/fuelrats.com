@@ -1,0 +1,24 @@
+@import '../../../scss/colors';
+
+
+.select {
+  :global(.validityIconGroup) {
+    right: 2.85rem;
+  }
+}
+
+.arrow {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+
+  padding: 1rem #{(2 / 3) * 1rem};
+
+  border: none;
+
+  color: $grey;
+
+  line-height: normal;
+
+  pointer-events: none;
+}
