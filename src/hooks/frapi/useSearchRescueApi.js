@@ -1,6 +1,7 @@
 import { useEffect, useReducer, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
+import { isValidUuidV4 } from '~/helpers/uuidValidator'
 import { getRescue } from '~/store/actions/rescues'
 
 export default function useSearchRescueApi (initialRescueId = null) {
@@ -47,7 +48,7 @@ export default function useSearchRescueApi (initialRescueId = null) {
       didCancel = true
     }
 
-    if (typeof rescueId !== 'string' || !rescueId.match(/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/u)) {
+    if (typeof rescueId !== 'string' || !isValidUuidV4(rescueId)) {
       return cleanup
     }
 
@@ -55,10 +56,6 @@ export default function useSearchRescueApi (initialRescueId = null) {
     const fetchRescue = async () => {
       dispatch({ type: 'FETCH_START' })
 
-      if (typeof rescueId !== 'string' || !rescueId.match(/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/u)) {
-        dispatch({ type: 'FETCH_FAILURE' })
-        return cleanup
-      }
       const result = await reduxDispatch(getRescue(rescueId))
 
       if (!didCancel) {

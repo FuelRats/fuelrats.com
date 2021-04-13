@@ -1,3 +1,5 @@
+import { isValidUuidV4 } from '~/helpers/uuidValidator'
+
 import InputFieldset, { useValidationCallback } from './InputFieldset'
 
 export default function RescueIdFieldset (props) {
@@ -9,7 +11,7 @@ export default function RescueIdFieldset (props) {
 
   const handleValidate = useValidationCallback(
     (messages, value) => {
-      if (!value.match(/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/u)) {
+      if (!isValidUuidV4(value)) {
         messages.errors.push('The syntax of the rescue ID is invalid, it should be in the form: 00000000-0000-0000-0000-000000000000!')
       }
     },

@@ -1,6 +1,7 @@
 import { useEffect, useReducer, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
+import { isValidUuidV4 } from '~/helpers/uuidValidator'
 import { createEpic } from '~/store/actions/epics'
 
 export default function useCreateEpicApi () {
@@ -51,7 +52,7 @@ export default function useCreateEpicApi () {
       didCancel = true
     }
 
-    if (typeof createEpicData.rescueId !== 'string' || !createEpicData.rescueId.match(/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/u)) {
+    if (typeof createEpicData.rescueId !== 'string' || !isValidUuidV4(createEpicData.rescueId)) {
       return cleanup
     }
 
@@ -59,10 +60,6 @@ export default function useCreateEpicApi () {
     const createEpicCall = async () => {
       dispatch({ type: 'CREATE_START' })
 
-      if (typeof createEpicData.rescueId !== 'string' || !createEpicData.rescueId.match(/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/u)) {
-        dispatch({ type: 'CREATE_FAILURE' })
-        return cleanup
-      }
       const result = await reduxDispatch(createEpic({
         attributes: {
           notes: createEpicData.notes,
