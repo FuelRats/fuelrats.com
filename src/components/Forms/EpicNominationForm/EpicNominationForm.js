@@ -5,6 +5,8 @@ import RadioFieldset from '~/components/Fieldsets/RadioFieldset'
 import NominateRescueForm from '~/components/Forms/EpicNominationForm/NominateRescueForm'
 import useForm from '~/hooks/useForm'
 
+import styles from './EpicNominationForm.module.scss'
+
 const radioChildren = [
   {
     label: 'A rat, or group of rats, who performed an epic rescue.',
@@ -48,7 +50,7 @@ export default function EpicNominationForm () {
 
   if (error) {
     return (
-      <div>
+      <div className={styles.wrapper}>
         <p>{'There was an error while processing your epic nomination.'}</p>
         <p>{'Please contact a techrat if this issue persists!'}</p>
       </div>
@@ -57,7 +59,7 @@ export default function EpicNominationForm () {
 
   if (success) {
     return (
-      <div>
+      <div className={styles.wrapper}>
         <h3>{'Thanks!'}</h3>
         <p>{'Your epic nomination has been submitted. If approved, the rats nominated will be notified that they are now epic rats!'}</p>
         <p>{'Note that while we track who nominates who, the nominees will never be notified of who made the original nomination for their epic deed.'}</p>
