@@ -56,7 +56,6 @@ export default function useCreateEpicApi () {
       return cleanup
     }
 
-    // eslint-disable-next-line consistent-return
     const createEpicCall = async () => {
       dispatch({ type: 'CREATE_START' })
 

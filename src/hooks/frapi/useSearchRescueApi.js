@@ -52,7 +52,6 @@ export default function useSearchRescueApi (initialRescueId = null) {
       return cleanup
     }
 
-    // eslint-disable-next-line consistent-return
     const fetchRescue = async () => {
       dispatch({ type: 'FETCH_START' })
 
