@@ -60,10 +60,10 @@ export default function RescueDetail (props) {
           <td><b>{'Rats'}</b></td>
           <td>
             {
-rats.map((rat) => {
-  return rat.attributes.name
-}).join(', ')
-}
+              rats.map((rat) => {
+                return rat.attributes.name
+              }).join(', ')
+            }
           </td>
         </tr>
         <tr>

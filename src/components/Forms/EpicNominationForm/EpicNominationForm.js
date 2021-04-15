@@ -81,14 +81,12 @@ export default function EpicNominationForm () {
 
 
       {
-type === 'RESCUE'
-  && (
-    <NominateRescueForm
-      onError={onError}
-      onSuccess={onSuccess} />
-  )
-
-}
+        type === 'RESCUE' && (
+          <NominateRescueForm
+            onError={onError}
+            onSuccess={onSuccess} />
+        )
+      }
       {type === 'RAT' && <p> {'Coming soon...'}</p>}
     </>
 

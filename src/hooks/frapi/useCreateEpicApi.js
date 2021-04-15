@@ -4,6 +4,34 @@ import { useDispatch } from 'react-redux'
 import { isValidUuidV4 } from '~/helpers/uuidValidator'
 import { createEpic } from '~/store/actions/epics'
 
+const rescueFetchReducer = (state, action) => {
+  switch (action.type) {
+    case 'CREATE_START':
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+        epicId: null,
+      }
+    case 'CREATE_SUCCESS':
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        epicId: action.epicId,
+      }
+    case 'CREATE_FAILURE':
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        epicId: null,
+      }
+    default:
+      throw new Error('Wrong action type used')
+  }
+}
+
 export default function useCreateEpicApi () {
   const [createEpicData, setCreateEpic] = useState({
     rescueId: null,
@@ -11,34 +39,6 @@ export default function useCreateEpicApi () {
     nomineeIds: [],
   })
   const reduxDispatch = useDispatch()
-
-  const rescueFetchReducer = (state, action) => {
-    switch (action.type) {
-      case 'CREATE_START':
-        return {
-          ...state,
-          isLoading: true,
-          isError: false,
-          epicId: null,
-        }
-      case 'CREATE_SUCCESS':
-        return {
-          ...state,
-          isLoading: false,
-          isError: false,
-          epicId: action.epicId,
-        }
-      case 'CREATE_FAILURE':
-        return {
-          ...state,
-          isLoading: false,
-          isError: true,
-          epicId: null,
-        }
-      default:
-        throw new Error('Wrong action type used')
-    }
-  }
 
   const [state, dispatch] = useReducer(rescueFetchReducer, {
     isLoading: false,

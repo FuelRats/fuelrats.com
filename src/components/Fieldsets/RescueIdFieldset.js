@@ -27,7 +27,6 @@ export default function RescueIdFieldset (props) {
       name="attributes.rescueId"
       placeholder="00000000-0000-0000-0000-000000000000"
       {...inputProps}
-      type="text"
       onChange={onChange}
       onValidate={handleValidate} />
   )
