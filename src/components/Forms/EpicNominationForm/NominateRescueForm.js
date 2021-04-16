@@ -75,14 +75,14 @@ export default function NominateRescueForm ({ onSuccess, onError }) {
 
   return (
     <Form>
-      <RescueIdFieldset id="rescueId" label="ID of the Rescue" name="attributes.rescueId" onChange={onChangeRescueUuid} />
+      <RescueIdFieldset required id="rescueId" label="ID of the Rescue" name="attributes.rescueId" onChange={onChangeRescueUuid} />
 
       {rescue && <RescueDetail rescue={rescue} />}
       <div className={styles.fetchingText}>
         {isRescueLoading && 'Fetching rescue, please wait...'}
         {isRescueError && 'Couldn\'t find rescue'}
       </div>
-      <InputFieldset id="notes" label="What did the rat(s) do that makes them so epic?" name="attributes.notes" />
+      <InputFieldset required id="notes" label="What did the rat(s) do that makes them so epic?" name="attributes.notes" />
 
       <fieldset className={styles.submitBtn}>
         <button

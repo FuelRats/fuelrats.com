@@ -2,6 +2,7 @@
 import { useState } from 'react'
 
 import RadioFieldset from '~/components/Fieldsets/RadioFieldset'
+import NominateRatForm from '~/components/Forms/EpicNominationForm/NominateRatForm'
 import NominateRescueForm from '~/components/Forms/EpicNominationForm/NominateRescueForm'
 import useForm from '~/hooks/useForm'
 
@@ -61,7 +62,7 @@ export default function EpicNominationForm () {
     return (
       <div className={styles.wrapper}>
         <h3>{'Thanks!'}</h3>
-        <p>{'Your epic nomination has been submitted. If approved, the rats nominated will be notified that they are now epic rats!'}</p>
+        <p>{'Your epic nomination has been submitted. If approved, the rat(s) nominated will be notified that they are now epic rats!'}</p>
         <p>{'Note that while we track who nominates who, the nominees will never be notified of who made the original nomination for their epic deed.'}</p>
       </div>
     )
@@ -79,7 +80,6 @@ export default function EpicNominationForm () {
           onChange={onTypeChange} />
       </Form>
 
-
       {
         type === 'RESCUE' && (
           <NominateRescueForm
@@ -87,7 +87,13 @@ export default function EpicNominationForm () {
             onSuccess={onSuccess} />
         )
       }
-      {type === 'RAT' && <p> {'Coming soon...'}</p>}
+      {
+        type === 'RAT' && (
+          <NominateRatForm
+            onError={onError}
+            onSuccess={onSuccess} />
+        )
+      }
     </>
 
   )

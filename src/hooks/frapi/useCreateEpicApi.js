@@ -52,24 +52,22 @@ export default function useCreateEpicApi () {
       didCancel = true
     }
 
-    if (typeof createEpicData.rescueId !== 'string' || !isValidUuidV4(createEpicData.rescueId)) {
+    if (typeof createEpicData.rescueId === 'string' && !isValidUuidV4(createEpicData.rescueId)) {
+      return cleanup
+    }
+
+    if (typeof createEpicData.notes !== 'string' || createEpicData.nomineeIds.length === 0) {
       return cleanup
     }
 
     const createEpicCall = async () => {
       dispatch({ type: 'CREATE_START' })
 
-      const result = await reduxDispatch(createEpic({
+      const postBody = {
         attributes: {
           notes: createEpicData.notes,
         },
         relationships: {
-          rescue: {
-            data: {
-              type: 'rescues',
-              id: createEpicData.rescueId,
-            },
-          },
           nominees: {
             data: createEpicData.nomineeIds.map((userId) => {
               return {
@@ -79,7 +77,18 @@ export default function useCreateEpicApi () {
             }),
           },
         },
-      }))
+      }
+
+      if (createEpicData.rescueId) {
+        postBody.relationships.rescue = {
+          data: {
+            type: 'rescues',
+            id: createEpicData.rescueId,
+          },
+        }
+      }
+
+      const result = await reduxDispatch(createEpic(postBody))
 
       if (!didCancel) {
         if (result.error) {
