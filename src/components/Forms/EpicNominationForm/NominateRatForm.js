@@ -1,5 +1,4 @@
-/* eslint-disable react/jsx-no-bind */
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import InputFieldset from '~/components/Fieldsets/InputFieldset'
 import RatTagsInput from '~/components/RatTagsInput'
@@ -27,14 +26,14 @@ export default function NominateRatForm ({ onSuccess, onError }) {
     })
   }
 
-  const onChangeRat = (rats) => {
+  const onChangeRat = useCallback((rats) => {
     if (rats.length !== 1 || !isValidUuidV4(rats[0].relationships.user.data.id)) {
       setUserId(null)
       return
     }
 
     setUserId(rats[0].relationships.user.data.id)
-  }
+  }, [setUserId])
   const {
     Form,
     submitting,
@@ -79,7 +78,7 @@ export default function NominateRatForm ({ onSuccess, onError }) {
           onChange={onChangeRat} />
       </fieldset>
 
-      <InputFieldset required id="notes" label="What did the rat do that makes him so epic?" name="attributes.notes" />
+      <InputFieldset required id="notes" label="What did the rat do that makes them so epic?" name="attributes.notes" />
 
       <fieldset className={styles.submitBtn}>
         <button

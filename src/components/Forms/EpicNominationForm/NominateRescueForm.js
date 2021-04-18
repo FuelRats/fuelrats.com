@@ -1,5 +1,4 @@
-/* eslint-disable react/jsx-no-bind */
-import { useEffect } from 'react'
+import { useEffect, useCallback } from 'react'
 
 import InputFieldset from '~/components/Fieldsets/InputFieldset'
 import RescueIdFieldset from '~/components/Fieldsets/RescueIdFieldset'
@@ -28,12 +27,12 @@ export default function NominateRescueForm ({ onSuccess, onError }) {
   const rescue = useSelectorWithProps({ rescueId }, selectRescueById)
   const rats = useSelectorWithProps({ rescueId }, selectRatsByRescueId)
 
-  const onChangeRescueUuid = (props) => {
+  const onChangeRescueUuid = useCallback((props) => {
     if (!rescue && getValidityErrors(props.target).length) {
       return
     }
     searchRescue(props.target.value)
-  }
+  }, [searchRescue, rescue])
 
   const onSubmit = (props) => {
     createEpic({

@@ -1,10 +1,8 @@
-/* eslint-disable react/jsx-no-bind */
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 
-import RadioFieldset from '~/components/Fieldsets/RadioFieldset'
 import NominateRatForm from '~/components/Forms/EpicNominationForm/NominateRatForm'
 import NominateRescueForm from '~/components/Forms/EpicNominationForm/NominateRescueForm'
-import useForm from '~/hooks/useForm'
+import RadioInput from '~/components/RadioInput'
 
 import styles from './EpicNominationForm.module.scss'
 
@@ -25,29 +23,16 @@ export default function EpicNominationForm () {
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState(false)
 
-  const onSubmit = () => {}
-  const onSuccess = () => {
+  const onSuccess = useCallback(() => {
     setSuccess(true)
-  }
-  const onError = () => {
+  }, [setSuccess])
+  const onError = useCallback(() => {
     setError(true)
-  }
+  }, [setError])
 
-  const onTypeChange = (ev) => {
+  const onTypeChange = useCallback((ev) => {
     setType(ev.target.value)
-  }
-
-  const {
-    Form,
-  } = useForm({
-    data: {
-      attributes: {
-        epicType: type,
-      },
-    },
-    onSubmit,
-  })
-
+  }, [setType])
 
   if (error) {
     return (
@@ -70,15 +55,14 @@ export default function EpicNominationForm () {
 
   return (
     <>
-      {/* This form is not used but is neccesary for the RadioFieldset to function */}
-      <Form>
-        <RadioFieldset
+      <fieldset>
+        <label htmlFor="type">{'Who are you nominating for an epic today?'}</label>
+        <RadioInput
           id="type"
-          label="Who are you nominating for an epic today?"
-          name="attributes.epicType"
           options={radioChildren}
+          value={type}
           onChange={onTypeChange} />
-      </Form>
+      </fieldset>
 
       {
         type === 'RESCUE' && (
