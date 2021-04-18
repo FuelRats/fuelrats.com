@@ -28,6 +28,7 @@ const BUILD_COMMIT_SHORT = $BUILD_COMMIT_SHORT
 function Header () {
   const { loggedIn } = useSelector(selectSession)
   const userCanDispatch = useSelectorWithProps({ scope: 'dispatch.read' }, selectCurrentUserHasScope)
+  const userCanCreateEpic = useSelectorWithProps({ scope: 'epics.write.me' }, selectCurrentUserHasScope)
 
   const checkboxRef = useRef()
 
@@ -92,6 +93,13 @@ function Header () {
                   userCanDispatch && (
                     <NavLink href="/dispatch">
                       {'Dispatch Board'}
+                    </NavLink>
+                  )
+                }
+                {
+                  userCanCreateEpic && (
+                    <NavLink href="/epic/nominate">
+                      {'Epic Nomination'}
                     </NavLink>
                   )
                 }
