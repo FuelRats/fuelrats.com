@@ -27,7 +27,7 @@ function BooleanRadioFieldset (props) {
   } = props
 
   const onValidate = useCallback((value) => {
-    return Boolean(value) || !required
+    return typeof value === 'boolean' || (typeof value === 'undefined' && !required)
   }, [required])
 
   const { value = undefined, handleChange, submitting } = useField(props.name, { onChange, onValidate })
