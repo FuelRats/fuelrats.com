@@ -35,16 +35,19 @@ function useField (name = isRequired('name'), opts = {}) {
     validateOpts ?? { wait: 250 },
   )
 
-  const handleChange = useCallback((event) => {
-    onChange?.(event)
-
-    if (event.defaultPrevented) {
-      return
-    }
-
+  const handleChange = useCallback((event, nextValue) => {
     let { value } = event.target
     if (event.target.type === 'checkbox') {
       value = event.target.checked
+    }
+    if (typeof nextValue !== 'undefined') {
+      value = nextValue
+    }
+
+    onChange?.(event, value)
+
+    if (event.defaultPrevented) {
+      return
     }
 
     if (typeof onValidate === 'function') {
