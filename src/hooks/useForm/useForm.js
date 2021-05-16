@@ -40,7 +40,9 @@ export default function useForm (config = {}) {
           value: _get(initialStateRef.current, action.name),
           valid: action.valid,
         })
+        return
       }
+
       if (Reflect.has(action, 'value')) {
         dispatchState(action)
         if (trackDelta) {
