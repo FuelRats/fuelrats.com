@@ -6,14 +6,6 @@
 
   line-height: 2.2rem;
 
-  /* global selector required for specificity */
-  /* stylelint-disable-next-line selector-class-pattern */
-  &.loading .handle:global(.svg-inline--fa.fa-fw) {
-    background: $grey;
-
-    transform: translateX(50%);
-  }
-
   &.checked {
     /* global selector required for specificity */
     /* stylelint-disable-next-line selector-class-pattern */
@@ -21,6 +13,16 @@
       background: $green;
 
       transform: translateX(100%);
+    }
+  }
+
+  &.loading {
+    /* global selector required for specificity */
+    /* stylelint-disable-next-line selector-class-pattern */
+    .handle:global(.svg-inline--fa.fa-fw) {
+      background: $grey;
+
+      transform: translateX(50%);
     }
   }
 

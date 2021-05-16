@@ -36,14 +36,16 @@ function Switch (props) {
   let icon = 'times'
   if (loading) {
     icon = 'circle'
-  }
-  if (props.checked) {
+  } else if (props.checked) {
     icon = 'check'
   }
 
   return (
     <div>
-      <label {...containerProps} className={[styles.switch, { [styles.checked]: props.checked, [styles.disabled]: props.disabled }, className]} htmlFor={id}>
+      <label
+        {...containerProps}
+        className={[styles.switch, { [styles.checked]: props.checked, [styles.loading]: loading, [styles.disabled]: props.disabled }, className]}
+        htmlFor={id}>
         <input
           {...inputProps}
           className={styles.input}
@@ -55,7 +57,7 @@ function Switch (props) {
         <span className={styles.slider} />
         <FontAwesomeIcon
           fixedWidth
-          className={[styles.handle, { [styles.loading]: loading }]}
+          className={[styles.handle]}
           icon={icon} />
 
         {
