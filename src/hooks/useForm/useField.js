@@ -13,6 +13,8 @@ import { useFormContext } from './useFormComponent'
 function useField (name = isRequired('name'), opts = {}) {
   const { onValidate, onChange, validateOpts } = opts
 
+  const nameRef = useRef(name)
+
   const ctxRef = useRef(null)
   ctxRef.current = useFormContext()
 
@@ -28,10 +30,10 @@ function useField (name = isRequired('name'), opts = {}) {
   const debouncedValidate = useDebouncedCallback(
     async (value) => {
       dirtyState.current = false
-      await ctxRef.current?.validateField(name, value, ctxRef.current?.ctx.state)
+      await ctxRef.current?.validateField(nameRef.current, value, ctxRef.current?.ctx.state)
       setValidatingState(false)
     },
-    [name],
+    [],
     validateOpts ?? { wait: 250 },
   )
 
@@ -56,20 +58,35 @@ function useField (name = isRequired('name'), opts = {}) {
       dirtyState.current = true
     }
 
-    ctxRef.current?.ctx.dispatchField({ name, value })
-  }, [onChange, onValidate, name])
+    ctxRef.current?.ctx.dispatchField({ name: nameRef.current, value })
+  }, [onChange, onValidate])
 
   // Register our validation method for this field
   useEffect(
     () => {
+      const currentName = nameRef.current
       if (typeof onValidate === 'function') {
-        ctxRef.current?.registerValidator(name, onValidate)
+        ctxRef.current?.registerValidator(currentName, onValidate)
       }
       return () => {
-        ctxRef.current?.registerValidator(name, undefined)
+        ctxRef.current?.registerValidator(currentName, undefined)
       }
     },
-    [name, onValidate],
+    [onValidate],
+  )
+
+  // Clear state value on unmount, but also use this hook as a check for changes to the name variable, which should never change.
+  useEffect(
+    () => {
+      if (nameRef.current !== name) {
+        throw new Error('Field names must be static. Dynamically mount another field instead of reassigning an existing field')
+      }
+
+      return () => {
+        ctxRef.current?.ctx.dispatchField({ name, default: true })
+      }
+    },
+    [name],
   )
 
   // validate whenever the field is marked as dirty
@@ -83,12 +100,12 @@ function useField (name = isRequired('name'), opts = {}) {
 
       if (!validating) {
         setValidatingState(true)
-        ctxRef.current?.ctx.dispatchValidity({ name, valid: false })
+        ctxRef.current?.ctx.dispatchValidity({ name: nameRef.current, valid: false })
       }
 
       debouncedValidate(inputValue)
     },
-    [debouncedValidate, inputValue, name, onValidate, validating],
+    [debouncedValidate, inputValue, onValidate, validating],
   )
 
   return {
