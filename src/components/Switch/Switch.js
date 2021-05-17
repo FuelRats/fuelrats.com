@@ -52,7 +52,7 @@ function Switch (props) {
           disabled={loading || disabled}
           id={id}
           type="checkbox"
-          onClick={handleClick} />
+          onChange={handleClick} />
 
         <span className={styles.slider} />
         <FontAwesomeIcon
