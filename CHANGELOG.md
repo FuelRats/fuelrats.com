@@ -9,6 +9,30 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ## [Unreleased][]
 
 ### ✨ Added
+*
+
+
+### ⚡ Changed
+*
+
+
+### 🐛 Fixed
+*
+
+
+### ⚙ Tasks
+*
+
+
+[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.13.0...HEAD
+
+
+
+
+
+## [2.13.0][] - 2021-03-19
+
+### ✨ Added
 * Added controls for rats to opt-in to Odyssey rescues. - [#320][]
 * Added `odyssey` field to registration page. - [#320][]
 
@@ -28,7 +52,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 [#316]: https://github.com/fuelRats/fuelrats.com/pull/316
 [#317]: https://github.com/fuelRats/fuelrats.com/pull/317
 [#320]: https://github.com/fuelRats/fuelrats.com/pull/320
-[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.10...HEAD
+[2.13.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.10...v2.13.0
 
 
 ## [2.12.10][] - 2021-03-10
