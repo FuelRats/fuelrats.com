@@ -66,6 +66,9 @@ module.exports = {
       },
     },
   },
+  future: {
+    webpack5: true,
+  },
   webpack: (config, opt) => {
     /* Define Plugin */
     config.plugins.push(new DefinePlugin({
@@ -80,18 +83,13 @@ module.exports = {
       $NODE_VERSION: JSON.stringify(process.version),
     }))
 
+    // Workaround to fix dev warning: https://github.com/vercel/next.js/issues/19865
+    config.output.hotUpdateMainFilename = 'static/webpack/[fullhash].[runtime].hot-update.json'
 
-    /* worker-loader */
-    config.module.rules.unshift({
-      test: /\.worker\.js$/u,
-      loader: require.resolve('worker-loader'),
-      options: {
-        filename: 'static/[contenthash].worker.js',
-        publicPath: '/_next/',
-      },
-    })
-    config.output.globalObject = 'self'
-
+    // Workaround to fix production builds with workers: https://github.com/vercel/next.js/issues/22813
+    config.output.chunkFilename = opt.isServer
+      ? `${opt.dev ? '[name]' : '[name].[fullhash]'}.js`
+      : `static/chunks/${opt.dev ? '[name]' : '[name].[fullhash]'}.js`
 
     /* SVGR */
     config.module.rules.push({
