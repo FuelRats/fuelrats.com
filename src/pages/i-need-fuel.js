@@ -1,8 +1,16 @@
+import getConfig from 'next/config'
 import Link from 'next/link'
 import { createStructuredSelector } from 'reselect'
 
 import { connect } from '~/store'
 import { selectSession } from '~/store/selectors'
+
+
+
+
+
+const { publicRuntimeConfig } = getConfig()
+const { irc: ircURLs } = publicRuntimeConfig
 
 
 
@@ -49,7 +57,7 @@ function INeedFuel (props) {
               <div className="buttons">
                 <a
                   className="button call-to-action green"
-                  href="https://clients.fuelrats.com:7778/"
+                  href={ircURLs.client}
                   rel="noopener noreferrer"
                   target="_blank">
                   {'Yes, I Need Fuel!'}
@@ -61,7 +69,7 @@ function INeedFuel (props) {
 
                 <a
                   className="button secondary"
-                  href="https://kiwi.fuelrats.com/"
+                  href={ircURLs.rat}
                   rel="noopener noreferrer"
                   target="_blank">
                   {"I don't need fuel, but I still want to chat."}
