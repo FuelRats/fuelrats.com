@@ -58,7 +58,7 @@
     "@types/react-dom": "^17.0.5",
     "@types/react-redux": "^7.1.16",
     "@types/ua-parser-js": "^0.7.36",
-    "@types/webpack": "^4.41.28",
+    "@types/webpack": "^5.28.0",
     "@types/zxcvbn": "^4.4.1",
     "babel-loader": "8.2.2",
     "builtin-modules": "^3.2.0",
@@ -78,7 +78,7 @@
     "stylelint": "^13.13.1",
     "stylelint-order": "^4.1.0",
     "stylelint-scss": "^3.19.0",
-    "webpack": "^4.44.2",
+    "webpack": "^5.37.0",
     "worker-loader": "^3.0.8"
   },
   "dependencies": {
