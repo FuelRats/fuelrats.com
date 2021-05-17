@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, m } from 'framer-motion'
 import hoistNonReactStatics from 'hoist-non-react-statics'
 import React, { useCallback, useMemo, useContext } from 'react'
 
@@ -63,7 +63,7 @@ function ModalComponent (props) {
   }, [onClose])
   useEventListener('keydown', handleGlobalKeyDown, { listen: !hideClose })
 
-  const RootElement = motion[as]
+  const RootElement = m[as]
 
   return (
     <ModalContext.Provider value={sharedContext}>
