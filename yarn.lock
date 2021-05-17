@@ -46,16 +46,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/core@npm:7.14.2, @babel/core@npm:^7.14.2":
-  version: 7.14.2
-  resolution: "@babel/core@npm:7.14.2"
+"@babel/core@npm:7.14.3, @babel/core@npm:^7.14.3":
+  version: 7.14.3
+  resolution: "@babel/core@npm:7.14.3"
   dependencies:
     "@babel/code-frame": ^7.12.13
-    "@babel/generator": ^7.14.2
+    "@babel/generator": ^7.14.3
     "@babel/helper-compilation-targets": ^7.13.16
     "@babel/helper-module-transforms": ^7.14.2
     "@babel/helpers": ^7.14.0
-    "@babel/parser": ^7.14.2
+    "@babel/parser": ^7.14.3
     "@babel/template": ^7.12.13
     "@babel/traverse": ^7.14.2
     "@babel/types": ^7.14.2
@@ -65,7 +65,7 @@ __metadata:
     json5: ^2.1.2
     semver: ^6.3.0
     source-map: ^0.5.0
-  checksum: 097b44de65166e7649a3418f5464cfefae201ecaa1208d7691fd0df9440bf848955ca3b392446e1befc7cb652a3cdbe5690bf116018fc3a3597c2e30df6aea47
+  checksum: b91ed6adc790428966e134b9b8bfa1f2d54d8867877057ed9f9fcc354475a26d267afd6b0c84ac1a7ac7805bffc7b3353fdd9d894e58ef52c7c7e06f17044fd0
   languageName: node
   linkType: hard
 
@@ -93,9 +93,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/eslint-parser@npm:^7.14.2":
-  version: 7.14.2
-  resolution: "@babel/eslint-parser@npm:7.14.2"
+"@babel/eslint-parser@npm:^7.14.3":
+  version: 7.14.3
+  resolution: "@babel/eslint-parser@npm:7.14.3"
   dependencies:
     eslint-scope: ^5.1.0
     eslint-visitor-keys: ^2.1.0
@@ -103,7 +103,7 @@ __metadata:
   peerDependencies:
     "@babel/core": ">=7.11.0"
     eslint: ">=7.5.0"
-  checksum: 90e3eb289b8a03b4db97a01538e7023bbd00387938f7a71f0097365fa098a2dc7260b4b948232873d0ff2cfd3c2793df2f99865fbd9e0a0783cecfeeea6afe8c
+  checksum: a171046cc297bd3fb94f7a40bdf6b6fee9e3bfa61927dc06c9a78dc780012a9b841df4e3a9600df7f89fd2bc2bb00fce20873b3d1887b4a4bb90c5da79cb4b5e
   languageName: node
   linkType: hard
 
@@ -138,6 +138,17 @@ __metadata:
     jsesc: ^2.5.1
     source-map: ^0.5.0
   checksum: 25231a54952a37ab74c1cfee9ffe544cf4a84bc40aaa391b51675aee96647a04a7bbcc17b3aa9a797dbb270a229b9afb8cc44a554627164477c96136177b3a4f
+  languageName: node
+  linkType: hard
+
+"@babel/generator@npm:^7.14.3":
+  version: 7.14.3
+  resolution: "@babel/generator@npm:7.14.3"
+  dependencies:
+    "@babel/types": ^7.14.2
+    jsesc: ^2.5.1
+    source-map: ^0.5.0
+  checksum: 2c104bbe531935d73a66b6c1370da2e986e94154e7e574bd081fe6abe0d493e39d94a38a4c07c415aa90281047f858a51967b74eed83fec17cbca98a657e864a
   languageName: node
   linkType: hard
 
@@ -727,6 +738,15 @@ __metadata:
   bin:
     parser: ./bin/babel-parser.js
   checksum: 38ecb2f2288fb1b14a9677a6ea311ae8fe35ec2b4b26f2734ab10619d909e72cc94d527847ce41f49b264e7326b91e6e823b5d870202b4be7c5abb17247ec4c2
+  languageName: node
+  linkType: hard
+
+"@babel/parser@npm:^7.14.3":
+  version: 7.14.3
+  resolution: "@babel/parser@npm:7.14.3"
+  bin:
+    parser: ./bin/babel-parser.js
+  checksum: 39653900d3a76fba8891fbe3e799f6619d2286dc57be0b95ce8d93e667eec4c52df58603d03fbdc11edcbd0b4110a5f7393538315e02a234178581033dbcb881
   languageName: node
   linkType: hard
 
@@ -3524,10 +3544,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/tapable@npm:*":
-  version: 1.0.6
-  resolution: "@types/tapable@npm:1.0.6"
-  checksum: 5be0d2b1c71f0fbd92a3df23140fc1907c8c4471f42385ce1cf700144405a1baa5c272964c8cb0488b589b354c2a952835a9d9e64b1e131ae88ab36cf46ab5da
+"@types/tapable@npm:^1":
+  version: 1.0.7
+  resolution: "@types/tapable@npm:1.0.7"
+  checksum: efae5c6cd184cbd768f98c0777c829e30045d57664731f36fcc7e32a372fd01c0f50283375e8cd6e325d321d7962906d2bdb82ee4595f7b9f53cefd3011bfa82
   languageName: node
   linkType: hard
 
@@ -3565,17 +3585,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/webpack@npm:^4.41.25":
-  version: 4.41.25
-  resolution: "@types/webpack@npm:4.41.25"
+"@types/webpack@npm:^4.41.28":
+  version: 4.41.28
+  resolution: "@types/webpack@npm:4.41.28"
   dependencies:
     "@types/anymatch": "*"
     "@types/node": "*"
-    "@types/tapable": "*"
+    "@types/tapable": ^1
     "@types/uglify-js": "*"
     "@types/webpack-sources": "*"
     source-map: ^0.6.0
-  checksum: 90141c04f8662beae69626c31a0a5f21cf9d5886106ec1ee9f81d0aca8dfcb3e1046c161c2f61b6898429ba0d9cfeaa305807c3a81e6fc0886a329c62ce311a2
+  checksum: d9a99bb2a3c958d4a797734cba89ac489256cfb7fede7b8970b55291bca936c448851297ebaddb5b871e48fc028fa83e31856ec5f57695e9cbbd2ceda72fc499
   languageName: node
   linkType: hard
 
@@ -7132,8 +7152,8 @@ fsevents@~2.3.1:
   version: 0.0.0-use.local
   resolution: "fuelrats.com@workspace:."
   dependencies:
-    "@babel/core": ^7.14.2
-    "@babel/eslint-parser": ^7.14.2
+    "@babel/core": ^7.14.3
+    "@babel/eslint-parser": ^7.14.3
     "@babel/eslint-plugin": ^7.13.16
     "@babel/plugin-proposal-class-properties": ^7.13.0
     "@babel/plugin-proposal-decorators": ^7.14.2
@@ -7179,7 +7199,7 @@ fsevents@~2.3.1:
     "@types/react-dom": ^17.0.5
     "@types/react-redux": ^7.1.16
     "@types/ua-parser-js": ^0.7.36
-    "@types/webpack": ^4.41.25
+    "@types/webpack": ^4.41.28
     "@types/zxcvbn": ^4.4.1
     axios: ^0.21.1
     babel-loader: 8.2.2

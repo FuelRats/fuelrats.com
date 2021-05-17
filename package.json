@@ -20,8 +20,8 @@
     "stylelint": "stylelint \"src/**/*.scss\""
   },
   "devDependencies": {
-    "@babel/core": "^7.14.2",
-    "@babel/eslint-parser": "^7.14.2",
+    "@babel/core": "^7.14.3",
+    "@babel/eslint-parser": "^7.14.3",
     "@babel/eslint-plugin": "^7.13.16",
     "@babel/plugin-proposal-class-properties": "^7.13.0",
     "@babel/plugin-proposal-decorators": "^7.14.2",
@@ -58,7 +58,7 @@
     "@types/react-dom": "^17.0.5",
     "@types/react-redux": "^7.1.16",
     "@types/ua-parser-js": "^0.7.36",
-    "@types/webpack": "^4.41.25",
+    "@types/webpack": "^4.41.28",
     "@types/zxcvbn": "^4.4.1",
     "babel-loader": "8.2.2",
     "builtin-modules": "^3.2.0",
