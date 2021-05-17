@@ -11,4 +11,8 @@ EpicNominatePage.getPageMeta = () => {
   }
 }
 
-export default authenticated('epics.write.me', 'Sorry, you must be a rat to access the nomination page.')(EpicNominatePage)
+
+export default authenticated(
+  'epics.write' /* 'epics.write.me' */,
+  'Sorry, you must be a drilled rat to access the nomination page.',
+)(EpicNominatePage)

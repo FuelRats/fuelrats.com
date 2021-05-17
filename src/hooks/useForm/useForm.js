@@ -23,6 +23,8 @@ export default function useForm (config = {}) {
     trackDelta,
   } = config
 
+  const initialStateRef = useRef(initialState)
+
   const [submitting, setSubmit] = useState(false)
 
   const [{ __init }, isValid, dispatchValidity] = useValidityReducer({ __init: false })
@@ -32,6 +34,15 @@ export default function useForm (config = {}) {
 
   const dispatchField = useCallback(
     (action) => {
+      if (action.default) {
+        dispatchField({
+          name: action.name,
+          value: _get(initialStateRef.current, action.name),
+          valid: action.valid,
+        })
+        return
+      }
+
       if (Reflect.has(action, 'value')) {
         dispatchState(action)
         if (trackDelta) {

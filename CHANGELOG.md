@@ -9,7 +9,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ## [Unreleased][]
 
 ### ✨ Added
-* Added closing button to RescueDetailsContent so rats and dispatch can close the details on the last case of the board once it has been cleared. Thanks @Master-Guy! - [#303][]
+*
 
 
 ### ⚡ Changed
@@ -24,8 +24,35 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 *
 
 
-[#303]: https://github.com/fuelRats/fuelrats.com/pull/303
-[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.10...HEAD
+[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.13.0...HEAD
+
+
+
+
+
+## [2.13.0][] - 2021-03-19
+
+### ✨ Added
+* Added controls for rats to opt-in to Odyssey rescues. - [#320][]
+* Added `odyssey` field to registration page. - [#320][]
+
+
+### ⚡ Changed
+* Reworked page for nominating epic rats/rescues. - [#316][]
+
+
+### 🐛 Fixed
+*
+
+
+### ⚙ Tasks
+* Add @Delota as a contributor! 🥳 - [#317][]
+
+
+[#316]: https://github.com/fuelRats/fuelrats.com/pull/316
+[#317]: https://github.com/fuelRats/fuelrats.com/pull/317
+[#320]: https://github.com/fuelRats/fuelrats.com/pull/320
+[2.13.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.10...v2.13.0
 
 
 ## [2.12.10][] - 2021-03-10
