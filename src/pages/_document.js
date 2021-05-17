@@ -45,6 +45,8 @@ class FuelRatsWebsite extends Document {
           <link href="/static/favicon/favicon-16.png" rel="icon" sizes="16x16" type="image/png" />
           <link href="/static/favicon/favicon-128.png" rel="icon" sizes="128x128" type="image/png" />
 
+          <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital@0;1&family=Raleway" rel="stylesheet" />
+
           <link href="/manifest.json" rel="manifest" />
 
           <link href="/favicon.ico" rel="shortcut icon" />

@@ -54,7 +54,7 @@ const configureCSP = () => {
           "'strict-dynamic'",
           ...(isDev ? ["'unsafe-eval'"] : []),
         ],
-        styleSrc: ["'self'", "'unsafe-inline'", ...domainWhitelist],
+        styleSrc: ["'self'", "'unsafe-inline'", ...domainWhitelist, 'fonts.googleapis.com'],
         imgSrc: ["'self'", ...domainWhitelist, '*.wp.com', 'blob:', 'data:'],
         mediaSrc: ["'self'"],
         objectSrc: ["'self'"],
