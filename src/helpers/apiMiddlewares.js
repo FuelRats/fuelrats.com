@@ -10,6 +10,7 @@ export function methodRouter (handlers = isRequired('handlers')) {
 
     if (typeof methodHandler === 'function') {
       methodHandler(req, res)
+      return
     }
 
     res.setHeader('Allow', Object.keys(handlers))
