@@ -5,11 +5,11 @@ import { HttpStatus } from '@fuelrats/web-util/http'
 
 
 export function methodRouter (handlers = isRequired('handlers')) {
-  return (req, res) => {
+  return async (req, res) => {
     const methodHandler = handlers[req.method]
 
     if (typeof methodHandler === 'function') {
-      methodHandler(req, res)
+      await methodHandler(req, res)
       return
     }
 
