@@ -16,22 +16,22 @@ function Switch (props) {
     disabled,
     id,
     label,
-    onClick,
+    onChange,
     ...inputProps
   } = props
 
   const [loading, setLoading] = useState(false)
 
-  const handleClick = useCallback(async (event) => {
+  const handleChange = useCallback(async (event) => {
     if (!isAsync) {
-      onClick?.(event)
+      onChange?.(event)
       return
     }
 
     setLoading(true)
-    await onClick?.(event)
+    await onChange?.(event)
     setLoading(false)
-  }, [isAsync, onClick])
+  }, [isAsync, onChange])
 
   let icon = 'times'
   if (loading) {
@@ -52,7 +52,7 @@ function Switch (props) {
           disabled={loading || disabled}
           id={id}
           type="checkbox"
-          onChange={handleClick} />
+          onChange={handleChange} />
 
         <span className={styles.slider} />
         <FontAwesomeIcon
@@ -78,7 +78,7 @@ Switch.propTypes = {
   disabled: PropTypes.bool,
   id: PropTypes.string.isRequired,
   label: PropTypes.node,
-  onClick: PropTypes.func,
+  onChange: PropTypes.func.isRequired,
 }
 
 
