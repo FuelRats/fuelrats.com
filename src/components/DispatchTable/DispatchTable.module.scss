@@ -72,3 +72,14 @@
   background-color: rgba(240, 230, 140, 0.25);
   opacity: 0.25;
 }
+
+
+.queueLength {
+  float: right;
+
+  padding: 2px 8px;
+
+  border: 1px solid var(--table-border-color);
+
+  background: $black;
+}
