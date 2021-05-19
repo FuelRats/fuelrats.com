@@ -46,14 +46,14 @@ function DispatchTable (props) {
         </tbody>
       </table>
       <div className={styles.queueLength}>
-        <small>{'MAX'}</small>
-        {` ${maxClients} `}
-        <small>{'CLIENTS'}</small>
+        <small>{'MAX '}</small>
+        {maxClients}
+        <small>{' CLIENTS'}</small>
         {
             queueLength > 0 && (
               <>
                 <small>{' ( '}</small>
-                <b>{queueLength}</b>
+                {queueLength}
                 <small>{' IN QUEUE )'}</small>
               </>
             )
