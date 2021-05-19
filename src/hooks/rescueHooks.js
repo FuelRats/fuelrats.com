@@ -7,7 +7,7 @@ import { formatAsEliteDateTime } from '~/helpers/formatTime'
 
 export const useQuoteString = (rescue) => {
   return useMemo(() => {
-    if (!rescue.attributes.quotes.length) {
+    if (!rescue?.attributes?.quotes?.length) {
       return undefined
     }
 
