@@ -1,4 +1,5 @@
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 // import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
@@ -62,6 +63,7 @@ function RescueDetailsContent (props) {
     platform,
     clientLanguage,
     createdAt,
+    odyssey,
     title,
     quotes,
   } = rescue.attributes
@@ -80,6 +82,14 @@ function RescueDetailsContent (props) {
       <div className={styles.header}>
         <div className={styles.title}>
           {`${typeof commandIdentifier === 'number' ? `#${commandIdentifier} - ` : ''}${title ?? client}`}
+          {
+            odyssey && (
+              <>
+                {' '}
+                <FontAwesomeIcon fixedWidth icon="shoe-prints" size="sm" title="Odyssey Rescue" transform={{ rotate: -40 }} />
+              </>
+            )
+          }
           {codeRed && <span className="badge">{'CODE RED'}</span>}
           {status === 'inactive' && <span className="badge warn">{'Inactive'}</span>}
         </div>
