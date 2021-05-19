@@ -43,7 +43,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 ### 🐛 Fixed
-*
+* Resolved crash which would occur if rescue quotes is null. - [#324][]
 
 
 ### ⚙ Tasks
@@ -54,6 +54,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 [#317]: https://github.com/fuelRats/fuelrats.com/pull/317
 [#320]: https://github.com/fuelRats/fuelrats.com/pull/320
 [#323]: https://github.com/fuelRats/fuelrats.com/pull/323
+[#324]: https://github.com/fuelRats/fuelrats.com/pull/324
 [2.13.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.10...v2.13.0
 
 
