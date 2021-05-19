@@ -12,27 +12,22 @@ const { DefinePlugin } = require('webpack')
 
 // Constants
 const {
+  APP_URL,
+  FR_API_URL,
+  FR_CLIENT_IRC_URL,
+  FR_RAT_IRC_URL,
+  FR_SOCKET_URL,
+  FR_STRIPE_API_PK,
   GITHUB_REF,
-  GITHUB_SHA,
-  FRDC_API_URL,
-  FRDC_PUBLIC_URL,
-  FRDC_SOCKET_URL,
-  FRDC_STRIPE_API_PK,
-  PORT,
-  CI,
-  GITHUB_SERVER_URL = 'https://github.com',
   GITHUB_RUN_ID,
+  GITHUB_SERVER_URL = 'https://github.com',
+  GITHUB_SHA,
+  CI,
 } = process.env
 
-
-const DEFAULT_PORT = 3000
 const COMMIT_HASH_LENGTH = 10
 const DEV_BUILD_ID_LENGTH = 16
 const GIT_BRANCH = (GITHUB_REF || 'develop').replace(/^refs\/heads\//u, '').replace(/\//gu, '-')
-
-
-const FINAL_PUBLIC_URL = FRDC_PUBLIC_URL || `http://localhost:${PORT || DEFAULT_PORT}`
-
 
 const generateBuildId = () => {
   const buildId = CI
@@ -42,7 +37,6 @@ const generateBuildId = () => {
   return `${GIT_BRANCH}_${buildId}`
 }
 
-
 module.exports = {
   distDir: path.join('dist', 'next'),
   generateBuildId,
@@ -51,22 +45,29 @@ module.exports = {
   },
   publicRuntimeConfig: {
     local: {
-      publicUrl: FINAL_PUBLIC_URL,
+      publicUrl: APP_URL,
+    },
+    irc: {
+      client: FR_CLIENT_IRC_URL ?? 'https://qms.fuelrats.dev',
+      rat: FR_RAT_IRC_URL ?? 'https://kiwi.fuelrats.com',
     },
     apis: {
       fuelRats: {
-        local: `${FINAL_PUBLIC_URL}/api/fr`,
-        server: FRDC_API_URL || 'http://localhost:8080',
-        socket: FRDC_SOCKET_URL || 'wss://localhost:8080',
+        local: `${APP_URL}/api/fr`,
+        server: FR_API_URL ?? 'https://dev.api.fuelrats.com',
+        socket: FR_SOCKET_URL ?? 'wss://dev.api.fuelrats.com',
       },
       wordpress: {
-        url: `${FINAL_PUBLIC_URL}/api/wp`,
+        url: `${APP_URL}/api/wp`,
       },
       stripe: {
-        url: `${FINAL_PUBLIC_URL}/api/stripe`,
-        public: FRDC_STRIPE_API_PK || null,
+        url: `${APP_URL}/api/stripe`,
+        public: FR_STRIPE_API_PK,
       },
     },
+  },
+  future: {
+    webpack5: true,
   },
   webpack: (config, opt) => {
     /* Define Plugin */
@@ -82,18 +83,13 @@ module.exports = {
       $NODE_VERSION: JSON.stringify(process.version),
     }))
 
+    // Workaround to fix dev warning: https://github.com/vercel/next.js/issues/19865
+    config.output.hotUpdateMainFilename = 'static/webpack/[fullhash].[runtime].hot-update.json'
 
-    /* worker-loader */
-    config.module.rules.unshift({
-      test: /\.worker\.js$/u,
-      loader: require.resolve('worker-loader'),
-      options: {
-        filename: 'static/[contenthash].worker.js',
-        publicPath: '/_next/',
-      },
-    })
-    config.output.globalObject = 'self'
-
+    // Workaround to fix production builds with workers: https://github.com/vercel/next.js/issues/22813
+    config.output.chunkFilename = opt.isServer
+      ? `${opt.dev ? '[name]' : '[name].[fullhash]'}.js`
+      : `static/chunks/${opt.dev ? '[name]' : '[name].[fullhash]'}.js`
 
     /* SVGR */
     config.module.rules.push({

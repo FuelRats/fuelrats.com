@@ -28,6 +28,8 @@ const BUILD_COMMIT_SHORT = $BUILD_COMMIT_SHORT
 function Header () {
   const { loggedIn } = useSelector(selectSession)
   const userCanDispatch = useSelectorWithProps({ scope: 'dispatch.read' }, selectCurrentUserHasScope)
+  /* Temporarily use 'epics.write' instead of 'epics.write.me' to disable epic nomination for normal users, we're not ready for this yet. */
+  const userCanCreateEpic = useSelectorWithProps({ scope: 'epics.write' }, selectCurrentUserHasScope)
 
   const checkboxRef = useRef()
 
@@ -92,6 +94,13 @@ function Header () {
                   userCanDispatch && (
                     <NavLink href="/dispatch">
                       {'Dispatch Board'}
+                    </NavLink>
+                  )
+                }
+                {
+                  userCanCreateEpic && (
+                    <NavLink href="/epic/nominate">
+                      {'Epic Nomination'}
                     </NavLink>
                   )
                 }

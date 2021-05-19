@@ -61,4 +61,5 @@
   "stylelint.packageManager": "yarn",
   "stylelint.reportNeedlessDisables": true,
   "cSpell.language": "en,en-US",
+  "develop.attachurl": "http://localhost:3000/"
 }

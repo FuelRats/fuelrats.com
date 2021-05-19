@@ -1,12 +1,17 @@
-import { useMemo } from 'react'
+import { HttpStatus } from '@fuelrats/web-util/http'
+import axios from 'axios'
+import { useMemo, useState, useEffect } from 'react'
 
 import { getLanguage } from '~/data/LanguageList'
 import { getPlatform } from '~/data/PlatformList'
 import { formatAsEliteDateTime } from '~/helpers/formatTime'
 
+
+const pollTimeoutTime = 10000
+
 export const useQuoteString = (rescue) => {
   return useMemo(() => {
-    if (!rescue.attributes.quotes.length) {
+    if (!rescue?.attributes?.quotes?.length) {
       return undefined
     }
 
@@ -26,4 +31,38 @@ export const usePlatformData = (rescue) => {
   return useMemo(() => {
     return getPlatform(rescue.attributes.platform)
   }, [rescue.attributes.platform])
+}
+
+
+export const useRescueQueueCount = () => {
+  const [rescueCount, setCount] = useState(0)
+
+  useEffect(
+    () => {
+      let timeout = null
+
+      const fetchData = async () => {
+        const { data, status } = await axios.get('/api/qms/queue')
+
+        if (status === HttpStatus.OK) {
+          setCount(data.data.queueLength)
+        }
+
+
+        timeout = setTimeout(fetchData, pollTimeoutTime)
+      }
+
+      fetchData()
+
+      return () => {
+        if (timeout) {
+          clearTimeout(timeout)
+        }
+      }
+    },
+    [],
+  )
+
+
+  return rescueCount
 }

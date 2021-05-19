@@ -36,4 +36,13 @@ module.exports = {
       },
     },
   },
+  overrides: [
+    {
+      files: ['src/pages/api/**/*.js'],
+      env: {
+        browser: false,
+        node: true,
+      },
+    },
+  ],
 }

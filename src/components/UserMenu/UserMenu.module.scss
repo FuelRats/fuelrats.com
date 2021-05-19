@@ -157,6 +157,7 @@ $user-menu-width-mobile: 21rem;
               -1 * (($user-menu-width-mobile / 2) - ($avatar-size / 2) - $avatar-right-margin - ($user-menu-border-width-mobile / 2))
             }
           );
+
         transform: $umt-mobile-translate;
 
         &:active {

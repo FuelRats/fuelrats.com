@@ -1,6 +1,4 @@
 import actionTypes from '~/store/actionTypes'
-import ImageLoaderWorker from '~/workers/image-loader.worker'
-
 
 
 
@@ -13,7 +11,7 @@ let worker = null
 
 const getImageLoader = (dispatch) => {
   if (!worker) {
-    worker = new ImageLoaderWorker()
+    worker = new Worker(new URL('../workers/image-loader.worker.js', import.meta.url))
     worker.addEventListener('message', (event) => {
       dispatch({
         type: actionTypes.images.read,

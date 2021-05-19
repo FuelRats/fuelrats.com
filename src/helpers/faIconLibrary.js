@@ -9,6 +9,7 @@ export {
   faBook,
   faCheck,
   faCheckCircle,
+  faCircle,
   faClipboardCheck,
   faClipboardList,
   faClock,

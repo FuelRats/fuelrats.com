@@ -1,5 +1,5 @@
 import { library as faLibrary, config as faConfig } from '@fortawesome/fontawesome-svg-core'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, LazyMotion, domAnimation, m } from 'framer-motion'
 import withRedux from 'next-redux-wrapper'
 import App from 'next/app'
 import NextHead from 'next/head'
@@ -110,35 +110,37 @@ class FuelRatsApp extends App {
           <meta content={description} name="description" />
           <meta content={description} property="og:description" />
         </NextHead>
-        <div className={{ forceDrawer }} id="FuelRatsApp" role="application">
-          <Provider store={store}>
-            <NProgress />
-            <Header />
-            <UserMenu />
+        <LazyMotion strict features={domAnimation}>
+          <div className={{ forceDrawer }} id="FuelRatsApp" role="application">
+            <Provider store={store}>
+              <NProgress />
+              <Header />
+              <UserMenu />
 
-            <AnimatePresence initial={false} onExitComplete={this.handlePageDestroy}>
-              <motion.main
-                {...pageMotionConfig}
-                key={key}
-                className={['page', title.toLowerCase().replace(/\s/gu, '-'), className]}>
-                {
-                  !noHeader && (
-                    <header className="page-header">
-                      <h1>
-                        {displayTitle ?? title}
-                      </h1>
-                    </header>
-                  )
-                }
-                <SilentBoundary>
-                  <Page {...pageProps} />
-                </SilentBoundary>
-              </motion.main>
-            </AnimatePresence>
+              <AnimatePresence initial={false} onExitComplete={this.handlePageDestroy}>
+                <m.main
+                  {...pageMotionConfig}
+                  key={key}
+                  className={['page', title.toLowerCase().replace(/\s/gu, '-'), className]}>
+                  {
+                    !noHeader && (
+                      <header className="page-header">
+                        <h1>
+                          {displayTitle ?? title}
+                        </h1>
+                      </header>
+                    )
+                  }
+                  <SilentBoundary>
+                    <Page {...pageProps} />
+                  </SilentBoundary>
+                </m.main>
+              </AnimatePresence>
 
-            <LoginModal />
-          </Provider>
-        </div>
+              <LoginModal />
+            </Provider>
+          </div>
+        </LazyMotion>
       </StrictMode>
     )
   }

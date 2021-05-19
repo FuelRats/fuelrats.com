@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, m } from 'framer-motion'
 import getConfig from 'next/config'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -147,7 +147,7 @@ class Carousel extends React.Component {
         <AnimatePresence>
           {
             Boolean(slide.image) && (
-              <motion.div
+              <m.div
                 {...slideMotionConfig}
                 key={`${curSlide}-img`}
                 className="carousel-slide"
@@ -162,12 +162,12 @@ class Carousel extends React.Component {
           }
           {
             Boolean(slide.image && slide.text) && (
-              <motion.span
+              <m.span
                 {...slideTextMotionConfig}
                 key={`${curSlide}-text`}
                 className="carousel-slide-text">
                 {slide.text}
-              </motion.span>
+              </m.span>
             )
           }
         </AnimatePresence>

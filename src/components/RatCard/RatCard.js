@@ -15,6 +15,7 @@ import {
 
 import CardControls from '../CardControls'
 import InlineEditSpan from '../InlineEditSpan'
+import Switch from '../Switch'
 import DefaultRatButton from './DefaultRatButton'
 
 
@@ -146,6 +147,15 @@ class RatCard extends React.Component {
     }
   }
 
+  _handleOdysseySwitch = async () => {
+    await this.props.updateRat({
+      id: this.props.rat.id,
+      attributes: {
+        odyssey: !this.props.rat.attributes.odyssey,
+      },
+    })
+  }
+
 
 
   /***************************************************************************\
@@ -210,11 +220,17 @@ class RatCard extends React.Component {
             <span className="rat-platform">{rat.attributes.platform.toUpperCase()}</span>
           </div>
         </header>
-        {/* Disabled until ships are fully implemented
-        <div className="panel-content">
-          ships.
-        </div>
-        */}
+        {
+          rat.attributes.platform === 'pc' && (
+            <div className="panel-content">
+              <Switch
+                async
+                checked={rat.attributes.odyssey}
+                label="Owns Odyssey"
+                onClick={this._handleOdysseySwitch} />
+            </div>
+          )
+        }
         <footer className="panel-content">
           <div className="rat-stats">
             <small>
