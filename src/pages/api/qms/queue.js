@@ -20,7 +20,7 @@ async function Queue (req, res) {
     cache.lastCheck = nowTime
 
     const { data, status, statusText } = await axios.get(
-      `${process.env.QMS_API_URL}/api/v1/queue`,
+      `${process.env.QMS_API_URL}/api/v1/queue/`,
       {
         headers: {
           Authorization: `Bearer ${process.env.QMS_API_TOKEN}`,
