@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 
+import { useRescueQueueCount } from '~/hooks/rescueHooks'
 import { selectDispatchBoard } from '~/store/selectors/dispatch'
 
 import styles from './DispatchTable.module.scss'
@@ -16,6 +17,7 @@ function DispatchTable (props) {
   } = props
 
   const rescueIds = useSelector(selectDispatchBoard)
+  const queueLength = useRescueQueueCount()
 
   return (
     <section className={[styles.dispatchTable, className]}>
@@ -43,6 +45,15 @@ function DispatchTable (props) {
           }
         </tbody>
       </table>
+      {
+        queueLength > 0 && (
+          <div className={styles.queueLength}>
+            {'+'}
+            <b>{queueLength}</b>
+            <small>{' IN QUEUE'}</small>
+          </div>
+        )
+      }
     </section>
   )
 }
