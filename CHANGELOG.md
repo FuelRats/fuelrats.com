@@ -35,6 +35,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ### ✨ Added
 * Added controls for rats to opt-in to Odyssey rescues. - [#320][]
 * Added `odyssey` field to registration page. - [#320][]
+* Added basic QMS queue counter to Dispatch Board. - [#323][]
 
 
 ### ⚡ Changed
@@ -52,6 +53,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 [#316]: https://github.com/fuelRats/fuelrats.com/pull/316
 [#317]: https://github.com/fuelRats/fuelrats.com/pull/317
 [#320]: https://github.com/fuelRats/fuelrats.com/pull/320
+[#323]: https://github.com/fuelRats/fuelrats.com/pull/323
 [2.13.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.10...v2.13.0
 
 
