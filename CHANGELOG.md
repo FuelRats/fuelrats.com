@@ -11,10 +11,8 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ### ✨ Added
 *
 
-
 ### ⚡ Changed
 *
-
 
 ### 🐛 Fixed
 *
@@ -25,6 +23,24 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 [Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.13.0...HEAD
+
+
+
+
+
+## [2.13.1][] - 2021-03-19
+
+### ✨ Added
+* An icon will now appear on rescues being held on the Elite Dangerous: Odyssey server. - [#326][]
+
+
+### ⚡ Changed
+* Improved queue information display on Disaptch Board. - [#326][]
+* Improved queue information endpoint response times via better routing and caching. - [#326][]
+
+
+[#326]: https://github.com/fuelRats/fuelrats.com/pull/326
+[2.13.1]: https://github.com/FuelRats/fuelrats.com/compare/v2.13.0...v2.13.1
 
 
 
@@ -56,6 +72,9 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 [#323]: https://github.com/fuelRats/fuelrats.com/pull/323
 [#324]: https://github.com/fuelRats/fuelrats.com/pull/324
 [2.13.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.10...v2.13.0
+
+
+
 
 
 ## [2.12.10][] - 2021-03-10
