@@ -17,7 +17,7 @@ function DispatchTable (props) {
   } = props
 
   const rescueIds = useSelector(selectDispatchBoard)
-  const queueLength = useRescueQueueCount()
+  const [queueLength, maxClients] = useRescueQueueCount()
 
   return (
     <section className={[styles.dispatchTable, className]}>
@@ -45,15 +45,20 @@ function DispatchTable (props) {
           }
         </tbody>
       </table>
-      {
-        queueLength > 0 && (
-          <div className={styles.queueLength}>
-            {'+'}
-            <b>{queueLength}</b>
-            <small>{' IN QUEUE'}</small>
-          </div>
-        )
-      }
+      <div className={styles.queueLength}>
+        <small>{'MAX '}</small>
+        {maxClients}
+        <small>{' CLIENTS'}</small>
+        {
+            queueLength > 0 && (
+              <>
+                <small>{' ( '}</small>
+                {queueLength}
+                <small>{' IN QUEUE )'}</small>
+              </>
+            )
+          }
+      </div>
     </section>
   )
 }

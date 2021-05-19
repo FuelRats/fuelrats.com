@@ -35,7 +35,8 @@ export const usePlatformData = (rescue) => {
 
 
 export const useRescueQueueCount = () => {
-  const [rescueCount, setCount] = useState(0)
+  const [queueLength, setCount] = useState(0)
+  const [maxClients, setMax] = useState(0)
 
   useEffect(
     () => {
@@ -46,6 +47,7 @@ export const useRescueQueueCount = () => {
 
         if (status === HttpStatus.OK) {
           setCount(data.data.queueLength)
+          setMax(data.data.maxClients)
         }
 
 
@@ -64,5 +66,5 @@ export const useRescueQueueCount = () => {
   )
 
 
-  return rescueCount
+  return [queueLength, maxClients]
 }

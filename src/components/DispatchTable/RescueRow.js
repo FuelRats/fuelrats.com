@@ -83,6 +83,7 @@ function RescueRow (props) {
     clientNick,
     client,
     commandIdentifier,
+    odyssey,
     system,
   } = rescue.attributes
 
@@ -110,6 +111,13 @@ function RescueRow (props) {
         text={clientNick ?? client}
         title={clientNick ?? ''}>
         {client ?? '?'}
+        {
+          odyssey && (
+            <span className={styles.odysseyIcon}>
+              <FontAwesomeIcon fixedWidth icon="shoe-prints" title="Odyssey Rescue" transform={{ rotate: -40 }} />
+            </span>
+          )
+        }
       </CopyToClipboard>
       <td
         className="rescue-row-language"

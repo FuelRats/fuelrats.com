@@ -4,23 +4,34 @@ import axios from 'axios'
 import { methodRouter } from '~/helpers/apiMiddlewares'
 
 
-// 10 second maxAge
-const cacheMaxAge = 10000
+
+
 
 const cache = {
-  lastCheck: 0,
-  count: 0,
+  count: {
+    maxAge: 10000,
+    lastCheck: 0,
+    value: 0,
+  },
+  max: {
+    maxAge: 60000,
+    lastCheck: 0,
+    value: 0,
+  },
 }
+
+
+
 
 
 async function Queue (req, res) {
   const nowTime = Date.now()
 
-  if (nowTime - cache.lastCheck >= cacheMaxAge) {
-    cache.lastCheck = nowTime
+  if (nowTime - cache.count.lastCheck >= cache.count.maxAge) {
+    cache.count.lastCheck = nowTime
 
     const { data, status, statusText } = await axios.get(
-      `${process.env.QMS_API_URL}/api/v1/queue`,
+      `${process.env.QMS_API_URL}/api/v1/queue/`,
       {
         headers: {
           Authorization: `Bearer ${process.env.QMS_API_TOKEN}`,
@@ -33,21 +44,41 @@ async function Queue (req, res) {
         return !rescue.pending && !rescue.in_progress
       })
 
-      cache.count = rescueQueue.length
+      cache.count.value = rescueQueue.length
     } else {
+      console.error('GET /api/v1/queue/', status, statusText, data)
       res.status(status).end(statusText)
-      console.error(status, statusText, data)
+      return
+    }
+  }
+
+  if (nowTime - cache.max.lastCheck >= cache.max.maxAge) {
+    cache.max.lastCheck = nowTime
+    const { data, status, statusText } = await axios.get(
+      `${process.env.QMS_API_URL}/api/v1/config/`,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.QMS_API_TOKEN}`,
+        },
+      },
+    )
+
+    if (status === HttpStatus.OK) {
+      cache.max.value = data.max_active_clients
+    } else {
+      console.error('GET /api/v1/config/', status, statusText, data)
     }
   }
 
 
-  return res.status(HttpStatus.OK).json({
+  res.status(HttpStatus.OK).json({
     data: {
-      queueLength: cache.count,
+      queueLength: cache.count.value,
+      maxClients: cache.max.value,
     },
     meta: {
-      age: nowTime - cache.lastCheck,
-      maxAge: cacheMaxAge,
+      queueAge: nowTime - cache.count.lastCheck,
+      maxClientAge: nowTime - cache.max.lastCheck,
     },
   })
 }

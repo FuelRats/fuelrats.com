@@ -31,6 +31,7 @@ export {
   faPlus,
   faRocket,
   faShieldAlt,
+  faShoePrints,
   faShoppingCart,
   faSignature,
   faSpaceShuttle,
