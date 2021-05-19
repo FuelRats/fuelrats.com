@@ -19,7 +19,7 @@ async function Queue (req, res) {
   if (nowTime - cache.lastCheck >= cacheMaxAge) {
     cache.lastCheck = nowTime
 
-    const result = await axios.get(
+    const { data, status, statusText } = await axios.get(
       `${process.env.QMS_API_URL}/api/v1/queue`,
       {
         headers: {
@@ -28,11 +28,16 @@ async function Queue (req, res) {
       },
     )
 
-    const rescueQueue = result.data.filter((rescue) => {
-      return !rescue.pending && !rescue.in_progress
-    })
+    if (status === HttpStatus.OK) {
+      const rescueQueue = data.filter((rescue) => {
+        return !rescue.pending && !rescue.in_progress
+      })
 
-    cache.count = rescueQueue.length
+      cache.count = rescueQueue.length
+    } else {
+      res.status(status).end(statusText)
+      console.error(status, statusText, data)
+    }
   }
 
 
