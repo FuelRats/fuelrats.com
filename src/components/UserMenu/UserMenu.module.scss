@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 @import '../../scss/colors';
 
 
@@ -58,8 +60,8 @@ $user-menu-width-mobile: 21rem;
   }
 
   @media not screen and (max-width: $mobile-max-width) {
-    top: #{$avatar-top-margin + (($avatar-size - 4rem) / 2)};
-    right: #{$avatar-right-margin + (($avatar-size - 4rem) / 2)};
+    top: #{$avatar-top-margin + math.div(($avatar-size - 4rem), 2)};
+    right: #{$avatar-right-margin + math.div(($avatar-size - 4rem), 2)};
 
     max-width: 4rem;
     max-height: 4rem;
@@ -136,8 +138,8 @@ $user-menu-width-mobile: 21rem;
   @media not screen and (max-width: $mobile-max-width) {
     &:checked {
       ~ .nav {
-        top: #{($avatar-size / 2) + 1rem};
-        right: #{($avatar-size / 2) + 2.5rem};
+        top: #{math.div($avatar-size, 2) + 1rem};
+        right: #{math.div($avatar-size, 2) + 2.5rem};
 
         max-width: 16rem;
         max-height: 35rem;
@@ -154,7 +156,7 @@ $user-menu-width-mobile: 21rem;
         $umt-mobile-translate:
           translateX(
             #{
-              -1 * (($user-menu-width-mobile / 2) - ($avatar-size / 2) - $avatar-right-margin - ($user-menu-border-width-mobile / 2))
+              -1 * (math.div($user-menu-width-mobile, 2) - math.div($avatar-size, 2) - $avatar-right-margin - math.div($user-menu-border-width-mobile, 2))
             }
           );
 
