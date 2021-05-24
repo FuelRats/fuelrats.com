@@ -28,8 +28,8 @@ export default function useForm (config = {}) {
   const [submitting, setSubmit] = useState(false)
 
   const [{ __init }, isValid, dispatchValidity] = useValidityReducer({ __init: false })
-  const [stateDelta, dispatchDelta] = useDeltaReducer(initialState)
-  const [state, dispatchState] = useObjectReducer(initialState)
+  const [stateDelta, dispatchDelta] = useDeltaReducer(initialStateRef.current)
+  const [state, dispatchState] = useObjectReducer(initialStateRef.current)
   const validationMethods = useRef({})
 
   const dispatchField = useCallback(
