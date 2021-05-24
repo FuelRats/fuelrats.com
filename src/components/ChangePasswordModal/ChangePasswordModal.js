@@ -2,14 +2,15 @@ import PropTypes from 'prop-types'
 import { useCallback, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+import dynamicNewPasswordFieldset from '~/components/Fieldsets/NewPasswordFieldset'
+import PasswordFieldset from '~/components/Fieldsets/PasswordFieldset'
+import asModal, { ModalContent, ModalFooter } from '~/components/Modal'
 import getResponseError from '~/helpers/getResponseError'
 import useForm from '~/hooks/useForm'
 import { changePassword } from '~/store/actions/authentication'
 import { selectCurrentUserId } from '~/store/selectors'
 
-import dynamicNewPasswordFieldset from '../Fieldsets/NewPasswordFieldset'
-import PasswordFieldset from '../Fieldsets/PasswordFieldset'
-import asModal, { ModalContent, ModalFooter } from '../Modal'
+
 import ChangePasswordMessageBox from './ChangePasswordMessageBox'
 
 // Component Constants

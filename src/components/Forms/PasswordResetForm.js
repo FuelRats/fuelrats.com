@@ -1,6 +1,6 @@
+import dynamicNewPasswordFieldset from '~/components/Fieldsets/NewPasswordFieldset'
 import useForm from '~/hooks/useForm'
 
-import dynamicNewPasswordFieldset from '../Fieldsets/NewPasswordFieldset'
 
 
 const passwordFieldProps = {

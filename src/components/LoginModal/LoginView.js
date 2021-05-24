@@ -2,17 +2,18 @@ import Router from 'next/router'
 import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 
+import EmailFieldset from '~/components/Fieldsets/EmailFieldset'
+import PasswordFieldset from '~/components/Fieldsets/PasswordFieldset'
+import SwitchFieldset from '~/components/Fieldsets/SwitchFieldset'
+import { FooterPrimary, FooterSecondary, ModalFooter, useModalContext } from '~/components/Modal'
 import getResponseError from '~/helpers/getResponseError'
 import useForm from '~/hooks/useForm'
 import { login } from '~/store/actions/authentication'
 import { getUserProfile } from '~/store/actions/user'
 
-import EmailFieldset from '../Fieldsets/EmailFieldset'
-import PasswordFieldset from '../Fieldsets/PasswordFieldset'
-import SwitchFieldset from '../Fieldsets/SwitchFieldset'
-import { FooterPrimary, FooterSecondary, ModalFooter } from '../Modal'
-import { useModalContext } from '../Modal/Modal'
 import styles from './LoginModal.module.scss'
+
+
 
 
 

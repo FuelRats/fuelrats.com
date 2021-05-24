@@ -3,12 +3,12 @@ import { HttpStatus } from '@fuelrats/web-util/http'
 import { isError } from 'flux-standard-action'
 import React from 'react'
 
+import InfoBubble from '~/components/infoBubble'
+import ValidatedFormInput from '~/components/ValidatedFormInput'
 import { ircNickPattern } from '~/data/RegExpr'
 import { connect } from '~/store'
 import { selectUserById, withCurrentUserId } from '~/store/selectors'
 
-import InfoBubble from '../infoBubble'
-import ValidatedFormInput from '../ValidatedFormInput'
 import styles from './AddNicknameForm.module.scss'
 
 

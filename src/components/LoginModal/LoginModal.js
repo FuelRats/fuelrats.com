@@ -1,9 +1,8 @@
+import asModal, { ModalContent, useModalContext } from '~/components/Modal'
 import { connect } from '~/store'
 import { setFlag } from '~/store/actions/flags'
 import { selectFlagByName } from '~/store/selectors'
 
-import asModal, { ModalContent } from '../Modal'
-import { useModalContext } from '../Modal/Modal'
 import styles from './LoginModal.module.scss'
 import LoginModalErrorBox from './LoginModalErrorBox'
 import LoginView from './LoginView'

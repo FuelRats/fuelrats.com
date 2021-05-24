@@ -2,15 +2,14 @@ import PropTypes from 'prop-types'
 import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 
+import EmailFieldset from '~/components/Fieldsets/EmailFieldset'
+import MessageBox from '~/components/MessageBox'
+import { FooterPrimary, FooterSecondary, ModalFooter, useModalContext } from '~/components/Modal'
 import getResponseError from '~/helpers/getResponseError'
 import useForm from '~/hooks/useForm'
 import useMountedState from '~/hooks/useMountedState'
 import { sendPasswordResetEmail } from '~/store/actions/authentication'
 
-import EmailFieldset from '../Fieldsets/EmailFieldset'
-import MessageBox from '../MessageBox'
-import { FooterPrimary, FooterSecondary, ModalFooter } from '../Modal'
-import { useModalContext } from '../Modal/Modal'
 import styles from './LoginModal.module.scss'
 
 
