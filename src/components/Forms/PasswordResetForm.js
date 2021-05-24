@@ -17,12 +17,12 @@ const NewPasswordFieldset = dynamicNewPasswordFieldset(passwordFieldProps)
 
 
 
-const data = Object.freeze({
+const data = {
   type: 'resets',
   attributes: {
     password: '',
   },
-})
+}
 
 function PasswordResetForm ({ onSubmit }) {
   const { Form, canSubmit, submitting } = useForm({ data, onSubmit })

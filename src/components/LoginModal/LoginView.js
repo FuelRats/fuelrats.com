@@ -17,13 +17,13 @@ import styles from './LoginModal.module.scss'
 
 
 // Component Constants
-const initialData = Object.freeze({
+const initialData = {
   remember: false,
   data: {
     password: '',
     username: '',
   },
-})
+}
 
 function LoginView () {
   const [{ formData: data, onClose }, setModalState] = useModalContext()

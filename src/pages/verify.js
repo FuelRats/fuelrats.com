@@ -19,10 +19,10 @@ import { selectCurrentUserHasScope } from '~/store/selectors'
 
 const RESET_SUCCESS_REDIRECT_WAIT = 6000 // 6 Seconds
 
-const TokenType = Object.freeze({
+const TokenType = {
   RESET: 'reset',
   EMAIL: 'email',
-})
+}
 
 
 

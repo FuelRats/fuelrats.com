@@ -16,12 +16,12 @@ import styles from './LoginModal.module.scss'
 
 
 // Component Constants
-const data = Object.freeze({
+const data = {
   type: 'resets',
   attributes: {
     email: '',
   },
-})
+}
 
 
 

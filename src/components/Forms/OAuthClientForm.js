@@ -9,13 +9,13 @@ import InputFieldset from '../Fieldsets/InputFieldset'
 
 
 // Component Constants
-const data = Object.freeze({
+const data = {
   type: 'clients',
   attributes: {
     name: '',
     redirectUri: '',
   },
-})
+}
 
 
 

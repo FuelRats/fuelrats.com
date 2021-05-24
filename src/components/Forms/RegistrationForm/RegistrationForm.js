@@ -11,13 +11,13 @@ import useForm from '~/hooks/useForm'
 
 
 
-const data = Object.freeze({
+const data = {
   type: 'registrations',
   attributes: {},
   meta: {
     termsApproved: false,
   },
-})
+}
 
 const labels = {
   email: 'Email',
