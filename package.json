@@ -14,7 +14,7 @@
     "build:server": "rollup --config",
     "build": "yarn build:server && yarn build:next",
     "start": "yarn node --inspect --harmony --trace-warnings dist/server.js",
-    "dev": "yarn build:server && yarn start",
+    "dev": "yarn install && yarn build:server && yarn start",
     "utoc": "doctoc $(grep --include=\\*.md --exclude-dir=node_modules -Rwl . -e 'START doctoc')",
     "eslint": "eslint .",
     "stylelint": "stylelint \"src/**/*.scss\""
