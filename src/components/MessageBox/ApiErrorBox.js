@@ -18,7 +18,7 @@ function ApiErrorBox (props) {
   }
 
   return (
-    <MessageBox {...messageProps}>
+    <MessageBox title={error.title} {...messageProps}>
       {
         renderError?.(error) ?? (
           <>
