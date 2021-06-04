@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import InputFieldset from './InputFieldset'
+import InputFieldset from '~/components/Fieldsets/InputFieldset'
 
 
 
@@ -24,7 +24,7 @@ export default function CurrencyFieldset (props) {
         event.preventDefault()
       }
 
-      parentChange(event, value)
+      parentChange?.(event, value)
     },
     [parentChange],
   )
