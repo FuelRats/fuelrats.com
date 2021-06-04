@@ -1,40 +1,73 @@
 import PropTypes from 'prop-types'
-import { useMemo } from 'react'
+import { useCallback, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-import InputFieldset from '~/components/Fieldsets/InputFieldset'
-import RadioFieldset from '~/components/Fieldsets/RadioFieldset'
 import StripeBadge from '~/components/StripeBadge'
+import getFingerprint from '~/helpers/getFingerprint'
 import getMoney from '~/helpers/getMoney'
+import getResponseError from '~/helpers/getResponseError'
 import useForm from '~/hooks/useForm'
+import { createDonationSession } from '~/store/actions/stripe'
+import { selectUserById, withCurrentUserId } from '~/store/selectors'
+
+import { DonationErrorBox } from '.'
+import AmountPresetRadioFieldset from './AmountPresetRadioFieldset'
+import CurrencyFieldset from './CurrencyFieldset'
+import CurrencyRadioFieldset from './CurrencyRadioFieldset'
 
 
 
 
 
 // Component Constants
-const data = {
+const formData = {
   currency: '',
   amountPreset: 0,
   amount: undefined,
 }
 
-const currencyOptions = [
-  {
-    value: 'EUR',
-    label: '€ EUR',
-    title: 'Euro',
-  },
-  {
-    value: 'GBP',
-    label: '£ GBP',
-    title: 'Great British Pounds',
-  },
-  {
-    value: 'USD',
-    label: '$ USD',
-    title: 'United States Dollars',
-  },
-]
+const presetAmounts = {
+  one: 100,
+  five: 500,
+  ten: 1000,
+  twenty: 2000,
+}
+
+
+
+
+
+const getAmount = (amountPreset, amount) => {
+  return presetAmounts[amountPreset] ?? (amount * 100)
+}
+
+const preparePayload = async (data, user) => {
+  const fingerprint = await getFingerprint()
+
+  const {
+    currency,
+    amount,
+    amountPreset,
+  } = data
+
+  const sessionData = {
+    currency,
+    amount: getAmount(amountPreset, amount),
+    fingerprint,
+  }
+
+  if (user) {
+    const { email, stripeId } = user.attributes
+
+    if (stripeId) {
+      sessionData.customer = stripeId
+    } else {
+      sessionData.email = email
+    }
+  }
+
+  return sessionData
+}
 
 
 
@@ -43,83 +76,88 @@ const currencyOptions = [
 function DonationForm (props) {
   const {
     className,
-    onSubmit,
+    stripe,
   } = props
 
-  const { Form, canSubmit, state } = useForm({ data, onSubmit })
+  const [errorState, setErrorState] = useState()
+  const currentUser = useSelector(withCurrentUserId(selectUserById))
 
-  const amountOptions = useMemo(() => {
-    const [prefix] = (0).toLocaleString('en-US', { style: 'currency', currency: state.currency })
-    return [
-      {
-        value: 'one',
-        label: `${prefix}1.00`,
-      },
-      {
-        value: 'five',
-        label: `${prefix}5.00`,
-      },
-      {
-        value: 'ten',
-        label: `${prefix}10.00`,
-      },
-      {
-        value: 'twenty',
-        label: `${prefix}20.00`,
-      },
-      {
-        value: 'custom',
-        label: 'Custom Amount',
-      },
-    ]
-  }, [state.currency])
+  const dispatch = useDispatch()
 
-  const finalAmount = getMoney(state.amount * 100, state.currency)
+  const onSubmit = useCallback(async (data) => {
+    const sessionData = await preparePayload(data, currentUser)
+
+    const response = await dispatch(createDonationSession(sessionData))
+    const resError = getResponseError(response)
+    if (resError) {
+      setErrorState(resError)
+      return
+    }
+
+    try {
+      await stripe.redirectToCheckout({ sessionId: response.payload.data.id })
+    } catch (redirectError) {
+      setErrorState({
+        detail: redirectError.message,
+      })
+    }
+  }, [currentUser, dispatch, stripe])
+
+  const { Form, canSubmit, state } = useForm({ data: formData, onSubmit })
+
+
+
+  const finalAmount = canSubmit && getMoney(getAmount(state.amountPreset, state.amount), state.currency)
 
   return (
-    <Form className={['donate-form compact', className]}>
-      <RadioFieldset
-        required
-        id="DonationCurrency"
-        label="Select your currency"
-        name="currency"
-        options={currencyOptions} />
+    <>
+      <DonationErrorBox error={errorState} />
+      <Form className={['donate-form compact', className]}>
+        <CurrencyRadioFieldset
+          required
+          id="DonationCurrency"
+          label="Select your currency"
+          name="currency" />
 
-      <RadioFieldset
-        required
-        id="DonationAmountPreset"
-        label="Select your amount"
-        name="amountPreset"
-        options={amountOptions} />
+        {
+          state.currency !== '' && (
+            <AmountPresetRadioFieldset
+              required
+              currency={state.currency}
+              id="DonationAmountPreset"
+              label="Select your amount"
+              name="amountPreset" />
+          )
+        }
+        {
+          state.amountPreset === 'custom' && (
+            <CurrencyFieldset
+              required
+              id="DonationAmount"
+              label="Input your custom amount"
+              name="amount" />
+          )
+        }
 
-      {
-        state.amountPreset === 'custom' && (
-          <InputFieldset
-            required
-            id="DonationAmount"
-            label="Input your custom amount"
-            name="amount" />
-        )
-      }
+        <div className="fieldset">
+          <button
+            className="green"
+            disabled={!canSubmit}
+            type="submit">
+            {'Donate'}
+            {Boolean(canSubmit) && ` ${finalAmount}`}
+          </button>
+        </div>
 
-      <div className="fieldset">
-        <button
-          className="green"
-          disabled={!canSubmit}
-          type="submit">
-          {'Donate'}
-          {Boolean(canSubmit) && ` ${finalAmount}`}
-        </button>
-      </div>
-
-      <StripeBadge className="donation-info-badge" />
-    </Form>
+        <StripeBadge className="donation-info-badge" />
+      </Form>
+    </>
   )
 }
 
 DonationForm.propTypes = {
   className: PropTypes.string,
-  onSubmit: PropTypes.func.isRequired,
+  stripe: PropTypes.object.isRequired,
 }
 
 
