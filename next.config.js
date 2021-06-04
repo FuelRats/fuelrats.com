@@ -69,6 +69,14 @@ module.exports = {
   future: {
     webpack5: true,
   },
+  redirects: () => {
+    return [
+      {
+        source: '/donate/cancel',
+        destination: '/donate',
+      },
+    ]
+  },
   webpack: (config, opt) => {
     /* Define Plugin */
     config.plugins.push(new DefinePlugin({
