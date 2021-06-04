@@ -1,15 +1,11 @@
 import { withStripe } from '~/components/AppLayout'
-import DonateForm from '~/components/DonateForm'
+import DonationForm from '~/components/Forms/DonationForm/DonationForm'
 
 
 
 
 
-function Donate (props) {
-  const {
-    stripe,
-  } = props
-
+function Donate ({ stripe }) {
   return (
     <div className="page-content">
       <div className="intro-text">
@@ -20,7 +16,7 @@ function Donate (props) {
         {'Donations are processed via stripe. Any questions may be directed to '}
         <a href="mailto:support@fuelrats.com">{'support@fuelrats.com'}</a>
       </div>
-      <DonateForm stripe={stripe} />
+      <DonationForm stripe={stripe} />
     </div>
   )
 }
