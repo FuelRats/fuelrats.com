@@ -157,7 +157,7 @@ function DonationForm (props) {
 
 DonationForm.propTypes = {
   className: PropTypes.string,
-  stripe: PropTypes.object.isRequired,
+  stripe: PropTypes.object,
 }
 
 
