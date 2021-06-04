@@ -226,7 +226,7 @@ class RatCard extends React.Component {
               <Switch
                 async
                 checked={rat.attributes.odyssey}
-                label="Owns Odyssey"
+                label="Using Odyssey"
                 onClick={this._handleOdysseySwitch} />
             </div>
           )
