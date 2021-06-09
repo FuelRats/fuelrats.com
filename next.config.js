@@ -4,6 +4,7 @@
 /* eslint-env node */
 const crypto = require('crypto')
 const path = require('path')
+const url = require('url')
 const { DefinePlugin } = require('webpack')
 
 
@@ -41,19 +42,20 @@ module.exports = {
   distDir: path.join('dist', 'next'),
   generateBuildId,
   images: {
-    domains: ['static-cdn.jtvnw.net'],
+    domains: [
+      url.parse(APP_URL).hostname, // Ensure the public hostname is always allowed.
+      'static-cdn.jtvnw.net',
+    ],
   },
   publicRuntimeConfig: {
-    local: {
-      publicUrl: APP_URL,
-    },
+    appUrl: APP_URL,
     irc: {
       client: FR_CLIENT_IRC_URL ?? 'https://qms.fuelrats.dev',
       rat: FR_RAT_IRC_URL ?? 'https://kiwi.fuelrats.com',
     },
     apis: {
       fuelRats: {
-        local: `${APP_URL}/api/fr`,
+        url: `${APP_URL}/api/fr`,
         server: FR_API_URL ?? 'https://dev.api.fuelrats.com',
         socket: FR_SOCKET_URL ?? 'wss://dev.api.fuelrats.com',
       },
