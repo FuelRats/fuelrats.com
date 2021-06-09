@@ -1,4 +1,5 @@
 import getConfig from 'next/config'
+import Image from 'next/image'
 import Link from 'next/link'
 import { createStructuredSelector } from 'reselect'
 
@@ -34,11 +35,13 @@ function INeedFuel (props) {
   return (
     <div className="page-content">
       <div>
-        <img
-          alt="Fuel rat riding a limpet"
-          className="pull-right"
-          src="https://wordpress.fuelrats.com/wp-content/uploads/2016/07/vig_rescue_250-200x126.jpg?resize=200%2C126&ssl=1" />
-
+        <div className="pull-right">
+          <Image
+            alt="Fuel rat riding a limpet"
+            height={126}
+            src="https://wordpress.fuelrats.com/wp-content/uploads/2016/07/vig_rescue_250-200x126.jpg?resize=200%2C126&ssl=1"
+            width={200} />
+        </div>
         <h4>
           {'DO YOU SEE A "OXYGEN DEPLETED IN" TIMER?'}
           <br />

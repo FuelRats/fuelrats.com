@@ -44,6 +44,7 @@ module.exports = {
   images: {
     domains: [
       url.parse(APP_URL).hostname, // Ensure the public hostname is always allowed.
+      'wordpress.fuelrats.com',
       'static-cdn.jtvnw.net',
     ],
   },
