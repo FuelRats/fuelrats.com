@@ -23,7 +23,7 @@ const configureRouter = (nextApp, koaServer) => {
   stripeApi(router)
 
   // Avatars
-  router.use('/avatars', AvatarsRouter.routes(), AvatarsRouter.allowedMethods())
+  router.use('/api/avatars', AvatarsRouter.routes(), AvatarsRouter.allowedMethods())
 
 
   /***************************************************************************\
