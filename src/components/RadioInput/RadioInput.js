@@ -36,8 +36,8 @@ function RadioInput (props) {
         options.map((option) => {
           return (
             <OptionElement
-              {...option}
               key={option.value}
+              {...option}
               checked={option.value === value ?? option.checked}
               disabled={disabled ?? option.disabled}
               name={name}

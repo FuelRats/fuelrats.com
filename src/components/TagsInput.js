@@ -5,6 +5,7 @@
     no-restricted-syntax,
     no-return-assign,
     react/jsx-no-bind,
+    react/no-unsafe,
     react/state-in-constructor,
     arrow-body-style,
 */

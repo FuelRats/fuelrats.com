@@ -140,9 +140,11 @@ InputFieldset.propTypes = {
 /**
  * Returns a memoized version of a callback which can accept the following arguments:
  *
- * * `messages` - an object containing two arrays of messages called `errors` and `warnings`
- * * `value` - The input value to validate against
- * * `target?` - the underlying input element
+ * `messages` - an object containing two arrays of messages called `errors` and `warnings`
+ *
+ * `value` - The input value to validate against
+ *
+ * `target?` - the underlying input element
  *
  * `messages` can be mutated or an updated object can be returned by the callback.
  *

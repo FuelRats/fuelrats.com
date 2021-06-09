@@ -148,8 +148,8 @@ class Carousel extends React.Component {
           {
             Boolean(slide.image) && (
               <m.div
-                {...slideMotionConfig}
                 key={`${curSlide}-img`}
+                {...slideMotionConfig}
                 className="carousel-slide"
                 src={slide.image}
                 style={
@@ -163,8 +163,8 @@ class Carousel extends React.Component {
           {
             Boolean(slide.image && slide.text) && (
               <m.span
-                {...slideTextMotionConfig}
                 key={`${curSlide}-text`}
+                {...slideTextMotionConfig}
                 className="carousel-slide-text">
                 {slide.text}
               </m.span>

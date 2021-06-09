@@ -10,10 +10,10 @@ import useForm from '~/hooks/useForm'
 import { createDonationSession } from '~/store/actions/stripe'
 import { selectUserById, withCurrentUserId } from '~/store/selectors'
 
-import { DonationErrorBox } from '.'
 import AmountPresetRadioFieldset from './AmountPresetRadioFieldset'
 import CurrencyFieldset from './CurrencyFieldset'
 import CurrencyRadioFieldset from './CurrencyRadioFieldset'
+import DonationErrorBox from './DonationErrorBox'
 
 
 

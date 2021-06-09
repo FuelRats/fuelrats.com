@@ -119,8 +119,8 @@ class FuelRatsApp extends App {
 
               <AnimatePresence initial={false} onExitComplete={this.handlePageDestroy}>
                 <m.main
-                  {...pageMotionConfig}
                   key={key}
+                  {...pageMotionConfig}
                   className={['page', title.toLowerCase().replace(/\s/gu, '-'), className]}>
                   {
                     !noHeader && (
