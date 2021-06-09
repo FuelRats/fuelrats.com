@@ -74,6 +74,7 @@ module.exports = {
       {
         source: '/donate/cancel',
         destination: '/donate',
+        permanent: false,
       },
     ]
   },
