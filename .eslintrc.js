@@ -11,6 +11,7 @@ module.exports = {
     '@fuelrats/eslint-config',
     '@fuelrats/eslint-config/plugins/fuelrats',
     '@fuelrats/eslint-config-react',
+    'plugin:@next/next/recommended',
   ],
   rules: {
     'jsx-a11y/no-noninteractive-element-interactions': ['off'], // We intend to enable this once we refactor certain key components.
@@ -21,6 +22,7 @@ module.exports = {
       ...importRules.rules['import/order'][1],
       'newlines-between': 'always',
     }],
+    '@next/next/link-passhref': 0, // This rule is broken so just ignore it for now.
   },
   settings: {
     'import/ignore': [

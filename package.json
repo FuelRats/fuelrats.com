@@ -33,6 +33,7 @@
     "@fuelrats/validation-util": "^1.2.0",
     "@fuelrats/web-util": "^0.3.2",
     "@koa/router": "^10.0.0",
+    "@next/eslint-plugin-next": "^10.2.3",
     "axios": "^0.21.1",
     "clsx": "^1.1.1",
     "content-security-policy-builder": "^2.1.0",
