@@ -13,7 +13,7 @@ import { selectImages } from '~/store/selectors'
 
 // Component constants
 const { publicRuntimeConfig } = getConfig()
-const { publicUrl } = publicRuntimeConfig.local
+const { appUrl } = publicRuntimeConfig
 
 const getSlides = (_, props) => {
   return props.slides
@@ -33,7 +33,7 @@ const selectConnectedSlides = createSelector(
         [slideId]: {
           ...slide,
           id: slideId,
-          url: `${publicUrl}/static/images/${slide.filename || `slide_${key}.jpg`}`,
+          url: `${appUrl}/static/images/${slide.filename || `slide_${key}.jpg`}`,
           image: images[slideId],
         },
       }

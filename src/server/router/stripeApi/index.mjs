@@ -67,8 +67,8 @@ const configureStripeApi = (router) => {
     const donationInfo = getDonationItemInfo(amount)
 
     ctx.body = await stripe.checkout.sessions.create({
-      success_url: `${ctx.state.env.publicUrl}/donate/success`,
-      cancel_url: `${ctx.state.env.publicUrl}/donate/cancel`,
+      success_url: `${ctx.state.env.appUrl}/donate/success`,
+      cancel_url: `${ctx.state.env.appUrl}/donate/cancel`,
       submit_type: 'donate',
       payment_method_types: ['card'],
       allow_promotion_codes: false,

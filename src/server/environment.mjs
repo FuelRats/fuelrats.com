@@ -9,9 +9,9 @@ const DEFAULT_PORT = 3000
 
 function getEnv () {
   return {
+    appUrl: process.env.APP_URL,
     isDev: process.env.NODE_ENV !== 'production',
     port: process.env.PORT ?? DEFAULT_PORT,
-    publicUrl: process.env.APP_URL,
     fallbackUrl: process.env.FR_FALLBACK_URL ?? 'https://fallback.fuelrats.com/',
     api: {
       clientId: process.env.FR_API_KEY,
