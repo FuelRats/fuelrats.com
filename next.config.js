@@ -13,7 +13,8 @@ const { DefinePlugin } = require('webpack')
 
 // Constants
 const {
-  APP_URL,
+  PORT = 3000,
+  APP_URL = `https://localhost:${PORT}`,
   FR_API_URL,
   FR_CLIENT_IRC_URL,
   FR_RAT_IRC_URL,
