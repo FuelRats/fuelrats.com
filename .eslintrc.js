@@ -16,13 +16,11 @@ module.exports = {
   rules: {
     'jsx-a11y/no-noninteractive-element-interactions': ['off'], // We intend to enable this once we refactor certain key components.
     'jsdoc/require-jsdoc': ['off'], // we'll get to it someday...
-    'react/jsx-uses-react': ['off'],
-    'react/react-in-jsx-scope': ['off'],
     'import/order': ['error', {
       ...importRules.rules['import/order'][1],
       'newlines-between': 'always',
     }],
-    '@next/next/link-passhref': 0, // This rule is broken so just ignore it for now.
+    '@next/next/link-passhref': ['off'], // This rule is broken so just ignore it for now.
   },
   settings: {
     'import/ignore': [

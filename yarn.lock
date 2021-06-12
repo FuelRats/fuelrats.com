@@ -2843,9 +2843,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fuelrats/eslint-config-react@npm:canary":
-  version: 2.4.0-canary.4
-  resolution: "@fuelrats/eslint-config-react@npm:2.4.0-canary.4"
+"@fuelrats/eslint-config-react@npm:^2.4.0-canary.5":
+  version: 2.4.0-canary.5
+  resolution: "@fuelrats/eslint-config-react@npm:2.4.0-canary.5"
   peerDependencies:
     "@babel/core": ^7.11
     "@babel/eslint-parser": ^7.11
@@ -2854,13 +2854,13 @@ __metadata:
     eslint-plugin-react: ^7.23
     eslint-plugin-react-hooks: ^4.0.1
     react: ^16.8 || ^17
-  checksum: 5419b18c3c16fbb6096741e83c27a104dd1913176874fe5616677fb0a36d1f8324f5098b9c7d95f4c675bad21474773ed876149c316f8b1ec1e4cd051deebc3b
+  checksum: 76d523680dfcd2e7ec8f40a74e87b406635a176833bc21e71325fcc60d67361e9047bdadf1d1b3d02635427157fe77ce192f8dc8d5824a6dc9f664714b1a1953
   languageName: node
   linkType: hard
 
-"@fuelrats/eslint-config@npm:canary":
-  version: 2.4.0-canary.4
-  resolution: "@fuelrats/eslint-config@npm:2.4.0-canary.4"
+"@fuelrats/eslint-config@npm:^2.4.0-canary.5":
+  version: 2.4.0-canary.5
+  resolution: "@fuelrats/eslint-config@npm:2.4.0-canary.5"
   dependencies:
     confusing-browser-globals: ^1.0.10
   peerDependencies:
@@ -2870,19 +2870,19 @@ __metadata:
     eslint: ^7.24
     eslint-plugin-import: ^2.23
     eslint-plugin-jsdoc: ^35
-  checksum: 4d38348de7677df39bc0d59710139e09dba88718f2749b415a8f6382171fd13648e8345ea64fdc3986af2ce7e11a78c79494c710b15ac96ed0858d0bb903fb0f
+  checksum: 627f9d5bd82738f92e339aa540f2e7d6d22ee20292df4b4485d2097061a9f7f3062b972c1593d7a3d2a06ea77b885de3257819736962bc12fc364c5d2416eede
   languageName: node
   linkType: hard
 
-"@fuelrats/eslint-plugin@npm:canary":
-  version: 2.4.0-canary.4
-  resolution: "@fuelrats/eslint-plugin@npm:2.4.0-canary.4"
+"@fuelrats/eslint-plugin@npm:^2.4.0-canary.5":
+  version: 2.4.0-canary.5
+  resolution: "@fuelrats/eslint-plugin@npm:2.4.0-canary.5"
   dependencies:
     requireindex: ~1.2.0
   peerDependencies:
     "@babel/eslint-parser": ^7.11
     eslint: ^7.5
-  checksum: 44f5e0b46602966f0f2d1bff4c70fa1977f7a3e45a1fc11647a055e0224555064111d32565f83b6cb810374d8ec816d19b13c36380cd30d3aa7392fa217c4590
+  checksum: 2b72c197f1112c1182624e2c35552857e19f67f5177bb1374f60d2ca15811661e84e6a4ee117aee9ac7d996d28745fc29a734c48d3b21b6a6eb4d4d5654d45fd
   languageName: node
   linkType: hard
 
@@ -6813,9 +6813,9 @@ fsevents@~2.3.1:
     "@fortawesome/free-solid-svg-icons": ^5.15.3
     "@fortawesome/react-fontawesome": ^0.1.14
     "@fuelrats/babel-plugin-classnames": ^0.3.0
-    "@fuelrats/eslint-config": canary
-    "@fuelrats/eslint-config-react": canary
-    "@fuelrats/eslint-plugin": canary
+    "@fuelrats/eslint-config": ^2.4.0-canary.5
+    "@fuelrats/eslint-config-react": ^2.4.0-canary.5
+    "@fuelrats/eslint-plugin": ^2.4.0-canary.5
     "@fuelrats/koa-adorable-avatars": ^0.1.2
     "@fuelrats/stylelint-config": ^1.2.3
     "@fuelrats/validation-util": ^1.2.0
