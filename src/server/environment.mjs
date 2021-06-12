@@ -1,32 +1,37 @@
-/* eslint-env node */
-
-// Constants
-const DEFAULT_PORT = 3000
-
-
-
-
-
 function getEnv () {
+  const {
+    PORT = 3000,
+    APP_URL = `https://localhost:${PORT}`,
+    NODE_ENV,
+    FR_FALLBACK_URL = 'https://fallback.fuelrats.com/',
+    FR_API_SECRET,
+    FR_API_KEY,
+    FR_API_URL = 'https://dev.api.fuelrats.com',
+    FR_EDSM_API_URL = 'https://www.edsm.net',
+    FR_WORDPRESS_URL = 'https://wordpress.fuelrats.com',
+    FR_STRIPE_API_SK,
+    FR_STRIPE_BANS_FILE,
+  } = process.env
+
   return {
-    appUrl: process.env.APP_URL,
-    isDev: process.env.NODE_ENV !== 'production',
-    port: process.env.PORT ?? DEFAULT_PORT,
-    fallbackUrl: process.env.FR_FALLBACK_URL ?? 'https://fallback.fuelrats.com/',
+    appUrl: APP_URL,
+    isDev: NODE_ENV !== 'production',
+    port: PORT,
+    fallbackUrl: FR_FALLBACK_URL,
     api: {
-      clientId: process.env.FR_API_KEY,
-      clientSecret: process.env.FR_API_SECRET,
-      url: process.env.FR_API_URL ?? 'https://dev.api.fuelrats.com',
+      url: FR_API_URL,
+      clientId: FR_API_KEY,
+      clientSecret: FR_API_SECRET,
     },
     edsm: {
-      url: process.env.FR_EDSM_API_URL ?? 'https://www.edsm.net',
+      url: FR_EDSM_API_URL,
     },
     wordpress: {
-      url: process.env.FR_WORDPRESS_URL ?? 'https://wordpress.fuelrats.com',
+      url: FR_WORDPRESS_URL,
     },
     stripe: {
-      secret: process.env.FR_STRIPE_API_SK,
-      bansFile: process.env.FR_STRIPE_BANS_FILE,
+      secret: FR_STRIPE_API_SK,
+      bansFile: FR_STRIPE_BANS_FILE,
     },
   }
 }
