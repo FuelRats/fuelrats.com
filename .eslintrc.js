@@ -40,10 +40,18 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['src/pages/api/**/*.js'],
+      files: ['src/pages/api/**/*.js', 'src/server/**/*.mjs'],
       env: {
         browser: false,
         node: true,
+      },
+    },
+    {
+      files: ['*.worker.js'],
+      env: {
+        browser: false,
+        commonjs: false,
+        worker: true,
       },
     },
   ],
