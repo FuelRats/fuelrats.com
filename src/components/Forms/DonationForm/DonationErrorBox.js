@@ -21,7 +21,7 @@ const renderError = (error) => {
 
 
 
-function RegistrationErrorBox (props) {
+function DonationErrorBox (props) {
   const { error } = props
 
   if (!error) {
@@ -50,7 +50,7 @@ function RegistrationErrorBox (props) {
   )
 }
 
-RegistrationErrorBox.propTypes = {
+DonationErrorBox.propTypes = {
   error: PropTypes.object,
 }
 
@@ -58,4 +58,4 @@ RegistrationErrorBox.propTypes = {
 
 
 
-export default RegistrationErrorBox
+export default DonationErrorBox
