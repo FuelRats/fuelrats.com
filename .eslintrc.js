@@ -9,7 +9,6 @@ module.exports = {
   },
   extends: [
     '@fuelrats/eslint-config',
-    '@fuelrats/eslint-config/plugins/fuelrats',
     '@fuelrats/eslint-config-react',
     'plugin:@next/next/recommended',
   ],
@@ -50,6 +49,12 @@ module.exports = {
         browser: false,
         commonjs: false,
         worker: true,
+      },
+    },
+    {
+      files: ['src/pages/**/*.js'],
+      rules: {
+        '@fuelrats/default-export-matches-module-name': ['off'], // Disabled in pages dir as it becomes difficult to stick to module names
       },
     },
   ],

@@ -43,6 +43,7 @@ module.exports = {
   distDir: path.join('dist', 'next'),
   generateBuildId,
   images: {
+    disableStaticImages: true,
     domains: [
       url.parse(APP_URL).hostname, // Ensure the public hostname is always allowed.
       'wordpress.fuelrats.com',
@@ -69,9 +70,6 @@ module.exports = {
         public: FR_STRIPE_API_PK,
       },
     },
-  },
-  future: {
-    webpack5: true,
   },
   redirects: () => {
     return [
