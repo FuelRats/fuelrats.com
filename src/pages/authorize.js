@@ -68,7 +68,7 @@ class Authorize extends React.Component {
 
       if (payload.redirect) {
         pageRedirect(ctx, payload.redirect)
-        return {}
+        return { redirect: true }
       }
 
       if (res && meta.response.headers['set-cookie']) {
@@ -81,13 +81,21 @@ class Authorize extends React.Component {
     return {}
   }
 
-  static getPageMeta () {
-    return { title: 'Authorize Application' }
+  static getPageMeta (_, pageProps) {
+    return {
+      title: 'Authorize Application',
+      className: pageProps.redirect ? 'hidden' : '',
+    }
   }
 
   render () {
-    const { client } = this.props
+    const { client, redirect } = this.props
     const { submitting } = this.state
+
+
+    if (redirect) {
+      return null
+    }
 
     return (
       <div className="page-content">
