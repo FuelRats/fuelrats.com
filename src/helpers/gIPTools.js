@@ -99,7 +99,7 @@ export const resolvePageMeta = async (Component, ctx, pageProps) => {
 
   return {
     ...pageMeta,
-    className: `${(pageMeta.title ?? 'fuel-rats').toLowerCase().replace(/\s/gu, '-')} ${pageMeta.className}`,
+    className: `${(pageMeta.title ?? 'fuel-rats').toLowerCase().replace(/\s/gu, '-')} ${pageMeta.className ?? ''}`,
   }
 }
 
