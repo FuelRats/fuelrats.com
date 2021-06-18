@@ -121,7 +121,7 @@ class FuelRatsApp extends App {
                 <m.main
                   key={key}
                   {...pageMotionConfig}
-                  className={['page', title.toLowerCase().replace(/\s/gu, '-'), className]}>
+                  className={['page', className]}>
                   {
                     !noHeader && (
                       <header className="page-header">
