@@ -1,17 +1,16 @@
-import dynamicNewPasswordFieldset from '~/components/Fieldsets/NewPasswordFieldset'
+import NewPasswordFieldset from '~/components/Fieldsets/NewPasswordFieldset'
 import useForm from '~/hooks/useForm'
 
 
 
-const passwordFieldProps = {
-  required: true,
-  id: 'Password',
-  label: (<>{'New Password '}<small>{'This password will be used for both fuelrats.com and our IRC chat.'}</small></>),
-  name: 'attributes.password',
-}
-
-
-const NewPasswordFieldset = dynamicNewPasswordFieldset(passwordFieldProps)
+const passwordLabel = (
+  <>
+    {'New Password '}
+    <small>
+      {'This password will be used for both fuelrats.com and our IRC chat.'}
+    </small>
+  </>
+)
 
 
 
@@ -29,7 +28,11 @@ function PasswordResetForm ({ onSubmit }) {
 
   return (
     <Form>
-      <NewPasswordFieldset {...passwordFieldProps} />
+      <NewPasswordFieldset
+        required
+        id="Password"
+        label={passwordLabel}
+        name="attributes.password" />
 
       <menu type="toolbar">
         <div className="primary position-vertical">

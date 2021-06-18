@@ -1,7 +1,7 @@
 import BooleanRadioFieldset from '~/components/Fieldsets/BooleanRadioFieldset'
 import CMDRFieldset from '~/components/Fieldsets/CMDRFieldset'
 import IRCNickFieldset from '~/components/Fieldsets/IRCNickFieldset'
-import dynamicNewPasswordFieldset from '~/components/Fieldsets/NewPasswordFieldset'
+import NewPasswordFieldset from '~/components/Fieldsets/NewPasswordFieldset/NewPasswordFieldset'
 import PlatformFieldset from '~/components/Fieldsets/PlatformFieldset'
 import NewEmailFieldset from '~/components/Fieldsets/RegistrationEmailFieldset'
 import TermsFieldset from '~/components/Fieldsets/TermsFieldset'
@@ -49,16 +49,6 @@ const labels = {
   platform: 'What platform is your CMDR on?',
 }
 
-const passwordFieldProps = {
-  required: true,
-  id: 'Password',
-  label: labels.password,
-  name: 'attributes.password',
-}
-
-const NewPasswordFieldset = dynamicNewPasswordFieldset(passwordFieldProps)
-
-
 function RegistrationForm ({ onSubmit }) {
   const { Form, canSubmit, submitting, state } = useForm({ data, onSubmit })
 
@@ -72,7 +62,11 @@ function RegistrationForm ({ onSubmit }) {
         label={labels.email}
         name="attributes.email" />
 
-      <NewPasswordFieldset {...passwordFieldProps} />
+      <NewPasswordFieldset
+        required
+        id="Password"
+        label="labels.password"
+        name="attributes.password" />
 
       <IRCNickFieldset
         required
