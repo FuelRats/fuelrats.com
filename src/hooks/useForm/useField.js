@@ -30,7 +30,7 @@ function useField (name = isRequired('name'), opts = {}) {
   const debouncedValidate = useDebouncedCallback(
     async (value) => {
       dirtyState.current = false
-      await ctxRef.current?.validateField(nameRef.current, value, ctxRef.current?.ctx.state)
+      await ctxRef.current?.validateField(nameRef.current, value)
       setValidatingState(false)
     },
     [],
