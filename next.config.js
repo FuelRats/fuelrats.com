@@ -97,11 +97,6 @@ module.exports = {
     // Workaround to fix dev warning: https://github.com/vercel/next.js/issues/19865
     config.output.hotUpdateMainFilename = 'static/webpack/[fullhash].[runtime].hot-update.json'
 
-    // Workaround to fix production builds with workers: https://github.com/vercel/next.js/issues/22813
-    config.output.chunkFilename = opt.isServer
-      ? `${opt.dev ? '[name]' : '[name].[fullhash]'}.js`
-      : `static/chunks/${opt.dev ? '[name]' : '[name].[fullhash]'}.js`
-
     /* SVGR */
     config.module.rules.push({
       exclude: /node_modules/u,
