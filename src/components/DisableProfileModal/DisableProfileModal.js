@@ -2,14 +2,14 @@ import Router from 'next/router'
 import { useCallback, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+import asModal, { FooterPrimary, ModalContent, ModalFooter } from '~/components/asModal'
+import PasswordFieldset from '~/components/Fieldsets/PasswordFieldset'
 import getResponseError from '~/helpers/getResponseError'
 import useForm from '~/hooks/useForm'
 import { logout } from '~/store/actions/session'
 import { updateUser } from '~/store/actions/user'
 import { selectCurrentUserId } from '~/store/selectors'
 
-import PasswordFieldset from '../Fieldsets/PasswordFieldset'
-import asModal, { FooterPrimary, ModalContent, ModalFooter } from '../Modal'
 import DisableProfileErrorBox from './DisableProfileErrorBox'
 
 

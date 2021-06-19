@@ -18,7 +18,7 @@ function ApiErrorBox (props) {
   }
 
   return (
-    <MessageBox {...messageProps}>
+    <MessageBox title={error.title} {...messageProps}>
       {
         renderError?.(error) ?? (
           <>
@@ -27,8 +27,12 @@ function ApiErrorBox (props) {
             {
               error.id && (
                 <>
-                  {', and include this error ID in your email: \n'}
-                  <code>{error.id}</code>
+                  {', and include this error information in your email: \n'}
+                  <pre>
+                    {`"id": "${error.id}",\n`}
+                    {`"error": "${error.status}",\n`}
+                    {`"source": ${JSON.stringify(error.source, undefined, 2)}`}
+                  </pre>
                 </>
               )
             }

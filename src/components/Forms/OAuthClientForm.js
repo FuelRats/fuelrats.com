@@ -1,21 +1,20 @@
 import PropTypes from 'prop-types'
 
+import InputFieldset from '~/components/Fieldsets/InputFieldset'
 import useForm from '~/hooks/useForm'
-
-import InputFieldset from '../Fieldsets/InputFieldset'
 
 
 
 
 
 // Component Constants
-const data = Object.freeze({
+const data = {
   type: 'clients',
   attributes: {
     name: '',
     redirectUri: '',
   },
-})
+}
 
 
 

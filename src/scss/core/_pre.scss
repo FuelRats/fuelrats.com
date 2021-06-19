@@ -1,12 +1,16 @@
 pre {
   flex-shrink: 0;
 
-  margin-bottom: 2rem;
-  padding: 2rem;
+  margin-bottom: 1rem;
+  padding: 1rem 2rem;
 
-  background-color: $light-grey;
+  border-radius: 2px;
 
-  font-family: 'Source Code Pro', monospace;
+  background-color: rgba($grey, 0.15);
+
+  font-family: $monospace-fonts;
   white-space: pre-wrap;
   box-sizing: initial;
+
+  user-select: all;
 }

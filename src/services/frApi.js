@@ -6,7 +6,7 @@ import qs from 'qs'
 
 
 const { publicRuntimeConfig } = getConfig()
-const localApiUrl = publicRuntimeConfig.apis.fuelRats.local
+const localApiUrl = publicRuntimeConfig.apis.fuelRats.url
 
 
 

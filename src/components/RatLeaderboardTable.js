@@ -22,7 +22,21 @@ const FETCH_DATA_DEBOUNCE = 500
 const DEFAULT_PAGE_SIZE = 25
 
 
+const renderBadgeCell = ({ value }) => {
+  const {
+    codeRedCount,
+    joinedAt,
+    rescueCount,
+  } = value.attributes
 
+  return (
+    <div className="badge-list">
+      <RescueAchievementIcon className="size-32 fixed" rescueCount={rescueCount} />
+      <CodeRedIcon className="size-32 fixed" codeRedCount={codeRedCount} />
+      <FirstYearIcon className="size-32 fixed" createdAt={joinedAt} />
+    </div>
+  )
+}
 
 
 @connect
@@ -144,21 +158,7 @@ class RatLeaderboardTable extends React.Component {
           minWidth: 150,
           maxWidth: 200,
           filterable: false,
-          Cell: ({ value }) => {
-            const {
-              codeRedCount,
-              joinedAt,
-              rescueCount,
-            } = value.attributes
-
-            return (
-              <div className="badge-list">
-                <RescueAchievementIcon className="size-32 fixed" rescueCount={rescueCount} />
-                <CodeRedIcon className="size-32 fixed" codeRedCount={codeRedCount} />
-                <FirstYearIcon className="size-32 fixed" createdAt={joinedAt} />
-              </div>
-            )
-          },
+          Cell: renderBadgeCell,
         },
       ]
     }

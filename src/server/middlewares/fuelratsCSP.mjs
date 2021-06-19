@@ -25,11 +25,11 @@ const domainWhitelist = [
 
 
 
-const configureCSP = () => {
+const fuelratsCSP = () => {
   return async function koaCSP (ctx, next) {
     const {
       isDev,
-      publicUrl,
+      appUrl,
       api,
     } = ctx.state.env
 
@@ -44,7 +44,7 @@ const configureCSP = () => {
           "'self'",
           'wss://*.fuelrats.com',
           api.url,
-          publicUrl,
+          appUrl,
           ...(isDev ? ['webpack://*'] : []),
         ],
         baseUri: ["'none'"],
@@ -74,4 +74,4 @@ const configureCSP = () => {
 
 
 
-export default configureCSP
+export default fuelratsCSP

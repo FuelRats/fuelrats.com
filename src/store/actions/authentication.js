@@ -5,7 +5,7 @@ import Router from 'next/router'
 
 import getFingerprint from '~/helpers/getFingerprint'
 import { presentApiRequestBody } from '~/helpers/presenters'
-import frApi from '~/services/fuelrats'
+import frApi from '~/services/frApi'
 
 import actionTypes from '../actionTypes'
 import { frApiPlainRequest } from './services'
@@ -65,21 +65,15 @@ export const login = (options) => {
 
       Cookies.set('access_token', token, { expires: remember ? SESSION_TOKEN_LENGTH : null })
 
-      /* eslint-disable no-restricted-globals */
       if (location && location.search) {
-        const searchParams = {}
+        const searchParams = new URLSearchParams(location.search)
 
-        location.search.replace(/^\?/u, '').split('&').forEach((searchParam) => {
-          const [key, value] = searchParam.split('=')
-
-          searchParams[key] = value
-        })
-
-        const destination = searchParams.destination ? decodeURIComponent(searchParams.destination) : '/profile'
+        const destination = searchParams.has('destination')
+          ? decodeURIComponent(searchParams.get('destination'))
+          : '/profile'
 
         Router.push(destination)
       }
-      /* eslint-enable no-restricted-globals */
     }
 
     return dispatch(action)

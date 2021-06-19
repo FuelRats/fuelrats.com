@@ -1,4 +1,4 @@
-import asModal, { ModalContent, ModalFooter } from './Modal'
+import asModal, { ModalContent, ModalFooter } from './asModal'
 
 
 

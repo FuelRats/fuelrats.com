@@ -2,7 +2,7 @@ import ip6addr from 'ip6addr'
 import jsonfile from 'jsonfile'
 
 
-import { UnauthorizedError } from './error'
+import { UnauthorizedError } from '../error'
 
 const IPV4_PREFIX_LENGTH = 32
 const IPV6_PREFIX_LENGTH = 56
@@ -31,7 +31,7 @@ const compareIps = (userIp) => {
   }
 }
 
-const authorizeUser = async (ctx, next) => {
+const authorization = async (ctx, next) => {
   // We only care about checking the file if it's actually configured
   if (ctx.state.env?.stripe?.bansFile) {
     // Load on every request since we don't want to
@@ -53,4 +53,4 @@ const authorizeUser = async (ctx, next) => {
 
 
 
-export default authorizeUser
+export default authorization

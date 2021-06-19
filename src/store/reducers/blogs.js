@@ -11,7 +11,7 @@ import initialState from '../initialState'
 
 
 
-const blogsReducer = produce((draftState, action) => {
+export default produce((draftState, action) => {
   const {
     payload,
     type,
@@ -52,9 +52,3 @@ const blogsReducer = produce((draftState, action) => {
       break
   }
 }, initialState.blogs)
-
-
-
-
-
-export default blogsReducer

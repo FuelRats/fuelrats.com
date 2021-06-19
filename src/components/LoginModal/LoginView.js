@@ -2,28 +2,29 @@ import Router from 'next/router'
 import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 
+import { FooterPrimary, FooterSecondary, ModalFooter, useModalContext } from '~/components/asModal'
+import EmailFieldset from '~/components/Fieldsets/EmailFieldset'
+import PasswordFieldset from '~/components/Fieldsets/PasswordFieldset'
+import SwitchFieldset from '~/components/Fieldsets/SwitchFieldset'
 import getResponseError from '~/helpers/getResponseError'
 import useForm from '~/hooks/useForm'
 import { login } from '~/store/actions/authentication'
 import { getUserProfile } from '~/store/actions/user'
 
-import EmailFieldset from '../Fieldsets/EmailFieldset'
-import PasswordFieldset from '../Fieldsets/PasswordFieldset'
-import SwitchFieldset from '../Fieldsets/SwitchFieldset'
-import { FooterPrimary, FooterSecondary, ModalFooter } from '../Modal'
-import { useModalContext } from '../Modal/Modal'
 import styles from './LoginModal.module.scss'
 
 
 
+
+
 // Component Constants
-const initialData = Object.freeze({
+const initialData = {
   remember: false,
   data: {
     password: '',
     username: '',
   },
-})
+}
 
 function LoginView () {
   const [{ formData: data, onClose }, setModalState] = useModalContext()

@@ -1,6 +1,9 @@
+import getConfig from 'next/config'
+import Image from 'next/image'
 import { useCallback, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { setFlag } from '~/store/actions/flags'
 import { logout } from '~/store/actions/session'
 import {
@@ -18,13 +21,20 @@ import styles from './UserMenu.module.scss'
 
 
 
+const { publicRuntimeConfig } = getConfig()
+const { appUrl } = publicRuntimeConfig
+
+
+
+
+
 function UserMenu () {
   const checkboxRef = useRef()
 
   const { loggedIn } = useSelector(selectSession)
   const userCanSeeRescueAdmin = useSelector(selectCurrentUserCanEditAllRescues)
   const user = useSelector(withCurrentUserId(selectUserById))
-  const userAvatar = useSelector(withCurrentUserId(selectAvatarByUserId))
+  const userAvatar = useSelectorWithProps({ size: 64 }, withCurrentUserId(selectAvatarByUserId))
 
   const dispatch = useDispatch()
 
@@ -56,7 +66,12 @@ function UserMenu () {
               <label className={[styles.avatar, styles.navHandle]} htmlFor="UserMenuControl" id="UserMenuToggle">
                 {
                   Boolean(user) && (
-                    <img alt="Your avatar" src={userAvatar} />
+                    <Image
+                      unoptimized
+                      alt="User's avatar"
+                      height={64}
+                      src={`${appUrl}${userAvatar}`}
+                      width={64} />
                   )
                 }
               </label>

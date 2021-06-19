@@ -2,29 +2,22 @@ import PropTypes from 'prop-types'
 import { useCallback, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+import asModal, { ModalContent, ModalFooter } from '~/components/asModal'
+import NewPasswordFieldset from '~/components/Fieldsets/NewPasswordFieldset'
+import PasswordFieldset from '~/components/Fieldsets/PasswordFieldset'
 import getResponseError from '~/helpers/getResponseError'
 import useForm from '~/hooks/useForm'
 import { changePassword } from '~/store/actions/authentication'
 import { selectCurrentUserId } from '~/store/selectors'
 
-import dynamicNewPasswordFieldset from '../Fieldsets/NewPasswordFieldset'
-import PasswordFieldset from '../Fieldsets/PasswordFieldset'
-import asModal, { ModalContent, ModalFooter } from '../Modal'
+
 import ChangePasswordMessageBox from './ChangePasswordMessageBox'
 
 // Component Constants
 const SUBMIT_AUTO_CLOSE_DELAY_TIME = 3000
 
-const passwordFieldProps = {
-  dark: true,
-  required: true,
-  'aria-label': 'New Password',
-  id: 'NewPassword',
-  name: 'attributes.newPassword',
-  placeholder: 'New Password',
-}
 
-const NewPasswordFieldset = dynamicNewPasswordFieldset(passwordFieldProps)
+
 
 
 function ChangePasswordModal (props) {
@@ -95,7 +88,13 @@ function ChangePasswordModal (props) {
         name="attributes.password"
         placeholder="Current Password" />
 
-      <NewPasswordFieldset {...passwordFieldProps} />
+      <NewPasswordFieldset
+        dark
+        required
+        aria-label="New Password"
+        id="NewPassword"
+        name="attributes.newPassword"
+        placeholder="New Password" />
 
       <ModalFooter>
         <div className="secondary" />

@@ -46,9 +46,9 @@ function MessageBox (props) {
       </div>
       {
         footer && (
-          <span className={styles.footer}>
+          <small className={styles.footer}>
             {footer}
-          </span>
+          </small>
         )
       }
     </div>

@@ -1,4 +1,4 @@
-export default function extPropType (propType) {
+export default function extPropTypes (propType) {
   function checkType (extTypeCheck, ...args) {
     const [, propName, componentName] = args
     if (typeof propType !== 'function') {

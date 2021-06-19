@@ -1,9 +1,11 @@
+@use 'sass:math';
+
 $wiggle-rotation: 7.5;
 
 @keyframes wiggle {
   10%,
   90% {
-    transform: rotateZ((($wiggle-rotation / 3) * 2) * 1deg);
+    transform: rotateZ((math.div($wiggle-rotation, 3) * 2) * 1deg);
   }
 
   30%,

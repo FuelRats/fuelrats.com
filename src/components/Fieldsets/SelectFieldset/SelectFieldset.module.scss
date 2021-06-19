@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 @import '../../../scss/colors';
 
 
@@ -12,7 +14,7 @@
   top: 1px;
   right: 1px;
 
-  padding: 1rem #{(2 / 3) * 1rem};
+  padding: 1rem #{math.div(2, 3) * 1rem};
 
   border: none;
 

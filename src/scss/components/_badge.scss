@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 // Create an empty list to generate our PC badge background
 $pc-background-gradients: ();
 
@@ -6,8 +8,8 @@ $pc-background-gradients: ();
   $texture-colors: ($pc-sun-orange, $pc-sun-yellow);
 
   // Generate a random percentage-based X and Y position for each spot
-  $texture-x: percentage((random(30) + 70) / 100);
-  $texture-y: percentage((random(30) + 70) / 100);
+  $texture-x: percentage(math.div((random(30) + 70), 100));
+  $texture-y: percentage(math.div((random(30) + 70), 100));
 
   // The texture size is where we'll put our final color stop
   $texture-size: (random(10)) + '%';
@@ -47,9 +49,9 @@ $pc-background-gradients:
 // Generate the "stars"
 @for $i from 1 through 50 {
   // Generate a random percentage-based X and Y position for each star
-  $star-x: percentage(random(100) / 100);
-  $star-y: percentage(random(100) / 100);
-  $star-size: percentage((random(50) * 0.1) / 100);
+  $star-x: percentage(math.div(random(100), 100));
+  $star-y: percentage(math.div(random(100), 100));
+  $star-size: percentage(math.div((random(50) * 0.1), 100));
 
   // Create the star's gradient
   $gradient:

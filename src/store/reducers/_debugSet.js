@@ -9,7 +9,7 @@ import _set from 'lodash/set'
  * @param {[string, any]} action.payload lodash set path/value
  * @returns {object} next redux state
  */
-export default function unsafeSet (state, action) {
+export default function _debugSet (state, action) {
   if (action.type === 'unsafe/set') {
     return produce(state, (draftState) => {
       _set(draftState, ...action.payload)

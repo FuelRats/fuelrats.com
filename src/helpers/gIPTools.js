@@ -4,7 +4,7 @@ import jsCookie from 'js-cookie'
 import nextCookies from 'next-cookies'
 import Router from 'next/router'
 
-import frApi from '~/services/fuelrats'
+import frApi from '~/services/frApi'
 
 
 
@@ -13,6 +13,10 @@ import frApi from '~/services/fuelrats'
 const MAX_TITLE_LENGTH = 50
 const MAX_DESCR_LENGTH = 300
 const validatePageMeta = (props) => {
+  if (!props.title?.length) {
+    console.error('Pages must contain a unique title')
+  }
+
   if (props.title?.length > MAX_TITLE_LENGTH) {
     console.warn(`Page titles should be fewer than 60 characters, preferably closer to 50. This page's title is ${props.title.length} characters.`)
   }
@@ -84,16 +88,18 @@ export const setError = (ctx, statusCode, message) => {
 
 
 export const resolvePageMeta = async (Component, ctx, pageProps) => {
-  const pageMeta = (await Component.getPageMeta?.(ctx, pageProps)) ?? {}
+  const pageMeta = {
+    description: 'The Fuel Rats are Elite: Dangerous\'s premier emergency refueling service. Fueling the galaxy, one ship at a time, since 3301.',
+    ...(await Component.getPageMeta?.(ctx, pageProps)) ?? {},
+  }
 
   if ($IS_DEVELOPMENT) {
     validatePageMeta(pageMeta)
   }
 
   return {
-    title: 'Fuel Rats',
-    description: 'The Fuel Rats are Elite: Dangerous\'s premier emergency refueling service. Fueling the galaxy, one ship at a time, since 3301.',
     ...pageMeta,
+    className: `${(pageMeta.title ?? 'fuel-rats').toLowerCase().replace(/\s/gu, '-')} ${pageMeta.className ?? ''}`,
   }
 }
 

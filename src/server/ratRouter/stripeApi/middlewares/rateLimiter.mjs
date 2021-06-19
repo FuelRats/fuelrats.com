@@ -1,4 +1,4 @@
-import { TooManyRequestsError } from './error'
+import { TooManyRequestsError } from '../error'
 
 const hourTimer = 60 * 60 * 1000
 
@@ -146,10 +146,10 @@ class RemoteAddressEntity {
 
 
 
-const createControlTower = () => {
+const rateLimiter = () => {
   const traffic = new TrafficControl()
 
-  return async function trafficControl (ctx, next) {
+  return async function trafficControlTower (ctx, next) {
     const rateLimit = traffic.validateRateLimit({ connection: ctx })
     ctx.state.traffic = rateLimit
     ctx.set('X-Rate-Limit-Limit', rateLimit.total)
@@ -165,4 +165,4 @@ const createControlTower = () => {
   }
 }
 
-export default createControlTower
+export default rateLimiter

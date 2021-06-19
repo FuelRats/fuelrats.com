@@ -12,7 +12,15 @@
     },
     {
       "name": "Next: Attach Chrome",
-      "type": "chrome",
+      "type": "pwa-chrome",
+      "request": "attach",
+      "port": 9222,
+      "url": "${config:develop.attachurl}",
+      "webRoot": "${workspaceFolder}"
+    }
+    {
+      "name": "Next: Attach Edge",
+      "type": "pwa-msedge",
       "request": "attach",
       "port": 9222,
       "url": "${config:develop.attachurl}",
@@ -21,8 +29,12 @@
   ],
   "compounds": [
     {
-      "name": "Next: Attach",
+      "name": "Next: Attach All",
       "configurations": ["Next: Attach Server", "Next: Attach Chrome"]
+    },
+    {
+      "name": "Next: Attach All (Edge)",
+      "configurations": ["Next: Attach Server", "Next: Attach Edge"]
     }
   ]
 }

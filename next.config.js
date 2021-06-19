@@ -4,6 +4,7 @@
 /* eslint-env node */
 const crypto = require('crypto')
 const path = require('path')
+const url = require('url')
 const { DefinePlugin } = require('webpack')
 
 
@@ -12,7 +13,8 @@ const { DefinePlugin } = require('webpack')
 
 // Constants
 const {
-  APP_URL,
+  PORT = 3000,
+  APP_URL = `https://localhost:${PORT}`,
   FR_API_URL,
   FR_CLIENT_IRC_URL,
   FR_RAT_IRC_URL,
@@ -41,19 +43,26 @@ module.exports = {
   distDir: path.join('dist', 'next'),
   generateBuildId,
   images: {
-    domains: ['static-cdn.jtvnw.net'],
+    disableStaticImages: true,
+    domains: [
+      url.parse(APP_URL).hostname, // Ensure the public hostname is always allowed.
+      'wordpress.fuelrats.com',
+      'static-cdn.jtvnw.net',
+    ],
+  },
+  eslint: {
+    // Ignore ESLint in builds as our CI Takes care of this for us.
+    ignoreDuringBuilds: true,
   },
   publicRuntimeConfig: {
-    local: {
-      publicUrl: APP_URL,
-    },
+    appUrl: APP_URL,
     irc: {
       client: FR_CLIENT_IRC_URL ?? 'https://qms.fuelrats.dev',
       rat: FR_RAT_IRC_URL ?? 'https://kiwi.fuelrats.com',
     },
     apis: {
       fuelRats: {
-        local: `${APP_URL}/api/fr`,
+        url: `${APP_URL}/api/fr`,
         server: FR_API_URL ?? 'https://dev.api.fuelrats.com',
         socket: FR_SOCKET_URL ?? 'wss://dev.api.fuelrats.com',
       },
@@ -66,8 +75,60 @@ module.exports = {
       },
     },
   },
-  future: {
-    webpack5: true,
+  redirects: () => {
+    return [
+      {
+        // Temporary workaround so canceled donations return to donate screen
+        source: '/donate/cancel',
+        destination: '/donate',
+        permanent: false,
+      },
+      {
+        // Profile page requires a tab name in the path
+        source: '/profile',
+        destination: '/profile/overview',
+        permanent: true,
+      },
+      {
+        // Old blog used to exist at /blogs
+        source: '/blogs',
+        destination: '/blog',
+        permanent: true,
+      },
+      {
+        // get-help was used at launch of the website, but has since been changed back.
+        source: '/get-help',
+        destination: '/i-need-fuel',
+        permanent: true,
+      },
+      {
+        // Common endpoint for privacy policies
+        source: '/privacy',
+        destination: '/privacy-policy',
+        permanent: true,
+      },
+      {
+        // Lexicon is no longer local
+        source: '/fuel-rats-lexicon',
+        destination: 'https://confluence.fuelrats.com/pages/viewpage.action?pageId=3637257',
+        permanent: true,
+        basePath: false,
+      },
+      {
+        // statistics are no longer local
+        source: '/statistics',
+        destination: 'https://grafana.fuelrats.com',
+        permanent: true,
+        basePath: false,
+      },
+      {
+        // People often type this one manually into their URL bar to get to the helpdesk
+        source: '/help',
+        destination: 'https://t.fuelr.at/help',
+        permanent: true,
+        basePath: false,
+      },
+    ]
   },
   webpack: (config, opt) => {
     /* Define Plugin */
@@ -85,11 +146,6 @@ module.exports = {
 
     // Workaround to fix dev warning: https://github.com/vercel/next.js/issues/19865
     config.output.hotUpdateMainFilename = 'static/webpack/[fullhash].[runtime].hot-update.json'
-
-    // Workaround to fix production builds with workers: https://github.com/vercel/next.js/issues/22813
-    config.output.chunkFilename = opt.isServer
-      ? `${opt.dev ? '[name]' : '[name].[fullhash]'}.js`
-      : `static/chunks/${opt.dev ? '[name]' : '[name].[fullhash]'}.js`
 
     /* SVGR */
     config.module.rules.push({

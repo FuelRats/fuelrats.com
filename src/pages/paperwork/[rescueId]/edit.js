@@ -444,7 +444,7 @@ class Paperwork extends React.Component {
             id="codeRed"
             name="codeRed"
             options={codeRedRadioOptions}
-            value={`${codeRed}`}
+            value={String(codeRed)}
             onChange={this._handleRadioInputChange} />
         </fieldset>
 

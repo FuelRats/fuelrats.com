@@ -23,7 +23,7 @@ const createProxyWithDefaults = (path, opts) => {
 
 
 
-const configureProxies = (koaServer, env) => {
+const fuelratsProxy = (koaServer, env) => {
   /***************************************************************************\
     Proxy Fuelrats API requests
   \***************************************************************************/
@@ -86,4 +86,4 @@ const configureProxies = (koaServer, env) => {
 
 
 
-export default configureProxies
+export default fuelratsProxy

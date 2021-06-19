@@ -1,6 +1,6 @@
 import { createAxiosFSA } from '@fuelrats/web-util/actions'
 
-import wpApi from '~/services/wordpress'
+import wpApi from '~/services/wpApi'
 
 import actionTypes from '../actionTypes'
 
