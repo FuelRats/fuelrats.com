@@ -12,16 +12,25 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 *
 
 ### ⚡ Changed
-*
+* Error readout for unknown API Errors has been improved. - [#328][]
+* Reworded `Owns Odyssey` to `Using Odyssey` on rat cards to better convey the toggle's meaning. - [#328][]
+* Canceled donations will now return you to the donation form. - [#328][]
+* Optimized image loading and accessibility for images site-wide. - [#328][]
+* Further optimized font loading. - [#328][]
+* Moved raw version information to an API route (`/api/version`), and reworked version page to draw information from that route. - [#328][]
+* Other smaller changes to sreamline development. - [#328][]
+
 
 ### 🐛 Fixed
-*
-
+* Resolved form submitting issues that occured when password evaluation fails to load. - [#328][]
+* Fixed authorization page displaying an `Invalid Authorize Request` error when redirecting users after login. - [#328][]
 
 ### ⚙ Tasks
-*
+* Update lint configs
+* Add `@next/eslint-plugin-next` into linting config.
 
 
+[#328]: https://github.com/fuelRats/fuelrats.com/pull/328
 [Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.13.0...HEAD
 
 
