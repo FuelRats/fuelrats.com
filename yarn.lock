@@ -2889,12 +2889,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^17.0.7":
-  version: 17.0.7
-  resolution: "@types/react-dom@npm:17.0.7"
+"@types/react-dom@npm:^17.0.8":
+  version: 17.0.8
+  resolution: "@types/react-dom@npm:17.0.8"
   dependencies:
     "@types/react": "*"
-  checksum: 9b2eb0d86dd00bff5e4a9a4d1892f6ef3dd79434acb5d38a45a8bda8a383cff0a3d7bb58d662c2a5352ab7c92145d5736f56f1bd12e1e3a482727c274bf09434
+  checksum: 9ad1220297bede365e0d2aae4bc4a2deee3247da9da62d45bcd770812d246d46c219b3f58755b08423a4339c3c654fddd6c2b16b27151d09213b527a7cde8910
   languageName: node
   linkType: hard
 
@@ -5390,9 +5390,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsdoc@npm:^35.3.0":
-  version: 35.3.0
-  resolution: "eslint-plugin-jsdoc@npm:35.3.0"
+"eslint-plugin-jsdoc@npm:^35.3.2":
+  version: 35.3.2
+  resolution: "eslint-plugin-jsdoc@npm:35.3.2"
   dependencies:
     "@es-joy/jsdoccomment": ^0.8.0-alpha.2
     comment-parser: 1.1.5
@@ -5405,7 +5405,7 @@ __metadata:
     spdx-expression-parse: ^3.0.1
   peerDependencies:
     eslint: ^6.0.0 || ^7.0.0
-  checksum: 09141f74078bb7a4e814d98b42ab9dc5f72f406ca3eea3a622d19f2f8286339b1d219bb849502803d95a9beb43c0667b2635304e5d5750923ae420367e2fee8d
+  checksum: b3aa29bca4fe11758ac32f84fd1e473fa74efe070faefd3d2d9c78b50d3c2d6f8fddb8a8e843afb05e39fa31e8e8c954a26798529846991ed6a9a9cd7cc9e298
   languageName: node
   linkType: hard
 
@@ -5508,9 +5508,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^7.28.0":
-  version: 7.28.0
-  resolution: "eslint@npm:7.28.0"
+"eslint@npm:^7.29.0":
+  version: 7.29.0
+  resolution: "eslint@npm:7.29.0"
   dependencies:
     "@babel/code-frame": 7.12.11
     "@eslint/eslintrc": ^0.4.2
@@ -5553,7 +5553,7 @@ __metadata:
     v8-compile-cache: ^2.0.3
   bin:
     eslint: bin/eslint.js
-  checksum: 624ed594c909a8e54129b8e659c521de9e31f1f363c5f96f95af674c83887e0b27bf3e8b50ce4b57e6691658f6053be6d62849ab515fd62a54a3a2a85a0f1dfb
+  checksum: 8a18377c761560a29fb48b27458517f260f7854882e40cf7e2d38f0ba60ac1038f39404e0ea849abdda18699530fe055adc5bdbf1ef726ce91ac1482cac9d38c
   languageName: node
   linkType: hard
 
@@ -6045,7 +6045,7 @@ __metadata:
     "@types/koa__router": ^8.0.4
     "@types/lodash": ^4.14.170
     "@types/react": ^17.0.11
-    "@types/react-dom": ^17.0.7
+    "@types/react-dom": ^17.0.8
     "@types/react-redux": ^7.1.16
     "@types/ua-parser-js": ^0.7.36
     "@types/webpack": ^5.28.0
@@ -6059,11 +6059,11 @@ __metadata:
     date-fns-tz: ^1.1.4
     doctoc: ^2.0.1
     dotenv: ^10.0.0
-    eslint: ^7.28.0
+    eslint: ^7.29.0
     eslint-import-resolver-alias: ^1.1.2
     eslint-import-resolver-node: ^0.3.4
     eslint-plugin-import: ^2.23.4
-    eslint-plugin-jsdoc: ^35.3.0
+    eslint-plugin-jsdoc: ^35.3.2
     eslint-plugin-jsx-a11y: ^6.4.1
     eslint-plugin-react: ^7.24.0
     eslint-plugin-react-hooks: ^4.2.0
@@ -6084,7 +6084,7 @@ __metadata:
     next-cookies: ^2.0.3
     next-redux-wrapper: 5.0.0
     nprogress: ^0.2.0
-    postcss: ^8.3.4
+    postcss: ^8.3.5
     postcss-easy-import: ^3.0.0
     postcss-flexbugs-fixes: ^5.0.2
     postcss-preset-env: ^6.7.0
@@ -6102,17 +6102,17 @@ __metadata:
     redux-immutable-state-invariant: ^2.1.0
     redux-thunk: ^2.3.0
     reselect: ^4.0.0
-    rollup: ^2.52.0
+    rollup: ^2.52.1
     rollup-plugin-cleaner: ^1.0.0
     rollup-plugin-node-externals: ^2.2.0
     sass: ^1.35.1
-    stripe: ^8.155.0
+    stripe: ^8.156.0
     stylelint: ^13.13.1
     stylelint-order: ^4.1.0
     stylelint-scss: ^3.19.0
     ua-parser-js: ^0.7.28
     use-immer: ^0.5.2
-    webpack: ^5.39.0
+    webpack: ^5.39.1
     worker-loader: ^3.0.8
     zxcvbn: ^4.4.2
   languageName: unknown
@@ -9489,14 +9489,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.3.4":
-  version: 8.3.4
-  resolution: "postcss@npm:8.3.4"
+"postcss@npm:^8.3.5":
+  version: 8.3.5
+  resolution: "postcss@npm:8.3.5"
   dependencies:
     colorette: ^1.2.2
     nanoid: ^3.1.23
     source-map-js: ^0.6.2
-  checksum: 86de06e3c4e3f35d41564e2aa94ebf54ceddeef13e2a799f33189c15e8ac3faab87ad6e2ba7999b108c6f432d6abb5ffd453219b20795a3635e47a81185b2a21
+  checksum: c73fc4825ed27396d453a942628cd8e34dd43c11b724f43f65f376d3900037736013b6446f1d9947ce5a847837cf96649e9a3f200ca2bd94a884e91e56ee1ceb
   languageName: node
   linkType: hard
 
@@ -10349,9 +10349,9 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
-"rollup@npm:^2.52.0":
-  version: 2.52.0
-  resolution: "rollup@npm:2.52.0"
+"rollup@npm:^2.52.1":
+  version: 2.52.1
+  resolution: "rollup@npm:2.52.1"
   dependencies:
     fsevents: ~2.3.2
   dependenciesMeta:
@@ -10359,7 +10359,7 @@ resolve@^2.0.0-next.3:
       optional: true
   bin:
     rollup: dist/bin/rollup
-  checksum: 5b2afeefafc717762f80e8f45c6f1f2982c0a7b0a98dc2b28644872d5e657549f48710aeedc5635372cd441a9e9f2fe73053bd1fd47561b742bd0f6aa3cb9333
+  checksum: 62d1eda5a8f5f732eb372aaa209b02f20002eab0fce246654b41de6c9821d4987d620816181b94ebb8fdb29a7aef419c104ab497de05df0dcde4e4b8f6182187
   languageName: node
   linkType: hard
 
@@ -11057,13 +11057,13 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
-"stripe@npm:^8.155.0":
-  version: 8.155.0
-  resolution: "stripe@npm:8.155.0"
+"stripe@npm:^8.156.0":
+  version: 8.156.0
+  resolution: "stripe@npm:8.156.0"
   dependencies:
     "@types/node": ">=8.1.0"
     qs: ^6.6.0
-  checksum: 4cd87fb900428753221be6fade663712482480518012009a71fbc8ca4e484571a300ba8629ff92675141b6b0cd42f9beb641ac9bdf9d1223ec854fddd24b2459
+  checksum: 8e03610148b33458fbde3f2a9ae37f3ccfa21dd1038f0395e590e7249ce2f6d02f0cfb31ec0a7778e3a34c9c3bcb9ea807e6cde3a3921d7046f7d4b99583877f
   languageName: node
   linkType: hard
 
@@ -12155,9 +12155,9 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
-"webpack@npm:^5.39.0":
-  version: 5.39.0
-  resolution: "webpack@npm:5.39.0"
+"webpack@npm:^5.39.1":
+  version: 5.39.1
+  resolution: "webpack@npm:5.39.1"
   dependencies:
     "@types/eslint-scope": ^3.7.0
     "@types/estree": ^0.0.47
@@ -12187,7 +12187,7 @@ resolve@^2.0.0-next.3:
       optional: true
   bin:
     webpack: bin/webpack.js
-  checksum: 1acff2bcc06d6e47bc66708ea7970e72baa2f0fd866219ae0962e2dec38baeb2aaa4767b3622d9516bab4395153e3a53e799c15536d88d3ffae71be462d68a07
+  checksum: 28a3fa8dd1094bc9d43efa15e101b73f7c3c6ee753354c38ef428756faf8014ddfb93425e2f54beafc45b1cfc00b24d7a0a39bd60016294b0b2801d9665999d5
   languageName: node
   linkType: hard
 
