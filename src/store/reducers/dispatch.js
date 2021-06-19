@@ -7,7 +7,7 @@ import initialState from '../initialState'
 const DISPATCH_VIEW = '__dispatch_board'
 
 
-const dispatchReducer = produce((draft, action) => {
+export default produce((draft, action) => {
   switch (action.type) {
     case actionTypes.rescues.search:
       if (action.meta[DISPATCH_VIEW]) {
@@ -22,7 +22,6 @@ const dispatchReducer = produce((draft, action) => {
   }
 }, initialState.dispatch)
 
-export default dispatchReducer
 export {
   DISPATCH_VIEW,
 }

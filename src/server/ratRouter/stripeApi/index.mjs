@@ -3,9 +3,9 @@
 import Router from '@koa/router'
 import stripeJs from 'stripe'
 
-import authorizeUser from './authorization'
-import prepareResponse from './document'
-import createControlTower from './TrafficControl'
+import authorization from './middlewares/authorization'
+import rateLimiter from './middlewares/rateLimiter'
+import responseDocument from './middlewares/responseDocument'
 
 const getDonationItemInfo = (amount) => {
   if (amount >= 3500) {
@@ -43,12 +43,12 @@ const getDonationItemInfo = (amount) => {
   }
 }
 
-const configureStripeApi = (router) => {
-  const trafficControl = createControlTower()
+const stripeApi = (router) => {
+  const trafficControl = rateLimiter()
   const stApiRouter = new Router()
-  stApiRouter.use(prepareResponse)
+  stApiRouter.use(responseDocument)
   stApiRouter.use(trafficControl)
-  stApiRouter.use(authorizeUser)
+  stApiRouter.use(authorization)
 
 
   stApiRouter.post('/checkout/donate', async (ctx) => {
@@ -95,4 +95,4 @@ const configureStripeApi = (router) => {
 
 
 
-export default configureStripeApi
+export default stripeApi

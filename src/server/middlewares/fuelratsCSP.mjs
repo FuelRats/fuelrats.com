@@ -25,7 +25,7 @@ const domainWhitelist = [
 
 
 
-const configureCSP = () => {
+const fuelratsCSP = () => {
   return async function koaCSP (ctx, next) {
     const {
       isDev,
@@ -74,4 +74,4 @@ const configureCSP = () => {
 
 
 
-export default configureCSP
+export default fuelratsCSP

@@ -1,5 +1,5 @@
 import Router from 'next/router'
-import NProgress from 'nprogress'
+import NProgressLib from 'nprogress'
 import React from 'react'
 
 
@@ -13,7 +13,7 @@ const minimumChangeTime = 250
 
 
 
-class NProgressReact extends React.Component {
+class NProgress extends React.Component {
   /***************************************************************************\
     Class Properties
   \***************************************************************************/
@@ -30,12 +30,12 @@ class NProgressReact extends React.Component {
 
   _handleRouteChangeStart = () => {
     clearTimeout(this.timer)
-    this.timer = setTimeout(NProgress.start, minimumChangeTime)
+    this.timer = setTimeout(NProgressLib.start, minimumChangeTime)
   }
 
   _handleRouteChangeDone = () => {
     clearTimeout(this.timer)
-    NProgress.done()
+    NProgressLib.done()
   }
 
 
@@ -47,7 +47,7 @@ class NProgressReact extends React.Component {
   \***************************************************************************/
 
   componentDidMount () {
-    NProgress.configure(this.props)
+    NProgressLib.configure(this.props)
 
     Router.events.on('routeChangeStart', this._handleRouteChangeStart)
     Router.events.on('routeChangeComplete', this._handleRouteChangeDone)
@@ -79,4 +79,4 @@ class NProgressReact extends React.Component {
 
 
 
-export default NProgressReact
+export default NProgress

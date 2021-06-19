@@ -12,7 +12,7 @@ import initialState from '../initialState'
 
 
 
-const wordpressReducer = produce((draftState, action) => {
+export default produce((draftState, action) => {
   const {
     payload,
     type,
@@ -32,9 +32,3 @@ const wordpressReducer = produce((draftState, action) => {
       break
   }
 }, initialState.rescues)
-
-
-
-
-
-export default wordpressReducer

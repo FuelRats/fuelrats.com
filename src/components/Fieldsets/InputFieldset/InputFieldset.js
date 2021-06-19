@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React, { useCallback, useState } from 'react'
 
 import InputSuggestions from '~/components/InputMessages'
-import extPropType from '~/helpers/extPropTypes'
+import extPropTypes from '~/helpers/extPropTypes'
 import getValidityErrors from '~/helpers/getValidityErrors'
 import useFocusState from '~/hooks/useFocusState'
 import { useField, fieldPropTypes } from '~/hooks/useForm'
@@ -126,7 +126,7 @@ const InputFieldset = React.forwardRef((props, forwardRef) => {
 InputFieldset.displayName = 'InputFieldset'
 
 InputFieldset.propTypes = {
-  'aria-label': extPropType(PropTypes.string).isRequiredIf('label', 'undefined'),
+  'aria-label': extPropTypes(PropTypes.string).isRequiredIf('label', 'undefined'),
   dark: PropTypes.bool,
   displayName: PropTypes.string,
   id: PropTypes.string.isRequired,

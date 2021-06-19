@@ -12,7 +12,7 @@ import initialState from '../initialState'
 
 
 
-const flagsReducer = produce((draftState, action) => {
+export default produce((draftState, action) => {
   const {
     payload,
     type,
@@ -29,9 +29,3 @@ const flagsReducer = produce((draftState, action) => {
       break
   }
 }, initialState.flags)
-
-
-
-
-
-export default flagsReducer

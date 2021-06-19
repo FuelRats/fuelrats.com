@@ -3,7 +3,7 @@ import { HttpStatus } from '@fuelrats/web-util/http'
 import { isError } from 'flux-standard-action'
 import React from 'react'
 
-import InfoBubble from '~/components/infoBubble'
+import InfoBubble from '~/components/InfoBubble'
 import ValidatedFormInput from '~/components/ValidatedFormInput'
 import { ircNickPattern } from '~/data/RegExpr'
 import { connect } from '~/store'

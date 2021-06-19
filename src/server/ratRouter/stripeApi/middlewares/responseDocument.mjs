@@ -1,6 +1,6 @@
 import { HttpStatus } from '@fuelrats/web-util/http'
 
-import { ApiError, InternalServerError } from './error'
+import { ApiError, InternalServerError } from '../error'
 
 
 class ResponseDocument {
@@ -29,7 +29,7 @@ class ResponseDocument {
   }
 }
 
-const prepareResponse = async (ctx, next) => {
+const responseDocument = async (ctx, next) => {
   try {
     await next()
 
@@ -71,4 +71,4 @@ const prepareResponse = async (ctx, next) => {
 
 
 
-export default prepareResponse
+export default responseDocument

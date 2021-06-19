@@ -1,4 +1,4 @@
-function InlineEditor ({
+function InlineEditSpan ({
   canEdit,
   className,
   inputClassName,
@@ -24,4 +24,4 @@ function InlineEditor ({
 
 
 
-export default InlineEditor
+export default InlineEditSpan

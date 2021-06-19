@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import PropTypes from 'prop-types'
 import { useCallback, useRef } from 'react'
 
-import extPropType from '~/helpers/extPropTypes'
+import extPropTypes from '~/helpers/extPropTypes'
 import { useField, fieldPropTypes } from '~/hooks/useForm'
 
 import inputStyles from '../InputFieldset/InputFieldset.module.scss'
@@ -90,7 +90,7 @@ function SelectFieldset (props) {
 SelectFieldset.displayName = 'InputFieldset'
 
 SelectFieldset.propTypes = {
-  'aria-label': extPropType(PropTypes.string).isRequiredIf('label', 'undefined'),
+  'aria-label': extPropTypes(PropTypes.string).isRequiredIf('label', 'undefined'),
   dark: PropTypes.bool,
   id: PropTypes.string.isRequired,
   inputClassName: PropTypes.string,

@@ -8,7 +8,7 @@ import initialState from '../initialState'
 
 const metaKey = '__decals/decrement'
 
-const usersReducer = produce((draftState, action) => {
+export default produce((draftState, action) => {
   if (isError(action)) {
     return
   }
@@ -35,6 +35,3 @@ export function decrementsEligibleDecals (id) {
     [metaKey]: id,
   }
 }
-
-
-export default usersReducer

@@ -25,7 +25,7 @@ const dataReducer = ({ data }, { reducer }) => {
 
 
 
-const pageViewsReducer = produce((draftState, action) => {
+export default produce((draftState, action) => {
   const { meta, payload } = action
 
   if (!isError(action) && meta?.pageView) {
@@ -37,9 +37,3 @@ const pageViewsReducer = produce((draftState, action) => {
     }
   }
 }, initialState.pageViews)
-
-
-
-
-
-export default pageViewsReducer

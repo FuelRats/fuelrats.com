@@ -1,14 +1,14 @@
 import AvatarsRouter from '@fuelrats/koa-adorable-avatars'
 import Router from '@koa/router'
 
-import redirects from './redirects'
 import stripeApi from './stripeApi'
+import wpRedirect from './wpRedirect'
 
 
 
 
 
-const configureRouter = (nextApp, koaServer) => {
+const ratRouter = (nextApp, koaServer) => {
   const router = new Router()
 
 
@@ -17,7 +17,7 @@ const configureRouter = (nextApp, koaServer) => {
   \***************************************************************************/
 
   // Redirects
-  redirects(router)
+  wpRedirect(router)
 
   // Stripe Api
   stripeApi(router)
@@ -56,4 +56,4 @@ const configureRouter = (nextApp, koaServer) => {
 
 
 
-export default configureRouter
+export default ratRouter

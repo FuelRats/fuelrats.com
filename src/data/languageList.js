@@ -1,4 +1,4 @@
-const languages = {
+const languageList = {
   bg: {
     short: 'BG',
     long: 'Bulgarian',
@@ -142,15 +142,15 @@ const languages = {
 }
 
 
-export default languages
+export default languageList
 
 export function getLanguage (lang) {
   if (!lang) {
-    return languages.unknown
+    return languageList.unknown
   }
 
   const [langCode] = lang.split('-')
-  const langData = languages[langCode]
+  const langData = languageList[langCode]
 
   if (!langData) {
     return {

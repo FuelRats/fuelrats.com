@@ -2,8 +2,8 @@ import { HttpStatus } from '@fuelrats/web-util/http'
 import axios from 'axios'
 import { useMemo, useState, useEffect } from 'react'
 
-import { getLanguage } from '~/data/LanguageList'
-import { getPlatform } from '~/data/PlatformList'
+import { getLanguage } from '~/data/languageList'
+import { getPlatform } from '~/data/platformList'
 import { formatAsEliteDateTime } from '~/helpers/formatTime'
 
 

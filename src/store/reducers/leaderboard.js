@@ -8,7 +8,7 @@ import initialState from '../initialState'
 
 
 
-const leaderboardReducer = produce((draftState, action) => {
+export default produce((draftState, action) => {
   if (isError(action)) {
     return
   }
@@ -23,9 +23,3 @@ const leaderboardReducer = produce((draftState, action) => {
       break
   }
 }, initialState.leaderboard)
-
-
-
-
-
-export default leaderboardReducer

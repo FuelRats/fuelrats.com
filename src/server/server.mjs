@@ -7,11 +7,11 @@ import koaCompress from 'koa-compress'
 import koaLogger from 'koa-logger'
 import createNextServer from 'next'
 
-import getEnv from './environment'
-import configureCSP from './middlewares/csp'
-import proxies from './middlewares/proxy'
-import uaRedirect from './middlewares/ua-redirect'
-import router from './router'
+import getEnv from './helpers/getEnv'
+import fuelratsCSP from './middlewares/fuelratsCSP'
+import fuelratsProxy from './middlewares/fuelratsProxy'
+import uaRedirect from './middlewares/uaRedirect'
+import ratRouter from './ratRouter'
 
 
 
@@ -48,10 +48,10 @@ const nextApp = createNextServer({
   server.use(koaLogger())
 
   // Add CSP
-  server.use(configureCSP())
+  server.use(fuelratsCSP())
 
   // Add proxies
-  proxies(server, env)
+  fuelratsProxy(server, env)
 
   // Compress responses
   server.use(koaCompress())
@@ -60,7 +60,7 @@ const nextApp = createNextServer({
   server.use(koaBody())
 
   // Add routes
-  router(nextApp, server)
+  ratRouter(nextApp, server)
 
   // Start the server
   server.listen(env.port)

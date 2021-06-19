@@ -13,7 +13,7 @@ import DecalRow from './DecalRow'
 import styles from './UserDecalPanel.module.scss'
 
 
-function UserDetailsPanel () {
+function UserDecalPanel () {
   const [redeeming, setRedeeming] = useState(false)
 
   const decals = useSelector(withCurrentUserId(selectDecalsByUserId))
@@ -75,4 +75,4 @@ function UserDetailsPanel () {
 
 
 
-export default UserDetailsPanel
+export default UserDecalPanel

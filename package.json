@@ -20,8 +20,9 @@
     "start": "yarn node --inspect --harmony --trace-warnings dist/server.js",
     "dev": "yarn install && yarn build:server && yarn start",
     "utoc": "doctoc $(grep --include=\\*.md --exclude-dir=node_modules -Rwl . -e 'START doctoc')",
-    "eslint": "eslint .",
-    "stylelint": "stylelint \"src/**/*.scss\""
+    "lint:js": "eslint .",
+    "lint:css": "stylelint \"src/**/*.scss\"",
+    "lint": "yarn lint:js; yarn lint:css"
   },
   "dependencies": {
     "@fingerprintjs/fingerprintjs": "^3.1.3",

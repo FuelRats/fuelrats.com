@@ -1,4 +1,4 @@
-import asModal, { ModalContent, useModalContext } from '~/components/Modal'
+import asModal, { ModalContent, useModalContext } from '~/components/asModal'
 import { connect } from '~/store'
 import { setFlag } from '~/store/actions/flags'
 import { selectFlagByName } from '~/store/selectors'

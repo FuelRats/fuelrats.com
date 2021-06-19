@@ -1,4 +1,4 @@
-const platforms = {
+const platformList = {
   pc: {
     short: 'PC',
     long: 'PC',
@@ -17,12 +17,12 @@ const platforms = {
   },
 }
 
-export default platforms
+export default platformList
 
 export function getPlatform (platform) {
   if (!platform) {
-    return platforms.unknown
+    return platformList.unknown
   }
 
-  return platforms[platform]
+  return platformList[platform]
 }

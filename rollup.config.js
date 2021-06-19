@@ -57,7 +57,7 @@ const babelConfig = {
 
 
 
-const config = {
+const rollup = {
   input: path.resolve(__dirname, 'src', 'server', 'server.mjs'),
   output: {
     file: path.resolve(__dirname, 'dist', 'server.js'),
@@ -74,4 +74,4 @@ const config = {
   ],
 }
 
-export default config
+export default rollup

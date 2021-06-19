@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from '~/store'
 import { selectWordpressPageBySlug } from '~/store/selectors'
 
-import asModal, { ModalContent, ModalFooter } from '../Modal'
+import asModal, { ModalContent, ModalFooter } from '../asModal'
 import styles from './TermsModal.module.scss'
 
 
@@ -12,7 +12,7 @@ import styles from './TermsModal.module.scss'
 
 @asModal({ className: 'terms-dialog' })
 @connect
-class WordpressTermsModal extends React.Component {
+class TermsModal extends React.Component {
   /***************************************************************************\
     Class Properties
   \***************************************************************************/
@@ -152,4 +152,4 @@ class WordpressTermsModal extends React.Component {
 
 
 
-export default WordpressTermsModal
+export default TermsModal

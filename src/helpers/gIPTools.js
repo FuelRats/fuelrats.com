@@ -4,7 +4,7 @@ import jsCookie from 'js-cookie'
 import nextCookies from 'next-cookies'
 import Router from 'next/router'
 
-import frApi from '~/services/fuelrats'
+import frApi from '~/services/frApi'
 
 
 
