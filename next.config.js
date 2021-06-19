@@ -50,6 +50,10 @@ module.exports = {
       'static-cdn.jtvnw.net',
     ],
   },
+  eslint: {
+    // Ignore ESLint in builds as our CI Takes care of this for us.
+    ignoreDuringBuilds: true,
+  },
   publicRuntimeConfig: {
     appUrl: APP_URL,
     irc: {
