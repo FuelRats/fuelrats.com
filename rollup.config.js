@@ -23,7 +23,7 @@ const babelConfig = {
       '@babel/env',
       {
         targets: {
-          node: '13',
+          node: '14',
         },
         bugfixes: true,
         shippedProposals: true,
