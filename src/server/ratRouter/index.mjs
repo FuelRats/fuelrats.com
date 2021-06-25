@@ -1,4 +1,3 @@
-import AvatarsRouter from '@fuelrats/koa-adorable-avatars'
 import Router from '@koa/router'
 
 import stripeApi from './stripeApi'
@@ -22,8 +21,8 @@ const ratRouter = (nextApp, koaServer) => {
   // Stripe Api
   stripeApi(router)
 
-  // Avatars
-  router.use('/api/avatars', AvatarsRouter.routes(), AvatarsRouter.allowedMethods())
+
+
 
 
   /***************************************************************************\
