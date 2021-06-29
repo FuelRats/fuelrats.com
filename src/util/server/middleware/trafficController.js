@@ -1,4 +1,4 @@
-import { TooManyRequestsApiError } from '~/util/server/errors'
+import { TooManyRequestsAPIError } from '~/util/server/errors'
 
 const hourTimer = 60 * 60 * 1000
 
@@ -165,7 +165,7 @@ const trafficController = () => {
     ctx.meta.rateLimitReset = user.reset
 
     if (user.exceeded) {
-      throw new TooManyRequestsApiError()
+      throw new TooManyRequestsAPIError()
     }
 
     await next()

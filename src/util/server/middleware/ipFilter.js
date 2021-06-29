@@ -2,7 +2,7 @@ import ip6addr from 'ip6addr'
 import jsonfile from 'jsonfile'
 
 
-import { UnauthorizedApiError } from '~/util/server/errors'
+import { UnauthorizedAPIError } from '~/util/server/errors'
 import getEnv from '~/util/server/getEnv'
 
 
@@ -46,7 +46,7 @@ function ipFilter () {
       const isBanned = bansList.find(compareIps(ctx.req.ip))
 
       if (isBanned) {
-        throw new UnauthorizedApiError()
+        throw new UnauthorizedAPIError()
       }
     }
 

@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 
 import bind from '~/util/decorators/bind'
 import createResource from '~/util/jsonapi/createResource'
-import { InternalServerApiError, JSONApiError } from '~/util/server/errors'
+import { InternalServerAPIError, APIError } from '~/util/server/errors'
 
 /**
  * Context object for JsonApiRoute endpoints
@@ -44,7 +44,7 @@ export default class JsonApiContext {
   }
 
   /**
-   * @param {JSONApiError} error
+   * @param {APIError} error
    * @param {boolean} first
    * @returns {JsonApiContext}
    */
@@ -52,9 +52,9 @@ export default class JsonApiContext {
   error (error, first) {
     if (error) {
       this.#resErrors[first ? 'unshift' : 'push'](
-        error instanceof JSONApiError
+        error instanceof APIError
           ? error
-          : new InternalServerApiError({ internalError: error }),
+          : new InternalServerAPIError({ internalError: error }),
       )
     }
 
@@ -119,7 +119,7 @@ export default class JsonApiContext {
   }
 
   /**
-   * @returns {JSONApiError[]}
+   * @returns {APIError[]}
    */
   get errors () {
     return this.#resErrors
