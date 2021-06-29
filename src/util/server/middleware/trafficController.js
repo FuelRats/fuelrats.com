@@ -1,4 +1,4 @@
-import { TooManyRequestsError } from '../error'
+import { TooManyRequestsApiError } from '~/util/server/errors'
 
 const hourTimer = 60 * 60 * 1000
 
@@ -23,18 +23,18 @@ class TrafficControl {
   /**
    *
    * @param {object} arg function arguments object
-   * @param {object} arg.connection Koa.js context object.
+   * @param {object} arg.ctx Koa.js context object.
    * @param {boolean} arg.increase Whether this validation should also increase the request count by 1
    * @returns {object} An object containing whether the rate limit is exceeded, how many requests are left,
    * and the total requests
    */
-  validateRateLimit ({ connection, increase = true }) {
-    const fingerprint = connection.request.get('X-Fingerprint')
+  validateRateLimit ({ ctx, increase = true }) {
+    const fingerprint = ctx.req.getHeader('X-Fingerprint')
     let entity = null
     let valid = false
 
     if (fingerprint) {
-      entity = this.retrieveUnauthenticatedEntity({ remoteAddress: connection.ip, fingerprint })
+      entity = this.retrieveUnauthenticatedEntity({ remoteAddress: ctx.req.ip, fingerprint })
       valid = entity.remainingRequests > 0
       if (valid && increase) {
         entity.count += 1
@@ -146,23 +146,30 @@ class RemoteAddressEntity {
 
 
 
-const rateLimiter = () => {
+const trafficController = () => {
   const traffic = new TrafficControl()
 
-  return async function trafficControlTower (ctx, next) {
-    const rateLimit = traffic.validateRateLimit({ connection: ctx })
-    ctx.state.traffic = rateLimit
-    ctx.set('X-Rate-Limit-Limit', rateLimit.total)
-    ctx.set('X-Rate-Limit-Remaining', rateLimit.remaining)
-    ctx.set('X-Rate-Limit-Reset', rateLimit.reset)
+  return async function rateLimitMiddleware (ctx, next) {
+    const user = traffic.validateRateLimit({ ctx })
+    // Set to state for reference.
+    ctx.state.traffic = user
 
+    // Set to outgoing headers.
+    ctx.res.setHeader('X-Rate-Limit-Limit', user.total)
+    ctx.res.setHeader('X-Rate-Limit-Remaining', user.remaining)
+    ctx.res.setHeader('X-Rate-Limit-Reset', user.reset)
 
-    if (rateLimit.exceeded) {
-      throw new TooManyRequestsError()
+    // Set to response meta.
+    ctx.meta.rateLimitTotal = user.total
+    ctx.meta.rateLimitRemaining = user.remaining
+    ctx.meta.rateLimitReset = user.reset
+
+    if (user.exceeded) {
+      throw new TooManyRequestsApiError()
     }
 
     await next()
   }
 }
 
-export default rateLimiter
+export default trafficController
