@@ -23,7 +23,7 @@ class TrafficControl {
   /**
    *
    * @param {object} arg function arguments object
-   * @param {object} arg.ctx Koa.js context object.
+   * @param {object} arg.ctx jsonApiRoute context object.
    * @param {boolean} arg.increase Whether this validation should also increase the request count by 1
    * @returns {object} An object containing whether the rate limit is exceeded, how many requests are left,
    * and the total requests
