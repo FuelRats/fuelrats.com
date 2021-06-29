@@ -1,4 +1,4 @@
-import AvatarsRouter from '@fuelrats/next-adorable-avatars'
+import avatarsRouter from '@fuelrats/next-adorable-avatars'
 
 
-export default AvatarsRouter
+export default avatarsRouter()
