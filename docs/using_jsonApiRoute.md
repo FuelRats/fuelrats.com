@@ -68,27 +68,32 @@ import getUser from 'magic-example-package'
 import jsonApiRoute from '~/util/server/middleware/jsonApiRoute'
 import { UnauthorizedAPIError } from '~/util/server/errors'
 
-async function requireUser (ctx, next) {
-  const user = await getUser(ctx.req.getHeader('Authorization')) // Gets the user matching the given auth token.
 
-  if (!user) {
-    // We throw here to immediately break the chain and have the route framework respond with the error.
-    // If we wanted to continue execution, we could send this error to ctx.error(error) instead of throwing.
-    throw new UnauthorizedAPIError()
-  }
+// It's recommended to use a generator function like this even if you don't require configuration.
+// This way all middleware are consistent, and adding configuration in the future does not have to be a breaking change.
+async function requireUser () {
+  return (ctx, next) => {
+    const user = await getUser(ctx.req.getHeader('Authorization')) // Gets the user matching the given auth token.
 
-  ctx.state.user = user // Add the user object to state. Note that this does NOT mean it will be sent with the response.
+    if (!user) {
+      // We throw here to immediately break the chain and have the route framework respond with the error.
+      // If we wanted to continue execution, we could send this error to ctx.error(error) instead of throwing.
+      throw new UnauthorizedAPIError()
+    }
 
-  await next() // wait for the other middleware deeper in the chain.
+    ctx.state.user = user // Add the user object to state. Note that this does NOT mean it will be sent with the response.
 
-  if (ctx.state.includeUser) {
-    // If the endpoint requests it, include, the user object to the response.
-    ctx.include(user)
+    await next() // wait for the other middleware deeper in the chain.
+
+    if (ctx.state.includeUser) {
+      // If the endpoint requests it, include, the user object to the response.
+      ctx.include(user)
+    }
   }
 }
 
 export default jsonApiRoute(
-  requireUser,
+  requireUser(),
   (ctx) => {
     /* Do some work */
     ctx.state.includeUser = true
