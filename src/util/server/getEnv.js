@@ -15,6 +15,7 @@ export default function getEnv () {
     const {
       PORT = 3000,
       APP_URL = requireEnv('APP_URL'),
+      APP_PROXIED = false,
       NODE_ENV,
       FR_API_KEY = requireEnv('FR_API_KEY'),
       FR_API_SECRET = requireEnv('FR_API_SECRET'),
@@ -34,6 +35,7 @@ export default function getEnv () {
 
     env = {
       appUrl: APP_URL,
+      proxied: APP_PROXIED,
       isDev: NODE_ENV !== 'production',
       port: PORT,
       fallbackUrl: FR_FALLBACK_URL,
