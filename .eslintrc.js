@@ -37,7 +37,11 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['src/pages/api/**/*.js', 'src/server/**/*.mjs'],
+      files: [
+        'src/pages/api/**/*.js',
+        'src/server/**/*.mjs',
+        'src/util/server/**/*.js',
+      ],
       env: {
         browser: false,
         node: true,
