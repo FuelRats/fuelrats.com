@@ -8,6 +8,8 @@
 */
 
 
+import jsonApiRoute from '~/util/server/middleware/jsonApiRoute'
+
 import pkgFile from '../../../package.json'
 
 const BUILD_BRANCH = $BUILD_BRANCH
@@ -22,23 +24,19 @@ const { version: appVersion } = pkgFile
 
 
 
-export default function version (req, res) {
-  res.setHeader('Content-Type', 'application/vnd.api+json')
-  res.end(JSON.stringify({
-    data: {
-      id: NEXT_BUILD_ID,
-      type: 'frWebBuilds',
-      attributes: {
-        branch: BUILD_BRANCH || 'develop',
-        builtOn: BUILD_DATE || null,
-        builtAt: BUILD_URL || null,
-        commit: BUILD_COMMIT || null,
-        versions: {
-          app: `v${appVersion}`,
-          node: NODE_VERSION,
-        },
+export default jsonApiRoute((ctx) => {
+  ctx.send({
+    id: NEXT_BUILD_ID,
+    type: 'fr-web-builds',
+    attributes: {
+      branch: BUILD_BRANCH ?? 'develop',
+      builtOn: BUILD_DATE ?? null,
+      builtAt: BUILD_URL ?? null,
+      commit: BUILD_COMMIT ?? null,
+      versions: {
+        app: `v${appVersion}`,
+        node: NODE_VERSION,
       },
     },
-
-  }))
-}
+  })
+})
