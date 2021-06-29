@@ -62,3 +62,17 @@ declare const $NEXT_BUILD_ID: Readonly<string>;
  * NodeJS version used to build the project.
  */
 declare const $NODE_VERSION: Readonly<string>;
+
+/**
+ * Module override for koa-compose. @types/koa-compose is koa-specific, while we are using this tool in a generic context.
+ */
+declare module "koa-compose" {
+  declare function NextFunc(): Promise<void>;
+
+  declare namespace compose {
+    type Middleware<C> = (context: Ctx, next: NextFunc) => Promise<any>;
+    type ComposedMiddleware<C> = (context: C, next?: NextFunc) => Promise<void>;
+  }
+
+  export default function compose<C>(middleware: Array<compose.Middleware<C>>): compose.ComposedMiddleware<C>;
+}
