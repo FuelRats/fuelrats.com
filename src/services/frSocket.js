@@ -10,12 +10,9 @@ import { updatesResources } from '~/store/reducers/frAPIResources'
 
 
 const { publicRuntimeConfig } = getConfig()
-const socketUrl = publicRuntimeConfig.apis.fuelRats.socket
-
-
 
 const frSocket = new ReduxRatSocket(
-  socketUrl,
+  publicRuntimeConfig.frapi.socket,
   {
     transformAction (action) {
       return {

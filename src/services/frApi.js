@@ -5,15 +5,11 @@ import qs from 'qs'
 
 
 
+
 const { publicRuntimeConfig } = getConfig()
-const localApiUrl = publicRuntimeConfig.apis.fuelRats.url
-
-
-
-
 
 const frApi = axios.create({
-  baseURL: localApiUrl,
+  baseURL: publicRuntimeConfig.frapi.url,
   timeout: 10000,
   paramsSerializer: qs.stringify,
 

@@ -2,24 +2,21 @@
 /* eslint-disable no-param-reassign -- reassign is intended for changing configs */
 
 /* eslint-env node */
-const crypto = require('crypto')
-const path = require('path')
-const url = require('url')
-const { DefinePlugin } = require('webpack')
+import crypto from 'crypto'
+import path from 'path'
+import url from 'url'
+import { DefinePlugin } from 'webpack'
 
+import { getEnv } from './src/util/server'
 
 
 
 
 // Constants
+const env = getEnv()
+
+
 const {
-  PORT = 3000,
-  APP_URL = `https://localhost:${PORT}`,
-  FR_API_URL,
-  FR_CLIENT_IRC_URL,
-  FR_RAT_IRC_URL,
-  FR_SOCKET_URL,
-  FR_STRIPE_API_PK,
   GITHUB_REF,
   GITHUB_RUN_ID,
   GITHUB_SERVER_URL = 'https://github.com',
@@ -39,13 +36,13 @@ const generateBuildId = () => {
   return `${GIT_BRANCH}_${buildId}`
 }
 
-module.exports = {
+const next = {
   distDir: path.join('dist', 'next'),
   generateBuildId,
   images: {
     disableStaticImages: true,
     domains: [
-      url.parse(APP_URL).hostname, // Ensure the public hostname is always allowed.
+      url.parse(env.appUrl).hostname, // Ensure the public hostname is always allowed.
       'wordpress.fuelrats.com',
       'static-cdn.jtvnw.net',
     ],
@@ -55,28 +52,68 @@ module.exports = {
     ignoreDuringBuilds: true,
   },
   publicRuntimeConfig: {
-    appUrl: APP_URL,
+    // This information is PUBLIC. all env values are explicitly defined to prevent secret leakage.
+    // DO NOT BLINDLY DEFINE OBJECTS! I.E. `frapi: env.frapi,`
+    appUrl: env.appUrl,
+    frapi: {
+      url: env.frapi.proxy,
+      server: env.frapi.url,
+      socket: env.frapi.socket,
+    },
+    edsm: {
+      url: env.edsm.proxy,
+    },
+    wordpress: {
+      url: env.wordpress.proxy,
+    },
+    stripe: {
+      url: env.stripe.url,
+      public: env.stripe.public,
+    },
     irc: {
-      client: FR_CLIENT_IRC_URL ?? 'https://qms.fuelrats.dev',
-      rat: FR_RAT_IRC_URL ?? 'https://kiwi.fuelrats.com',
+      client: env.irc.client,
+      rat: env.irc.rat,
     },
-    apis: {
-      fuelRats: {
-        url: `${APP_URL}/api/fr`,
-        server: FR_API_URL ?? 'https://dev.api.fuelrats.com',
-        socket: FR_SOCKET_URL ?? 'wss://dev.api.fuelrats.com',
-      },
-      wordpress: {
-        url: `${APP_URL}/api/wp`,
-      },
-      stripe: {
-        url: `${APP_URL}/api/stripe`,
-        public: FR_STRIPE_API_PK,
-      },
-    },
+  },
+  rewrites: () => {
+    return {
+      beforeFiles: [
+        {
+          // Apple demands this be on the site root, but all api routes must be in /api. oof.
+          source: '/apple-app-site-association',
+          destination: '/api/apple-app-site-association',
+        },
+        {
+          // Blog content dir.
+          source: '/wp-content/:path*',
+          destination: `${env.wordpress.url}/wp-content/:path*`,
+        },
+      ],
+      fallback: [
+        {
+          // Old blog links. yikes.
+          source: '/:year/:month/:day/:slug',
+          destination: '/blog/:slug',
+        },
+      ],
+    }
   },
   redirects: () => {
     return [
+      {
+        // All IE traffic should go to fallbackUrl.
+        source: '/:path*',
+        destination: env.fallbackUrl,
+        permanent: false,
+        basePath: false,
+        has: [
+          {
+            type: 'header',
+            key: 'User-Agent',
+            value: '(.*Trident.*)',
+          },
+        ],
+      },
       {
         // Temporary workaround so canceled donations return to donate screen
         source: '/donate/cancel',
@@ -157,3 +194,7 @@ module.exports = {
     return config
   },
 }
+
+
+
+export default next
