@@ -1,19 +1,11 @@
-import httpProxy from 'next-http-proxy-middleware'
-
-import { getEnv } from '~/util/server'
-
-
+import apiProxy from '~/util/server/apiProxy'
+import getEnv from '~/util/server/getEnv'
 
 const env = getEnv()
 
-export default function wpApiProxy (res, req) {
-  return httpProxy(req, res, {
-    changeOrigin: true,
-    secure: true,
-    xfwd: true,
-    target: env.wordpress.url,
-    pathRewrite: {
-      '^/api/wp': '/wp-json/wp/v2',
-    },
-  })
-}
+export default apiProxy({
+  target: env.wordpress.url,
+  pathRewrite: {
+    '^/api/wp': '/wp-json/wp/v2',
+  },
+})

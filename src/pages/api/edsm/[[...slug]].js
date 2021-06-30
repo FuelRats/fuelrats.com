@@ -1,19 +1,12 @@
-import httpProxy from 'next-http-proxy-middleware'
-
-import { getEnv } from '~/util/server'
-
+import apiProxy from '~/util/server/apiProxy'
+import getEnv from '~/util/server/getEnv'
 
 
 const env = getEnv()
 
-export default function edsmApiProxy (res, req) {
-  return httpProxy(req, res, {
-    changeOrigin: true,
-    secure: true,
-    xfwd: true,
-    target: env.edsm.url,
-    pathRewrite: {
-      '^/api/edsm': '',
-    },
-  })
-}
+export default apiProxy({
+  target: env.edsm.url,
+  pathRewrite: {
+    '^/api/edsm': '',
+  },
+})

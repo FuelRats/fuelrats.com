@@ -1,26 +1,21 @@
-import httpProxy from 'next-http-proxy-middleware'
-
-import { getEnv } from '~/util/server'
+import apiProxy from '~/util/server/apiProxy'
+import getEnv from '~/util/server/getEnv'
 
 
 
 const env = getEnv()
 
 
+
+
 export function frApiProxy (opts = {}) {
-  return (req, res) => {
-    return httpProxy(req, res, {
-      changeOrigin: true,
-      secure: true,
-      xfwd: true,
-      target: env.frapi.url,
-      ...opts,
-      pathRewrite: {
-        '^/api/fr': '',
-        ...(opts.pathRewrite ?? {}),
-      },
-    })
-  }
+  return apiProxy({
+    target: env.frapi.url,
+    pathRewrite: {
+      '^/api/fr': '',
+    },
+    ...opts,
+  })
 }
 
 
