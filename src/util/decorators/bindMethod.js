@@ -1,4 +1,4 @@
-export default function bind (target, name, descriptor) {
+export default function bindMethod (target, name, descriptor) {
   const func = descriptor.value
   return {
     configurable: true,

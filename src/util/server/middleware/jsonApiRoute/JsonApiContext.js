@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import bind from '~/util/decorators/bind'
+import bindMethod from '~/util/decorators/bindMethod'
 import createResource from '~/util/jsonapi/createResource'
 import { InternalServerAPIError, APIError } from '~/util/server/errors'
 
@@ -32,7 +32,7 @@ export default class JsonApiContext {
    * @param {object} data
    * @returns {JsonApiContext}
    */
-  @bind
+  @bindMethod
   send (data) {
     if (Array.isArray(data)) {
       this.#resData = data.map(createResource.bind(null, data[0]?.type))
@@ -48,7 +48,7 @@ export default class JsonApiContext {
    * @param {boolean} first
    * @returns {JsonApiContext}
    */
-  @bind
+  @bindMethod
   error (error, first) {
     if (error) {
       this.#resErrors[first ? 'unshift' : 'push'](
@@ -65,7 +65,7 @@ export default class JsonApiContext {
    * @param {number} statusCode
    * @returns {JsonApiContext}
    */
-  @bind
+  @bindMethod
   status (statusCode) {
     this.res.status(statusCode)
     return this
@@ -75,7 +75,7 @@ export default class JsonApiContext {
    * @param {object | object[]} data
    * @returns {JsonApiContext}
    */
-  @bind
+  @bindMethod
   include (data) {
     if (Array.isArray(data)) {
       this.#resIncluded.append(data.map(createResource.bind(null, null)))
@@ -89,7 +89,7 @@ export default class JsonApiContext {
   /**
    * @returns {object}
    */
-  @bind
+  @bindMethod
   toJSON () {
     const errors = this.#resErrors
 
