@@ -112,6 +112,10 @@ export default class JsonApiContext {
     return this.#resData
   }
 
+  set data (newData) {
+    this.send(newData)
+  }
+
   /**
    * @returns {object[]}
    */
