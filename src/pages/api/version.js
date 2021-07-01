@@ -9,6 +9,7 @@
 
 
 import jsonApiRoute from '~/util/server/middleware/jsonApiRoute'
+import methodRouter from '~/util/server/middleware/methodRouter'
 
 import pkgFile from '../../../package.json'
 
@@ -24,19 +25,22 @@ const { version: appVersion } = pkgFile
 
 
 
-export default jsonApiRoute((ctx) => {
-  ctx.send({
-    id: NEXT_BUILD_ID,
-    type: 'fr-web-builds',
-    attributes: {
-      branch: BUILD_BRANCH ?? 'develop',
-      builtOn: BUILD_DATE ?? null,
-      builtAt: BUILD_URL ?? null,
-      commit: BUILD_COMMIT ?? null,
-      versions: {
-        app: `v${appVersion}`,
-        node: NODE_VERSION,
+export default jsonApiRoute(
+  methodRouter.GET(),
+  (ctx) => {
+    ctx.send({
+      id: NEXT_BUILD_ID,
+      type: 'fr-web-builds',
+      attributes: {
+        branch: BUILD_BRANCH ?? 'develop',
+        builtOn: BUILD_DATE ?? null,
+        builtAt: BUILD_URL ?? null,
+        commit: BUILD_COMMIT ?? null,
+        versions: {
+          app: `v${appVersion}`,
+          node: NODE_VERSION,
+        },
       },
-    },
-  })
-})
+    })
+  },
+)
