@@ -42,9 +42,10 @@ function methodRouter (methodHandlers) {
     const reqMethod = ctx.req.method.toUpperCase()
 
     let handler = methodHandlers[reqMethod]
-    handler ??= reqMethod === 'PATCH' && methodHandlers.PUT // Use PUT if PATCH isn't defined
+    handler ??= reqMethod === 'PATCH' && methodHandlers.PUT // Try PUT if PATCH isn't defined
 
     if (!handler) {
+      ctx.res.setHeader('Allow', allowedMethods)
       throw new MethodNotAllowedAPIError({
         meta: {
           allowedMethods,
