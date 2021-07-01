@@ -83,3 +83,9 @@ export class InternalServerAPIError extends APIError {
     return 'internal_server_error'
   }
 }
+
+export class NotImplementedAPIError extends APIError {
+  get status () {
+    return 'not_implemented'
+  }
+}
