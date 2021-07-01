@@ -46,8 +46,8 @@ export const useRescueQueueCount = () => {
         const { data, status } = await axios.get('/api/qms/queue')
 
         if (status === HttpStatus.OK) {
-          setCount(data.data.queueLength)
-          setMax(data.data.maxClients)
+          setCount(data.data.attributes.queueLength)
+          setMax(data.data.attributes.maxClients)
         }
 
 
