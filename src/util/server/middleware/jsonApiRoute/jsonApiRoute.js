@@ -8,10 +8,10 @@ import JsonApiContext from './JsonApiContext'
 const jsonApiContentType = 'application/vnd.api+json'
 const env = getEnv()
 
-function checkSent ({ res }) {
+function checkSent ({ res, __suppressWarnings }) {
   const sent = res.finished || res.headersSent || res.writableEnded
-  if (sent) {
-    console.warn('Route using \'jsonApiRoute()\' framework manually sent response. This is NOT recommended.')
+  if (sent && !__suppressWarnings) {
+    console.error('Route using \'jsonApiRoute()\' framework manually sent response. This is NOT recommended.')
   }
 
   return sent
