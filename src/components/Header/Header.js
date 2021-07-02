@@ -1,5 +1,3 @@
-/* globals $IS_DEVELOPMENT:false, $IS_STAGING:false, $BUILD_COMMIT_SHORT:false */
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 import { useCallback, useRef } from 'react'
@@ -18,8 +16,6 @@ import SocialIcon from './SocialIcon'
 
 
 // Component constants
-const IS_DEV_OR_STAGING = $IS_DEVELOPMENT || $IS_STAGING
-const BUILD_COMMIT_SHORT = $BUILD_COMMIT_SHORT
 
 
 
@@ -131,10 +127,10 @@ function Header () {
           </NavLink>
 
           {
-            IS_DEV_OR_STAGING && (
+            (!$$BUILD.isProduction) && (
               <NavLink className="button link" href="/version">
                 <FontAwesomeIcon fixedWidth icon="code-branch" />
-                {BUILD_COMMIT_SHORT}
+                {$$BUILD.commitShort}
               </NavLink>
             )
           }

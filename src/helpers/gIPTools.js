@@ -1,4 +1,3 @@
-/* global $IS_DEVELOPMENT:false */
 import { HttpStatus } from '@fuelrats/web-util/http'
 import jsCookie from 'js-cookie'
 import nextCookies from 'next-cookies'
@@ -93,7 +92,7 @@ export const resolvePageMeta = async (Component, ctx, pageProps) => {
     ...(await Component.getPageMeta?.(ctx, pageProps)) ?? {},
   }
 
-  if ($IS_DEVELOPMENT) {
+  if ($$BUILD.isDev) {
     validatePageMeta(pageMeta)
   }
 
