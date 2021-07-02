@@ -17,11 +17,6 @@ declare namespace $$BUILD {
   declare const isDev: Readonly<boolean>;
 
   /**
-   * Was CI build built from a staging branch.
-   */
-  declare const isStaging: Readonly<boolean>;
-
-  /**
    * Was CI build built from a production branch.
    */
   declare const isProduction: Readonly<boolean>;

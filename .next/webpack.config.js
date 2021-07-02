@@ -12,7 +12,6 @@ module.exports = (env) => {
     /* Define Plugin */
     config.plugins.push(new DefinePlugin({
       '$$BUILD.isDev': JSON.stringify(opt.dev),
-      '$$BUILD.isStaging': JSON.stringify(['develop', 'beta'].includes(env.git.branch)),
       '$$BUILD.isProduction': JSON.stringify(!opt.dev && env.git.branch === 'release'),
       '$$BUILD.branch': JSON.stringify(env.git.branch ?? null),
       '$$BUILD.commit': JSON.stringify(env.git.commit ?? null),
