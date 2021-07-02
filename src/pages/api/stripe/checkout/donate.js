@@ -3,9 +3,9 @@
 import stripeJs from 'stripe'
 
 import getEnv from '~/util/server/getEnv'
+import acceptMethod from '~/util/server/middleware/acceptMethod'
 import ipFilter from '~/util/server/middleware/ipFilter'
 import jsonApiRoute from '~/util/server/middleware/jsonApiRoute'
-import methodRouter from '~/util/server/middleware/methodRouter'
 import trafficController from '~/util/server/middleware/trafficController'
 
 
@@ -55,7 +55,7 @@ const getDonationItemInfo = (amount) => {
 export default jsonApiRoute(
   ipFilter(),
   trafficController(),
-  methodRouter.POST(),
+  acceptMethod.POST(),
   async (ctx) => {
     const {
       body = {},

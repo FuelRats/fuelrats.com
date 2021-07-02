@@ -8,8 +8,8 @@
 */
 
 
+import acceptMethod from '~/util/server/middleware/acceptMethod'
 import jsonApiRoute from '~/util/server/middleware/jsonApiRoute'
-import methodRouter from '~/util/server/middleware/methodRouter'
 
 import pkgFile from '../../../package.json'
 
@@ -26,7 +26,7 @@ const { version: appVersion } = pkgFile
 
 
 export default jsonApiRoute(
-  methodRouter.GET(),
+  acceptMethod.GET(),
   (ctx) => {
     ctx.send({
       id: NEXT_BUILD_ID,

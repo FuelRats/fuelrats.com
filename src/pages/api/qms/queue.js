@@ -2,8 +2,8 @@ import { HttpStatus } from '@fuelrats/web-util/http'
 import axios from 'axios'
 
 import { InternalServerAPIError } from '~/util/server/errors'
+import acceptMethod from '~/util/server/middleware/acceptMethod'
 import jsonApiRoute from '~/util/server/middleware/jsonApiRoute'
-import methodRouter from '~/util/server/middleware/methodRouter'
 
 
 
@@ -27,7 +27,7 @@ const cache = {
 
 
 export default jsonApiRoute(
-  methodRouter.GET(),
+  acceptMethod.GET(),
   async (ctx) => {
     const nowTime = Date.now()
 
