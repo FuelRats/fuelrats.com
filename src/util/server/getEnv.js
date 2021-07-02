@@ -4,6 +4,8 @@ function requireEnv (name) {
   throw new TypeError(`Expected required variable 'process.env.${name}' to be defined.`)
 }
 
+const COMMIT_HASH_LENGTH = 10
+
 let env = null
 
 export default function getEnv () {
@@ -13,6 +15,7 @@ export default function getEnv () {
     }
 
     const {
+      CI = false,
       PORT = 3000,
       APP_URL = requireEnv('APP_URL'),
       APP_PROXIED = false,
@@ -29,6 +32,10 @@ export default function getEnv () {
       FR_STRIPE_API_SK,
       FR_STRIPE_BANS_FILE,
       FR_WORDPRESS_URL = 'https://wordpress.fuelrats.com',
+      GITHUB_REF = 'develop',
+      GITHUB_RUN_ID,
+      GITHUB_SERVER_URL = 'https://github.com',
+      GITHUB_SHA,
       QMS_API_URL = 'https://api.qms.fuelrats.dev',
       QMS_API_TOKEN,
     } = process.env
@@ -67,6 +74,16 @@ export default function getEnv () {
       irc: {
         client: FR_CLIENT_IRC_URL,
         rat: FR_RAT_IRC_URL,
+      },
+      git: {
+        // Git CI vars. Will not typically be defined at runtime.
+        // These exist to be used by DefinePlugin at build time.
+        ci: CI,
+        ciId: GITHUB_RUN_ID,
+        server: GITHUB_SERVER_URL,
+        branch: GITHUB_REF?.replace(/^refs\/heads\//u, '')?.replace(/\//gu, '-') ?? null,
+        commit: GITHUB_SHA?.toLowerCase() ?? null,
+        commitShort: GITHUB_SHA?.slice(0, COMMIT_HASH_LENGTH)?.toLowerCase() ?? null,
       },
     }
   }
