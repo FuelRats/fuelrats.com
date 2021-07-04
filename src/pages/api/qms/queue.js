@@ -2,13 +2,14 @@ import { HttpStatus } from '@fuelrats/web-util/http'
 import axios from 'axios'
 
 import { InternalServerAPIError } from '~/util/server/errors'
+import getEnv from '~/util/server/getEnv'
 import acceptMethod from '~/util/server/middleware/acceptMethod'
 import jsonApiRoute from '~/util/server/middleware/jsonApiRoute'
 
 
 
 
-
+// Module constants
 const cache = {
   count: {
     maxAge: 10000,
@@ -21,7 +22,7 @@ const cache = {
     value: 0,
   },
 }
-
+const env = getEnv()
 
 
 
@@ -35,10 +36,10 @@ export default jsonApiRoute(
       cache.count.lastCheck = nowTime
 
       const { data, status, statusText } = await axios.get(
-        `${process.env.QMS_API_URL}/api/v1/queue/`,
+        `${env.qms.url}/api/v1/queue/`,
         {
           headers: {
-            Authorization: `Bearer ${process.env.QMS_API_TOKEN}`,
+            Authorization: `Bearer ${env.qms.token}`,
           },
         },
       )
@@ -65,10 +66,10 @@ export default jsonApiRoute(
     if (nowTime - cache.max.lastCheck >= cache.max.maxAge) {
       cache.max.lastCheck = nowTime
       const { data, status, statusText } = await axios.get(
-        `${process.env.QMS_API_URL}/api/v1/config/`,
+        `${env.qms.url}/api/v1/config/`,
         {
           headers: {
-            Authorization: `Bearer ${process.env.QMS_API_TOKEN}`,
+            Authorization: `Bearer ${env.qms.token}`,
           },
         },
       )

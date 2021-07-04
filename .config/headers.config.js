@@ -4,13 +4,15 @@ const nextSafe = require('next-safe')
 
 
 
-const isDev = process.env.NODE_ENV !== 'production'
-
 const domainWhitelist = [
   '*.fuelrats.com',
   '*.stripe.com',
   'www.google.com',
 ]
+
+
+
+
 
 module.exports = (env) => {
   return () => {
@@ -18,7 +20,7 @@ module.exports = (env) => {
       {
         source: '/:path*',
         headers: nextSafe({
-          isDev,
+          isDev: env.isDev,
           contentSecurityPolicy: {
             'default-src': ["'self'", ...domainWhitelist, 'blob:'],
             'connect-src': ["'self'", 'wss://*.fuelrats.com', env.frapi.url, env.appUrl],
