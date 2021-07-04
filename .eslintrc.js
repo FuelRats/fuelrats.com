@@ -41,8 +41,8 @@ module.exports = {
   overrides: [
     {
       files: [
+        '.config/**/*.js',
         'src/pages/api/**/*.js',
-        'src/server/**/*.mjs',
         'src/util/server/**/*.js',
       ],
       env: {

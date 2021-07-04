@@ -55,6 +55,7 @@ jobs:
       - name: Prepare artifact
         run: |
           tar -czf fuelrats-com.tar.gz \
+            .config \
             dist \
             public \
             scripts \
