@@ -51,13 +51,11 @@ export default jsonApiRoute(
 
         cache.count.value = rescueQueue.length
       } else {
-        ctx.error(new InternalServerAPIError({
-          meta: {
-            internalError: {
-              url: '/api/v1/queue/',
-              status,
-              statusText,
-            },
+        ctx.error(new InternalServerAPIError(null, {
+          internalError: {
+            url: '/api/v1/queue/',
+            status,
+            statusText,
           },
         }))
       }
@@ -77,13 +75,11 @@ export default jsonApiRoute(
       if (status === HttpStatus.OK) {
         cache.max.value = data.max_active_clients
       } else {
-        ctx.error(new InternalServerAPIError({
-          meta: {
-            internalError: {
-              url: '/api/v1/config/',
-              status,
-              statusText,
-            },
+        ctx.error(new InternalServerAPIError(null, {
+          internalError: {
+            url: '/api/v1/config/',
+            status,
+            statusText,
           },
         }))
       }

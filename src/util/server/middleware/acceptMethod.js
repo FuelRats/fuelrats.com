@@ -26,10 +26,8 @@ function acceptMethod (...methods) {
 
     if (!allowedMethods.includes(reqMethod)) {
       ctx.res.setHeader('Allow', allowedMethods.join(', '))
-      throw new MethodNotAllowedAPIError({
-        meta: {
-          allowedMethods,
-        },
+      throw new MethodNotAllowedAPIError(null, {
+        allowedMethods,
       })
     }
 

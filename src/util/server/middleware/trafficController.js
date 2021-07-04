@@ -165,7 +165,9 @@ const trafficController = () => {
     ctx.meta.rateLimitReset = user.reset
 
     if (user.exceeded) {
-      throw new TooManyRequestsAPIError()
+      throw new TooManyRequestsAPIError(null, {
+        tryAfter: user.reset,
+      })
     }
 
     await next()

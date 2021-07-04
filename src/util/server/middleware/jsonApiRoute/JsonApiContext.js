@@ -55,7 +55,7 @@ export default class JsonApiContext {
       this.#resErrors[first ? 'unshift' : 'push'](
         error instanceof APIError
           ? error
-          : new InternalServerAPIError({ internalError: error }),
+          : new InternalServerAPIError(null, { internalError: error }),
       )
     }
 
