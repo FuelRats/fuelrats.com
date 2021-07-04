@@ -2,6 +2,7 @@
 const crypto = require('crypto')
 const url = require('url')
 
+const getCIEnv = require('./.config/getCIEnv')
 const headersConfig = require('./.config/headers.config')
 const publicRuntimeConfig = require('./.config/publicRuntime.config')
 const redirectsConfig = require('./.config/redirects.config')
@@ -44,11 +45,12 @@ module.exports = () => {
     webpack: webpackConfig(env),
 
     generateBuildId: () => {
-      const buildId = env.git.ci
-        ? env.git.commit
+      const ciEnv = getCIEnv()
+      const buildId = ciEnv.isCi
+        ? ciEnv.commit
         : crypto.randomBytes(DEV_BUILD_ID_LENGTH).toString('hex').toLowerCase()
 
-      return `${env.git.branch}_${buildId}`
+      return `${ciEnv.branch}_${buildId}`
     },
 
   }

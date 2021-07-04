@@ -3,21 +3,24 @@
 /* eslint-env node */
 const { DefinePlugin } = require('webpack')
 
+const getCIEnv = require('./getCIEnv')
 
 
 
 
-module.exports = (env) => {
+
+module.exports = () => {
   return (config, opt) => {
+    const ciEnv = getCIEnv()
     /* Define Plugin */
     config.plugins.push(new DefinePlugin({
       '$$BUILD.isDev': JSON.stringify(opt.dev),
-      '$$BUILD.isProduction': JSON.stringify(!opt.dev && env.git.branch === 'release'),
-      '$$BUILD.branch': JSON.stringify(env.git.branch ?? null),
-      '$$BUILD.commit': JSON.stringify(env.git.commit ?? null),
-      '$$BUILD.commitShort': JSON.stringify(env.git.commitShort ?? env.git.branch),
+      '$$BUILD.isProduction': JSON.stringify(!opt.dev && ciEnv.branch === 'release'),
+      '$$BUILD.branch': JSON.stringify(ciEnv.branch ?? null),
+      '$$BUILD.commit': JSON.stringify(ciEnv.commit ?? null),
+      '$$BUILD.commitShort': JSON.stringify(ciEnv.commitShort ?? ciEnv.branch),
       '$$BUILD.date': JSON.stringify((new Date()).toISOString()),
-      '$$BUILD.url': JSON.stringify(`${env.git.server}/fuelrats/fuelrats.com/actions/runs/${env.git.ciId}`),
+      '$$BUILD.url': JSON.stringify(`${ciEnv.server}/fuelrats/fuelrats.com/actions/runs/${ciEnv.ciId}`),
       '$$BUILD.id': JSON.stringify(opt.buildId),
       '$$BUILD.nodeVersion': JSON.stringify(process.version),
     }))
