@@ -1,6 +1,5 @@
 /* eslint-env node */
 const crypto = require('crypto')
-const url = require('url')
 
 const getCIEnv = require('./.config/getCIEnv')
 const headersConfig = require('./.config/headers.config')
@@ -27,7 +26,6 @@ module.exports = () => {
     images: {
       disableStaticImages: true,
       domains: [
-        url.parse(env.appUrl).hostname, // Ensure the public hostname is always allowed.
         'wordpress.fuelrats.com',
         'static-cdn.jtvnw.net',
       ],
