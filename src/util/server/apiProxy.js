@@ -4,14 +4,14 @@ import { createProxyMiddleware } from 'http-proxy-middleware'
 
 
 
-const config = {
+export const config = {
   api: {
     externalResolver: true,
     bodyParser: false,
   },
 }
 
-function apiProxy (options) {
+export default function apiProxy (options) {
   return createProxyMiddleware({
     changeOrigin: true,
     secure: true,
@@ -19,10 +19,3 @@ function apiProxy (options) {
     ...options,
   })
 }
-
-
-
-
-
-export default apiProxy
-export { config }
