@@ -1,22 +1,8 @@
-import apiProxy from '~/util/server/apiProxy'
-import getEnv from '~/util/server/getEnv'
+import frApiProxy, { config } from '~/util/server/frApiProxy'
 
 
 
-const env = getEnv()
-
-
-
-
-export function frApiProxy (opts = {}) {
-  return apiProxy({
-    target: env.frapi.url,
-    pathRewrite: {
-      '^/api/fr': '',
-    },
-    ...opts,
-  })
-}
 
 
 export default frApiProxy()
+export { config }

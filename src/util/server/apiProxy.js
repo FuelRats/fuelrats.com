@@ -1,16 +1,28 @@
-import httpProxyMiddleware from 'next-http-proxy-middleware'
+import { createProxyMiddleware } from 'http-proxy-middleware'
 
 
 
 
 
-export default function apiProxy (...options) {
-  return (res, req) => {
-    return httpProxyMiddleware(req, res, {
-      changeOrigin: true,
-      secure: true,
-      xfwd: true,
-      ...options,
-    })
-  }
+const config = {
+  api: {
+    externalResolver: true,
+    bodyParser: false,
+  },
 }
+
+function apiProxy (options) {
+  return createProxyMiddleware({
+    changeOrigin: true,
+    secure: true,
+    xfwd: true,
+    ...options,
+  })
+}
+
+
+
+
+
+export default apiProxy
+export { config }

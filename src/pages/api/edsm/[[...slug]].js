@@ -1,12 +1,15 @@
-import apiProxy from '~/util/server/apiProxy'
+import apiProxy, { config } from '~/util/server/apiProxy'
 import getEnv from '~/util/server/getEnv'
 
 
-const env = getEnv()
+
+
 
 export default apiProxy({
-  target: env.edsm.url,
+  target: getEnv().edsm.url,
   pathRewrite: {
-    '^/api/edsm': '',
+    '^/api/edsm/': '/',
   },
 })
+
+export { config }
