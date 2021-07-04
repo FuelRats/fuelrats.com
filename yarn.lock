@@ -2555,6 +2555,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/qs@npm:^6.9.6":
+  version: 6.9.6
+  resolution: "@types/qs@npm:6.9.6"
+  checksum: 01871b1cf7062717ec76fcb9b29ddae1e04fcfadc1c76d86ec2571e72f27bf09ff31b094b295be8d4ca664aeec9b8965563680b31fcab7aba1ed93afac5181cd
+  languageName: node
+  linkType: hard
+
 "@types/react-dom@npm:^17.0.8":
   version: 17.0.8
   resolution: "@types/react-dom@npm:17.0.8"
@@ -5499,6 +5506,7 @@ fsevents@~2.3.1:
     "@types/js-cookie": ^2.2.6
     "@types/jsonfile": ^6.0.0
     "@types/lodash": ^4.14.170
+    "@types/qs": ^6.9.6
     "@types/react": ^17.0.13
     "@types/react-dom": ^17.0.8
     "@types/react-redux": ^7.1.16

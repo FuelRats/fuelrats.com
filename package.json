@@ -33,6 +33,7 @@
     "@fuelrats/validation-util": "^1.2.0",
     "@fuelrats/web-util": "^0.3.2",
     "@next/eslint-plugin-next": "^11.0.1",
+    "@types/qs": "^6.9.6",
     "axios": "^0.21.1",
     "clsx": "^1.1.1",
     "date-fns": "^2.22.1",
