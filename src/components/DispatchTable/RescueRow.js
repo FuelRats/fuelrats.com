@@ -4,11 +4,11 @@ import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
 import { useCallback, useState } from 'react'
 
-import { makeRoute } from '~/helpers/routeGen'
 import { useQuoteString, useLanguageData, usePlatformData } from '~/hooks/rescueHooks'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import useStoreEffect from '~/hooks/useStoreEffect'
 import { selectRescueById, createSelectRenderedRatList } from '~/store/selectors'
+import makeRoute from '~/util/router/makeRoute'
 
 import CopyToClipboard from '../CopyToClipboard'
 import styles from './DispatchTable.module.scss'

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import { useEffect, useState } from 'react'
 
-import { formatAsEliteDateTime } from '~/helpers/formatTime'
+import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 
 import styles from './Clock.module.scss'
 

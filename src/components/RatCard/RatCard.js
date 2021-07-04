@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import React from 'react'
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import { formatAsEliteDate } from '~/helpers/formatTime'
 import { connect } from '~/store'
 import {
   selectRatById,
@@ -12,6 +11,7 @@ import {
   withCurrentUserId,
   selectRatStatisticsById,
 } from '~/store/selectors'
+import formatAsEliteDate from '~/util/date/formatAsEliteDate'
 
 import CardControls from '../CardControls'
 import InlineEditSpan from '../InlineEditSpan'

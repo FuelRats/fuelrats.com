@@ -9,10 +9,6 @@ import RadioInput from '~/components/RadioInput'
 import RatTagsInput from '~/components/RatTagsInput'
 import SystemTagsInput from '~/components/SystemTagsInput'
 import platformRadioOptions from '~/data/platformRadioOptions'
-import { formatAsEliteDateTime } from '~/helpers/formatTime'
-import getRatTag from '~/helpers/getRatTag'
-import { pageRedirect } from '~/helpers/gIPTools'
-import { makePaperworkRoute } from '~/helpers/routeGen'
 import { connect } from '~/store'
 import { getRescue } from '~/store/actions/rescues'
 import {
@@ -20,6 +16,10 @@ import {
   selectRescueById,
   selectCurrentUserCanEditRescue,
 } from '~/store/selectors'
+import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
+import pageRedirect from '~/util/getInitialProps/pageRedirect'
+import getRatTag from '~/util/getRatTag'
+import makePaperworkRoute from '~/util/router/makePaperworkRoute'
 
 
 

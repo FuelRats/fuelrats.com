@@ -3,11 +3,7 @@ import axios from 'axios'
 import getConfig from 'next/config'
 import Link from 'next/link'
 
-import { formatAsEliteDateTime } from '~/helpers/formatTime'
-
-
-
-
+import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 
 // Component constants
 const { publicRuntimeConfig } = getConfig()

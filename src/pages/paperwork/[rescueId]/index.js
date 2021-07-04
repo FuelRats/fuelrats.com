@@ -4,9 +4,6 @@ import Router from 'next/router'
 import React from 'react'
 
 import { authenticated } from '~/components/AppLayout'
-import { formatAsEliteDateTime } from '~/helpers/formatTime'
-import { pageRedirect } from '~/helpers/gIPTools'
-import { makePaperworkRoute } from '~/helpers/routeGen'
 import { connect } from '~/store'
 import { getRescue } from '~/store/actions/rescues'
 import {
@@ -15,6 +12,9 @@ import {
   selectCurrentUserCanEditRescue,
   selectCurrentUserHasScope,
 } from '~/store/selectors'
+import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
+import pageRedirect from '~/util/getInitialProps/pageRedirect'
+import makePaperworkRoute from '~/util/router/makePaperworkRoute'
 
 
 

@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import asModal, { FooterPrimary, ModalContent, ModalFooter } from '~/components/asModal'
 import PasswordFieldset from '~/components/Fieldsets/PasswordFieldset'
-import getResponseError from '~/helpers/getResponseError'
 import useForm from '~/hooks/useForm'
 import { logout } from '~/store/actions/session'
 import { updateUser } from '~/store/actions/user'
 import { selectCurrentUserId } from '~/store/selectors'
+import getResponseError from '~/util/getResponseError'
 
 import DisableProfileErrorBox from './DisableProfileErrorBox'
 

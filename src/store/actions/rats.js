@@ -1,6 +1,7 @@
 import { defineRelationship } from '@fuelrats/web-util/redux-json-api'
 
-import { presentApiRequestBody } from '~/helpers/presenters'
+import createRequestBody from '~/util/jsonapi/createRequestBody'
+
 
 import actionTypes from '../actionTypes'
 import {
@@ -42,7 +43,7 @@ export const createRat = (data) => {
     {
       url: '/rats',
       method: 'post',
-      data: presentApiRequestBody('rats', data),
+      data: createRequestBody('rats', data),
     },
     createsRelationship(
       defineRelationship(data.relationships?.user?.data, { rats: [RESOURCE] }),
@@ -74,7 +75,7 @@ export const updateRat = (data) => {
     {
       url: `/rats/${data.id}`,
       method: 'put',
-      data: presentApiRequestBody('rats', data),
+      data: createRequestBody('rats', data),
     },
   )
 }

@@ -2,8 +2,10 @@ import { createFSA, createAxiosFSA } from '@fuelrats/web-util/actions'
 import { HttpStatus } from '@fuelrats/web-util/http'
 import { isError } from 'flux-standard-action'
 
-import { configureRequest, deleteCookie } from '~/helpers/gIPTools'
+
 import frApi from '~/services/frApi'
+import configureRequest from '~/util/getInitialProps/configureRequest'
+import deleteCookie from '~/util/getInitialProps/deleteCookie'
 
 import actionTypes from '../actionTypes'
 import {

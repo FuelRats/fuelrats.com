@@ -2,8 +2,8 @@ import PropTypes from 'prop-types'
 import { useCallback } from 'react'
 
 import RadioInput from '~/components/RadioInput'
-import stringToStrictBoolean from '~/helpers/stringToStrictBoolean'
 import { useField, fieldPropTypes } from '~/hooks/useForm'
+import stringToStrictBoolean from '~/util/string/stringToStrictBoolean'
 
 const booleanRadioOptions = [
   {

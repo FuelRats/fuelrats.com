@@ -4,7 +4,7 @@ import { useMemo, useState, useEffect } from 'react'
 
 import { getLanguage } from '~/data/languageList'
 import { getPlatform } from '~/data/platformList'
-import { formatAsEliteDateTime } from '~/helpers/formatTime'
+import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 
 
 const pollTimeoutTime = 10000

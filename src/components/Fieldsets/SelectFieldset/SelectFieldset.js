@@ -2,8 +2,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import PropTypes from 'prop-types'
 import { useCallback, useRef } from 'react'
 
-import extPropTypes from '~/helpers/extPropTypes'
 import { useField, fieldPropTypes } from '~/hooks/useForm'
+import extPropTypes from '~/util/propTypes/extPropTypes'
 
 import inputStyles from '../InputFieldset/InputFieldset.module.scss'
 import ValidityIcon from '../InputFieldset/ValidityIcon'

@@ -1,6 +1,6 @@
 import { isRequired } from '@fuelrats/validation-util'
 
-export function presentApiRequestBody (
+export default function createRequestBody (
   type = isRequired('resourceType'),
   data = isRequired('data'),
   documentMeta,

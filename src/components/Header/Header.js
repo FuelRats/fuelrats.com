@@ -3,9 +3,9 @@ import Link from 'next/link'
 import { useCallback, useRef } from 'react'
 import { useSelector } from 'react-redux'
 
-import { makeBlogRoute } from '~/helpers/routeGen'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { selectCurrentUserHasScope, selectSession } from '~/store/selectors'
+import makeBlogRoute from '~/util/router/makeBlogRoute'
 
 import Brand from '../../../public/static/svg/brand.svg'
 import { Nav, NavUl, NavLink, SubNav } from '../Nav'

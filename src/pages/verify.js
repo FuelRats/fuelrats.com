@@ -6,12 +6,12 @@ import { useDispatch } from 'react-redux'
 import PasswordResetForm from '~/components/Forms/PasswordResetForm'
 import MessageBox from '~/components/MessageBox'
 import ApiErrorBox from '~/components/MessageBox/ApiErrorBox'
-import getResponseError from '~/helpers/getResponseError'
-import { pageRedirect } from '~/helpers/gIPTools'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { validatePasswordResetToken, resetPassword } from '~/store/actions/authentication'
 import { verifyEmailToken } from '~/store/actions/verify'
 import { selectCurrentUserHasScope } from '~/store/selectors'
+import pageRedirect from '~/util/getInitialProps/pageRedirect'
+import getResponseError from '~/util/getResponseError'
 
 
 

@@ -3,8 +3,8 @@ import Router from 'next/router'
 import React from 'react'
 
 import Carousel from '~/components/Carousel'
-import { makeRoute } from '~/helpers/routeGen'
 import { connect } from '~/store'
+import makeRoute from '~/util/router/makeRoute'
 
 
 
