@@ -31,7 +31,7 @@
     "@fortawesome/react-fontawesome": "^0.1.14",
     "@fuelrats/next-adorable-avatars": "^0.3.0",
     "@fuelrats/validation-util": "^1.2.0",
-    "@fuelrats/web-util": "^0.3.2",
+    "@fuelrats/web-util": "^0.3.3",
     "@next/eslint-plugin-next": "^11.0.1",
     "axios": "^0.21.1",
     "clsx": "^1.1.1",

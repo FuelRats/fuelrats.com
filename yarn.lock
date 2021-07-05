@@ -2064,9 +2064,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fuelrats/web-util@npm:^0.3.2":
-  version: 0.3.2
-  resolution: "@fuelrats/web-util@npm:0.3.2"
+"@fuelrats/web-util@npm:^0.3.3":
+  version: 0.3.3
+  resolution: "@fuelrats/web-util@npm:0.3.3"
   dependencies:
     "@babel/runtime": ^7.11.2
     "@fuelrats/validation-util": ^1.2.0
@@ -2077,7 +2077,7 @@ __metadata:
     axios: ">=0.18"
     redux: "*"
     redux-thunk: "*"
-  checksum: f1f29c3b6d1e63803f1bc39818d51ef6d27c5ec64f1d39cd0b7c546f8f198962d51de74efe79c8ba554fe06890a95b8c9e85be76257e34194bf86c7f9720fafd
+  checksum: fe687f644ea3f532818ca87a3a3cc65d6edc8bc3cf913251e69faad33eafad879f2f0908fe34b55fdb36b39c3d0029f4709f4579c9fc692abeea961b8b3b7da9
   languageName: node
   linkType: hard
 
@@ -5498,7 +5498,7 @@ fsevents@~2.3.1:
     "@fuelrats/next-adorable-avatars": ^0.3.0
     "@fuelrats/stylelint-config": ^1.2.3
     "@fuelrats/validation-util": ^1.2.0
-    "@fuelrats/web-util": ^0.3.2
+    "@fuelrats/web-util": ^0.3.3
     "@next/eslint-plugin-next": ^11.0.1
     "@svgr/webpack": ^5.5.0
     "@types/hoist-non-react-statics": ^3.3.1
