@@ -541,10 +541,6 @@ class Paperwork extends React.Component {
 
   render () {
     const {
-      rescue,
-    } = this.props
-
-    const {
       submitting,
       error,
     } = this.state
