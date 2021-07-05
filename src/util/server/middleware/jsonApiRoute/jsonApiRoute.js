@@ -11,14 +11,14 @@ const env = getEnv()
 function checkSent ({ res, __suppressWarnings }) {
   const sent = res.finished || res.headersSent || res.writableEnded
   if (sent && !__suppressWarnings) {
-    console.error('Route using \'jsonApiRoute()\' framework manually sent response. This is NOT recommended.')
+    console.error('JSON:API route manually sent response. This is NOT supported by this middleware.')
   }
 
   return sent
 }
 
 function getIps ({ req }) {
-  const ips = req.getHeader('X-Forwarded-For')
+  const ips = req.headers['X-Forwarded-For']
   return env.proxied && ips
     ? ips.split(/\s*,\s*/u)
     : []
@@ -28,7 +28,7 @@ function getIps ({ req }) {
 function modRequest (ctx, next) {
   // Add IP handlers
   ctx.req.ips = getIps(ctx)
-  ctx.req.ip = ctx.req.ips[0] ?? ctx.socket.remoteAddress ?? ''
+  ctx.req.ip = ctx.req.ips[0] ?? ctx.req.socket.remoteAddress ?? ''
 
   return next()
 }
@@ -46,7 +46,7 @@ export default function jsonApiRoute (...middleware) {
     try {
       await handler(ctx)
 
-      if (!ctx.body && !ctx.errors.length) {
+      if (!ctx.data && !ctx.errors.length) {
         throw new Error('Route failed to respond with data or error.')
       }
     } catch (error) {
