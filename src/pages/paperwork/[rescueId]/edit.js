@@ -1,3 +1,4 @@
+import { HttpStatus } from '@fuelrats/web-util/http'
 import { isError } from 'flux-standard-action'
 import Router from 'next/router'
 import React from 'react'
@@ -18,7 +19,9 @@ import {
 } from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 import pageRedirect from '~/util/getInitialProps/pageRedirect'
+import setError from '~/util/getInitialProps/setError'
 import getRatTag from '~/util/getRatTag'
+import getResponseError from '~/util/getResponseError'
 import makePaperworkRoute from '~/util/router/makePaperworkRoute'
 
 
@@ -336,7 +339,15 @@ class Paperwork extends React.Component {
     const state = store.getState()
 
     if (!selectRescueById(state, query)) {
-      await store.dispatch(getRescue(query.rescueId))
+      const response = await store.dispatch(getRescue(query.rescueId))
+      const error = getResponseError(response)
+
+      if (error) {
+        if (error?.code === HttpStatus.NOT_FOUND) {
+          error.detail = 'We tried looking everywhere, but this rescue doesn\'t exist.'
+        }
+        setError(ctx, error.code, error.detail)
+      }
     }
   }
 
@@ -550,15 +561,7 @@ class Paperwork extends React.Component {
           )
         }
 
-        {
-          (!rescue) && (
-            <div className="loading page-content">
-              <p>{"Sorry, we couldn't find the paperwork you requested."}</p>
-            </div>
-          )
-        }
-
-        {(rescue) && this.renderRescueEditForm()}
+        {this.renderRescueEditForm()}
       </>
     )
   }
