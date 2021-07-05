@@ -28,6 +28,11 @@ const apiErrorLocalisations = {
     title: 'Not Implemented',
     detail: 'The server does not support the functionality required to fulfill the request.',
   },
+
+  internal_server_error: {
+    title: 'Internal Server Error',
+    detail: 'The server encountered an unexpected condition that prevented it from fulfilling the request.',
+  },
 }
 
 export default apiErrorLocalisations
