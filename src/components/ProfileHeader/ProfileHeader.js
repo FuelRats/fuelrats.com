@@ -1,4 +1,3 @@
-import getConfig from 'next/config'
 import Image from 'next/image'
 import React from 'react'
 
@@ -16,12 +15,6 @@ import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 import ChangePasswordModal from '../ChangePasswordModal'
 import DisableProfileModal from '../DisableProfileModal'
 import UnverifiedUserBanner from './UnverifiedUserBanner'
-
-
-
-
-const { publicRuntimeConfig } = getConfig()
-const { appUrl } = publicRuntimeConfig
 
 
 
@@ -108,7 +101,7 @@ class ProfileHeader extends React.Component {
                 unoptimized
                 alt="User's avatar"
                 height={170}
-                src={`${appUrl}${userAvatar}`}
+                src={userAvatar}
                 width={170} />
             </div>
           </div>
