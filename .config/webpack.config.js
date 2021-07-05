@@ -20,7 +20,7 @@ module.exports = () => {
       '$$BUILD.commit': JSON.stringify(ciEnv.commit ?? null),
       '$$BUILD.commitShort': JSON.stringify(ciEnv.commitShort ?? ciEnv.branch),
       '$$BUILD.date': JSON.stringify((new Date()).toISOString()),
-      '$$BUILD.url': JSON.stringify(`${ciEnv.server}/fuelrats/fuelrats.com/actions/runs/${ciEnv.ciId}`),
+      '$$BUILD.url': JSON.stringify(`${ciEnv.server}/${ciEnv.repository}${ciEnv.ciId ? `/actions/runs/${ciEnv.ciId}` : ''}`),
       '$$BUILD.id': JSON.stringify(opt.buildId),
       '$$BUILD.nodeVersion': JSON.stringify(process.version),
     }))
