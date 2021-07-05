@@ -17,8 +17,8 @@ function Version ({ version }) {
   const {
     branch,
     versions,
-    builtOn,
     builtAt,
+    buildUrl,
     commit,
   } = version.attributes
   return (
@@ -33,7 +33,7 @@ function Version ({ version }) {
       <div className="page-content text-mono">
         <span>
           {'App Version: '}
-          <a href={`https://github.com/FuelRats/fuelrats.com/releases/tag/${version.app}`} rel="noopener noreferrer" target="_blank">
+          <a href={`https://github.com/FuelRats/fuelrats.com/releases/tag/${versions.app}`} rel="noopener noreferrer" target="_blank">
             {versions.app}
           </a>
         </span>
@@ -45,8 +45,8 @@ function Version ({ version }) {
         </span>
         <span>
           {'Built On: '}
-          <a href={builtAt} rel="noopener noreferrer" target="_blank">
-            <time dateTime={builtOn}>{formatAsEliteDateTime(builtOn)}</time>
+          <a href={buildUrl} rel="noopener noreferrer" target="_blank">
+            <time dateTime={builtAt}>{formatAsEliteDateTime(builtAt)}</time>
           </a>
         </span>
         <span>

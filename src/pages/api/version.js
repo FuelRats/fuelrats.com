@@ -15,10 +15,10 @@ export default jsonApiRoute(
       id: $$BUILD.id,
       type: 'fr-web-builds',
       attributes: {
-        branch: $$BUILD.branch ?? 'develop',
-        builtOn: $$BUILD.date ?? null,
-        builtAt: $$BUILD.url ?? null,
-        commit: $$BUILD.commit ?? null,
+        branch: $$BUILD.branch,
+        builtAt: $$BUILD.date,
+        buildUrl: $$BUILD.url,
+        commit: $$BUILD.commit,
         versions: {
           app: `v${appVersion}`,
           node: $$BUILD.nodeVersion,
