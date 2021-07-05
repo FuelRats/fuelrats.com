@@ -3,6 +3,8 @@ import UUID from 'pure-uuid'
 
 import apiErrorLocalisations from '~/data/apiErrorLocalisations'
 
+import bindMethod from '../decorators/bindMethod'
+
 const UUID_VERSION = 4
 
 /**
@@ -11,10 +13,13 @@ const UUID_VERSION = 4
 export class APIError extends Error {
   constructor (source, meta) {
     super()
-    this.message = this.detail
     this.id = (new UUID(UUID_VERSION)).toString()
     this.source = source
     this.meta = meta
+  }
+
+  get message () {
+    return this.detail
   }
 
   get code () {
@@ -26,11 +31,11 @@ export class APIError extends Error {
   }
 
   get title () {
-    return apiErrorLocalisations[this.status].title
+    return apiErrorLocalisations[this.status]?.title
   }
 
   get detail () {
-    return apiErrorLocalisations[this.status].detail
+    return apiErrorLocalisations[this.status]?.detail
   }
 
   get links () {
@@ -39,6 +44,7 @@ export class APIError extends Error {
     }
   }
 
+  @bindMethod
   toJSON () {
     // all elements are defaulted to undefined.
     // This removes the entry from the resulting object.
