@@ -40,15 +40,17 @@ export class APIError extends Error {
   }
 
   toJSON () {
+    // all elements are defaulted to undefined.
+    // This removes the entry from the resulting object.
     return {
       id: this.id,
-      links: this.links,
-      status: this.status,
-      code: this.code,
-      title: this.title,
-      detail: this.detail,
-      source: this.source,
-      meta: this.meta,
+      links: this.links ?? undefined,
+      status: this.status ?? undefined,
+      code: this.code ?? undefined,
+      title: this.title ?? undefined,
+      detail: this.detail ?? undefined,
+      source: this.source ?? undefined,
+      meta: this.meta ?? undefined,
     }
   }
 }
