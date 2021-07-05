@@ -29,7 +29,7 @@ class TrafficControl {
    * and the total requests
    */
   validateRateLimit ({ ctx, increase = true }) {
-    const fingerprint = ctx.req.getHeader('X-Fingerprint')
+    const fingerprint = ctx.req.headers['X-Fingerprint']
     let entity = null
     let valid = false
 
