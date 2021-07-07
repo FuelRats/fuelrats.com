@@ -225,6 +225,7 @@ class RatCard extends React.Component {
             <div className="panel-content">
               <Switch
                 checked={rat.attributes.odyssey}
+                id={`OdysseySwitch-${rat.id}`}
                 label="Using Odyssey"
                 onChange={this._handleOdysseySwitch} />
             </div>
