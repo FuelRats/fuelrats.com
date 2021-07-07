@@ -25,7 +25,6 @@ function Switch (props) {
 
   const handleChange = useCallback(async (event) => {
     const result = onChange?.(event)
-
     if (isPromise(result)) {
       setLoading(true)
       await result
@@ -35,7 +34,7 @@ function Switch (props) {
 
   let icon = 'times'
   if (loading) {
-    icon = 'circle'
+    icon = 'sync'
   } else if (props.checked) {
     icon = 'check'
   }
