@@ -2,8 +2,8 @@ import { SOCKET_OPEN, SOCKET_CLOSE } from '@fuelrats/web-util/redux-ratsocket'
 import { isError } from 'flux-standard-action'
 import { produce } from 'immer'
 
-import unshiftSplice from '~/helpers/unshiftSplice'
 import frSocket from '~/services/frSocket'
+import unshiftSplice from '~/util/array/unshiftSplice'
 
 import initialState from '../initialState'
 

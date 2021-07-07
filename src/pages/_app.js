@@ -11,14 +11,14 @@ import LoginModal from '~/components/LoginModal'
 import NProgress from '~/components/NProgress'
 import SilentBoundary from '~/components/SilentBoundary'
 import UserMenu from '~/components/UserMenu'
-import * as faIcons from '~/helpers/faIconLibrary'
-import { resolvePageMeta } from '~/helpers/gIPTools'
 import { initStore } from '~/store'
 import {
   initUserSession,
   notifyPageDestroyed,
   notifyPageLoading,
 } from '~/store/actions/session'
+import * as faIcons from '~/util/fontawesome/library'
+import resolvePageMeta from '~/util/getInitialProps/resolvePageMeta'
 
 import ErrorPage from './_error'
 

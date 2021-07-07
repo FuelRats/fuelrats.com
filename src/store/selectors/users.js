@@ -1,6 +1,7 @@
 import { createCachedSelector } from 're-reselect'
 
-import { includesAll, includesSome } from '~/helpers/arrIncludes'
+import includesAll from '~/util/array/includesAll'
+import includesSome from '~/util/array/includesSome'
 
 import { withCurrentUserId } from './session'
 
@@ -47,7 +48,7 @@ export const selectAvatarByUserId = (state, props) => {
 
   return user.attributes.image
     ? `/api/users/${user.id}/avatar`
-    : `/api/avatars/${props.size ?? AVATAR_DEFAULT_SIZE}/${user.id}`
+    : `/api/avatars/${user.id}/${props.size ?? AVATAR_DEFAULT_SIZE}`
 }
 
 export const selectCurrentUserScopes = (state) => {

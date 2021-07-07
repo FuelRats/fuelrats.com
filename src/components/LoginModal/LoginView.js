@@ -6,10 +6,10 @@ import { FooterPrimary, FooterSecondary, ModalFooter, useModalContext } from '~/
 import EmailFieldset from '~/components/Fieldsets/EmailFieldset'
 import PasswordFieldset from '~/components/Fieldsets/PasswordFieldset'
 import SwitchFieldset from '~/components/Fieldsets/SwitchFieldset'
-import getResponseError from '~/helpers/getResponseError'
 import useForm from '~/hooks/useForm'
 import { login } from '~/store/actions/authentication'
 import { getUserProfile } from '~/store/actions/user'
+import getResponseError from '~/util/getResponseError'
 
 import styles from './LoginModal.module.scss'
 

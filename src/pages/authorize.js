@@ -3,9 +3,9 @@ import React from 'react'
 
 import { authenticated } from '~/components/AppLayout'
 import ScopeView from '~/components/ScopeView'
-import { pageRedirect } from '~/helpers/gIPTools'
 import { connect } from '~/store'
 import { getClientOAuthPage } from '~/store/actions/authentication'
+import pageRedirect from '~/util/getInitialProps/pageRedirect'
 
 
 

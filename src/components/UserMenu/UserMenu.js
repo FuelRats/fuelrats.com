@@ -1,4 +1,3 @@
-import getConfig from 'next/config'
 import Image from 'next/image'
 import { useCallback, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -16,13 +15,6 @@ import {
 
 import { Nav, NavLink, NavSection } from '../Nav'
 import styles from './UserMenu.module.scss'
-
-
-
-
-
-const { publicRuntimeConfig } = getConfig()
-const { appUrl } = publicRuntimeConfig
 
 
 
@@ -70,7 +62,7 @@ function UserMenu () {
                       unoptimized
                       alt="User's avatar"
                       height={64}
-                      src={`${appUrl}${userAvatar}`}
+                      src={userAvatar}
                       width={64} />
                   )
                 }

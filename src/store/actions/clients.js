@@ -1,4 +1,4 @@
-import { presentApiRequestBody } from '~/helpers/presenters'
+import createRequestBody from '~/util/jsonapi/createRequestBody'
 
 import actionTypes from '../actionTypes'
 import { frApiRequest } from './services'
@@ -24,7 +24,7 @@ export const createClient = (data) => {
     {
       url: '/clients',
       method: 'post',
-      data: presentApiRequestBody('clients', data),
+      data: createRequestBody('clients', data),
     },
   )
 }

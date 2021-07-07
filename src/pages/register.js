@@ -3,10 +3,10 @@ import { useDispatch } from 'react-redux'
 
 import RegistrationForm, { RegistrationErrorBox } from '~/components/Forms/RegistrationForm'
 import MessageBox from '~/components/MessageBox'
-import getResponseError from '~/helpers/getResponseError'
 import useMergeReducer from '~/hooks/useMergeReducer'
 import { login, register } from '~/store/actions/authentication'
 import { resendVerificationEmail } from '~/store/actions/verify'
+import getResponseError from '~/util/getResponseError'
 
 
 

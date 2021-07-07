@@ -1,4 +1,4 @@
-import { presentApiRequestBody } from '~/helpers/presenters'
+import createRequestBody from '~/util/jsonapi/createRequestBody'
 
 import actionTypes from '../actionTypes'
 import { DISPATCH_VIEW } from '../reducers/dispatch'
@@ -62,7 +62,7 @@ export const updateRescue = (data) => {
     {
       url: `/rescues/${data.id}`,
       method: 'put',
-      data: presentApiRequestBody('rescues', data),
+      data: createRequestBody('rescues', data),
     },
   )
 }

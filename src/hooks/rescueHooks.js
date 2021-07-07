@@ -4,7 +4,7 @@ import { useMemo, useState, useEffect } from 'react'
 
 import { getLanguage } from '~/data/languageList'
 import { getPlatform } from '~/data/platformList'
-import { formatAsEliteDateTime } from '~/helpers/formatTime'
+import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 
 
 const pollTimeoutTime = 10000
@@ -46,8 +46,8 @@ export const useRescueQueueCount = () => {
         const { data, status } = await axios.get('/api/qms/queue')
 
         if (status === HttpStatus.OK) {
-          setCount(data.data.queueLength)
-          setMax(data.data.maxClients)
+          setCount(data.data.attributes.queueLength)
+          setMax(data.data.attributes.maxClients)
         }
 
 

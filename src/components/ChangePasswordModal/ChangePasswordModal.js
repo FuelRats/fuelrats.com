@@ -5,10 +5,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import asModal, { ModalContent, ModalFooter } from '~/components/asModal'
 import NewPasswordFieldset from '~/components/Fieldsets/NewPasswordFieldset'
 import PasswordFieldset from '~/components/Fieldsets/PasswordFieldset'
-import getResponseError from '~/helpers/getResponseError'
 import useForm from '~/hooks/useForm'
 import { changePassword } from '~/store/actions/authentication'
 import { selectCurrentUserId } from '~/store/selectors'
+import getResponseError from '~/util/getResponseError'
 
 
 import ChangePasswordMessageBox from './ChangePasswordMessageBox'

@@ -1,5 +1,3 @@
-/* globals $IS_DEVELOPMENT:false */
-
 import { errorLoggerMiddleware, FSAComplianceMiddleware } from '@fuelrats/web-util/redux-middleware'
 import { connect } from 'react-redux'
 import {
@@ -63,7 +61,7 @@ const ignoredTypes = [
 ]
 
 const middlewares = [thunkMiddleware, frSocket.createMiddleware(), errorLoggerMiddleware(ignoredTypes)]
-if ($IS_DEVELOPMENT) {
+if ($$BUILD.isDev) {
   middlewares.unshift(require('redux-immutable-state-invariant').default())
   middlewares.push(FSAComplianceMiddleware)
 }

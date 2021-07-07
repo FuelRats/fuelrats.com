@@ -5,10 +5,10 @@ import { useDispatch } from 'react-redux'
 import { FooterPrimary, FooterSecondary, ModalFooter, useModalContext } from '~/components/asModal'
 import EmailFieldset from '~/components/Fieldsets/EmailFieldset'
 import MessageBox from '~/components/MessageBox'
-import getResponseError from '~/helpers/getResponseError'
 import useForm from '~/hooks/useForm'
 import useMountedState from '~/hooks/useMountedState'
 import { sendPasswordResetEmail } from '~/store/actions/authentication'
+import getResponseError from '~/util/getResponseError'
 
 import styles from './LoginModal.module.scss'
 

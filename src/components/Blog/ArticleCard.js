@@ -1,10 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 
-import { formatAsEliteDateTime } from '~/helpers/formatTime'
-import { makeBlogRoute } from '~/helpers/routeGen'
 import { connect } from '~/store'
 import { selectAuthorByBlogId, selectBlogById, selectCategoriesByBlogId } from '~/store/selectors'
+import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
+import makeBlogRoute from '~/util/router/makeBlogRoute'
 
 import TextPlaceholder from '../TextPlaceholder'
 

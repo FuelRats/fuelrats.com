@@ -1,12 +1,10 @@
-/* global $IS_DEVELOPMENT, $IS_STAGING */
-
 import { forwardRef } from 'react'
 
 import EmailFieldset from './EmailFieldset'
 import { useValidationCallback } from './InputFieldset'
 
 
-const isProduction = !$IS_DEVELOPMENT && !$IS_STAGING
+
 
 
 const RegistrationEmailFieldset = forwardRef((props, ref) => {
@@ -21,7 +19,7 @@ const RegistrationEmailFieldset = forwardRef((props, ref) => {
       const compareValue = value.toLowerCase().trim()
       if (compareValue === 'surly_badger@fuelrats.com') {
         messages.errors.push('While we appreciate your admiration for our founder, this email is most surely not your own.')
-      } else if (isProduction && compareValue.includes('@fuelrats')) {
+      } else if ($$BUILD.isProduction && compareValue.includes('@fuelrats')) {
         messages.errors.push('Fuel rats email accounts cannot be used to register a brand new account, goofball.')
       }
     },

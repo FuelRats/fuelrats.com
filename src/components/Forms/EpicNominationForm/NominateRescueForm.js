@@ -3,12 +3,12 @@ import { useEffect, useCallback } from 'react'
 import InputFieldset from '~/components/Fieldsets/InputFieldset'
 import RescueIdFieldset from '~/components/Fieldsets/RescueIdFieldset'
 import RescueDetail from '~/components/Forms/EpicNominationForm/RescueDetail'
-import getValidityErrors from '~/helpers/getValidityErrors'
 import useCreateEpicApi from '~/hooks/frapi/useCreateEpicApi'
 import useSearchRescueApi from '~/hooks/frapi/useSearchRescueApi'
 import useForm from '~/hooks/useForm'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { selectRatsByRescueId, selectRescueById } from '~/store/selectors'
+import getValidityErrors from '~/util/getValidityErrors'
 
 import styles from './NominateRescueForm.module.scss'
 

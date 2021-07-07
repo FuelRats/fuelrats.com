@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 
-import getResponseError from '~/helpers/getResponseError'
+import getResponseError from '~/util/getResponseError'
 
 import MessageBox from '../MessageBox'
 import ApiErrorBox from '../MessageBox/ApiErrorBox'

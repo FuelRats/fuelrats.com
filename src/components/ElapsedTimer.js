@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import { useState, useEffect } from 'react'
 
-import { formatTimeElapsed } from '~/helpers/formatTime'
+import formatTimeElapsed from '~/util/date/formatTimeElapsed'
 
 
 
