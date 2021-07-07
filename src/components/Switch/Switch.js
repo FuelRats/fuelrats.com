@@ -2,6 +2,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import PropTypes from 'prop-types'
 import { useCallback, useState } from 'react'
 
+import isPromise from '~/util/isPromise'
+
 import styles from './Switch.module.scss'
 
 
@@ -10,7 +12,6 @@ import styles from './Switch.module.scss'
 
 function Switch (props) {
   const {
-    async: isAsync,
     containerProps,
     className,
     disabled,
@@ -23,15 +24,14 @@ function Switch (props) {
   const [loading, setLoading] = useState(false)
 
   const handleChange = useCallback(async (event) => {
-    if (!isAsync) {
-      onChange?.(event)
-      return
-    }
+    const result = onChange?.(event)
 
-    setLoading(true)
-    await onChange?.(event)
-    setLoading(false)
-  }, [isAsync, onChange])
+    if (isPromise(result)) {
+      setLoading(true)
+      await result
+      setLoading(false)
+    }
+  }, [onChange])
 
   let icon = 'times'
   if (loading) {
@@ -71,7 +71,6 @@ function Switch (props) {
 }
 
 Switch.propTypes = {
-  async: PropTypes.bool,
   checked: PropTypes.bool,
   className: PropTypes.string,
   containerProps: PropTypes.object,
