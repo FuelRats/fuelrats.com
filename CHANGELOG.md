@@ -18,6 +18,8 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Optimized image loading and accessibility for images site-wide. - [#328][]
 * Further optimized font loading. - [#328][]
 * Moved raw version information to an API route (`/api/version`), and reworked version page to draw information from that route. - [#328][]
+* Moved all custom server functions into suitable replacements provided by our site framework. - [#329][]
+    * This move has let us drop our entire custom backend.
 * Other smaller changes to sreamline development. - [#328][]
 
 
@@ -31,6 +33,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 [#328]: https://github.com/fuelRats/fuelrats.com/pull/328
+[#329]: https://github.com/fuelRats/fuelrats.com/pull/329
 [Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.13.0...HEAD
 
 
