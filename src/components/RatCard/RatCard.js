@@ -226,7 +226,7 @@ class RatCard extends React.Component {
               <Switch
                 checked={rat.attributes.odyssey}
                 label="Using Odyssey"
-                onClick={this._handleOdysseySwitch} />
+                onChange={this._handleOdysseySwitch} />
             </div>
           )
         }
