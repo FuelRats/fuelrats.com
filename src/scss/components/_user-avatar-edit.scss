@@ -1,0 +1,29 @@
+.user-avatar-edit {
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  opacity: 0;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  &:hover {
+    opacity: 1;
+  }
+}
+.edit-back {
+  border-radius: 50%;
+  background: white;
+  opacity: 0.8;
+}
+.edit-face {
+}
+.edit-face svg {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+}
+.edit-border {
+  border: 0.2rem solid $red;
+  border-radius: 50%;
+}

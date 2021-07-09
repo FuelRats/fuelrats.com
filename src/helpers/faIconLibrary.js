@@ -44,6 +44,7 @@ export {
   faUndo,
   faUser,
   faUserSecret,
+  faUpload,
 } from '@fortawesome/free-solid-svg-icons'
 
 

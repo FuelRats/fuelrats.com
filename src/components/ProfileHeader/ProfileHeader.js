@@ -8,15 +8,14 @@ import {
   selectGroupsByUserId,
   selectUserById,
   selectDisplayRatByUserId,
-  selectAvatarByUserId,
   withCurrentUserId,
   selectCurrentUserHasScope,
 } from '~/store/selectors'
 
+import ProfileUserAvatar from '../ProfileUserAvatar'
 import ChangePasswordModal from '../ChangePasswordModal'
 import DisableProfileModal from '../DisableProfileModal'
 import UnverifiedUserBanner from './UnverifiedUserBanner'
-
 
 
 
@@ -83,7 +82,6 @@ class ProfileHeader extends React.Component {
     } = this.state
     const {
       displayRat,
-      userAvatar,
       userIsVerified,
     } = this.props
 
@@ -102,16 +100,7 @@ class ProfileHeader extends React.Component {
               <UnverifiedUserBanner />
             )
           }
-          <div className="user-avatar">
-            <div className="avatar xl">
-              <Image
-                unoptimized
-                alt="User's avatar"
-                height={170}
-                src={`${appUrl}${userAvatar}`}
-                width={170} />
-            </div>
-          </div>
+          <ProfileUserAvatar />
           <div className="profile-basic-info">
             <div className="rat-name">
               {displayRat.attributes.name}
@@ -165,7 +154,6 @@ class ProfileHeader extends React.Component {
     return {
       groups: withCurrentUserId(selectGroupsByUserId)(state),
       user: withCurrentUserId(selectUserById)(state),
-      userAvatar: withCurrentUserId(selectAvatarByUserId)(state, { size: 170 }),
       displayRat: withCurrentUserId(selectDisplayRatByUserId)(state),
       userIsVerified: selectCurrentUserHasScope(state, { scope: 'users.verified' }),
     }

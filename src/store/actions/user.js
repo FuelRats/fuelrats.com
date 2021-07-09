@@ -8,8 +8,6 @@ import { withCurrentUserId, selectUserById } from '../selectors'
 import { frApiRequest } from './services'
 
 
-
-
 export const getNickname = (nickId) => {
   return frApiRequest(
     actionTypes.nicknames.read,
@@ -76,5 +74,18 @@ export const updateUser = (data, password) => {
     }
 
     return dispatch(frApiRequest(actionTypes.users.update, request))
+  }
+}
+
+export const updateAvatar = (user, datamime, data) => {
+  return (dispatch, getState) => {
+    const request = {
+      url: `/users/${user}/image`,
+      method: 'post',
+      contenttype: datamime,
+      data: data
+    }
+
+    return dispatch(frApiRequest(actionTypes.users.avatar.update, request))
   }
 }

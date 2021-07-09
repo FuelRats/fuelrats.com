@@ -1,8 +1,8 @@
+
 const clients = {
   create: 'clients/create',
   search: 'clients/search',
 }
-
 
 const decals = {
   read: 'decals/read',
@@ -68,6 +68,9 @@ const users = {
   statistics: {
     read: 'users/statistics/read',
   },
+  avatar: {
+    update: 'users/avatar/update'
+  }
 }
 
 
