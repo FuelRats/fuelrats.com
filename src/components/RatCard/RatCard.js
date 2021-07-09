@@ -147,8 +147,8 @@ class RatCard extends React.Component {
     }
   }
 
-  _handleOdysseySwitch = async () => {
-    await this.props.updateRat({
+  _handleOdysseySwitch = () => {
+    return this.props.updateRat({
       id: this.props.rat.id,
       attributes: {
         odyssey: !this.props.rat.attributes.odyssey,
@@ -224,10 +224,10 @@ class RatCard extends React.Component {
           rat.attributes.platform === 'pc' && (
             <div className="panel-content">
               <Switch
-                async
                 checked={rat.attributes.odyssey}
+                id={`OdysseySwitch-${rat.id}`}
                 label="Using Odyssey"
-                onClick={this._handleOdysseySwitch} />
+                onChange={this._handleOdysseySwitch} />
             </div>
           )
         }

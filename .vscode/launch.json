@@ -9,32 +9,57 @@
       "type": "node",
       "request": "attach",
       "port": 9229,
+      "presentation": {
+        "hidden": false,
+        "group": "",
+        "order": 0
+      }
     },
     {
-      "name": "Next: Attach Chrome",
-      "type": "pwa-chrome",
-      "request": "attach",
-      "port": 9222,
-      "url": "${config:develop.attachurl}",
-      "webRoot": "${workspaceFolder}"
-    }
-    {
-      "name": "Next: Attach Edge",
+      "name": "Next: Launch Edge",
       "type": "pwa-msedge",
-      "request": "attach",
+      "request": "launch",
       "port": 9222,
-      "url": "${config:develop.attachurl}",
-      "webRoot": "${workspaceFolder}"
+      "url": "${config:develop.attachurl}", // Custom vscode config property. does not actually exist, but configurable via user config.
+      "webRoot": "${workspaceFolder}",
+      "presentation": {
+        "hidden": false,
+        "group": "",
+        "order": 0
+      }
+    },
+    {
+      "name": "Next: Launch Chrome",
+      "type": "pwa-chrome",
+      "request": "launch",
+      "port": 9222,
+      "url": "${config:develop.attachurl}", // Custom vscode config property. does not actually exist, but configurable via user config.
+      "webRoot": "${workspaceFolder}",
+      "presentation": {
+        "hidden": false,
+        "group": "",
+        "order": 0
+      }
     }
   ],
   "compounds": [
     {
-      "name": "Next: Attach All",
-      "configurations": ["Next: Attach Server", "Next: Attach Chrome"]
+      "name": "Next: Attach & Launch Edge",
+      "configurations": ["Next: Attach Server", "Next: Launch Edge"],
+      "presentation": {
+        "hidden": false,
+        "group": "next",
+        "order": 0
+      }
     },
     {
-      "name": "Next: Attach All (Edge)",
-      "configurations": ["Next: Attach Server", "Next: Attach Edge"]
+      "name": "Next: Attach & Launch Chrome",
+      "configurations": ["Next: Attach Server", "Next: Launch Edge"],
+      "presentation": {
+        "hidden": false,
+        "group": "next",
+        "order": 1
+      }
     }
   ]
 }
