@@ -2571,6 +2571,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-is@npm:^17.0.1":
+  version: 17.0.1
+  resolution: "@types/react-is@npm:17.0.1"
+  dependencies:
+    "@types/react": "*"
+  checksum: 81437cb5f7696c175fffef2e18360e0a878d1a5edeec5c9832c2075583c6cacaea074e468859d7e3de06f401fb1289c9b07dd7de21d46d4f71490b55bb111d6a
+  languageName: node
+  linkType: hard
+
 "@types/react-redux@npm:^7.1.16":
   version: 7.1.16
   resolution: "@types/react-redux@npm:7.1.16"
@@ -5509,6 +5518,7 @@ fsevents@~2.3.1:
     "@types/qs": ^6.9.6
     "@types/react": ^17.0.13
     "@types/react-dom": ^17.0.8
+    "@types/react-is": ^17.0.1
     "@types/react-redux": ^7.1.16
     "@types/ua-parser-js": ^0.7.36
     "@types/webpack": ^5.28.0
@@ -5555,6 +5565,7 @@ fsevents@~2.3.1:
     react: ^17.0.2
     react-copy-to-clipboard: ^5.0.3
     react-dom: ^17.0.2
+    react-is: ^17.0.2
     react-redux: ^7.2.4
     react-table-6: ^6.11.0
     redux: ^4.1.0
@@ -8972,7 +8983,7 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"react-is@npm:17.0.2":
+"react-is@npm:17.0.2, react-is@npm:^17.0.2":
   version: 17.0.2
   resolution: "react-is@npm:17.0.2"
   checksum: 9d6d111d8990dc98bc5402c1266a808b0459b5d54830bbea24c12d908b536df7883f268a7868cfaedde3dd9d4e0d574db456f84d2e6df9c4526f99bb4b5344d8
