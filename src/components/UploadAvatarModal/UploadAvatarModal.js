@@ -1,16 +1,16 @@
 import PropTypes from 'prop-types'
 import { useCallback, useMemo, useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import Cropper from 'react-easy-crop'
-import Slider from 'rc-slider';
+import Slider from 'rc-slider'
 
 import asModal, { ModalContent, ModalFooter } from '~/components/asModal'
 import getResponseError from '~/helpers/getResponseError'
 import { selectCurrentUserId } from '~/store/selectors'
 import { updateAvatar } from '~/store/actions/user'
 import UploadAvatarMessageBox from './UploadAvatarMessageBox'
-
 // Component Constants
 const SUBMIT_AUTO_CLOSE_DELAY_TIME = 3000
 
@@ -23,28 +23,28 @@ function UploadAvatarModal (props) {
 
   const [result, setResult] = useState({})
 
-  const [upImg, setUpImg] = useState();
+  const [upImg, setUpImg] = useState()
   const [crop, setCrop] = useState({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
   const [rotation, setRotation] = useState(0) // Future enhancement, in case we want to add rotation as an option
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
   const [croppedImage, setCroppedImage] = useState(null)
-  const [previewImg, setPreviewImg] = useState();
-  const [submitReady, setSubmitReady] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
+//  const [previewImg, setPreviewImg] = useState()
+  const [submitReady, setSubmitReady] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
 
   const onCropComplete = (croppedArea, cap) => {
     setCroppedAreaPixels(cap)
-    setSubmitReady(true);
-  };
+    setSubmitReady(true)
+  }
 
   const onSelectFile = (e) => {
     if (e.target.files && e.target.files.length > 0) {
-      const reader = new FileReader();
-      reader.addEventListener('load', () => setUpImg(reader.result));
-      reader.readAsDataURL(e.target.files[0]);
+      const reader = new FileReader()
+      reader.addEventListener('load', () => setUpImg(reader.result))
+      reader.readAsDataURL(e.target.files[0])
     }
-  };
+  }
 
   const dispatch = useDispatch()
 
@@ -97,25 +97,25 @@ function UploadAvatarModal (props) {
             mime = arr[0].match(/:(.*?);/)[1],
             bstr = atob(arr[1]),
             n = bstr.length,
-            u8arr = new Uint8Array(n);
+            u8arr = new Uint8Array(n)
 
             while(n--){
-              u8arr[n] = bstr.charCodeAt(n);
+              u8arr[n] = bstr.charCodeAt(n)
             }
             console.log(u8arr)
-            let croppedImage = new File([u8arr], 'avatar.png', {type:mime});
+            let croppedImage = new File([u8arr], 'avatar.png', {type:mime})
 
-            if (croppedImage.size > 20*1024*1000) {
+            console.log(croppedImage.size)
+            if (croppedImage.size > 25*1024*1024) {
               setResult({
                 error: { status: 'toobig' },
                 success: false,
                 submitted: false,
               })
             } else {
-              submit(mime, croppedImage);
+              submit(mime, croppedImage)
             }
-/*            console.log(croppedImage.size)
-            // This is only here for debug
+/*            // This is only here for debug
             console.log("Loading preview")
             const reader2 = new FileReader()
             reader2.addEventListener('load', () => setPreviewImg(reader.result))
@@ -137,7 +137,7 @@ function UploadAvatarModal (props) {
   }
 
   const submit = async (mime, img) => {
-    setSubmitting(true);
+    setSubmitting(true)
     const response = await dispatch(updateAvatar(userId, mime, img))
     const error = getResponseError(response)
 
@@ -154,7 +154,7 @@ function UploadAvatarModal (props) {
         }
       }, SUBMIT_AUTO_CLOSE_DELAY_TIME)
     } else {
-      setSubmitting(false);
+      setSubmitting(false)
     }
   }
 
@@ -164,28 +164,61 @@ function UploadAvatarModal (props) {
     <ModalContent className="dialog no-pad">
       <UploadAvatarMessageBox result={result} />
       <div>
+        <label>Select Image: </label>
         <input type="file" accept="image/*" onChange={onSelectFile} />
       </div>
-      <div className="crop-container">
-        <Cropper
-          image={upImg}
-          crop={crop}
-          zoom={zoom}
-          aspect={1 / 1}
-          onCropChange={setCrop}
-          onCropComplete={onCropComplete}
-          onZoomChange={setZoom}
-        />
-      </div>
-      <div className="controls">
-        <Slider
-          value={zoom}
-          min={1}
-          max={3}
-          step={0.1}
-          aria-labelledby="Zoom"
-          onChange={(zoom) => { setZoom(zoom); }}
-        />
+      <div class="zoomandcrop">
+        <div class='zoomsliderbox'>
+          <div class='zoomslidericon'>
+            <FontAwesomeIcon icon="search-plus" />
+          </div>
+          <div class='slidercontrol'>
+            <Slider
+              value={zoom}
+              min={1}
+              max={3}
+              step={0.1}
+              vertical={true}
+              aria-labelledby="Zoom"
+              onChange={(zoom) => { setZoom(zoom) }}
+            />
+          </div>
+          <div class='zoomslidericon'>
+            <FontAwesomeIcon icon="search-minus" />
+          </div>
+        </div>
+        <div class="rotateandcrop">
+          <div className="crop-container">
+            <Cropper
+              image={upImg}
+              crop={crop}
+              zoom={zoom}
+              rotation={rotation}
+              aspect={1 / 1}
+              onCropChange={setCrop}
+              onCropComplete={onCropComplete}
+              onZoomChange={setZoom}
+            />
+          </div>
+          <div className="rotatesliderbox">
+            <div class='rotateslidericon'>
+              <FontAwesomeIcon icon="undo" />
+            </div>
+            <div class='slidercontrol'>
+              <Slider
+              value={rotation}
+              min={-180}
+              max={180}
+              step={1}
+              aria-labelledby="Rotation"
+              onChange={(rotation) => { setRotation(rotation) }}
+              />
+            </div>
+            <div class='rotateslidericon'>
+              <FontAwesomeIcon icon="redo" />
+            </div>
+          </div>
+        </div>
       </div>
       <ModalFooter>
         <div className="secondary" />

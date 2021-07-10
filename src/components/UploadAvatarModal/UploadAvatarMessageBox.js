@@ -10,7 +10,7 @@ function getErrorText (error) {
     case 'unauthorized':
       return 'Invalid User'
     case 'toobig':
-      return 'Avatar is too large'
+      return 'Avatar is too large; please try on a reduced size image'
     case 'internal':
       return 'An internal error occured'
     default:

@@ -45,6 +45,9 @@ export {
   faUser,
   faUserSecret,
   faUpload,
+  faSearchPlus,
+  faSearchMinus,
+  faRedo
 } from '@fortawesome/free-solid-svg-icons'
 
 
