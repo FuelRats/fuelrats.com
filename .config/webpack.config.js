@@ -1,9 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies -- required dev dependencies are only loaded in development context */
 /* eslint-disable no-param-reassign -- reassign is intended for changing configs */
-/* eslint-env node */
 const { DefinePlugin } = require('webpack')
 
-const getCIEnv = require('./getCIEnv')
+const ciEnv = require('./ciEnv')
 
 
 
@@ -11,7 +10,6 @@ const getCIEnv = require('./getCIEnv')
 
 module.exports = () => {
   return (config, opt) => {
-    const ciEnv = getCIEnv()
     /* Define Plugin */
     config.plugins.push(new DefinePlugin({
       '$$BUILD.isDev': JSON.stringify(opt.dev),
