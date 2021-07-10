@@ -120,6 +120,5 @@
   },
   "engines": {
     "node": "^14.0.0"
-  },
-  "engineStrict": true
+  }
 }
