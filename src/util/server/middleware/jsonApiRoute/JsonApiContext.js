@@ -3,6 +3,44 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import bindMethod from '~/util/decorators/bindMethod'
 import createResource from '~/util/jsonapi/createResource'
 import { InternalServerAPIError, APIError } from '~/util/server/errors'
+import getEnv from '~/util/server/getEnv'
+
+
+
+const env = getEnv()
+
+
+function modRequest (req) {
+  // Add IP handlers
+  Reflect.defineProperty(req, 'ips', {
+    get: () => {
+      const fwdForIps = req.headers['x-forwarded-for']
+      return env.proxied && fwdForIps
+        ? fwdForIps.split(/\s*,\s*/u)
+        : []
+    },
+  })
+
+  Reflect.defineProperty(req, 'ip', {
+    get: () => {
+      return req.ips[0] ?? req.socket.remoteAddress ?? ''
+    },
+  })
+
+  Reflect.defineProperty(req, 'fingerprint', {
+    get: () => {
+      return req.headers['x-fingerprint']
+    },
+  })
+
+  Reflect.defineProperty(req, 'getHeader', {
+    value: (headerName) => {
+      return req.headers[headerName.toLowerCase()]
+    },
+  })
+
+  return req
+}
 
 /**
  * Context object for JsonApiRoute endpoints
@@ -23,9 +61,8 @@ export default class JsonApiContext {
    * @param {NextApiResponse} res
    */
   constructor (req, res) {
-    this.req = req
+    this.req = modRequest(req)
     this.res = res
-
     this.createResource = createResource.bind(null, null)
   }
 
@@ -84,7 +121,7 @@ export default class JsonApiContext {
   @bindMethod
   include (data) {
     if (Array.isArray(data)) {
-      this.#resIncluded.append(data.map(createResource.bind(null, null)))
+      this.#resIncluded.push(...data.map(this.createResource))
     } else {
       this.#resIncluded.push(createResource(null, data))
     }
