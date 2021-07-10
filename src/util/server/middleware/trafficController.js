@@ -29,16 +29,10 @@ class TrafficControl {
    * and the total requests
    */
   validateRateLimit ({ ctx, increase = true }) {
-    const fingerprint = ctx.req.headers['X-Fingerprint']
-    let entity = null
-    let valid = false
-
-    if (fingerprint) {
-      entity = this.retrieveUnauthenticatedEntity({ remoteAddress: ctx.req.ip, fingerprint })
-      valid = entity.remainingRequests > 0
-      if (valid && increase) {
-        entity.count += 1
-      }
+    const entity = this.retrieveRateLimitedEntity(ctx.req)
+    const valid = entity.remainingRequests > 0
+    if (valid && increase) {
+      entity.count += 1
     }
 
     return {
@@ -51,16 +45,23 @@ class TrafficControl {
 
   /**
    * Retrieve an unauthenticated entity with the number of requests made by this IP address, or create one
-   * @param {string} remoteAddress - The remote address associated with this request
+   * @param {object} arg Function argument object
+   * @param {string} arg.ip The remote address associated with this request
+   * @param {string} arg.fingerprint The client fingerprint associated with this request
    * @returns {object} an instance of RemoteAddressEntity
    */
-  retrieveUnauthenticatedEntity ({ remoteAddress, fingerprint }) {
-    let entity = this.unauthenticatedRequests[remoteAddress] || this.unauthenticatedRequests[fingerprint]
+  retrieveRateLimitedEntity ({ ip, fingerprint }) {
+    let entity = (fingerprint && this.unauthenticatedRequests[fingerprint]) ?? this.unauthenticatedRequests[ip]
+
     if (!entity) {
-      entity = new RemoteAddressEntity({ remoteAddress, fingerprint })
-      this.unauthenticatedRequests[remoteAddress] = entity
-      this.unauthenticatedRequests[fingerprint] = entity
+      entity = new RemoteAddressEntity({ ip, fingerprint })
+      this.unauthenticatedRequests[ip] = entity
+
+      if (fingerprint) {
+        this.unauthenticatedRequests[fingerprint] = entity
+      }
     }
+
     return entity
   }
 
@@ -101,12 +102,12 @@ class RemoteAddressEntity {
   /**
    * Create an entity representing the traffic made by a specific unauthenticated remote address
    * @param {object} arg function arguments object
-   * @param {string} arg.remoteAddress The remote address this traffic belongs to
-   * @param {string} arg.fingerprint The fingerprint provided by the
+   * @param {string} arg.ip The remote address this entity belongs to
+   * @param {string} arg.fingerprint The browser fingerprint this entity belongs to
    * @param {number} [arg.initialCount] Optional parameter containing the number of requests this entity should start
    */
-  constructor ({ remoteAddress, fingerprint, initialCount = 0 }) {
-    this.#remoteAddress = remoteAddress
+  constructor ({ ip, fingerprint, initialCount = 0 }) {
+    this.#remoteAddress = ip
     this.#fingerprint = fingerprint
     this.requestCount = initialCount
   }
