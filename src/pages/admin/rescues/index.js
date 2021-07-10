@@ -4,11 +4,11 @@ import Link from 'next/link'
 import React from 'react'
 
 import { authenticated } from '~/components/AppLayout'
-import { formatAsEliteDateTime } from '~/helpers/formatTime'
-import { makePaperworkRoute } from '~/helpers/routeGen'
 import { connect } from '~/store'
 import { getRescues } from '~/store/actions/rescues'
 import { selectPageViewDataById, selectPageViewMetaById } from '~/store/selectors'
+import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
+import makePaperworkRoute from '~/util/router/makePaperworkRoute'
 
 
 

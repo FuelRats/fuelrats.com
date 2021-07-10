@@ -2,10 +2,10 @@ import { HttpStatus } from '@fuelrats/web-util/http'
 import { isError } from 'flux-standard-action'
 import React from 'react'
 
-import { setError } from '~/helpers/gIPTools'
 import { connect } from '~/store'
 import { getWordpressPage } from '~/store/actions/wordpress'
 import { selectWordpressPageBySlug } from '~/store/selectors'
+import setError from '~/util/getInitialProps/setError'
 
 
 

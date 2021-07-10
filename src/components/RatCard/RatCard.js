@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import React from 'react'
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import { formatAsEliteDate } from '~/helpers/formatTime'
 import { connect } from '~/store'
 import {
   selectRatById,
@@ -12,6 +11,7 @@ import {
   withCurrentUserId,
   selectRatStatisticsById,
 } from '~/store/selectors'
+import formatAsEliteDate from '~/util/date/formatAsEliteDate'
 
 import CardControls from '../CardControls'
 import InlineEditSpan from '../InlineEditSpan'
@@ -147,8 +147,8 @@ class RatCard extends React.Component {
     }
   }
 
-  _handleOdysseySwitch = async () => {
-    await this.props.updateRat({
+  _handleOdysseySwitch = () => {
+    return this.props.updateRat({
       id: this.props.rat.id,
       attributes: {
         odyssey: !this.props.rat.attributes.odyssey,
@@ -224,10 +224,10 @@ class RatCard extends React.Component {
           rat.attributes.platform === 'pc' && (
             <div className="panel-content">
               <Switch
-                async
                 checked={rat.attributes.odyssey}
+                id={`OdysseySwitch-${rat.id}`}
                 label="Using Odyssey"
-                onClick={this._handleOdysseySwitch} />
+                onChange={this._handleOdysseySwitch} />
             </div>
           )
         }

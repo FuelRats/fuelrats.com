@@ -1,6 +1,8 @@
 import { defineRelationship } from '@fuelrats/web-util/redux-json-api'
 
-import { presentApiRequestBody } from '~/helpers/presenters'
+import createRequestBody from '~/util/jsonapi/createRequestBody'
+
+
 
 import actionTypes from '../actionTypes'
 import { deletesResource, deletesRelationship, createsRelationship, RESOURCE } from '../reducers/frAPIResources'
@@ -21,7 +23,7 @@ export const addNickname = (user, data) => {
     {
       url: '/nicknames',
       method: 'post',
-      data: presentApiRequestBody('nicknames', data),
+      data: createRequestBody('nicknames', data),
     },
     createsRelationship(
       defineRelationship(user, { nicknames: [RESOURCE] }),
@@ -61,7 +63,7 @@ export const updateUser = (data, password) => {
     const request = {
       url: `/users/${data.id}`,
       method: 'put',
-      data: presentApiRequestBody('users', data),
+      data: createRequestBody('users', data),
     }
 
     if (password) {

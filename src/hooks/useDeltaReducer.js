@@ -4,7 +4,7 @@ import _unset from 'lodash/unset'
 import { useCallback } from 'react'
 import { useImmerReducer } from 'use-immer'
 
-import isEqual from '~/helpers/isEqual'
+import isEqual from '~/util/isEqual'
 
 
 

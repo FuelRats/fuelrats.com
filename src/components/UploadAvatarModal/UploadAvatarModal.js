@@ -7,7 +7,7 @@ import Cropper from 'react-easy-crop'
 import Slider from 'rc-slider'
 
 import asModal, { ModalContent, ModalFooter } from '~/components/asModal'
-import getResponseError from '~/helpers/getResponseError'
+import getResponseError from '~/util/getResponseError'
 import { selectCurrentUserId } from '~/store/selectors'
 import { updateAvatar } from '~/store/actions/user'
 import UploadAvatarMessageBox from './UploadAvatarMessageBox'

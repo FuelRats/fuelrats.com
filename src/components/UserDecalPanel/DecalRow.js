@@ -1,8 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useReducer } from 'react'
 
-import { formatAsEliteDate } from '~/helpers/formatTime'
 import reduceToggle from '~/hooks/reducers/reduceToggle'
+import formatAsEliteDate from '~/util/date/formatAsEliteDate'
 
 import styles from './UserDecalPanel.module.scss'
 

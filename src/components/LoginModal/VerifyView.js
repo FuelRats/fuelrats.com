@@ -4,12 +4,12 @@ import { useDispatch } from 'react-redux'
 
 import { FooterPrimary, FooterSecondary, ModalFooter, useModalContext } from '~/components/asModal'
 import LoginTokenFieldset from '~/components/Fieldsets/LoginTokenFieldset'
-import getResponseError from '~/helpers/getResponseError'
 import useForm from '~/hooks/useForm'
 import useMountedState from '~/hooks/useMountedState'
 import useUnloadConfirmation from '~/hooks/useUnloadConfirmation'
 import { login } from '~/store/actions/authentication'
 import { getUserProfile } from '~/store/actions/user'
+import getResponseError from '~/util/getResponseError'
 
 import styles from './LoginModal.module.scss'
 

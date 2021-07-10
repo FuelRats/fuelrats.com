@@ -3,9 +3,9 @@ import { isError } from 'flux-standard-action'
 import Cookies from 'js-cookie'
 import Router from 'next/router'
 
-import getFingerprint from '~/helpers/getFingerprint'
-import { presentApiRequestBody } from '~/helpers/presenters'
 import frApi from '~/services/frApi'
+import getFingerprint from '~/util/getFingerprint'
+import createRequestBody from '~/util/jsonapi/createRequestBody'
 
 import actionTypes from '../actionTypes'
 import { frApiPlainRequest } from './services'
@@ -27,7 +27,7 @@ export const changePassword = ({ id, ...data }) => {
     {
       url: `/users/${id}/password`,
       method: 'patch',
-      data: presentApiRequestBody('password-changes', data),
+      data: createRequestBody('password-changes', data),
     },
   )
 }
@@ -117,7 +117,7 @@ export const register = (data) => {
           headers: {
             'X-Fingerprint': fingerprint,
           },
-          data: presentApiRequestBody('registrations', data),
+          data: createRequestBody('registrations', data),
         },
       ),
     )
@@ -131,7 +131,7 @@ export const resetPassword = (token, data) => {
     {
       url: `/resets/${token}`,
       method: 'post',
-      data: presentApiRequestBody('resets', data),
+      data: createRequestBody('resets', data),
     },
   )
 }
@@ -143,7 +143,7 @@ export const sendPasswordResetEmail = (data) => {
     {
       url: '/resets',
       method: 'post',
-      data: presentApiRequestBody('resets', data),
+      data: createRequestBody('resets', data),
     },
   )
 }

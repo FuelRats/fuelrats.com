@@ -6,7 +6,7 @@ import getConfig from 'next/config'
 
 
 const { publicRuntimeConfig } = getConfig()
-const localWordpressApiUrl = publicRuntimeConfig.apis.wordpress.url
+const localWordpressApiUrl = publicRuntimeConfig.wordpress.url
 
 
 

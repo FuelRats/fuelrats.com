@@ -5,11 +5,11 @@ import Link from 'next/link'
 import PropTypes from 'prop-types'
 // import { useCallback } from 'react'
 
-import { formatAsEliteDateTime } from '~/helpers/formatTime'
-import { makePaperworkRoute } from '~/helpers/routeGen'
 import { usePlatformData, useLanguageData } from '~/hooks/rescueHooks'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { createSelectRenderedRatList } from '~/store/selectors'
+import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
+import makePaperworkRoute from '~/util/router/makePaperworkRoute'
 
 import CopyToClipboard from '../CopyToClipboard'
 import ElapsedTimer from '../ElapsedTimer'

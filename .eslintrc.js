@@ -12,6 +12,9 @@ module.exports = {
     '@fuelrats/eslint-config-react',
     'plugin:@next/next/recommended',
   ],
+  globals: {
+    $$BUILD: 'readonly',
+  },
   rules: {
     'jsx-a11y/no-noninteractive-element-interactions': ['off'], // We intend to enable this once we refactor certain key components.
     'jsdoc/require-jsdoc': ['off'], // we'll get to it someday...
@@ -37,7 +40,11 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['src/pages/api/**/*.js', 'src/server/**/*.mjs'],
+      files: [
+        '.config/**/*.js',
+        'src/pages/api/**/*.js',
+        'src/util/server/**/*.js',
+      ],
       env: {
         browser: false,
         node: true,

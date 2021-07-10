@@ -1,6 +1,7 @@
 import { createCachedSelector } from 're-reselect'
 
-import { includesAll, includesSome } from '~/helpers/arrIncludes'
+import includesAll from '~/util/array/includesAll'
+import includesSome from '~/util/array/includesSome'
 
 import { withCurrentUserId } from './session'
 

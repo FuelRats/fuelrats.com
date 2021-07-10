@@ -18,12 +18,16 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Optimized image loading and accessibility for images site-wide. - [#328][]
 * Further optimized font loading. - [#328][]
 * Moved raw version information to an API route (`/api/version`), and reworked version page to draw information from that route. - [#328][]
-* Other smaller changes to sreamline development. - [#328][]
+* Moved all custom server functions into suitable replacements provided by our site framework. - [#329][]
+    * This move has let us drop our entire custom backend.
+* Updated `<Switch />` with an improved loading state animation. - [#330][]
+* Other smaller changes to sreamline development. - [#328][], [#329][]
 
 
 ### 🐛 Fixed
 * Resolved form submitting issues that occured when password evaluation fails to load. - [#328][]
 * Fixed authorization page displaying an `Invalid Authorize Request` error when redirecting users after login. - [#328][]
+* Fixed `Using Odyssey` switch not properly entering loading state while waiting on a response from the API. - [#330][]
 
 ### ⚙ Tasks
 * Update lint configs
@@ -31,6 +35,8 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 
 [#328]: https://github.com/fuelRats/fuelrats.com/pull/328
+[#329]: https://github.com/fuelRats/fuelrats.com/pull/329
+[#330]: https://github.com/fuelRats/fuelrats.com/pull/330
 [Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.13.0...HEAD
 
 

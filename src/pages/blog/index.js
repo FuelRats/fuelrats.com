@@ -2,13 +2,13 @@ import Link from 'next/link'
 import React from 'react'
 
 import ArticleCard from '~/components/Blog/ArticleCard'
-import { makeBlogRoute } from '~/helpers/routeGen'
-import safeParseInt from '~/helpers/safeParseInt'
 import { connect } from '~/store'
 import {
   selectBlogs,
   selectBlogStatistics,
 } from '~/store/selectors'
+import makeBlogRoute from '~/util/router/makeBlogRoute'
+import safeParseInt from '~/util/safeParseInt'
 
 
 

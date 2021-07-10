@@ -1,5 +1,15 @@
 @import '../../scss/colors';
 
+@keyframes loader-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .switch {
   display: inline-block;
   position: relative;
@@ -23,6 +33,11 @@
       background: $grey;
 
       transform: translateX(50%);
+
+      > path {
+        animation: loader-spin 2s infinite linear;
+        transform-origin: center;
+      }
     }
   }
 

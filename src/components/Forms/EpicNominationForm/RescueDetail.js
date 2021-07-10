@@ -1,8 +1,8 @@
 import Link from 'next/link'
 
-import { makePaperworkRoute } from '~/helpers/routeGen'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { selectRatsByRescueId } from '~/store/selectors'
+import makePaperworkRoute from '~/util/router/makePaperworkRoute'
 
 import styles from './RescueDetail.module.scss'
 

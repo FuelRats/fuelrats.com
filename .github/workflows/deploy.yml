@@ -55,12 +55,16 @@ jobs:
       - name: Prepare artifact
         run: |
           tar -czf fuelrats-com.tar.gz \
+            .config \
+            .yarn/plugins \
+            .yarn/releases \
             dist \
             public \
             scripts \
             .nvmrc \
             CHANGELOG.md \
             LICENSE \
+            .yarnrc.yml \
             next.config.js \
             package.json \
             README.md \

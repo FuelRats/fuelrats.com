@@ -9,7 +9,7 @@ import ProfileHeader from '~/components/ProfileHeader'
 import TabbedPanel from '~/components/TabbedPanel'
 import UserOverview from '~/components/UserOverview'
 import UserRatsPanel from '~/components/UserRatsPanel'
-import { setError } from '~/helpers/gIPTools'
+import setError from '~/util/getInitialProps/setError'
 
 
 

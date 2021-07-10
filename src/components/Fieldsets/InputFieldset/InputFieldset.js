@@ -2,11 +2,11 @@ import PropTypes from 'prop-types'
 import React, { useCallback, useState } from 'react'
 
 import InputSuggestions from '~/components/InputMessages'
-import extPropTypes from '~/helpers/extPropTypes'
-import getValidityErrors from '~/helpers/getValidityErrors'
 import useFocusState from '~/hooks/useFocusState'
 import { useField, fieldPropTypes } from '~/hooks/useForm'
 import useSharedForwardRef from '~/hooks/useSharedForwardRef'
+import getValidityErrors from '~/util/getValidityErrors'
+import extPropTypes from '~/util/propTypes/extPropTypes'
 
 import styles from './InputFieldset.module.scss'
 import ValidityIcon from './ValidityIcon'

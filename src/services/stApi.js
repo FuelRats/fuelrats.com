@@ -6,7 +6,7 @@ import getConfig from 'next/config'
 
 
 const { publicRuntimeConfig } = getConfig()
-const localStripeApiUrl = publicRuntimeConfig.apis.stripe.url
+const localStripeApiUrl = publicRuntimeConfig.stripe.url
 
 
 

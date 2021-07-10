@@ -1,7 +1,7 @@
 import { isError } from 'flux-standard-action'
 import { produce } from 'immer'
 
-import safeParseInt from '~/helpers/safeParseInt'
+import safeParseInt from '~/util/safeParseInt'
 
 import actionTypes from '../actionTypes'
 import initialState from '../initialState'

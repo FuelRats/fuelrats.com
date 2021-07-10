@@ -3,7 +3,6 @@ import Image from 'next/image'
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import { formatAsEliteDateTime } from '~/helpers/formatTime'
 import { connect } from '~/store'
 import {
   selectGroupsByUserId,

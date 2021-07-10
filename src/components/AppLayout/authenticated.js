@@ -1,17 +1,15 @@
 import { HttpStatus } from '@fuelrats/web-util/http'
 import hoistNonReactStatics from 'hoist-non-react-statics'
 
+import { selectSession, selectCurrentUserHasScope } from '~/store/selectors'
+import pageRedirect from '~/util/getInitialProps/pageRedirect'
+import setError from '~/util/getInitialProps/setError'
 
 
 
 
-import { pageRedirect, setError } from '~/helpers/gIPTools'
-import userHasPermission from '~/helpers/userHasPermission'
-import { selectSession, selectCurrentUserScopes } from '~/store/selectors'
 
-
-
-const wrapPage = (PageComponent, scopes, message) => {
+const wrapPage = (scope, message, PageComponent) => {
   function AuthenticatedPage (props) {
     return (<PageComponent {...props} />)
   }
@@ -32,8 +30,8 @@ const wrapPage = (PageComponent, scopes, message) => {
 
     // Now that we know the user is logged in, lets check if they require any permission scopes to view the page.
     // If they do, check scopes against their groups.
-    if (scopes) {
-      if (!userHasPermission(selectCurrentUserScopes(state), scopes)) {
+    if (scope) {
+      if (!selectCurrentUserHasScope(state, { scope })) {
         setError(ctx, HttpStatus.UNAUTHORIZED, message)
       }
     }
@@ -47,16 +45,12 @@ const wrapPage = (PageComponent, scopes, message) => {
 
 
 const authenticated = (scope, message) => {
-  // Check if `opt` is a permission scope or lsit of scopes.
-  // If it is then we need to return a function to get the component before passing to wrapPage
   if (typeof scope === 'string' || Array.isArray(scope)) {
-    return (PageComponent) => {
-      return wrapPage(PageComponent, scope, message)
-    }
+    return wrapPage.bind(null, scope, message)
   }
 
   // opt is not a scope so we know it's the page component we're wrapping.
-  return wrapPage(scope)
+  return wrapPage(undefined, undefined, scope)
 }
 
 

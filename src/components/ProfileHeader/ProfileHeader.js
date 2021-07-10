@@ -1,8 +1,6 @@
-import getConfig from 'next/config'
 import Image from 'next/image'
 import React from 'react'
 
-import { formatAsEliteDateTime } from '~/helpers/formatTime'
 import { connect } from '~/store'
 import {
   selectGroupsByUserId,
@@ -11,16 +9,12 @@ import {
   withCurrentUserId,
   selectCurrentUserHasScope,
 } from '~/store/selectors'
+import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 
 import ProfileUserAvatar from '../ProfileUserAvatar'
 import ChangePasswordModal from '../ChangePasswordModal'
 import DisableProfileModal from '../DisableProfileModal'
 import UnverifiedUserBanner from './UnverifiedUserBanner'
-
-
-
-const { publicRuntimeConfig } = getConfig()
-const { appUrl } = publicRuntimeConfig
 
 
 

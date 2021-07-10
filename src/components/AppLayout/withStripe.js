@@ -8,7 +8,7 @@ import React from 'react'
 
 // Component Constants
 const { publicRuntimeConfig } = getConfig()
-const STRIPE_API_PK = publicRuntimeConfig.apis.stripe.public
+const STRIPE_API_PK = publicRuntimeConfig.stripe.public
 
 
 
