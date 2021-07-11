@@ -11,7 +11,11 @@ import getResponseError from '~/util/getResponseError'
 import { selectCurrentUserId } from '~/store/selectors'
 import { updateAvatar } from '~/store/actions/user'
 import UploadAvatarMessageBox from './UploadAvatarMessageBox'
+
+import styles from './UploadAvatarModal.module.scss'
+
 // Component Constants
+const MAX_FILE_SIZE = 20971520
 const SUBMIT_AUTO_CLOSE_DELAY_TIME = 3000
 
 
@@ -29,7 +33,6 @@ function UploadAvatarModal (props) {
   const [rotation, setRotation] = useState(0) // Future enhancement, in case we want to add rotation as an option
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
   const [croppedImage, setCroppedImage] = useState(null)
-//  const [previewImg, setPreviewImg] = useState()
   const [submitReady, setSubmitReady] = useState(false)
   const [submitting, setSubmitting] = useState(false)
 
@@ -106,7 +109,7 @@ function UploadAvatarModal (props) {
             let croppedImage = new File([u8arr], 'avatar.png', {type:mime})
 
             console.log(croppedImage.size)
-            if (croppedImage.size > 25*1024*1024) {
+            if (croppedImage.size > MAX_FILE_SIZE) {
               setResult({
                 error: { status: 'toobig' },
                 success: false,
@@ -115,12 +118,6 @@ function UploadAvatarModal (props) {
             } else {
               submit(mime, croppedImage)
             }
-/*            // This is only here for debug
-            console.log("Loading preview")
-            const reader2 = new FileReader()
-            reader2.addEventListener('load', () => setPreviewImg(reader.result))
-            reader2.readAsDataURL(croppedImage)
-*/
           }
         })
       })
@@ -138,7 +135,7 @@ function UploadAvatarModal (props) {
 
   const submit = async (mime, img) => {
     setSubmitting(true)
-    const response = await dispatch(updateAvatar(userId, mime, img))
+    const response = await dispatch(updateAvatar(userId, img))
     const error = getResponseError(response)
 
     setResult({
@@ -167,12 +164,12 @@ function UploadAvatarModal (props) {
         <label>Select Image: </label>
         <input type="file" accept="image/*" onChange={onSelectFile} />
       </div>
-      <div class="zoomandcrop">
-        <div class='zoomsliderbox'>
-          <div class='zoomslidericon'>
+      <div class={styles.zoomAndCrop}>
+        <div class={styles.zoomSliderBox}>
+          <div class={styles.zoomSliderIcon}>
             <FontAwesomeIcon icon="search-plus" />
           </div>
-          <div class='slidercontrol'>
+          <div class={styles.sliderControl}>
             <Slider
               value={zoom}
               min={1}
@@ -183,28 +180,29 @@ function UploadAvatarModal (props) {
               onChange={(zoom) => { setZoom(zoom) }}
             />
           </div>
-          <div class='zoomslidericon'>
+          <div class={styles.zoomSliderIcon}>
             <FontAwesomeIcon icon="search-minus" />
           </div>
         </div>
-        <div class="rotateandcrop">
-          <div className="crop-container">
-            <Cropper
-              image={upImg}
-              crop={crop}
-              zoom={zoom}
-              rotation={rotation}
-              aspect={1 / 1}
-              onCropChange={setCrop}
-              onCropComplete={onCropComplete}
-              onZoomChange={setZoom}
-            />
+        <div class={styles.rotateAndCrop}>
+            <div class={styles.cropContainer}>
+              <Cropper
+                image={upImg}
+                crop={crop}
+                zoom={zoom}
+                rotation={rotation}
+                aspect={1 / 1}
+                cropShape={'round'}
+                onCropChange={setCrop}
+                onCropComplete={onCropComplete}
+                onZoomChange={setZoom}
+              />
           </div>
-          <div className="rotatesliderbox">
-            <div class='rotateslidericon'>
+          <div className={styles.rotateSliderBox}>
+            <div class={styles.rotateSliderIcon}>
               <FontAwesomeIcon icon="undo" />
             </div>
-            <div class='slidercontrol'>
+            <div class={styles.sliderControl}>
               <Slider
               value={rotation}
               min={-180}
@@ -214,7 +212,7 @@ function UploadAvatarModal (props) {
               onChange={(rotation) => { setRotation(rotation) }}
               />
             </div>
-            <div class='rotateslidericon'>
+            <div class={styles.rotateSliderIcon}>
               <FontAwesomeIcon icon="redo" />
             </div>
           </div>

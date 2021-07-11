@@ -1,100 +1,48 @@
 import getConfig from 'next/config'
 import Image from 'next/image'
-import React from 'react'
+import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { connect } from '~/store'
-import {
-  selectGroupsByUserId,
-  selectUserById,
-  selectDisplayRatByUserId,
-  selectAvatarByUserId,
-  withCurrentUserId,
-  selectCurrentUserHasScope,
-} from '~/store/selectors'
+import useSelectorWithProps from '~/hooks/useSelectorWithProps'
+import { selectAvatarByUserId, withCurrentUserId } from '~/store/selectors'
 
 import UploadAvatarModal from '../UploadAvatarModal'
 
-const { publicRuntimeConfig } = getConfig()
-const { appUrl } = publicRuntimeConfig
 
-@connect
-class ProfileHeader extends React.Component {
-  /***************************************************************************\
-    Class Properties
-  \***************************************************************************/
+function ProfileUserAvatar () {
+  const userAvatar = useSelectorWithProps({ size: 170 }, withCurrentUserId(selectAvatarByUserId))
 
-  state = {
-    showUploadAvatar: false
+  const [ showUploadAvatar, setShowUploadAvatar ] = useState(false);
+
+  const handleToggleUploadAvatar = () => {
+    setShowUploadAvatar(!showUploadAvatar);
   }
 
-  /***************************************************************************\
-    Private Methods
-  \***************************************************************************/
-
-  _handleToggleUploadAvatar = () => {
-    this.setState((state) => {
-      return { showUploadAvatar: !state.showUploadAvatar }
-    })
-  }
-
-
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
-
-  render () {
-    const {
-      showUploadAvatar
-    } = this.state
-    const {
-      userAvatar,
-    } = this.props
-
-
-    return (
-      <>
-        <div className="user-avatar" onClick={this._handleToggleUploadAvatar}>
-          <div className="avatar xl">
-            <Image
-              unoptimized
-              alt="User's avatar"
-              height={170}
-              src={`${appUrl}${userAvatar}`}
-              width={170} />
+  return (
+    <>
+      <div className="user-avatar" onClick={handleToggleUploadAvatar}>
+        <div className="avatar xl">
+          <Image
+            unoptimized
+            alt="User's avatar"
+            height={170}
+            src={ userAvatar }
+            width={170} />
+        </div>
+        <div className="edit-border user-avatar-edit">
+          <div className="user-avatar-edit edit-back">
           </div>
-          <div className="edit-border user-avatar-edit">
-            <div className="user-avatar-edit edit-back">
-            </div>
-            <div className="user-avatar-edit edit-face">
-              <FontAwesomeIcon icon="upload" size="3x" />
-            </div>
+          <div className="user-avatar-edit edit-face">
+            <FontAwesomeIcon icon="upload" size="3x" />
           </div>
         </div>
-        <UploadAvatarModal
-          isOpen={showUploadAvatar}
-          onClose={this._handleToggleUploadAvatar} />
-      </>
-    )
-  }
-
-
-
-
-
-  /***************************************************************************\
-    Redux Properties
-  \***************************************************************************/
-
-  static mapStateToProps = (state) => {
-    return {
-      userAvatar: withCurrentUserId(selectAvatarByUserId)(state, { size: 170 })
-    }
-  }
+      </div>
+      <UploadAvatarModal
+        isOpen={showUploadAvatar}
+        onClose={handleToggleUploadAvatar} />
+    </>
+  )
 }
 
-
-
-
-
-export default ProfileHeader
+export default ProfileUserAvatar

@@ -79,14 +79,13 @@ export const updateUser = (data, password) => {
   }
 }
 
-export const updateAvatar = (user, datamime, data) => {
+export const updateAvatar = (user, data) => {
   return (dispatch, getState) => {
     const formData = new FormData();
     formData.append('image', data)
     const request = {
       url: `/users/${user}/image`,
       method: 'post',
-      contenttype: datamime,
       data: formData
     }
 
