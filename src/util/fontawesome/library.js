@@ -47,7 +47,7 @@ export {
   faUpload,
   faSearchPlus,
   faSearchMinus,
-  faRedo
+  faRedo,
 } from '@fortawesome/free-solid-svg-icons'
 
 export {

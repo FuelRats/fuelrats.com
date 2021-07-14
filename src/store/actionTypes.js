@@ -1,4 +1,3 @@
-
 const clients = {
   create: 'clients/create',
   search: 'clients/search',
@@ -69,8 +68,8 @@ const users = {
     read: 'users/statistics/read',
   },
   avatar: {
-    update: 'users/avatar/update'
-  }
+    update: 'users/avatar/update',
+  },
 }
 
 

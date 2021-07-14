@@ -3,11 +3,10 @@ import PropTypes from 'prop-types'
 import Slider from 'rc-slider'
 import { useState, useCallback } from 'react'
 import Cropper from 'react-easy-crop'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import asModal, { ModalContent, ModalFooter } from '~/components/asModal'
 import { updateAvatar } from '~/store/actions/user'
-import { selectCurrentUserId } from '~/store/selectors'
 import getResponseError from '~/util/getResponseError'
 
 import UploadAvatarMessageBox from './UploadAvatarMessageBox'
@@ -34,8 +33,6 @@ function UploadAvatarModal (props) {
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
   const [submitReady, setSubmitReady] = useState(false)
   const [submitting, setSubmitting] = useState(false)
-
-  const userId = useSelector(selectCurrentUserId)
 
   // Linting note: Cannot use arrow function in onevent, need to wrap
   const handleSetCrop = useCallback((newCrop) => {
@@ -67,7 +64,7 @@ function UploadAvatarModal (props) {
 
   const submit = useCallback(async (mime, img) => {
     setSubmitting(true)
-    const response = await dispatch(updateAvatar(userId, img))
+    const response = await dispatch(updateAvatar(img))
     const error = getResponseError(response)
 
     setResult({
@@ -85,7 +82,7 @@ function UploadAvatarModal (props) {
         }
       }, SUBMIT_AUTO_CLOSE_DELAY_TIME)
     }
-  }, [dispatch, isOpen, onClose, userId])
+  }, [dispatch, isOpen, onClose])
 
   const onSubmit = useCallback(() => {
     try {
