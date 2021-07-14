@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import React from 'react'
 
 import { connect } from '~/store'
@@ -11,9 +10,9 @@ import {
 } from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 
-import ProfileUserAvatar from '../ProfileUserAvatar'
 import ChangePasswordModal from '../ChangePasswordModal'
 import DisableProfileModal from '../DisableProfileModal'
+import ProfileUserAvatar from '../ProfileUserAvatar'
 import UnverifiedUserBanner from './UnverifiedUserBanner'
 
 

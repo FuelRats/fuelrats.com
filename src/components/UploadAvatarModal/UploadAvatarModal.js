@@ -1,22 +1,22 @@
-import PropTypes from 'prop-types'
-import { useCallback, useMemo, useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
-import Cropper from 'react-easy-crop'
+import PropTypes from 'prop-types'
 import Slider from 'rc-slider'
+import { useState, useCallback } from 'react'
+import Cropper from 'react-easy-crop'
+import { useDispatch, useSelector } from 'react-redux'
 
 import asModal, { ModalContent, ModalFooter } from '~/components/asModal'
-import getResponseError from '~/util/getResponseError'
-import { selectCurrentUserId } from '~/store/selectors'
 import { updateAvatar } from '~/store/actions/user'
-import UploadAvatarMessageBox from './UploadAvatarMessageBox'
+import { selectCurrentUserId } from '~/store/selectors'
+import getResponseError from '~/util/getResponseError'
 
+import UploadAvatarMessageBox from './UploadAvatarMessageBox'
 import styles from './UploadAvatarModal.module.scss'
 
 // Component Constants
-const MAX_FILE_SIZE = 20971520
+const MAX_FILE_SIZE = 26214400 // Server upload max is 25M
 const SUBMIT_AUTO_CLOSE_DELAY_TIME = 3000
+const HALF_CIRCLE = 180 // Conversion of rat to deg
 
 
 function UploadAvatarModal (props) {
@@ -28,30 +28,66 @@ function UploadAvatarModal (props) {
   const [result, setResult] = useState({})
 
   const [upImg, setUpImg] = useState()
-  const [crop, setCrop] = useState({ x: 0, y: 0 })
+  const [crop, setCrop] = useState({ x: 0, y: 0 }) // Lint comment on "Identifier name is too short" - this is required by the Cropper. Cannot change.
   const [zoom, setZoom] = useState(1)
-  const [rotation, setRotation] = useState(0) // Future enhancement, in case we want to add rotation as an option
+  const [rotation, setRotation] = useState(0)
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
-  const [croppedImage, setCroppedImage] = useState(null)
   const [submitReady, setSubmitReady] = useState(false)
   const [submitting, setSubmitting] = useState(false)
 
-  const onCropComplete = (croppedArea, cap) => {
+  const userId = useSelector(selectCurrentUserId)
+
+  // Linting note: Cannot use arrow function in onevent, need to wrap
+  const handleSetCrop = useCallback((newCrop) => {
+    setCrop(newCrop)
+  }, [])
+  const handleSetZoom = useCallback((newZoom) => {
+    setZoom(newZoom)
+  }, [])
+  const handleSetRotation = useCallback((newRotation) => {
+    setRotation(newRotation)
+  }, [])
+
+  const onCropComplete = useCallback((croppedArea, cap) => {
     setCroppedAreaPixels(cap)
     setSubmitReady(true)
-  }
+  }, [])
 
-  const onSelectFile = (e) => {
-    if (e.target.files && e.target.files.length > 0) {
+  const onSelectFile = useCallback((event) => {
+    if (event.target.files && event.target.files.length > 0) {
       const reader = new FileReader()
-      reader.addEventListener('load', () => setUpImg(reader.result))
-      reader.readAsDataURL(e.target.files[0])
+      reader.addEventListener('load', () => {
+        return setUpImg(reader.result)
+      })
+      reader.readAsDataURL(event.target.files[0])
     }
-  }
+  }, [])
 
   const dispatch = useDispatch()
 
-  const onSubmit = () => {
+  const submit = useCallback(async (mime, img) => {
+    setSubmitting(true)
+    const response = await dispatch(updateAvatar(userId, img))
+    const error = getResponseError(response)
+
+    setResult({
+      error,
+      success: !error,
+      submitted: true,
+    })
+
+    if (error) {
+      setSubmitting(false)
+    } else {
+      setTimeout(() => {
+        if (isOpen) {
+          onClose()
+        }
+      }, SUBMIT_AUTO_CLOSE_DELAY_TIME)
+    }
+  }, [dispatch, isOpen, onClose, userId])
+
+  const onSubmit = useCallback(() => {
     try {
       const image = new Image()
       image.addEventListener('load', () => {
@@ -68,14 +104,14 @@ function UploadAvatarModal (props) {
 
         // translate canvas context to a central location on image to allow rotating around the center.
         ctx.translate(safeArea / 2, safeArea / 2)
-        ctx.rotate((rotation * Math.PI) / 180)
+        ctx.rotate((rotation * Math.PI) / HALF_CIRCLE)
         ctx.translate(-safeArea / 2, -safeArea / 2)
 
         // draw rotated image and store data.
         ctx.drawImage(
           image,
-          safeArea / 2 - image.width * 0.5,
-          safeArea / 2 - image.height * 0.5
+          safeArea / 2 - image.width / 2,
+          safeArea / 2 - image.height / 2,
         )
         const data = ctx.getImageData(0, 0, safeArea, safeArea)
 
@@ -86,29 +122,26 @@ function UploadAvatarModal (props) {
         // paste generated rotate image with correct offsets for x,y crop values.
         ctx.putImageData(
           data,
-          Math.round(0 - safeArea / 2 + image.width * 0.5 - croppedAreaPixels.x),
-          Math.round(0 - safeArea / 2 + image.height * 0.5 - croppedAreaPixels.y)
+          Math.round(0 - safeArea / 2 + image.width / 2 - croppedAreaPixels.x),
+          Math.round(0 - safeArea / 2 + image.height / 2 - croppedAreaPixels.y),
         )
 
         // Convert the contents of the canvas blob to an image
         const reader = new FileReader()
-        canvas.toBlob(blob => {
+        canvas.toBlob((blob) => {
           reader.readAsDataURL(blob)
           reader.onloadend = () => {
-            console.log(reader.result)
-            let arr = reader.result.split(','),
-            mime = arr[0].match(/:(.*?);/)[1],
-            bstr = atob(arr[1]),
-            n = bstr.length,
-            u8arr = new Uint8Array(n)
+            const [, mime, b64data] = reader.result.match(/:([^;]+);[^,]+,(.*)$/u)
+            const bstr = atob(b64data)
+            let datalength = bstr.length
+            const u8arr = new Uint8Array(datalength)
 
-            while(n--){
-              u8arr[n] = bstr.charCodeAt(n)
+            while (datalength > 0) {
+              datalength -= 1
+              u8arr[datalength] = bstr.charCodeAt(datalength)
             }
-            console.log(u8arr)
-            let croppedImage = new File([u8arr], 'avatar.png', {type:mime})
+            const croppedImage = new File([u8arr], 'avatar.png', { type: mime })
 
-            console.log(croppedImage.size)
             if (croppedImage.size > MAX_FILE_SIZE) {
               setResult({
                 error: { status: 'toobig' },
@@ -122,97 +155,69 @@ function UploadAvatarModal (props) {
         })
       })
       image.src = upImg
-
-    } catch (e) {
-      console.error(e)
+    } catch (exception) {
+      console.error(exception)
       setResult({
         error: { status: 'internal' },
         success: false,
         submitted: false,
       })
     }
-  }
-
-  const submit = async (mime, img) => {
-    setSubmitting(true)
-    const response = await dispatch(updateAvatar(userId, img))
-    const error = getResponseError(response)
-
-    setResult({
-      error,
-      success: !error,
-      submitted: true,
-    })
-
-    if (!error) {
-      setTimeout(() => {
-        if (isOpen) {
-          onClose()
-        }
-      }, SUBMIT_AUTO_CLOSE_DELAY_TIME)
-    } else {
-      setSubmitting(false)
-    }
-  }
-
-  const userId = useSelector(selectCurrentUserId)
+  }, [croppedAreaPixels, rotation, submit, upImg])
 
   return (
     <ModalContent className="dialog no-pad">
       <UploadAvatarMessageBox result={result} />
       <div>
-        <label>Select Image: </label>
-        <input type="file" accept="image/*" onChange={onSelectFile} />
+        <label>{'Select Image: '}</label>
+        <input accept="image/*" aria-label="Select Image" type="file" onChange={onSelectFile} />
       </div>
-      <div class={styles.zoomAndCrop}>
-        <div class={styles.zoomSliderBox}>
-          <div class={styles.zoomSliderIcon}>
+      <div className={styles.zoomAndCrop}>
+        <div className={styles.zoomSliderBox}>
+          <div className={styles.zoomSliderIcon}>
             <FontAwesomeIcon icon="search-plus" />
           </div>
-          <div class={styles.sliderControl}>
+          <div className={styles.sliderControl}>
             <Slider
-              value={zoom}
-              min={1}
-              max={3}
-              step={0.1}
-              vertical={true}
+              vertical
               aria-labelledby="Zoom"
-              onChange={(zoom) => { setZoom(zoom) }}
-            />
+              max={3}
+              min={1}
+              step={0.1}
+              value={zoom}
+              onChange={handleSetZoom} />
           </div>
-          <div class={styles.zoomSliderIcon}>
+          <div className={styles.zoomSliderIcon}>
             <FontAwesomeIcon icon="search-minus" />
           </div>
         </div>
-        <div class={styles.rotateAndCrop}>
-            <div class={styles.cropContainer}>
-              <Cropper
-                image={upImg}
-                crop={crop}
-                zoom={zoom}
-                rotation={rotation}
-                aspect={1 / 1}
-                cropShape={'round'}
-                onCropChange={setCrop}
-                onCropComplete={onCropComplete}
-                onZoomChange={setZoom}
-              />
+        <div className={styles.rotateAndCrop}>
+          <div className={styles.cropContainer}>
+            <Cropper
+              aspect={1 / 1}
+              crop={crop}
+              cropShape="round"
+              image={upImg}
+              rotation={rotation}
+              zoom={zoom}
+              onCropChange={handleSetCrop}
+              onCropComplete={onCropComplete}
+              onZoomChange={handleSetZoom} />
           </div>
           <div className={styles.rotateSliderBox}>
-            <div class={styles.rotateSliderIcon}>
+            <div className={styles.rotateSliderIcon}>
               <FontAwesomeIcon icon="undo" />
             </div>
-            <div class={styles.sliderControl}>
+            <div className={styles.sliderControl}>
               <Slider
-              value={rotation}
-              min={-180}
-              max={180}
-              step={1}
-              aria-labelledby="Rotation"
-              onChange={(rotation) => { setRotation(rotation) }}
-              />
+                aria-labelledby="Rotation"
+                max={180}
+                min={-180}
+                step={1}
+                value={rotation}
+                onChange={handleSetRotation} />
             </div>
-            <div class={styles.rotateSliderIcon}>
+            <div className={styles.rotateSliderIcon}>
               <FontAwesomeIcon icon="redo" />
             </div>
           </div>
@@ -226,7 +231,7 @@ function UploadAvatarModal (props) {
             disabled={!submitReady}
             type="submit"
             onClick={onSubmit}>
-            { submitting ? 'Uploading' : 'Upload' }
+            {submitting ? 'Uploading' : 'Upload'}
           </button>
         </div>
       </ModalFooter>

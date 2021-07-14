@@ -1,41 +1,38 @@
-import getConfig from 'next/config'
-import Image from 'next/image'
-import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Image from 'next/image'
+import { useState, useCallback } from 'react'
 
-import { connect } from '~/store'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { selectAvatarByUserId, withCurrentUserId } from '~/store/selectors'
 
 import UploadAvatarModal from '../UploadAvatarModal'
-
+import styles from './ProfileUserAvatar.module.scss'
 
 function ProfileUserAvatar () {
   const userAvatar = useSelectorWithProps({ size: 170 }, withCurrentUserId(selectAvatarByUserId))
 
-  const [ showUploadAvatar, setShowUploadAvatar ] = useState(false);
+  const [showUploadAvatar, setShowUploadAvatar] = useState(false)
 
-  const handleToggleUploadAvatar = () => {
-    setShowUploadAvatar(!showUploadAvatar);
-  }
+  const handleToggleUploadAvatar = useCallback(() => {
+    setShowUploadAvatar(!showUploadAvatar)
+  }, [showUploadAvatar])
 
   return (
     <>
-      <div className="user-avatar" onClick={handleToggleUploadAvatar}>
+      <div className={styles.userAvatar}>
         <div className="avatar xl">
           <Image
             unoptimized
             alt="User's avatar"
             height={170}
-            src={ userAvatar }
+            src={userAvatar}
             width={170} />
         </div>
-        <div className="edit-border user-avatar-edit">
-          <div className="user-avatar-edit edit-back">
-          </div>
-          <div className="user-avatar-edit edit-face">
+        <div className={styles.userAvatarEdit}>
+          <div className={[styles.userAvatarEdit, styles.editBack]} />
+          <button className={[styles.userAvatarEdit, styles.editFace]} type="button" onClick={handleToggleUploadAvatar}>
             <FontAwesomeIcon icon="upload" size="3x" />
-          </div>
+          </button>
         </div>
       </div>
       <UploadAvatarModal
