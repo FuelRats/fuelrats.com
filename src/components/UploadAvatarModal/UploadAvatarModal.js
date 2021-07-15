@@ -16,6 +16,7 @@ import styles from './UploadAvatarModal.module.scss'
 const MAX_FILE_SIZE = 26214400 // Server upload max is 25M
 const SUBMIT_AUTO_CLOSE_DELAY_TIME = 3000
 const HALF_CIRCLE = 180 // Conversion of rat to deg
+const TRIM_DATA = 5
 
 
 function UploadAvatarModal (props) {
@@ -118,7 +119,16 @@ function UploadAvatarModal (props) {
         canvas.toBlob((blob) => {
           reader.readAsDataURL(blob)
           reader.onloadend = () => {
-            const [, mime, b64data] = reader.result.match(/:([^;]+);[^,]+,(.*)$/u)
+            let start = 0
+            let mimeend = 0
+            let datastart = 0
+            if (reader.result.indexOf('data:') === 0) {
+              start = TRIM_DATA
+            }
+            mimeend = reader.result.indexOf(';', start)
+            datastart = reader.result.indexOf(',', mimeend)
+            const mime = reader.result.substring(start, mimeend)
+            const b64data = reader.result.substr(datastart + 1)
             const bstr = atob(b64data)
             let datalength = bstr.length
             const u8arr = new Uint8Array(datalength)
