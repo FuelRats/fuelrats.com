@@ -27,23 +27,13 @@ function UploadAvatarModal (props) {
   const [result, setResult] = useState({})
 
   const [upImg, setUpImg] = useState()
-  const [crop, setCrop] = useState({ x: 0, y: 0 }) // Lint comment on "Identifier name is too short" - this is required by the Cropper. Cannot change.
-  const [zoom, setZoom] = useState(1)
-  const [rotation, setRotation] = useState(0)
+  // eslint-disable-next-line id-length -- Required by react-easy-crop
+  const [crop, handleSetCrop] = useState({ x: 0, y: 0 })
+  const [zoom, handleSetZoom] = useState(1)
+  const [rotation, handleSetRotation] = useState(0)
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
   const [submitReady, setSubmitReady] = useState(false)
   const [submitting, setSubmitting] = useState(false)
-
-  // Linting note: Cannot use arrow function in onevent, need to wrap
-  const handleSetCrop = useCallback((newCrop) => {
-    setCrop(newCrop)
-  }, [])
-  const handleSetZoom = useCallback((newZoom) => {
-    setZoom(newZoom)
-  }, [])
-  const handleSetRotation = useCallback((newRotation) => {
-    setRotation(newRotation)
-  }, [])
 
   const onCropComplete = useCallback((croppedArea, cap) => {
     setCroppedAreaPixels(cap)

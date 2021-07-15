@@ -14,8 +14,10 @@ function ProfileUserAvatar () {
   const [showUploadAvatar, setShowUploadAvatar] = useState(false)
 
   const handleToggleUploadAvatar = useCallback(() => {
-    setShowUploadAvatar(!showUploadAvatar)
-  }, [showUploadAvatar])
+    setShowUploadAvatar((prevState) => {
+      return !prevState
+    })
+  }, [])
 
   return (
     <>

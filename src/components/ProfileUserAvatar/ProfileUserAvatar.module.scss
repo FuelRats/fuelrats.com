@@ -1,41 +1,51 @@
 @import '../../scss/colors';
 
-.profilePictureButton {
-}
 .userAvatar {
-  grid-area: avatar;
   position: relative;
+
+  grid-area: avatar;
 }
+
 .userAvatarEdit {
   position: absolute;
+  top: 0;
+  left: 0;
+
   width: 170px;
   height: 170px;
-  left: 0px;
-  top: 0px;
+
   opacity: 0;
-  cursor: pointer;
   transition: opacity 0.2s;
+
+  cursor: pointer;
+
   &:hover {
     opacity: 1;
   }
 }
+
 .editBack {
   border: 0.2rem solid $red;
   border-radius: 50%;
-  background: white;
+
+  background: $white;
   opacity: 0.8;
 }
+
 .editFace {
+  margin: 0;
+  padding: 0;
+
   border: none;
-  color: black;
+
+  color: $black;
   background: none;
-  padding: 0px;
-  margin: 0px;
 }
 
 .editFace svg {
   position: absolute;
-  color: black;
-  right: 0px;
-  bottom: 0px;
+  right: 0;
+  bottom: 0;
+
+  color: $black;
 }
