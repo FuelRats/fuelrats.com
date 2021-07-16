@@ -80,6 +80,7 @@ class RatCard extends React.Component {
       updateRat,
       deleteRat,
       rat,
+      user,
     } = this.props
 
     if (deleteConfirm) {
@@ -88,7 +89,7 @@ class RatCard extends React.Component {
         submitting: 'delete',
       })
 
-      deleteRat(rat)
+      deleteRat(user, rat)
       return
     }
 

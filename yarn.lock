@@ -4873,6 +4873,7 @@ __metadata:
     redux-thunk: ^2.3.0
     reselect: ^4.0.0
     sass: ^1.35.1
+    semver: ^7.3.5
     stripe: ^8.160.0
     stylelint: ^13.13.1
     stylelint-order: ^4.1.0

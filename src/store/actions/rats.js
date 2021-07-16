@@ -52,7 +52,7 @@ export const createRat = (data) => {
 }
 
 
-export const deleteRat = (rat) => {
+export const deleteRat = (user, rat) => {
   return frApiRequest(
     actionTypes.rats.delete,
     {
@@ -61,7 +61,10 @@ export const deleteRat = (rat) => {
     },
     deletesResource(rat),
     deletesRelationship(
-      defineRelationship(rat.relationships?.user?.data?.id, { rats: [rat] }),
+      defineRelationship(
+        { type: 'users', id: user.id },
+        { rats: [{ type: 'rats', id: rat.id }] },
+      ),
     ),
   )
 }

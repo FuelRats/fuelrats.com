@@ -113,6 +113,7 @@
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "sass": "^1.35.1",
+    "semver": "^7.3.5",
     "stylelint": "^13.13.1",
     "stylelint-order": "^4.1.0",
     "stylelint-scss": "^3.19.0",
@@ -121,6 +122,5 @@
   },
   "engines": {
     "node": "^14.0.0"
-  },
-  "engineStrict": true
+  }
 }
