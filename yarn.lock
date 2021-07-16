@@ -1517,7 +1517,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fuelrats/eslint-config-react@npm:^2.4.0-canary.6":
+"@fuelrats/eslint-config-react@npm:^2.4.0-canary.11":
   version: 2.4.0-canary.11
   resolution: "@fuelrats/eslint-config-react@npm:2.4.0-canary.11"
   peerDependencies:
@@ -1543,9 +1543,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fuelrats/eslint-config@npm:^2.4.0-canary.6":
-  version: 2.4.0-canary.12
-  resolution: "@fuelrats/eslint-config@npm:2.4.0-canary.12"
+"@fuelrats/eslint-config@npm:^2.4.0-canary.13":
+  version: 2.4.0-canary.13
+  resolution: "@fuelrats/eslint-config@npm:2.4.0-canary.13"
   dependencies:
     confusing-browser-globals: ^1.0.10
   peerDependencies:
@@ -1571,11 +1571,11 @@ __metadata:
       optional: true
     typescript:
       optional: true
-  checksum: b15eace00b9df3394d2e2206ca3ecc2bed3ded2056967d3fc0af8c37c620b7fb06b60210a9b5ecb05beaaf0a118b4dbdf03ee7669a574f69fe7ae0fc8840608e
+  checksum: 1d6ccc72e516b611bbdcbcf16762389edb48dce6787a71ad9df94bd7567339e7b2e4ea715cfc8feab7672f9cc5ec73dcf8c5a489cedc8f4b85f1c6ad27dd3fb4
   languageName: node
   linkType: hard
 
-"@fuelrats/eslint-plugin@npm:^2.4.0-canary.8":
+"@fuelrats/eslint-plugin@npm:^2.4.0-canary.11":
   version: 2.4.0-canary.11
   resolution: "@fuelrats/eslint-plugin@npm:2.4.0-canary.11"
   dependencies:
@@ -2011,14 +2011,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/ip6addr@npm:^0.2.2":
+"@types/ip6addr@npm:^0.2.3":
   version: 0.2.3
   resolution: "@types/ip6addr@npm:0.2.3"
   checksum: ef19779ed25761450d2741a011ae702f82c3d032ddc68670adada3a0c74b629be6b7483ba2accd37cd7a5e768f3cb75c1524a91bbb7fe8572015e6f630818bf5
   languageName: node
   linkType: hard
 
-"@types/js-cookie@npm:^2.2.6":
+"@types/js-cookie@npm:^2.2.7":
   version: 2.2.7
   resolution: "@types/js-cookie@npm:2.2.7"
   checksum: 851f47e94ca1fc43661d8f51614d67a613e7810c91b876d0a3b311ce72f7df800107fd02a08cb6948184e12c120b4f058edca2f50424d8798bdcffd6627281e3
@@ -2032,7 +2032,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jsonfile@npm:^6.0.0":
+"@types/jsonfile@npm:^6.0.1":
   version: 6.0.1
   resolution: "@types/jsonfile@npm:6.0.1"
   dependencies:
@@ -2041,7 +2041,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash@npm:^4.14.170":
+"@types/lodash@npm:^4.14.171":
   version: 4.14.171
   resolution: "@types/lodash@npm:4.14.171"
   checksum: d093d8ff8b31d7829ab5f2625d824bb1f903fb07d4beca50812c99c3d6c6b63155c56eb0ecf14b97f0d4ba5fcb3b13f8259cca6d4313345326f3c48bed6f4b9f
@@ -2099,14 +2099,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/qs@npm:^6.9.6":
+"@types/qs@npm:^6.9.7":
   version: 6.9.7
   resolution: "@types/qs@npm:6.9.7"
   checksum: 7fd6f9c25053e9b5bb6bc9f9f76c1d89e6c04f7707a7ba0e44cc01f17ef5284adb82f230f542c2d5557d69407c9a40f0f3515e8319afd14e1e16b5543ac6cdba
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^17.0.8":
+"@types/react-dom@npm:^17.0.9":
   version: 17.0.9
   resolution: "@types/react-dom@npm:17.0.9"
   dependencies:
@@ -2115,7 +2115,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-is@npm:^17.0.1":
+"@types/react-is@npm:^17.0.2":
   version: 17.0.2
   resolution: "@types/react-is@npm:17.0.2"
   dependencies:
@@ -2124,7 +2124,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-redux@npm:^7.1.16":
+"@types/react-redux@npm:^7.1.16, @types/react-redux@npm:^7.1.18":
   version: 7.1.18
   resolution: "@types/react-redux@npm:7.1.18"
   dependencies:
@@ -2136,7 +2136,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^17.0.13":
+"@types/react@npm:*, @types/react@npm:^17.0.14":
   version: 17.0.14
   resolution: "@types/react@npm:17.0.14"
   dependencies:
@@ -4304,7 +4304,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsdoc@npm:^35.4.1":
+"eslint-plugin-jsdoc@npm:^35.4.3":
   version: 35.4.3
   resolution: "eslint-plugin-jsdoc@npm:35.4.3"
   dependencies:
@@ -4843,9 +4843,9 @@ __metadata:
     "@fortawesome/free-solid-svg-icons": ^5.15.3
     "@fortawesome/react-fontawesome": ^0.1.14
     "@fuelrats/babel-plugin-classnames": ^0.3.0
-    "@fuelrats/eslint-config": ^2.4.0-canary.6
-    "@fuelrats/eslint-config-react": ^2.4.0-canary.6
-    "@fuelrats/eslint-plugin": ^2.4.0-canary.8
+    "@fuelrats/eslint-config": ^2.4.0-canary.13
+    "@fuelrats/eslint-config-react": ^2.4.0-canary.11
+    "@fuelrats/eslint-plugin": ^2.4.0-canary.11
     "@fuelrats/next-adorable-avatars": ^0.3.0
     "@fuelrats/stylelint-config": ^1.2.3
     "@fuelrats/validation-util": ^1.2.0
@@ -4853,15 +4853,15 @@ __metadata:
     "@next/eslint-plugin-next": ^11.0.1
     "@svgr/webpack": ^5.5.0
     "@types/hoist-non-react-statics": ^3.3.1
-    "@types/ip6addr": ^0.2.2
-    "@types/js-cookie": ^2.2.6
-    "@types/jsonfile": ^6.0.0
-    "@types/lodash": ^4.14.170
-    "@types/qs": ^6.9.6
-    "@types/react": ^17.0.13
-    "@types/react-dom": ^17.0.8
-    "@types/react-is": ^17.0.1
-    "@types/react-redux": ^7.1.16
+    "@types/ip6addr": ^0.2.3
+    "@types/js-cookie": ^2.2.7
+    "@types/jsonfile": ^6.0.1
+    "@types/lodash": ^4.14.171
+    "@types/qs": ^6.9.7
+    "@types/react": ^17.0.14
+    "@types/react-dom": ^17.0.9
+    "@types/react-is": ^17.0.2
+    "@types/react-redux": ^7.1.18
     "@types/ua-parser-js": ^0.7.36
     "@types/webpack": ^5.28.0
     "@types/zxcvbn": ^4.4.1
@@ -4877,7 +4877,7 @@ __metadata:
     eslint-import-resolver-alias: ^1.1.2
     eslint-import-resolver-node: ^0.3.4
     eslint-plugin-import: ^2.23.4
-    eslint-plugin-jsdoc: ^35.4.1
+    eslint-plugin-jsdoc: ^35.4.3
     eslint-plugin-jsx-a11y: ^6.4.1
     eslint-plugin-react: ^7.24.0
     eslint-plugin-react-hooks: ^4.2.0
@@ -4885,7 +4885,7 @@ __metadata:
     framer-motion: ^4.1.17
     hoist-non-react-statics: ^3.3.2
     http-proxy-middleware: ^2.0.1
-    immer: ^9.0.3
+    immer: ^9.0.5
     ip6addr: ^0.2.3
     js-cookie: ^2.2.1
     jsonfile: ^6.1.0
@@ -4917,14 +4917,14 @@ __metadata:
     redux-immutable-state-invariant: ^2.1.0
     redux-thunk: ^2.3.0
     reselect: ^4.0.0
-    sass: ^1.35.1
+    sass: ^1.35.2
     semver: ^7.3.5
-    stripe: ^8.160.0
+    stripe: ^8.163.0
     stylelint: ^13.13.1
     stylelint-order: ^4.1.0
     stylelint-scss: ^3.19.0
     use-immer: ^0.6.0
-    webpack: ^5.42.0
+    webpack: ^5.45.0
     worker-loader: ^3.0.8
     zxcvbn: ^4.4.2
   languageName: unknown
@@ -5414,7 +5414,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"immer@npm:^9.0.3":
+"immer@npm:^9.0.5":
   version: 9.0.5
   resolution: "immer@npm:9.0.5"
   checksum: 8199c092bb2d12de00a2264ee0f5170cd7356427aee6e5e012628057c8d063bf8ac9c318c7b3b41a0228b0ceefdef340f76caf4d95b4e4ca3ec27b4bb42de371
@@ -8835,7 +8835,7 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.35.1":
+"sass@npm:^1.35.2":
   version: 1.35.2
   resolution: "sass@npm:1.35.2"
   dependencies:
@@ -9450,7 +9450,7 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
-"stripe@npm:^8.160.0":
+"stripe@npm:^8.163.0":
   version: 8.163.0
   resolution: "stripe@npm:8.163.0"
   dependencies:
@@ -10438,7 +10438,7 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
-"webpack@npm:^5, webpack@npm:^5.42.0":
+"webpack@npm:^5, webpack@npm:^5.45.0":
   version: 5.45.0
   resolution: "webpack@npm:5.45.0"
   dependencies:
