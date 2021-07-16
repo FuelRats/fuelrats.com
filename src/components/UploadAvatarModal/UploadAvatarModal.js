@@ -16,7 +16,6 @@ import styles from './UploadAvatarModal.module.scss'
 const MAX_FILE_SIZE = 26214400 // Server upload max is 25M
 const SUBMIT_AUTO_CLOSE_DELAY_TIME = 3000
 const HALF_CIRCLE = 180 // Conversion of rat to deg
-const TRIM_DATA = 5
 
 
 function UploadAvatarModal (props) {
@@ -53,7 +52,7 @@ function UploadAvatarModal (props) {
 
   const dispatch = useDispatch()
 
-  const submit = useCallback(async (mime, img) => {
+  const submit = useCallback(async (img) => {
     setSubmitting(true)
     const response = await dispatch(updateAvatar(img))
     const error = getResponseError(response)
@@ -119,16 +118,7 @@ function UploadAvatarModal (props) {
         canvas.toBlob((blob) => {
           reader.readAsDataURL(blob)
           reader.onloadend = () => {
-            let start = 0
-            let mimeend = 0
-            let datastart = 0
-            if (reader.result.indexOf('data:') === 0) {
-              start = TRIM_DATA
-            }
-            mimeend = reader.result.indexOf(';', start)
-            datastart = reader.result.indexOf(',', mimeend)
-            const mime = reader.result.substring(start, mimeend)
-            const b64data = reader.result.substr(datastart + 1)
+            const [, b64data] = reader.result.split(',')
             const bstr = atob(b64data)
             let datalength = bstr.length
             const u8arr = new Uint8Array(datalength)
@@ -137,7 +127,7 @@ function UploadAvatarModal (props) {
               datalength -= 1
               u8arr[datalength] = bstr.charCodeAt(datalength)
             }
-            const croppedImage = new File([u8arr], 'avatar.png', { type: mime })
+            const croppedImage = new File([u8arr], 'avatar.png', { type: 'image/png' })
 
             if (croppedImage.size > MAX_FILE_SIZE) {
               setResult({
@@ -146,7 +136,7 @@ function UploadAvatarModal (props) {
                 submitted: false,
               })
             } else {
-              submit(mime, croppedImage)
+              submit(croppedImage)
             }
           }
         })
