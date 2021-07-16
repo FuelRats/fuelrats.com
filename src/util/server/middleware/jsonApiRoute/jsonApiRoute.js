@@ -1,12 +1,14 @@
 import { HttpStatus } from '@fuelrats/web-util/http'
 import compose from 'koa-compose'
 
-import getEnv from '../../getEnv'
 import JsonApiContext from './JsonApiContext'
 
 
 const jsonApiContentType = 'application/vnd.api+json'
-const env = getEnv()
+
+
+
+
 
 function checkSent ({ res, __suppressWarnings }) {
   const sent = res.finished || res.headersSent || res.writableEnded
@@ -17,28 +19,8 @@ function checkSent ({ res, __suppressWarnings }) {
   return sent
 }
 
-function getIps ({ req }) {
-  const ips = req.headers['X-Forwarded-For']
-  return env.proxied && ips
-    ? ips.split(/\s*,\s*/u)
-    : []
-}
-
-
-function modRequest (ctx, next) {
-  // Add IP handlers
-  ctx.req.ips = getIps(ctx)
-  ctx.req.ip = ctx.req.ips[0] ?? ctx.req.socket.remoteAddress ?? ''
-
-  return next()
-}
-
-
 export default function jsonApiRoute (...middleware) {
-  const handler = compose([
-    modRequest,
-    ...middleware,
-  ])
+  const handler = compose(middleware)
 
   return async (req, res) => {
     const ctx = new JsonApiContext(req, res)
