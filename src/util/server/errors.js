@@ -61,7 +61,11 @@ export class APIError extends Error {
   }
 }
 
-
+export class BadRequestAPIError extends APIError {
+  get status () {
+    return 'bad_request'
+  }
+}
 
 export class UnauthorizedAPIError extends APIError {
   get status () {

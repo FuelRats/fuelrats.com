@@ -34,8 +34,9 @@
   }
 
   .user-avatar {
-    grid-area: avatar;
     position: relative;
+
+    grid-area: avatar;
   }
 
   .profile-basic-info {
