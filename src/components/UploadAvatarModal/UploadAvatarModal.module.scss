@@ -1,0 +1,45 @@
+.zoomAndCrop {
+  display: flex;
+
+  .zoomSliderBox {
+    display: flex;
+
+    flex-direction: column;
+
+    width: 30px;
+    margin-bottom: 30px;
+
+    .zoomSliderIcon {
+      height: 30px;
+      padding: 5px none;
+    }
+  }
+
+  .sliderControl {
+    flex-grow: 1;
+  }
+
+  .cropContainer {
+    position: relative;
+
+    width: 100%;
+    padding-top: 100%;
+  }
+
+  .rotateSliderBox {
+    display: flex;
+
+    .sliderControl {
+      padding-top: 5px;
+    }
+
+    .rotateSliderIcon {
+      width: 30px;
+      padding: none 5px;
+    }
+  }
+
+  .rotateAndCrop {
+    flex-grow: 1;
+  }
+}
