@@ -157,7 +157,7 @@ function UploadAvatarModal (props) {
       <UploadAvatarMessageBox result={result} />
       <div>
         <label>{'Select Image: '}</label>
-        <input accept="image/*" aria-label="Select Image" type="file" onChange={onSelectFile} />
+        <input accept="image/png,image/jpeg,image/webp" aria-label="Select Image" type="file" onChange={onSelectFile} />
       </div>
       <div className={styles.zoomAndCrop}>
         <div className={styles.zoomSliderBox}>
