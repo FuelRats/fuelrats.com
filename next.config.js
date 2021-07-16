@@ -1,13 +1,13 @@
 /* eslint-env node */
 const crypto = require('crypto')
 
-const getCIEnv = require('./.config/getCIEnv')
+const ciEnv = require('./.config/ciEnv')
+const env = require('./.config/env')
 const headersConfig = require('./.config/headers.config')
 const publicRuntimeConfig = require('./.config/publicRuntime.config')
 const redirectsConfig = require('./.config/redirects.config')
 const rewritesConfig = require('./.config/rewrites.config')
 const webpackConfig = require('./.config/webpack.config')
-const getEnv = require('./src/util/server/getEnv')
 
 
 // Constants
@@ -18,8 +18,6 @@ const DEV_BUILD_ID_LENGTH = 16
 
 
 module.exports = () => {
-  const env = getEnv()
-
   return {
     distDir: 'dist',
 
@@ -43,7 +41,6 @@ module.exports = () => {
     webpack: webpackConfig(env),
 
     generateBuildId: () => {
-      const ciEnv = getCIEnv()
       const buildId = ciEnv.isCi
         ? ciEnv.commit
         : crypto.randomBytes(DEV_BUILD_ID_LENGTH).toString('hex').toLowerCase()
