@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 const importRules = require('@fuelrats/eslint-config/core/plugin-import')
 const importExtensions = require('@fuelrats/eslint-config/util/importExtensions')
 
