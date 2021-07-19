@@ -1,13 +1,13 @@
-import Link from 'next/link'
-import React from 'react'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import ArticleCard from '~/components/Blog/ArticleCard'
-import { connect } from '~/store'
+import BlogMenu from '~/components/Blog/BlogMenu'
+import { getBlogs } from '~/store/actions/blogs'
 import {
   selectBlogs,
   selectBlogStatistics,
 } from '~/store/selectors'
-import makeBlogRoute from '~/util/router/makeBlogRoute'
 import safeParseInt from '~/util/safeParseInt'
 
 
@@ -18,176 +18,53 @@ import safeParseInt from '~/util/safeParseInt'
 const BASE_TEN_RADIX = 10
 const DEFAULT_PAGE = 1
 
+function Blogs (props) {
+  const { author, category } = props.query
+  const page = safeParseInt(props.query.page ?? DEFAULT_PAGE, BASE_TEN_RADIX, DEFAULT_PAGE)
 
+  const dispatch = useDispatch()
+  const [retrieving, setRetrieving] = useState(false)
+  const { totalPages } = useSelector(selectBlogStatistics)
+  const blogs = useSelector(selectBlogs)
 
-
-
-@connect
-class Blogs extends React.Component {
-  /***************************************************************************\
-    Class Properties
-  \***************************************************************************/
-
-  state = {
-    retrieving: false,
-  }
-
-
-
-
-
-  /***************************************************************************\
-    Private Methods
-  \***************************************************************************/
-
-  _renderMenu () {
-    const {
-      author,
-      category,
-      page,
-      totalPages,
-    } = this.props
-
-    return (
-      <menu
-        type="toolbar">
-        <div className="secondary">
-          {
-            (page > 1) && (
-              <Link href={makeBlogRoute({ author, category, page: Math.max(1, page - 1) })}>
-                <a className="button">{'Previous Page'}</a>
-              </Link>
-            )
-          }
-        </div>
-
-        <div className="primary">
-          {
-            (page < totalPages) && (
-              <Link href={makeBlogRoute({ author, category, page: Math.min(page + 1, totalPages) })}>
-                <a className="button">{'Next Page'}</a>
-              </Link>
-            )
-          }
-        </div>
-      </menu>
-    )
-  }
-
-  async _getBlogs (options = {}) {
-    let {
-      author,
-      category,
-    } = this.props
-
-    const {
-      page,
-      getBlogs,
-    } = this.props
-
-    const wpOptions = {}
-
-    author = typeof options.author === 'undefined' ? author : options.author
-    category = typeof options.category === 'undefined' ? category : options.category
-
-    if (author) {
-      wpOptions.author = author
+  useEffect(() => {
+    const updateList = async () => {
+      setRetrieving(true)
+      await dispatch(getBlogs({
+        author,
+        categories: category,
+        page,
+      }))
+      setRetrieving(false)
     }
 
-    if (category) {
-      wpOptions.categories = category
-    }
+    updateList()
+  }, [author, category, dispatch, page])
 
-    wpOptions.page = options.page || page
+  return (
+    <div className="page-content">
+      <ol className="article-list loading">
+        {
+        Boolean(!retrieving && blogs.length) && blogs.map((blog) => {
+          return (
+            <li key={blog.id}>
+              <ArticleCard blogId={blog.id} renderMode="excerpt" />
+            </li>
+          )
+        })
+      }
+      </ol>
 
-    this.setState({
-      retrieving: true,
-    })
+      <BlogMenu author={author} category={category} page={page} totalPages={totalPages} />
+    </div>
+  )
+}
 
-    await getBlogs(wpOptions)
-
-    this.setState({
-      retrieving: false,
-    })
+Blogs.getPageMeta = () => {
+  return {
+    title: 'Blog',
+    pageKey: 'blog-list',
   }
-
-
-
-
-
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
-
-  componentDidUpdate (prevProps) {
-    if (
-      prevProps.page !== this.props.page
-      || prevProps.category !== this.props.category
-      || prevProps.author !== this.props.author) {
-      this._getBlogs()
-    }
-  }
-
-  componentDidMount () {
-    this._getBlogs()
-  }
-
-  static getInitialProps ({ query }) {
-    const props = {}
-
-    props.page = safeParseInt(query.page || DEFAULT_PAGE, BASE_TEN_RADIX, DEFAULT_PAGE)
-
-    if (query.category) {
-      props.category = query.category
-    }
-
-    if (query.author) {
-      props.author = query.author
-    }
-
-    return props
-  }
-
-  static getPageMeta () {
-    return {
-      title: 'Blog',
-      pageKey: 'blog-list',
-    }
-  }
-
-  render () {
-    const { blogs } = this.props
-    const {
-      retrieving,
-    } = this.state
-
-    return (
-      <div className="page-content">
-        <ol className="article-list loading">
-          {
-            !retrieving && Boolean(blogs.length) && blogs.map((blog) => {
-              return (
-                <li key={blog.id}>
-                  <ArticleCard blogId={blog.id} renderMode="excerpt" />
-                </li>
-              )
-            })
-          }
-        </ol>
-
-        {this._renderMenu()}
-      </div>
-    )
-  }
-
-  static mapStateToProps = (state) => {
-    return {
-      blogs: selectBlogs(state),
-      ...selectBlogStatistics(state),
-    }
-  }
-
-  static mapDispatchToProps = ['getBlogs']
 }
 
 
