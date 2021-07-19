@@ -1438,9 +1438,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint/eslintrc@npm:^0.4.2":
-  version: 0.4.2
-  resolution: "@eslint/eslintrc@npm:0.4.2"
+"@eslint/eslintrc@npm:^0.4.3":
+  version: 0.4.3
+  resolution: "@eslint/eslintrc@npm:0.4.3"
   dependencies:
     ajv: ^6.12.4
     debug: ^4.1.1
@@ -1451,7 +1451,7 @@ __metadata:
     js-yaml: ^3.13.1
     minimatch: ^3.0.4
     strip-json-comments: ^3.1.1
-  checksum: 17f90cf07988dd2a5e4f510687c81334141977b8e0fa1b63ef0318b0578466e368fc988c101ddc7df55b6124dff8ecd1be67292c27901265761758ad22608e12
+  checksum: 03a7704150b868c318aab6a94d87a33d30dc2ec579d27374575014f06237ba1370ae11178db772f985ef680d469dc237e7b16a1c5d8edaaeb8c3733e7a95a6d3
   languageName: node
   linkType: hard
 
@@ -4304,9 +4304,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsdoc@npm:^35.4.3":
-  version: 35.4.3
-  resolution: "eslint-plugin-jsdoc@npm:35.4.3"
+"eslint-plugin-jsdoc@npm:^35.4.5":
+  version: 35.4.5
+  resolution: "eslint-plugin-jsdoc@npm:35.4.5"
   dependencies:
     "@es-joy/jsdoccomment": ^0.9.0-alpha.1
     comment-parser: 1.1.6-beta.0
@@ -4319,7 +4319,7 @@ __metadata:
     spdx-expression-parse: ^3.0.1
   peerDependencies:
     eslint: ^6.0.0 || ^7.0.0
-  checksum: 60940878e6833c476302e6c27d54ed1ed96e8a035cd36ee0b47389074ffc60563303d8fda2a46efffdcde41e7a90f5913305c38cdecc84de07f5f73f47e07c8e
+  checksum: 6a984903c90e56c94b867318070bfbb7521c2f5be4740b8cef3cffda942a93325f04a9108335eb8040d31f1847d4f501fea4288a0a599cc371e794ae5deef7b4
   languageName: node
   linkType: hard
 
@@ -4415,12 +4415,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^7.30.0":
-  version: 7.30.0
-  resolution: "eslint@npm:7.30.0"
+"eslint@npm:^7.31.0":
+  version: 7.31.0
+  resolution: "eslint@npm:7.31.0"
   dependencies:
     "@babel/code-frame": 7.12.11
-    "@eslint/eslintrc": ^0.4.2
+    "@eslint/eslintrc": ^0.4.3
     "@humanwhocodes/config-array": ^0.5.0
     ajv: ^6.10.0
     chalk: ^4.0.0
@@ -4461,7 +4461,7 @@ __metadata:
     v8-compile-cache: ^2.0.3
   bin:
     eslint: bin/eslint.js
-  checksum: 872f90844b164dd61ec1bb949d2e33e7fbd189e0652fabe2cbbd0bdce1e4cd7ed08e72fa213795a453ae39fe24460771800608e765febb9e778deb28b9db3cc1
+  checksum: fd73d07ce0b73e5ea950b295a6eaf8d45914b4e56cba4ef49e55a36dc7e965a4865f63f618c0a096a01d089752d9e44180b80ba8657039b8e631dd40e0af1663
   languageName: node
   linkType: hard
 
@@ -4873,11 +4873,11 @@ __metadata:
     date-fns-tz: ^1.1.4
     doctoc: ^2.0.1
     dotenv: ^10.0.0
-    eslint: ^7.30.0
+    eslint: ^7.31.0
     eslint-import-resolver-alias: ^1.1.2
     eslint-import-resolver-node: ^0.3.4
     eslint-plugin-import: ^2.23.4
-    eslint-plugin-jsdoc: ^35.4.3
+    eslint-plugin-jsdoc: ^35.4.5
     eslint-plugin-jsx-a11y: ^6.4.1
     eslint-plugin-react: ^7.24.0
     eslint-plugin-react-hooks: ^4.2.0
@@ -4922,9 +4922,9 @@ __metadata:
     stripe: ^8.163.0
     stylelint: ^13.13.1
     stylelint-order: ^4.1.0
-    stylelint-scss: ^3.19.0
+    stylelint-scss: ^3.20.0
     use-immer: ^0.6.0
-    webpack: ^5.45.0
+    webpack: ^5.45.1
     worker-loader: ^3.0.8
     zxcvbn: ^4.4.2
   languageName: unknown
@@ -9517,9 +9517,9 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
-"stylelint-scss@npm:^3.19.0":
-  version: 3.19.0
-  resolution: "stylelint-scss@npm:3.19.0"
+"stylelint-scss@npm:^3.20.0":
+  version: 3.20.0
+  resolution: "stylelint-scss@npm:3.20.0"
   dependencies:
     lodash: ^4.17.15
     postcss-media-query-parser: ^0.2.3
@@ -9528,7 +9528,7 @@ resolve@^2.0.0-next.3:
     postcss-value-parser: ^4.1.0
   peerDependencies:
     stylelint: ^8.0.0 || ^9.0.0 || ^10.0.0 || ^11.0.0 || ^12.0.0 || ^13.0.0
-  checksum: 5ce72106f5a99800ce463715d9ff7c59eb2169c8c046b5f5ff0dcf8cdfadc7c6f67a02a2a9f2c2be376cebdae5dcfc467f07c7a71a2a919444226705cea9fc44
+  checksum: 61b7448fd110b166edb8b4cfa1a42624dd94e35154ab5db5ef51b6c578c00c4f3ff9d1be1cee8a16f19aef81e755289fb3e013c4316ee4718001beaf2cdf05cd
   languageName: node
   linkType: hard
 
@@ -10438,7 +10438,7 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
-"webpack@npm:^5, webpack@npm:^5.45.0":
+"webpack@npm:^5":
   version: 5.45.0
   resolution: "webpack@npm:5.45.0"
   dependencies:
@@ -10472,6 +10472,42 @@ resolve@^2.0.0-next.3:
   bin:
     webpack: bin/webpack.js
   checksum: 3469d66d257e6058e26c737bedce9d423046c977b0f3b0c9e58198d5ff101a37a4002e464b35884ac1cc18d4fcdb8fa2bf19f4bab09d5645d19ee5aecaf0b58b
+  languageName: node
+  linkType: hard
+
+"webpack@npm:^5.45.1":
+  version: 5.45.1
+  resolution: "webpack@npm:5.45.1"
+  dependencies:
+    "@types/eslint-scope": ^3.7.0
+    "@types/estree": ^0.0.50
+    "@webassemblyjs/ast": 1.11.1
+    "@webassemblyjs/wasm-edit": 1.11.1
+    "@webassemblyjs/wasm-parser": 1.11.1
+    acorn: ^8.4.1
+    browserslist: ^4.14.5
+    chrome-trace-event: ^1.0.2
+    enhanced-resolve: ^5.8.0
+    es-module-lexer: ^0.7.1
+    eslint-scope: 5.1.1
+    events: ^3.2.0
+    glob-to-regexp: ^0.4.1
+    graceful-fs: ^4.2.4
+    json-parse-better-errors: ^1.0.2
+    loader-runner: ^4.2.0
+    mime-types: ^2.1.27
+    neo-async: ^2.6.2
+    schema-utils: ^3.1.0
+    tapable: ^2.1.1
+    terser-webpack-plugin: ^5.1.3
+    watchpack: ^2.2.0
+    webpack-sources: ^2.3.0
+  peerDependenciesMeta:
+    webpack-cli:
+      optional: true
+  bin:
+    webpack: bin/webpack.js
+  checksum: 7aca5a40bf95d83c89b30b7c58da70e6aba672fc97b8f8ddea18516ce026706982b3b6b5c9509a6295b87de889df64f9a08e125ba9a36a128cb84cbce742225c
   languageName: node
   linkType: hard
 
