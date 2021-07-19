@@ -45,14 +45,14 @@ function Blogs (props) {
     <div className="page-content">
       <ol className="article-list loading">
         {
-        Boolean(!retrieving && blogs.length) && blogs.map((blog) => {
-          return (
-            <li key={blog.id}>
-              <ArticleCard blogId={blog.id} renderMode="excerpt" />
-            </li>
-          )
-        })
-      }
+          Boolean(!retrieving && blogs.length) && blogs.map((blog) => {
+            return (
+              <li key={blog.id}>
+                <ArticleCard blogId={blog.id} renderMode="excerpt" />
+              </li>
+            )
+          })
+        }
       </ol>
 
       <BlogMenu author={author} category={category} page={page} totalPages={totalPages} />
