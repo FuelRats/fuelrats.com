@@ -63,7 +63,7 @@ function Blogs (props) {
 Blogs.getPageMeta = () => {
   return {
     title: 'Blog',
-    pageKey: 'blog-list',
+    key: 'blog-list',
   }
 }
 

@@ -49,7 +49,7 @@ DispatchBoard.getPageMeta = () => {
     forceDrawer: true,
     className: styles.dispatchBoard,
     title: 'Dispatch Board',
-    pageKey: 'dispatch',
+    key: 'dispatch',
   }
 }
 

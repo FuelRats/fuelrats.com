@@ -165,7 +165,7 @@ class FuelRatsApp extends App {
       Page,
       pageProps,
       pageMeta,
-      key: pageMeta.pageKey ?? router.asPath,
+      key: pageMeta.key ?? router.asPath,
     }
   }
 }
