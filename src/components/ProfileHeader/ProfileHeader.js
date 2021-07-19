@@ -1,6 +1,7 @@
-import React from 'react'
+import { useCallback, useState } from 'react'
+import { useSelector } from 'react-redux'
 
-import { connect } from '~/store'
+import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import {
   selectGroupsByUserId,
   selectUserById,
@@ -19,138 +20,83 @@ import UnverifiedUserBanner from './UnverifiedUserBanner'
 
 
 
-@connect
-class ProfileHeader extends React.Component {
-  /***************************************************************************\
-    Class Properties
-  \***************************************************************************/
+function ProfileHeader () {
+  const [showChangePassword, setShowChangePassword] = useState(false)
+  const [showDisableProfile, setShowDisableProfile] = useState(false)
 
-  state = {
-    showChangePassword: false,
-    showDisableProfile: false,
-  }
+  const handleToggleChangePassword = useCallback(() => {
+    setShowChangePassword((state) => {
+      return !state
+    })
+  }, [])
 
+  const handleToggleDisableProfile = useCallback(() => {
+    setShowDisableProfile((state) => {
+      return !state
+    })
+  }, [])
 
+  const groups = useSelector(withCurrentUserId(selectGroupsByUserId))
+  const displayRat = useSelector(withCurrentUserId(selectDisplayRatByUserId))
+  const userIsVerified = useSelectorWithProps({ scope: 'users.verified' }, selectCurrentUserHasScope)
+  const { createdAt, email } = useSelector(withCurrentUserId(selectUserById))?.attributes ?? {}
 
-
-
-  /***************************************************************************\
-    Private Methods
-  \***************************************************************************/
-
-  _renderUserGroups = () => {
-    return (
-      this.props.groups && (
-        this.props.groups.map((group) => {
-          return (
-            <li key={group.id} className={['badge info', group.attributes.name]}>
-              {group.attributes.name}
-            </li>
+  return (
+    <>
+      <div className="profile-header">
+        {
+          !userIsVerified && (
+            <UnverifiedUserBanner />
           )
-        })))
-  }
-
-  _handleToggleChangePassword = () => {
-    this.setState((state) => {
-      return { showChangePassword: !state.showChangePassword }
-    })
-  }
-
-  _handleToggleDisableProfile = () => {
-    this.setState((state) => {
-      return { showDisableProfile: !state.showDisableProfile }
-    })
-  }
-
-
-
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
-
-  render () {
-    const {
-      showChangePassword,
-      showDisableProfile,
-    } = this.state
-    const {
-      displayRat,
-      userIsVerified,
-    } = this.props
-
-    const attributes = this.props.user.attributes || {}
-
-    const {
-      createdAt,
-      email,
-    } = attributes
-
-    return (
-      <>
-        <div className="profile-header">
-          {
-            !userIsVerified && (
-              <UnverifiedUserBanner />
-            )
-          }
-          <ProfileUserAvatar />
-          <div className="profile-basic-info">
-            <div className="rat-name">
-              {displayRat.attributes.name}
-            </div>
-            <div className="email">
-              <span className="label">{'E-Mail: '}</span>
-              <span>{email}</span>
-            </div>
-            <div className="member-since">
-              <span className="label">{'Date joined: '}</span>
-              <span>{formatAsEliteDateTime(createdAt)}</span>
-            </div>
+        }
+        <ProfileUserAvatar />
+        <div className="profile-basic-info">
+          <div className="rat-name">
+            {displayRat.attributes.name}
           </div>
-          <div className="profile-user-badges">
-            <ul>
-              {this._renderUserGroups()}
-            </ul>
+          <div className="email">
+            <span className="label">{'E-Mail: '}</span>
+            <span>{email}</span>
           </div>
-          <div className="profile-controls">
-            <button
-              type="button"
-              onClick={this._handleToggleChangePassword}>
-              {'Change Password'}
-            </button>
-            <button
-              type="button"
-              onClick={this._handleToggleDisableProfile}>
-              {'Disable Profile'}
-            </button>
+          <div className="member-since">
+            <span className="label">{'Date joined: '}</span>
+            <span>{formatAsEliteDateTime(createdAt)}</span>
           </div>
         </div>
-        <ChangePasswordModal
-          isOpen={showChangePassword}
-          onClose={this._handleToggleChangePassword} />
-        <DisableProfileModal
-          isOpen={showDisableProfile}
-          onClose={this._handleToggleDisableProfile} />
-      </>
-    )
-  }
-
-
-
-
-
-  /***************************************************************************\
-    Redux Properties
-  \***************************************************************************/
-
-  static mapStateToProps = (state) => {
-    return {
-      groups: withCurrentUserId(selectGroupsByUserId)(state),
-      user: withCurrentUserId(selectUserById)(state),
-      displayRat: withCurrentUserId(selectDisplayRatByUserId)(state),
-      userIsVerified: selectCurrentUserHasScope(state, { scope: 'users.verified' }),
-    }
-  }
+        <div className="profile-user-badges">
+          <ul>
+            {
+              groups?.map((group) => {
+                return (
+                  <li key={group.id} className={['badge info', group.attributes.name]}>
+                    {group.attributes.name}
+                  </li>
+                )
+              })
+            }
+          </ul>
+        </div>
+        <div className="profile-controls">
+          <button
+            type="button"
+            onClick={handleToggleChangePassword}>
+            {'Change Password'}
+          </button>
+          <button
+            type="button"
+            onClick={handleToggleDisableProfile}>
+            {'Disable Profile'}
+          </button>
+        </div>
+      </div>
+      <ChangePasswordModal
+        isOpen={showChangePassword}
+        onClose={handleToggleChangePassword} />
+      <DisableProfileModal
+        isOpen={showDisableProfile}
+        onClose={handleToggleDisableProfile} />
+    </>
+  )
 }
 
 
