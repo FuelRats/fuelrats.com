@@ -16,7 +16,7 @@
     "add-contributor": "all-contributors add",
     "build": "next build",
     "start": "NODE_OPTIONS='-r dotenv/config' next start",
-    "dev:start": "DOTENV_CONFIG_PATH=.env.local node --inspect --trace-warnings -r dotenv/config ./node_modules/.bin/next dev",
+    "dev:start": "DOTENV_CONFIG_PATH=.env.local node --inspect=15268 --trace-warnings -r dotenv/config ./node_modules/.bin/next dev",
     "dev": "yarn install && yarn dev:start",
     "utoc": "doctoc $(grep --include=\\*.md --exclude-dir=node_modules -Rwl . -e 'START doctoc')",
     "lint:js": "eslint .",

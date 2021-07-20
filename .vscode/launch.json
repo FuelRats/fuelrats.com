@@ -8,7 +8,7 @@
       "name": "Next: Attach Server",
       "type": "node",
       "request": "attach",
-      "port": 9229,
+      "port": 15268,
       "presentation": {
         "hidden": false,
         "group": "",
@@ -16,10 +16,10 @@
       }
     },
     {
-      "name": "Next: Launch Edge",
+      "name": "Edge: Attach",
       "type": "pwa-msedge",
-      "request": "launch",
-      "port": 9222,
+      "request": "attach",
+      "port": 9223,
       "url": "${config:develop.attachurl}", // Custom vscode config property. does not actually exist, but configurable via user config.
       "webRoot": "${workspaceFolder}",
       "presentation": {
@@ -29,9 +29,9 @@
       }
     },
     {
-      "name": "Next: Launch Chrome",
+      "name": "Chrome: Attach",
       "type": "pwa-chrome",
-      "request": "launch",
+      "request": "attach",
       "port": 9222,
       "url": "${config:develop.attachurl}", // Custom vscode config property. does not actually exist, but configurable via user config.
       "webRoot": "${workspaceFolder}",
@@ -44,8 +44,8 @@
   ],
   "compounds": [
     {
-      "name": "Next: Attach & Launch Edge",
-      "configurations": ["Next: Attach Server", "Next: Launch Edge"],
+      "name": "Next: Attach Edge",
+      "configurations": ["Next: Attach Server", "Next: Attach Edge"],
       "presentation": {
         "hidden": false,
         "group": "next",
@@ -54,7 +54,7 @@
     },
     {
       "name": "Next: Attach & Launch Chrome",
-      "configurations": ["Next: Attach Server", "Next: Launch Edge"],
+      "configurations": ["Next: Attach Server", "Next: Attach Edge"],
       "presentation": {
         "hidden": false,
         "group": "next",
