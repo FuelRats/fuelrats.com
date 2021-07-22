@@ -1,0 +1,11 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Account Support
+    about: Account related questions should be submitted through our support desk.
+    url: https://jira.fuelrats.com/servicedesk/customer/portal/2
+  - name: Provide Feedback
+    about: "Don't like something? Really love something else? Let us know!"
+    url: https://github.com/FuelRats/fuelrats.com/discussions/new?category=feedback
+  - name: Hang out with us!
+    about: Join us on IRC and hang out with the rats.
+    url: https://kiwi.fuelrats.com
