@@ -52,7 +52,7 @@ function ProfileHeader () {
         <ProfileUserAvatar />
         <div className="profile-basic-info">
           <div className="rat-name">
-            {displayRat.attributes.name}
+            {displayRat?.attributes?.name ?? email.split('@')[0]}
           </div>
           <div className="email">
             <span className="label">{'E-Mail: '}</span>
