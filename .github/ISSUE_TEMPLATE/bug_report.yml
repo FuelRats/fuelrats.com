@@ -1,0 +1,62 @@
+name: Bug Report
+description: Something might be very wrong here...
+labels:
+  - 'Type | Bug :bug:'
+  - 'Meta | Needs Attention :rotating_light:'
+body:
+- type: markdown
+  attributes:
+    value: "# Bug Report"
+- type: textarea
+  id: description
+  attributes:
+    label: Describe the bug
+    description: A brief description of what the bug is.
+    placeholder: A little more than "x doesn't work" is preferred.
+  validations:
+    required: true
+- type: textarea
+  id: expected
+  attributes:
+    label: Expected behavior
+    description: A brief description of what you expected to happen.
+    placeholder: |
+      I expect the darn thing to always work!
+      How much are we paying you, anyways!?
+  validations:
+    required: true
+- type: textarea
+  id: reproduce
+  attributes:
+    label: Steps to reproduce
+    description: We need, to the best of your ability, the steps required to reproduce this issue. We may not be able to confirm this bug, otherwise.
+    placeholder: |
+      1.
+      2.
+      3.
+  validations:
+    required: true
+- type: textarea
+  id: misc
+  attributes:
+    label: Additional Information (optional)
+    description: Any other context about the problem that may be helpful.
+    placeholder: I think my limpets are stuck in the cargo hatch.
+  validations:
+    required: false
+- type: input
+  id: name
+  attributes:
+    label: FuelRats IRC Nickname (optional)
+    description: We may need to work with you directly to resolve this issue. Providing your IRC nick will make it easier for us to contact you.
+    placeholder: Surly_Badger
+  validations:
+    required: false
+- type: checkboxes
+  id: checks
+  attributes:
+    label: I can help!
+    description: Please check the box below if you're able to submit a fix.
+    options:
+      - label: I am willing to fix to this issue, and submit it as a PR.
+        required: false
