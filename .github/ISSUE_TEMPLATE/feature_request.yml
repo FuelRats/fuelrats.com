@@ -1,0 +1,41 @@
+name: Feature Request
+description: How can we improve?
+labels:
+  - 'Type | Feature Request :sparkles:'
+  - 'Meta | Needs Attention :rotating_light:'
+body:
+- type: markdown
+  attributes:
+    value: "# Feature Request"
+- type: textarea
+  id: desc
+  attributes:
+    label: Description
+    description: Describe the feature you want. Be as detailed as you like!
+    placeholder: Do more things!
+  validations:
+    required: true
+- type: textarea
+  id: misc
+  attributes:
+    label: Additional Information (optional)
+    description: Any other context about the feature request that may be helpful.
+    placeholder: Will there be in-flight refreshments?
+  validations:
+    required: false
+- type: input
+  id: name
+  attributes:
+    label: FuelRats IRC Nickname (optional)
+    description: We may wish to contact you directly to ask further questions about your feature request. Providing your IRC name will make it easier for us to contact you.
+    placeholder: Surly_Badger
+  validations:
+    required: false
+- type: checkboxes
+  id: checks
+  attributes:
+    label: I can help!
+    description: Please check the box below if you're able implement this feature.
+    options:
+      - label: I am willing to implement this feature, and submit it as a PR.
+        required: false
