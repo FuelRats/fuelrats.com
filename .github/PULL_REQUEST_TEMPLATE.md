@@ -36,6 +36,7 @@ Closes #[issue]
 - [ ] I have discussed creating this PR with the maintainers in the issue(s) beforehand.
 - [ ] I have thoroughly tested the changes this PR introduces in a local development enviornment.
 - [ ] I have linted the entire codebase using `yarn lint` and confirmed there are no errors or warnings.
+- [ ] I have followed the commit conventions laid out by [`CONTRIBUTING.md`](https://github.com/FuelRats/fuelrats.com/blob/develop/CONTRIBUTING.md#commit-conventions).
 
 ## Maintainer's Checklist
 <!-- The following items only need to be completed by project maintainers. (A.K.A. The TechRats) -->
