@@ -5,7 +5,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Next: Attach Server",
+      "name": "Attach: Next Server",
       "type": "node",
       "request": "attach",
       "port": 15268,
@@ -16,7 +16,7 @@
       }
     },
     {
-      "name": "Edge: Attach",
+      "name": "Attach: Edge",
       "type": "pwa-msedge",
       "request": "attach",
       "port": 9223,
@@ -29,7 +29,7 @@
       }
     },
     {
-      "name": "Chrome: Attach",
+      "name": "Attach: Chrome",
       "type": "pwa-chrome",
       "request": "attach",
       "port": 9222,
@@ -44,8 +44,8 @@
   ],
   "compounds": [
     {
-      "name": "Next: Attach Edge",
-      "configurations": ["Next: Attach Server", "Next: Attach Edge"],
+      "name": "Attach: Next & Edge",
+      "configurations": ["Attach: Next Server", "Attach: Edge"],
       "presentation": {
         "hidden": false,
         "group": "next",
@@ -53,8 +53,8 @@
       }
     },
     {
-      "name": "Next: Attach & Launch Chrome",
-      "configurations": ["Next: Attach Server", "Next: Attach Edge"],
+      "name": "Attach: Next & Chrome",
+      "configurations": ["Attach: Next Server", "Attach: Chrome"],
       "presentation": {
         "hidden": false,
         "group": "next",
