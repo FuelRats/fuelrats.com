@@ -1,7 +1,7 @@
 ---
 name: User Story
 about: An issue that describes a new feature to be implemented, in detail.
-title: ''
+title: 'As a ... I want ...'
 labels: 'Type | Story :books:'
 assignees: ''
 
