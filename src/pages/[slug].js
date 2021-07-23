@@ -1,79 +1,66 @@
-import { HttpStatus } from '@fuelrats/web-util/http'
 import { isError } from 'flux-standard-action'
-import React from 'react'
+import { useMemo } from 'react'
 
-import { connect } from '~/store'
+import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { getWordpressPage } from '~/store/actions/wordpress'
 import { selectWordpressPageBySlug } from '~/store/selectors'
 import setError from '~/util/getInitialProps/setError'
 
 
+const selectPage = (state, props) => {
+  return selectWordpressPageBySlug(state, { slug: props.query?.slug }) ?? props.query?.page ?? {}
+}
 
 
+function WordpressProxy (props) {
+  const { content } = useSelectorWithProps(props, selectPage)
 
-@connect
-class WordpressProxy extends React.Component {
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
-
-  static async getInitialProps (ctx) {
-    const { query, store } = ctx
-    const { slug } = query
-
-    if (!selectWordpressPageBySlug(store.getState(), { slug })) {
-      const response = await store.dispatch(getWordpressPage(slug))
-
-      if (isError(response)) {
-        setError(ctx, HttpStatus.NOT_FOUND)
-      }
-    }
-  }
-
-  static getPageMeta ({ store, query }) {
-    const page = selectWordpressPageBySlug(store.getState(), { slug: query.slug })
-
-    return {
-      className: 'wordpress-page',
-      title: page.title.rendered,
-      key: query.slug,
-    }
-  }
-
-  render () {
-    const { page } = this.props
-    let content = null
-
-    if (page) {
-      content = page.content.rendered.replace(/<ul>/giu, '<ul class="bulleted">').replace(/<ol>/giu, '<ol class="numbered">')
+  const renderedContent = useMemo(() => {
+    if (!content?.rendered) {
+      return null
     }
 
-    /* eslint-disable react/no-danger */
+    return content.rendered.replace(/<ul>/giu, '<ul class="bulleted">').replace(/<ol>/giu, '<ol class="numbered">')
+  }, [content?.rendered])
+
+  if (!renderedContent) {
     return (
-      <>
-        {
-          Boolean(page) && (
-            <article className="page-content">
-              <div
-                className="article-content"
-                dangerouslySetInnerHTML={{ __html: content }} />
-            </article>
-          )
-        }
-        {
-          !page && (
-            <article className="error page-content" />
-          )
-        }
-      </>
+      <article className="error page-content" />
     )
-    /* eslint-enable */
   }
 
-  static mapStateToProps = (state, ownProps) => {
-    return {
-      page: selectWordpressPageBySlug(state, { slug: ownProps.query?.slug }) || ownProps.query.page || null,
+  /* eslint-disable react/no-danger */
+  return (
+    <article className="page-content">
+      <div
+        className="article-content"
+        dangerouslySetInnerHTML={{ __html: renderedContent }} />
+    </article>
+  )
+  /* eslint-enable */
+}
+
+
+
+WordpressProxy.getInitialProps = async (ctx) => {
+  const { query, store } = ctx
+  const { slug } = query
+
+  if (!selectWordpressPageBySlug(store.getState(), { slug })) {
+    const response = await store.dispatch(getWordpressPage(slug))
+    if (isError(response)) {
+      setError(ctx, response.meta?.response?.status)
     }
+  }
+}
+
+WordpressProxy.getPageMeta = ({ store, query }) => {
+  const page = selectWordpressPageBySlug(store.getState(), { slug: query.slug })
+
+  return {
+    className: 'wordpress-page',
+    title: page.title.rendered,
+    key: query.slug,
   }
 }
 
