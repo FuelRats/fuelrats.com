@@ -1,9 +1,9 @@
 import getConfig from 'next/config'
 import Image from 'next/image'
 import Link from 'next/link'
-import { createStructuredSelector } from 'reselect'
+import { useMemo } from 'react'
+import { useSelector } from 'react-redux'
 
-import { connect } from '~/store'
 import { selectSession } from '~/store/selectors'
 
 
@@ -17,20 +17,18 @@ const { irc: ircURLs } = publicRuntimeConfig
 
 
 
-function INeedFuel (props) {
-  const {
-    session,
-  } = props
-
-  let supportMessage = null
-
-  if (session.userAgent.match(/playstation/giu)) {
-    supportMessage = `
-      The built-in PS4 browser is currently not supported.
-      This is due to bugs in the PS4 browser, and outside of our control.
-      Please use your phone or computer instead.
-    `
-  }
+function INeedFuel () {
+  const session = useSelector(selectSession)
+  const supportMessage = useMemo(() => {
+    if (session.userAgent.match(/playstation/giu)) {
+      return `
+        The built-in PS4 browser is currently not supported.
+        This is due to bugs in the PS4 browser, and outside of our control.
+        Please use your phone or computer instead.
+      `
+    }
+    return undefined
+  }, [session.userAgent])
 
   return (
     <div className="page-content">
@@ -106,9 +104,5 @@ INeedFuel.getPageMeta = () => {
   }
 }
 
-INeedFuel.mapStateToProps = createStructuredSelector({
-  session: selectSession,
-})
 
-
-export default connect(INeedFuel)
+export default INeedFuel
