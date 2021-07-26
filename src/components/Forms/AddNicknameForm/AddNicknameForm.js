@@ -1,19 +1,19 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { HttpStatus } from '@fuelrats/web-util/http'
 import { isError } from 'flux-standard-action'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+import IRCNickFieldset from '~/components/Fieldsets/IRCNickFieldset'
 import InfoBubble from '~/components/InfoBubble'
 import useForm from '~/hooks/useForm'
 import { addNickname } from '~/store/actions/user'
 import { selectUserById, withCurrentUserId } from '~/store/selectors'
 
-import IRCNickFieldset from '../Fieldsets/IRCNickFieldset'
 import styles from './AddNicknameForm.module.scss'
 
 
-const formData = {
+const initialState = {
   attributes: {
     nick: '',
   },
@@ -25,7 +25,7 @@ function AddNicknameForm (props) {
   const [error, setSubmitError] = useState(null)
   const dispatch = useDispatch()
 
-  const onSubmit = async (data, _, reset) => {
+  const onSubmit = useCallback(async (data, _, reset) => {
     const response = await dispatch(addNickname(user, data))
 
     if (isError(response)) {
@@ -46,15 +46,16 @@ function AddNicknameForm (props) {
     }
 
     reset()
-  }
+  }, [dispatch, user])
 
-  const { Form, canSubmit } = useForm({ onSubmit, data: formData })
+  const { Form, canSubmit } = useForm({ onSubmit, data: initialState })
 
   return (
     <Form className={styles.addNicknameForm}>
       <IRCNickFieldset
         aria-label="Nickname"
         className={[styles.thinInput, error && styles.error]}
+        disabled={props.disabled}
         id="AddNickname"
         name="attributes.nick"
         placeholder={error ?? 'Add a nickname...'}
@@ -67,7 +68,7 @@ function AddNicknameForm (props) {
       <button
         aria-label="submit new nickname"
         className="green compact"
-        disabled={!canSubmit}
+        disabled={!canSubmit || props.disabled}
         type="submit">
         <FontAwesomeIcon fixedWidth icon="arrow-right" />
       </button>

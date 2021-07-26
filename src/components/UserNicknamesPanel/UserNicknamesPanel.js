@@ -4,6 +4,9 @@ import { isError } from 'flux-standard-action'
 import { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+import ConfirmActionButton from '~/components/ConfirmActionButton'
+import AddNicknameForm from '~/components/Forms/AddNicknameForm/AddNicknameForm'
+import MessageBox from '~/components/MessageBox'
 import { deleteNickname } from '~/store/actions/user'
 import {
   selectUserById,
@@ -11,9 +14,6 @@ import {
   selectNicknamesByUserId,
 } from '~/store/selectors'
 
-import AddNicknameForm from '../AddNicknameForm/AddNicknameForm'
-import ConfirmActionButton from '../ConfirmActionButton'
-import MessageBox from '../MessageBox'
 import styles from './UserNicknamesPanel.module.scss'
 
 
