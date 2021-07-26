@@ -25,6 +25,7 @@ function SelectFieldset (props) {
     onChange,
     onValidate: parentValidate,
     required,
+    placeholder,
     validateOpts,
     ...inputProps
   } = props
@@ -47,7 +48,6 @@ function SelectFieldset (props) {
 
   const {
     value = '',
-    validating,
     submitting,
     handleChange,
   } = useField(props.name, { onValidate, onChange, validateOpts })
@@ -62,7 +62,7 @@ function SelectFieldset (props) {
 
       <div className={[inputStyles.inputGroup, styles.select, className]}>
         <select
-          className={[inputClassName, { dark, required, valid: validityRef.current }]}
+          className={[inputClassName, { dark, required, valid: validityRef.current, [styles.empty]: !value.length }]}
           disabled={submitting || disabled}
           type="text"
           {...inputProps}
@@ -70,7 +70,7 @@ function SelectFieldset (props) {
           onChange={handleChange}>
           {
             !noEmpty && (
-              <option aria-label="Empty" value="" />
+              <option disabled aria-label="Empty" value="">{placeholder}</option>
             )
           }
           {children}
@@ -78,16 +78,12 @@ function SelectFieldset (props) {
         <div className={styles.arrow}>
           <FontAwesomeIcon fixedWidth icon="angle-down" size="lg" />
         </div>
-        <ValidityIcon
-          className={{ [inputStyles.hidden]: !value.length }}
-          valid={validityRef.current}
-          validating={validating} />
       </div>
     </fieldset>
   )
 }
 
-SelectFieldset.displayName = 'InputFieldset'
+SelectFieldset.displayName = 'SelectFieldset'
 
 SelectFieldset.propTypes = {
   'aria-label': extPropTypes(PropTypes.string).isRequiredIf('label', 'undefined'),
