@@ -75,7 +75,7 @@ function UserNicknamesPanel () {
             <MessageBox>{error}</MessageBox>
           )
         }
-        <ul>
+        <ul className={styles.nickList}>
           {
             (nickCount <= 0) && (
               <li className="text-center">{'You do not have any nicknames registered yet.'}</li>
