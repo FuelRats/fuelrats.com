@@ -1,5 +1,5 @@
 import { errorLoggerMiddleware } from '@fuelrats/web-util/redux-middleware'
-import React, { useCallback } from 'react'
+import React from 'react'
 import { useDispatch } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
