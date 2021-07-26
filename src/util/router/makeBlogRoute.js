@@ -23,7 +23,7 @@ export default function makeBlogRoute (params) {
     route += `/category/${category}`
   }
 
-  if (typeof page === 'number') {
+  if (typeof page === 'number' && page > 1) {
     route += `/page/${page}`
   }
 

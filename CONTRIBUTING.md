@@ -29,7 +29,7 @@ By contributing to this repository, you are expected to know and follow the rule
 1. Install Node.js and `npm` (if you haven't already).
     * [`nvm`](#nvm-install) is recommended for Linux/WSL/macOS.
     * Node for Windows is available [here](#node-install), but you should probably be using WSL or some other linux-based CLI alternative.
-    * Current version requirement is: `^14.0.0`.
+    * Current version requirement is: `^16.0.0`.
 1. Install Yarn (if you haven't already).
     * Run: `npm i -g yarn`
 1. Fork and clone the repo

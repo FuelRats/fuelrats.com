@@ -50,7 +50,7 @@ class Profile extends React.Component {
     return {
       title: 'Profile',
       displayTitle: this.tabs[ctx.query.tab].pageTitle,
-      pageKey: 'profile',
+      key: 'profile',
     }
   }
 

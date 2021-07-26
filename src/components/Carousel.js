@@ -1,10 +1,13 @@
 import { AnimatePresence, m } from 'framer-motion'
 import getConfig from 'next/config'
 import PropTypes from 'prop-types'
-import React from 'react'
-import { createSelector, createStructuredSelector } from 'reselect'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { createSelector } from 'reselect'
 
-import { connect } from '~/store'
+
+import useSelectorWithProps from '~/hooks/useSelectorWithProps'
+import { getImage } from '~/store/actions/images'
 import { selectImages } from '~/store/selectors'
 
 
@@ -33,7 +36,7 @@ const selectConnectedSlides = createSelector(
         [slideId]: {
           ...slide,
           id: slideId,
-          url: `${appUrl}/static/images/${slide.filename || `slide_${key}.jpg`}`,
+          url: `${appUrl}/static/images/${slide.filename ?? `slide_${key}.jpg`}`,
           image: images[slideId],
         },
       }
@@ -62,173 +65,118 @@ const slideTextMotionConfig = {
 
 
 
+function Carousel (props) {
+  const {
+    id,
+    className,
+    interval = 10000,
+  } = props
 
+  const imageSlides = useSelectorWithProps(props, selectConnectedSlides)
+  const [curSlideId, setCurSlide] = useState(Object.keys(imageSlides)[0])
 
-@connect
-class Carousel extends React.Component {
-  /***************************************************************************\
-    Class Properties
-  \***************************************************************************/
+  const timerRef = useRef(null)
 
-  state = {
-    curSlide: Object.keys(this.props.slides)[0],
-  }
+  const dispatch = useDispatch()
 
-  timer = null
-
-
-
-
-
-  /***************************************************************************\
-    Private Methods
-  \***************************************************************************/
-
-  _handleSlideButtonClick = (event) => {
-    this._setSlide(event.target.name)
-  }
-
-  _setSlide = (slideId) => {
-    clearTimeout(this.timer)
-    this.timer = setTimeout(this._setSlide, this.props.interval)
+  const setSlide = useCallback((nextSlide) => {
+    timerRef.current = window.setTimeout(setSlide, interval)
 
     if (document.visibilityState === 'hidden') {
       return
     }
 
-    const slideKeys = Object.keys(this.props.slides)
+    const slideKeys = Object.keys(imageSlides)
 
-    this.setState((state) => {
-      return {
-        curSlide: typeof slideId === 'undefined'
-          ? slideKeys[(slideKeys.indexOf(state.curSlide) + 1) % slideKeys.length]
-          : slideId,
-      }
+    setCurSlide((slideId) => {
+      return typeof nextSlide === 'undefined'
+        ? slideKeys[(slideKeys.indexOf(slideId) + 1) % slideKeys.length]
+        : nextSlide
     })
-  }
+  }, [imageSlides, interval])
 
-
-
-
-
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
-
-  componentDidMount () {
-    this.timer = setTimeout(this._setSlide, this.props.interval)
-
-    Object.values(this.props.slides).forEach((slide) => {
+  useEffect(() => {
+    Object.values(imageSlides).forEach((slide) => {
       if (!slide.image) {
-        this.props.getImage(slide)
+        dispatch(getImage(slide))
       }
     })
-  }
+  }, [dispatch, imageSlides])
 
-  componentWillUnmount () {
-    clearTimeout(this.timer)
-  }
+  useEffect(() => {
+    setSlide()
+    return () => {
+      window.clearTimeout(timerRef.current)
+    }
+  }, [setSlide])
 
-  render () {
-    const {
-      className,
-      slides,
-      id,
-    } = this.props
+  const handleSlideButtonClick = useCallback((event) => {
+    window.clearTimeout(timerRef.current)
+    setCurSlide(event.target.name)
+  }, [])
 
-    const {
-      curSlide,
-    } = this.state
 
-    const slide = this.props.slides[curSlide]
+  const curSlide = imageSlides[curSlideId]
 
-    return (
-      <div className={['carousel', className]} id={id}>
-        <AnimatePresence>
-          {
-            Boolean(slide.image) && (
-              <m.div
-                key={`${curSlide}-img`}
-                {...slideMotionConfig}
-                className="carousel-slide"
-                src={slide.image}
-                style={
-                  {
-                    backgroundImage: `url(${slide.image})`,
-                    backgroundPosition: slide.position || 'center',
-                  }
-                } />
-            )
-          }
-          {
-            Boolean(slide.image && slide.text) && (
-              <m.span
-                key={`${curSlide}-text`}
-                {...slideTextMotionConfig}
-                className="carousel-slide-text">
-                {slide.text}
-              </m.span>
-            )
-          }
-        </AnimatePresence>
-        <div className="carousel-slide-picker">
-          {
-            Object.keys(slides).map((slideId) => {
-              return (
-                <button
-                  key={slideId}
-                  aria-label={`Image carousel slide ${slideId}`}
-                  className={['circle-button', { active: curSlide === slideId }]}
-                  name={slideId}
-                  type="button"
-                  onClick={this._handleSlideButtonClick} />
-              )
-            })
-          }
-        </div>
+  return (
+    <div className={['carousel', className]} id={id}>
+      <AnimatePresence>
+        {
+        Boolean(curSlide.image) && (
+          <m.div
+            key={`${curSlideId}-img`}
+            {...slideMotionConfig}
+            className="carousel-slide"
+            src={curSlide.image}
+            style={
+              {
+                backgroundImage: `url(${curSlide.image})`,
+                backgroundPosition: curSlide.position ?? 'center',
+              }
+            } />
+        )
+      }
+        {
+        Boolean(curSlide.image && curSlide.text) && (
+          <m.span
+            key={`${curSlideId}-text`}
+            {...slideTextMotionConfig}
+            className="carousel-slide-text">
+            {curSlide.text}
+          </m.span>
+        )
+      }
+      </AnimatePresence>
+      <div className="carousel-slide-picker">
+        {
+        Object.keys(imageSlides).map((slideId) => {
+          return (
+            <button
+              key={slideId}
+              aria-label={`Image carousel slide ${slideId}`}
+              className={['circle-button', { active: curSlideId === slideId }]}
+              name={slideId}
+              type="button"
+              onClick={handleSlideButtonClick} />
+          )
+        })
+      }
       </div>
-    )
-  }
+    </div>
+  )
+}
 
-
-
-
-
-  /***************************************************************************\
-    Redux Properties
-  \***************************************************************************/
-
-  static mapDispatchToProps = ['getImage']
-
-  static mapStateToProps = createStructuredSelector({
-    slides: selectConnectedSlides,
-  })
-
-
-
-
-
-  /***************************************************************************\
-    Prop Definitions
-  \***************************************************************************/
-
-  static defaultProps = {
-    className: '',
-    interval: 10000,
-  }
-
-  static propTypes = {
-    className: PropTypes.string,
-    getImage: PropTypes.func,
-    id: PropTypes.string.isRequired,
-    interval: PropTypes.number,
-    slides: PropTypes.objectOf(PropTypes.shape({
-      filename: PropTypes.string,
-      image: PropTypes.string,
-      position: PropTypes.string,
-      text: PropTypes.any,
-    })).isRequired,
-  }
+Carousel.propTypes = {
+  className: PropTypes.string,
+  getImage: PropTypes.func,
+  id: PropTypes.string.isRequired,
+  interval: PropTypes.number,
+  slides: PropTypes.objectOf(PropTypes.shape({
+    filename: PropTypes.string,
+    image: PropTypes.string,
+    position: PropTypes.string,
+    text: PropTypes.any,
+  })).isRequired,
 }
 
 

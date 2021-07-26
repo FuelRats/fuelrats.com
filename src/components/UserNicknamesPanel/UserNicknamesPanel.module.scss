@@ -5,22 +5,21 @@
   padding: 0.5rem 0 0;
 
   overflow: visible;
+}
 
+.nickList > li {
+  display: flex;
 
-  ul > li {
-    display: flex;
+  justify-content: space-between;
 
-    justify-content: space-between;
+  padding: 0.5rem 1rem;
 
-    padding: 0.5rem 1rem;
+  &:nth-child(even) {
+    background-color: $light-grey;
+  }
 
-    &:nth-child(even) {
-      background-color: $light-grey;
-    }
-
-    span {
-      word-break: break-word;
-    }
+  span {
+    word-break: break-word;
   }
 }
 

@@ -12,10 +12,10 @@ module.exports = (env) => {
         headers: nextSafe({
           isDev: env.isDev,
           contentSecurityPolicy: {
-            'default-src': ["'self'", '*.fuelrats.com', 'blob:'],
+            'default-src': ["'self'", '*.fuelrats.com'],
             'script-src': ["'self'", '*.stripe.com'],
             'connect-src': ["'self'", 'wss://*.fuelrats.com', env.frapi.url, env.appUrl],
-            'object-src': ["'self'"],
+            'object-src': ["'self'", 'data:'],
             'font-src': ["'self'", 'fonts.gstatic.com'],
             'style-src': ["'self'", 'fonts.googleapis.com'],
             'img-src': ["'self'", '*.wp.com', 'blob:', 'data:'],

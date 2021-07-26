@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 
-import { connect } from '~/store'
+import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { selectAuthorByBlogId, selectBlogById, selectCategoriesByBlogId } from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 import makeBlogRoute from '~/util/router/makeBlogRoute'
@@ -13,13 +13,11 @@ import TextPlaceholder from '../TextPlaceholder'
 
 
 function ArticleCard (props) {
-  const {
-    author,
-    blog,
-    categories,
-    className,
-    renderMode = 'excerpt',
-  } = props
+  const { className, renderMode = 'excerpt' } = props
+
+  const author = useSelectorWithProps(props, selectAuthorByBlogId)
+  const blog = useSelectorWithProps(props, selectBlogById)
+  const categories = useSelectorWithProps(props, selectCategoriesByBlogId)
 
   if (!blog) {
     if (renderMode === 'article') {
@@ -110,16 +108,4 @@ function ArticleCard (props) {
 
 
 
-ArticleCard.mapStateToProps = (state, ownProps) => {
-  return {
-    author: selectAuthorByBlogId(state, ownProps),
-    blog: selectBlogById(state, ownProps),
-    categories: selectCategoriesByBlogId(state, ownProps),
-  }
-}
-
-
-
-
-
-export default connect(ArticleCard)
+export default ArticleCard

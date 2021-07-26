@@ -1,9 +1,10 @@
 import _debounce from 'lodash/debounce'
 import React from 'react'
+import { useSelector } from 'react-redux'
 import ReactTable from 'react-table-6'
-import { createStructuredSelector } from 'reselect'
 
-import { connect } from '~/store'
+import { connectState } from '~/store'
+import { getLeaderboard } from '~/store/actions/statistics'
 import {
   selectLeaderboard,
   selectLeaderboardStatistics,
@@ -21,25 +22,63 @@ import RescueAchievementIcon from './Leaderboard/RescueAchievementIcon'
 const FETCH_DATA_DEBOUNCE = 500
 const DEFAULT_PAGE_SIZE = 25
 
+const columns = [
+  {
+    accessor: 'attributes.preferredName',
+    className: 'name',
+    Header: 'Name',
+    headerClassName: 'name-header',
+    id: 'name',
+    minWidth: 125,
+  },
+  {
+    accessor: 'attributes.rescueCount',
+    className: 'rescues',
+    Header: 'Rescues',
+    headerClassName: 'rescues-header',
+    id: 'rescues',
+    filterable: false,
+    minWidth: 60,
+    maxWidth: 80,
+  },
+  {
+    accessor: (datum) => {
+      return datum
+    },
+    className: 'badges',
+    Header: 'Badges',
+    headerClassName: 'badges-header',
+    id: 'badges',
+    minWidth: 150,
+    maxWidth: 200,
+    filterable: false,
+    Cell: ({ value }) => {
+      const {
+        codeRedCount,
+        joinedAt,
+        rescueCount,
+      } = value.attributes
 
-const renderBadgeCell = ({ value }) => {
-  const {
-    codeRedCount,
-    joinedAt,
-    rescueCount,
-  } = value.attributes
-
-  return (
-    <div className="badge-list">
-      <RescueAchievementIcon className="size-32 fixed" rescueCount={rescueCount} />
-      <CodeRedIcon className="size-32 fixed" codeRedCount={codeRedCount} />
-      <FirstYearIcon className="size-32 fixed" createdAt={joinedAt} />
-    </div>
-  )
-}
+      return (
+        <div className="badge-list">
+          <RescueAchievementIcon className="size-32 fixed" rescueCount={rescueCount} />
+          <CodeRedIcon className="size-32 fixed" codeRedCount={codeRedCount} />
+          <FirstYearIcon className="size-32 fixed" createdAt={joinedAt} />
+        </div>
+      )
+    },
+  },
+]
 
 
-@connect
+
+
+@connectState(() => {
+  return {
+    statistics: useSelector(selectLeaderboardStatistics),
+    entries: useSelector(selectLeaderboard),
+  }
+})
 class RatLeaderboardTable extends React.Component {
   /***************************************************************************\
     Class Properties
@@ -51,7 +90,7 @@ class RatLeaderboardTable extends React.Component {
 
 
   _fetchData = async (state) => {
-    await this.props.getLeaderboard({
+    await this.props.dispatch(getLeaderboard({
       filter: {
         name: state.filtered.length > 0 ? `%${state.filtered[0]?.value}%` : undefined,
       },
@@ -59,7 +98,7 @@ class RatLeaderboardTable extends React.Component {
         offset: state.page * state.pageSize,
         limit: state.pageSize,
       },
-    })
+    }))
 
     this.setState({ loading: false })
   }
@@ -81,11 +120,11 @@ class RatLeaderboardTable extends React.Component {
 
   async componentDidMount () {
     if (!this.props.statistics?.page) { // page would be undefined if we haven't grabbed the leaderboard yet.
-      await this.props.getLeaderboard({
+      await this.props.dispatch(getLeaderboard({
         page: {
           limit: DEFAULT_PAGE_SIZE,
         },
-      })
+      }))
     }
 
     this.setState({ loading: false })
@@ -107,7 +146,7 @@ class RatLeaderboardTable extends React.Component {
           filterable
           manual
           className="rat-leaderboard -striped"
-          columns={this.columns}
+          columns={columns}
           data={entries ?? []}
           loading={loading}
           pages={statistics.lastPage}
@@ -117,61 +156,6 @@ class RatLeaderboardTable extends React.Component {
       </section>
     )
   }
-
-
-
-
-
-  /***************************************************************************\
-    Getters
-  \***************************************************************************/
-
-  get columns () {
-    if (!this._columns) {
-      this._columns = [
-        {
-          accessor: 'attributes.preferredName',
-          className: 'name',
-          Header: 'Name',
-          headerClassName: 'name-header',
-          id: 'name',
-          minWidth: 125,
-        },
-        {
-          accessor: 'attributes.rescueCount',
-          className: 'rescues',
-          Header: 'Rescues',
-          headerClassName: 'rescues-header',
-          id: 'rescues',
-          filterable: false,
-          minWidth: 60,
-          maxWidth: 80,
-        },
-        {
-          accessor: (datum) => {
-            return datum
-          },
-          className: 'badges',
-          Header: 'Badges',
-          headerClassName: 'badges-header',
-          id: 'badges',
-          minWidth: 150,
-          maxWidth: 200,
-          filterable: false,
-          Cell: renderBadgeCell,
-        },
-      ]
-    }
-
-    return this._columns
-  }
-
-  static mapDispatchToProps = ['getLeaderboard']
-
-  static mapStateToProps = createStructuredSelector({
-    statistics: selectLeaderboardStatistics,
-    entries: selectLeaderboard,
-  })
 }
 
 

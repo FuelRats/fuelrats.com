@@ -11,28 +11,9 @@ form {
     margin: 0 auto 0.5rem;
   }
 
-  &.compact .form-row {
-    &.submit-row {
-      padding: 0.4rem 0;
 
-      fieldset,
-      > div {
-        padding: 0.1rem 0.25rem;
-      }
-    }
-
-    fieldset,
-    > div {
-      padding: 0.5rem;
-
-      &:first-child {
-        padding-left: 4rem;
-      }
-
-      &:last-child {
-        padding-right: 4rem;
-      }
-    }
+  &.compact .form-row fieldset {
+    padding: 0.5rem 0.25rem;
   }
 
   .form-row {

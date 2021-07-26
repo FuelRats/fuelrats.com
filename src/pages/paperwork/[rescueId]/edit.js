@@ -10,8 +10,9 @@ import RadioInput from '~/components/RadioInput'
 import RatTagsInput from '~/components/RatTagsInput'
 import SystemTagsInput from '~/components/SystemTagsInput'
 import platformRadioOptions from '~/data/platformRadioOptions'
-import { connect } from '~/store'
-import { getRescue } from '~/store/actions/rescues'
+import useSelectorWithProps from '~/hooks/useSelectorWithProps'
+import { connectState } from '~/store'
+import { getRescue, updateRescue } from '~/store/actions/rescues'
 import {
   selectRatsByRescueId,
   selectRescueById,
@@ -85,7 +86,6 @@ const outcomeRadioOptions = [
 
 
 @authenticated
-@connect
 class Paperwork extends React.Component {
   /***************************************************************************\
     Properties
@@ -250,7 +250,7 @@ class Paperwork extends React.Component {
       }
     }
 
-    const response = await this.props.updateRescue(updateData)
+    const response = await this.props.dispatch(updateRescue(updateData))
 
     if (isError(response)) {
       this.setState({ error: true, submitting: false })
@@ -675,28 +675,16 @@ class Paperwork extends React.Component {
       system: ifDefined(changes.system, rescue.attributes.system ? { value: rescue.attributes.system.toUpperCase() } : null),
     }
   }
-
-
-
-
-
-  /***************************************************************************\
-    Redux Properties
-  \***************************************************************************/
-
-  static mapDispatchToProps = ['updateRescue', 'getRescue']
-
-  static mapStateToProps = (state, { query }) => {
-    return {
-      rats: selectFormattedRatsByRescueId(state, query),
-      rescue: selectRescueById(state, query),
-      userCanEdit: selectCurrentUserCanEditRescue(state, query),
-    }
-  }
 }
 
 
 
 
 
-export default Paperwork
+export default connectState((props) => {
+  return {
+    rats: useSelectorWithProps(props.query, selectFormattedRatsByRescueId),
+    rescue: useSelectorWithProps(props.query, selectRescueById),
+    userCanEdit: useSelectorWithProps(props.query, selectCurrentUserCanEditRescue),
+  }
+})(Paperwork)

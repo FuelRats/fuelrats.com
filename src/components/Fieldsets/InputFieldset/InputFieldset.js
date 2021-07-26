@@ -21,6 +21,7 @@ const InputFieldset = React.forwardRef((props, forwardRef) => {
     className,
     dark,
     displayName = 'Input',
+    fieldsetClassName,
     skipWarnings = false,
     inputClassName,
     label,
@@ -89,7 +90,7 @@ const InputFieldset = React.forwardRef((props, forwardRef) => {
   const hideMessages = !messages?.validatedValue?.length || !messages?.hasMessages || validating || !isFocused
 
   return (
-    <fieldset>
+    <fieldset className={fieldsetClassName}>
 
       {
         Boolean(label) && (
