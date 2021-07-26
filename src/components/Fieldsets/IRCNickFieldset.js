@@ -29,7 +29,7 @@ export default function IRCNickFieldset (props) {
 
       if (!value.match(ircNickRegExp)) {
         messages.errors.push(
-          'IRC Nicks can only be single words made up of letters, numbers, and certain formatting characters. Underscores ("_") are usually used in place of spaces',
+          'IRC Nicks must begin with a letter, and may only contain letters, numbers, and certain formatting characters. Underscores ("_") are usually used in place of spaces',
         )
       }
 
