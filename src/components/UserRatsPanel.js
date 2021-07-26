@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+import AddRatForm from '~/components/Forms/AddRatForm'
+import RatCard from '~/components/RatCard'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { getUserStatistics } from '~/store/actions/statistics'
 import {
@@ -8,9 +10,6 @@ import {
   withCurrentUserId,
   selectRatStatisticsById,
 } from '~/store/selectors'
-
-import AddRatForm from './AddRatForm'
-import RatCard from './RatCard'
 
 
 
