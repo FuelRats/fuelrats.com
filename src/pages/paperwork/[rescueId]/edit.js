@@ -2,7 +2,6 @@ import { HttpStatus } from '@fuelrats/web-util/http'
 import { isError } from 'flux-standard-action'
 import Router from 'next/router'
 import React from 'react'
-import { useDispatch } from 'react-redux'
 import { createSelector } from 'reselect'
 
 import { authenticated } from '~/components/AppLayout'
@@ -684,7 +683,6 @@ class Paperwork extends React.Component {
 
 export default connectState((props) => {
   return {
-    dispatch: useDispatch(),
     rats: useSelectorWithProps(props.query, selectFormattedRatsByRescueId),
     rescue: useSelectorWithProps(props.query, selectRescueById),
     userCanEdit: useSelectorWithProps(props.query, selectCurrentUserCanEditRescue),

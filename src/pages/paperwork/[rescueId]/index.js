@@ -3,7 +3,6 @@ import { HttpStatus } from '@fuelrats/web-util/http'
 import Link from 'next/link'
 import Router from 'next/router'
 import React from 'react'
-import { useDispatch } from 'react-redux'
 
 import { authenticated } from '~/components/AppLayout'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
@@ -385,7 +384,6 @@ class Paperwork extends React.Component {
 
 export default connectState((props) => {
   return {
-    dispatch: useDispatch(),
     rats: useSelectorWithProps(props.query, selectRatsByRescueId) ?? [],
     rescue: useSelectorWithProps(props.query, selectRescueById),
     userCanEdit: useSelectorWithProps(props.query, selectCurrentUserCanEditRescue),

@@ -2,7 +2,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import debounce from 'lodash/debounce'
 import Link from 'next/link'
 import React from 'react'
-import { useDispatch } from 'react-redux'
 
 import { authenticated } from '~/components/AppLayout'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
@@ -193,7 +192,6 @@ class ListRescues extends React.Component {
 
 export default connectState(() => {
   return {
-    dispatch: useDispatch(),
     meta: useSelectorWithProps({ pageViewId }, selectPageViewMetaById),
     rescues: useSelectorWithProps({ pageViewId }, selectPageViewDataById) ?? [],
   }
