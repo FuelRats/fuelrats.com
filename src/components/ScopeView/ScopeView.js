@@ -43,8 +43,8 @@ const selectGroupedScopes = createSelector(
 
 
 
-function ScopeView ({ className }) {
-  const groupedScopes = useSelectorWithProps(className, selectGroupedScopes)
+function ScopeView ({ scopes, className }) {
+  const groupedScopes = useSelectorWithProps({ scopes }, selectGroupedScopes)
   return (
     <div className={[styles.scopeView, className]}>
       {
