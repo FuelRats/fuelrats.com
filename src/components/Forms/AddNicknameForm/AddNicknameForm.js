@@ -53,6 +53,7 @@ function AddNicknameForm (props) {
   return (
     <Form className={styles.addNicknameForm}>
       <IRCNickFieldset
+        required
         aria-label="Nickname"
         className={[styles.thinInput, error && styles.error]}
         disabled={props.disabled}
