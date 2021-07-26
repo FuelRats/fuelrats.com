@@ -3,10 +3,11 @@ import { HttpStatus } from '@fuelrats/web-util/http'
 import Link from 'next/link'
 import Router from 'next/router'
 import React from 'react'
+import { useDispatch } from 'react-redux'
 
 import { authenticated } from '~/components/AppLayout'
-import { connect } from '~/store'
-import { getRescue } from '~/store/actions/rescues'
+import useSelectorWithProps from '~/hooks/useSelectorWithProps'
+import { deleteRescue, getRescue } from '~/store/actions/rescues'
 import {
   selectRatsByRescueId,
   selectRescueById,
@@ -24,7 +25,6 @@ import makePaperworkRoute from '~/util/router/makePaperworkRoute'
 
 
 @authenticated
-@connect
 class Paperwork extends React.Component {
   /***************************************************************************\
     Properties
@@ -46,7 +46,7 @@ class Paperwork extends React.Component {
   _handleDeleteClick = async () => {
     if (this.state.deleteConfirm) {
       this.setState({ deleting: true })
-      await this.props.deleteRescue(this.props.rescue)
+      await this.props.dispatch(deleteRescue(this.props.rescue))
 
       Router.push(
         this.props.userCanWriteAll
@@ -376,29 +376,20 @@ class Paperwork extends React.Component {
       </div>
     )
   }
+}
 
-
-
-
-
-  /***************************************************************************\
-    Redux Properties
-  \***************************************************************************/
-
-  static mapDispatchToProps = ['deleteRescue']
-
-  static mapStateToProps = (state, { query }) => {
-    return {
-      rats: selectRatsByRescueId(state, query) || [],
-      rescue: selectRescueById(state, query),
-      userCanEdit: selectCurrentUserCanEditRescue(state, query),
-      userCanWriteAll: selectCurrentUserHasScope(state, { scope: 'rescues.write' }),
-    }
+export function connectState (Component) {
+  return (props) => {
+    return (
+      <Component
+        {...props}
+        dispatch={useDispatch()}
+        rats={useSelectorWithProps(props.query, selectRatsByRescueId) ?? []}
+        rescue={useSelectorWithProps(props.query, selectRescueById)}
+        userCanEdit={useSelectorWithProps(props.query, selectCurrentUserCanEditRescue)}
+        userCanWriteAll={useSelectorWithProps({ scope: 'rescues.write' }, selectCurrentUserHasScope)} />
+    )
   }
 }
 
-
-
-
-
-export default Paperwork
+export default connectState(Paperwork)

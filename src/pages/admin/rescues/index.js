@@ -2,9 +2,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import debounce from 'lodash/debounce'
 import Link from 'next/link'
 import React from 'react'
+import { useDispatch } from 'react-redux'
 
 import { authenticated } from '~/components/AppLayout'
-import { connect } from '~/store'
+import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { getRescues } from '~/store/actions/rescues'
 import { selectPageViewDataById, selectPageViewMetaById } from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
@@ -24,7 +25,6 @@ const pageViewId = 'admin-rescue-list'
 
 
 @authenticated('rescue.write')
-@connect
 class ListRescues extends React.Component {
   /***************************************************************************\
     Class Properties
@@ -59,14 +59,14 @@ class ListRescues extends React.Component {
     this.setState(
       { loading: true },
       async () => {
-        await this.props.getRescues(
+        await this.props.dispatch(getRescues(
           this.state.client
             ? { 'client.ilike': `${this.state.client}%` }
             : { 'status.ne': 'closed' },
           {
             pageView: pageViewId,
           },
-        )
+        ))
 
         this.setState({ loading: false })
       },
@@ -186,27 +186,20 @@ class ListRescues extends React.Component {
       </div>
     )
   }
+}
 
 
-
-
-
-  /***************************************************************************\
-    Redux Properties
-  \***************************************************************************/
-
-  static mapDispatchToProps = ['getRescues']
-
-  static mapStateToProps = (state) => {
-    return {
-      rescues: selectPageViewDataById(state, { pageViewId }) || [],
-      meta: selectPageViewMetaById(state, { pageViewId }),
-    }
+function connectState (Component) {
+  return (props) => {
+    return (
+      <Component
+        {...props}
+        dispatch={useDispatch()}
+        meta={useSelectorWithProps({ pageViewId }, selectPageViewMetaById)}
+        rescues={useSelectorWithProps({ pageViewId }, selectPageViewDataById) ?? []} />
+    )
   }
 }
 
 
-
-
-
-export default ListRescues
+export default connectState(ListRescues)
