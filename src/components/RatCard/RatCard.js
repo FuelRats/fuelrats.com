@@ -1,10 +1,11 @@
 import { isError } from 'flux-standard-action'
 import PropTypes from 'prop-types'
-import React, { useCallback } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React from 'react'
+import { useSelector } from 'react-redux'
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
+import { connectState, useAction } from '~/store'
 import { deleteRat as deleteRatAction, updateRat as updateRatAction } from '~/store/actions/rats'
 import {
   selectRatById,
@@ -313,31 +314,17 @@ class RatCard extends React.Component {
   }
 }
 
-// Dirty hack due to pending component rewrite.
-function connectState (Component) {
-  return (props) => {
-    const dispatch = useDispatch()
 
-    const deleteRat = useCallback((...args) => {
-      return dispatch(deleteRatAction(...args))
-    }, [dispatch])
 
-    const updateRat = useCallback((...args) => {
-      return dispatch(updateRatAction(...args))
-    }, [dispatch])
 
-    return (
-      <Component
-        deleteRat={deleteRat}
-        rat={useSelectorWithProps(props, selectRatById)}
-        statistics={useSelectorWithProps(props, selectRatStatisticsById)}
-        updateRat={updateRat}
-        user={useSelector(withCurrentUserId(selectUserById))}
-        userDisplayRatId={useSelector(withCurrentUserId(selectDisplayRatIdByUserId))}
-        {...props} />
-    )
+
+export default connectState((props) => {
+  return {
+    deleteRat: useAction(deleteRatAction),
+    updateRat: useAction(updateRatAction),
+    rat: useSelectorWithProps(props, selectRatById),
+    statistics: useSelectorWithProps(props, selectRatStatisticsById),
+    user: useSelector(withCurrentUserId(selectUserById)),
+    userDisplayRatId: useSelector(withCurrentUserId(selectDisplayRatIdByUserId)),
   }
-}
-
-
-export default connectState(RatCard)
+})(RatCard)

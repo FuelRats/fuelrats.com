@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux'
 
 import { authenticated } from '~/components/AppLayout'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
+import { connectState } from '~/store'
 import { getRescues } from '~/store/actions/rescues'
 import { selectPageViewDataById, selectPageViewMetaById } from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
@@ -189,17 +190,11 @@ class ListRescues extends React.Component {
 }
 
 
-function connectState (Component) {
-  return (props) => {
-    return (
-      <Component
-        {...props}
-        dispatch={useDispatch()}
-        meta={useSelectorWithProps({ pageViewId }, selectPageViewMetaById)}
-        rescues={useSelectorWithProps({ pageViewId }, selectPageViewDataById) ?? []} />
-    )
+
+export default connectState(() => {
+  return {
+    dispatch: useDispatch(),
+    meta: useSelectorWithProps({ pageViewId }, selectPageViewMetaById),
+    rescues: useSelectorWithProps({ pageViewId }, selectPageViewDataById) ?? [],
   }
-}
-
-
-export default connectState(ListRescues)
+})(ListRescues)

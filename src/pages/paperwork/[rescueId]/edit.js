@@ -12,6 +12,7 @@ import RatTagsInput from '~/components/RatTagsInput'
 import SystemTagsInput from '~/components/SystemTagsInput'
 import platformRadioOptions from '~/data/platformRadioOptions'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
+import { connectState } from '~/store'
 import { getRescue, updateRescue } from '~/store/actions/rescues'
 import {
   selectRatsByRescueId,
@@ -677,17 +678,15 @@ class Paperwork extends React.Component {
   }
 }
 
-export function connectState (Component) {
-  return (props) => {
-    return (
-      <Component
-        {...props}
-        dispatch={useDispatch()}
-        rats={useSelectorWithProps(props.query, selectFormattedRatsByRescueId)}
-        rescue={useSelectorWithProps(props.query, selectRescueById)}
-        userCanEdit={useSelectorWithProps(props.query, selectCurrentUserCanEditRescue)} />
-    )
-  }
-}
 
-export default connectState(Paperwork)
+
+
+
+export default connectState((props) => {
+  return {
+    dispatch: useDispatch(),
+    rats: useSelectorWithProps(props.query, selectFormattedRatsByRescueId),
+    rescue: useSelectorWithProps(props.query, selectRescueById),
+    userCanEdit: useSelectorWithProps(props.query, selectCurrentUserCanEditRescue),
+  }
+})(Paperwork)

@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux'
 
 import { authenticated } from '~/components/AppLayout'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
+import { connectState } from '~/store'
 import { deleteRescue, getRescue } from '~/store/actions/rescues'
 import {
   selectRatsByRescueId,
@@ -378,18 +379,16 @@ class Paperwork extends React.Component {
   }
 }
 
-export function connectState (Component) {
-  return (props) => {
-    return (
-      <Component
-        {...props}
-        dispatch={useDispatch()}
-        rats={useSelectorWithProps(props.query, selectRatsByRescueId) ?? []}
-        rescue={useSelectorWithProps(props.query, selectRescueById)}
-        userCanEdit={useSelectorWithProps(props.query, selectCurrentUserCanEditRescue)}
-        userCanWriteAll={useSelectorWithProps({ scope: 'rescues.write' }, selectCurrentUserHasScope)} />
-    )
-  }
-}
 
-export default connectState(Paperwork)
+
+
+
+export default connectState((props) => {
+  return {
+    dispatch: useDispatch(),
+    rats: useSelectorWithProps(props.query, selectRatsByRescueId) ?? [],
+    rescue: useSelectorWithProps(props.query, selectRescueById),
+    userCanEdit: useSelectorWithProps(props.query, selectCurrentUserCanEditRescue),
+    userCanWriteAll: useSelectorWithProps({ scope: 'rescues.write' }, selectCurrentUserHasScope),
+  }
+})(Paperwork)
