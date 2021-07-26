@@ -1,6 +1,8 @@
+import { useCallback } from 'react'
+
 import asModal, { ModalContent, useModalContext } from '~/components/asModal'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
-import { connectState, useAction } from '~/store'
+import { connectState } from '~/store'
 import { setFlag } from '~/store/actions/flags'
 import { selectFlagByName } from '~/store/selectors'
 
@@ -29,10 +31,11 @@ function LoginModal () {
 
 
 
-const hideLoginDialog = setFlag.bind(null, 'showLoginDialog', false)
-export default connectState(() => {
+export default connectState((_, dispatch) => {
   return {
-    onClose: useAction(hideLoginDialog),
+    onClose: useCallback(() => {
+      return dispatch(setFlag('showLoginDialog', false))
+    }, [dispatch]),
     isOpen: useSelectorWithProps({ name: 'showLoginDialog' }, selectFlagByName),
   }
 })(asModal(

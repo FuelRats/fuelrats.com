@@ -26,31 +26,28 @@ if ($$BUILD.isDev) {
 
 /**
  * Transitionary method of connecting state to hard-to-refactor class components.
+ *
+ * Provides state returned by the provider function and automatically attaches the dispatch() function.
+ *
  * DO NOT INTRODUCE TO NEW COMPONENTS
  *
- * @param {Function} stateProvider a function which returns an object of state values. hook-compatible
+ * @param {Function} stateProvider a function which returns an object of state values. hook-compatible. props and dispatch are available through arguments.
  * @returns {React.FC}
  */
 export function connectState (stateProvider) {
   return (Component) => {
-    return (comProps) => {
-      const stateProps = stateProvider(comProps) ?? {}
+    return (props) => {
+      const dispatch = useDispatch()
+      const stateProps = stateProvider?.(props, dispatch) ?? {}
       return (
         <Component
-          {...comProps}
-          {...stateProps} />
+          {...props}
+          {...stateProps}
+          dispatch={dispatch} />
       )
     }
   }
 }
-
-export function useAction (actionCreator) {
-  const dispatch = useDispatch()
-  return useCallback((...props) => {
-    return dispatch(actionCreator(...props))
-  }, [actionCreator, dispatch])
-}
-
 
 export const initStore = (state = initialState) => {
   return createStore(reducer, state, composeWithDevTools(applyMiddleware(...middlewares)))

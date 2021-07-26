@@ -5,8 +5,8 @@ import { useSelector } from 'react-redux'
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
-import { connectState, useAction } from '~/store'
-import { deleteRat as deleteRatAction, updateRat as updateRatAction } from '~/store/actions/rats'
+import { connectState } from '~/store'
+import { deleteRat, updateRat } from '~/store/actions/rats'
 import {
   selectRatById,
   selectUserById,
@@ -70,8 +70,7 @@ class RatCard extends React.Component {
     } = this.state
 
     const {
-      updateRat,
-      deleteRat,
+      dispatch,
       rat,
       user,
     } = this.props
@@ -82,16 +81,16 @@ class RatCard extends React.Component {
         submitting: 'delete',
       })
 
-      deleteRat(user, rat)
+      dispatch(deleteRat(user, rat))
       return
     }
 
     this.setState({ submitting: true })
 
-    await updateRat({
+    await dispatch(updateRat({
       id: rat.id,
       attributes: changes,
-    })
+    }))
 
     this.setState({
       changes: {},
@@ -142,12 +141,12 @@ class RatCard extends React.Component {
   }
 
   _handleOdysseySwitch = () => {
-    return this.props.updateRat({
+    return this.props.dispatch(updateRat({
       id: this.props.rat.id,
       attributes: {
         odyssey: !this.props.rat.attributes.odyssey,
       },
-    })
+    }))
   }
 
 
@@ -303,12 +302,11 @@ class RatCard extends React.Component {
 
   static propTypes = {
     className: PropTypes.string,
-    deleteRat: PropTypes.func,
+    dispatch: PropTypes.func.isRequired,
     rat: PropTypes.object,
     // eslint-disable-next-line react/no-unused-prop-types -- ratId is used in state mapping
     ratId: PropTypes.string.isRequired,
     statistics: PropTypes.object,
-    updateRat: PropTypes.func,
     user: PropTypes.object,
     userDisplayRatId: PropTypes.string,
   }
@@ -320,8 +318,6 @@ class RatCard extends React.Component {
 
 export default connectState((props) => {
   return {
-    deleteRat: useAction(deleteRatAction),
-    updateRat: useAction(updateRatAction),
     rat: useSelectorWithProps(props, selectRatById),
     statistics: useSelectorWithProps(props, selectRatStatisticsById),
     user: useSelector(withCurrentUserId(selectUserById)),
