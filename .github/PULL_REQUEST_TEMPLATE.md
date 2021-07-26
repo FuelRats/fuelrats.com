@@ -34,7 +34,7 @@ Closes #[issue]
 - [ ] This PR was created to resolve an existing issue or set of issues.
 - [ ] This PR satisfies any and all acceptance criteria laid out by issue(s) it resolves.
 - [ ] I have discussed creating this PR with the maintainers in the issue(s) beforehand.
-- [ ] I have thoroughly tested the changes this PR introduces in a local development enviornment.
+- [ ] I have thoroughly tested the changes this PR introduces in a local development environment.
 - [ ] I have linted the entire codebase using `yarn lint` and confirmed there are no errors or warnings.
 - [ ] I have followed the commit conventions laid out by [`CONTRIBUTING.md`](https://github.com/FuelRats/fuelrats.com/blob/develop/CONTRIBUTING.md#commit-conventions).
 
