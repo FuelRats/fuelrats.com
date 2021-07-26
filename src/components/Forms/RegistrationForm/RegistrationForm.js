@@ -65,7 +65,7 @@ function RegistrationForm ({ onSubmit }) {
       <NewPasswordFieldset
         required
         id="Password"
-        label="labels.password"
+        label={labels.password}
         name="attributes.password" />
 
       <IRCNickFieldset
