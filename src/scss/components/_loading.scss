@@ -1,10 +1,8 @@
 @use 'sass:math';
 
-.loading {
+.loading:not(.error) {
   &:empty,
   &.loader-force {
-    position: relative;
-
     &::after,
     &::before {
       display: flex;

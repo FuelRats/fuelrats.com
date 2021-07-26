@@ -1,8 +1,6 @@
 @use 'sass:math';
 
 .error:empty {
-  position: relative;
-
   &::after,
   &::before {
     display: flex;
