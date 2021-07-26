@@ -1,4 +1,5 @@
 import { errorLoggerMiddleware } from '@fuelrats/web-util/redux-middleware'
+import hoistNonReactStatics from 'hoist-non-react-statics'
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
@@ -36,7 +37,7 @@ if ($$BUILD.isDev) {
  */
 export function connectState (stateProvider) {
   return (Component) => {
-    return (props) => {
+    return hoistNonReactStatics((props) => {
       const dispatch = useDispatch()
       const stateProps = stateProvider?.(props, dispatch) ?? {}
       return (
@@ -45,7 +46,7 @@ export function connectState (stateProvider) {
           {...stateProps}
           dispatch={dispatch} />
       )
-    }
+    }, Component)
   }
 }
 
