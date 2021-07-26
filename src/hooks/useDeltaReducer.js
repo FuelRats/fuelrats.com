@@ -13,7 +13,11 @@ import isEqual from '~/util/isEqual'
 export default function useDeltaReducer (initialState) {
   const deltaReducer = useCallback(
     (draft, action) => {
-      const { name, value } = action
+      const { name, value, clear } = action
+      if (clear) {
+        return {}
+      }
+
       const initialValue = _get(initialState, name)
 
       if (isEqual(initialValue, value)) {
@@ -21,6 +25,8 @@ export default function useDeltaReducer (initialState) {
       } else {
         _set(draft, name, value)
       }
+
+      return undefined
     },
     [initialState],
   )
