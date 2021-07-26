@@ -6,7 +6,6 @@ import { useField, fieldPropTypes } from '~/hooks/useForm'
 import extPropTypes from '~/util/propTypes/extPropTypes'
 
 import inputStyles from '../InputFieldset/InputFieldset.module.scss'
-import ValidityIcon from '../InputFieldset/ValidityIcon'
 import styles from './SelectFieldset.module.scss'
 
 
@@ -19,6 +18,7 @@ function SelectFieldset (props) {
     className,
     dark,
     disabled,
+    fieldsetClassName,
     inputClassName,
     label,
     noEmpty,
@@ -53,7 +53,7 @@ function SelectFieldset (props) {
   } = useField(props.name, { onValidate, onChange, validateOpts })
 
   return (
-    <fieldset>
+    <fieldset className={fieldsetClassName}>
       {
         Boolean(label) && (
           <label htmlFor={props.id}>{label}</label>
