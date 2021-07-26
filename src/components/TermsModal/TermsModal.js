@@ -32,8 +32,8 @@ function TermsModal (props) {
 
   return (
     <>
-      <ModalContent className={[styles.content]}>
-        <WordpressPage slug={slug} />
+      <ModalContent as="article" className={[styles.content]}>
+        <WordpressPage className="loader-dark" slug={slug} />
       </ModalContent>
       <ModalFooter>
         <div className="secondary" />

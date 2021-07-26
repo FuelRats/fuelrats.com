@@ -48,7 +48,7 @@ function WordpressPage ({ className, slug }) {
   /* eslint-disable react/no-danger */
   return (
     <div
-      className={['article-content', { error: !renderedContent && !loading }, className]}
+      className={['article-content loading', { error: !renderedContent && !loading }, className]}
       dangerouslySetInnerHTML={{ __html: renderedContent }} />
   )
   /* eslint-enable */
