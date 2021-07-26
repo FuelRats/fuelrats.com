@@ -1,152 +1,78 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { HttpStatus } from '@fuelrats/web-util/http'
 import { isError } from 'flux-standard-action'
-import React from 'react'
+import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import InfoBubble from '~/components/InfoBubble'
-import ValidatedFormInput from '~/components/ValidatedFormInput'
-import { ircNickPattern } from '~/data/RegExpr'
-import { connect } from '~/store'
+import useForm from '~/hooks/useForm'
+import { addNickname } from '~/store/actions/user'
 import { selectUserById, withCurrentUserId } from '~/store/selectors'
 
+import IRCNickFieldset from '../Fieldsets/IRCNickFieldset'
 import styles from './AddNicknameForm.module.scss'
 
 
+const formData = {
+  attributes: {
+    nick: '',
+  },
+}
 
 
+function AddNicknameForm (props) {
+  const user = useSelector(withCurrentUserId(selectUserById))
+  const [error, setSubmitError] = useState(null)
+  const dispatch = useDispatch()
 
-@connect
-class AddNicknameForm extends React.Component {
-  /***************************************************************************\
-    Class Properties
-  \***************************************************************************/
-
-  state = {
-    error: null,
-    nickname: '',
-    submitting: false,
-  }
-
-
-
-
-
-  /***************************************************************************\
-    Private Methods
-  \***************************************************************************/
-
-  _handleSubmit = async (event) => {
-    const {
-      addNickname,
-      user,
-    } = this.props
-    const {
-      nickname,
-    } = this.state
-    event.preventDefault()
-
-    this.setState({ submitting: true })
-
-    const response = await addNickname(user, { attributes: { nick: nickname } })
+  const onSubmit = async (data, _, reset) => {
+    const response = await dispatch(addNickname(user, data))
 
     if (isError(response)) {
       const { meta, payload } = response
       let errorMessage = 'Unknown error occured.'
 
-      if (HttpStatus.isClientError(meta.response.status)) {
-        errorMessage = payload.errors && payload.errors.length ? payload.errors[0].title : 'Client communication error'
-      }
-
-      if (HttpStatus.isServerError(meta.response.status)) {
+      if (meta.response.status === HttpStatus.UNPROCESSABLE_ENTITY) {
+        errorMessage = 'Nickname invalid'
+      } else if (meta.response.status === HttpStatus.CONFLICT) {
+        errorMessage = 'Nickname already registered'
+      } else if (HttpStatus.isClientError(meta.response.status)) {
+        errorMessage = payload?.errors?.[0]?.title ?? 'Client communication error'
+      } else if (HttpStatus.isServerError(meta.response.status)) {
         errorMessage = 'Server communication error'
       }
 
-      if (meta.response.status === HttpStatus.CONFLICT) {
-        errorMessage = 'Nickname already registered'
-      }
-
-      if (meta.response.status === HttpStatus.UNPROCESSABLE_ENTITY) {
-        errorMessage = 'Nickname invalid'
-      }
-
-      this.setState({
-        error: errorMessage,
-      })
+      setSubmitError(errorMessage)
     }
 
-    this.setState({
-      nickname: '',
-      submitting: false,
-    })
+    reset()
   }
 
-  _handleChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value })
-  }
+  const { Form, canSubmit } = useForm({ onSubmit, data: formData })
 
+  return (
+    <Form className={styles.addNicknameForm}>
+      <IRCNickFieldset
+        aria-label="Nickname"
+        className={[styles.thinInput, error && styles.error]}
+        id="AddNickname"
+        name="attributes.nick"
+        placeholder={error ?? 'Add a nickname...'}
+        title={props.title}>
+        <InfoBubble className={styles.nicknamesInfo} header="reminder" id="NickRegisterReminder">
+          {"You cannot register a nick that's in use on IRC. Switch to a temporary one before registering!"}
+        </InfoBubble>
+      </IRCNickFieldset>
 
-
-
-
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
-
-  render () {
-    const {
-      error,
-      nickname,
-      submitting,
-    } = this.state
-
-    return (
-      <form
-        className={styles.addNicknameForm}
-        onSubmit={this._handleSubmit}>
-        <ValidatedFormInput
-          className={[styles.thinInput, error && styles.error]}
-          disabled={this.props.disabled}
-          id="AddNickname"
-          label="Nickname"
-          name="nickname"
-          pattern={ircNickPattern}
-          patternMessage="Nickname must start with a letter, contain no spaces, and be between 2-30 characters"
-          placeholder={error || 'Add a nickname...'}
-          title={this.props.title}
-          type="text"
-          value={nickname}
-          onChange={this._handleChange}>
-          <InfoBubble className={styles.nicknamesInfo} header="reminder" id="NickRegisterReminder">
-            {"You cannot register a nick that's in use on IRC. Switch to a temporary one before registering!"}
-          </InfoBubble>
-        </ValidatedFormInput>
-
-        <button
-          aria-label="submit new nickname"
-          className="green compact"
-          disabled={!nickname || submitting}
-          type="submit">
-          <FontAwesomeIcon fixedWidth icon="check" />
-        </button>
-      </form>
-    )
-  }
-
-
-
-
-
-  /***************************************************************************\
-    Redux Properties
-  \***************************************************************************/
-
-  static mapDispatchToProps = ['addNickname']
-
-  static mapStateToProps = (state) => {
-    return {
-      user: withCurrentUserId(selectUserById)(state),
-    }
-  }
+      <button
+        aria-label="submit new nickname"
+        className="green compact"
+        disabled={!canSubmit}
+        type="submit">
+        <FontAwesomeIcon fixedWidth icon="arrow-right" />
+      </button>
+    </Form>
+  )
 }
 
 

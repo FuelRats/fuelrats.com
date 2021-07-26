@@ -1,3 +1,4 @@
+@import '../../scss/animations/toast-fade';
 @import '../../scss/colors';
 
 .addNicknameForm {
@@ -25,7 +26,13 @@
   }
 
   .thinInput {
-    padding: 0.6rem 1rem;
+    :global(.validityIconGroup) {
+      padding: 0.625rem 1rem; /* extra .025 for centering. */
+    }
+
+    > input {
+      padding: 0.6rem 1rem;
+    }
   }
 
   .error,
@@ -42,12 +49,12 @@
   pointer-events: none;
 
   position: absolute;
-  top: 5rem;
+  top: -8rem;
 
   opacity: 0;
-  transition: opacity 0.2s;
+  will-change: opacity;
 }
 
-input:focus ~ .nicknamesInfo {
-  opacity: 1;
+input:placeholder-shown:focus ~ .nicknamesInfo {
+  animation: toast-fade 3s linear;
 }
