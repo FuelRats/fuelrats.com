@@ -39,7 +39,7 @@ function NewPasswordFieldset (props) {
   const handleValidate = useValidationCallback(
     (messages, value) => {
       if (value.match(/[@&+%~\s]/gu)) {
-        messages.errors.push(`${displayName} must not contain "@", "$", "+", "%", "+", or spaces due to limitations in IRC.`)
+        messages.errors.push(`${displayName} must not contain "@", "$", "%", "+", or spaces due to limitations in IRC.`)
       }
 
       if (value.length > maxLength) {
