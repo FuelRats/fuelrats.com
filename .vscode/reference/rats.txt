@@ -1,0 +1,2 @@
+{rats:{date:[1,6],chars:["\u{26FD}","\u{1F400}"],size:40}},
+patrick
