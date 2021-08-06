@@ -2,10 +2,9 @@
 // Project: fuelrats.com
 // Definitions by: Cameron Welter <https://fuelrats.com>
 
-
-
-
-
+/**
+ * DefinePlugin namespace
+ */
 declare namespace $$BUILD {
   /**
    * Exposes `NODE_ENV` state to the server.
@@ -67,22 +66,4 @@ declare namespace $$BUILD {
   * NodeJS version used to build the project.
   */
   declare const nodeVersion: Readonly<string>;
-}
-
-
-
-
-
-/**
-* Module override for koa-compose. @types/koa-compose is koa-specific, while we are using this tool in a generic context.
-*/
-declare module "koa-compose" {
-  declare function NextFunc(): Promise<void>;
-
-  declare namespace compose {
-    type Middleware<C> = (context: Ctx, next: NextFunc) => Promise<any>;
-    type ComposedMiddleware<C> = (context: C, next?: NextFunc) => Promise<void>;
-  }
-
-  export default function compose<C>(middleware: Array<compose.Middleware<C>>): compose.ComposedMiddleware<C>;
 }
