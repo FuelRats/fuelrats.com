@@ -1,5 +1,6 @@
 const importRules = require('@fuelrats/eslint-config/core/plugin-import')
-const importExtensions = require('@fuelrats/eslint-config/util/importExtensions')
+const jsExtensions = require('@fuelrats/eslint-config/util/importExtensions')
+const tsExtensions = require('@fuelrats/eslint-config/util/importExtensionsTypescript')
 
 module.exports = {
   env: {
@@ -8,6 +9,7 @@ module.exports = {
   },
   extends: [
     '@fuelrats/eslint-config',
+    '@fuelrats/eslint-config/plugin/fuelrats',
     '@fuelrats/eslint-config-react',
     'plugin:@next/next/recommended',
   ],
@@ -29,11 +31,11 @@ module.exports = {
     ],
     'import/resolver': {
       node: {
-        extensions: importExtensions,
+        extensions: jsExtensions,
       },
       alias: {
-        map: [['~', './src']],
-        extensions: importExtensions,
+        map: [['~', './src'], ['typings', './typings']],
+        extensions: tsExtensions,
       },
     },
   },
