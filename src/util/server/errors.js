@@ -101,3 +101,9 @@ export class NotImplementedAPIError extends APIError {
     return 'not_implemented'
   }
 }
+
+export class NotFoundAPIError extends APIError {
+  get status () {
+    return 'not_found'
+  }
+}
