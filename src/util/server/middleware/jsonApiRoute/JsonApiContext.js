@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 import bindMethod from '~/util/decorators/bindMethod'
@@ -8,9 +9,15 @@ import getEnv from '~/util/server/getEnv'
 
 
 const env = getEnv()
+const cacheStorage = {}
 
 
 function modRequest (req) {
+  // Add request time
+  Reflect.defineProperty(req, 'date', {
+    value: Date.now(),
+  })
+
   // Add IP handlers
   Reflect.defineProperty(req, 'ips', {
     get: () => {
@@ -27,12 +34,14 @@ function modRequest (req) {
     },
   })
 
+  // Add fingerprint to top level
   Reflect.defineProperty(req, 'fingerprint', {
     get: () => {
       return req.headers['x-fingerprint']
     },
   })
 
+  // Add getHeader helper
   Reflect.defineProperty(req, 'getHeader', {
     value: (headerName) => {
       return req.headers[headerName.toLowerCase()]
@@ -144,6 +153,45 @@ export default class JsonApiContext {
       jsonapi: {
         version: '1.0',
       },
+    }
+  }
+
+  @bindMethod
+  async fetch (options) {
+    const { cache, ...restOptions } = options
+
+    if (cache) {
+      const storedData = cacheStorage[cache.key]
+
+      if (storedData) {
+        if (this.req.date < storedData.last + cache.maxAge) {
+          return { ...storedData.data }
+        }
+
+        delete cacheStorage[cache.key]
+      }
+    }
+
+    try {
+      const response = await axios.request({
+        method: 'get',
+        ...restOptions,
+      })
+
+      if (cache) {
+        cacheStorage[cache.key] = {
+          data: { ...response },
+          last: this.req.date,
+        }
+      }
+
+      return response
+    } catch ({ response }) {
+      throw new InternalServerAPIError(null, {
+        url: options.url,
+        status: response.status,
+        statusText: response.statusText,
+      })
     }
   }
 

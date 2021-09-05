@@ -33,6 +33,11 @@ const apiErrorLocalisations = {
     title: 'Internal Server Error',
     detail: 'The server encountered an unexpected condition that prevented it from fulfilling the request.',
   },
+
+  not_found: {
+    title: 'Not Found',
+    detail: 'The origin server did not find a current representation for the target resource or is not willing to disclose that one exists.',
+  },
 }
 
 export default apiErrorLocalisations
