@@ -244,6 +244,15 @@ Sets a resource or collection of resources to the response document's primary `d
 Appends a resource or collection of resources to the response document's `included` field.
 
 
+### `context.fetch(options)`
+* `options` {[AxiosRequestConfig](https://github.com/axios/axios#request-config)}
+  * Also accepts an object named `cache` with the following properties:
+      * `key`: A cache key to store a successful response under.
+      * `maxAge`: The maximum age to store the cached response.
+* **Returns:** {[AxiosResponse](https://github.com/axios/axios#response-schema)}
+
+An axios request wrapper which simplifies data fetching in API routes. An optional `cache` config lets responses be cached for later-reuse, lowering 3rd party API load. If an error is encountered, it is automatically thrown with a valid `APIError` for the request.
+
 ### `context.error(error[, first])`
 * `error` {APIError|Error} Any instance of `Error`.
     * Preferably an error extending `APIError`
@@ -253,6 +262,7 @@ Appends a resource or collection of resources to the response document's `includ
 
 Appends an error to the response document's `errors` field. Adding an error will also prevent `data` and `included` from being sent as per [JSON:API][] spec.
 Useful for including additional errors before throwing the primary error preventing a successful response. Calling this method will **NOT** halt endpoint execution.
+
 
 ### `context.createResource(data)`
 * `data` {object} **Any** object containing at least an `id` and `type` property.
@@ -297,6 +307,11 @@ Boolean representing if Next.js [preview mode](https://nextjs.org/docs/advanced-
 * {Object}
 
 Preview mode data for the request.
+
+### `request.date`
+* {number}
+
+Numeric timestamp representing the datetime the request was officially acknowleged at.
 
 ### `request.ips`
 * {string[]}
