@@ -1,0 +1,13 @@
+.presence-container {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  .presence-animator {
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+  }
+}
