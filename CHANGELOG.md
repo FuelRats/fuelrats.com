@@ -9,7 +9,8 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ## [Unreleased][]
 
 ### ✨ Added
-*
+* A new page to assist with editing QMS locale files has been added. - [#370][]
+* A general purpose JSON object editor has been implemented. this should come in handy at some point! - [#370][]
 
 ### ⚡ Changed
 * Error readout for unknown API Errors has been improved. - [#328][]
@@ -21,7 +22,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Moved all custom server functions into suitable replacements provided by our site framework. - [#329][]
     * This move has let us drop our entire custom backend.
 * Updated `<Switch />` with an improved loading state animation. - [#330][]
-* Other smaller changes to sreamline development. - [#328][], [#329][]
+* Other smaller changes to sreamline development. - [#328][], [#329][], [#370][]
 
 
 ### 🐛 Fixed
@@ -39,6 +40,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 [#329]: https://github.com/FuelRats/fuelrats.com/pull/329
 [#330]: https://github.com/FuelRats/fuelrats.com/pull/330
 [#333]: https://github.com/FuelRats/fuelrats.com/pull/333
+[#370]: https://github.com/FuelRats/fuelrats.com/pull/370
 [Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.13.0...HEAD
 
 
