@@ -62,7 +62,7 @@ function LocaleEditor ({ locales }) {
          You may use basic HTML and some accept parameters `
         }
         <code>{'{{in_brackets_like_this}}'}</code>
-        {'. Be sure to double check the default values for HTML content and parameterized strings!'}
+        {'. Be sure to double check the default values for HTML content and parameterized strings! Is this overkill? absolutely. Did we do it anyway? Of course!'}
       </p>
       <div>
         <label htmlFor="presetSelector"><strong>{'Locale Files'}</strong></label>
