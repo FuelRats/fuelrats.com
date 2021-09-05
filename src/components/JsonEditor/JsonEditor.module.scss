@@ -1,0 +1,42 @@
+@import '../../scss/fonts';
+@import '../../scss/colors';
+
+.jsonEditor {
+  padding: 0.5rem 1rem;
+
+  border: 1px solid $black;
+
+  background: rgba($grey, 0.25);
+}
+
+.jsonObject {
+  padding: 0.5rem 0;
+}
+
+.hasDepth {
+  padding-left: 2rem;
+}
+
+.jsonField {
+  display: flex;
+
+  flex-direction: row;
+  align-items: center;
+
+  padding: 0.5rem 0 0.5rem 2rem;
+}
+
+.fieldInput {
+  display: inline-block;
+}
+
+
+.fieldLabel {
+  display: inline-block;
+  position: relative;
+
+
+  padding-right: 0.75rem;
+
+  font-family: $monospace-fonts;
+}
