@@ -13,6 +13,7 @@ module.exports = {
   ],
   globals: {
     $$BUILD: 'readonly',
+    fetch: 'readonly',
   },
   rules: {
     'jsx-a11y/no-noninteractive-element-interactions': ['off'], // We intend to enable this once we refactor certain key components.
