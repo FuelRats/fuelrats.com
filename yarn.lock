@@ -5036,6 +5036,7 @@ __metadata:
     stylelint: ^13.13.1
     stylelint-order: ^4.1.0
     stylelint-scss: ^3.20.1
+    ua-parser-js: ^0.7.28
     use-immer: ^0.6.0
     webpack: ^5.46.0
     worker-loader: ^3.0.8
@@ -10104,6 +10105,13 @@ resolve@^2.0.0-next.3:
   dependencies:
     is-typedarray: ^1.0.0
   checksum: 99c11aaa8f45189fcfba6b8a4825fd684a321caa9bd7a76a27cf0c7732c174d198b99f449c52c3818107430b5f41c0ccbbfb75cb2ee3ca4a9451710986d61a60
+  languageName: node
+  linkType: hard
+
+"ua-parser-js@npm:^0.7.28":
+  version: 0.7.28
+  resolution: "ua-parser-js@npm:0.7.28"
+  checksum: a7da4ad54527211e878ee016c2ef64efad5c2f5a31277d36c9da93b4c89ecaa64f391ad4cf158ada76a9ad8e53004a950705ff1c2f27a52ca8bfb3f1381c39ff
   languageName: node
   linkType: hard
 
