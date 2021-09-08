@@ -23,7 +23,7 @@ const unsupportedPlatforms = {
       Please use your phone or computer instead.
     `,
   },
-  Xbox: {
+  Microsoft: {
     type: 'warn',
     message: `
     It appears you're connecting from your Xbox!
