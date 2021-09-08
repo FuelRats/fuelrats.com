@@ -649,18 +649,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-proposal-export-default-from@npm:^7.14.5":
-  version: 7.14.5
-  resolution: "@babel/plugin-proposal-export-default-from@npm:7.14.5"
-  dependencies:
-    "@babel/helper-plugin-utils": ^7.14.5
-    "@babel/plugin-syntax-export-default-from": ^7.14.5
-  peerDependencies:
-    "@babel/core": ^7.0.0-0
-  checksum: 706f22a67bb45f3c7d998b5c0dba4c7263dec747427c2a086460475c10c45b61204c9252ff4ca1300be076d1fafca593d6ee53744f478d2f67447133abd8b92f
-  languageName: node
-  linkType: hard
-
 "@babel/plugin-proposal-export-namespace-from@npm:^7.14.5":
   version: 7.14.5
   resolution: "@babel/plugin-proposal-export-namespace-from@npm:7.14.5"
@@ -851,17 +839,6 @@ __metadata:
   peerDependencies:
     "@babel/core": ^7.0.0-0
   checksum: ce307af83cf433d4ec42932329fad25fa73138ab39c7436882ea28742e1c0066626d224e0ad2988724c82644e41601cef607b36194f695cb78a1fcdc959637bd
-  languageName: node
-  linkType: hard
-
-"@babel/plugin-syntax-export-default-from@npm:^7.14.5":
-  version: 7.14.5
-  resolution: "@babel/plugin-syntax-export-default-from@npm:7.14.5"
-  dependencies:
-    "@babel/helper-plugin-utils": ^7.14.5
-  peerDependencies:
-    "@babel/core": ^7.0.0-0
-  checksum: c480fad64ac4fd1d7c6f54250999adb7600263491d15be28998bc7d2aea4cae12966e905d80d69f9d98b170ee28d164a7529025f250e2a285d97dff9d421fe48
   languageName: node
   linkType: hard
 
@@ -5172,7 +5149,6 @@ __metadata:
     "@babel/eslint-parser": ^7.15.4
     "@babel/eslint-plugin": ^7.14.5
     "@babel/plugin-proposal-decorators": ^7.15.4
-    "@babel/plugin-proposal-export-default-from": ^7.14.5
     "@fingerprintjs/fingerprintjs": ^3.3.0
     "@fortawesome/fontawesome-svg-core": ^1.2.36
     "@fortawesome/free-brands-svg-icons": ^5.15.4

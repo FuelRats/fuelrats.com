@@ -84,7 +84,6 @@
     "@babel/eslint-parser": "^7.15.4",
     "@babel/eslint-plugin": "^7.14.5",
     "@babel/plugin-proposal-decorators": "^7.15.4",
-    "@babel/plugin-proposal-export-default-from": "^7.14.5",
     "@fuelrats/babel-plugin-classnames": "^0.3.0",
     "@fuelrats/eslint-config": "^2.4.0-canary.17",
     "@fuelrats/eslint-config-react": "^2.4.0-canary.11",
