@@ -26,17 +26,16 @@ const unsupportedPlatforms = {
   Xbox: {
     type: 'warn',
     message: `
-      It appears you're connecting from a mobile device.
-      Ensure your device's screen and browser remains active through the course of your rescue.
-      You may loose connection otherwise!
+    It appears you're connecting from your Xbox!
+    While you may use the Xbox browser to use our services, we recommend using your computer to ensure a consistent connection.
     `,
   },
   Generic: {
     type: 'warn',
     message: `
       It appears you're connecting from a mobile device.
-      Ensure your device's screen and browser remains active through the course of your rescue.
-      You may loose connection otherwise!
+      Ensure your device's screen and browser remains active throughout your rescue.
+      You may lose your connection otherwise!
     `,
   },
 }
