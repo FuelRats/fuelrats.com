@@ -2,7 +2,6 @@
 /* eslint-disable
     no-magic-numbers,
     no-negated-condition,
-    no-restricted-syntax,
     no-return-assign,
     react/jsx-no-bind,
     react/no-unsafe,
