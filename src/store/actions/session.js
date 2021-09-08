@@ -68,9 +68,9 @@ export const initUserSession = (ctx) => {
     // Get user agent to be used by login modal and i-need-fuel page
     let userAgent = ''
     if (ctx.req && ctx.req.headers['user-agent']) {
-      userAgent = ctx.req.headers['user-agent'].toLowerCase()
+      userAgent = ctx.req.headers['user-agent']
     } else if (typeof window !== 'undefined') {
-      userAgent = window.navigator.userAgent.toLowerCase()
+      userAgent = window.navigator.userAgent
     }
 
     const action = createFSA(
@@ -81,7 +81,7 @@ export const initUserSession = (ctx) => {
       },
     )
 
-    if (accessToken !== session.token) {
+    if (accessToken !== session.token || userAgent !== session.userAgent) {
       dispatch(action)
     }
 
