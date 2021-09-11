@@ -8,7 +8,7 @@ import { logout } from '~/store/actions/session'
 import {
   selectSession,
   selectUserById,
-  selectAvatarByUserId,
+  selectAvatarUrlByUserId,
   withCurrentUserId,
   selectCurrentUserCanEditAllRescues,
 } from '~/store/selectors'
@@ -26,7 +26,7 @@ function UserMenu () {
   const { loggedIn } = useSelector(selectSession)
   const userCanSeeRescueAdmin = useSelector(selectCurrentUserCanEditAllRescues)
   const user = useSelector(withCurrentUserId(selectUserById))
-  const userAvatar = useSelectorWithProps({ size: 64 }, withCurrentUserId(selectAvatarByUserId))
+  const userAvatarUrl = useSelectorWithProps({ size: 64 }, withCurrentUserId(selectAvatarUrlByUserId))
 
   const dispatch = useDispatch()
 
@@ -62,7 +62,7 @@ function UserMenu () {
                       unoptimized
                       alt="User's avatar"
                       height={64}
-                      src={userAvatar}
+                      src={userAvatarUrl}
                       width={64} />
                   )
                 }

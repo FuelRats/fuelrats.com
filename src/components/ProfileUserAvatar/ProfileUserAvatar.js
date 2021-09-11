@@ -3,13 +3,13 @@ import Image from 'next/image'
 import { useState, useCallback } from 'react'
 
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
-import { selectAvatarByUserId, withCurrentUserId } from '~/store/selectors'
+import { selectAvatarUrlByUserId, withCurrentUserId } from '~/store/selectors'
 
 import UploadAvatarModal from '../UploadAvatarModal'
 import styles from './ProfileUserAvatar.module.scss'
 
 function ProfileUserAvatar () {
-  const userAvatar = useSelectorWithProps({ size: 170 }, withCurrentUserId(selectAvatarByUserId))
+  const userAvatarUrl = useSelectorWithProps({ size: 170 }, withCurrentUserId(selectAvatarUrlByUserId))
 
   const [showUploadAvatar, setShowUploadAvatar] = useState(false)
 
@@ -27,7 +27,7 @@ function ProfileUserAvatar () {
             unoptimized
             alt="User's avatar"
             height={170}
-            src={userAvatar}
+            src={userAvatarUrl}
             width={170} />
         </div>
         <div className={styles.userAvatarEdit}>

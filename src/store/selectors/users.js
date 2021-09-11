@@ -19,6 +19,10 @@ const getScope = (_, props) => {
   return props?.scope
 }
 
+const getSizeProp = (_, props) => {
+  return props?.size
+}
+
 export const getUserId = (_, props) => {
   return props?.userId
 }
@@ -40,16 +44,17 @@ export const selectUserDisplayRatRelationship = (state, props) => {
 }
 
 export const selectAvatarByUserId = (state, props) => {
-  const user = selectUserById(state, props)
-
-  if (!user) {
-    return undefined
-  }
-
-  return user.relationships?.avatar?.data
-    ? `/api/fr/users/${user.id}/image?v=${user.relationships.avatar.data.id}`
-    : `/api/avatars/${user.id}/${props.size ?? AVATAR_DEFAULT_SIZE}`
+  return selectUserById(state, props)?.relationships.avatar?.data ?? undefined
 }
+
+export const selectAvatarUrlByUserId = createCachedSelector(
+  [selectAvatarByUserId, getSizeProp, getUserId],
+  (avatar, size, userId) => {
+    return avatar
+      ? `/api/fr/users/${userId}/image?v=${avatar.id}`
+      : `/api/avatars/${userId}/${size ?? AVATAR_DEFAULT_SIZE}`
+  },
+)(getUserId)
 
 export const selectCurrentUserScopes = (state) => {
   return withCurrentUserId(selectUserById)(state)?.meta?.permissions ?? []
