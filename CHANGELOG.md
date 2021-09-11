@@ -22,6 +22,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Moved all custom server functions into suitable replacements provided by our site framework. - [#329][]
     * This move has let us drop our entire custom backend.
 * Updated `<Switch />` with an improved loading state animation. - [#330][]
+* Open rescues may no longer be edited by normal users while the rescue is open - [#373]
 * Other smaller changes to sreamline development. - [#328][], [#329][], [#370][]
 
 
@@ -41,6 +42,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 [#330]: https://github.com/FuelRats/fuelrats.com/pull/330
 [#333]: https://github.com/FuelRats/fuelrats.com/pull/333
 [#370]: https://github.com/FuelRats/fuelrats.com/pull/370
+[#373]: https://github.com/FuelRats/fuelrats.com/pull/373
 [Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.13.0...HEAD
 
 
