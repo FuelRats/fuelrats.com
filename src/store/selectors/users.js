@@ -46,8 +46,8 @@ export const selectAvatarByUserId = (state, props) => {
     return undefined
   }
 
-  return user.attributes.image
-    ? `/api/fr/users/${user.id}/image`
+  return user.relationships?.avatar?.data
+    ? `/api/fr/users/${user.id}/image?v=${user.relationships.avatar.data.id}`
     : `/api/avatars/${user.id}/${props.size ?? AVATAR_DEFAULT_SIZE}`
 }
 
