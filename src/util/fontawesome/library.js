@@ -37,6 +37,7 @@ export {
   faTimes,
   faTimesCircle,
   faTrash,
+  faSearch,
   faUser,
   faUserSecret,
   faUpload,
