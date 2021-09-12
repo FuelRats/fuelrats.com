@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Image from 'next/image'
+import PropTypes from 'prop-types'
 import { useState, useCallback } from 'react'
 
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
@@ -8,7 +9,7 @@ import { selectAvatarUrlByUserId, withCurrentUserId } from '~/store/selectors'
 import UploadAvatarModal from '../UploadAvatarModal'
 import styles from './ProfileUserAvatar.module.scss'
 
-function ProfileUserAvatar () {
+function ProfileUserAvatar ({ canEdit }) {
   const userAvatarUrl = useSelectorWithProps({ size: 170 }, withCurrentUserId(selectAvatarUrlByUserId))
 
   const [showUploadAvatar, setShowUploadAvatar] = useState(false)
@@ -17,6 +18,10 @@ function ProfileUserAvatar () {
     setShowUploadAvatar((prevState) => {
       return !prevState
     })
+  }, [])
+
+  const handleAvatarModalClose = useCallback(() => {
+    return setShowUploadAvatar(false)
   }, [])
 
   return (
@@ -29,19 +34,28 @@ function ProfileUserAvatar () {
             height={170}
             src={userAvatarUrl}
             width={170} />
-        </div>
-        <div className={styles.userAvatarEdit}>
-          <div className={[styles.userAvatarEdit, styles.editBack]} />
-          <button className={[styles.userAvatarEdit, styles.editFace]} type="button" onClick={handleToggleUploadAvatar}>
-            <FontAwesomeIcon icon="upload" size="3x" />
-          </button>
+          {
+            canEdit && (
+              <button
+                aria-label="Edit your avatar"
+                className={[styles.userAvatarEdit, styles.editFace]}
+                type="button"
+                onClick={handleToggleUploadAvatar}>
+                <FontAwesomeIcon icon="upload" size="3x" />
+              </button>
+            )
+          }
         </div>
       </div>
       <UploadAvatarModal
         isOpen={showUploadAvatar}
-        onClose={handleToggleUploadAvatar} />
+        onClose={handleAvatarModalClose} />
     </>
   )
+}
+
+ProfileUserAvatar.propTypes = {
+  canEdit: PropTypes.bool,
 }
 
 export default ProfileUserAvatar

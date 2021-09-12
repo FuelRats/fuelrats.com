@@ -49,7 +49,7 @@ function ProfileHeader () {
             <UnverifiedUserBanner />
           )
         }
-        <ProfileUserAvatar />
+        <ProfileUserAvatar canEdit />
         <div className="profile-basic-info">
           <div className="rat-name">
             {displayRat?.attributes?.name ?? email.split('@')[0]}
