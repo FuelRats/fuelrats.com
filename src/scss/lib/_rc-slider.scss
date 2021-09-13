@@ -1,4 +1,20 @@
 .rc-slider {
+  &.rc-slider-disabled {
+    background-color: transparent;
+
+    .rc-slider-track {
+      background: rgba($grey-darkened, 0.2);
+    }
+
+    .rc-slider-handle {
+      background: $grey-muted;
+    }
+
+    .rc-slider-dot {
+      border-color: $grey-muted;
+    }
+  }
+
   &.rc-slider-vertical {
     .rc-slider-handle {
       margin-left: -0.8rem;
