@@ -1,0 +1,44 @@
+label.file-dropzone {
+  display: block;
+  position: relative;
+
+  width: 100%;
+  padding: 4rem;
+
+  border: 4px dashed rgba($red-darkened, 0.4);
+
+  color: $red;
+  background: rgba($red, 0.2);
+  transition:
+    border-color 0.1s ease,
+    background 0.1s ease,
+    font-size 0.15s ease,
+    color 0.1s ease;
+
+  font-size: 1.5em;
+  font-weight: 600;
+  font-family: $title-fonts;
+  text-align: center;
+
+  &.active {
+    border-color: rgba($green-darkened, 0.4);
+
+    color: $green;
+    background: rgba($green, 0.2);
+
+
+    font-size: 1.75em;
+  }
+
+
+  input {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    opacity: 0;
+  }
+}
