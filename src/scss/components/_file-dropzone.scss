@@ -32,6 +32,9 @@ label.file-dropzone {
     font-size: 1.75em;
   }
 
+  small {
+    font-size: 0.7em;
+  }
 
   input {
     position: absolute;
@@ -42,5 +45,7 @@ label.file-dropzone {
     height: 100%;
 
     opacity: 0;
+
+    cursor: pointer;
   }
 }
