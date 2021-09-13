@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Image from 'next/image'
 import PropTypes from 'prop-types'
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { selectAvatarUrlByUserId, withCurrentUserId } from '~/store/selectors'
@@ -9,8 +9,14 @@ import { selectAvatarUrlByUserId, withCurrentUserId } from '~/store/selectors'
 import UploadAvatarModal from '../UploadAvatarModal'
 import styles from './ProfileUserAvatar.module.scss'
 
-function ProfileUserAvatar ({ canEdit }) {
-  const userAvatarUrl = useSelectorWithProps({ size: 170 }, withCurrentUserId(selectAvatarUrlByUserId))
+const faIconLgSize = 100
+const faIconMdSize = 64
+
+function ProfileUserAvatar ({
+  canEdit,
+  size = 170,
+}) {
+  const userAvatarUrl = useSelectorWithProps({ size }, withCurrentUserId(selectAvatarUrlByUserId))
 
   const [showUploadAvatar, setShowUploadAvatar] = useState(false)
 
@@ -24,16 +30,34 @@ function ProfileUserAvatar ({ canEdit }) {
     return setShowUploadAvatar(false)
   }, [])
 
+  const sizeMeta = useMemo(() => {
+    let icon = undefined
+
+    if (size >= faIconLgSize) {
+      icon = '3x'
+    } else if (size >= faIconMdSize) {
+      icon = '2x'
+    }
+
+    return {
+      style: {
+        width: `${size}px`,
+        height: `${size}px`,
+      },
+      icon,
+    }
+  }, [size])
+
   return (
     <>
       <div className={styles.userAvatar}>
-        <div className="avatar xl">
+        <div className="avatar" style={sizeMeta.style}>
           <Image
             unoptimized
             alt="User's avatar"
-            height={170}
+            height={size}
             src={userAvatarUrl}
-            width={170} />
+            width={size} />
           {
             canEdit && (
               <button
@@ -41,7 +65,7 @@ function ProfileUserAvatar ({ canEdit }) {
                 className={[styles.userAvatarEdit, styles.editFace]}
                 type="button"
                 onClick={handleToggleUploadAvatar}>
-                <FontAwesomeIcon icon="upload" size="3x" />
+                <FontAwesomeIcon icon="upload" size={sizeMeta.icon} />
               </button>
             )
           }
@@ -56,6 +80,7 @@ function ProfileUserAvatar ({ canEdit }) {
 
 ProfileUserAvatar.propTypes = {
   canEdit: PropTypes.bool,
+  size: PropTypes.number,
 }
 
 export default ProfileUserAvatar
