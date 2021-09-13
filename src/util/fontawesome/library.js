@@ -19,6 +19,7 @@ export {
   faExclamationCircle,
   faEye,
   faEyeSlash,
+  faFileUpload,
   faFirstAid,
   faFolder,
   faFolderOpen,
