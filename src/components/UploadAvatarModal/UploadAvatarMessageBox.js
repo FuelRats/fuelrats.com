@@ -19,23 +19,27 @@ function getErrorText (error) {
 }
 
 function UploadAvatarMessageBox (props) {
-  const { result } = props
+  const { result, className } = props
 
   return result.success
     ? (
-      <MessageBox type="success">
-        {'Avatar Updated!'}
+      <MessageBox className={className} title="Success!" type="success">
+        {'You avatar has been updated!'}
+        <br />
+        {'This window will now automatically close...'}
       </MessageBox>
     )
     : (
       <ApiErrorBox
+        className={className}
         error={result.error}
         renderError={getErrorText} />
     )
 }
 
 UploadAvatarMessageBox.propTypes = {
-  result: PropTypes.object,
+  className: PropTypes.string,
+  result: PropTypes.object.isRequired,
 }
 
 export default UploadAvatarMessageBox
