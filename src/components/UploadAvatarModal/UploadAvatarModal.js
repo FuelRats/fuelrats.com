@@ -208,7 +208,11 @@ function UploadAvatarModal (props) {
           Boolean(!upImg && !result.success) && (
             <label className={['file-dropzone', { active: inputDragActive }]} htmlFor="avatarInput" id="avatarInputLabel">
               <FontAwesomeIcon fixedWidth icon="file-upload" />
-              {' Select Image'}
+              {' Drop image here'}
+              <br />
+              <small>
+                {'or click me to select an image!'}
+              </small>
               <input
                 accept="image/png,image/jpeg,image/webp"
                 aria-labelledby="avatarInputLabel"
