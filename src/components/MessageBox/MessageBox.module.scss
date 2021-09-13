@@ -2,6 +2,7 @@
 
 .message {
   --message-color: #{$red};
+  composes: message from global;
 
   position: relative;
 
@@ -12,26 +13,35 @@
   border: 1px solid var(--message-color);
 
   background: rgba($red, 0.15);
+}
 
-  &.error {
-    --message-color: #{$red};
-    background: rgba($red, 0.15);
-  }
+.error {
+  --message-color: #{$red};
+  composes: error from global;
 
-  &.success {
-    --message-color: #{$green};
-    background: rgba($green, 0.15);
-  }
+  background: rgba($red, 0.15);
+}
 
-  &.info {
-    --message-color: #{$blue};
-    background: rgba($blue, 0.15);
-  }
+.success {
+  --message-color: #{$green};
+  composes: success from global;
 
-  &.warn {
-    --message-color: #{$yellow};
-    background: rgba($yellow, 0.15);
-  }
+  background: rgba($green, 0.15);
+}
+
+.info {
+  --message-color: #{$blue};
+  composes: info from global;
+
+  background: rgba($blue, 0.15);
+}
+
+.warn {
+  --message-color: #{$yellow};
+
+  composes: warn from global;
+
+  background: rgba($yellow, 0.15);
 }
 
 .icon {

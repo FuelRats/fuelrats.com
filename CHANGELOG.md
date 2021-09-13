@@ -11,6 +11,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ### ✨ Added
 * A new page to assist with editing QMS locale files has been added. - [#370][]
 * A general purpose JSON object editor has been implemented. this should come in handy at some point! - [#370][]
+* User avatars are now customizable through our new Avatar uploader! - [#332][], [#375][]
 
 ### ⚡ Changed
 * Error readout for unknown API Errors has been improved. - [#328][]
@@ -40,9 +41,11 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 [#328]: https://github.com/FuelRats/fuelrats.com/pull/328
 [#329]: https://github.com/FuelRats/fuelrats.com/pull/329
 [#330]: https://github.com/FuelRats/fuelrats.com/pull/330
+[#332]: https://github.com/FuelRats/fuelrats.com/pull/332
 [#333]: https://github.com/FuelRats/fuelrats.com/pull/333
 [#370]: https://github.com/FuelRats/fuelrats.com/pull/370
 [#373]: https://github.com/FuelRats/fuelrats.com/pull/373
+[#375]: https://github.com/FuelRats/fuelrats.com/pull/375
 [Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.13.0...HEAD
 
 

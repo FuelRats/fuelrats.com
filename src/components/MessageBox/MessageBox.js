@@ -31,7 +31,7 @@ function MessageBox (props) {
   }
 
   return (
-    <div className={[styles.message, styles[type], 'message', className]}>
+    <div className={[styles.message, styles[type], className]}>
       <FontAwesomeIcon
         className={styles.icon}
         icon={icon}

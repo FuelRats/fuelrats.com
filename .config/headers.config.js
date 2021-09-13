@@ -20,7 +20,11 @@ module.exports = (env) => {
             'style-src': ["'self'", "'unsafe-inline'", 'fonts.googleapis.com'],
             'img-src': ["'self'", '*.wp.com', 'blob:', 'data:'],
             'frame-src': ['https://js.stripe.com'],
+            'child-src': false,
+            'prefetch-src': false,
+            'worker-src': false,
           },
+          xssProtection: '1; mode=block;',
         }),
       },
     ]

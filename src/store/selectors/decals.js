@@ -4,7 +4,7 @@ import safeParseInt from '~/util/safeParseInt'
 
 
 import { withCurrentUserId } from './session'
-import { getUserId, selectUserById } from './users'
+import { getUserIdProp, selectUserById } from './users'
 
 
 
@@ -39,4 +39,4 @@ export const selectDecalsByUserId = createCachedSelector(
     }
     return undefined
   },
-)(getUserId)
+)(getUserIdProp)

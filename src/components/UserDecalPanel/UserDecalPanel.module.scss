@@ -1,3 +1,4 @@
+@import '../../scss/fonts';
 @import '../../scss/colors';
 
 .panelContent {
@@ -29,7 +30,7 @@
   .decalCode {
     flex: 1 0 auto;
 
-    font-family: monospace;
+    font-family: $monospace-fonts;
   }
 
   .decalClaimedAt {
