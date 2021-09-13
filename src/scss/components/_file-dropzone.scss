@@ -20,6 +20,8 @@ label.file-dropzone {
   font-family: $title-fonts;
   text-align: center;
 
+  cursor: pointer;
+
   &.active {
     border-color: rgba($green-darkened, 0.4);
 
