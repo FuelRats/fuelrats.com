@@ -1,6 +1,6 @@
 import { createCachedSelector } from 're-reselect'
 
-import { getUserId, selectUserById } from './users'
+import { getUserIdProp, selectUserById } from './users'
 
 
 
@@ -26,4 +26,4 @@ export const selectNicknamesByUserId = createCachedSelector(
     }
     return []
   },
-)(getUserId)
+)(getUserIdProp)

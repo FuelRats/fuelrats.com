@@ -15,15 +15,15 @@ const AVATAR_DEFAULT_SIZE = 256
 
 
 
-const getScope = (_, props) => {
+const getScopeProp = (_, props) => {
   return props?.scope
 }
 
 const getSizeProp = (_, props) => {
-  return props?.size
+  return props?.size ?? AVATAR_DEFAULT_SIZE
 }
 
-export const getUserId = (_, props) => {
+export const getUserIdProp = (_, props) => {
   return props?.userId
 }
 
@@ -48,13 +48,19 @@ export const selectAvatarByUserId = (state, props) => {
 }
 
 export const selectAvatarUrlByUserId = createCachedSelector(
-  [selectAvatarByUserId, getSizeProp, getUserId],
+  [selectAvatarByUserId, getSizeProp, getUserIdProp],
   (avatar, size, userId) => {
+    if (userId === 'null') {
+      return undefined
+    }
+
     return avatar
-      ? `/api/fr/users/${userId}/image?v=${avatar.id}`
-      : `/api/avatars/${userId}/${size ?? AVATAR_DEFAULT_SIZE}`
+      ? `/api/fr/users/${userId}/image?v=${avatar.id}&size=${size}`
+      : `/api/avatars/${userId}/${size}`
   },
-)(getUserId)
+)((_, props) => {
+  return `${getUserIdProp(_, props)}-${getSizeProp(_, props)}`
+})
 
 export const selectCurrentUserScopes = (state) => {
   return withCurrentUserId(selectUserById)(state)?.meta?.permissions ?? []
@@ -71,7 +77,7 @@ export const selectCurrentUserScopes = (state) => {
 export const selectCurrentUserHasScope = createCachedSelector(
   [
     selectCurrentUserScopes,
-    getScope,
+    getScopeProp,
   ],
   (userScopes, scope) => {
     if (!scope) {
