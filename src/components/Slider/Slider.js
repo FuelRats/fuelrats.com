@@ -1,6 +1,6 @@
 /***
- * The renderSliderHandle function within the following component is based on the default handle prop value in .
- * https://github.com/react-component/slider/blob/master/src/common/createSlider.tsx#L32
+ * The renderHandle function within the following component is based on the default handle prop value located here:
+ * https://github.com/react-component/slider/blob/af77a4c7fb/src/common/createSlider.tsx#L32
  *
  * It is licensed under the MIT License below.
  *
@@ -44,7 +44,7 @@ export default function Slider (props) {
     ...restProps
   } = props
 
-  const renderSliderHandle = useCallback((sliderProps) => {
+  const renderHandle = useCallback((sliderProps) => {
     const { index, ...restSliderProps } = sliderProps
     delete restSliderProps.dragging
     if (restSliderProps.value === null) {
@@ -68,7 +68,7 @@ export default function Slider (props) {
 
   return (
     <Component
-      handle={renderSliderHandle}
+      handle={renderHandle}
       {...restProps} />
   )
 }
