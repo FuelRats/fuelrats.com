@@ -24,7 +24,6 @@ module.exports = (env) => {
             'prefetch-src': false,
             'worker-src': false,
           },
-          xssProtection: '1; mode=block;',
         }),
       },
     ]
