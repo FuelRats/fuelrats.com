@@ -122,11 +122,12 @@ Commits should be as small as possible, with exceptions for large sweeping chang
 Please follow the gitmoji commit format when submitting code.
 
 ```
-<😎> [(scope):] <title>
+<😎...> [(scope):] <title>
 
 [detailed message]
 ```
-* `<😎>` - gitmoji icon that best represents this change. [See below for more info](#gitmoji).
+* `<😎...>` - gitmoji(s) that best represent this change. [See below for more info](#gitmoji).
+    * You're not limited to a single emoji! Use as many as neccessary, but keep in mind that commits should remain simple enough to only require one.
 * `[(scope):]` - Optional, but helpful. When used the scope should follow [these rules](#commit-scopes).
     * Remain as consistent in naming as possible. Use git history as precedence for the scope given to a file.
     * If the commit makes changes to two or more **completely unrelated** files, the component scope should not be included.
