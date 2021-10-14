@@ -1,5 +1,5 @@
-const importRules = require('@fuelrats/eslint-config/core/plugin-import')
-const importExtensions = require('@fuelrats/eslint-config/util/importExtensions')
+const util = require('@fuelrats/eslint-config-react/util')
+const { withAliasResolver } = require('@fuelrats/eslint-config/util/import')
 
 module.exports = {
   env: {
@@ -16,27 +16,22 @@ module.exports = {
     fetch: 'readonly',
   },
   rules: {
-    'jsx-a11y/no-noninteractive-element-interactions': ['off'], // We intend to enable this once we refactor certain key components.
-    'jsdoc/require-jsdoc': ['off'], // we'll get to it someday...
-    'import/order': ['error', {
-      ...importRules.rules['import/order'][1],
+    'import/order': util.extendRule('import/order', {
       'newlines-between': 'always',
-    }],
-    '@next/next/link-passhref': ['off'], // This rule is broken so just ignore it for now.
+    }),
+    ...util.disable(
+      'jsx-a11y/no-noninteractive-element-interactions', // We intend to enable this once we refactor certain key components.
+      'jsdoc/require-jsdoc', // we'll get to it someday...
+      '@next/next/link-passhref', // This rule is broken so just ignore it for now.
+    ),
   },
   settings: {
     'import/ignore': [
       '.worker.js$',
     ],
-    'import/resolver': {
-      node: {
-        extensions: importExtensions,
-      },
-      alias: {
-        map: [['~', './src']],
-        extensions: importExtensions,
-      },
-    },
+    'import/resolver': withAliasResolver([
+      ['~', './src'],
+    ]),
   },
   overrides: [
     {
