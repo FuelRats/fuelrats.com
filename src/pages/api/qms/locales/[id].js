@@ -33,6 +33,13 @@ export default jsonApiRoute(
       attributes: {
         data: await getLocaleData(ctx, localeMeta),
       },
+      meta: {
+        github: {
+          meta: localeMeta.links.self,
+          raw: localeMeta.links.related,
+          html: localeMeta.meta.html,
+        },
+      },
     })
   },
 )

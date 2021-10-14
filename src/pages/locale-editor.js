@@ -77,11 +77,11 @@ function LocaleEditor ({ locales }) {
         </select>
       </div>
       <h6>
-        <a href={`https://github.com/FuelRats/QMS/blob/main/qms/frontend/public/locales/en/${activeLocale}`}>{'GitHub'}</a>
+        <a href={localeData[activeLocale]?.meta.github.html}>{'GitHub'}</a>
         {' | '}
-        <a href={`https://raw.githubusercontent.com/FuelRats/QMS/main/qms/frontend/public/locales/en/${activeLocale}`}>{'Raw'}</a>
+        <a href={localeData[activeLocale]?.meta.github.raw}>{'Raw'}</a>
         {' | '}
-        <a href={`https://api.github.com/repos/FuelRats/QMS/contents/qms/frontend/public/locales/en/${activeLocale}?ref=main`}>{'Metadata'}</a>
+        <a href={localeData[activeLocale]?.meta.github.meta}>{'Metadata'}</a>
       </h6>
       <br />
       <div className="presence-container">
