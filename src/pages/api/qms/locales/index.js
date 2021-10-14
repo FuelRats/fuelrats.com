@@ -2,10 +2,13 @@ import acceptMethod from '~/util/server/middleware/acceptMethod'
 import jsonApiRoute from '~/util/server/middleware/jsonApiRoute'
 
 const maxAge = 21600000 // 6 hours
+const repo = 'fuelrats/QMS'
+const path = 'qms/frontend/public/locales/en'
+const branch = 'develop'
 
 export function listLocaleFiles (ctx) {
   return ctx.fetch({
-    url: 'https://api.github.com/repos/fuelrats/QMS/contents/qms/frontend/public/locales/en?ref=main',
+    url: `https://api.github.com/repos/${repo}/contents/${path}?ref=${branch}`,
     cache: {
       key: 'qms-locale-list',
       maxAge,
@@ -18,6 +21,9 @@ export function listLocaleFiles (ctx) {
         links: {
           self: fileMeta.url,
           related: fileMeta.download_url,
+        },
+        meta: {
+          html: fileMeta.html_url,
         },
       }
     })
