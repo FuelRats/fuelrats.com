@@ -7,8 +7,8 @@ export default function useToggleState (initialState = false) {
     setState((curState) => {
       return Boolean(
         typeof nextState === 'function'
-          ? nextState(curState) ?? !curState
-          : nextState ?? !curState,
+          ? (nextState(curState) ?? !curState)
+          : (nextState ?? !curState),
       )
     })
   }, [])

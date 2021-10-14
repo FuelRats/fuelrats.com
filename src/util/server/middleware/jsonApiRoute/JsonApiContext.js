@@ -22,7 +22,7 @@ function modRequest (req) {
   Reflect.defineProperty(req, 'ips', {
     get: () => {
       const fwdForIps = req.headers['x-forwarded-for']
-      return env.proxied && fwdForIps
+      return (env.proxied && fwdForIps)
         ? fwdForIps.split(/\s*,\s*/u)
         : []
     },

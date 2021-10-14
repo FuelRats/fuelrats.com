@@ -80,10 +80,6 @@ const columns = [
   }
 })
 class RatLeaderboardTable extends React.Component {
-  /***************************************************************************\
-    Class Properties
-  \***************************************************************************/
-
   state = {
     loading: true,
   }
@@ -112,11 +108,6 @@ class RatLeaderboardTable extends React.Component {
 
     this._queueFetchData(state)
   }
-
-
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
 
   async componentDidMount () {
     if (!this.props.statistics?.page) { // page would be undefined if we haven't grabbed the leaderboard yet.
