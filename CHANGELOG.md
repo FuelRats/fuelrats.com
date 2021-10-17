@@ -9,9 +9,33 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ## [Unreleased][]
 
 ### ✨ Added
+*
+
+
+### ⚡ Changed
+*
+
+
+### 🐛 Fixed
+*
+
+
+### ⚙ Tasks
+*
+
+[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.14.0...HEAD
+
+
+
+
+
+## [2.14.0][] - 2021-10-17
+
+### ✨ Added
 * A new page to assist with editing QMS locale files has been added. - [#370][]
 * A general purpose JSON object editor has been implemented. this should come in handy at some point! - [#370][]
 * User avatars are now customizable through our new Avatar uploader! - [#332][], [#375][]
+
 
 ### ⚡ Changed
 * Error readout for unknown API Errors has been improved. - [#328][]
@@ -33,6 +57,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * `Using Odyssey` switch now properly enters a loading state while waiting on it's event handler to resolve. - [#330][]
 * Profile page will no longer crash when deleting a rat. - [#333][]
 
+
 ### ⚙ Tasks
 * Update lint configs
 * Add `@next/eslint-plugin-next` into linting config.
@@ -46,7 +71,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 [#370]: https://github.com/FuelRats/fuelrats.com/pull/370
 [#373]: https://github.com/FuelRats/fuelrats.com/pull/373
 [#375]: https://github.com/FuelRats/fuelrats.com/pull/375
-[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.13.0...HEAD
+[2.14.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.13.1...v2.14.0
 
 
 
