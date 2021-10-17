@@ -2482,14 +2482,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:^17.0.29":
-  version: 17.0.29
-  resolution: "@types/react@npm:17.0.29"
+"@types/react@npm:^17.0.30":
+  version: 17.0.30
+  resolution: "@types/react@npm:17.0.30"
   dependencies:
     "@types/prop-types": "*"
     "@types/scheduler": "*"
     csstype: ^3.0.2
-  checksum: 39280743f6fec1bbc5c8e705976c1738a5526aaa0e693052badf5cd2dd599b6536dd815b651017737a533bf1c03db6a5738498796ff44f806e55324dc7867723
+  checksum: e3aaac1b8fda6e3622b75db0bd7d8dc412c2f2b77a00afdd32cae8c71fb0b1ca6926ab1fbe1c536dd51d96c0ba372738993837a8df1637637aaab7b86e421b7f
   languageName: node
   linkType: hard
 
@@ -5320,7 +5320,7 @@ __metadata:
     "@types/jsonfile": ^6.0.1
     "@types/lodash": ^4.14.175
     "@types/qs": ^6.9.7
-    "@types/react": ^17.0.29
+    "@types/react": ^17.0.30
     "@types/react-dom": ^17.0.9
     "@types/react-is": ^17.0.2
     "@types/react-redux": ^7.1.19
@@ -5356,7 +5356,7 @@ __metadata:
     next: ^11.1.2
     next-cookies: ^2.0.3
     next-redux-wrapper: 5.0.0
-    next-safe: ^3.0.1
+    next-safe: ^3.1.0
     nprogress: ^0.2.0
     postcss: ^8.3.9
     postcss-easy-import: ^3.0.0
@@ -5381,7 +5381,7 @@ __metadata:
     reselect: ^4.0.0
     sass: ^1.43.2
     semver: ^7.3.5
-    stripe: ^8.181.0
+    stripe: ^8.183.0
     stylelint: ^13.13.1
     stylelint-order: ^4.1.0
     stylelint-scss: ^3.21.0
@@ -7227,12 +7227,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-safe@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "next-safe@npm:3.0.1"
+"next-safe@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "next-safe@npm:3.1.0"
   peerDependencies:
-    next: ^9.5.0
-  checksum: a8c39ba7c3ccc462227d9f9277e10a0ad476e6aca190598fa3075875064ebf058089c3825fb745cf33ac96b3c2759b4ee99ed1aabb818e5887f07cca9e8e029b
+    next: ^9.5.0 || ^10.2.1 || ^11.1.0
+  checksum: 2703f7ee64926dac8df4255877ef580be9f79a6aeea28d9d8ee5fe87e2bccc71d8ad84143fc745b7c2ec81b675ce0d2345842d34d05bb9ba17869768dcb9ba1c
   languageName: node
   linkType: hard
 
@@ -10017,13 +10017,13 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
-"stripe@npm:^8.181.0":
-  version: 8.181.0
-  resolution: "stripe@npm:8.181.0"
+"stripe@npm:^8.183.0":
+  version: 8.183.0
+  resolution: "stripe@npm:8.183.0"
   dependencies:
     "@types/node": ">=8.1.0"
     qs: ^6.6.0
-  checksum: 1a64d71d657cfae6b172d140c08b2738fbb75659c8f98e27e5d59e35ae4195b6cc35c3ae57186b8f2afa19044e261c714664c5c9b757d382af21e42cff6e6bde
+  checksum: e9daac703bfe4dff019db9fe8e047099947bc43801713e45205c7aa44acc4d32d0be7aa769b855082449078bbe27ec11c71e1407fb6e14ed61f89b87b183e22a
   languageName: node
   linkType: hard
 
