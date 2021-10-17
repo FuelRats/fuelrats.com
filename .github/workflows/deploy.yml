@@ -39,7 +39,7 @@ jobs:
       - name: Load Next.js cache
         uses: actions/cache@v2
         with:
-          path: ${{ github.workspace }}/dist/next/cache
+          path: ${{ github.workspace }}/dist/cache
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-nextjs-
@@ -55,12 +55,16 @@ jobs:
       - name: Prepare artifact
         run: |
           tar -czf fuelrats-com.tar.gz \
+            .config \
+            .yarn/plugins \
+            .yarn/releases \
             dist \
             public \
             scripts \
             .nvmrc \
             CHANGELOG.md \
             LICENSE \
+            .yarnrc.yml \
             next.config.js \
             package.json \
             README.md \

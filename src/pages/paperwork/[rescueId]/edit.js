@@ -1,3 +1,4 @@
+import { HttpStatus } from '@fuelrats/web-util/http'
 import { isError } from 'flux-standard-action'
 import Router from 'next/router'
 import React from 'react'
@@ -9,17 +10,20 @@ import RadioInput from '~/components/RadioInput'
 import RatTagsInput from '~/components/RatTagsInput'
 import SystemTagsInput from '~/components/SystemTagsInput'
 import platformRadioOptions from '~/data/platformRadioOptions'
-import { formatAsEliteDateTime } from '~/helpers/formatTime'
-import getRatTag from '~/helpers/getRatTag'
-import { pageRedirect } from '~/helpers/gIPTools'
-import { makePaperworkRoute } from '~/helpers/routeGen'
-import { connect } from '~/store'
-import { getRescue } from '~/store/actions/rescues'
+import useSelectorWithProps from '~/hooks/useSelectorWithProps'
+import { connectState } from '~/store'
+import { getRescue, updateRescue } from '~/store/actions/rescues'
 import {
   selectRatsByRescueId,
   selectRescueById,
   selectCurrentUserCanEditRescue,
 } from '~/store/selectors'
+import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
+import pageRedirect from '~/util/getInitialProps/pageRedirect'
+import setError from '~/util/getInitialProps/setError'
+import getRatTag from '~/util/getRatTag'
+import getResponseError from '~/util/getResponseError'
+import makePaperworkRoute from '~/util/router/makePaperworkRoute'
 
 
 
@@ -82,25 +86,12 @@ const outcomeRadioOptions = [
 
 
 @authenticated
-@connect
 class Paperwork extends React.Component {
-  /***************************************************************************\
-    Properties
-  \***************************************************************************/
-
   state = {
     submitting: false,
     error: null,
     changes: {},
   }
-
-
-
-
-
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
 
   _handleChange = ({ target }) => {
     const {
@@ -247,7 +238,7 @@ class Paperwork extends React.Component {
       }
     }
 
-    const response = await this.props.updateRescue(updateData)
+    const response = await this.props.dispatch(updateRescue(updateData))
 
     if (isError(response)) {
       this.setState({ error: true, submitting: false })
@@ -272,14 +263,6 @@ class Paperwork extends React.Component {
       }
     })
   }
-
-
-
-
-
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
 
   static renderQuote = (quote, index) => {
     const createdAt = formatAsEliteDateTime(quote.createdAt)
@@ -336,7 +319,15 @@ class Paperwork extends React.Component {
     const state = store.getState()
 
     if (!selectRescueById(state, query)) {
-      await store.dispatch(getRescue(query.rescueId))
+      const response = await store.dispatch(getRescue(query.rescueId))
+      const error = getResponseError(response)
+
+      if (error) {
+        if (error?.code === HttpStatus.NOT_FOUND) {
+          error.detail = 'We tried looking everywhere, but this rescue doesn\'t exist.'
+        }
+        setError(ctx, error.code, error.detail)
+      }
     }
   }
 
@@ -444,7 +435,7 @@ class Paperwork extends React.Component {
             id="codeRed"
             name="codeRed"
             options={codeRedRadioOptions}
-            value={`${codeRed}`}
+            value={String(codeRed)}
             onChange={this._handleRadioInputChange} />
         </fieldset>
 
@@ -530,10 +521,6 @@ class Paperwork extends React.Component {
 
   render () {
     const {
-      rescue,
-    } = this.props
-
-    const {
       submitting,
       error,
     } = this.state
@@ -550,15 +537,7 @@ class Paperwork extends React.Component {
           )
         }
 
-        {
-          (!rescue) && (
-            <div className="loading page-content">
-              <p>{"Sorry, we couldn't find the paperwork you requested."}</p>
-            </div>
-          )
-        }
-
-        {(rescue) && this.renderRescueEditForm()}
+        {this.renderRescueEditForm()}
       </>
     )
   }
@@ -676,28 +655,16 @@ class Paperwork extends React.Component {
       system: ifDefined(changes.system, rescue.attributes.system ? { value: rescue.attributes.system.toUpperCase() } : null),
     }
   }
-
-
-
-
-
-  /***************************************************************************\
-    Redux Properties
-  \***************************************************************************/
-
-  static mapDispatchToProps = ['updateRescue', 'getRescue']
-
-  static mapStateToProps = (state, { query }) => {
-    return {
-      rats: selectFormattedRatsByRescueId(state, query),
-      rescue: selectRescueById(state, query),
-      userCanEdit: selectCurrentUserCanEditRescue(state, query),
-    }
-  }
 }
 
 
 
 
 
-export default Paperwork
+export default connectState((props) => {
+  return {
+    rats: useSelectorWithProps(props.query, selectFormattedRatsByRescueId),
+    rescue: useSelectorWithProps(props.query, selectRescueById),
+    userCanEdit: useSelectorWithProps(props.query, selectCurrentUserCanEditRescue),
+  }
+})(Paperwork)

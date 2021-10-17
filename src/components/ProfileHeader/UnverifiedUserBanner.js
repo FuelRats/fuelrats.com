@@ -2,9 +2,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import getResponseError from '~/helpers/getResponseError'
 import { resendVerificationEmail } from '~/store/actions/verify'
 import { selectUserById, withCurrentUserId } from '~/store/selectors'
+import getResponseError from '~/util/getResponseError'
 
 import MessageBox from '../MessageBox'
 import ApiErrorBox from '../MessageBox/ApiErrorBox'

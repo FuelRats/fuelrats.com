@@ -11,14 +11,14 @@ import LoginModal from '~/components/LoginModal'
 import NProgress from '~/components/NProgress'
 import SilentBoundary from '~/components/SilentBoundary'
 import UserMenu from '~/components/UserMenu'
-import * as faIcons from '~/helpers/faIconLibrary'
-import { resolvePageMeta } from '~/helpers/gIPTools'
 import { initStore } from '~/store'
 import {
   initUserSession,
   notifyPageDestroyed,
   notifyPageLoading,
 } from '~/store/actions/session'
+import * as faIcons from '~/util/fontawesome/library'
+import resolvePageMeta from '~/util/getInitialProps/resolvePageMeta'
 
 import ErrorPage from './_error'
 
@@ -119,9 +119,9 @@ class FuelRatsApp extends App {
 
               <AnimatePresence initial={false} onExitComplete={this.handlePageDestroy}>
                 <m.main
-                  {...pageMotionConfig}
                   key={key}
-                  className={['page', title.toLowerCase().replace(/\s/gu, '-'), className]}>
+                  {...pageMotionConfig}
+                  className={['page', className]}>
                   {
                     !noHeader && (
                       <header className="page-header">
@@ -165,7 +165,7 @@ class FuelRatsApp extends App {
       Page,
       pageProps,
       pageMeta,
-      key: pageMeta.pageKey ?? router.asPath,
+      key: pageMeta.key ?? router.asPath,
     }
   }
 }

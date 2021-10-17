@@ -1,9 +1,9 @@
 import { isRequired } from '@fuelrats/validation-util'
 import { axiosRequest, createAxiosFSA } from '@fuelrats/web-util/actions'
 
-import frApi from '~/services/fuelrats'
-import stApi from '~/services/stripe'
-import wpApi from '~/services/wordpress'
+import frApi from '~/services/frApi'
+import stApi from '~/services/stApi'
+import wpApi from '~/services/wpApi'
 
 import { updatesResources } from '../reducers/frAPIResources'
 import { selectSessionToken } from '../selectors'

@@ -2,26 +2,25 @@ import PropTypes from 'prop-types'
 import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 
-import getResponseError from '~/helpers/getResponseError'
+import { FooterPrimary, FooterSecondary, ModalFooter, useModalContext } from '~/components/asModal'
+import EmailFieldset from '~/components/Fieldsets/EmailFieldset'
+import MessageBox from '~/components/MessageBox'
 import useForm from '~/hooks/useForm'
 import useMountedState from '~/hooks/useMountedState'
 import { sendPasswordResetEmail } from '~/store/actions/authentication'
+import getResponseError from '~/util/getResponseError'
 
-import EmailFieldset from '../Fieldsets/EmailFieldset'
-import MessageBox from '../MessageBox'
-import { FooterPrimary, FooterSecondary, ModalFooter } from '../Modal'
-import { useModalContext } from '../Modal/Modal'
 import styles from './LoginModal.module.scss'
 
 
 
 // Component Constants
-const data = Object.freeze({
+const data = {
   type: 'resets',
   attributes: {
     email: '',
   },
-})
+}
 
 
 

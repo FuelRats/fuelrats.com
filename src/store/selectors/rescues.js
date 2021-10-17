@@ -76,6 +76,11 @@ export const selectCurrentUserCanEditRescue = createCachedSelector(
       return true
     }
 
+    // If the resuce is still open, don't allow editing
+    if (rescue.attributes.status !== 'closed') {
+      return false
+    }
+
     // Check if current user is assigned to case.
     const usersAssignedRats = rescueRats?.reduce(
       (acc, rat) => {

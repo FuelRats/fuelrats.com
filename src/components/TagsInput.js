@@ -2,9 +2,8 @@
 /* eslint-disable
     no-magic-numbers,
     no-negated-condition,
-    no-restricted-syntax,
     no-return-assign,
-    react/jsx-no-bind,
+    react/no-unsafe,
     react/state-in-constructor,
     arrow-body-style,
 */
@@ -18,7 +17,7 @@ import Key from './Key'
 
 
 
-export default class TagsInputComponent extends React.Component {
+export default class TagsInput extends React.Component {
   _bindMethods (methods) {
     methods.forEach((method) => this[method] = this[method].bind(this))
   }
@@ -26,7 +25,7 @@ export default class TagsInputComponent extends React.Component {
   static _renderLoader () {
     return (
       <div className="loader">
-        {TagsInputComponent.renderLoader()}
+        {TagsInput.renderLoader()}
       </div>
     )
   }
@@ -34,7 +33,7 @@ export default class TagsInputComponent extends React.Component {
   static _renderNoResults () {
     return (
       <div className="no-results">
-        {TagsInputComponent.renderNoResults()}
+        {TagsInput.renderNoResults()}
       </div>
     )
   }
@@ -112,7 +111,7 @@ export default class TagsInputComponent extends React.Component {
     const newNextState = { ...nextState }
 
     if (this.state.tags !== nextState.tags) {
-      newNextState.tags = nextState.tags.map((tag) => TagsInputComponent.parseOption(tag))
+      newNextState.tags = nextState.tags.map((tag) => TagsInput.parseOption(tag))
     }
   }
 
@@ -139,7 +138,7 @@ export default class TagsInputComponent extends React.Component {
       tags = [tags]
     }
 
-    tags = tags.map((tag) => TagsInputComponent.parseOption(tag))
+    tags = tags.map((tag) => TagsInput.parseOption(tag))
 
     this.state = {
       allowDuplicates: props['data-allowduplicates'],
@@ -431,15 +430,15 @@ export default class TagsInputComponent extends React.Component {
           placeholder={placeholder}
           type="search"
           onBlur={this.onBlur}
-          onFocus={TagsInputComponent.onFocus}
+          onFocus={TagsInput.onFocus}
           onInput={this.onInput}
           onKeyDown={this.onKeyDown} />
 
         {Boolean(allowNew) && this.renderReturnPrompt()}
 
-        {loading && TagsInputComponent._renderLoader()}
+        {loading && TagsInput._renderLoader()}
 
-        {(!loading && !newFocus && Boolean(currentValue) && !options.length) && TagsInputComponent._renderNoResults()}
+        {(!loading && !newFocus && Boolean(currentValue) && !options.length) && TagsInput._renderNoResults()}
 
         {
           (!loading && Boolean(options.length)) && (
@@ -471,10 +470,10 @@ export default class TagsInputComponent extends React.Component {
       <li
         key={index}
         className={['option', { focus: selectedOption === index }]}
-        onBlur={TagsInputComponent.handleOptionMouseOut}
+        onBlur={TagsInput.handleOptionMouseOut}
         onFocus={(event) => this.handleOptionMouseOver(event, index)}
         onMouseDown={() => this.addTag(option)}
-        onMouseOut={TagsInputComponent.handleOptionMouseOut}
+        onMouseOut={TagsInput.handleOptionMouseOut}
         onMouseOver={(event) => this.handleOptionMouseOver(event, index)}>
         {this.renderValue(option)}
       </li>
@@ -552,7 +551,7 @@ export default class TagsInputComponent extends React.Component {
     }
 
     options.forEach((optionValue) => {
-      const option = TagsInputComponent.parseOption(optionValue)
+      const option = TagsInput.parseOption(optionValue)
 
       if (merge && this.findOption(option)) {
         return

@@ -1,0 +1,57 @@
+.platformField {
+  flex-shrink: 1.75;
+}
+
+.addRatForm {
+  display: flex;
+
+  align-items: center;
+  justify-content: flex-end;
+
+  transition: padding 0.2s ease;
+
+  &.formOpen {
+    min-width: 500px;
+    padding: 0.5rem;
+
+    border: 1px solid rgba(26, 26, 26, 0.2);
+
+    background: #FFFFFFFF;
+    box-shadow: 0 0 1rem rgba(26, 26, 26, 0.1);
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  :global(.form-row) {
+    flex-grow: 1;
+  }
+
+  .formControl {
+    button {
+      margin: 1rem 0.25rem;
+    }
+  }
+
+
+
+
+
+  @media only screen and (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-end;
+
+    &.formOpen {
+      align-items: stretch;
+    }
+
+    .formControl {
+      display: flex;
+
+      flex-direction: row;
+      justify-content: flex-end;
+
+      button {
+        flex-grow: 1;
+      }
+    }
+  }
+}

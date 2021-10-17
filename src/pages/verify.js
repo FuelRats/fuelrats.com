@@ -6,12 +6,12 @@ import { useDispatch } from 'react-redux'
 import PasswordResetForm from '~/components/Forms/PasswordResetForm'
 import MessageBox from '~/components/MessageBox'
 import ApiErrorBox from '~/components/MessageBox/ApiErrorBox'
-import getResponseError from '~/helpers/getResponseError'
-import { pageRedirect } from '~/helpers/gIPTools'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { validatePasswordResetToken, resetPassword } from '~/store/actions/authentication'
 import { verifyEmailToken } from '~/store/actions/verify'
 import { selectCurrentUserHasScope } from '~/store/selectors'
+import pageRedirect from '~/util/getInitialProps/pageRedirect'
+import getResponseError from '~/util/getResponseError'
 
 
 
@@ -19,10 +19,10 @@ import { selectCurrentUserHasScope } from '~/store/selectors'
 
 const RESET_SUCCESS_REDIRECT_WAIT = 6000 // 6 Seconds
 
-const TokenType = Object.freeze({
+const TokenType = {
   RESET: 'reset',
   EMAIL: 'email',
-})
+}
 
 
 

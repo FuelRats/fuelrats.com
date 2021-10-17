@@ -9,7 +9,7 @@ let worker = null
 
 
 
-const getImageLoader = (dispatch) => {
+const imageLoader = (dispatch) => {
   if (!worker) {
     worker = new Worker(new URL('../workers/image-loader.worker.js', import.meta.url))
     worker.addEventListener('message', (event) => {
@@ -34,4 +34,4 @@ const getImageLoader = (dispatch) => {
 
 
 
-export default getImageLoader
+export default imageLoader

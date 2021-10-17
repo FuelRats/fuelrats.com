@@ -3,12 +3,17 @@ import _set from 'lodash/set'
 import _unset from 'lodash/unset'
 import { useImmerReducer } from 'use-immer'
 
+import { mergeReducer } from './useMergeReducer'
+
 
 
 const stateReducer = (draft, action) => {
-  const { name, value } = action
-  const curValue = _get(draft, name)
+  const { name, value, fragment } = action
+  if (fragment) {
+    return mergeReducer(draft, fragment)
+  }
 
+  const curValue = _get(draft, name)
   if (curValue !== value) {
     if (typeof value === 'undefined') {
       _unset(draft, name)
@@ -16,6 +21,7 @@ const stateReducer = (draft, action) => {
       _set(draft, name, value)
     }
   }
+  return undefined
 }
 
 

@@ -1,0 +1,60 @@
+@import '../../../scss/animations/toast-fade';
+@import '../../../scss/colors';
+
+.addNicknameForm {
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  flex-flow: row nowrap;
+  align-items: center;
+
+  padding: 1rem;
+
+  fieldset {
+    flex: 2 0;
+
+    margin-right: 0.5rem;
+    padding: 0;
+  }
+
+  button[type='submit'] {
+    flex: 0 0 auto;
+  }
+
+  .thinInput {
+    :global(.validityIconGroup) {
+      padding: 0.625rem 1rem; /* extra .025 for centering. */
+    }
+
+    > input {
+      padding: 0.6rem 1rem;
+    }
+  }
+
+  .error,
+  .error:focus {
+    border-color: $red;
+
+    &::placeholder {
+      color: $red;
+    }
+  }
+}
+
+.nicknamesInfo {
+  pointer-events: none;
+
+  position: absolute;
+  top: -8rem;
+
+  opacity: 0;
+  will-change: opacity;
+}
+
+input:placeholder-shown:focus ~ .nicknamesInfo {
+  animation: toast-fade 3s linear;
+}

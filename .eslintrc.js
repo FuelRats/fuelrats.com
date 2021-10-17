@@ -1,6 +1,5 @@
-/* eslint-disable import/no-extraneous-dependencies */
-const importRules = require('@fuelrats/eslint-config/core/plugin-import')
-const importExtensions = require('@fuelrats/eslint-config/util/importExtensions')
+const util = require('@fuelrats/eslint-config-react/util')
+const { withAliasResolver } = require('@fuelrats/eslint-config/util/import')
 
 module.exports = {
   env: {
@@ -9,39 +8,55 @@ module.exports = {
   },
   extends: [
     '@fuelrats/eslint-config',
-    '@fuelrats/eslint-config/plugins/fuelrats',
     '@fuelrats/eslint-config-react',
+    'plugin:@next/next/recommended',
   ],
+  globals: {
+    $$BUILD: 'readonly',
+    fetch: 'readonly',
+  },
   rules: {
-    'jsx-a11y/no-noninteractive-element-interactions': ['off'], // We intend to enable this once we refactor certain key components.
-    'jsdoc/require-jsdoc': ['off'], // we'll get to it someday...
-    'react/jsx-uses-react': ['off'],
-    'react/react-in-jsx-scope': ['off'],
-    'import/order': ['error', {
-      ...importRules.rules['import/order'][1],
+    'import/order': util.extendRule('import/order', {
       'newlines-between': 'always',
-    }],
+    }),
+    ...util.disable(
+      'jsx-a11y/no-noninteractive-element-interactions', // We intend to enable this once we refactor certain key components.
+      'jsdoc/require-jsdoc', // we'll get to it someday...
+      '@next/next/link-passhref', // This rule is broken so just ignore it for now.
+    ),
   },
   settings: {
     'import/ignore': [
       '.worker.js$',
     ],
-    'import/resolver': {
-      node: {
-        extensions: importExtensions,
-      },
-      alias: {
-        map: [['~', './src']],
-        extensions: importExtensions,
-      },
-    },
+    'import/resolver': withAliasResolver([
+      ['~', './src'],
+    ]),
   },
   overrides: [
     {
-      files: ['src/pages/api/**/*.js'],
+      files: [
+        '.config/**/*.js',
+        'src/pages/api/**/*.js',
+        'src/util/server/**/*.js',
+      ],
       env: {
         browser: false,
         node: true,
+      },
+    },
+    {
+      files: ['*.worker.js'],
+      env: {
+        browser: false,
+        commonjs: false,
+        worker: true,
+      },
+    },
+    {
+      files: ['src/pages/**/*.js'],
+      rules: {
+        '@fuelrats/default-export-matches-module-name': ['off'], // Disabled in pages dir as it becomes difficult to stick to module names
       },
     },
   ],

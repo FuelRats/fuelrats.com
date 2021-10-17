@@ -11,8 +11,10 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ### ✨ Added
 *
 
+
 ### ⚡ Changed
 *
+
 
 ### 🐛 Fixed
 *
@@ -21,8 +23,55 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ### ⚙ Tasks
 *
 
+[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.14.0...HEAD
 
-[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.13.0...HEAD
+
+
+
+
+## [2.14.0][] - 2021-10-17
+
+### ✨ Added
+* A new page to assist with editing QMS locale files has been added. - [#370][]
+* A general purpose JSON object editor has been implemented. this should come in handy at some point! - [#370][]
+* User avatars are now customizable through our new Avatar uploader! - [#332][], [#375][]
+
+
+### ⚡ Changed
+* Error readout for unknown API Errors has been improved. - [#328][]
+* Reworded `Owns Odyssey` to `Using Odyssey` on rat cards to better convey the toggle's meaning. - [#328][]
+* Canceled donations will now return you to the donation form. - [#328][]
+* Optimized image loading and accessibility for images site-wide. - [#328][]
+* Further optimized font loading. - [#328][]
+* Moved raw version information to an API route (`/api/version`), and reworked version page to draw information from that route. - [#328][]
+* Moved all custom server functions into suitable replacements provided by our site framework. - [#329][]
+    * This move has let us drop our entire custom backend.
+* Updated `<Switch />` with an improved loading state animation. - [#330][]
+* Open rescues may no longer be edited by normal users while the rescue is open - [#373]
+* Other smaller changes to sreamline development. - [#328][], [#329][], [#370][]
+
+
+### 🐛 Fixed
+* Failure to load password evaluation will no longer prevent forms that use it from being submitted. - [#328][]
+* Authorization page no longer displays an `Invalid Authorize Request` error when redirecting users after login. - [#328][]
+* `Using Odyssey` switch now properly enters a loading state while waiting on it's event handler to resolve. - [#330][]
+* Profile page will no longer crash when deleting a rat. - [#333][]
+
+
+### ⚙ Tasks
+* Update lint configs
+* Add `@next/eslint-plugin-next` into linting config.
+
+
+[#328]: https://github.com/FuelRats/fuelrats.com/pull/328
+[#329]: https://github.com/FuelRats/fuelrats.com/pull/329
+[#330]: https://github.com/FuelRats/fuelrats.com/pull/330
+[#332]: https://github.com/FuelRats/fuelrats.com/pull/332
+[#333]: https://github.com/FuelRats/fuelrats.com/pull/333
+[#370]: https://github.com/FuelRats/fuelrats.com/pull/370
+[#373]: https://github.com/FuelRats/fuelrats.com/pull/373
+[#375]: https://github.com/FuelRats/fuelrats.com/pull/375
+[2.14.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.13.1...v2.14.0
 
 
 
@@ -39,7 +88,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Improved queue information endpoint response times via better routing and caching. - [#326][]
 
 
-[#326]: https://github.com/fuelRats/fuelrats.com/pull/326
+[#326]: https://github.com/FuelRats/fuelrats.com/pull/326
 [2.13.1]: https://github.com/FuelRats/fuelrats.com/compare/v2.13.0...v2.13.1
 
 
@@ -66,11 +115,11 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Add @Delota as a contributor! 🥳 - [#317][]
 
 
-[#316]: https://github.com/fuelRats/fuelrats.com/pull/316
-[#317]: https://github.com/fuelRats/fuelrats.com/pull/317
-[#320]: https://github.com/fuelRats/fuelrats.com/pull/320
-[#323]: https://github.com/fuelRats/fuelrats.com/pull/323
-[#324]: https://github.com/fuelRats/fuelrats.com/pull/324
+[#316]: https://github.com/FuelRats/fuelrats.com/pull/316
+[#317]: https://github.com/FuelRats/fuelrats.com/pull/317
+[#320]: https://github.com/FuelRats/fuelrats.com/pull/320
+[#323]: https://github.com/FuelRats/fuelrats.com/pull/323
+[#324]: https://github.com/FuelRats/fuelrats.com/pull/324
 [2.13.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.10...v2.13.0
 
 
@@ -91,8 +140,8 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Resolved a crash on the paperwork page which would occur when changing the platform in certain situations. - [#315][]
 
 
-[#314]: https://github.com/fuelRats/fuelrats.com/pull/314
-[#315]: https://github.com/fuelRats/fuelrats.com/pull/315
+[#314]: https://github.com/FuelRats/fuelrats.com/pull/314
+[#315]: https://github.com/FuelRats/fuelrats.com/pull/315
 [2.12.10]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.9...v2.12.10
 
 
@@ -107,7 +156,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Move fuelrats API routes to `/api/fr` to free up the api directory for other things. - [#312][]
 
 
-[#312]: https://github.com/fuelRats/fuelrats.com/pull/312
+[#312]: https://github.com/FuelRats/fuelrats.com/pull/312
 [2.12.9]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.8...v2.12.9
 
 
@@ -120,7 +169,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Fix multiple issues with redeeming decals - [#309][]
 
 
-[#309]: https://github.com/fuelRats/fuelrats.com/pull/309
+[#309]: https://github.com/FuelRats/fuelrats.com/pull/309
 [2.12.8]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.7...v2.12.8
 
 
@@ -152,11 +201,11 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Add @Master-Guy as a contributor! 🥳 - [#304][]
 
 
-[#302]: https://github.com/fuelRats/fuelrats.com/pull/302
-[#304]: https://github.com/fuelRats/fuelrats.com/pull/304
-[#305]: https://github.com/fuelRats/fuelrats.com/pull/305
-[#306]: https://github.com/fuelRats/fuelrats.com/pull/306
-[#307]: https://github.com/fuelRats/fuelrats.com/pull/307
+[#302]: https://github.com/FuelRats/fuelrats.com/pull/302
+[#304]: https://github.com/FuelRats/fuelrats.com/pull/304
+[#305]: https://github.com/FuelRats/fuelrats.com/pull/305
+[#306]: https://github.com/FuelRats/fuelrats.com/pull/306
+[#307]: https://github.com/FuelRats/fuelrats.com/pull/307
 [2.12.7]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.6...v2.12.7
 
 
@@ -177,9 +226,9 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Add @diraven as a contributor! 🎊 - [#299][]
 
 
-[#297]: https://github.com/fuelrats/fuelrats.com/pull/297
-[#298]: https://github.com/fuelRats/fuelrats.com/pull/298
-[#299]: https://github.com/fuelRats/fuelrats.com/pull/299]
+[#297]: https://github.com/FuelRats/fuelrats.com/pull/297
+[#298]: https://github.com/FuelRats/fuelrats.com/pull/298
+[#299]: https://github.com/FuelRats/fuelrats.com/pull/299]
 [2.12.6]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.5...v2.12.6
 
 
@@ -197,7 +246,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Fix race condition that would allow certain requests to be made as someone other than the user making the request. - [#295][]
 
 
-[#295]: https://github.com/fuelrats/fuelrats.com/pull/295
+[#295]: https://github.com/FuelRats/fuelrats.com/pull/295
 [2.12.5]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.4...v2.12.5
 
 
@@ -226,10 +275,10 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Upgrade to React 17. - [#293][]
 
 
-[#290]: https://github.com/fuelrats/fuelrats.com/pull/290
-[#291]: https://github.com/fuelrats/fuelrats.com/pull/291
-[#292]: https://github.com/fuelrats/fuelrats.com/pull/292
-[#293]: https://github.com/fuelrats/fuelrats.com/pull/293
+[#290]: https://github.com/FuelRats/fuelrats.com/pull/290
+[#291]: https://github.com/FuelRats/fuelrats.com/pull/291
+[#292]: https://github.com/FuelRats/fuelrats.com/pull/292
+[#293]: https://github.com/FuelRats/fuelrats.com/pull/293
 [2.12.4]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.3...v2.12.4
 
 
@@ -255,9 +304,9 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Remove unused React imports and clean up import formatting. - [#287][]
 
 
-[#286]: https://github.com/fuelrats/fuelrats.com/pull/286
-[#287]: https://github.com/fuelrats/fuelrats.com/pull/287
-[#288]: https://github.com/fuelrats/fuelrats.com/pull/288
+[#286]: https://github.com/FuelRats/fuelrats.com/pull/286
+[#287]: https://github.com/FuelRats/fuelrats.com/pull/287
+[#288]: https://github.com/FuelRats/fuelrats.com/pull/288
 [2.12.3]: https://github.com/FuelRats/fuelrats.com/compare/v2.12.2...v2.12.3
 
 
@@ -349,32 +398,32 @@ This is the first recovery patch from APIv3 release. Changes were committed dire
 
 
 [2.12.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.11.5...v2.12.0
-[#191]: https://github.com/fuelrats/fuelrats.com/pull/191
-[#220]: https://github.com/fuelrats/fuelrats.com/pull/220
-[#238]: https://github.com/fuelrats/fuelrats.com/pull/238
-[#240]: https://github.com/fuelrats/fuelrats.com/pull/240
-[#241]: https://github.com/fuelrats/fuelrats.com/pull/241
-[#243]: https://github.com/fuelrats/fuelrats.com/pull/243
-[#245]: https://github.com/fuelrats/fuelrats.com/pull/245
-[#247]: https://github.com/fuelrats/fuelrats.com/pull/247
-[#248]: https://github.com/fuelrats/fuelrats.com/pull/248
-[#251]: https://github.com/fuelrats/fuelrats.com/pull/251
-[#253]: https://github.com/fuelrats/fuelrats.com/pull/253
-[#254]: https://github.com/fuelrats/fuelrats.com/pull/254
-[#255]: https://github.com/fuelrats/fuelrats.com/pull/255
-[#256]: https://github.com/fuelrats/fuelrats.com/pull/256
-[#258]: https://github.com/fuelrats/fuelrats.com/pull/258
-[#260]: https://github.com/fuelrats/fuelrats.com/pull/260
-[#262]: https://github.com/fuelrats/fuelrats.com/pull/262
-[#263]: https://github.com/fuelrats/fuelrats.com/pull/263
-[#264]: https://github.com/fuelrats/fuelrats.com/pull/264
-[#265]: https://github.com/fuelrats/fuelrats.com/pull/265
-[#266]: https://github.com/fuelrats/fuelrats.com/pull/266
-[#267]: https://github.com/fuelrats/fuelrats.com/pull/267
-[#268]: https://github.com/fuelrats/fuelrats.com/pull/268
-[#269]: https://github.com/fuelrats/fuelrats.com/pull/269
-[#270]: https://github.com/fuelrats/fuelrats.com/pull/270
-[#271]: https://github.com/fuelrats/fuelrats.com/pull/271
+[#191]: https://github.com/FuelRats/fuelrats.com/pull/191
+[#220]: https://github.com/FuelRats/fuelrats.com/pull/220
+[#238]: https://github.com/FuelRats/fuelrats.com/pull/238
+[#240]: https://github.com/FuelRats/fuelrats.com/pull/240
+[#241]: https://github.com/FuelRats/fuelrats.com/pull/241
+[#243]: https://github.com/FuelRats/fuelrats.com/pull/243
+[#245]: https://github.com/FuelRats/fuelrats.com/pull/245
+[#247]: https://github.com/FuelRats/fuelrats.com/pull/247
+[#248]: https://github.com/FuelRats/fuelrats.com/pull/248
+[#251]: https://github.com/FuelRats/fuelrats.com/pull/251
+[#253]: https://github.com/FuelRats/fuelrats.com/pull/253
+[#254]: https://github.com/FuelRats/fuelrats.com/pull/254
+[#255]: https://github.com/FuelRats/fuelrats.com/pull/255
+[#256]: https://github.com/FuelRats/fuelrats.com/pull/256
+[#258]: https://github.com/FuelRats/fuelrats.com/pull/258
+[#260]: https://github.com/FuelRats/fuelrats.com/pull/260
+[#262]: https://github.com/FuelRats/fuelrats.com/pull/262
+[#263]: https://github.com/FuelRats/fuelrats.com/pull/263
+[#264]: https://github.com/FuelRats/fuelrats.com/pull/264
+[#265]: https://github.com/FuelRats/fuelrats.com/pull/265
+[#266]: https://github.com/FuelRats/fuelrats.com/pull/266
+[#267]: https://github.com/FuelRats/fuelrats.com/pull/267
+[#268]: https://github.com/FuelRats/fuelrats.com/pull/268
+[#269]: https://github.com/FuelRats/fuelrats.com/pull/269
+[#270]: https://github.com/FuelRats/fuelrats.com/pull/270
+[#271]: https://github.com/FuelRats/fuelrats.com/pull/271
 
 
 
@@ -386,7 +435,7 @@ This is the first recovery patch from APIv3 release. Changes were committed dire
 * Resolved issues with our CSS processing config. - [#242][]
 
 [2.11.5]: https://github.com/FuelRats/fuelrats.com/compare/v2.11.4...v2.11.5
-[#242]: https://github.com/fuelrats/fuelrats.com/pull/242
+[#242]: https://github.com/FuelRats/fuelrats.com/pull/242
 
 
 
@@ -409,7 +458,7 @@ This is the first recovery patch from APIv3 release. Changes were committed dire
 * Switch to new SVG implementation. - [#249][]
 
 [2.11.4]: https://github.com/FuelRats/fuelrats.com/compare/v2.11.3...v2.11.4
-[#249]: https://github.com/fuelrats/fuelrats.com/pull/249
+[#249]: https://github.com/FuelRats/fuelrats.com/pull/249
 
 
 
@@ -422,7 +471,7 @@ This is the first recovery patch from APIv3 release. Changes were committed dire
 
 
 [2.11.3]: https://github.com/FuelRats/fuelrats.com/compare/v2.11.2...v2.11.3
-[#242]: https://github.com/fuelrats/fuelrats.com/pull/242
+[#242]: https://github.com/FuelRats/fuelrats.com/pull/242
 
 
 
@@ -435,7 +484,7 @@ This is the first recovery patch from APIv3 release. Changes were committed dire
 
 
 [2.11.2]: https://github.com/FuelRats/fuelrats.com/compare/v2.11.1...v2.11.2
-[#236]: https://github.com/fuelrats/fuelrats.com/pull/236
+[#236]: https://github.com/FuelRats/fuelrats.com/pull/236
 
 
 
@@ -450,7 +499,7 @@ This is the first recovery patch from APIv3 release. Changes were committed dire
 
 
 [2.11.1]: https://github.com/FuelRats/fuelrats.com/compare/v2.11.0...v2.11.1
-[#233]: https://github.com/fuelRats/fuelrats.com/pull/233
+[#233]: https://github.com/FuelRats/fuelrats.com/pull/233
 
 
 
@@ -499,10 +548,10 @@ This is the first recovery patch from APIv3 release. Changes were committed dire
 [#223]: https://github.com/FuelRats/fuelrats.com/pull/223
 [#224]: https://github.com/FuelRats/fuelrats.com/pull/224
 [#226]: https://github.com/FuelRats/fuelrats.com/pull/226
-[#228]: https://github.com/fuelRats/fuelrats.com/pull/228
-[#230]: https://github.com/fuelRats/fuelrats.com/pull/230
-[#231]: https://github.com/fuelRats/fuelrats.com/pull/231
-[#232]: https://github.com/fuelRats/fuelrats.com/pull/232
+[#228]: https://github.com/FuelRats/fuelrats.com/pull/228
+[#230]: https://github.com/FuelRats/fuelrats.com/pull/230
+[#231]: https://github.com/FuelRats/fuelrats.com/pull/231
+[#232]: https://github.com/FuelRats/fuelrats.com/pull/232
 
 
 

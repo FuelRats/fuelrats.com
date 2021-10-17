@@ -1,13 +1,13 @@
 import { defineRelationship } from '@fuelrats/web-util/redux-json-api'
 
-import { presentApiRequestBody } from '~/helpers/presenters'
+import createRequestBody from '~/util/jsonapi/createRequestBody'
+
+
 
 import actionTypes from '../actionTypes'
 import { deletesResource, deletesRelationship, createsRelationship, RESOURCE } from '../reducers/frAPIResources'
-import { withCurrentUserId, selectUserById } from '../selectors'
+import { withCurrentUserId, selectUserById, selectCurrentUserId } from '../selectors'
 import { frApiRequest } from './services'
-
-
 
 
 export const getNickname = (nickId) => {
@@ -23,7 +23,7 @@ export const addNickname = (user, data) => {
     {
       url: '/nicknames',
       method: 'post',
-      data: presentApiRequestBody('nicknames', data),
+      data: createRequestBody('nicknames', data),
     },
     createsRelationship(
       defineRelationship(user, { nicknames: [RESOURCE] }),
@@ -63,7 +63,7 @@ export const updateUser = (data, password) => {
     const request = {
       url: `/users/${data.id}`,
       method: 'put',
-      data: presentApiRequestBody('users', data),
+      data: createRequestBody('users', data),
     }
 
     if (password) {
@@ -76,5 +76,20 @@ export const updateUser = (data, password) => {
     }
 
     return dispatch(frApiRequest(actionTypes.users.update, request))
+  }
+}
+
+export const updateAvatar = (data) => {
+  return (dispatch, getState) => {
+    const user = selectCurrentUserId(getState())
+    const formData = new FormData()
+    formData.append('image', data)
+    const request = {
+      url: `/users/${user}/image`,
+      method: 'post',
+      data: formData,
+    }
+
+    return dispatch(frApiRequest(actionTypes.users.avatar.update, request))
   }
 }

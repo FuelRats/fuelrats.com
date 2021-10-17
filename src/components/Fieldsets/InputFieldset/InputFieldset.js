@@ -2,11 +2,11 @@ import PropTypes from 'prop-types'
 import React, { useCallback, useState } from 'react'
 
 import InputSuggestions from '~/components/InputMessages'
-import extPropType from '~/helpers/extPropTypes'
-import getValidityErrors from '~/helpers/getValidityErrors'
 import useFocusState from '~/hooks/useFocusState'
 import { useField, fieldPropTypes } from '~/hooks/useForm'
 import useSharedForwardRef from '~/hooks/useSharedForwardRef'
+import getValidityErrors from '~/util/getValidityErrors'
+import extPropTypes from '~/util/propTypes/extPropTypes'
 
 import styles from './InputFieldset.module.scss'
 import ValidityIcon from './ValidityIcon'
@@ -21,6 +21,7 @@ const InputFieldset = React.forwardRef((props, forwardRef) => {
     className,
     dark,
     displayName = 'Input',
+    fieldsetClassName,
     skipWarnings = false,
     inputClassName,
     label,
@@ -89,7 +90,7 @@ const InputFieldset = React.forwardRef((props, forwardRef) => {
   const hideMessages = !messages?.validatedValue?.length || !messages?.hasMessages || validating || !isFocused
 
   return (
-    <fieldset>
+    <fieldset className={fieldsetClassName}>
 
       {
         Boolean(label) && (
@@ -126,7 +127,7 @@ const InputFieldset = React.forwardRef((props, forwardRef) => {
 InputFieldset.displayName = 'InputFieldset'
 
 InputFieldset.propTypes = {
-  'aria-label': extPropType(PropTypes.string).isRequiredIf('label', 'undefined'),
+  'aria-label': extPropTypes(PropTypes.string).isRequiredIf('label', 'undefined'),
   dark: PropTypes.bool,
   displayName: PropTypes.string,
   id: PropTypes.string.isRequired,
@@ -140,9 +141,11 @@ InputFieldset.propTypes = {
 /**
  * Returns a memoized version of a callback which can accept the following arguments:
  *
- * * `messages` - an object containing two arrays of messages called `errors` and `warnings`
- * * `value` - The input value to validate against
- * * `target?` - the underlying input element
+ * `messages` - an object containing two arrays of messages called `errors` and `warnings`
+ *
+ * `value` - The input value to validate against
+ *
+ * `target?` - the underlying input element
  *
  * `messages` can be mutated or an updated object can be returned by the callback.
  *
@@ -159,9 +162,9 @@ function useValidationCallback (callback, deps = [], parent) {
     async (...args) => {
       const { errors = [], warnings = [] } = (await parent?.(...args)) ?? {}
       return (await _callback({ errors, warnings }, ...args)) ?? { errors, warnings }
-
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [parent, _callback, ...deps],
+    [parent, _callback, ...deps],
   )
 }
 

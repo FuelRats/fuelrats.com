@@ -1,5 +1,3 @@
-/* eslint-disable no-restricted-globals */
-
 self.addEventListener('message', async (event) => {
   try {
     const {

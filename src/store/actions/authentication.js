@@ -3,9 +3,9 @@ import { isError } from 'flux-standard-action'
 import Cookies from 'js-cookie'
 import Router from 'next/router'
 
-import getFingerprint from '~/helpers/getFingerprint'
-import { presentApiRequestBody } from '~/helpers/presenters'
-import frApi from '~/services/fuelrats'
+import frApi from '~/services/frApi'
+import getFingerprint from '~/util/getFingerprint'
+import createRequestBody from '~/util/jsonapi/createRequestBody'
 
 import actionTypes from '../actionTypes'
 import { frApiPlainRequest } from './services'
@@ -27,7 +27,7 @@ export const changePassword = ({ id, ...data }) => {
     {
       url: `/users/${id}/password`,
       method: 'patch',
-      data: presentApiRequestBody('password-changes', data),
+      data: createRequestBody('password-changes', data),
     },
   )
 }
@@ -65,21 +65,15 @@ export const login = (options) => {
 
       Cookies.set('access_token', token, { expires: remember ? SESSION_TOKEN_LENGTH : null })
 
-      /* eslint-disable no-restricted-globals */
       if (location && location.search) {
-        const searchParams = {}
+        const searchParams = new URLSearchParams(location.search)
 
-        location.search.replace(/^\?/u, '').split('&').forEach((searchParam) => {
-          const [key, value] = searchParam.split('=')
-
-          searchParams[key] = value
-        })
-
-        const destination = searchParams.destination ? decodeURIComponent(searchParams.destination) : '/profile'
+        const destination = searchParams.has('destination')
+          ? decodeURIComponent(searchParams.get('destination'))
+          : '/profile'
 
         Router.push(destination)
       }
-      /* eslint-enable no-restricted-globals */
     }
 
     return dispatch(action)
@@ -124,7 +118,7 @@ export const register = (data) => {
           headers: {
             'X-Fingerprint': fingerprint,
           },
-          data: presentApiRequestBody('registrations', data),
+          data: createRequestBody('registrations', data),
         },
       ),
     )
@@ -138,7 +132,7 @@ export const resetPassword = (token, data) => {
     {
       url: `/resets/${token}`,
       method: 'post',
-      data: presentApiRequestBody('resets', data),
+      data: createRequestBody('resets', data),
     },
   )
 }
@@ -150,7 +144,7 @@ export const sendPasswordResetEmail = (data) => {
     {
       url: '/resets',
       method: 'post',
-      data: presentApiRequestBody('resets', data),
+      data: createRequestBody('resets', data),
     },
   )
 }

@@ -1,7 +1,8 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 
 
-
+// eslint-disable-next-line no-template-curly-in-string -- intentional
+const noJSMessage = 'Blocking JavaScript in ${currentYear}.... You\'re just asking for trouble at this point.'
 
 
 class FuelRatsWebsite extends Document {
@@ -45,7 +46,9 @@ class FuelRatsWebsite extends Document {
           <link href="/static/favicon/favicon-16.png" rel="icon" sizes="16x16" type="image/png" />
           <link href="/static/favicon/favicon-128.png" rel="icon" sizes="128x128" type="image/png" />
 
-          <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital@0;1&family=Raleway" rel="stylesheet" />
+          <link href="https://fonts.gstatic.com" rel="preconnect" />
+          <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital@0;1&family=Raleway&display=swap" rel="stylesheet" />
+
 
           <link href="/manifest.json" rel="manifest" />
 
@@ -55,7 +58,7 @@ class FuelRatsWebsite extends Document {
         </Head>
 
         <body>
-          <noscript>{'Javascript is required to view this site, silly!'}</noscript>
+          <noscript>{noJSMessage}</noscript>
 
           <Main className="next-wrapper" />
 

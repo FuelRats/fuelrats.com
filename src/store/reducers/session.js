@@ -20,7 +20,7 @@ const clearLoginState = (draftState = initialState.session) => {
 }
 
 
-const sessionReducer = produce((draftState, action) => {
+export default produce((draftState, action) => {
   const {
     meta,
     payload,
@@ -76,9 +76,3 @@ const sessionReducer = produce((draftState, action) => {
       break
   }
 }, initialState.session)
-
-
-
-
-
-export default sessionReducer

@@ -1,10 +1,12 @@
 import { isError } from 'flux-standard-action'
 import PropTypes from 'prop-types'
 import React from 'react'
+import { useSelector } from 'react-redux'
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import { formatAsEliteDate } from '~/helpers/formatTime'
-import { connect } from '~/store'
+import useSelectorWithProps from '~/hooks/useSelectorWithProps'
+import { connectState } from '~/store'
+import { deleteRat, updateRat } from '~/store/actions/rats'
 import {
   selectRatById,
   selectUserById,
@@ -12,6 +14,7 @@ import {
   withCurrentUserId,
   selectRatStatisticsById,
 } from '~/store/selectors'
+import formatAsEliteDate from '~/util/date/formatAsEliteDate'
 
 import CardControls from '../CardControls'
 import InlineEditSpan from '../InlineEditSpan'
@@ -22,15 +25,9 @@ import DefaultRatButton from './DefaultRatButton'
 
 
 
-@connect
 class RatCard extends React.Component {
-  /***************************************************************************\
-    Class Properties
-  \***************************************************************************/
-
   state = {
     deleteConfirm: false,
-    shipsExpanded: false,
     changes: {},
     validity: {
       name: false,
@@ -42,21 +39,8 @@ class RatCard extends React.Component {
 
 
 
-
-  /***************************************************************************\
-    Private Methods
-  \***************************************************************************/
-
   _handleDelete = () => {
     this.setState({ deleteConfirm: true })
-  }
-
-  _handleExpandShips = () => {
-    this.setState(({ shipsExpanded }) => {
-      return {
-        shipsExpanded: !shipsExpanded,
-      }
-    })
   }
 
   _handleNameChange = ({ target: { value } }) => {
@@ -77,9 +61,9 @@ class RatCard extends React.Component {
     } = this.state
 
     const {
-      updateRat,
-      deleteRat,
+      dispatch,
       rat,
+      user,
     } = this.props
 
     if (deleteConfirm) {
@@ -88,16 +72,16 @@ class RatCard extends React.Component {
         submitting: 'delete',
       })
 
-      deleteRat(rat)
+      dispatch(deleteRat(user, rat))
       return
     }
 
     this.setState({ submitting: true })
 
-    await updateRat({
+    await dispatch(updateRat({
       id: rat.id,
       attributes: changes,
-    })
+    }))
 
     this.setState({
       changes: {},
@@ -147,20 +131,17 @@ class RatCard extends React.Component {
     }
   }
 
-  _handleOdysseySwitch = async () => {
-    await this.props.updateRat({
+  _handleOdysseySwitch = () => {
+    return this.props.dispatch(updateRat({
       id: this.props.rat.id,
       attributes: {
         odyssey: !this.props.rat.attributes.odyssey,
       },
-    })
+    }))
   }
 
 
 
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
 
   render () {
     const {
@@ -171,7 +152,6 @@ class RatCard extends React.Component {
     const {
       className,
       rat,
-      // ships,
       statistics,
     } = this.props
 
@@ -179,7 +159,6 @@ class RatCard extends React.Component {
       deleteConfirm,
       editing,
       changes,
-      shipsExpanded,
       submitting,
     } = this.state
 
@@ -194,7 +173,7 @@ class RatCard extends React.Component {
 
     return (
       <div
-        className={['panel rat-panel', { expanded: shipsExpanded, editing, submitting }, className]}
+        className={['panel rat-panel', { editing, submitting }, className]}
         data-loader-text={submitting ? submitText : null}>
         <header>
           <div>
@@ -224,10 +203,10 @@ class RatCard extends React.Component {
           rat.attributes.platform === 'pc' && (
             <div className="panel-content">
               <Switch
-                async
                 checked={rat.attributes.odyssey}
-                label="Owns Odyssey"
-                onClick={this._handleOdysseySwitch} />
+                id={`OdysseySwitch-${rat.id}`}
+                label="Using Odyssey"
+                onChange={this._handleOdysseySwitch} />
             </div>
           )
         }
@@ -242,16 +221,6 @@ class RatCard extends React.Component {
               {createdAt}
             </small>
           </div>
-          {/* Disabled until ships are fully implemented
-          <div className="rat-ships-expander">
-            <button
-              className="inline ship-expand-button"
-              type="button"
-              onClick={this._handleExpandShips}>
-              <FontAwesomeIcon icon="angle-down" fixedWidth />
-            </button>
-          </div>
-          */}
           <CardControls
             canDelete={userHasMultipleRats && !ratIsDisplayRat && (statistics && !statistics?.attributes.firstLimpet)}
             canSubmit={this.canSubmit}
@@ -284,12 +253,6 @@ class RatCard extends React.Component {
 
 
 
-
-
-  /***************************************************************************\
-    Getters
-  \***************************************************************************/
-
   get ratIsDisplayRat () {
     return this.props.userDisplayRatId === this.props.rat.id
   }
@@ -315,43 +278,13 @@ class RatCard extends React.Component {
     return hasChanges && isValid
   }
 
-
-
-  /***************************************************************************\
-    Redux Properties
-  \***************************************************************************/
-
-  static mapDispatchToProps = [
-    'deleteRat',
-    'updateRat',
-  ]
-
-
-  static mapStateToProps = (state, props) => {
-    return {
-      user: withCurrentUserId(selectUserById)(state),
-      userDisplayRatId: withCurrentUserId(selectDisplayRatIdByUserId)(state),
-      rat: selectRatById(state, props),
-      statistics: selectRatStatisticsById(state, props),
-    }
-  }
-
-
-
-
-
-  /***************************************************************************\
-    Prop Definitions
-  \***************************************************************************/
-
   static propTypes = {
     className: PropTypes.string,
-    deleteRat: PropTypes.func,
+    dispatch: PropTypes.func.isRequired,
     rat: PropTypes.object,
     // eslint-disable-next-line react/no-unused-prop-types -- ratId is used in state mapping
     ratId: PropTypes.string.isRequired,
     statistics: PropTypes.object,
-    updateRat: PropTypes.func,
     user: PropTypes.object,
     userDisplayRatId: PropTypes.string,
   }
@@ -361,4 +294,11 @@ class RatCard extends React.Component {
 
 
 
-export default RatCard
+export default connectState((props) => {
+  return {
+    rat: useSelectorWithProps(props, selectRatById),
+    statistics: useSelectorWithProps(props, selectRatStatisticsById),
+    user: useSelector(withCurrentUserId(selectUserById)),
+    userDisplayRatId: useSelector(withCurrentUserId(selectDisplayRatIdByUserId)),
+  }
+})(RatCard)

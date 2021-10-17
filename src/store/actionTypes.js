@@ -3,7 +3,6 @@ const clients = {
   search: 'clients/search',
 }
 
-
 const decals = {
   read: 'decals/read',
   redeem: 'decals/redeem',
@@ -67,6 +66,9 @@ const users = {
   update: 'users/update',
   statistics: {
     read: 'users/statistics/read',
+  },
+  avatar: {
+    update: 'users/avatar/update',
   },
 }
 

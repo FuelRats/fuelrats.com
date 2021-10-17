@@ -1,0 +1,51 @@
+// Specificity assurance
+:global(.message).message {
+  margin: 2rem auto;
+}
+
+.avatarPreview {
+  display: flex;
+
+  justify-content: center;
+
+  width: 100%;
+  margin: 2rem 0 0;
+}
+
+.body {
+  .zoomAndCrop {
+    display: flex;
+
+    margin: 0 3.4rem 0 0;
+  }
+
+  .zoomSliderBox {
+    display: flex;
+
+    flex-direction: column;
+
+    width: 3.4rem;
+    margin-bottom: 3.2rem;
+  }
+
+  .sliderControl {
+    flex-grow: 1;
+  }
+
+  .cropContainer {
+    position: relative;
+
+    width: 100%;
+    padding-top: 100%;
+  }
+
+  .rotateSliderBox {
+    display: flex;
+
+    padding-top: 1.8rem;
+  }
+
+  .rotateAndCrop {
+    flex-grow: 1;
+  }
+}

@@ -1,90 +1,73 @@
-import { HttpStatus } from '@fuelrats/web-util/http'
-import axios from 'axios'
-
-import { methodRouter } from '~/helpers/apiMiddlewares'
-
-
-
-
-
-const cache = {
-  count: {
-    maxAge: 10000,
-    lastCheck: 0,
-    value: 0,
-  },
-  max: {
-    maxAge: 60000,
-    lastCheck: 0,
-    value: 0,
-  },
-}
+import { InternalServerAPIError } from '~/util/server/errors'
+import getEnv from '~/util/server/getEnv'
+import acceptMethod from '~/util/server/middleware/acceptMethod'
+import jsonApiRoute from '~/util/server/middleware/jsonApiRoute'
 
 
 
 
+// Module constants
+const env = getEnv()
 
-async function Queue (req, res) {
-  const nowTime = Date.now()
-
-  if (nowTime - cache.count.lastCheck >= cache.count.maxAge) {
-    cache.count.lastCheck = nowTime
-
-    const { data, status, statusText } = await axios.get(
-      `${process.env.QMS_API_URL}/api/v1/queue/`,
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.QMS_API_TOKEN}`,
-        },
-      },
-    )
-
-    if (status === HttpStatus.OK) {
-      const rescueQueue = data.filter((rescue) => {
+function getQueueLength (ctx) {
+  return ctx.fetch({
+    url: `${env.qms.url}/api/v1/queue/`,
+    headers: {
+      Authorization: `Bearer ${env.qms.token}`,
+    },
+    cache: {
+      key: 'qms-queue-count',
+      maxAge: 10000,
+    },
+  }).then(
+    ({ data }) => {
+      return data.filter((rescue) => {
         return !rescue.pending && !rescue.in_progress
-      })
-
-      cache.count.value = rescueQueue.length
-    } else {
-      console.error('GET /api/v1/queue/', status, statusText, data)
-      res.status(status).end(statusText)
-      return
-    }
-  }
-
-  if (nowTime - cache.max.lastCheck >= cache.max.maxAge) {
-    cache.max.lastCheck = nowTime
-    const { data, status, statusText } = await axios.get(
-      `${process.env.QMS_API_URL}/api/v1/config/`,
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.QMS_API_TOKEN}`,
+      }).length
+    },
+    ({ response }) => {
+      ctx.error(new InternalServerAPIError(null, {
+        internalError: {
+          url: 'qms/api/v1/queue/',
+          status: response.status,
+          statusText: response.statusText,
         },
-      },
-    )
-
-    if (status === HttpStatus.OK) {
-      cache.max.value = data.max_active_clients
-    } else {
-      console.error('GET /api/v1/config/', status, statusText, data)
-    }
-  }
-
-
-  res.status(HttpStatus.OK).json({
-    data: {
-      queueLength: cache.count.value,
-      maxClients: cache.max.value,
+      }))
     },
-    meta: {
-      queueAge: nowTime - cache.count.lastCheck,
-      maxClientAge: nowTime - cache.max.lastCheck,
+  )
+}
+
+function getMaxQueueLength (ctx) {
+  return ctx.fetch({
+    url: `${env.qms.url}/api/v1/config/`,
+    headers: {
+      Authorization: `Bearer ${env.qms.token}`,
     },
-  })
+    cache: {
+      key: 'qms-queue-max-count',
+      maxAge: 60000,
+    },
+  }).then(
+    ({ data }) => {
+      return data.max_active_clients
+    },
+    (error) => {
+      ctx.error(error)
+    },
+  )
 }
 
 
-
-export default methodRouter({
-  GET: Queue,
-})
+export default jsonApiRoute(
+  acceptMethod.GET(),
+  async (ctx) => {
+    ctx.send({
+      id: 'static',
+      type: 'queue-statistics',
+      attributes: {
+        queueLength: await getQueueLength(ctx),
+        maxClients: await getMaxQueueLength(ctx),
+      },
+    })
+  },
+)

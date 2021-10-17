@@ -1,6 +1,7 @@
 import { createCachedSelector } from 're-reselect'
 
-import { includesAll, includesSome } from '~/helpers/arrIncludes'
+import includesAll from '~/util/array/includesAll'
+import includesSome from '~/util/array/includesSome'
 
 import { withCurrentUserId } from './session'
 
@@ -14,11 +15,15 @@ const AVATAR_DEFAULT_SIZE = 256
 
 
 
-const getScope = (_, props) => {
+const getScopeProp = (_, props) => {
   return props?.scope
 }
 
-export const getUserId = (_, props) => {
+const getSizeProp = (_, props) => {
+  return props?.size ?? AVATAR_DEFAULT_SIZE
+}
+
+export const getUserIdProp = (_, props) => {
   return props?.userId
 }
 
@@ -39,14 +44,23 @@ export const selectUserDisplayRatRelationship = (state, props) => {
 }
 
 export const selectAvatarByUserId = (state, props) => {
-  const user = selectUserById(state, props)
-
-  if (!user) {
-    return undefined
-  }
-
-  return user.attributes.image ? `/api/users/${user.id}/avatar` : `/avatars/${props.size ?? AVATAR_DEFAULT_SIZE}/${user.id}`
+  return selectUserById(state, props)?.relationships.avatar?.data ?? undefined
 }
+
+export const selectAvatarUrlByUserId = createCachedSelector(
+  [selectAvatarByUserId, getSizeProp, getUserIdProp],
+  (avatar, size, userId) => {
+    if (userId === 'null') {
+      return undefined
+    }
+
+    return avatar
+      ? `/api/fr/users/${userId}/image?v=${avatar.id}&size=${size}`
+      : `/api/avatars/${userId}/${size}`
+  },
+)((_, props) => {
+  return `${getUserIdProp(_, props)}-${getSizeProp(_, props)}`
+})
 
 export const selectCurrentUserScopes = (state) => {
   return withCurrentUserId(selectUserById)(state)?.meta?.permissions ?? []
@@ -63,7 +77,7 @@ export const selectCurrentUserScopes = (state) => {
 export const selectCurrentUserHasScope = createCachedSelector(
   [
     selectCurrentUserScopes,
-    getScope,
+    getScopeProp,
   ],
   (userScopes, scope) => {
     if (!scope) {

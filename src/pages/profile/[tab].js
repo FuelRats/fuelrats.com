@@ -9,7 +9,7 @@ import ProfileHeader from '~/components/ProfileHeader'
 import TabbedPanel from '~/components/TabbedPanel'
 import UserOverview from '~/components/UserOverview'
 import UserRatsPanel from '~/components/UserRatsPanel'
-import { setError } from '~/helpers/gIPTools'
+import setError from '~/util/getInitialProps/setError'
 
 
 
@@ -17,10 +17,6 @@ import { setError } from '~/helpers/gIPTools'
 
 @authenticated
 class Profile extends React.Component {
-  /***************************************************************************\
-    Private Methods
-  \***************************************************************************/
-
   _handleFLDClose = () => {
     Router.replace(`/profile/${this.props.query.tab}`)
   }
@@ -33,13 +29,6 @@ class Profile extends React.Component {
     Router.replace('/profile/overview')
   }
 
-
-
-
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
-
   static getInitialProps (ctx) {
     if (!this.tabs[ctx.query.tab]) {
       setError(ctx, HttpStatus.NOT_FOUND)
@@ -50,7 +39,7 @@ class Profile extends React.Component {
     return {
       title: 'Profile',
       displayTitle: this.tabs[ctx.query.tab].pageTitle,
-      pageKey: 'profile',
+      key: 'profile',
     }
   }
 
@@ -79,14 +68,6 @@ class Profile extends React.Component {
       </>
     )
   }
-
-
-
-
-
-  /***************************************************************************\
-    Getters
-  \***************************************************************************/
 
   static get tabs () {
     return {

@@ -1,8 +1,9 @@
 import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
+import AddRatForm from '~/components/Forms/AddRatForm'
+import RatCard from '~/components/RatCard'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
-import { connect } from '~/store'
 import { getUserStatistics } from '~/store/actions/statistics'
 import {
   selectUserById,
@@ -10,14 +11,12 @@ import {
   selectRatStatisticsById,
 } from '~/store/selectors'
 
-import AddRatForm from './AddRatForm'
-import RatCard from './RatCard'
 
 
 
 
-
-function UserRatsPanel ({ user }) {
+function UserRatsPanel () {
+  const user = useSelector(withCurrentUserId(selectUserById))
   const { rats } = user.relationships
 
   const dispatch = useDispatch()
@@ -27,7 +26,7 @@ function UserRatsPanel ({ user }) {
     if (!ratStatistics) {
       dispatch(getUserStatistics(user.id))
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
@@ -54,14 +53,4 @@ function UserRatsPanel ({ user }) {
 
 
 
-UserRatsPanel.mapStateToProps = (state) => {
-  return {
-    user: withCurrentUserId(selectUserById)(state),
-  }
-}
-
-
-
-
-
-export default connect(UserRatsPanel)
+export default UserRatsPanel

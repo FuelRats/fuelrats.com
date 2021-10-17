@@ -28,8 +28,8 @@ export default function useForm (config = {}) {
   const [submitting, setSubmit] = useState(false)
 
   const [{ __init }, isValid, dispatchValidity] = useValidityReducer({ __init: false })
-  const [stateDelta, dispatchDelta] = useDeltaReducer(initialState)
-  const [state, dispatchState] = useObjectReducer(initialState)
+  const [stateDelta, dispatchDelta] = useDeltaReducer(initialStateRef.current)
+  const [state, dispatchState] = useObjectReducer(initialStateRef.current)
   const validationMethods = useRef({})
 
   const dispatchField = useCallback(
@@ -93,14 +93,22 @@ export default function useForm (config = {}) {
     [dispatchValidity],
   )
 
+  const resetForm = useCallback(() => {
+    dispatchState({ fragment: initialStateRef.current })
+    validateAll(initialStateRef.current)
+    if (trackDelta) {
+      dispatchDelta({ clear: true })
+    }
+  }, [dispatchDelta, dispatchState, trackDelta, validateAll])
+
   const handleSubmit = useCallback(
     async (event) => {
       event.preventDefault()
       setSubmit(true)
-      await parentSubmit(state, stateDelta)
+      await parentSubmit(state, stateDelta, resetForm)
       setSubmit(false)
     },
-    [parentSubmit, state, stateDelta],
+    [parentSubmit, resetForm, state, stateDelta],
   )
 
   const ctxRef = useRef({ ctx: {} })
@@ -115,6 +123,7 @@ export default function useForm (config = {}) {
           submitting,
           dispatchField,
           dispatchValidity,
+          resetForm,
         },
         registerValidator,
         validateAll,
@@ -123,7 +132,7 @@ export default function useForm (config = {}) {
       }
     },
     [
-      __init, dispatchField, dispatchValidity,
+      __init, dispatchField, dispatchValidity, resetForm,
       handleSubmit, isValid, registerValidator,
       state, submitting, validateAll,
       validateField,

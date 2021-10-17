@@ -2,8 +2,10 @@ import { createFSA, createAxiosFSA } from '@fuelrats/web-util/actions'
 import { HttpStatus } from '@fuelrats/web-util/http'
 import { isError } from 'flux-standard-action'
 
-import { configureRequest, deleteCookie } from '~/helpers/gIPTools'
-import frApi from '~/services/fuelrats'
+
+import frApi from '~/services/frApi'
+import configureRequest from '~/util/getInitialProps/configureRequest'
+import deleteCookie from '~/util/getInitialProps/deleteCookie'
 
 import actionTypes from '../actionTypes'
 import {
@@ -66,9 +68,9 @@ export const initUserSession = (ctx) => {
     // Get user agent to be used by login modal and i-need-fuel page
     let userAgent = ''
     if (ctx.req && ctx.req.headers['user-agent']) {
-      userAgent = ctx.req.headers['user-agent'].toLowerCase()
+      userAgent = ctx.req.headers['user-agent']
     } else if (typeof window !== 'undefined') {
-      userAgent = window.navigator.userAgent.toLowerCase()
+      userAgent = window.navigator.userAgent
     }
 
     const action = createFSA(
@@ -79,7 +81,7 @@ export const initUserSession = (ctx) => {
       },
     )
 
-    if (accessToken !== session.token) {
+    if (accessToken !== session.token || userAgent !== session.userAgent) {
       dispatch(action)
     }
 

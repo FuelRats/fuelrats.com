@@ -2,11 +2,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import PropTypes from 'prop-types'
 import { useCallback, useRef } from 'react'
 
-import extPropType from '~/helpers/extPropTypes'
 import { useField, fieldPropTypes } from '~/hooks/useForm'
+import extPropTypes from '~/util/propTypes/extPropTypes'
 
 import inputStyles from '../InputFieldset/InputFieldset.module.scss'
-import ValidityIcon from '../InputFieldset/ValidityIcon'
 import styles from './SelectFieldset.module.scss'
 
 
@@ -19,12 +18,14 @@ function SelectFieldset (props) {
     className,
     dark,
     disabled,
+    fieldsetClassName,
     inputClassName,
     label,
     noEmpty,
     onChange,
     onValidate: parentValidate,
     required,
+    placeholder,
     validateOpts,
     ...inputProps
   } = props
@@ -47,13 +48,12 @@ function SelectFieldset (props) {
 
   const {
     value = '',
-    validating,
     submitting,
     handleChange,
   } = useField(props.name, { onValidate, onChange, validateOpts })
 
   return (
-    <fieldset>
+    <fieldset className={fieldsetClassName}>
       {
         Boolean(label) && (
           <label htmlFor={props.id}>{label}</label>
@@ -62,7 +62,7 @@ function SelectFieldset (props) {
 
       <div className={[inputStyles.inputGroup, styles.select, className]}>
         <select
-          className={[inputClassName, { dark, required, valid: validityRef.current }]}
+          className={[inputClassName, { dark, required, valid: validityRef.current, [styles.empty]: !value.length }]}
           disabled={submitting || disabled}
           type="text"
           {...inputProps}
@@ -70,7 +70,7 @@ function SelectFieldset (props) {
           onChange={handleChange}>
           {
             !noEmpty && (
-              <option aria-label="Empty" value="" />
+              <option disabled aria-label="Empty" value="">{placeholder}</option>
             )
           }
           {children}
@@ -78,19 +78,15 @@ function SelectFieldset (props) {
         <div className={styles.arrow}>
           <FontAwesomeIcon fixedWidth icon="angle-down" size="lg" />
         </div>
-        <ValidityIcon
-          className={{ [inputStyles.hidden]: !value.length }}
-          valid={validityRef.current}
-          validating={validating} />
       </div>
     </fieldset>
   )
 }
 
-SelectFieldset.displayName = 'InputFieldset'
+SelectFieldset.displayName = 'SelectFieldset'
 
 SelectFieldset.propTypes = {
-  'aria-label': extPropType(PropTypes.string).isRequiredIf('label', 'undefined'),
+  'aria-label': extPropTypes(PropTypes.string).isRequiredIf('label', 'undefined'),
   dark: PropTypes.bool,
   id: PropTypes.string.isRequired,
   inputClassName: PropTypes.string,

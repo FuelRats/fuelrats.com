@@ -1,12 +1,14 @@
+import Image from 'next/image'
 import { useCallback, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { setFlag } from '~/store/actions/flags'
 import { logout } from '~/store/actions/session'
 import {
   selectSession,
   selectUserById,
-  selectAvatarByUserId,
+  selectAvatarUrlByUserId,
   withCurrentUserId,
   selectCurrentUserCanEditAllRescues,
 } from '~/store/selectors'
@@ -24,7 +26,7 @@ function UserMenu () {
   const { loggedIn } = useSelector(selectSession)
   const userCanSeeRescueAdmin = useSelector(selectCurrentUserCanEditAllRescues)
   const user = useSelector(withCurrentUserId(selectUserById))
-  const userAvatar = useSelector(withCurrentUserId(selectAvatarByUserId))
+  const userAvatarUrl = useSelectorWithProps({ size: 64 }, withCurrentUserId(selectAvatarUrlByUserId))
 
   const dispatch = useDispatch()
 
@@ -56,7 +58,12 @@ function UserMenu () {
               <label className={[styles.avatar, styles.navHandle]} htmlFor="UserMenuControl" id="UserMenuToggle">
                 {
                   Boolean(user) && (
-                    <img alt="Your avatar" src={userAvatar} />
+                    <Image
+                      unoptimized
+                      alt="User's avatar"
+                      height={64}
+                      src={userAvatarUrl}
+                      width={64} />
                   )
                 }
               </label>

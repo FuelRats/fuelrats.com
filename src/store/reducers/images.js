@@ -12,7 +12,7 @@ import initialState from '../initialState'
 
 
 
-const imageReducer = produce((draftState, action) => {
+export default produce((draftState, action) => {
   const {
     payload,
     meta,
@@ -37,9 +37,3 @@ const imageReducer = produce((draftState, action) => {
       break
   }
 }, initialState.images)
-
-
-
-
-
-export default imageReducer

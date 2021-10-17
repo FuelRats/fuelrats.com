@@ -1,10 +1,11 @@
 import Link from 'next/link'
 import Router from 'next/router'
-import React from 'react'
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 
 import Carousel from '~/components/Carousel'
-import { makeRoute } from '~/helpers/routeGen'
-import { connect } from '~/store'
+import { setFlag } from '~/store/actions/flags'
+import makeRoute from '~/util/router/makeRoute'
 
 
 
@@ -12,89 +13,77 @@ import { connect } from '~/store'
 
 // Component constants
 const CarouselSlides = {
-  0: {
+  chives: {
     text: 'CMDR Dr Chives',
     position: '13% 50%',
     filename: 'chives.jpg',
   },
-  1: {
+  rafa: {
     text: 'CMDR rafaBC_',
     position: '20% 50%',
     filename: 'rafa.jpg',
   },
-  2: {
+  numpi: {
     text: 'CMDR NumberPi',
     position: '50% 50%',
     filename: 'pi.jpg',
   },
-  3: {
+  alpaca: {
     text: 'CMDR Worthy Alpaca',
     position: '25% 50%',
     filename: 'worthyalpaca.jpg',
   },
-  4: {
+  light: {
     text: 'CMDR Light1c3',
     position: '70% 100%',
     filename: 'light.jpg',
   },
-  5: {
+  fenri: {
     text: 'CMDR Fenrishi',
     position: '40% 50%',
     filename: 'fenrishi.jpg',
   },
 }
 
-@connect
-class Index extends React.Component {
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
 
-  static getPageMeta () {
-    return { noHeader: true, title: 'Home' }
-  }
+function FuelRatsHome (props) {
+  const { authenticate, ...restQuery } = props.query
+  const dispatch = useDispatch()
 
-  componentDidMount () {
-    const {
-      authenticate,
-      ...nextQuery
-    } = this.props.query
-
-    if (this.props.query.authenticate) {
-      this.props.setFlag('showLoginDialog', true)
-      Router.replace(makeRoute('/', nextQuery), undefined, { shallow: true })
+  useEffect(() => {
+    if (authenticate) {
+      dispatch(setFlag('showLoginDialog', true))
+      Router.replace(makeRoute('/', restQuery), undefined, { shallow: true })
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- only run on authenticate change, we only care about the state of others when this value changes anyway.
+  }, [authenticate])
+
+  return (
+    <section className="hero">
+      <Carousel id="HomeImages" slides={CarouselSlides} />
+
+      <header>
+        <h1>{'We Have Fuel. '}<wbr />{"You\u00a0Don't."}</h1>
+        <h2>{'Any Questions?'}</h2>
+      </header>
+
+      <footer className="call-to-action">
+        <Link href="/i-need-fuel">
+          <a className="button tall">{'Get Fuel'}</a>
+        </Link>
+      </footer>
+    </section>
+  )
+}
+
+FuelRatsHome.getPageMeta = () => {
+  return {
+    noHeader: true,
+    title: 'Home',
+    key: 'home',
   }
-
-  render () {
-    return (
-      <section className="hero">
-        <Carousel id="HomeImages" slides={CarouselSlides} />
-
-        <header>
-          <h1>{'We Have Fuel. '}<wbr />{"You\u00a0Don't."}</h1>
-          <h2>{'Any Questions?'}</h2>
-        </header>
-
-        <footer className="call-to-action">
-          <Link href="/i-need-fuel">
-            <a className="button tall">{'Get Fuel'}</a>
-          </Link>
-        </footer>
-      </section>
-    )
-  }
-
-  static mapDispatchToProps = ['setFlag']
 }
 
 
 
-
-
-export default Index
-
-
-/*
-
- */
+export default FuelRatsHome

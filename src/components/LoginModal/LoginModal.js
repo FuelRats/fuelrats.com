@@ -1,9 +1,11 @@
-import { connect } from '~/store'
+import { useCallback } from 'react'
+
+import asModal, { ModalContent, useModalContext } from '~/components/asModal'
+import useSelectorWithProps from '~/hooks/useSelectorWithProps'
+import { connectState } from '~/store'
 import { setFlag } from '~/store/actions/flags'
 import { selectFlagByName } from '~/store/selectors'
 
-import asModal, { ModalContent } from '../Modal'
-import { useModalContext } from '../Modal/Modal'
 import styles from './LoginModal.module.scss'
 import LoginModalErrorBox from './LoginModalErrorBox'
 import LoginView from './LoginView'
@@ -25,26 +27,21 @@ function LoginModal () {
   )
 }
 
-/* we're binding these via connect so they get passed to the modal wrapper */
-LoginModal.mapDispatchToProps = {
-  onClose: () => {
-    return setFlag('showLoginDialog', false)
-  },
-}
 
-LoginModal.mapStateToProps = (state) => {
+
+
+
+export default connectState((_, dispatch) => {
   return {
-    isOpen: selectFlagByName(state, { name: 'showLoginDialog' }),
+    onClose: useCallback(() => {
+      return dispatch(setFlag('showLoginDialog', false))
+    }, [dispatch]),
+    isOpen: useSelectorWithProps({ name: 'showLoginDialog' }, selectFlagByName),
   }
-}
-
-
-export default connect(
-  asModal(
-    {
-      className: 'login-dialog',
-      title: 'Login',
-      initialState: { view: 'login' },
-    },
-  )(LoginModal),
-)
+})(asModal(
+  {
+    className: 'login-dialog',
+    title: 'Login',
+    initialState: { view: 'login' },
+  },
+)(LoginModal))

@@ -1,49 +1,40 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { HttpStatus } from '@fuelrats/web-util/http'
 import Link from 'next/link'
 import Router from 'next/router'
 import React from 'react'
 
 import { authenticated } from '~/components/AppLayout'
-import { formatAsEliteDateTime } from '~/helpers/formatTime'
-import { pageRedirect } from '~/helpers/gIPTools'
-import { makePaperworkRoute } from '~/helpers/routeGen'
-import { connect } from '~/store'
-import { getRescue } from '~/store/actions/rescues'
+import useSelectorWithProps from '~/hooks/useSelectorWithProps'
+import { connectState } from '~/store'
+import { deleteRescue, getRescue } from '~/store/actions/rescues'
 import {
   selectRatsByRescueId,
   selectRescueById,
   selectCurrentUserCanEditRescue,
   selectCurrentUserHasScope,
 } from '~/store/selectors'
+import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
+import pageRedirect from '~/util/getInitialProps/pageRedirect'
+import setError from '~/util/getInitialProps/setError'
+import getResponseError from '~/util/getResponseError'
+import makePaperworkRoute from '~/util/router/makePaperworkRoute'
 
 
 
 
 
 @authenticated
-@connect
 class Paperwork extends React.Component {
-  /***************************************************************************\
-    Properties
-  \***************************************************************************/
-
   state = {
     deleteConfirm: false,
     deleting: false,
   }
 
-
-
-
-
-  /***************************************************************************\
-    Private Methods
-  \***************************************************************************/
-
   _handleDeleteClick = async () => {
     if (this.state.deleteConfirm) {
       this.setState({ deleting: true })
-      await this.props.deleteRescue(this.props.rescue)
+      await this.props.dispatch(deleteRescue(this.props.rescue))
 
       Router.push(
         this.props.userCanWriteAll
@@ -60,14 +51,6 @@ class Paperwork extends React.Component {
   _handleDeleteCancel = () => {
     this.setState({ deleteConfirm: false })
   }
-
-
-
-
-
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
 
   static renderQuote = (quote) => {
     const createdAt = formatAsEliteDateTime(quote.createdAt)
@@ -114,7 +97,11 @@ class Paperwork extends React.Component {
     const state = store.getState()
 
     if (!selectRescueById(state, query)) {
-      await store.dispatch(getRescue(query.rescueId))
+      const response = await store.dispatch(getRescue(query.rescueId))
+      const error = getResponseError(response)
+      if (error) {
+        setError(ctx, HttpStatus.NOT_FOUND, 'We tried looking everywhere, but this rescue doesn\'t exist.')
+      }
     }
   }
 
@@ -363,48 +350,11 @@ class Paperwork extends React.Component {
   }
 
   render () {
-    const {
-      rescue,
-    } = this.props
-
     return (
-      <>
-        {
-          (!rescue) && (
-            <div className="loading page-content">
-              <p>{"Sorry, we couldn't find the paperwork you requested."}</p>
-            </div>
-          )
-        }
-
-        {
-          (rescue) && (
-            <div className="page-content">
-              {this.renderRescue()}
-            </div>
-          )
-        }
-      </>
+      <div className="page-content">
+        {this.renderRescue()}
+      </div>
     )
-  }
-
-
-
-
-
-  /***************************************************************************\
-    Redux Properties
-  \***************************************************************************/
-
-  static mapDispatchToProps = ['deleteRescue']
-
-  static mapStateToProps = (state, { query }) => {
-    return {
-      rats: selectRatsByRescueId(state, query) || [],
-      rescue: selectRescueById(state, query),
-      userCanEdit: selectCurrentUserCanEditRescue(state, query),
-      userCanWriteAll: selectCurrentUserHasScope(state, { scope: 'rescues.write' }),
-    }
   }
 }
 
@@ -412,4 +362,11 @@ class Paperwork extends React.Component {
 
 
 
-export default Paperwork
+export default connectState((props) => {
+  return {
+    rats: useSelectorWithProps(props.query, selectRatsByRescueId) ?? [],
+    rescue: useSelectorWithProps(props.query, selectRescueById),
+    userCanEdit: useSelectorWithProps(props.query, selectCurrentUserCanEditRescue),
+    userCanWriteAll: useSelectorWithProps({ scope: 'rescues.write' }, selectCurrentUserHasScope),
+  }
+})(Paperwork)

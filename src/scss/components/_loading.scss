@@ -1,8 +1,8 @@
-.loading {
+@use 'sass:math';
+
+.loading:not(.error) {
   &:empty,
   &.loader-force {
-    position: relative;
-
     &::after,
     &::before {
       display: flex;
@@ -23,8 +23,8 @@
       content: '';
       width: $loader-size;
       height: $loader-size;
-      margin-top: -(($loader-size / 2) + $loader-border-width);
-      margin-left: -(($loader-size / 2) + $loader-border-width);
+      margin-top: -(math.div($loader-size, 2) + $loader-border-width);
+      margin-left: -(math.div($loader-size, 2) + $loader-border-width);
 
       border: $loader-border-width solid currentColor;
       border-radius: 100%;

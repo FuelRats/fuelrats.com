@@ -4,11 +4,12 @@ import Link from 'next/link'
 import React from 'react'
 
 import { authenticated } from '~/components/AppLayout'
-import { formatAsEliteDateTime } from '~/helpers/formatTime'
-import { makePaperworkRoute } from '~/helpers/routeGen'
-import { connect } from '~/store'
+import useSelectorWithProps from '~/hooks/useSelectorWithProps'
+import { connectState } from '~/store'
 import { getRescues } from '~/store/actions/rescues'
 import { selectPageViewDataById, selectPageViewMetaById } from '~/store/selectors'
+import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
+import makePaperworkRoute from '~/util/router/makePaperworkRoute'
 
 
 
@@ -24,24 +25,11 @@ const pageViewId = 'admin-rescue-list'
 
 
 @authenticated('rescue.write')
-@connect
 class ListRescues extends React.Component {
-  /***************************************************************************\
-    Class Properties
-  \***************************************************************************/
-
   state = {
     client: '',
     loading: false,
   }
-
-
-
-
-
-  /***************************************************************************\
-    Private Methods
-  \***************************************************************************/
 
   _handleSearchChange = (event) => {
     this.setState({
@@ -59,27 +47,19 @@ class ListRescues extends React.Component {
     this.setState(
       { loading: true },
       async () => {
-        await this.props.getRescues(
+        await this.props.dispatch(getRescues(
           this.state.client
             ? { 'client.ilike': `${this.state.client}%` }
             : { 'status.ne': 'closed' },
           {
             pageView: pageViewId,
           },
-        )
+        ))
 
         this.setState({ loading: false })
       },
     )
   }, viewUpdateDebounceTime, { maxWait: viewUpdateMaxWaitTime })
-
-
-
-
-
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
 
   static async getInitialProps ({ store }) {
     await store.dispatch(
@@ -186,27 +166,13 @@ class ListRescues extends React.Component {
       </div>
     )
   }
-
-
-
-
-
-  /***************************************************************************\
-    Redux Properties
-  \***************************************************************************/
-
-  static mapDispatchToProps = ['getRescues']
-
-  static mapStateToProps = (state) => {
-    return {
-      rescues: selectPageViewDataById(state, { pageViewId }) || [],
-      meta: selectPageViewMetaById(state, { pageViewId }),
-    }
-  }
 }
 
 
 
-
-
-export default ListRescues
+export default connectState(() => {
+  return {
+    meta: useSelectorWithProps({ pageViewId }, selectPageViewMetaById),
+    rescues: useSelectorWithProps({ pageViewId }, selectPageViewDataById) ?? [],
+  }
+})(ListRescues)

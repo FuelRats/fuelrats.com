@@ -2,10 +2,10 @@ import { useCallback, useEffect, useState } from 'react'
 
 import InputFieldset from '~/components/Fieldsets/InputFieldset'
 import RatTagsInput from '~/components/RatTagsInput'
-import getRatTag from '~/helpers/getRatTag'
-import { isValidUuidV4 } from '~/helpers/uuidValidator'
 import useCreateEpicApi from '~/hooks/frapi/useCreateEpicApi'
 import useForm from '~/hooks/useForm'
+import getRatTag from '~/util/getRatTag'
+import { isValidUuidV4 } from '~/util/string/uuidValidator'
 
 import styles from './NominateRatForm.module.scss'
 

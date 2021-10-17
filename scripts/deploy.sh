@@ -8,7 +8,7 @@ SERVICE_NAME=""
 # Find deploy target and service name
 case $GITHUB_REF in
 "refs/heads/develop")
-  DEPLOY_DIR="dev.fuelrats.com"
+  DEPLOY_DIR="fuelrats.dev"
   SERVICE_NAME="fr-web_dev"
   ;;
 

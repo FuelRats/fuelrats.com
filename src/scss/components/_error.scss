@@ -1,6 +1,6 @@
-.error:empty {
-  position: relative;
+@use 'sass:math';
 
+.error:empty {
   &::after,
   &::before {
     display: flex;
@@ -14,8 +14,8 @@
 
     width: $loader-size;
     height: $loader-size;
-    margin-top: -($loader-size / 2);
-    margin-left: -($loader-size / 2);
+    margin-top: 0 - math.div($loader-size, 2);
+    margin-left: 0 - math.div($loader-size, 2);
 
     border-width: 0.3rem;
     border-style: solid;

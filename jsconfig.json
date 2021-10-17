@@ -1,15 +1,23 @@
 {
   "compilerOptions": {
+    // based on with-typescript example https://github.com/vercel/next.js/blob/canary/examples/with-typescript/tsconfig.json
+    "target": "es6",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "experimentalDecorators": true,
     "baseUrl": ".",
     "paths": {
       "~/*": ["src/*"]
-    },
-    "experimentalDecorators": true,
-    "module": "esnext",
-    "target": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "jsx": "react"
+    }
   },
   "include": [
     "src/**/*",

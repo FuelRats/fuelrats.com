@@ -1,4 +1,4 @@
-import { presentApiRequestBody } from '~/helpers/presenters'
+import createRequestBody from '~/util/jsonapi/createRequestBody'
 
 import actionTypes from '../actionTypes'
 import { frApiRequest } from './services'
@@ -22,7 +22,7 @@ export const createEpic = (data) => {
     {
       url: '/epics',
       method: 'post',
-      data: presentApiRequestBody('epics', data),
+      data: createRequestBody('epics', data),
     },
   )
 }

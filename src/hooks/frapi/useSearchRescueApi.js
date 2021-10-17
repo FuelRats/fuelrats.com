@@ -1,8 +1,8 @@
 import { useEffect, useReducer, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { isValidUuidV4 } from '~/helpers/uuidValidator'
 import { getRescue } from '~/store/actions/rescues'
+import { isValidUuidV4 } from '~/util/string/uuidValidator'
 
 const rescueFetchReducer = (state, action) => {
   switch (action.type) {

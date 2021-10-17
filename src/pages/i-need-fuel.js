@@ -1,8 +1,11 @@
 import getConfig from 'next/config'
+import Image from 'next/image'
 import Link from 'next/link'
-import { createStructuredSelector } from 'reselect'
+import { useMemo } from 'react'
+import { useSelector } from 'react-redux'
+import UAParser from 'ua-parser-js'
 
-import { connect } from '~/store'
+import MessageBox from '~/components/MessageBox'
 import { selectSession } from '~/store/selectors'
 
 
@@ -11,34 +14,62 @@ import { selectSession } from '~/store/selectors'
 
 const { publicRuntimeConfig } = getConfig()
 const { irc: ircURLs } = publicRuntimeConfig
-
-
-
-
-
-function INeedFuel (props) {
-  const {
-    session,
-  } = props
-
-  let supportMessage = null
-
-  if (session.userAgent.match(/playstation/giu)) {
-    supportMessage = `
+const unsupportedPlatforms = {
+  Sony: {
+    type: 'error',
+    message: `
       The built-in PS4 browser is currently not supported.
       This is due to bugs in the PS4 browser, and outside of our control.
       Please use your phone or computer instead.
-    `
-  }
+    `,
+  },
+  Microsoft: {
+    type: 'warn',
+    message: `
+    It appears you're connecting from your Xbox!
+    While you may use the Xbox browser to use our services, we recommend using your computer to ensure a consistent connection.
+    `,
+  },
+  Generic: {
+    type: 'warn',
+    message: `
+      It appears you're connecting from a mobile device.
+      Ensure your device's screen and browser remains active throughout your rescue.
+      You may lose your connection otherwise!
+    `,
+  },
+}
+
+
+
+
+
+function INeedFuel () {
+  const session = useSelector(selectSession)
+  const supportMessage = useMemo(() => {
+    const uaInfo = new UAParser(session.userAgent)
+    const { type, vendor } = uaInfo.getDevice()
+
+    if (type) {
+      if (unsupportedPlatforms[vendor]) {
+        return unsupportedPlatforms[vendor]
+      }
+      return unsupportedPlatforms.Generic
+    }
+
+    return {}
+  }, [session.userAgent])
 
   return (
     <div className="page-content">
       <div>
-        <img
-          alt="Fuel rat riding a limpet"
-          className="pull-right"
-          src="https://wordpress.fuelrats.com/wp-content/uploads/2016/07/vig_rescue_250-200x126.jpg?resize=200%2C126&ssl=1" />
-
+        <div className="pull-right">
+          <Image
+            alt="Fuel rat riding a limpet"
+            height={126}
+            src="https://wordpress.fuelrats.com/wp-content/uploads/2016/07/vig_rescue_250-200x126.jpg?resize=200%2C126&ssl=1"
+            width={200} />
+        </div>
         <h4>
           {'DO YOU SEE A "OXYGEN DEPLETED IN" TIMER?'}
           <br />
@@ -47,10 +78,10 @@ function INeedFuel (props) {
 
         <br />
 
-        {supportMessage && (<h5>{supportMessage}</h5>)}
+        {supportMessage.message && (<MessageBox title="Unsupported Device" type={supportMessage.type}>{supportMessage.message}</MessageBox>)}
 
         {
-          !supportMessage && (
+          supportMessage.type !== 'error' && (
             <>
               <p>{'Have you found yourself low on fuel and unable to make it to your nearest refuel point? Never fear! The Fuel Rats are here to help!'}</p>
 
@@ -103,9 +134,5 @@ INeedFuel.getPageMeta = () => {
   }
 }
 
-INeedFuel.mapStateToProps = createStructuredSelector({
-  session: selectSession,
-})
 
-
-export default connect(INeedFuel)
+export default INeedFuel

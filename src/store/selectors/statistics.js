@@ -1,6 +1,6 @@
 import { createCachedSelector } from 're-reselect'
 
-import { selectUserRatsRelationship, getUserId } from './users'
+import { selectUserRatsRelationship, getUserIdProp } from './users'
 
 export const selectLeaderboard = (state) => {
   return state.leaderboard.entries
@@ -21,7 +21,7 @@ export const selectRatStatisticsById = (state, { ratId }) => {
 
 
 export const selectUserStatisticsById = createCachedSelector(
-  [getUserId, selectUserRatsRelationship, selectRatStatistics],
+  [getUserIdProp, selectUserRatsRelationship, selectRatStatistics],
   (userId, userRats, ratStatistics) => {
     // if the user doesn't exist, or there's no rat data, or there's no statistics for the first rat, return null.
     // Since the only way of getting a rat's statistics is by requesting for all rats of a user, we can assume we don't have any if we're missing one.
@@ -54,4 +54,4 @@ export const selectUserStatisticsById = createCachedSelector(
       }, {}),
     }
   },
-)(getUserId)
+)(getUserIdProp)

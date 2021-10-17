@@ -1,82 +1,40 @@
-import React from 'react'
+import { useCallback } from 'react'
 
-import { connect } from '~/store'
-import { selectWordpressPageBySlug } from '~/store/selectors'
+import useToggleState from '~/hooks/useToggleState'
 
-import asModal, { ModalContent, ModalFooter } from '../Modal'
+import asModal, { ModalContent, ModalFooter } from '../asModal'
+import WordpressPage from '../WordpressPage'
 import styles from './TermsModal.module.scss'
 
 
 
 
+function TermsModal (props) {
+  const {
+    checkboxLabel,
+    onAccept,
+    slug,
+    title,
+  } = props
 
-@asModal({ className: 'terms-dialog' })
-@connect
-class WordpressTermsModal extends React.Component {
-  /***************************************************************************\
-    Class Properties
-  \***************************************************************************/
+  const [termsAccepted, toggleTermsAccepted] = useToggleState(false)
+  const handleTermsToggle = useCallback(() => {
+    toggleTermsAccepted()
+  }, [toggleTermsAccepted])
 
-  state = {
-    termsAccepted: false,
-    loading: true,
-  }
-
-
-
-
-
-  /***************************************************************************\
-    Private Methods
-  \***************************************************************************/
-
-  _handleCheckboxChange = ({ target }) => {
-    return this.setState({ termsAccepted: target.checked })
-  }
-
-  _handleAccept = () => {
-    if (this.state.termsAccepted) {
-      this.props.onAccept?.()
+  const handleAcceptTerms = useCallback(() => {
+    if (termsAccepted) {
+      onAccept?.()
     }
-  }
+  }, [onAccept, termsAccepted])
 
+  const checkboxId = `TermsDialog-${title.replace(/\s/gu, '')}-checkbox`
 
-
-
-
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
-
-  async componentDidMount () {
-    const {
-      getWordpressPage,
-      page,
-      slug,
-    } = this.props
-
-    if (!page) {
-      await getWordpressPage(slug)
-    }
-
-    this.setState({
-      loading: false,
-    })
-  }
-
-  renderFooter () {
-    const {
-      checkboxLabel,
-      title,
-    } = this.props
-
-    const {
-      termsAccepted,
-    } = this.state
-
-    const checkboxId = `termsDialog-${title.replace(/\s/gu, '')}-checkbox`
-
-    return (
+  return (
+    <>
+      <ModalContent as="article" className={[styles.content]}>
+        <WordpressPage className="loader-dark" slug={slug} />
+      </ModalContent>
       <ModalFooter>
         <div className="secondary" />
         <div className="primary">
@@ -87,69 +45,26 @@ class WordpressTermsModal extends React.Component {
               className="large"
               id={checkboxId}
               type="checkbox"
-              onChange={this._handleCheckboxChange} />
+              onChange={handleTermsToggle} />
             <label htmlFor={checkboxId}>{checkboxLabel}</label>
           </span>
           <button
             key="NextButton"
             disabled={!termsAccepted}
             type="button"
-            onClick={this._handleAccept}>
+            onClick={handleAcceptTerms}>
             {'Next'}
           </button>
         </div>
       </ModalFooter>
-    )
-  }
-
-  /* eslint-disable react/no-danger */
-  renderWordpressPage () {
-    const { page } = this.props
-
-    return Boolean(page) && (
-      <div dangerouslySetInnerHTML={page && { __html: page.content.rendered.replace(/<ul>/giu, '<ul class="bulleted">').replace(/<ol>/giu, '<ol class="numbered">') }} />
-    )
-  }
-  /* eslint-enable react/no-danger */
-
-  render () {
-    const {
-      loading,
-    } = this.state
-
-    const {
-      page,
-    } = this.props
-
-    return (
-      <>
-        <ModalContent className={[styles.content, { error: !loading && !page }]}>
-          {this.renderWordpressPage(page)}
-        </ModalContent>
-        {this.renderFooter()}
-      </>
-    )
-  }
-
-
-
-
-
-  /***************************************************************************\
-    Redux Properties
-  \***************************************************************************/
-
-  static mapDispatchToProps = ['getWordpressPage']
-
-  static mapStateToProps = (state, ownProps) => {
-    return {
-      page: selectWordpressPageBySlug(state, ownProps),
-    }
-  }
+    </>
+  )
 }
 
 
 
 
 
-export default WordpressTermsModal
+export default asModal({
+  className: 'terms-dialog',
+})(TermsModal)

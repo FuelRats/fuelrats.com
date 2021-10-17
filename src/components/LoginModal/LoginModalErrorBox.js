@@ -5,12 +5,18 @@ import ApiErrorBox from '~/components/MessageBox/ApiErrorBox'
 function getErrorText (error) {
   // Bad verification tokens are returned as oauth errors, which is weird but okay.
   if (error.error_description === 'verify') {
-    return 'That verification token was incorrect. Please try again.'
+    return {
+      title: 'Invalid Token',
+      detail: 'That verification token was incorrect. Please try again.',
+    }
   }
 
   switch (error.status) {
     case 'verification_required':
-      return 'It appears you\'re logging in from a new device.\nA verification code has been sent to your email.'
+      return {
+        title: 'Verification Required',
+        detail: 'It appears you\'re logging in from a new device.\nA verification code has been sent to your email.',
+      }
 
     case 'unauthorized':
       return 'Invalid Username or Password'

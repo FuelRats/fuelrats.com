@@ -1,4 +1,4 @@
-import { isValidUuidV4 } from '~/helpers/uuidValidator'
+import { isValidUuidV4 } from '~/util/string/uuidValidator'
 
 import InputFieldset, { useValidationCallback } from './InputFieldset'
 
