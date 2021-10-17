@@ -87,23 +87,11 @@ const outcomeRadioOptions = [
 
 @authenticated
 class Paperwork extends React.Component {
-  /***************************************************************************\
-    Properties
-  \***************************************************************************/
-
   state = {
     submitting: false,
     error: null,
     changes: {},
   }
-
-
-
-
-
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
 
   _handleChange = ({ target }) => {
     const {
@@ -275,14 +263,6 @@ class Paperwork extends React.Component {
       }
     })
   }
-
-
-
-
-
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
 
   static renderQuote = (quote, index) => {
     const createdAt = formatAsEliteDateTime(quote.createdAt)

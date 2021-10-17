@@ -7,22 +7,10 @@ import React from 'react'
 
 
 class ConfirmActionButton extends React.Component {
-  /***************************************************************************\
-    Class Properties
-  \***************************************************************************/
-
   state = {
     confirmingAction: false,
     performingAction: false,
   }
-
-
-
-
-
-  /***************************************************************************\
-    Private Methods
-  \***************************************************************************/
 
   _handleClick = async (event) => {
     const {
@@ -52,14 +40,6 @@ class ConfirmActionButton extends React.Component {
       onClick(event)
     }
   }
-
-
-
-
-
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
 
   render () {
     const {
@@ -128,12 +108,6 @@ class ConfirmActionButton extends React.Component {
 
     return newProps
   }
-
-
-
-  /***************************************************************************\
-    Prop Properties
-  \***************************************************************************/
 
   static defaultProps = {
     confirmButtonText: 'Yes',

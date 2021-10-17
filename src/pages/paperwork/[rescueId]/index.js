@@ -26,22 +26,10 @@ import makePaperworkRoute from '~/util/router/makePaperworkRoute'
 
 @authenticated
 class Paperwork extends React.Component {
-  /***************************************************************************\
-    Properties
-  \***************************************************************************/
-
   state = {
     deleteConfirm: false,
     deleting: false,
   }
-
-
-
-
-
-  /***************************************************************************\
-    Private Methods
-  \***************************************************************************/
 
   _handleDeleteClick = async () => {
     if (this.state.deleteConfirm) {
@@ -63,14 +51,6 @@ class Paperwork extends React.Component {
   _handleDeleteCancel = () => {
     this.setState({ deleteConfirm: false })
   }
-
-
-
-
-
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
 
   static renderQuote = (quote) => {
     const createdAt = formatAsEliteDateTime(quote.createdAt)

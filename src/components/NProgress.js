@@ -14,19 +14,7 @@ const minimumChangeTime = 250
 
 
 class NProgress extends React.Component {
-  /***************************************************************************\
-    Class Properties
-  \***************************************************************************/
-
   timer = null
-
-
-
-
-
-  /***************************************************************************\
-    Private Methods
-  \***************************************************************************/
 
   _handleRouteChangeStart = () => {
     clearTimeout(this.timer)
@@ -37,14 +25,6 @@ class NProgress extends React.Component {
     clearTimeout(this.timer)
     NProgressLib.done()
   }
-
-
-
-
-
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
 
   componentDidMount () {
     NProgressLib.configure(this.props)
@@ -63,11 +43,6 @@ class NProgress extends React.Component {
   render () {
     return null
   }
-
-
-  /***************************************************************************\
-    Prop Properties
-  \***************************************************************************/
 
   static defaultProps = {
     minimum: 0.15,

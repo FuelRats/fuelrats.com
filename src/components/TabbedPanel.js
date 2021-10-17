@@ -54,10 +54,6 @@ function TabPanel (props) {
 }
 
 class TabbedPanel extends React.Component {
-  /***************************************************************************\
-    Private Methods
-  \***************************************************************************/
-
   _handleTabClick = (event) => {
     this.props.onTabClick(event.target.getAttribute('name'))
   }
@@ -99,14 +95,6 @@ class TabbedPanel extends React.Component {
       </nav>
     )
   }
-
-
-
-
-
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
 
   render () {
     return (

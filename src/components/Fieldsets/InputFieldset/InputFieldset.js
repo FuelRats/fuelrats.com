@@ -162,9 +162,9 @@ function useValidationCallback (callback, deps = [], parent) {
     async (...args) => {
       const { errors = [], warnings = [] } = (await parent?.(...args)) ?? {}
       return (await _callback({ errors, warnings }, ...args)) ?? { errors, warnings }
-
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [parent, _callback, ...deps],
+    [parent, _callback, ...deps],
   )
 }
 

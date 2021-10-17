@@ -6,10 +6,6 @@ import React from 'react'
 
 
 class ValidatedFormSelect extends React.Component {
-  /***************************************************************************\
-    Private Methods
-  \***************************************************************************/
-
   _handleChange = ({ target }) => {
     const {
       invalidMessage,
@@ -35,14 +31,6 @@ class ValidatedFormSelect extends React.Component {
       message,
     })
   }
-
-
-
-
-
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
 
   render () {
     const {
