@@ -1,6 +1,6 @@
 {
   "name": "fuelrats.com",
-  "version": "2.13.1",
+  "version": "2.14.0",
   "description": "The primary website of The Fuel Rats!",
   "homepage": "https://fuelrats.com/",
   "bugs": {
@@ -51,7 +51,7 @@
     "next": "^11.1.2",
     "next-cookies": "^2.0.3",
     "next-redux-wrapper": "5.0.0",
-    "next-safe": "^3.0.1",
+    "next-safe": "^3.1.0",
     "nprogress": "^0.2.0",
     "postcss": "^8.3.9",
     "postcss-easy-import": "^3.0.0",
@@ -74,7 +74,7 @@
     "redux-immutable-state-invariant": "^2.1.0",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
-    "stripe": "^8.181.0",
+    "stripe": "^8.183.0",
     "ua-parser-js": "^0.7.28",
     "use-immer": "^0.6.0",
     "zxcvbn": "^4.4.2"
@@ -96,7 +96,7 @@
     "@types/jsonfile": "^6.0.1",
     "@types/lodash": "^4.14.175",
     "@types/qs": "^6.9.7",
-    "@types/react": "^17.0.29",
+    "@types/react": "^17.0.30",
     "@types/react-dom": "^17.0.9",
     "@types/react-is": "^17.0.2",
     "@types/react-redux": "^7.1.19",
