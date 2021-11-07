@@ -1794,9 +1794,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fuelrats/eslint-config@npm:^2.4.0-canary.19":
-  version: 2.4.0-canary.19
-  resolution: "@fuelrats/eslint-config@npm:2.4.0-canary.19"
+"@fuelrats/eslint-config@npm:^2.4.0-canary.20":
+  version: 2.4.0-canary.20
+  resolution: "@fuelrats/eslint-config@npm:2.4.0-canary.20"
   dependencies:
     confusing-browser-globals: ^1.0.10
   peerDependencies:
@@ -1822,7 +1822,7 @@ __metadata:
       optional: true
     typescript:
       optional: true
-  checksum: 7213e38d8f6096c8f99de1bcb7e10800b55d52622a00e397b1aae04208f2e196077ebb4085e6f81dd467becf0fab1eacc2d83db1a1bc43a7c5727d7c950b05e0
+  checksum: cd3a1500c59f762bb0c1965d2bd3b0815e72725316ebf7d4337a96d92de552daabf91fcad91d7d8b8952c82a86ce2998f6ed17f9f866bbeb9adc5a4866a55a8c
   languageName: node
   linkType: hard
 
@@ -5241,7 +5241,7 @@ __metadata:
     "@fortawesome/free-solid-svg-icons": ^5.15.4
     "@fortawesome/react-fontawesome": ^0.1.16
     "@fuelrats/babel-plugin-classnames": ^0.3.0
-    "@fuelrats/eslint-config": ^2.4.0-canary.19
+    "@fuelrats/eslint-config": ^2.4.0-canary.20
     "@fuelrats/eslint-config-react": ^2.4.0-canary.19
     "@fuelrats/eslint-plugin": ^2.4.0-canary.11
     "@fuelrats/next-adorable-avatars": ^0.3.0
