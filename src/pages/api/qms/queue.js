@@ -1,4 +1,3 @@
-import { InternalServerAPIError } from '~/util/server/errors'
 import getEnv from '~/util/server/getEnv'
 import acceptMethod from '~/util/server/middleware/acceptMethod'
 import jsonApiRoute from '~/util/server/middleware/jsonApiRoute'
@@ -25,15 +24,6 @@ function getQueueLength (ctx) {
         return !rescue.pending && !rescue.in_progress
       }).length
     },
-    ({ response }) => {
-      ctx.error(new InternalServerAPIError(null, {
-        internalError: {
-          url: 'qms/api/v1/queue/',
-          status: response.status,
-          statusText: response.statusText,
-        },
-      }))
-    },
   )
 }
 
@@ -50,9 +40,6 @@ function getMaxQueueLength (ctx) {
   }).then(
     ({ data }) => {
       return data.max_active_clients
-    },
-    (error) => {
-      ctx.error(error)
     },
   )
 }

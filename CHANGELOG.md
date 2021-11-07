@@ -23,8 +23,19 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ### ⚙ Tasks
 *
 
-[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.14.0...HEAD
+[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.14.1...HEAD
 
+
+
+## [2.14.1][] - 2021-11-07
+
+### 🐛 Fixed
+* Removed redundant error handlers to allow errors to be properly conveyed.
+
+### ⚙ Tasks
+* Upgraded dependencies to fix security header issues and migrate to Next 12
+
+[2.14.1]: https://github.com/FuelRats/fuelrats.com/compare/v2.14.0...v2.14.1
 
 
 
