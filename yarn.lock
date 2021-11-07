@@ -1852,14 +1852,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fuelrats/stylelint-config@npm:^1.2.3":
-  version: 1.2.3
-  resolution: "@fuelrats/stylelint-config@npm:1.2.3"
+"@fuelrats/stylelint-config@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@fuelrats/stylelint-config@npm:2.0.0"
   peerDependencies:
-    stylelint: ^13.8
-    stylelint-order: ^4.0
-    stylelint-scss: ^3.17
-  checksum: 965b2287c75595058b6682a6bd6689a78808ec340928a94de2e6015de2d1fe70d0c85fce79a8014d313d765b532d1ec052ad0f691787b2c659592b645ec2510d
+    postcss: ^8.3.3
+    postcss-scss: ^4
+    stylelint: ^14
+    stylelint-order: ^5
+    stylelint-scss: ^4
+  checksum: cb0a816af26c1ecbc763ba6324530204d77bcd74e1fbb87a131506b59fb768dbf6944cc75e57eaca1ecb005936ebd30ec26a56acd6bda0746dfa2d25bc27c751
   languageName: node
   linkType: hard
 
@@ -5245,7 +5247,7 @@ __metadata:
     "@fuelrats/eslint-config-react": ^2.4.0-canary.19
     "@fuelrats/eslint-plugin": ^2.4.0-canary.11
     "@fuelrats/next-adorable-avatars": ^0.3.0
-    "@fuelrats/stylelint-config": ^1.2.3
+    "@fuelrats/stylelint-config": ^2.0.0
     "@fuelrats/validation-util": ^1.2.0
     "@fuelrats/web-util": ^0.3.3
     "@next/eslint-plugin-next": ^12.0.3
@@ -5298,6 +5300,7 @@ __metadata:
     postcss-easy-import: ^3.0.0
     postcss-flexbugs-fixes: ^5.0.2
     postcss-preset-env: ^6.7.0
+    postcss-scss: ^4.0.2
     prop-types: ^15.7.2
     pure-uuid: ^1.6.2
     qs: ^6.10.1
@@ -8090,6 +8093,15 @@ __metadata:
   peerDependencies:
     postcss: ^8.3.3
   checksum: 06c733eaad83a3954367e7ee02ddfe3796e7a44d4299ccf9239f40964a4daac153c7d77613f32964b5a86c0c6c2f6167738f31d578b73b17cb69d0c4446f0ebe
+  languageName: node
+  linkType: hard
+
+"postcss-scss@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "postcss-scss@npm:4.0.2"
+  peerDependencies:
+    postcss: ^8.3.3
+  checksum: b6506c1d9bc86f056e34c537447a35d2a90bc9f6afcffea9c5a8bf265334234592150c862351db9334e9b9109209ada023783ce22e56ca51221c1106591423d4
   languageName: node
   linkType: hard
 
