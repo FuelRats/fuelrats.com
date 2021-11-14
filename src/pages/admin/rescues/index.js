@@ -26,22 +26,10 @@ const pageViewId = 'admin-rescue-list'
 
 @authenticated('rescue.write')
 class ListRescues extends React.Component {
-  /***************************************************************************\
-    Class Properties
-  \***************************************************************************/
-
   state = {
     client: '',
     loading: false,
   }
-
-
-
-
-
-  /***************************************************************************\
-    Private Methods
-  \***************************************************************************/
 
   _handleSearchChange = (event) => {
     this.setState({
@@ -72,14 +60,6 @@ class ListRescues extends React.Component {
       },
     )
   }, viewUpdateDebounceTime, { maxWait: viewUpdateMaxWaitTime })
-
-
-
-
-
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
 
   static async getInitialProps ({ store }) {
     await store.dispatch(

@@ -116,6 +116,7 @@ input[type='checkbox'] {
 
   width: 1em;
   height: 1em;
+  margin-right: 16px;
 
   border: 0.2rem solid $red;
 
@@ -144,8 +145,8 @@ input[type='checkbox'] {
     &::-ms-check {
       border: 0.2rem solid transparent;
 
-      background: padding-box $red;
       color: $red;
+      background: padding-box $red;
     }
   }
 
@@ -153,8 +154,8 @@ input[type='checkbox'] {
     &::-ms-check {
       border: none;
 
-      background: transparent;
       color: $red;
+      background: transparent;
     }
 
     &::before {
@@ -176,6 +177,10 @@ input[type='checkbox'] {
   &.large {
     font-size: 16px;
     vertical-align: middle;
+  }
+
+  &:focus {
+    outline: #343434 solid 3px;
   }
 }
 

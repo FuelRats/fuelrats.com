@@ -26,10 +26,6 @@ import DefaultRatButton from './DefaultRatButton'
 
 
 class RatCard extends React.Component {
-  /***************************************************************************\
-    Class Properties
-  \***************************************************************************/
-
   state = {
     deleteConfirm: false,
     changes: {},
@@ -42,11 +38,6 @@ class RatCard extends React.Component {
 
 
 
-
-
-  /***************************************************************************\
-    Private Methods
-  \***************************************************************************/
 
   _handleDelete = () => {
     this.setState({ deleteConfirm: true })
@@ -151,9 +142,6 @@ class RatCard extends React.Component {
 
 
 
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
 
   render () {
     const {
@@ -265,12 +253,6 @@ class RatCard extends React.Component {
 
 
 
-
-
-  /***************************************************************************\
-    Getters
-  \***************************************************************************/
-
   get ratIsDisplayRat () {
     return this.props.userDisplayRatId === this.props.rat.id
   }
@@ -295,10 +277,6 @@ class RatCard extends React.Component {
 
     return hasChanges && isValid
   }
-
-  /***************************************************************************\
-    Prop Definitions
-  \***************************************************************************/
 
   static propTypes = {
     className: PropTypes.string,

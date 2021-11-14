@@ -9,7 +9,7 @@
   border: 0.2rem solid $red;
   border-radius: 50%;
 
-  background-color: $white;
+  background-color: $red-darker;
 
   overflow: hidden;
 
@@ -31,18 +31,5 @@
   &.xl {
     width: 17rem;
     height: 17rem;
-  }
-
-  &:empty::before {
-    align-items: center;
-    justify-content: center;
-
-    content: attr(data-letter);
-    width: 100%;
-
-    background: $white;
-    color: $red;
-
-    font-size: 2em;
   }
 }

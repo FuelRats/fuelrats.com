@@ -43,7 +43,7 @@ function UserNicknamesPanel () {
       let errorMessage = 'Unknown error occurred.'
 
       if (HttpStatus.isClientError(meta.response.status)) {
-        errorMessage = payload.errors && payload.errors.length ? payload.errors[0].detail : 'Client communication error'
+        errorMessage = payload.errors?.length ? payload.errors[0].detail : 'Client communication error'
       }
 
       if (HttpStatus.isServerError(meta.response.status)) {

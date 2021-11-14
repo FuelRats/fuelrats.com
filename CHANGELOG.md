@@ -11,6 +11,43 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ### ✨ Added
 *
 
+
+### ⚡ Changed
+*
+
+
+### 🐛 Fixed
+*
+
+
+### ⚙ Tasks
+*
+
+[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.14.1...HEAD
+
+
+
+## [2.14.1][] - 2021-11-07
+
+### 🐛 Fixed
+* Removed redundant error handlers to allow errors to be properly conveyed.
+
+### ⚙ Tasks
+* Upgraded dependencies to fix security header issues and migrate to Next 12
+
+[2.14.1]: https://github.com/FuelRats/fuelrats.com/compare/v2.14.0...v2.14.1
+
+
+
+
+## [2.14.0][] - 2021-10-17
+
+### ✨ Added
+* A new page to assist with editing QMS locale files has been added. - [#370][]
+* A general purpose JSON object editor has been implemented. this should come in handy at some point! - [#370][]
+* User avatars are now customizable through our new Avatar uploader! - [#332][], [#375][]
+
+
 ### ⚡ Changed
 * Error readout for unknown API Errors has been improved. - [#328][]
 * Reworded `Owns Odyssey` to `Using Odyssey` on rat cards to better convey the toggle's meaning. - [#328][]
@@ -21,7 +58,8 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Moved all custom server functions into suitable replacements provided by our site framework. - [#329][]
     * This move has let us drop our entire custom backend.
 * Updated `<Switch />` with an improved loading state animation. - [#330][]
-* Other smaller changes to sreamline development. - [#328][], [#329][]
+* Open rescues may no longer be edited by normal users while the rescue is open - [#373]
+* Other smaller changes to sreamline development. - [#328][], [#329][], [#370][]
 
 
 ### 🐛 Fixed
@@ -29,6 +67,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Authorization page no longer displays an `Invalid Authorize Request` error when redirecting users after login. - [#328][]
 * `Using Odyssey` switch now properly enters a loading state while waiting on it's event handler to resolve. - [#330][]
 * Profile page will no longer crash when deleting a rat. - [#333][]
+
 
 ### ⚙ Tasks
 * Update lint configs
@@ -38,8 +77,12 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 [#328]: https://github.com/FuelRats/fuelrats.com/pull/328
 [#329]: https://github.com/FuelRats/fuelrats.com/pull/329
 [#330]: https://github.com/FuelRats/fuelrats.com/pull/330
+[#332]: https://github.com/FuelRats/fuelrats.com/pull/332
 [#333]: https://github.com/FuelRats/fuelrats.com/pull/333
-[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.13.0...HEAD
+[#370]: https://github.com/FuelRats/fuelrats.com/pull/370
+[#373]: https://github.com/FuelRats/fuelrats.com/pull/373
+[#375]: https://github.com/FuelRats/fuelrats.com/pull/375
+[2.14.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.13.1...v2.14.0
 
 
 

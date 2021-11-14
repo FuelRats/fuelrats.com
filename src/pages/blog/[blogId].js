@@ -9,10 +9,6 @@ import { selectBlogById } from '~/store/selectors'
 
 
 class Blog extends React.Component {
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
-
   static async getInitialProps ({ query, store }) {
     const state = store.getState()
     if (!selectBlogById(state, query)) {

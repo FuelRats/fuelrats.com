@@ -1,6 +1,6 @@
 import { createCachedSelector } from 're-reselect'
 
-import { getUserId } from './users'
+import { getUserIdProp } from './users'
 
 
 const selectClients = (state) => {
@@ -8,13 +8,13 @@ const selectClients = (state) => {
 }
 
 const selectClientsByUserId = createCachedSelector(
-  [selectClients, getUserId],
+  [selectClients, getUserIdProp],
   (clients, userId) => {
     return Object.values(clients).filter((client) => {
       return client.relationships.user?.data?.id === userId
     }) ?? []
   },
-)(getUserId)
+)(getUserIdProp)
 
 export {
   selectClients,

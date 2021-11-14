@@ -13,32 +13,32 @@ import makeRoute from '~/util/router/makeRoute'
 
 // Component constants
 const CarouselSlides = {
-  0: {
+  chives: {
     text: 'CMDR Dr Chives',
     position: '13% 50%',
     filename: 'chives.jpg',
   },
-  1: {
+  rafa: {
     text: 'CMDR rafaBC_',
     position: '20% 50%',
     filename: 'rafa.jpg',
   },
-  2: {
+  numpi: {
     text: 'CMDR NumberPi',
     position: '50% 50%',
     filename: 'pi.jpg',
   },
-  3: {
+  alpaca: {
     text: 'CMDR Worthy Alpaca',
     position: '25% 50%',
     filename: 'worthyalpaca.jpg',
   },
-  4: {
+  light: {
     text: 'CMDR Light1c3',
     position: '70% 100%',
     filename: 'light.jpg',
   },
-  5: {
+  fenri: {
     text: 'CMDR Fenrishi',
     position: '40% 50%',
     filename: 'fenrishi.jpg',

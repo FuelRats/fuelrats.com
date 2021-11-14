@@ -17,10 +17,6 @@ import setError from '~/util/getInitialProps/setError'
 
 @authenticated
 class Profile extends React.Component {
-  /***************************************************************************\
-    Private Methods
-  \***************************************************************************/
-
   _handleFLDClose = () => {
     Router.replace(`/profile/${this.props.query.tab}`)
   }
@@ -32,13 +28,6 @@ class Profile extends React.Component {
   _handlePermissionError = () => {
     Router.replace('/profile/overview')
   }
-
-
-
-
-  /***************************************************************************\
-    Public Methods
-  \***************************************************************************/
 
   static getInitialProps (ctx) {
     if (!this.tabs[ctx.query.tab]) {
@@ -79,14 +68,6 @@ class Profile extends React.Component {
       </>
     )
   }
-
-
-
-
-
-  /***************************************************************************\
-    Getters
-  \***************************************************************************/
 
   static get tabs () {
     return {

@@ -38,7 +38,7 @@ function RadioInput (props) {
             <OptionElement
               key={option.value}
               {...option}
-              checked={option.value === value ?? option.checked}
+              checked={option.value === (value ?? option.checked)}
               disabled={disabled ?? option.disabled}
               name={name}
               onChange={handleOptionClick} />

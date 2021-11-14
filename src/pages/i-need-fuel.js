@@ -3,7 +3,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useMemo } from 'react'
 import { useSelector } from 'react-redux'
+import UAParser from 'ua-parser-js'
 
+import MessageBox from '~/components/MessageBox'
 import { selectSession } from '~/store/selectors'
 
 
@@ -12,6 +14,31 @@ import { selectSession } from '~/store/selectors'
 
 const { publicRuntimeConfig } = getConfig()
 const { irc: ircURLs } = publicRuntimeConfig
+const unsupportedPlatforms = {
+  Sony: {
+    type: 'error',
+    message: `
+      The built-in PS4 browser is currently not supported.
+      This is due to bugs in the PS4 browser, and outside of our control.
+      Please use your phone or computer instead.
+    `,
+  },
+  Microsoft: {
+    type: 'warn',
+    message: `
+    It appears you're connecting from your Xbox!
+    While you may use the Xbox browser to use our services, we recommend using your computer to ensure a consistent connection.
+    `,
+  },
+  Generic: {
+    type: 'warn',
+    message: `
+      It appears you're connecting from a mobile device.
+      Ensure your device's screen and browser remains active throughout your rescue.
+      You may lose your connection otherwise!
+    `,
+  },
+}
 
 
 
@@ -20,14 +47,17 @@ const { irc: ircURLs } = publicRuntimeConfig
 function INeedFuel () {
   const session = useSelector(selectSession)
   const supportMessage = useMemo(() => {
-    if (session.userAgent.match(/playstation/giu)) {
-      return `
-        The built-in PS4 browser is currently not supported.
-        This is due to bugs in the PS4 browser, and outside of our control.
-        Please use your phone or computer instead.
-      `
+    const uaInfo = new UAParser(session.userAgent)
+    const { type, vendor } = uaInfo.getDevice()
+
+    if (type) {
+      if (unsupportedPlatforms[vendor]) {
+        return unsupportedPlatforms[vendor]
+      }
+      return unsupportedPlatforms.Generic
     }
-    return undefined
+
+    return {}
   }, [session.userAgent])
 
   return (
@@ -48,10 +78,10 @@ function INeedFuel () {
 
         <br />
 
-        {supportMessage && (<h5>{supportMessage}</h5>)}
+        {supportMessage.message && (<MessageBox title="Unsupported Device" type={supportMessage.type}>{supportMessage.message}</MessageBox>)}
 
         {
-          !supportMessage && (
+          supportMessage.type !== 'error' && (
             <>
               <p>{'Have you found yourself low on fuel and unable to make it to your nearest refuel point? Never fear! The Fuel Rats are here to help!'}</p>
 

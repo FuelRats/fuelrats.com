@@ -17,6 +17,5 @@ module.exports = {
   plugins: [
     [require.resolve('@fuelrats/babel-plugin-classnames'), { transformObjects: true, packageName: 'clsx' }],
     [require.resolve('@babel/plugin-proposal-decorators'), { legacy: true }],
-    require.resolve('@babel/plugin-proposal-export-default-from'),
   ],
 }
