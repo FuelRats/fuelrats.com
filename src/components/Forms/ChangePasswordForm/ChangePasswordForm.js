@@ -1,8 +1,6 @@
-import PropTypes from 'prop-types'
 import { useCallback, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import asModal, { ModalContent, ModalFooter } from '~/components/asModal'
 import NewPasswordFieldset from '~/components/Fieldsets/NewPasswordFieldset'
 import PasswordFieldset from '~/components/Fieldsets/PasswordFieldset'
 import useForm from '~/hooks/useForm'
@@ -13,19 +11,8 @@ import getResponseError from '~/util/getResponseError'
 
 import ChangePasswordMessageBox from './ChangePasswordMessageBox'
 
-// Component Constants
-const SUBMIT_AUTO_CLOSE_DELAY_TIME = 3000
 
-
-
-
-
-function ChangePasswordModal (props) {
-  const {
-    onClose,
-    isOpen,
-  } = props
-
+function ChangePasswordForm () {
   const [result, setResult] = useState({})
 
   const dispatch = useDispatch()
@@ -42,15 +29,7 @@ function ChangePasswordModal (props) {
       success: !error,
       submitted: true,
     })
-
-    if (!error) {
-      setTimeout(() => {
-        if (isOpen) {
-          onClose()
-        }
-      }, SUBMIT_AUTO_CLOSE_DELAY_TIME)
-    }
-  }, [dispatch, isOpen, onClose, result.submitted])
+  }, [dispatch, result.submitted])
 
 
   const userId = useSelector(selectCurrentUserId)
@@ -67,7 +46,7 @@ function ChangePasswordModal (props) {
   const { Form, submitting, canSubmit } = useForm({ data, onSubmit })
 
   return (
-    <ModalContent as={Form} className="dialog no-pad">
+    <Form className="no-pad">
       <ChangePasswordMessageBox result={result} />
 
       {
@@ -81,7 +60,6 @@ function ChangePasswordModal (props) {
       }
 
       <PasswordFieldset
-        dark
         required
         aria-label="Current Password"
         id="CurrentPassword"
@@ -89,14 +67,14 @@ function ChangePasswordModal (props) {
         placeholder="Current Password" />
 
       <NewPasswordFieldset
-        dark
         required
         aria-label="New Password"
         id="NewPassword"
         name="attributes.newPassword"
         placeholder="New Password" />
 
-      <ModalFooter>
+
+      <menu type="toolbar">
         <div className="secondary" />
         <div className="primary">
           <button
@@ -106,21 +84,9 @@ function ChangePasswordModal (props) {
             {submitting ? 'Submitting...' : 'Change Password'}
           </button>
         </div>
-      </ModalFooter>
-    </ModalContent>
+      </menu>
+    </Form>
   )
 }
 
-ChangePasswordModal.propTypes = {
-  isOpen: PropTypes.any,
-  onClose: PropTypes.func.isRequired,
-}
-
-
-
-
-
-export default asModal({
-  className: 'password-change-dialog',
-  title: 'Change Password',
-})(ChangePasswordModal)
+export default ChangePasswordForm

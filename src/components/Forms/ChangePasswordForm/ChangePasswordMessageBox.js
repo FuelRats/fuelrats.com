@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 
 import ApiErrorBox from '~/components/MessageBox/ApiErrorBox'
 
-import MessageBox from '../MessageBox'
+import MessageBox from '../../MessageBox'
 
 
 
