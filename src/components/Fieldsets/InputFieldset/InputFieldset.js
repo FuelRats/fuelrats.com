@@ -20,14 +20,19 @@ const InputFieldset = React.forwardRef((props, forwardRef) => {
     children,
     className,
     dark,
+    disabled,
     displayName = 'Input',
     fieldsetClassName,
     skipWarnings = false,
     inputClassName,
     label,
     patternMessage,
+    onFocus,
+    onTouched,
+    onBlur,
     onChange,
     onValidate: parentValidate,
+    touched,
     validateOpts,
     ...inputProps
   } = props
@@ -36,7 +41,7 @@ const InputFieldset = React.forwardRef((props, forwardRef) => {
 
   const [messages, setMessages] = useState({ errors: [], warnings: [], valid: false })
 
-  const [isFocused, onFocus, onBlur] = useFocusState()
+  const [isFocused, handleFocus, handleBlur] = useFocusState({ touched, onFocus, onBlur, onTouched })
 
   const handleValidate = useCallback(async (value = '') => {
     const target = inputRef.current
@@ -100,16 +105,16 @@ const InputFieldset = React.forwardRef((props, forwardRef) => {
 
       <div className={[styles.inputGroup, className]}>
         <input
-          disabled={submitting}
           type="text"
           {...inputProps}
           ref={inputRef}
           className={[inputClassName, { dark }]}
           data-pattern-message={patternMessage}
+          disabled={submitting || disabled}
           value={value}
-          onBlur={onBlur}
+          onBlur={handleBlur}
           onChange={handleChange}
-          onFocus={onFocus} />
+          onFocus={handleFocus} />
         {children}
         <ValidityIcon
           className={{ [styles.hidden]: !value.length }}
@@ -132,8 +137,10 @@ InputFieldset.propTypes = {
   displayName: PropTypes.string,
   id: PropTypes.string.isRequired,
   label: PropTypes.node,
+  onTouched: PropTypes.func,
   patternMessage: PropTypes.string,
   skipWarnings: PropTypes.bool,
+  touched: PropTypes.any,
   ...fieldPropTypes,
 }
 

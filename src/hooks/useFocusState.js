@@ -1,22 +1,29 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef } from 'react'
 
 
 
 
 
-export default function useFocusState () {
-  const [state, setState] = useState(false)
+export default function useFocusState ({ touched = false, onTouched, onBlur, onFocus }) {
+  const isTouched = useRef(touched)
+  const [isFocused, setFocused] = useState(false)
 
 
 
-  const onFocus = useCallback(() => {
-    setState(true)
-  }, [])
+  const handleFocus = useCallback(() => {
+    if (!isTouched.current) {
+      isTouched.current = true
+      onTouched?.()
+    }
+    setFocused(true)
+    onFocus?.()
+  }, [onFocus, onTouched])
 
-  const onBlur = useCallback(() => {
-    setState(false)
-  }, [])
+  const handleBlur = useCallback(() => {
+    setFocused(false)
+    onBlur?.()
+  }, [onBlur])
 
 
-  return [state, onFocus, onBlur]
+  return [isFocused, handleFocus, handleBlur]
 }
