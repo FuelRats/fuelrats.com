@@ -12,6 +12,12 @@ function getErrorText (error) {
   }
 
   switch (error.status) {
+    case 'authenticator-required':
+      return {
+        title: 'Authentication Required',
+        detail: 'It appears you\'re logging in from a new device.\nEnter the 6-digit code from your authenticator app.',
+      }
+
     case 'verification_required':
       return {
         title: 'Verification Required',

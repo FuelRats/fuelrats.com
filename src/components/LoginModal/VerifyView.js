@@ -55,7 +55,7 @@ function VerifyView (props) {
       <LoginTokenFieldset
         dark
         required
-        aria-label="Login Verification token from E-Mail"
+        aria-label="Login verification token"
         id="LoginToken"
         name="data.verify"
         placeholder="Verification Token" />

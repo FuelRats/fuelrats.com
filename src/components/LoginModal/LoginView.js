@@ -26,6 +26,8 @@ const initialData = {
   },
 }
 
+const twoFactorErrors = ['authenticator-required', 'verification_required']
+
 function LoginView () {
   const [{ formData: data, onClose }, setModalState] = useModalContext()
 
@@ -39,7 +41,7 @@ function LoginView () {
     if (error) {
       const nextState = { error, formData }
 
-      if (error.status === 'verification_required') {
+      if (twoFactorErrors.includes(error.status)) {
         nextState.view = 'verify'
       }
 
