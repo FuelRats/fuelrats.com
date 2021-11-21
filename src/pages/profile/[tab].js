@@ -9,6 +9,7 @@ import ProfileHeader from '~/components/ProfileHeader'
 import TabbedPanel from '~/components/TabbedPanel'
 import UserOverview from '~/components/UserOverview'
 import UserRatsPanel from '~/components/UserRatsPanel'
+import UserSettingsPanel from '~/components/UserSettingsPanel'
 import setError from '~/util/getInitialProps/setError'
 
 
@@ -84,6 +85,13 @@ class Profile extends React.Component {
         },
         title: 'Rats',
         pageTitle: 'Your Rats',
+      },
+      settings: {
+        render: () => {
+          return (<UserSettingsPanel />)
+        },
+        title: 'Settings',
+        pageTitle: 'Settings',
       },
       developer: {
         render: () => {
