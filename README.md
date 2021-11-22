@@ -1,6 +1,7 @@
 # Fuelrats.com
 
 [![Fuelrats.com dependencies on David DM][daviddm-badge]][daviddm]
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FFuelRats%2Ffuelrats.com.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FFuelRats%2Ffuelrats.com?ref=badge_shield)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-18-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
@@ -84,3 +85,7 @@ This project follows the [all-contributors](https://github.com/kentcdodds/all-co
 [irc]: https://kiwi.fuelrats.com:7778/
 [prs]: CONTRIBUTING.md
 [prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FFuelRats%2Ffuelrats.com.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FFuelRats%2Ffuelrats.com?ref=badge_large)
