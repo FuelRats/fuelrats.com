@@ -5,7 +5,6 @@ import { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import IRCNickFieldset from '~/components/Fieldsets/IRCNickFieldset'
-import InfoBubble from '~/components/InfoBubble'
 import useForm from '~/hooks/useForm'
 import { addNickname } from '~/store/actions/user'
 import { selectUserById, withCurrentUserId } from '~/store/selectors'
@@ -60,11 +59,7 @@ function AddNicknameForm (props) {
         id="AddNickname"
         name="attributes.nick"
         placeholder={error ?? 'Add a nickname...'}
-        title={props.title}>
-        <InfoBubble className={styles.nicknamesInfo} header="reminder" id="NickRegisterReminder">
-          {"You cannot register a nick that's in use on IRC. Switch to a temporary one before registering!"}
-        </InfoBubble>
-      </IRCNickFieldset>
+        title={props.title} />
 
       <button
         aria-label="submit new nickname"
