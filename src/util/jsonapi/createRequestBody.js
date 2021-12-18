@@ -7,7 +7,7 @@ export default function createRequestBody (
 ) {
   const {
     id,
-    type: _, // strip type from data if it's given. We will always prefer the predefined type.
+    type: _t, // strip type from data if it's given. We will always prefer the predefined type.
     attributes = {},
     relationships,
     links, // API doesn't understand links or meta in resources we send to it, so we strip them here.
