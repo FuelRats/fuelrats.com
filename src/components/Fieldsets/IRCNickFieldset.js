@@ -47,7 +47,7 @@ export default function IRCNickFieldset (props) {
           const [, baseNick] = tagMatch
 
           if (!nickStrings.includes(baseNick.toLowerCase())) {
-            messages.errors.push(`To register this nick, please register '${baseNick}' first!`)
+            messages.errors.push(`To register this nick, please register "${baseNick}" first!`)
           }
         } else {
           messages.errors.push('Your primary nickname cannot contain a platform/status tag. If your in-game CMDR name contains a tag')
