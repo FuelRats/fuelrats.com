@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 
 import { ircNickRegExp } from '~/data/RegExpr'
 
@@ -10,9 +10,16 @@ import InputFieldset, { useValidationCallback } from './InputFieldset'
 
 export default function IRCNickFieldset (props) {
   const {
+    registeredNicks,
     onValidate: parentValidate,
     ...inputProps
   } = props
+
+  const nickStrings = useMemo(() => {
+    return registeredNicks?.map((nick) => {
+      return nick.attributes.nick.toLowerCase()
+    })
+  }, [registeredNicks])
 
   const handleChange = useCallback(
     ({ target }) => {
@@ -33,11 +40,21 @@ export default function IRCNickFieldset (props) {
         )
       }
 
-      if (value.match(/(\[.*\]|\|)/u)) {
-        messages.errors.push('Your primary nickname cannot contain a platform/status tag. It should be as close as possible to your CMDR name')
+      const tagMatch = value.match(/^(.*)([\[{|](.*)[\]}|]?)$/u)
+
+      if (Array.isArray(tagMatch)) {
+        if (nickStrings?.length) {
+          const [, baseNick] = tagMatch
+
+          if (!nickStrings.includes(baseNick.toLowerCase())) {
+            messages.errors.push(`To register this nick, please register '${baseNick}' first!`)
+          }
+        } else {
+          messages.errors.push('Your primary nickname cannot contain a platform/status tag. If your in-game CMDR name contains a tag')
+        }
       }
     },
-    [],
+    [nickStrings],
     parentValidate,
   )
 
