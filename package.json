@@ -56,7 +56,7 @@
     "postcss": "^8.4.5",
     "postcss-easy-import": "^3.0.0",
     "postcss-flexbugs-fixes": "^5.0.2",
-    "postcss-preset-env": "^6.7.0",
+    "postcss-preset-env": "^7.0.2",
     "prop-types": "^15.7.2",
     "pure-uuid": "^1.6.2",
     "qs": "^6.10.2",
