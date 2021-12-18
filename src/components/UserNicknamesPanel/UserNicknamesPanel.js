@@ -110,6 +110,7 @@ function UserNicknamesPanel () {
         <div className={styles.addNicknameFloat}>
           <AddNicknameForm
             disabled={maxNicksReached}
+            registeredNicks={nicknames}
             title={maxNicksReached ? 'You\'ve used all your nicknames' : 'Add new nickname'} />
         </div>
       </div>

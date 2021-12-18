@@ -59,6 +59,7 @@ function AddNicknameForm (props) {
         id="AddNickname"
         name="attributes.nick"
         placeholder={error ?? 'Add a nickname...'}
+        registeredNicks={props.registeredNicks}
         title={props.title} />
 
       <button
