@@ -50,7 +50,7 @@ export default function IRCNickFieldset (props) {
             messages.errors.push(`To register this nick, please register "${baseNick}" first!`)
           }
         } else {
-          messages.errors.push('Your primary nickname cannot contain a platform/status tag. If your in-game CMDR name contains a tag')
+          messages.errors.push('Your primary nickname cannot contain a platform/status tag. It should be as close as possible to your CMDR name')
         }
       }
     },
