@@ -23,7 +23,24 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 ### ⚙ Tasks
 *
 
-[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.14.1...HEAD
+[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.14.2...HEAD
+
+
+
+
+
+## [2.14.2][] - 2021-12-18
+
+### ⚡ Changed
+* Improved error messaging for IRC Nick inputs.
+
+
+### 🐛 Fixed
+* Fixed an issue preventing tagged nicks from being registered.
+
+[2.14.2]: https://github.com/FuelRats/fuelrats.com/compare/v2.14.1...v2.14.2
+
+
 
 
 
@@ -36,6 +53,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 * Upgraded dependencies to fix security header issues and migrate to Next 12
 
 [2.14.1]: https://github.com/FuelRats/fuelrats.com/compare/v2.14.0...v2.14.1
+
 
 
 
