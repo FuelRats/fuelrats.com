@@ -8,6 +8,7 @@ import { useQuoteString, useLanguageData, usePlatformData } from '~/hooks/rescue
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import useStoreEffect from '~/hooks/useStoreEffect'
 import { selectRescueById, createSelectRenderedRatList } from '~/store/selectors'
+import { expansionNameMap } from '~/util/expansion'
 import makeRoute from '~/util/router/makeRoute'
 
 import CopyToClipboard from '../CopyToClipboard'
@@ -16,9 +17,6 @@ import styles from './DispatchTable.module.scss'
 
 
 // Component Constants
-
-
-
 const selectRenderedRatList = createSelectRenderedRatList((rat, index, arr) => {
   const isLast = index === arr.length - 1
   const { name } = rat.attributes
@@ -83,7 +81,7 @@ function RescueRow (props) {
     clientNick,
     client,
     commandIdentifier,
-    odyssey,
+    expansion,
     system,
   } = rescue.attributes
 
@@ -112,9 +110,9 @@ function RescueRow (props) {
         title={clientNick ?? ''}>
         {client ?? '?'}
         {
-          odyssey && (
-            <span className={styles.odysseyIcon}>
-              <FontAwesomeIcon fixedWidth icon="shoe-prints" title="Odyssey Rescue" transform={{ rotate: -40 }} />
+          expansion && (
+            <span className={[styles.expansionName, styles[expansion]]}>
+              {expansionNameMap[expansion]}
             </span>
           )
         }
@@ -125,7 +123,7 @@ function RescueRow (props) {
         {rescueLanguage.short}
       </td>
       <td
-        className="rescue-row-platform"
+        className={['rescue-row-platform', styles.platform, styles[rescue.attributes.platform]]}
         title={rescuePlatform.long}>
         {rescuePlatform.short}
       </td>

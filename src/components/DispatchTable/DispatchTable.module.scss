@@ -73,10 +73,40 @@
   opacity: 0.25;
 }
 
-.odysseyIcon {
+.expansionName {
   float: right;
 
-  padding-left: 0.5rem;
+  color: $white;
+
+  padding: 0 0.5rem;
+
+  margin-left: 0.5rem;
+
+  &.horizons3 {
+    background-color: $magenta-dark3;
+  }
+
+  &.horizons4 {
+    background-color: $blue-dark3;
+  }
+
+  &.odyssey {
+    background-color: $gold-dark2;
+  }
+}
+
+.platform {
+  &.ps {
+    color: $playstation-blue-light3
+  }
+
+  &.xb {
+    color: $xbox-green-light
+  }
+
+  &.pc {
+    color: $magenta-dark
+  }
 }
 
 .queueLength {
