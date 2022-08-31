@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
 import { useCallback, useState } from 'react'
 
-import { useQuoteString, useLanguageData, usePlatformData } from '~/hooks/rescueHooks'
+import { useQuoteString, useRescueLanguage, useRescuePlatform, useRescueSystem } from '~/hooks/rescueHooks'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import useStoreEffect from '~/hooks/useStoreEffect'
 import { selectRescueById, createSelectRenderedRatList } from '~/store/selectors'
@@ -40,8 +40,9 @@ function RescueRow (props) {
   const rescueRats = useSelectorWithProps(props, selectRenderedRatList)
 
   const quoteString = useQuoteString(rescue)
-  const rescueLanguage = useLanguageData(rescue)
-  const rescuePlatform = usePlatformData(rescue)
+  const rescueLanguage = useRescueLanguage(rescue)
+  const rescuePlatform = useRescuePlatform(rescue)
+  const rescueSystem = useRescueSystem(rescue)
 
   // Flash any rescue under a minute old on mount. This flashes all new rescues when they are created, and any immediately new ones on page load.
   const [animating, setAnimating] = useState(differenceInMinutes(Date.now(), new Date(rescue.attributes.createdAt)) < 1)
@@ -82,7 +83,6 @@ function RescueRow (props) {
     client,
     commandIdentifier,
     expansion,
-    system,
   } = rescue.attributes
 
   const radioInputId = `rdetail-${rescue.id}`
@@ -130,8 +130,8 @@ function RescueRow (props) {
       <CopyToClipboard
         doHint
         as="td"
-        text={system ?? 'Unknown'}>
-        {system ?? 'N/A'}
+        text={rescue.attributes.system ?? 'Unknown'}>
+        {rescueSystem ?? 'N/A'}
       </CopyToClipboard>
       <td className="rescue-row-rats">
         {rescueRats}
