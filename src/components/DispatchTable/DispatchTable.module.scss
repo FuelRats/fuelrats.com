@@ -33,7 +33,7 @@
 
   tbody > tr > td {
     max-width: 300px;
-    padding: 8px;
+    padding: 0.8rem;
 
     border: 1px solid var(--table-border-color);
 
@@ -73,10 +73,49 @@
   opacity: 0.25;
 }
 
-.odysseyIcon {
-  float: right;
+.cmdrNameCol {
+  display: flex;
+  align-items: flex-start;
 
-  padding-left: 0.5rem;
+  .cmdrName {
+    flex-grow: 1;
+  }
+
+  .expansionBadge {
+    order: 1;
+
+    color: $white;
+
+    padding: 0 0.5rem;
+
+    margin-left: 0.8rem;
+
+    &.horizons3 {
+      background-color: $magenta-dark3;
+    }
+
+    &.horizons4 {
+      background-color: $blue-dark3;
+    }
+
+    &.odyssey {
+      background-color: $gold-dark2;
+    }
+  }
+}
+
+.platform {
+  &.ps {
+    color: $playstation-blue-light3
+  }
+
+  &.xb {
+    color: $xbox-green-light
+  }
+
+  &.pc {
+    color: $magenta-dark
+  }
 }
 
 .queueLength {

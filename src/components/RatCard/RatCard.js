@@ -2,8 +2,8 @@ import { isError } from 'flux-standard-action'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { useSelector } from 'react-redux'
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
+import ExpansionRadioInput from '~/components/ExpansionRadioInput'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { connectState } from '~/store'
 import { deleteRat, updateRat } from '~/store/actions/rats'
@@ -18,12 +18,7 @@ import formatAsEliteDate from '~/util/date/formatAsEliteDate'
 
 import CardControls from '../CardControls'
 import InlineEditSpan from '../InlineEditSpan'
-import Switch from '../Switch'
 import DefaultRatButton from './DefaultRatButton'
-
-
-
-
 
 class RatCard extends React.Component {
   state = {
@@ -35,9 +30,6 @@ class RatCard extends React.Component {
     editing: false,
     submitting: false,
   }
-
-
-
 
   _handleDelete = () => {
     this.setState({ deleteConfirm: true })
@@ -131,11 +123,11 @@ class RatCard extends React.Component {
     }
   }
 
-  _handleOdysseySwitch = () => {
+  _handleExpansionChange = (event) => {
     return this.props.dispatch(updateRat({
       id: this.props.rat.id,
       attributes: {
-        odyssey: !this.props.rat.attributes.odyssey,
+        expansion: event.target.value,
       },
     }))
   }
@@ -202,11 +194,12 @@ class RatCard extends React.Component {
         {
           rat.attributes.platform === 'pc' && (
             <div className="panel-content">
-              <Switch
-                checked={rat.attributes.odyssey}
-                id={`OdysseySwitch-${rat.id}`}
-                label="Using Odyssey"
-                onChange={this._handleOdysseySwitch} />
+              <span>{'Game Version: '}</span>
+              <ExpansionRadioInput
+                label="Game Version"
+                name={`expansion-${rat.id}`}
+                value={rat.attributes.expansion}
+                onChange={this._handleExpansionChange} />
             </div>
           )
         }

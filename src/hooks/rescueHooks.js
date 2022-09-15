@@ -9,6 +9,21 @@ import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 
 const pollTimeoutTime = 10000
 
+
+const specialSystems = {
+  FUELUM: 'FUELUM ⛽️🐀',
+  RODENTIA: 'RODENTIA ⛽️🐀',
+  'NLTT 48288': 'NLTT 48288 🥃',
+}
+
+export const useRescueSystem = (rescue) => {
+  const { system } = rescue?.attributes ?? {}
+
+  return useMemo(() => {
+    return specialSystems[system] ?? system
+  }, [system])
+}
+
 export const useQuoteString = (rescue) => {
   return useMemo(() => {
     if (!rescue?.attributes?.quotes?.length) {
@@ -21,13 +36,13 @@ export const useQuoteString = (rescue) => {
   }, [rescue?.attributes?.quotes])
 }
 
-export const useLanguageData = (rescue) => {
+export const useRescueLanguage = (rescue) => {
   return useMemo(() => {
     return getLanguage(rescue.attributes.clientLanguage)
   }, [rescue.attributes.clientLanguage])
 }
 
-export const usePlatformData = (rescue) => {
+export const useRescuePlatform = (rescue) => {
   return useMemo(() => {
     return getPlatform(rescue.attributes.platform)
   }, [rescue.attributes.platform])

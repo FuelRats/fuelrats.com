@@ -1,5 +1,6 @@
-import BooleanRadioFieldset from '~/components/Fieldsets/BooleanRadioFieldset'
 import CMDRFieldset from '~/components/Fieldsets/CMDRFieldset'
+import ExpansionFieldset from '~/components/Fieldsets/ExpansionFieldset'
+import { useConfirmationValidation } from '~/components/Fieldsets/InputFieldset'
 import IRCNickFieldset from '~/components/Fieldsets/IRCNickFieldset'
 import NewPasswordFieldset from '~/components/Fieldsets/NewPasswordFieldset/NewPasswordFieldset'
 import PlatformFieldset from '~/components/Fieldsets/PlatformFieldset'
@@ -21,6 +22,7 @@ const data = {
 
 const labels = {
   email: 'Email',
+  confirmEmail: 'Confirm Email',
   password: (
     <>
       {'Password '}
@@ -39,11 +41,10 @@ const labels = {
       <small>{'If you have more than one, you can add the rest later.'}</small>
     </>
   ),
-  odyssey: (
+  expansion: (
     <>
-      {'Does your CMDR own '}
-      <b>{'Elite Dangerous: Odyssey'}</b>
-      {'?'}
+      {'What game version do you most regularly play on? '}
+      <small>{'Not sure yet? You can change this later.'}</small>
     </>
   ),
   platform: 'What platform is your CMDR on?',
@@ -51,6 +52,8 @@ const labels = {
 
 function RegistrationForm ({ onSubmit }) {
   const { Form, canSubmit, submitting, state } = useForm({ data, onSubmit })
+
+  const confirmEmailProps = useConfirmationValidation('attributes.email', 'Email', state)
 
   return (
     <Form>
@@ -61,6 +64,14 @@ function RegistrationForm ({ onSubmit }) {
         id="Email"
         label={labels.email}
         name="attributes.email" />
+
+      <NewEmailFieldset
+        required
+        autoComplete="email"
+        id="ConfirmEmail"
+        label={labels.confirmEmail}
+        name="meta.confirmEmail"
+        {...confirmEmailProps} />
 
       <NewPasswordFieldset
         required
@@ -89,11 +100,12 @@ function RegistrationForm ({ onSubmit }) {
 
       {
         state.attributes.platform === 'pc' && (
-          <BooleanRadioFieldset
+          <ExpansionFieldset
+            longNames
             required
-            id="OdysseyAccount"
-            label={labels.odyssey}
-            name="attributes.odyssey" />
+            id="ExpansionAccount"
+            label={labels.expansion}
+            name="attributes.expansion" />
         )
       }
 
