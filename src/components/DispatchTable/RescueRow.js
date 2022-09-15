@@ -83,6 +83,7 @@ function RescueRow (props) {
     client,
     commandIdentifier,
     expansion,
+    platform,
   } = rescue.attributes
 
   const radioInputId = `rdetail-${rescue.id}`
@@ -103,29 +104,33 @@ function RescueRow (props) {
         text={commandIdentifier ?? '?'}>
         {commandIdentifier ?? '?'}
       </CopyToClipboard>
-      <CopyToClipboard
-        doHint
-        as="td"
-        text={clientNick ?? client}
-        title={clientNick ?? ''}>
-        {client ?? '?'}
-        {
-          expansion && (
-            <span className={[styles.expansionName, styles[expansion]]}>
-              {expansionNameMap[expansion]}
-            </span>
-          )
-        }
-      </CopyToClipboard>
-      <td
-        className="rescue-row-language"
-        title={rescueLanguage.long}>
-        {rescueLanguage.short}
+      <td>
+        <CopyToClipboard
+          doHint
+          className={styles.cmdrNameCol}
+          text={clientNick ?? client}
+          title={clientNick ?? ''}>
+          <span className={styles.cmdrName}>
+            {client ?? '?'}
+          </span>
+          {
+            platform === 'pc' && expansion && (
+              <span className={[styles.expansionBadge, styles[expansion]]}>
+                {expansionNameMap[expansion]}
+              </span>
+            )
+          }
+        </CopyToClipboard>
       </td>
       <td
         className={['rescue-row-platform', styles.platform, styles[rescue.attributes.platform]]}
         title={rescuePlatform.long}>
         {rescuePlatform.short}
+      </td>
+      <td
+        className="rescue-row-language"
+        title={rescueLanguage.long}>
+        {rescueLanguage.short}
       </td>
       <CopyToClipboard
         doHint

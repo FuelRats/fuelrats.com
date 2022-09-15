@@ -59,6 +59,20 @@
     font-family: $paragraph-fonts;
     font-weight: bold;
   }
+
+  .expansionBadge {
+    &.horizons3 {
+      background-color: $magenta-dark3;
+    }
+
+    &.horizons4 {
+      background-color: $blue-dark3;
+    }
+
+    &.odyssey {
+      background-color: $gold-dark2;
+    }
+  }
 }
 
 .body {
@@ -177,4 +191,8 @@
     font-style: italic;
     white-space: normal;
   }
+}
+
+.timer {
+  flex-shrink: 0;
 }

@@ -1,14 +1,11 @@
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
-// import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
-// import { useCallback } from 'react'
 
 import { useRescuePlatform, useRescueLanguage } from '~/hooks/rescueHooks'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { createSelectRenderedRatList } from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
+import { expansionNameMap } from '~/util/expansion'
 import makePaperworkRoute from '~/util/router/makePaperworkRoute'
 
 import CopyToClipboard from '../CopyToClipboard'
@@ -58,12 +55,12 @@ function RescueDetailsContent (props) {
     client,
     clientNick,
     codeRed,
+    expansion,
     system,
     status,
     platform,
     clientLanguage,
     createdAt,
-    odyssey,
     title,
     quotes,
   } = rescue.attributes
@@ -83,17 +80,16 @@ function RescueDetailsContent (props) {
         <div className={styles.title}>
           {`${typeof commandIdentifier === 'number' ? `#${commandIdentifier} - ` : ''}${title ?? client}`}
           {
-            odyssey && (
-              <>
-                {' '}
-                <FontAwesomeIcon fixedWidth icon="shoe-prints" size="sm" title="Odyssey Rescue" transform={{ rotate: -40 }} />
-              </>
+            platform === 'pc' && expansion && (
+              <span className={['badge', styles.expansionBadge, styles[expansion]]}>
+                {expansionNameMap[expansion]}
+              </span>
             )
           }
           {codeRed && <span className="badge">{'CODE RED'}</span>}
           {status === 'inactive' && <span className="badge warn">{'Inactive'}</span>}
         </div>
-        <div>
+        <div className={styles.timer}>
           <ElapsedTimer from={createdAt} />
           {/* <button
             readOnly
