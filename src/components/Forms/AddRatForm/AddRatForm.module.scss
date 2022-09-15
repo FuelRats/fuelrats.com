@@ -5,7 +5,7 @@
 .addRatForm {
   display: flex;
 
-  align-items: center;
+  align-items: baseline;
   justify-content: flex-end;
 
   transition: padding 0.2s ease;
@@ -21,7 +21,7 @@
   }
 
   /* stylelint-disable-next-line selector-class-pattern */
-  :global(.form-row) {
+  :global(.form-row), :global(.form-col) {
     flex-grow: 1;
   }
 

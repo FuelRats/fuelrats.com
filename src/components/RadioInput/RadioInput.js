@@ -1,9 +1,7 @@
 import PropTypes from 'prop-types'
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 
-
-
-
+import isPromise from '~/util/isPromise'
 
 import styles from './RadioInput.module.scss'
 import RadioInputOption from './RadioInputOption'
@@ -16,7 +14,7 @@ function RadioInput (props) {
   const {
     as: Element = 'div',
     className,
-    disabled,
+    disabled: disableProp,
     name,
     options,
     onChange,
@@ -24,9 +22,18 @@ function RadioInput (props) {
     value,
   } = props
 
-  const handleOptionClick = useCallback((event) => {
+  const [loading, setLoading] = useState(false)
+  const disabled = loading || disableProp
+
+  const handleOptionClick = useCallback(async (event) => {
     if (value !== event?.target?.value) {
-      onChange(event)
+      const changePromise = onChange(event)
+
+      if (isPromise(changePromise)) {
+        setLoading(true)
+        await changePromise
+        setLoading(false)
+      }
     }
   }, [onChange, value])
 

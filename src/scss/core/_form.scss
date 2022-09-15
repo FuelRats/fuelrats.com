@@ -16,9 +16,20 @@ form {
     padding: 0.5rem 0.25rem;
   }
 
+  &.compact .form-col fieldset {
+    padding: 0.25rem 0.5rem;
+  }
+
   .form-row {
     display: flex;
 
     flex-direction: row;
   }
+
+  .form-col {
+    display: flex;
+    flex-direction: column;
+  }
+
+
 }
