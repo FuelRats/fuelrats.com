@@ -1,10 +1,11 @@
-import RadioInput from '~/components/RadioInput'
 import { expansionLongRadioOptions, expansionRadioOptions } from '~/util/expansion'
 
+import RadioFieldset from './RadioFieldset'
 
-export default function ExpansionRadioInput ({ longNames = false, ...props }) {
+
+export default function ExpansionFieldset ({ longNames = false, ...props }) {
   return (
-    <RadioInput
+    <RadioFieldset
       {...props}
       options={longNames ? expansionLongRadioOptions : expansionRadioOptions} />
   )

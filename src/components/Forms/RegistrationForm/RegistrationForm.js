@@ -1,5 +1,5 @@
-import BooleanRadioFieldset from '~/components/Fieldsets/BooleanRadioFieldset'
 import CMDRFieldset from '~/components/Fieldsets/CMDRFieldset'
+import ExpansionFieldset from '~/components/Fieldsets/ExpansionFieldset'
 import IRCNickFieldset from '~/components/Fieldsets/IRCNickFieldset'
 import NewPasswordFieldset from '~/components/Fieldsets/NewPasswordFieldset/NewPasswordFieldset'
 import PlatformFieldset from '~/components/Fieldsets/PlatformFieldset'
@@ -39,11 +39,10 @@ const labels = {
       <small>{'If you have more than one, you can add the rest later.'}</small>
     </>
   ),
-  odyssey: (
+  expansion: (
     <>
-      {'Does your CMDR own '}
-      <b>{'Elite Dangerous: Odyssey'}</b>
-      {'?'}
+      {'What game version do you most regularly play on? '}
+      <small>{'Not sure yet? You can change this later.'}</small>
     </>
   ),
   platform: 'What platform is your CMDR on?',
@@ -89,11 +88,12 @@ function RegistrationForm ({ onSubmit }) {
 
       {
         state.attributes.platform === 'pc' && (
-          <BooleanRadioFieldset
+          <ExpansionFieldset
+            longNames
             required
-            id="OdysseyAccount"
-            label={labels.odyssey}
-            name="attributes.odyssey" />
+            id="ExpansionAccount"
+            label={labels.expansion}
+            name="attributes.expansion" />
         )
       }
 

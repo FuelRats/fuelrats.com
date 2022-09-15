@@ -3,6 +3,7 @@ import { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import CMDRFieldset from '~/components/Fieldsets/CMDRFieldset'
+import ExpansionFieldset from '~/components/Fieldsets/ExpansionFieldset'
 import SelectFieldset from '~/components/Fieldsets/SelectFieldset'
 import useForm from '~/hooks/useForm'
 import { createRat } from '~/store/actions/rats'
@@ -16,10 +17,8 @@ import styles from './AddRatForm.module.scss'
 const initialState = {
   name: '',
   platform: '',
+  expansion: '',
 }
-
-
-
 
 
 function AddRatForm () {
@@ -33,11 +32,12 @@ function AddRatForm () {
   }, [])
 
 
-  const onSubmit = async ({ name, platform }) => {
+  const onSubmit = async ({ name, platform, expansion }) => {
     await dispatch(createRat({
       attributes: {
         name: name.trim(),
         platform,
+        expansion: platform === 'pc' ? expansion : 'horizons3',
       },
       relationships: {
         user: {
@@ -52,34 +52,48 @@ function AddRatForm () {
   }
 
 
-  const { Form, canSubmit, submitting } = useForm({ onSubmit, data: initialState })
+  const { Form, canSubmit, submitting, state } = useForm({ onSubmit, data: initialState })
 
   return (
     <Form className={['compact', styles.addRatForm, { [styles.formOpen]: formOpen }]}>
       {
         formOpen && (
-          <div className="form-row">
-            <CMDRFieldset
-              required
-              aria-label="Commander Name"
-              fieldsetClassName={styles.cmdrField}
-              id="NewRatName"
-              maxLength={22}
-              minLength={1}
-              name="name"
-              placeholder="CMDR Name" />
+          <div className="form-col">
+            <div className="form-row">
+              <CMDRFieldset
+                required
+                aria-label="Commander Name"
+                fieldsetClassName={styles.cmdrField}
+                id="NewRatName"
+                maxLength={22}
+                minLength={1}
+                name="name"
+                placeholder="CMDR Name" />
 
-            <SelectFieldset
-              required
-              aria-label="Platform"
-              fieldsetClassName={styles.platformField}
-              id="NewRatPlatform"
-              name="platform"
-              placeholder="Platform">
-              <option value="pc">{'PC'}</option>
-              <option value="xb">{'XB1'}</option>
-              <option value="ps">{'PS4'}</option>
-            </SelectFieldset>
+              <SelectFieldset
+                required
+                aria-label="Platform"
+                fieldsetClassName={styles.platformField}
+                id="NewRatPlatform"
+                name="platform"
+                placeholder="Platform">
+                <option value="pc">{'PC'}</option>
+                <option value="xb">{'XB1'}</option>
+                <option value="ps">{'PS4'}</option>
+              </SelectFieldset>
+            </div>
+
+            {
+              state.platform === 'pc' && (
+                <ExpansionFieldset
+                  required
+                  aria-label="Expansion"
+                  id="NewRatExpansion"
+                  label="Game Version"
+                  name="expansion" />
+              )
+            }
+
           </div>
         )
       }
