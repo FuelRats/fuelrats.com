@@ -1,5 +1,7 @@
+import _get from 'lodash/get'
 import PropTypes from 'prop-types'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
+
 
 import InputSuggestions from '~/components/InputMessages'
 import useFocusState from '~/hooks/useFocusState'
@@ -29,6 +31,7 @@ const InputFieldset = React.forwardRef((props, forwardRef) => {
     onChange,
     onValidate: parentValidate,
     validateOpts,
+    validateDeps,
     ...inputProps
   } = props
 
@@ -85,7 +88,7 @@ const InputFieldset = React.forwardRef((props, forwardRef) => {
     validating,
     submitting,
     handleChange,
-  } = useField(props.name, { onValidate: handleValidate, onChange, validateOpts })
+  } = useField(props.name, { onValidate: handleValidate, onChange, validateOpts, validateDeps })
 
   const hideMessages = !messages?.validatedValue?.length || !messages?.hasMessages || validating || !isFocused
 
@@ -168,6 +171,19 @@ function useValidationCallback (callback, deps = [], parent) {
   )
 }
 
+function useConfirmationValidation (name, label, state, parent) {
+  const stateRef = useRef(_get(state, name))
+  stateRef.current = _get(state, name)
+
+  return {
+    onValidate: useValidationCallback(({ errors }, value) => {
+      if (value && stateRef.current && value !== stateRef.current) {
+        errors.push(`value must match with ${label} field.`)
+      }
+    }, [label], parent),
+    validateDeps: [stateRef.current],
+  }
+}
 
 
 
@@ -175,4 +191,5 @@ function useValidationCallback (callback, deps = [], parent) {
 export default InputFieldset
 export {
   useValidationCallback,
+  useConfirmationValidation,
 }

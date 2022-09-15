@@ -11,9 +11,7 @@ import { useFormContext } from './useFormComponent'
 
 
 function useField (name = isRequired('name'), opts = {}) {
-  const { onValidate, onChange, validateOpts } = opts
-
-  const nameRef = useRef(name)
+  const { onValidate, onChange, validateOpts, validateDeps } = opts
 
   const ctxRef = useRef(null)
   ctxRef.current = useFormContext()
@@ -23,17 +21,20 @@ function useField (name = isRequired('name'), opts = {}) {
   // Validation state tracking.
   const [validating, setValidatingState] = useState(false)
 
-  // Use a ref for dirtyState since it only changes on other state changes.
-  // Default state is dirty even if we're on initial mount of the form.
-  const dirtyState = useRef(true)
+  const metaRef = useRef({
+    dirty: true,
+    name,
+    validating,
+  })
+  metaRef.current.validating = validating
 
   const debouncedValidate = useDebouncedCallback(
     async (value) => {
-      dirtyState.current = false
-      await ctxRef.current?.validateField(nameRef.current, value)
+      metaRef.current.dirty = false
+      await ctxRef.current?.validateField(name, value)
       setValidatingState(false)
     },
-    [],
+    [name],
     validateOpts ?? { wait: 250 },
   )
 
@@ -55,30 +56,29 @@ function useField (name = isRequired('name'), opts = {}) {
     if (typeof onValidate === 'function') {
       // Only mark as dirty if we have a validation function to check.
       // The validation check itself is kicked off by the form state change below.
-      dirtyState.current = true
+      metaRef.current.dirty = true
     }
 
-    ctxRef.current?.ctx.dispatchField({ name: nameRef.current, value })
-  }, [onChange, onValidate])
+    ctxRef.current?.ctx.dispatchField({ name, value })
+  }, [name, onChange, onValidate])
 
   // Register our validation method for this field
   useEffect(
     () => {
-      const currentName = nameRef.current
       if (typeof onValidate === 'function') {
-        ctxRef.current?.registerValidator(currentName, onValidate)
+        ctxRef.current?.registerValidator(name, onValidate)
       }
       return () => {
-        ctxRef.current?.registerValidator(currentName, undefined)
+        ctxRef.current?.registerValidator(name, undefined)
       }
     },
-    [onValidate],
+    [name, onValidate],
   )
 
   // Clear state value on unmount, but also use this hook as a check for changes to the name variable, which should never change.
   useEffect(
     () => {
-      if (nameRef.current !== name) {
+      if (metaRef.current.name !== name) {
         throw new Error('Field names must be static. Dynamically mount another field instead of reassigning an existing field')
       }
 
@@ -92,20 +92,37 @@ function useField (name = isRequired('name'), opts = {}) {
   // validate whenever the field is marked as dirty
   useEffect(
     () => {
-      if (typeof onValidate !== 'function' || !dirtyState.current || !ctxRef.current?.ctx.isInit) {
+      if (typeof onValidate !== 'function' || !metaRef.current.dirty || !ctxRef.current?.ctx.isInit) {
         // Always set dirtyState back to false just to prevent unncessary validation attempts after form initialization.
-        dirtyState.current = false
+        metaRef.current.dirty = false
         return
       }
 
-      if (!validating) {
+      if (!metaRef.current.validating) {
         setValidatingState(true)
-        ctxRef.current?.ctx.dispatchValidity({ name: nameRef.current, valid: false })
+        ctxRef.current?.ctx.dispatchValidity({ name, valid: false })
       }
 
       debouncedValidate(inputValue)
     },
-    [debouncedValidate, inputValue, onValidate, validating],
+    [debouncedValidate, inputValue, name, onValidate],
+  )
+
+  useEffect(
+    () => {
+      if (typeof onValidate !== 'function' || !ctxRef.current?.ctx.isInit) {
+        return
+      }
+
+      if (!metaRef.current.validating) {
+        setValidatingState(true)
+        ctxRef.current?.ctx.dispatchValidity({ name, valid: false })
+      }
+
+      debouncedValidate(inputValue)
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- Only run this code when this deps array changes.
+    Array.isArray(validateDeps) ? validateDeps : [validateDeps],
   )
 
   return {

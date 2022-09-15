@@ -1,5 +1,6 @@
 import CMDRFieldset from '~/components/Fieldsets/CMDRFieldset'
 import ExpansionFieldset from '~/components/Fieldsets/ExpansionFieldset'
+import { useConfirmationValidation } from '~/components/Fieldsets/InputFieldset'
 import IRCNickFieldset from '~/components/Fieldsets/IRCNickFieldset'
 import NewPasswordFieldset from '~/components/Fieldsets/NewPasswordFieldset/NewPasswordFieldset'
 import PlatformFieldset from '~/components/Fieldsets/PlatformFieldset'
@@ -21,6 +22,7 @@ const data = {
 
 const labels = {
   email: 'Email',
+  confirmEmail: 'Confirm Email',
   password: (
     <>
       {'Password '}
@@ -51,6 +53,8 @@ const labels = {
 function RegistrationForm ({ onSubmit }) {
   const { Form, canSubmit, submitting, state } = useForm({ data, onSubmit })
 
+  const confirmEmailProps = useConfirmationValidation('attributes.email', 'Email', state)
+
   return (
     <Form>
       <NewEmailFieldset
@@ -60,6 +64,14 @@ function RegistrationForm ({ onSubmit }) {
         id="Email"
         label={labels.email}
         name="attributes.email" />
+
+      <NewEmailFieldset
+        required
+        autoComplete="email"
+        id="ConfirmEmail"
+        label={labels.confirmEmail}
+        name="meta.confirmEmail"
+        {...confirmEmailProps} />
 
       <NewPasswordFieldset
         required
