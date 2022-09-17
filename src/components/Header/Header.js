@@ -74,12 +74,12 @@ function Header () {
             </NavLink>
           </SubNav>
           <SubNav id="support" title="Support Us">
-            <NavLink href="/donate">
-              {'Donations'}
+            <NavLink external href="https://shop.fuelrats.com">
+              {'Merch Store'}
             </NavLink>
 
-            <NavLink disabled external>
-              {'Merch (Coming soon!)'}
+            <NavLink href="/donate">
+              {'Donations'}
             </NavLink>
           </SubNav>
 
