@@ -1,12 +1,12 @@
 export const expansionNameMap = {
-  horizons3: 'H3.8',
-  horizons4: 'H4.0',
+  horizons3: 'LEG',
+  horizons4: 'HOR',
   odyssey: 'ODY',
 }
 
 export const expansionLongNameMap = {
-  horizons3: 'Horizons 3.8',
-  horizons4: 'Horizons 4.0',
+  horizons3: 'Legacy',
+  horizons4: 'Horizons',
   odyssey: 'Odyssey',
 }
 
