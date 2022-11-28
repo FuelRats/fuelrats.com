@@ -138,9 +138,9 @@ function Header () {
 
         <div className="social-actions">
           <SocialIcon
-            href="https://www.twitter.com/FuelRats/"
-            icon={['fab', 'twitter']}
-            title="Fuel Rats on Twitter" />
+            href="https://mastodon.localecho.net/@FuelRats"
+            icon={['fab', 'mastadon']}
+            title="Fuel Rats on Mastadon" />
           <SocialIcon
             href="https://www.reddit.com/r/FuelRats/"
             icon={['fab', 'reddit-alien']}
