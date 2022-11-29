@@ -16,7 +16,7 @@ function SocialIcon (props) {
     <a
       className="button link"
       href={href}
-      rel="noopener noreferrer"
+      rel="noopener noreferrer me"
       target="_blank"
       title={title}>
       <FontAwesomeIcon
