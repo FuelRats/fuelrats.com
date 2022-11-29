@@ -45,8 +45,8 @@ export {
 } from '@fortawesome/free-solid-svg-icons'
 
 export {
-  faTwitter,
   faRedditAlien,
   faTwitch,
   faGithub,
+  faMastodon,
 } from '@fortawesome/free-brands-svg-icons'
