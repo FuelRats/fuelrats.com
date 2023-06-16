@@ -154,7 +154,7 @@ function Header () {
             icon={['fab', 'github']}
             title="Fuel Rats on GitHub" />
           <SocialIcon
-            href="https://forums.frontier.co.uk/showthread.php/150703-Out-of-Fuel-Explorer-Rescue-Service-The-Fuel-Rats"
+            href="https://forums.frontier.co.uk/threads/out-of-fuel-explorer-rescue-service-the-fuel-rats.150703/"
             icon="space-shuttle"
             title="Fuel Rats on Frontier Forums"
             transform={{ rotate: -45 }} />
