@@ -113,6 +113,7 @@ Register.getPageMeta = () => {
   return {
     displayTitle: 'Become a Fuel Rat',
     title: 'Register',
+    description: 'Join the elite team of rescuers in the gaming cosmos by registering with the Fuel Rats! Our registration page is your gateway to embark on thrilling rescue missions, interact with a community of passionate gamers, and make your mark in the interstellar gaming universe. Sign up to navigate through breathtaking adventures, enhance your gaming experience, and be a beacon of hope for stranded pilots across the galaxies!',
   }
 }
 

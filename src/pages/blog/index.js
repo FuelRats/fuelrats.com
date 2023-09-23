@@ -64,6 +64,7 @@ Blogs.getPageMeta = () => {
   return {
     title: 'Blog',
     key: 'blog-list',
+    description: 'Dive into the Fuel Rats Blog to explore thrilling tales of in-game rescues, updates, and insights from our adventurous team! Whether you’re a player seeking tips, a fan interested in our latest rescues, or just curious about our interstellar journeys, our blog offers a rich array of stories, advice, and news from the front lines of spaceship assistance. Discover the exciting world of Fuel Rats and join us in exploring the boundless gaming cosmos!',
   }
 }
 
