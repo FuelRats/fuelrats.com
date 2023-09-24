@@ -208,6 +208,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "lFourl",
+      "name": "Darius West",
+      "avatar_url": "https://avatars.githubusercontent.com/u/39689166?v=4",
+      "profile": "http://dwest.dev",
+      "contributions": [
+        "code",
+        "content"
+      ]
     }
   ],
   "repoType": "github",
@@ -215,5 +225,7 @@
   "skipCi": true,
   "files": [
     "README.md"
-  ]
+  ],
+  "commitType": "docs",
+  "commitConvention": "angular"
 }
