@@ -50,6 +50,7 @@ DispatchBoard.getPageMeta = () => {
     className: styles.dispatchBoard,
     title: 'Dispatch Board',
     key: 'dispatch',
+    description: 'Access the Fuel Rats Internal Dispatch Portal to coordinate rapid and efficient in-game rescues. Here, our dedicated team of Fuel Rats can respond to distress calls, manage rescue missions, and ensure that every player stranded in the cosmos receives timely assistance. Efficiently navigate through requests and deploy help where it\'s needed most in the gaming universe!',
   }
 }
 
