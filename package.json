@@ -59,7 +59,7 @@
     "postcss-preset-env": "^7.0.2",
     "prop-types": "^15.7.2",
     "pure-uuid": "^1.6.2",
-    "qs": "^6.10.2",
+    "qs": "^6.10.3",
     "rc-slider": "^9.7.5",
     "re-reselect": "^4.0.0",
     "react": "^17.0.2",
