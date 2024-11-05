@@ -43,45 +43,94 @@ const CarouselSlides = {
     position: '40% 50%',
     filename: 'fenrishi.jpg',
   },
-}
+  anja: {
+    text: 'CMDR Anja',
+    position: '50% 50%',
+    filename: 'anja.jpg',
+  },
+  lazylime: {
+    text: 'CMDR LazyLime',
+    position: '50% 50%',
+    filename: 'lazylime.jpg',
+  },
+  kumakenji: {
+    text: 'CMDR KumaKenji',
+    position: '50% 50%',
+    filename: 'kumakenji.jpg',
+  },
+  xman31: {
+    text: 'CMDR Xman31',
+    position: '50% 50%',
+    filename: 'xman31.jpg',
+  },
+  fiestypizza: {
+    text: 'CMDR FiestyPizza',
+    position: '50% 50%',
+    filename: 'fiestypizza.jpg',
+  },
+  boomer: {
+    text: 'CMDR Boomer Soomer',
+    position: '50% 50%',
+    filename: 'boomer_soomer.jpg',
+  },
+  kamirov: {
+    text: 'CMDR Kamirov',
+    position: '50% 50%',
+    filename: 'kamirov.jpg',
+  },
+  calebdume: {
+    text: 'CMDR Caleb Dume',
+    position: '50% 50%',
+    filename: 'calebdume.jpg',
+  },
+  joojoogamer: {
+    text: 'CMDR JooJooGamer',
+    position: '50% 50%',
+    filename: 'joojoogamer.jpg',
+  },
+  nlparadox: {
+    text: 'CMDR NL Paradox',
+    position: '50% 50%',
+    filename: 'nlparadox.jpg',
+  },
 
 
-function FuelRatsHome (props) {
-  const { authenticate, ...restQuery } = props.query
-  const dispatch = useDispatch()
+function FuelRatsHome(props) {
+    const { authenticate, ...restQuery } = props.query
+    const dispatch = useDispatch()
 
-  useEffect(() => {
-    if (authenticate) {
-      dispatch(setFlag('showLoginDialog', true))
-      Router.replace(makeRoute('/', restQuery), undefined, { shallow: true })
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps -- only run on authenticate change, we only care about the state of others when this value changes anyway.
-  }, [authenticate])
+    useEffect(() => {
+        if (authenticate) {
+            dispatch(setFlag('showLoginDialog', true))
+            Router.replace(makeRoute('/', restQuery), undefined, { shallow: true })
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps -- only run on authenticate change, we only care about the state of others when this value changes anyway.
+    }, [authenticate])
 
-  return (
-    <section className="hero">
-      <Carousel id="HomeImages" slides={CarouselSlides} />
+    return (
+        <section className="hero">
+            <Carousel id="HomeImages" slides={CarouselSlides} />
 
-      <header>
-        <h1>{'We Have Fuel. '}<wbr />{"You\u00a0Don't."}</h1>
-        <h2>{'Any Questions?'}</h2>
-      </header>
+            <header>
+                <h1>{'We Have Fuel. '}<wbr />{"You\u00a0Don't."}</h1>
+                <h2>{'Any Questions?'}</h2>
+            </header>
 
-      <footer className="call-to-action">
-        <Link href="/i-need-fuel">
-          <a className="button tall">{'Get Fuel'}</a>
-        </Link>
-      </footer>
-    </section>
-  )
+            <footer className="call-to-action">
+                <Link href="/i-need-fuel">
+                    <a className="button tall">{'Get Fuel'}</a>
+                </Link>
+            </footer>
+        </section>
+    )
 }
 
 FuelRatsHome.getPageMeta = () => {
-  return {
-    noHeader: true,
-    title: 'Home',
-    key: 'home',
-  }
+    return {
+        noHeader: true,
+        title: 'Home',
+        key: 'home',
+    }
 }
 
 
