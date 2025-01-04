@@ -70,6 +70,9 @@ const users = {
   avatar: {
     update: 'users/avatar/update',
   },
+  email: {
+    update: 'users/email/update',
+  },
 }
 
 

@@ -1,6 +1,7 @@
 name: Deploy
 
 on:
+  workflow_dispatch:
   push:
     branches: [ develop, release ]
 
@@ -12,40 +13,23 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Read `.nvmrc`
-        run: echo "::set-output name=nvmrc::$(cat .nvmrc)"
-        id: nvm
+        uses: actions/checkout@v4
 
       - name: Use Node.js (.nvmrc)
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
-          node-version: "${{ steps.nvm.outputs.nvmrc }}"
-
-      - name: Read `yarn cache dir`
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
-
-      - name: Load yarn cache
-        uses: actions/cache@v2
-        id: yarn-cache
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - name: Load Next.js cache
-        uses: actions/cache@v2
-        with:
-          path: ${{ github.workspace }}/dist/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-nextjs-
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
 
       - name: Install dependencies
         run: yarn install --immutable
+
+      - name: Load Next Cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/dist/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+          restore-keys: ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}-
 
       - name: Build
         run: yarn build
@@ -71,7 +55,7 @@ jobs:
             yarn.lock
 
       - name: Publish artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: fuelrats-com
           path: fuelrats-com.tar.gz
@@ -86,7 +70,7 @@ jobs:
 
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: fuelrats-com
 
@@ -95,27 +79,11 @@ jobs:
           tar -xzf fuelrats-com.tar.gz
           rm fuelrats-com.tar.gz
 
-      - name: Read `.nvmrc`
-        run: echo "::set-output name=nvmrc::$(cat .nvmrc)"
-        id: nvm
-
       - name: Use Node.js (.nvmrc)
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
-          node-version: "${{ steps.nvm.outputs.nvmrc }}"
-
-      - name: Read `yarn cache dir`
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
-
-      - name: Load yarn cache
-        uses: actions/cache@v2
-        id: yarn-cache
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
 
       - name: Install dependencies
         run: yarn install --immutable

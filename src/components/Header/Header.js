@@ -55,6 +55,14 @@ function Header () {
         </Link>
 
         <Nav onClick={handleClick}>
+          <SubNav id="about" title="About Us">
+            <NavLink href="/vision">
+              {'Surly\'s Vision'}
+            </NavLink>
+            <NavLink href="/history">
+              {'History'}
+            </NavLink>
+          </SubNav>
           <SubNav id="blog" title="Blog">
             <NavLink href="/blog">
               {'All'}

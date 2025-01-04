@@ -11,6 +11,7 @@ import {
 } from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 
+import ChangeEmailModal from '../ChangeEmailModal'
 import ChangePasswordModal from '../ChangePasswordModal'
 import DisableProfileModal from '../DisableProfileModal'
 import ProfileUserAvatar from '../ProfileUserAvatar'
@@ -21,8 +22,15 @@ import UnverifiedUserBanner from './UnverifiedUserBanner'
 
 
 function ProfileHeader () {
+  const [showChangeEmail, setShowChangeEmail] = useState(false)
   const [showChangePassword, setShowChangePassword] = useState(false)
   const [showDisableProfile, setShowDisableProfile] = useState(false)
+
+  const handleToggleChangeEmail = useCallback(() => {
+    setShowChangeEmail((state) => {
+      return !state
+    })
+  }, [])
 
   const handleToggleChangePassword = useCallback(() => {
     setShowChangePassword((state) => {
@@ -79,6 +87,11 @@ function ProfileHeader () {
         <div className="profile-controls">
           <button
             type="button"
+            onClick={handleToggleChangeEmail}>
+            {'Change E-Mail'}
+          </button>
+          <button
+            type="button"
             onClick={handleToggleChangePassword}>
             {'Change Password'}
           </button>
@@ -89,6 +102,9 @@ function ProfileHeader () {
           </button>
         </div>
       </div>
+      <ChangeEmailModal
+        isOpen={showChangeEmail}
+        onClose={handleToggleChangeEmail} />
       <ChangePasswordModal
         isOpen={showChangePassword}
         onClose={handleToggleChangePassword} />

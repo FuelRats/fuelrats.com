@@ -8,7 +8,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 ### ✨ Added
 
-*
+* An option for users to update their registered email address through the user profile.
 
 ### ⚡ Changed
 
