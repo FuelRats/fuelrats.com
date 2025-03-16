@@ -95,11 +95,6 @@ function ProfileHeader () {
             onClick={handleToggleChangePassword}>
             {'Change Password'}
           </button>
-          <button
-            type="button"
-            onClick={handleToggleDisableProfile}>
-            {'Disable Profile'}
-          </button>
         </div>
       </div>
       <ChangeEmailModal
