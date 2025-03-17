@@ -13,7 +13,6 @@ import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 
 import ChangeEmailModal from '../ChangeEmailModal'
 import ChangePasswordModal from '../ChangePasswordModal'
-import DisableProfileModal from '../DisableProfileModal'
 import ProfileUserAvatar from '../ProfileUserAvatar'
 import UnverifiedUserBanner from './UnverifiedUserBanner'
 
@@ -24,7 +23,6 @@ import UnverifiedUserBanner from './UnverifiedUserBanner'
 function ProfileHeader () {
   const [showChangeEmail, setShowChangeEmail] = useState(false)
   const [showChangePassword, setShowChangePassword] = useState(false)
-  const [showDisableProfile, setShowDisableProfile] = useState(false)
 
   const handleToggleChangeEmail = useCallback(() => {
     setShowChangeEmail((state) => {
@@ -34,12 +32,6 @@ function ProfileHeader () {
 
   const handleToggleChangePassword = useCallback(() => {
     setShowChangePassword((state) => {
-      return !state
-    })
-  }, [])
-
-  const handleToggleDisableProfile = useCallback(() => {
-    setShowDisableProfile((state) => {
       return !state
     })
   }, [])
@@ -103,9 +95,6 @@ function ProfileHeader () {
       <ChangePasswordModal
         isOpen={showChangePassword}
         onClose={handleToggleChangePassword} />
-      <DisableProfileModal
-        isOpen={showDisableProfile}
-        onClose={handleToggleDisableProfile} />
     </>
   )
 }
