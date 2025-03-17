@@ -113,19 +113,54 @@ function RescueRow (props) {
           <span className={styles.cmdrName}>
             {client ?? '?'}
           </span>
-          {
-            platform === 'pc' && expansion && (
-              <span className={[styles.expansionBadge, styles[expansion]]}>
-                {expansionNameMap[expansion]}
-              </span>
-            )
-          }
         </CopyToClipboard>
       </td>
       <td
         className={['rescue-row-platform', styles.platform, styles[rescue.attributes.platform]]}
         title={rescuePlatform.long}>
-        {rescuePlatform.short}
+        {
+          platform === 'pc' && expansion && (
+            <span className={[styles.platformBadge]}>
+              <span className={[styles.platformBadgeIcon]}>
+                <FontAwesomeIcon fixedWidth icon="tv" />
+              </span>
+              <span className={[styles.platformBadgeLabel, styles[platform], styles[expansion]]}>
+                {expansionNameMap[expansion]}
+              </span>
+            </span>
+          )
+        }
+        {
+          platform === 'pc' && !expansion && (
+            <span className={[styles.platformBadge]}>
+              <span className={[styles.platformBadgeIcon]}>
+                <FontAwesomeIcon fixedWidth icon="tv" />
+              </span>
+              <span className={[styles.platformBadgeLabel, styles[platform]]}>{'PC'}</span>
+            </span>
+          )
+        }
+        {
+          platform !== 'pc' && (
+            <span className={[styles.platformBadge]}>
+              <span className={[styles.platformBadgeIcon]}>
+                {
+                  platform === 'ps' && (
+                    <FontAwesomeIcon fixedWidth icon={['fab', 'playstation']} />
+                  )
+                }
+                {
+                  platform === 'xb' && (
+                    <FontAwesomeIcon fixedWidth icon={['fab', 'xbox']} />
+                  )
+                }
+              </span>
+              <span className={[styles.platformBadgeLabel, styles[platform]]}>
+                {rescuePlatform.short}
+              </span>
+            </span>
+          )
+        }
       </td>
       <td
         className="rescue-row-language"

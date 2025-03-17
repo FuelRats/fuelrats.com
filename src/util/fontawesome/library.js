@@ -39,6 +39,7 @@ export {
   faTimes,
   faTimesCircle,
   faTrash,
+  faTv,
   faSearch,
   faUser,
   faUserSecret,
@@ -50,4 +51,6 @@ export {
   faTwitch,
   faGithub,
   faMastodon,
+  faPlaystation,
+  faXbox,
 } from '@fortawesome/free-brands-svg-icons'

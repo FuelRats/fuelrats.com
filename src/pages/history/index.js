@@ -77,7 +77,7 @@ function History () {
         <br />
 
         {'Want to know more about the history of the Fuel Rats? We have a more in-depth history available '}
-        <a href="https://confluence.fuelrats.com/display/public/FRKB/History" rel="noreferrer" target="_blank">{'on our knowledgebase'}</a>{'.'}
+        <a href="https://confluence.fuelrats.com/display/public/FRKB/History" rel="noreferrer" target="_blank">{'on our knowledge base'}</a>{'.'}
       </div>
     </div>
   )

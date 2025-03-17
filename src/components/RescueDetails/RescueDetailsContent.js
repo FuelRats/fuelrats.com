@@ -200,6 +200,9 @@ function RescueDetailsContent (props) {
                             : (<td />)
                         }
                         <td className={[styles.infoValue, styles.infoGroup, styles.quote]}>
+                          <span className={styles.quoteIndex}>
+                            {index}
+                          </span>
                           <span className={styles.quoteAuthor}>
                             {`<${quoteSender}>`}
                           </span>
