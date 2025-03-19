@@ -3,6 +3,7 @@ import { axiosRequest, createAxiosFSA } from '@fuelrats/web-util/actions'
 
 import frApi from '~/services/frApi'
 import stApi from '~/services/stApi'
+import systemsApi from '~/services/systemsApi'
 import wpApi from '~/services/wpApi'
 
 import { updatesResources } from '../reducers/frAPIResources'
@@ -38,3 +39,4 @@ export const frApiRequest = frAxiosRequest(updatesResources('fuelrats'))
 export const frApiPlainRequest = frAxiosRequest()
 export const stApiRequest = axiosRequest(stApi)
 export const wpApiRequest = axiosRequest(wpApi)
+export const systemsApiRequest = axiosRequest(systemsApi)
