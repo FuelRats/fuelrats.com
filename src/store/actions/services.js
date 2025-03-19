@@ -2,7 +2,7 @@ import { isRequired } from '@fuelrats/validation-util'
 import { axiosRequest, createAxiosFSA } from '@fuelrats/web-util/actions'
 
 import frApi from '~/services/frApi'
-import stApi from '~/services/stApi'
+import stripeApi from '~/services/stripeApi'
 import systemsApi from '~/services/systemsApi'
 import wpApi from '~/services/wpApi'
 
@@ -37,6 +37,6 @@ function frAxiosRequest (...commonMeta) {
 
 export const frApiRequest = frAxiosRequest(updatesResources('fuelrats'))
 export const frApiPlainRequest = frAxiosRequest()
-export const stApiRequest = axiosRequest(stApi)
+export const stripeApiRequest = axiosRequest(stripeApi)
 export const wpApiRequest = axiosRequest(wpApi)
 export const systemsApiRequest = axiosRequest(systemsApi)
