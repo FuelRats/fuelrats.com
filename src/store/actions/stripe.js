@@ -1,5 +1,5 @@
-import { stripeApiRequest } from './services'
 import actionTypes from '../actionTypes'
+import { stripeApiRequest } from './services'
 
 
 
