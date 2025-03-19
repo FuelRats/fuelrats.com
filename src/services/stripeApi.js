@@ -12,7 +12,7 @@ const localStripeApiUrl = publicRuntimeConfig.stripe.url
 
 
 
-const stApi = axios.create({
+const stripeApi = axios.create({
   baseURL: localStripeApiUrl,
   timeout: 10000,
   validateStatus: () => {
@@ -24,4 +24,4 @@ const stApi = axios.create({
 
 
 
-export default stApi
+export default stripeApi
