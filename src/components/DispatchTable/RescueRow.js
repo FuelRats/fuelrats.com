@@ -79,7 +79,6 @@ function RescueRow (props) {
   const {
     codeRed,
     status,
-    clientNick,
     client,
     commandIdentifier,
     expansion,
@@ -108,8 +107,8 @@ function RescueRow (props) {
         <CopyToClipboard
           doHint
           className={styles.cmdrNameCol}
-          text={clientNick ?? client}
-          title={clientNick ?? ''}>
+          text={client ?? ''}
+          title={client ?? ''}>
           <span className={styles.cmdrName}>
             {client ?? '?'}
           </span>
