@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import PropTypes from 'prop-types'
 
-import { useRescuePlatform, useRescueLanguage } from '~/hooks/rescueHooks'
+import { useRescuePlatform, useRescueLanguage, useRescueLandmark, useRescueHasScoopableStar } from '~/hooks/rescueHooks'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { createSelectRenderedRatList } from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
@@ -68,6 +68,8 @@ function RescueDetailsContent (props) {
   const rescueLanguage = useRescueLanguage(rescue)
   const rescuePlatform = useRescuePlatform(rescue)
   const rescueRats = useSelectorWithProps({ rescueId: rescue.id }, selectRenderedRatList)
+  const rescueLandmark = useRescueLandmark(rescue)
+  const rescueHasScoopableStar = useRescueHasScoopableStar(rescue)
 
   // const router = useRouter()
   // const handleCloseRescueDetails = useCallback(() => {
@@ -132,6 +134,22 @@ function RescueDetailsContent (props) {
                   <CopyToClipboard doHint text={system}>
                     {system}
                   </CopyToClipboard>
+                  <span>
+                    {
+                      rescueLandmark && (
+                        <span className={styles.chip}>
+                          {rescueLandmark}
+                        </span>
+                      )
+                    }
+                    {
+                      rescueHasScoopableStar && (
+                        <span className={styles.chip}>
+                          {'Has Scoopable Star'}
+                        </span>
+                      )
+                    }
+                  </span>
                 </td>
               </tr>
             )
