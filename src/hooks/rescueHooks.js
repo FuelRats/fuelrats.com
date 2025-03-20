@@ -35,7 +35,7 @@ export const useRescueLandmark = (rescue) => {
 
 export const useRescueHasScoopableStar = (rescue) => {
   const systemId = rescue?.attributes?.data?.systemId ?? 0
-  const [hasScoopable, setHasScoopable] = useState(false)
+  const [hasScoopable, setHasScoopable] = useState('')
   const dispatch = useDispatch()
 
   useEffect(
@@ -49,13 +49,21 @@ export const useRescueHasScoopableStar = (rescue) => {
           const error = getResponseError(response)
 
           if (!error) {
-            let areScoopable = response.payload?.data?.filter((item) => {
+            const areScoopable = response.payload?.data?.filter((item) => {
               return item.attributes.isScoopable === true
             })
 
-            areScoopable = areScoopable.length > 0
+            if (areScoopable.length > 0) {
+              setHasScoopable('Secondary Star Scoopable')
 
-            setHasScoopable(areScoopable)
+              const mainStarScoopable = response.payload?.data?.filter((item) => {
+                return item.attributes.isMainStar === true
+              })
+
+              if (mainStarScoopable.length > 0) {
+                setHasScoopable('Main Star Scoopable')
+              }
+            }
           }
         }
 

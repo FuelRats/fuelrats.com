@@ -145,7 +145,7 @@ function RescueDetailsContent (props) {
                     {
                       rescueHasScoopableStar && (
                         <span className={styles.chip}>
-                          {'Has Scoopable Star'}
+                          {rescueHasScoopableStar}
                         </span>
                       )
                     }
