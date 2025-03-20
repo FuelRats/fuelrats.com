@@ -33,6 +33,12 @@ export const useRescueLandmark = (rescue) => {
   return (distance && name) ? `${distance.toFixed(1)}ly from ${name}` : false
 }
 
+export const useRescuePermit = (rescue) => {
+  const permit = rescue?.attributes?.data?.permit ?? ''
+
+  return (permit) ? `Permit Required: ${permit.name}` : false
+}
+
 export const useRescueHasScoopableStar = (rescue) => {
   const systemId = rescue?.attributes?.data?.systemId ?? 0
   const [hasScoopable, setHasScoopable] = useState('')
