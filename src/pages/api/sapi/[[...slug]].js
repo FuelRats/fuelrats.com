@@ -6,9 +6,9 @@ import getEnv from '~/util/server/getEnv'
 
 
 export default apiProxy({
-  target: getEnv().sapi.url,
+  target: getEnv()?.sapi?.url,
   pathRewrite: {
-    '^/api/edsm/': '/',
+    '^/api/sapi/': '/',
   },
 })
 
