@@ -46,8 +46,6 @@ export const useRescueHasScoopableStar = (rescue) => {
 
   useEffect(
     () => {
-      let timeout = null
-
       const fetchData = async () => {
         if (systemId) {
           const response = await dispatch(getSystemStars(systemId))
@@ -72,17 +70,9 @@ export const useRescueHasScoopableStar = (rescue) => {
             }
           }
         }
-
-        timeout = setTimeout(fetchData, pollTimeoutTime)
       }
 
       fetchData()
-
-      return () => {
-        if (timeout) {
-          clearTimeout(timeout)
-        }
-      }
     },
     [dispatch, systemId],
   )
