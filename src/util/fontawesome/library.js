@@ -25,6 +25,7 @@ export {
   faFolder,
   faFolderOpen,
   faHandsHelping,
+  faIdCard,
   faIdCardAlt,
   faMouse,
   faPen,

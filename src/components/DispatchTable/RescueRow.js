@@ -4,7 +4,9 @@ import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
 import { useCallback, useState } from 'react'
 
-import { useQuoteString, useRescueLanguage, useRescuePlatform, useRescueSystem } from '~/hooks/rescueHooks'
+import {
+  useQuoteString, useRescueLanguage, useRescuePlatform, useRescueSystem, useRescuePermit,
+} from '~/hooks/rescueHooks'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import useStoreEffect from '~/hooks/useStoreEffect'
 import { selectRescueById, createSelectRenderedRatList } from '~/store/selectors'
@@ -43,6 +45,7 @@ function RescueRow (props) {
   const rescueLanguage = useRescueLanguage(rescue)
   const rescuePlatform = useRescuePlatform(rescue)
   const rescueSystem = useRescueSystem(rescue)
+  const rescuePermit = useRescuePermit(rescue)
 
   // Flash any rescue under a minute old on mount. This flashes all new rescues when they are created, and any immediately new ones on page load.
   const [animating, setAnimating] = useState(differenceInMinutes(Date.now(), new Date(rescue.attributes.createdAt)) < 1)
@@ -171,6 +174,13 @@ function RescueRow (props) {
         as="td"
         text={rescue.attributes.system ?? 'Unknown'}>
         {rescueSystem ?? 'N/A'}
+        {
+          rescuePermit && (
+            <span className={styles.rescueRowPermit} title={rescuePermit}>
+              <FontAwesomeIcon fixedWidth icon="id-card" />
+            </span>
+          )
+        }
       </CopyToClipboard>
       <td className="rescue-row-rats">
         {rescueRats}
