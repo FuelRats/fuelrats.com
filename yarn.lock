@@ -5352,7 +5352,6 @@ __metadata:
     react-easy-crop: ^3.5.3
     react-is: ^17.0.2
     react-redux: ^7.2.6
-    react-table-6: ^6.11.0
     redux: ^4.1.2
     redux-devtools-extension: ^2.13.9
     redux-immutable-state-invariant: ^2.1.0
@@ -8702,19 +8701,6 @@ __metadata:
   version: 0.8.3
   resolution: "react-refresh@npm:0.8.3"
   checksum: 3cffe5a9cbac1c5d59bf74bf9fff43c987d87ef32098b9092ea94b6637377d86c08565b9374d9397f446b3fbcd95de986ec77220a16f979687cb39b7b89e2f91
-  languageName: node
-  linkType: hard
-
-"react-table-6@npm:^6.11.0":
-  version: 6.11.0
-  resolution: "react-table-6@npm:6.11.0"
-  dependencies:
-    classnames: ^2.2.5
-  peerDependencies:
-    prop-types: ^15.5.0
-    react: ^16.x.x
-    react-dom: ^16.x.x
-  checksum: a8f553df11c269fdd2a890be38e589180e7ebd6c7cb8e084e8e9aed12b65ab2632e45499d3928bf8f07d7f4073cebe7c177a2efc525ff95d794aa6dda5be909e
   languageName: node
   linkType: hard
 
