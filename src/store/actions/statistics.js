@@ -3,16 +3,18 @@ import { frApiRequest } from './services'
 
 
 
-
-
 export const getLeaderboard = (params) => {
-  return frApiRequest(
-    actionTypes.leaderboard.read,
-    {
-      url: '/leaderboard',
-      params,
-    },
-  )
+  return async (dispatch) => {
+    const action = await dispatch(frApiRequest(
+      actionTypes.leaderboard.read,
+      {
+        url: '/leaderboard',
+        params,
+      },
+    ))
+
+    return action
+  }
 }
 
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import ArticleCard from '~/components/Blog/ArticleCard'
-import BlogMenu from '~/components/Blog/BlogMenu'
+import Pagination from '~/components/Pagination'
 import { getBlogs } from '~/store/actions/blogs'
 import {
   selectBlogs,
@@ -55,7 +55,7 @@ function Blogs (props) {
         }
       </ol>
 
-      <BlogMenu author={author} category={category} page={page} totalPages={totalPages} />
+      <Pagination author={author} category={category} page={page} route="blog" totalPages={totalPages} />
     </div>
   )
 }

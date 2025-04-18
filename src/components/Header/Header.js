@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { selectCurrentUserHasScope, selectSession } from '~/store/selectors'
-import makeBlogRoute from '~/util/router/makeBlogRoute'
+import makePaginatedRoute from '~/util/router/makePaginatedRoute'
 
 import Brand from '../../../public/static/svg/brand.svg'
 import { Nav, NavUl, NavLink, SubNav } from '../Nav'
@@ -68,7 +68,7 @@ function Header () {
               {'All'}
             </NavLink>
 
-            <NavLink href={makeBlogRoute({ category: 138 })}>
+            <NavLink href={makePaginatedRoute({ category: 138, route: 'blog' })}>
               {'Stories, Art, & Toons'}
             </NavLink>
           </SubNav>

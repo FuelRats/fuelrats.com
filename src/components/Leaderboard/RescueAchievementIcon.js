@@ -3,13 +3,13 @@
 
 
 
-
 import Rescue100 from '../../../public/static/svg/rescue100.svg'
 import Rescue1000 from '../../../public/static/svg/rescue1000.svg'
 import Rescue200 from '../../../public/static/svg/rescue200.svg'
 import Rescue300 from '../../../public/static/svg/rescue300.svg'
 import Rescue400 from '../../../public/static/svg/rescue400.svg'
 import Rescue500 from '../../../public/static/svg/rescue500.svg'
+import styles from './Leaderboard.module.scss'
 
 
 
@@ -18,13 +18,16 @@ import Rescue500 from '../../../public/static/svg/rescue500.svg'
 function RescueAchievementIcon ({ rescueCount, ...iconProps }) {
   let Icon = null
   let count = 0
+  let classes = `${styles.achievement} ${styles.rescueCount} `
 
   if (rescueCount >= 1000) {
     Icon = Rescue1000
     count = 1000
+    classes += String(styles.crown)
   } else if (rescueCount >= 500) {
     Icon = Rescue500
     count = 500
+    classes += String(styles.crown)
   } else if (rescueCount >= 400) {
     Icon = Rescue400
     count = 400
@@ -42,7 +45,7 @@ function RescueAchievementIcon ({ rescueCount, ...iconProps }) {
 
   return Icon && (
     <div
-      className={['achievement rescue-count', { crown: count >= 500 }]}
+      className={classes}
       title={`This rat has completed at least ${count} rescues!`}>
       <Icon {...iconProps} />
     </div>

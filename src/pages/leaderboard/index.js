@@ -1,0 +1,136 @@
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+
+import CodeRedIcon from '~/components/Leaderboard/CodeRedIcon'
+import FirstYearIcon from '~/components/Leaderboard/FirstYearIcon'
+import RescueAchievementIcon from '~/components/Leaderboard/RescueAchievementIcon'
+import Pagination from '~/components/Pagination'
+import styles from '~/scss/pages/leaderboard.module.scss'
+import { getLeaderboard } from '~/store/actions/statistics'
+import {
+  selectLeaderboard,
+  selectLeaderboardStatistics,
+} from '~/store/selectors'
+import safeParseInt from '~/util/safeParseInt'
+
+
+
+
+
+// Component constants
+const BASE_TEN_RADIX = 10
+const DEFAULT_PAGE = 1
+const DEFAULT_PAGE_SIZE = 25
+
+function Leaderboard (props) {
+  const page = safeParseInt(props.query.page ?? DEFAULT_PAGE, BASE_TEN_RADIX, DEFAULT_PAGE)
+
+  const dispatch = useDispatch()
+  const [retrieving, setRetrieving] = useState(false)
+  const statistics = useSelector(selectLeaderboardStatistics)
+  const entries = useSelector(selectLeaderboard)
+  const pageSize = props.query?.limit ?? DEFAULT_PAGE_SIZE
+
+  const [filterRat, setFilterRat] = useState('')
+
+  const handleInputChange = (param) => {
+    const searchTerm = param.target.value
+
+    setFilterRat(searchTerm)
+  }
+
+  useEffect(() => {
+    const updateList = async () => {
+      setRetrieving(true)
+
+      let leaderboardArgs = {
+        page: {
+          limit: pageSize,
+        },
+        filter: {
+          name: filterRat.length > 0 ? `%${filterRat}%` : undefined,
+        },
+      }
+
+      if (page > 1) {
+        leaderboardArgs = {
+          page: {
+            offset: (page - 1) * pageSize,
+            limit: pageSize,
+          },
+          filter: {
+            name: filterRat.length > 0 ? `%${filterRat}%` : undefined,
+          },
+        }
+      }
+
+      await dispatch(getLeaderboard(leaderboardArgs))
+
+      setRetrieving(false)
+    }
+
+    updateList()
+  }, [dispatch, filterRat, page, pageSize])
+
+  return (
+    <div className="page-content">
+      <section className="panel">
+        <div className={styles.ratLeaderboard}>
+          <div className={styles.ratLeaderboardHeader}>
+            <div className={styles.ratName}>
+              {'Name'}
+              <input
+                aria-label="Filter Rat"
+                className={styles.filterRat}
+                placeholder="Filter Rat"
+                type="text"
+                value={filterRat}
+                onChange={handleInputChange} />
+            </div>
+            <div className={styles.ratRescues}>
+              {'Rescues'}
+            </div>
+            <div className={styles.ratBadges}>
+              {'Badges'}
+            </div>
+          </div>
+          <ol className="loading">
+            {
+              Boolean(!retrieving && entries.length) && entries.map((entry) => {
+                return (
+                  <li key={entry.id}>
+                    <div className={styles.ratName}>
+                      {entry.attributes.preferredName}
+                    </div>
+                    <div className={styles.ratRescues}>
+                      {entry.attributes.rescueCount}
+                    </div>
+                    <div className={styles.ratBadges}>
+                      <RescueAchievementIcon className="size-32 fixed" rescueCount={entry.attributes.rescueCount} />
+                      <CodeRedIcon className="size-32 fixed" codeRedCount={entry.attributes.codeRedCount} />
+                      <FirstYearIcon className="size-32 fixed" createdAt={entry.attributes.joinedAt} />
+                    </div>
+                  </li>
+                )
+              })
+            }
+          </ol>
+          <Pagination page={page} route="leaderboard" totalPages={statistics.lastPage} />
+        </div>
+      </section>
+    </div>
+  )
+}
+
+Leaderboard.getPageMeta = () => {
+  return {
+    title: 'Leaderboard',
+    description: 'Explore the Fuel Rats Leaderboard and witness the daring rescues by elite players in the galaxy! Our leaderboard tracks in-game spaceship rescues, showcasing individual accomplishments and contributions of our top rescuers.',
+  }
+}
+
+
+
+
+
+export default Leaderboard
