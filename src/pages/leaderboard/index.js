@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import CodeRedIcon from '~/components/Leaderboard/CodeRedIcon'
 import FirstYearIcon from '~/components/Leaderboard/FirstYearIcon'
 import RescueAchievementIcon from '~/components/Leaderboard/RescueAchievementIcon'
-import Pagination from '~/components/Pagination'
+import Pagination from '~/components/Pagination/Pagination'
 import styles from '~/scss/pages/leaderboard.module.scss'
 import { getLeaderboard } from '~/store/actions/statistics'
 import {
@@ -115,7 +115,7 @@ function Leaderboard (props) {
               })
             }
           </ol>
-          <Pagination page={page} route="leaderboard" totalPages={statistics.lastPage} />
+          <Pagination pageInput page={page} route="leaderboard" totalPages={statistics.lastPage} />
         </div>
       </section>
     </div>

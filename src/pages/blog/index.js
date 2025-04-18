@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import ArticleCard from '~/components/Blog/ArticleCard'
-import Pagination from '~/components/Pagination'
+import Pagination from '~/components/Pagination/Pagination'
 import { getBlogs } from '~/store/actions/blogs'
 import {
   selectBlogs,
