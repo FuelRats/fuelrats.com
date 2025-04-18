@@ -21,6 +21,9 @@ function Pagination (props) {
 
   const router = useRouter()
 
+  const showPrevPage = (page > 1 ? '' : 'hidden')
+  const showNextPage = (page < totalPages ? '' : 'hidden')
+
   const handlePageChange = (input) => {
     setCurrentPage(input.target.value)
   }
@@ -36,14 +39,10 @@ function Pagination (props) {
   return (
     <menu
       type="toolbar">
-      <div className="secondary">
-        {
-          (currentPage > 1) && (
-            <Link href={makePaginatedRoute({ route, author, category, page: Math.max(1, currentPage - 1) })}>
-              <a className="button">{'Previous Page'}</a>
-            </Link>
-          )
-        }
+      <div className="secondary" style={{ visibility: showPrevPage }}>
+        <Link href={makePaginatedRoute({ route, author, category, page: Math.max(1, page - 1) })}>
+          <a className="button">{'Previous Page'}</a>
+        </Link>
       </div>
 
       {
@@ -64,14 +63,10 @@ function Pagination (props) {
         )
       }
 
-      <div className="primary">
-        {
-          (page < totalPages) && (
-            <Link href={makePaginatedRoute({ route, author, category, page: Math.min(currentPage + 1, totalPages) })}>
-              <a className="button">{'Next Page'}</a>
-            </Link>
-          )
-        }
+      <div className="primary" style={{ visibility: showNextPage }}>
+        <Link href={makePaginatedRoute({ route, author, category, page: Math.min(page + 1, totalPages) })}>
+          <a className="button">{'Next Page'}</a>
+        </Link>
       </div>
     </menu>
   )
