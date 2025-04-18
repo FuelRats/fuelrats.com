@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -11,6 +12,7 @@ import {
   selectLeaderboard,
   selectLeaderboardStatistics,
 } from '~/store/selectors'
+import makePaginatedRoute from '~/util/router/makePaginatedRoute'
 import safeParseInt from '~/util/safeParseInt'
 
 
@@ -29,14 +31,26 @@ function Leaderboard (props) {
   const [retrieving, setRetrieving] = useState(false)
   const statistics = useSelector(selectLeaderboardStatistics)
   const entries = useSelector(selectLeaderboard)
-  const pageSize = props.query?.limit ?? DEFAULT_PAGE_SIZE
 
   const [filterRat, setFilterRat] = useState('')
+  const [pageSize, setPageSize] = useState(props.query?.limit ?? DEFAULT_PAGE_SIZE)
 
-  const handleInputChange = (param) => {
-    const searchTerm = param.target.value
+  const router = useRouter()
+
+  const handleInputChange = (input) => {
+    const searchTerm = input.target.value
 
     setFilterRat(searchTerm)
+  }
+
+  const handleUpdatePageSize = (input) => {
+    const newPageSize = input.target.value
+
+    setPageSize(newPageSize)
+
+    const newRoute = makePaginatedRoute({ route: 'leaderboard', page, limit: newPageSize })
+
+    router.push(newRoute)
   }
 
   useEffect(() => {
@@ -115,7 +129,13 @@ function Leaderboard (props) {
               })
             }
           </ol>
-          <Pagination pageInput page={page} route="leaderboard" totalPages={statistics.lastPage} />
+          <Pagination
+            pageInput
+            page={page}
+            pageSize={Number(pageSize)}
+            route="leaderboard"
+            totalPages={statistics.lastPage}
+            onUpdatePageSize={handleUpdatePageSize} />
         </div>
       </section>
     </div>
