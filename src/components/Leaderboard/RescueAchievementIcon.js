@@ -18,16 +18,13 @@ import styles from './Leaderboard.module.scss'
 function RescueAchievementIcon ({ rescueCount, ...iconProps }) {
   let Icon = null
   let count = 0
-  let classes = `${styles.achievement} ${styles.rescueCount} `
 
   if (rescueCount >= 1000) {
     Icon = Rescue1000
     count = 1000
-    classes += String(styles.crown)
   } else if (rescueCount >= 500) {
     Icon = Rescue500
     count = 500
-    classes += String(styles.crown)
   } else if (rescueCount >= 400) {
     Icon = Rescue400
     count = 400
@@ -45,7 +42,7 @@ function RescueAchievementIcon ({ rescueCount, ...iconProps }) {
 
   return Icon && (
     <div
-      className={classes}
+      className={[`${styles.achievement} ${styles.rescueCount}`, { [styles.crown]: count >= 500 }]}
       title={`This rat has completed at least ${count} rescues!`}>
       <Icon {...iconProps} />
     </div>
