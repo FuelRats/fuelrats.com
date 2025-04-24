@@ -20,7 +20,7 @@ function Store () {
 Store.getPageMeta = () => {
   return {
     title: 'Merch Store',
-    description: 'Support the Fuel Rats\' mission to aid spaceship pilots in our vast universe! Your generous donation helps us continue our in-game rescue services, ensuring no player is left stranded in space. Contribute today and fuel our journey to make the gaming experience enjoyable for everyone!',
+    description: 'Support the Fuel Rats\' mission to aid spaceship pilots in our vast universe!',
   }
 }
 
