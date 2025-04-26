@@ -82,7 +82,7 @@ function Header () {
             </NavLink>
           </SubNav>
           <SubNav id="support" title="Support Us">
-            <NavLink external href="https://shop.fuelrats.com">
+            <NavLink href="/store">
               {'Merch Store'}
             </NavLink>
 
