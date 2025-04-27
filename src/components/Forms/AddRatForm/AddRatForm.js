@@ -48,8 +48,8 @@ function AddRatForm () {
     <Form className={['compact', styles.addRatForm, { [styles.formOpen]: formOpen }]}>
       {
         formOpen && (
-          <div className="form-col">
-            <div className="form-row">
+          <div className="formCol">
+            <div className="formRow">
               <CMDRFieldset
                 required
                 aria-label="Commander Name"

@@ -21,8 +21,8 @@
   }
 
   /* stylelint-disable-next-line selector-class-pattern */
-  :global(.form-row),
-  :global(.form-col) {
+  :global(.formRow),
+  :global(.formCol) {
     flex-grow: 1;
   }
 
