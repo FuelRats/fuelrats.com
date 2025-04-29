@@ -128,11 +128,13 @@
         background-color: $gold-dark2;
       }
 
-      &.ps {
+      /* Platform-specific classes align with values returned from the API. */
+      &.ps { /* stylelint-disable-line selector-class-pattern */
         background-color: $playstation-blue-light3;
       }
 
-      &.xb {
+      /* Platform-specific classes align with values returned from the API. */
+      &.xb { /* stylelint-disable-line selector-class-pattern */
         background-color: $xbox-green-light;
       }
     }
