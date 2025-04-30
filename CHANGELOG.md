@@ -8,7 +8,7 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 ### ✨ Added
 
-* An option for users to update their registered email address through the user profile.
+*
 
 ### ⚡ Changed
 
@@ -22,7 +22,61 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 *
 
-[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.14.2...HEAD
+[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.17.0...HEAD
+
+## [2.17.0][] - 2025-4-30
+
+### ✨ Added
+
+* An option for users to update their registered email address through the user profile [#407][]
+* Support for iOS deeplinking
+* About Us and Surly's Vision pages [#408][]
+* Line numbers on Dispatch Board case quotes [#419][]
+* Systems API proxy to allow pulling system info in the Dispatch Board [#430][]
+* System info to cases on Dispatch Board [#431][]
+* Permit info to cases on Dispatch Board
+
+### ⚡ Changed
+
+* Redesigned platform indicators on Dispatch Board [#418][]
+* Removed option to disable profiles [#421][]
+* Renamed stApi to stripeApi to avoid confusion with new systems API
+* Webstore link now points to a placeholder page instead of creating a redirect loop [#433][]
+
+### 🐛 Fixed
+
+* Invalid blog routes will now show a 404 page instead of a 200 error [#402][]
+* Clicking on CMDR column on Dispatch Board now copies commander name instead of IRC nick [#428][]
+* Meta descriptions for Blog, Donations, Dispatch Board, Leaderboard and Registration pages are no longer long enough to break unit tests (and SEO)
+
+### ⚙ Tasks
+
+* ESLint settings brought up to date
+* Minor SCSS cleanup to keep the linter happy [#434][]
+
+[#402]: https://github.com/FuelRats/fuelrats.com/pull/402
+[#407]: https://github.com/FuelRats/fuelrats.com/pull/407
+[#408]: https://github.com/FuelRats/fuelrats.com/pull/408
+[#418]: https://github.com/FuelRats/fuelrats.com/pull/418
+[#419]: https://github.com/FuelRats/fuelrats.com/pull/419
+[#421]: https://github.com/FuelRats/fuelrats.com/pull/421
+[#428]: https://github.com/FuelRats/fuelrats.com/pull/428
+[#430]: https://github.com/FuelRats/fuelrats.com/pull/430
+[#431]: https://github.com/FuelRats/fuelrats.com/pull/431
+[#433]: https://github.com/FuelRats/fuelrats.com/pull/433
+[#434]: https://github.com/FuelRats/fuelrats.com/pull/434
+[2.17.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.16.0...v2.17.0
+
+## [2.16.0][] - 2022-11-29
+
+### ⚡ Changed
+
+* Replaced Twitter with Mastadon [#391][]
+* Update merch store link [#389][]
+
+[#389]: https://github.com/FuelRats/fuelrats.com/pull/389
+[#391]: https://github.com/FuelRats/fuelrats.com/pull/391
+[2.16.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.15.0...v2.16.0
 
 ## [2.15.0][] - 2022-09-15
 
@@ -32,7 +86,8 @@ For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
 
 ### ⚡ Changed
 
-* replaced odyssey bool with expansion field across the app. [#387][]
+* Replaced Odyssey bool with expansion field across the app. [#387][]
+* Minor updates to site color scheme
 
 [#387]: https://github.com/FuelRats/fuelrats.com/pull/387
 [2.15.0]: https://github.com/FuelRats/fuelrats.com/compare/v2.14.2...v2.15.0
