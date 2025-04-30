@@ -68,6 +68,10 @@ function Header () {
               {'All'}
             </NavLink>
 
+            <NavLink href={makeBlogRoute({ category: 140 })}>
+              {'Rodent Report'}
+            </NavLink>
+
             <NavLink href={makeBlogRoute({ category: 138 })}>
               {'Stories, Art, & Toons'}
             </NavLink>
