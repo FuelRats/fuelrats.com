@@ -128,6 +128,17 @@
           border-width: 1px 1px 0;
         }
 
+        .chip {
+          margin-left: 1rem;
+          padding: 0.15rem 0.25rem;
+
+          background: #{$red};
+
+          font-size: 0.78em;
+          font-weight: bold;
+          line-height: 1;
+        }
+
         button,
         :global(.button) {
           --background-color-hover: #{$red-darker};

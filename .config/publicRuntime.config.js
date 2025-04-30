@@ -11,6 +11,9 @@ module.exports = (env) => {
     edsm: {
       url: env.edsm.proxy,
     },
+    sapi: {
+      url: env.sapi.proxy,
+    },
     wordpress: {
       url: env.wordpress.proxy,
     },

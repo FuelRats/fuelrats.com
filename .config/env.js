@@ -14,7 +14,7 @@ const env = Object.freeze({
     clientSecret: process.env.FR_API_SECRET,
   },
   edsm: {
-    url: process.env.FR_EDSM_API_URL ?? 'https://www.edsm.net',
+    url: process.env.FR_EDSM_API_URL ?? 'https://www.edsm.net/api-v1',
     proxy: `${process.env.APP_URL}/api/edsm`,
   },
   wordpress: {
@@ -34,6 +34,10 @@ const env = Object.freeze({
   irc: {
     client: process.env.FR_CLIENT_IRC_URL ?? 'https://qms.fuelrats.dev',
     rat: process.env.FR_RAT_IRC_URL ?? 'https://kiwi.fuelrats.com',
+  },
+  sapi: {
+    url: process.env.FR_SAPI_URL ?? 'https://systems.api.fuelrats.com',
+    proxy: `${process.env.APP_URL}/api/sapi`,
   },
 })
 

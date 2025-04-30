@@ -1,10 +1,13 @@
 import { HttpStatus } from '@fuelrats/web-util/http'
 import axios from 'axios'
 import { useMemo, useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 
 import { getLanguage } from '~/data/languageList'
 import { getPlatform } from '~/data/platformList'
+import { getSystemStars } from '~/store/actions/systems'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
+import getResponseError from '~/util/getResponseError'
 
 
 const pollTimeoutTime = 10000
@@ -22,6 +25,60 @@ export const useRescueSystem = (rescue) => {
   return useMemo(() => {
     return specialSystems[system] ?? system
   }, [system])
+}
+
+export const useRescueLandmark = (rescue) => {
+  const { distance, name } = rescue?.attributes?.data?.landmark ?? {}
+
+  return (distance && name) ? `${distance.toFixed(1)}ly from ${name}` : false
+}
+
+export const useRescuePermit = (rescue) => {
+  const permit = rescue?.attributes?.data?.permit ?? ''
+
+  return (permit) ? `Permit Required: ${permit.name}` : false
+}
+
+export const useRescueHasScoopableStar = (rescue) => {
+  const systemId = rescue?.attributes?.data?.systemId ?? 0
+  const [hasScoopable, setHasScoopable] = useState('')
+  const dispatch = useDispatch()
+
+  useEffect(
+    () => {
+      const fetchData = async () => {
+        if (systemId) {
+          const response = await dispatch(getSystemStars(systemId))
+
+          const error = getResponseError(response)
+
+          if (!error) {
+            const areScoopable = response.payload?.data?.filter((item) => {
+              return item.attributes.isScoopable === true
+            })
+
+            if (areScoopable.length > 0) {
+              setHasScoopable('Secondary Star Scoopable')
+
+              const mainStarScoopable = response.payload?.data?.filter((item) => {
+                return item.attributes.isMainStar === true
+              })
+
+              if (mainStarScoopable.length > 0) {
+                setHasScoopable('Main Star Scoopable')
+              }
+            }
+          }
+        }
+      }
+
+      fetchData()
+    },
+    [dispatch, systemId],
+  )
+
+
+  return hasScoopable
 }
 
 export const useQuoteString = (rescue) => {

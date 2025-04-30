@@ -126,6 +126,14 @@ const session = {
 
 
 
+const sapi = {
+  systems: 'sapi/systems',
+}
+
+
+
+
+
 const stripe = {
   checkout: {
     create: 'stripeCheckout/create',
@@ -186,6 +194,7 @@ const actionTypes = {
   verify,
 
   // Services
+  sapi,
   stripe,
   wordpress,
 }
