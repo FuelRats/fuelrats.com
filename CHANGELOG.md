@@ -1,29 +1,5 @@
 # fuelrats.com Changelog
 
-All changes relative to the previous version of fuelrats.com shall be documented in this file.
-
-For detailed rules of this file, see  [Changelog Rules](#changelog-rules)
-
-## [Unreleased][]
-
-### ✨ Added
-
-*
-
-### ⚡ Changed
-
-*
-
-### 🐛 Fixed
-
-*
-
-### ⚙ Tasks
-
-*
-
-[Unreleased]: https://github.com/FuelRats/fuelrats.com/compare/v2.17.0...HEAD
-
 ## [2.17.0][] - 2025-4-30
 
 ### ✨ Added
@@ -1192,22 +1168,3 @@ v1.0 refers to our old wordpress-based hybrid site which had major problems and 
 We look back on that old website fondly, but alas technology must continue moving forward.
 
 also... react is cooler, yo.
-
-## Changelog Rules
-
-basic format:
-
-```txt
-* message - [#pr1][], [#pr2][] - @externalContributor
-```
-
-* Entries must be easy to consume. Complex changes should be split up or made into a sublist of changes.
-* Entries for changes made by external contributors should be attributed via mention.
-  * Changes made by team members should __not__ be attributed.
-* Entries must contain links to all PRs to `develop` which contribute to the change.
-  * Changes made before 2.9.1 are kinda exempt right now. We're adding them over time.
-* Entries must be grouped using the following groups:
-  * __✨ Added__ - For new features and additions.
-  * __⚡ Changed__ - For any changes to existing features, or removal of old ones.
-  * __🐛 Fixed__ - For bug fixes
-  * __⚙ Tasks__ - Chores relating to the upkeep of the project or repository. (documentation, dependencies, etc.)

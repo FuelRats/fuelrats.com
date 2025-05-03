@@ -54,6 +54,14 @@ jobs:
             README.md \
             yarn.lock
 
+      - name: Create Release Pull Request
+        uses: changesets/action@v1.4.10
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          title: "chore: Version Changelog"
+          commit: "chore: version changelog"
+
       - name: Publish artifact
         uses: actions/upload-artifact@v4
         with:
