@@ -129,6 +129,8 @@
         }
 
         .chip {
+          display: inline-block;
+
           margin-left: 1rem;
           padding: 0.15rem 0.25rem;
 
@@ -136,7 +138,7 @@
 
           font-size: 0.78em;
           font-weight: bold;
-          line-height: 1;
+          line-height: 1.2;
         }
 
         button,
