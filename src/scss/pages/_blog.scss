@@ -1,0 +1,21 @@
+@import '../colors';
+
+.lana-download {
+  background-color: $red;
+  border: 0.2rem solid $red;
+  color: $white;
+  padding: 1rem 2rem;
+
+  &:focus {
+    color: $white;
+  }
+
+  &:hover {
+    background-color: $white;
+    color: $red;
+  }
+}
+
+.lana-download .badge {
+  display: none;
+}
