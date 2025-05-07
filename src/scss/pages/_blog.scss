@@ -1,10 +1,12 @@
 @import '../colors';
 
 .lana-download {
-  background-color: $red;
-  border: 0.2rem solid $red;
-  color: $white;
   padding: 1rem 2rem;
+
+  border: 0.2rem solid $red;
+
+  background-color: $red;
+  color: $white;
 
   &:focus {
     color: $white;
