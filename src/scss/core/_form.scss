@@ -12,24 +12,23 @@ form {
   }
 
 
-  &.compact .form-row fieldset {
+  &.compact .formRow fieldset {
     padding: 0.5rem 0.25rem;
   }
 
-  &.compact .form-col fieldset {
+  &.compact .formCol fieldset {
     padding: 0.25rem 0.5rem;
   }
 
-  .form-row {
+  .formRow {
     display: flex;
 
     flex-direction: row;
   }
 
-  .form-col {
+  .formCol {
     display: flex;
+
     flex-direction: column;
   }
-
-
 }

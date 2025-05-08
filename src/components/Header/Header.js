@@ -68,6 +68,10 @@ function Header () {
               {'All'}
             </NavLink>
 
+            <NavLink href={makePaginatedRoute({ category: 140, route: 'blog' })}>
+              {'Rodent Report'}
+            </NavLink>
+
             <NavLink href={makePaginatedRoute({ category: 138, route: 'blog' })}>
               {'Stories, Art, & Toons'}
             </NavLink>
@@ -82,7 +86,7 @@ function Header () {
             </NavLink>
           </SubNav>
           <SubNav id="support" title="Support Us">
-            <NavLink external href="https://shop.fuelrats.com">
+            <NavLink href="/store">
               {'Merch Store'}
             </NavLink>
 
