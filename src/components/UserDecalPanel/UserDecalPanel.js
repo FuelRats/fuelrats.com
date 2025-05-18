@@ -34,9 +34,13 @@ function UserDecalPanel () {
     <div className="panel">
       <header>
         {'Decal'}
-        <div className="controls">
-          {'Redeemed'}
-        </div>
+        {
+          Boolean(decals.length) && (
+            <div className="controls">
+              {'Redeemed'}
+            </div>
+          )
+        }
       </header>
       <div className={styles.panelContent}>
         {
