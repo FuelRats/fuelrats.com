@@ -1,6 +1,7 @@
 {
   "name": "fuelrats.com",
-  "version": "2.17.0",
+  "version": "2.17.1",
+  "private": true,
   "description": "The primary website of The Fuel Rats!",
   "homepage": "https://fuelrats.com/",
   "bugs": {
@@ -84,6 +85,8 @@
     "@babel/eslint-parser": "^7.16.5",
     "@babel/eslint-plugin": "^7.16.5",
     "@babel/plugin-proposal-decorators": "^7.16.5",
+    "@changesets/changelog-github": "^0.5.1",
+    "@changesets/cli": "^2.29.2",
     "@fuelrats/babel-plugin-classnames": "^0.3.0",
     "@fuelrats/eslint-config": "^2.4.0-canary.21",
     "@fuelrats/eslint-config-react": "^2.4.0-canary.19",
@@ -125,5 +128,6 @@
   },
   "engines": {
     "node": "^16.0.0"
-  }
+  },
+  "packageManager": "yarn@3.8.7"
 }
