@@ -24,6 +24,15 @@ function getErrorText (error) {
           return undefined
       }
 
+    case HttpStatus.FORBIDDEN:
+      switch (error.source?.pointer) {
+        case '/data/attributes/name':
+          return 'You do not need to register on fuelrats.com to be rescued, if you wish to become a rat you can sign up after your rescue.'
+
+        default:
+          return undefined
+      }
+
     default:
       return undefined
   }
