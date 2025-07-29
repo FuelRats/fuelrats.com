@@ -5446,7 +5446,7 @@ __metadata:
     postcss-scss: ^4.0.2
     prop-types: ^15.7.2
     pure-uuid: ^1.6.2
-    qs: ^6.10.2
+    qs: ^6.10.3
     rc-slider: ^9.7.5
     re-reselect: ^4.0.0
     react: ^17.0.2
@@ -5455,7 +5455,6 @@ __metadata:
     react-easy-crop: ^3.5.3
     react-is: ^17.0.2
     react-redux: ^7.2.6
-    react-table-6: ^6.11.0
     redux: ^4.1.2
     redux-devtools-extension: ^2.13.9
     redux-immutable-state-invariant: ^2.1.0
@@ -5467,7 +5466,7 @@ __metadata:
     stylelint: ^14.1.0
     stylelint-order: ^5.0.0
     stylelint-scss: ^4.0.1
-    ua-parser-js: 1.0.2
+    ua-parser-js: 1.0.33
     use-immer: ^0.6.0
     webpack: ^5.65.0
     worker-loader: ^3.0.8
@@ -8489,7 +8488,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"qs@npm:^6.10.2, qs@npm:^6.10.3":
+"qs@npm:^6.10.3":
   version: 6.14.0
   resolution: "qs@npm:6.14.0"
   dependencies:
@@ -8703,19 +8702,6 @@ __metadata:
     react-native:
       optional: true
   checksum: 369a2bdcf87915659af9e5c55abfd9f52a84e43e0d12dcc108ed17dbe6933558b7b7fc12caa9c10c1a10a8be7df89454b6c96989d8573fedec1a772c94a1f145
-  languageName: node
-  linkType: hard
-
-"react-table-6@npm:^6.11.0":
-  version: 6.11.0
-  resolution: "react-table-6@npm:6.11.0"
-  dependencies:
-    classnames: ^2.2.5
-  peerDependencies:
-    prop-types: ^15.5.0
-    react: ^16.x.x
-    react-dom: ^16.x.x
-  checksum: a8f553df11c269fdd2a890be38e589180e7ebd6c7cb8e084e8e9aed12b65ab2632e45499d3928bf8f07d7f4073cebe7c177a2efc525ff95d794aa6dda5be909e
   languageName: node
   linkType: hard
 
@@ -10244,10 +10230,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ua-parser-js@npm:1.0.2":
-  version: 1.0.2
-  resolution: "ua-parser-js@npm:1.0.2"
-  checksum: ff7f6d79a9c1a38aa85a0e751040fc7e17a0b621bda876838d14ebe55aca4e50e68da0350f181e58801c2d8a35e7db4e12473776e558910c4b7cabcec96aa3bf
+"ua-parser-js@npm:1.0.33":
+  version: 1.0.33
+  resolution: "ua-parser-js@npm:1.0.33"
+  checksum: 460adef51235267345b221842979b6b167543725d03f7c9c4f9ca6af4da835a71d016390da139d2b32828063c4730dcfae6e53b9dce815f4000be4e1fe1c7737
   languageName: node
   linkType: hard
 
