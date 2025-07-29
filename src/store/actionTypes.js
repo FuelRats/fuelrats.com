@@ -70,6 +70,9 @@ const users = {
   avatar: {
     update: 'users/avatar/update',
   },
+  email: {
+    update: 'users/email/update',
+  },
 }
 
 
@@ -117,6 +120,14 @@ const session = {
   pageLoading: 'session/page/loading',
   pageDestroyed: 'session/page/destroyed',
   setFlag: 'session/setFlag',
+}
+
+
+
+
+
+const sapi = {
+  systems: 'sapi/systems',
 }
 
 
@@ -183,6 +194,7 @@ const actionTypes = {
   verify,
 
   // Services
+  sapi,
   stripe,
   wordpress,
 }

@@ -26,7 +26,7 @@ function DispatchTable (props) {
           <tr>
             <th width="50px">{'#'}</th>
             <th>{'CMDR'}</th>
-            <th width="50px">{'Plat'}</th>
+            <th width="85px">{'Platform'}</th>
             <th width="50px">{'Lang'}</th>
             <th>{'System'}</th>
             <th>{'Rats'}</th>

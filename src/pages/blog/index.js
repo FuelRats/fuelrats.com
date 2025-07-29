@@ -64,6 +64,7 @@ Blogs.getPageMeta = () => {
   return {
     title: 'Blog',
     key: 'blog-list',
+    description: 'Dive into the Fuel Rats Blog to explore thrilling tales of in-game rescues, updates, and insights from our adventurous team!',
   }
 }
 

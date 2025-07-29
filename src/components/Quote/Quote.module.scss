@@ -1,0 +1,31 @@
+@import '../../scss/colors';
+
+.quote {
+  max-width: 100rem;
+  margin-bottom: 0.5rem;
+}
+
+.quoteAuthor {
+  &::before {
+    content: '-';
+    margin-right: 0.25rem;
+  }
+}
+
+.quoteDate {
+  margin-right: 0.5rem;
+  padding: 0.25rem;
+
+  border-radius: 0.25rem;
+
+  background-color: $red;
+  color: $white;
+}
+
+.quoteContent {
+  margin-top: 0.5rem;
+  margin-left: 1rem;
+  padding: 0.5rem 1rem;
+
+  border-left: 0.25rem solid $grey-lightened;
+}

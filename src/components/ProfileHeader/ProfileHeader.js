@@ -11,8 +11,8 @@ import {
 } from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 
+import ChangeEmailModal from '../ChangeEmailModal'
 import ChangePasswordModal from '../ChangePasswordModal'
-import DisableProfileModal from '../DisableProfileModal'
 import ProfileUserAvatar from '../ProfileUserAvatar'
 import UnverifiedUserBanner from './UnverifiedUserBanner'
 
@@ -21,17 +21,17 @@ import UnverifiedUserBanner from './UnverifiedUserBanner'
 
 
 function ProfileHeader () {
+  const [showChangeEmail, setShowChangeEmail] = useState(false)
   const [showChangePassword, setShowChangePassword] = useState(false)
-  const [showDisableProfile, setShowDisableProfile] = useState(false)
 
-  const handleToggleChangePassword = useCallback(() => {
-    setShowChangePassword((state) => {
+  const handleToggleChangeEmail = useCallback(() => {
+    setShowChangeEmail((state) => {
       return !state
     })
   }, [])
 
-  const handleToggleDisableProfile = useCallback(() => {
-    setShowDisableProfile((state) => {
+  const handleToggleChangePassword = useCallback(() => {
+    setShowChangePassword((state) => {
       return !state
     })
   }, [])
@@ -79,22 +79,22 @@ function ProfileHeader () {
         <div className="profile-controls">
           <button
             type="button"
-            onClick={handleToggleChangePassword}>
-            {'Change Password'}
+            onClick={handleToggleChangeEmail}>
+            {'Change E-Mail'}
           </button>
           <button
             type="button"
-            onClick={handleToggleDisableProfile}>
-            {'Disable Profile'}
+            onClick={handleToggleChangePassword}>
+            {'Change Password'}
           </button>
         </div>
       </div>
+      <ChangeEmailModal
+        isOpen={showChangeEmail}
+        onClose={handleToggleChangeEmail} />
       <ChangePasswordModal
         isOpen={showChangePassword}
         onClose={handleToggleChangePassword} />
-      <DisableProfileModal
-        isOpen={showDisableProfile}
-        onClose={handleToggleDisableProfile} />
     </>
   )
 }

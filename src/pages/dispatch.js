@@ -50,6 +50,7 @@ DispatchBoard.getPageMeta = () => {
     className: styles.dispatchBoard,
     title: 'Dispatch Board',
     key: 'dispatch',
+    description: 'The Dispatch Portal, used to coordinate rapid and efficient in-game rescues by our dedicated team of Fuel Rats.',
   }
 }
 
