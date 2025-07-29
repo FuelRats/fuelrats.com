@@ -1,3 +1,4 @@
+import { HttpStatus } from '@fuelrats/web-util/http'
 import { isError } from 'flux-standard-action'
 
 import WordpressPage from '~/components/WordpressPage'
@@ -19,9 +20,14 @@ WordpressProxy.getInitialProps = async (ctx) => {
 
   if (!selectWordpressPageBySlug(store.getState(), { slug })) {
     const response = await store.dispatch(getWordpressPage(slug))
-    if (isError(response)) {
-      setError(ctx, response.meta?.response?.status)
+    if (!isError(response)) {
+      return
     }
+    if (!response.payload?.length) {
+      setError(ctx, HttpStatus.NOT_FOUND)
+      return
+    }
+    setError(ctx, response.meta?.response?.status)
   }
 }
 

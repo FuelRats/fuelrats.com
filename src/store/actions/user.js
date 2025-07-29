@@ -7,8 +7,7 @@ import createRequestBody from '~/util/jsonapi/createRequestBody'
 import actionTypes from '../actionTypes'
 import { deletesResource, deletesRelationship, createsRelationship, RESOURCE } from '../reducers/frAPIResources'
 import { withCurrentUserId, selectUserById, selectCurrentUserId } from '../selectors'
-import { frApiRequest } from './services'
-
+import { frApiRequest, frApiPlainRequest } from './services'
 
 export const getNickname = (nickId) => {
   return frApiRequest(
@@ -92,4 +91,15 @@ export const updateAvatar = (data) => {
 
     return dispatch(frApiRequest(actionTypes.users.avatar.update, request))
   }
+}
+
+export const changeEmail = ({ id, ...data }) => {
+  return frApiPlainRequest(
+    actionTypes.users.email.update,
+    {
+      url: `/users/${id}/email`,
+      method: 'patch',
+      data: createRequestBody('email-changes', data),
+    },
+  )
 }

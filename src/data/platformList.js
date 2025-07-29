@@ -4,12 +4,12 @@ const platformList = {
     long: 'PC',
   },
   xb: {
-    short: 'XB1',
-    long: 'Xbox One',
+    short: 'XB',
+    long: 'Xbox',
   },
   ps: {
-    short: 'PS4',
-    long: 'Playstation 4',
+    short: 'PS',
+    long: 'Playstation',
   },
   unknown: {
     short: '?',

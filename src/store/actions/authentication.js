@@ -19,8 +19,6 @@ const SESSION_TOKEN_LENGTH = 365 // days
 
 
 
-
-
 export const changePassword = ({ id, ...data }) => {
   return frApiPlainRequest(
     actionTypes.passwords.update,

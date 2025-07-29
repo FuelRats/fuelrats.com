@@ -1,12 +1,12 @@
 import actionTypes from '../actionTypes'
-import { stApiRequest } from './services'
+import { stripeApiRequest } from './services'
 
 
 
 
 
 export const createDonationSession = ({ fingerprint, ...data }) => {
-  return stApiRequest(
+  return stripeApiRequest(
     actionTypes.stripe.checkout.create,
     {
       url: '/checkout/donate',

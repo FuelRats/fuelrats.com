@@ -113,6 +113,7 @@ Register.getPageMeta = () => {
   return {
     displayTitle: 'Become a Fuel Rat',
     title: 'Register',
+    description: 'Join our elite team of rescuers! Sign up to be a beacon of hope for stranded pilots across the galaxy!',
   }
 }
 
