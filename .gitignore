@@ -22,3 +22,6 @@
 .pnp.*
 node_modules
 package-lock.json
+
+# Artifacts
+*.tar.gz

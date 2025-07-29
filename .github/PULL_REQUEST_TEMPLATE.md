@@ -1,8 +1,13 @@
-<!-- ⚠⚠ Do not ignore this template! ⚠⚠ -->
-<!-- Pull requests that do not follow this format will be rejected. -->
+<!--
+  ⚠⚠ Do not ignore this template! ⚠⚠
+  Pull requests that do not follow this format will be rejected!
+-->
 
-<!-- Add the issues this PR closes below. -->
-<!-- Additional issues should be defined with a full "Closes #[issue]" line to ensure GitHub automation operates as-expected. -->
+<!--
+  Add the issues this PR closes below.
+  Additional issues should be defined with a full "Closes #[issue]" line to ensure GitHub automation operates as-expected.
+-->
+
 Closes #
 
 ## Description
@@ -11,7 +16,22 @@ Closes #
 *
 
 ### Additional Information
-<!-- Add any other context about the pull request can go here. -->
+<!-- Add any other context or development notes can go here. -->
+
+*
+
+### Demo
+<!--
+  In order to assist reviewers, Please include a screenshot or short video clip demonstrating your change in the details block below.
+  If this PR does not contain any functional code change, this section may be removed.
+-->
+
+<details>
+<summary>Demo</summary>
+
+
+
+</details>
 
 ## Acceptance Tasks
 
@@ -26,8 +46,10 @@ Closes #
 * [ ] I have followed the commit conventions laid out by [`CONTRIBUTING.md`](https://github.com/FuelRats/fuelrats.com/blob/develop/CONTRIBUTING.md#commit-conventions).
 
 ### Maintainer's Checklist
-<!-- The following items must be completed by project maintainers. (A.K.A. The TechRats) -->
-<!-- If you are not a TechRat, do not fill out this list. -->
+<!--
+  The following items must be completed by project maintainers. (A.K.A. The TechRats)
+  If you are not a TechRat, do not fill out this list.
+-->
 
 * [ ] User-facing changes this PR introduces have been captured in a changeset.
 * [ ] This PR has been linted and tested locally as a part of the review process.
