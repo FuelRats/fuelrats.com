@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import CodeRedIcon from '~/components/Leaderboard/CodeRedIcon'
@@ -32,15 +32,24 @@ function Leaderboard (props) {
   const statistics = useSelector(selectLeaderboardStatistics)
   const entries = useSelector(selectLeaderboard)
 
-  const [filterRat, setFilterRat] = useState('')
+  const [filterRat, setFilterRat] = useState(props.query?.filter ?? '')
   const [pageSize, setPageSize] = useState(props.query?.limit ?? DEFAULT_PAGE_SIZE)
 
   const router = useRouter()
 
   const handleInputChange = (input) => {
     const searchTerm = input.target.value
-
     setFilterRat(searchTerm)
+    
+    // Update URL to preserve filter state
+    const newRoute = makePaginatedRoute({
+      route: 'leaderboard',
+      page: 1, // Reset to page 1 when filtering
+      ...(searchTerm && { filter: searchTerm }),
+      ...(pageSize !== DEFAULT_PAGE_SIZE && { limit: pageSize }),
+    })
+    
+    router.replace(newRoute)
   }
 
   const handleUpdatePageSize = (input) => {
@@ -48,9 +57,26 @@ function Leaderboard (props) {
 
     setPageSize(newPageSize)
 
-    const newRoute = makePaginatedRoute({ route: 'leaderboard', page, limit: newPageSize })
+    const newRoute = makePaginatedRoute({ 
+      route: 'leaderboard', 
+      page: 1, // Reset to page 1 when changing page size
+      limit: newPageSize,
+      ...(filterRat && { filter: filterRat }),
+    })
 
     router.push(newRoute)
+  }
+
+  const makeLeaderboardRoute = (routeOptions) => {
+    const { page: routePage, limit, ...otherParams } = routeOptions
+    
+    return makePaginatedRoute({
+      route: 'leaderboard',
+      page: routePage,
+      ...(limit && limit !== DEFAULT_PAGE_SIZE && { limit }),
+      ...(filterRat && { filter: filterRat }),
+      ...otherParams,
+    })
   }
 
   useEffect(() => {
@@ -135,6 +161,7 @@ function Leaderboard (props) {
             pageSize={Number(pageSize)}
             route="leaderboard"
             totalPages={statistics.lastPage}
+            onMakeRoute={makeLeaderboardRoute}
             onUpdatePageSize={handleUpdatePageSize} />
         </div>
       </section>
