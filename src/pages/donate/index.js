@@ -24,6 +24,7 @@ function Donate ({ stripe }) {
 Donate.getPageMeta = () => {
   return {
     title: 'Donate',
+    description: 'Support the Fuel Rats\' mission to aid pilots in our vast universe! Your generous donation helps us continue our in-game rescue services.',
   }
 }
 

@@ -1,13 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useCallback, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import CMDRFieldset from '~/components/Fieldsets/CMDRFieldset'
 import ExpansionFieldset from '~/components/Fieldsets/ExpansionFieldset'
 import SelectFieldset from '~/components/Fieldsets/SelectFieldset'
 import useForm from '~/hooks/useForm'
 import { createRat } from '~/store/actions/rats'
-import { selectCurrentUserId } from '~/store/selectors'
 
 import styles from './AddRatForm.module.scss'
 
@@ -23,7 +22,6 @@ const initialState = {
 
 function AddRatForm () {
   const dispatch = useDispatch()
-  const userId = useSelector(selectCurrentUserId)
   const [formOpen, setFormOpen] = useState(false)
   const handleToggleForm = useCallback(() => {
     setFormOpen((state) => {
@@ -39,14 +37,6 @@ function AddRatForm () {
         platform,
         expansion: platform === 'pc' ? expansion : 'horizons3',
       },
-      relationships: {
-        user: {
-          data: {
-            type: 'users',
-            id: userId,
-          },
-        },
-      },
     }))
     setFormOpen(false)
   }
@@ -58,8 +48,8 @@ function AddRatForm () {
     <Form className={['compact', styles.addRatForm, { [styles.formOpen]: formOpen }]}>
       {
         formOpen && (
-          <div className="form-col">
-            <div className="form-row">
+          <div className="formCol">
+            <div className="formRow">
               <CMDRFieldset
                 required
                 aria-label="Commander Name"

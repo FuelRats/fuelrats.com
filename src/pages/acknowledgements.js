@@ -79,6 +79,7 @@ function Acknowledgements () {
 Acknowledgements.getPageMeta = () => {
   return {
     title: 'Acknowledgements',
+    description: 'Explore our Acknowledgements Page to see the incredible companies fueling the Fuel Rats\' lifesaving missions within \'Elite Dangerous\'. We extend our sincerest thanks to our corporate sponsors, whose generous support empowers us to reach stranded pilots across the galaxy and ensure no spaceship runs out of fuel. Discover the organizations that share our passion for community and gaming, and join us in celebrating their valuable contribution to our interstellar rescue endeavors.',
   }
 }
 

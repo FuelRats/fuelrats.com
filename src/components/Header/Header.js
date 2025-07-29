@@ -55,9 +55,21 @@ function Header () {
         </Link>
 
         <Nav onClick={handleClick}>
+          <SubNav id="about" title="About Us">
+            <NavLink href="/vision">
+              {'Surly\'s Vision'}
+            </NavLink>
+            <NavLink href="/history">
+              {'History'}
+            </NavLink>
+          </SubNav>
           <SubNav id="blog" title="Blog">
             <NavLink href="/blog">
               {'All'}
+            </NavLink>
+
+            <NavLink href={makeBlogRoute({ category: 140 })}>
+              {'Rodent Report'}
             </NavLink>
 
             <NavLink href={makeBlogRoute({ category: 138 })}>
@@ -74,7 +86,7 @@ function Header () {
             </NavLink>
           </SubNav>
           <SubNav id="support" title="Support Us">
-            <NavLink external href="https://shop.fuelrats.com">
+            <NavLink href="/store">
               {'Merch Store'}
             </NavLink>
 
@@ -154,7 +166,7 @@ function Header () {
             icon={['fab', 'github']}
             title="Fuel Rats on GitHub" />
           <SocialIcon
-            href="https://forums.frontier.co.uk/showthread.php/150703-Out-of-Fuel-Explorer-Rescue-Service-The-Fuel-Rats"
+            href="https://forums.frontier.co.uk/threads/out-of-fuel-explorer-rescue-service-the-fuel-rats.150703/"
             icon="space-shuttle"
             title="Fuel Rats on Frontier Forums"
             transform={{ rotate: -45 }} />

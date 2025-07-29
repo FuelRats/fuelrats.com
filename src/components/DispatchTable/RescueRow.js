@@ -4,7 +4,9 @@ import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
 import { useCallback, useState } from 'react'
 
-import { useQuoteString, useRescueLanguage, useRescuePlatform, useRescueSystem } from '~/hooks/rescueHooks'
+import {
+  useQuoteString, useRescueLanguage, useRescuePlatform, useRescueSystem, useRescuePermit,
+} from '~/hooks/rescueHooks'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import useStoreEffect from '~/hooks/useStoreEffect'
 import { selectRescueById, createSelectRenderedRatList } from '~/store/selectors'
@@ -43,6 +45,7 @@ function RescueRow (props) {
   const rescueLanguage = useRescueLanguage(rescue)
   const rescuePlatform = useRescuePlatform(rescue)
   const rescueSystem = useRescueSystem(rescue)
+  const rescuePermit = useRescuePermit(rescue)
 
   // Flash any rescue under a minute old on mount. This flashes all new rescues when they are created, and any immediately new ones on page load.
   const [animating, setAnimating] = useState(differenceInMinutes(Date.now(), new Date(rescue.attributes.createdAt)) < 1)
@@ -79,7 +82,6 @@ function RescueRow (props) {
   const {
     codeRed,
     status,
-    clientNick,
     client,
     commandIdentifier,
     expansion,
@@ -108,24 +110,59 @@ function RescueRow (props) {
         <CopyToClipboard
           doHint
           className={styles.cmdrNameCol}
-          text={clientNick ?? client}
-          title={clientNick ?? ''}>
+          text={client ?? ''}
+          title={client ?? ''}>
           <span className={styles.cmdrName}>
             {client ?? '?'}
           </span>
-          {
-            platform === 'pc' && expansion && (
-              <span className={[styles.expansionBadge, styles[expansion]]}>
-                {expansionNameMap[expansion]}
-              </span>
-            )
-          }
         </CopyToClipboard>
       </td>
       <td
         className={['rescue-row-platform', styles.platform, styles[rescue.attributes.platform]]}
         title={rescuePlatform.long}>
-        {rescuePlatform.short}
+        {
+          platform === 'pc' && expansion && (
+            <span className={[styles.platformBadge]}>
+              <span className={[styles.platformBadgeIcon]}>
+                <FontAwesomeIcon fixedWidth icon="tv" />
+              </span>
+              <span className={[styles.platformBadgeLabel, styles[platform], styles[expansion]]}>
+                {expansionNameMap[expansion]}
+              </span>
+            </span>
+          )
+        }
+        {
+          platform === 'pc' && !expansion && (
+            <span className={[styles.platformBadge]}>
+              <span className={[styles.platformBadgeIcon]}>
+                <FontAwesomeIcon fixedWidth icon="tv" />
+              </span>
+              <span className={[styles.platformBadgeLabel, styles[platform]]}>{'PC'}</span>
+            </span>
+          )
+        }
+        {
+          platform !== 'pc' && (
+            <span className={[styles.platformBadge]}>
+              <span className={[styles.platformBadgeIcon]}>
+                {
+                  platform === 'ps' && (
+                    <FontAwesomeIcon fixedWidth icon={['fab', 'playstation']} />
+                  )
+                }
+                {
+                  platform === 'xb' && (
+                    <FontAwesomeIcon fixedWidth icon={['fab', 'xbox']} />
+                  )
+                }
+              </span>
+              <span className={[styles.platformBadgeLabel, styles[platform]]}>
+                {rescuePlatform.short}
+              </span>
+            </span>
+          )
+        }
       </td>
       <td
         className="rescue-row-language"
@@ -137,6 +174,13 @@ function RescueRow (props) {
         as="td"
         text={rescue.attributes.system ?? 'Unknown'}>
         {rescueSystem ?? 'N/A'}
+        {
+          rescuePermit && (
+            <span className={styles.rescueRowPermit} title={rescuePermit}>
+              <FontAwesomeIcon fixedWidth icon="id-card" />
+            </span>
+          )
+        }
       </CopyToClipboard>
       <td className="rescue-row-rats">
         {rescueRats}

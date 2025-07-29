@@ -4,7 +4,7 @@ module.exports = (env) => {
       beforeFiles: [
         {
           // Apple demands this be on the site root, but all api routes must be in /api. oof.
-          source: '/apple-app-site-association',
+          source: '/.well-known/apple-app-site-association',
           destination: '/api/apple-app-site-association',
         },
         {
