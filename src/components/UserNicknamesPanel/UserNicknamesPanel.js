@@ -61,9 +61,9 @@ function UserNicknamesPanel () {
     const nickname = nicknames.find((nick) => {
       return nick.id === event.target.name
     })
-    
+
     const response = await dispatch(setDisplayNickname(nickname.id, nickname.attributes.nick))
-    
+
     if (!isError(response)) {
       // Refresh user profile to get updated nicknames
       await dispatch(getUserProfile())
