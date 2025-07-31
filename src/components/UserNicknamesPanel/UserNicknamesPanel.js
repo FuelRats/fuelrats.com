@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import ConfirmActionButton from '~/components/ConfirmActionButton'
 import AddNicknameForm from '~/components/Forms/AddNicknameForm/AddNicknameForm'
 import MessageBox from '~/components/MessageBox'
-import { deleteNickname } from '~/store/actions/user'
+import { deleteNickname, setDisplayNickname, getUserProfile } from '~/store/actions/user'
 import {
   selectUserById,
   withCurrentUserId,
@@ -57,6 +57,19 @@ function UserNicknamesPanel () {
     return undefined
   }, [dispatch, nicknames, user])
 
+  const handleSetDisplayNickname = useCallback(async (event) => {
+    const nickname = nicknames.find((nick) => {
+      return nick.id === event.target.name
+    })
+    
+    const response = await dispatch(setDisplayNickname(nickname.id, nickname.attributes.nick))
+    
+    if (!isError(response)) {
+      // Refresh user profile to get updated nicknames
+      await dispatch(getUserProfile())
+    }
+  }, [dispatch, nicknames])
+
   const nickCount = nicknames?.length
   const maxNicksReached = (nickCount >= MAX_NICKS)
 
@@ -83,24 +96,42 @@ function UserNicknamesPanel () {
           }
           {
             nicknames?.map((nickname) => {
+              const isDisplayNick = nickname.attributes?.display === nickname.attributes?.nick
               return (
                 <li key={nickname.id}>
                   <span>{nickname.attributes?.nick}</span>
-                  {
-                    // Only render for additional nicks, prevent for display nick.
-                    nickname.attributes?.display !== nickname.attributes?.nick && (
-                      <ConfirmActionButton
-                        className="icon"
-                        confirmButtonText={`Delete nickname '${nickname.attributes?.nick}'`}
-                        confirmSubText=""
-                        denyButtonText="Cancel"
-                        name={nickname.id}
-                        onConfirm={handleDeleteNickname}
-                        onConfirmText="">
-                        <FontAwesomeIcon fixedWidth icon="trash" />
-                      </ConfirmActionButton>
-                    )
-                  }
+                  <div>
+                    {
+                      // Only show set display button for non-display nicks
+                      !isDisplayNick && (
+                        <ConfirmActionButton
+                          className="icon"
+                          confirmButtonText={`Set '${nickname.attributes?.nick}' as display nickname`}
+                          confirmSubText=""
+                          denyButtonText="Cancel"
+                          name={nickname.id}
+                          onConfirm={handleSetDisplayNickname}
+                          onConfirmText="">
+                          <FontAwesomeIcon fixedWidth icon="star" />
+                        </ConfirmActionButton>
+                      )
+                    }
+                    {
+                      // Only render for additional nicks, prevent for display nick.
+                      !isDisplayNick && (
+                        <ConfirmActionButton
+                          className="icon"
+                          confirmButtonText={`Delete nickname '${nickname.attributes?.nick}'`}
+                          confirmSubText=""
+                          denyButtonText="Cancel"
+                          name={nickname.id}
+                          onConfirm={handleDeleteNickname}
+                          onConfirmText="">
+                          <FontAwesomeIcon fixedWidth icon="trash" />
+                        </ConfirmActionButton>
+                      )
+                    }
+                  </div>
                 </li>
               )
             }) ?? null

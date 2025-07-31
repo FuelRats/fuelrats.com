@@ -36,6 +36,7 @@ export {
   faSignature,
   faSpaceShuttle,
   faSpinner,
+  faStar,
   faSync,
   faTimes,
   faTimesCircle,

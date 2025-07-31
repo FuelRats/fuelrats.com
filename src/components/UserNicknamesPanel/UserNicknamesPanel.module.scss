@@ -21,6 +21,11 @@
   span {
     word-break: break-word;
   }
+
+  div {
+    display: flex;
+    gap: 0.5rem;
+  }
 }
 
 .addNicknameFloat {
