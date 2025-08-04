@@ -18,7 +18,7 @@ export default produce((draftState, action) => {
       if (action.meta[metaKey]) {
         const user = draftState[action.meta[metaKey]]
         if (user?.meta) {
-          user.meta.redeemable = Math.max(safeParseInt(user.meta.redeemable) - 1, 0)
+          user.meta.redeemable = Math.max((safeParseInt(user.meta.redeemable) ?? 0) - 1, 0)
         }
       }
       break

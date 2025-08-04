@@ -25,7 +25,7 @@ const DEFAULT_PAGE = 1
 const DEFAULT_PAGE_SIZE = 25
 
 function Leaderboard (props) {
-  const page = safeParseInt(props.query.page ?? DEFAULT_PAGE, BASE_TEN_RADIX, DEFAULT_PAGE)
+  const page = safeParseInt(props.query.page) ?? DEFAULT_PAGE
 
   const dispatch = useDispatch()
   const [retrieving, setRetrieving] = useState(false)
