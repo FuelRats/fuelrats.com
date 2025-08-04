@@ -1,33 +1,19 @@
 import makeRoute from './makeRoute'
 
 /**
+ * @param {string} route
  * @param {object} params
- * @param {string} params.route
- * @param {string|number|null} params.author
- * @param {string|number|null} params.category
- * @param {string|number|null} params.page
+ * @param {number|null} [params.page]
  * @returns {string}
  */
-export default function makePaginatedRoute (params) {
-  const {
-    route,
-    author,
-    category,
-    page,
-    ...query
-  } = params
+export default function makePaginatedRoute (route, params) {
+  const { page, ...query } = params
 
-  let parsedRoute = `/${route}`
-
-  if (author) {
-    parsedRoute += `/author/${author}`
-  } else if (category) {
-    parsedRoute += `/category/${category}`
-  }
+  let finalRoute = route
 
   if (typeof page === 'number' && page > 1) {
-    parsedRoute += `/page/${page}`
+    finalRoute += `/page/${page}`
   }
 
-  return makeRoute(parsedRoute, query)
+  return makeRoute(finalRoute, query)
 }

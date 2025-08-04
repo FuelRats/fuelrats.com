@@ -1,70 +1,77 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
-import { useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 
-import makePaginatedRoute from '~/util/router/makePaginatedRoute'
+import safeParseInt from '~/util/safeParseInt'
 
 import styles from './Pagination.module.scss'
 
-const DEFAULT_PAGE_SIZE = 25
-
+/**
+ *
+ * @param {object} props
+ * @param {number} [props.defaultPageSize]
+ * @param {number} props.page
+ * @param {Function} props.onGenerateRoute
+ * @param {number} [props.pageSize]
+ * @param {Array<number>} [props.pageSizeOptions]
+ * @param {boolean} [props.showPageInput]
+ * @param {number} props.totalPages
+ * @returns {React.ReactNode}
+ */
 function Pagination (props) {
   const {
-    author,
-    category,
+    defaultPageSize,
+    onGenerateRoute,
     page,
-    pageInput,
     pageSize,
-    onUpdatePageSize,
-    route,
-    totalPages = 1,
+    pageSizeOptions,
+    showPageInput,
+    totalPages,
   } = props
 
-  const [currentPage, setCurrentPage] = useState(page)
+  const [pageInput, setPageInput] = useState(page)
 
   const router = useRouter()
 
   const showPrevPage = (page > 1 ? '' : 'hidden')
   const showNextPage = (page < totalPages ? '' : 'hidden')
 
-  let prevPage = makePaginatedRoute({
-    route, author, category, page: Math.max(1, page - 1),
-  })
-
-  let nextPage = makePaginatedRoute({
-    route, author, category, page: Math.min(page + 1, totalPages),
-  })
-
-  if (pageSize !== DEFAULT_PAGE_SIZE) {
-    prevPage = makePaginatedRoute({
-      route, author, category, page: Math.max(1, page - 1), limit: pageSize,
+  const makePageRoute = useCallback(({
+    page: nextPage = page,
+    limit: nextLimit = pageSize,
+  }) => {
+    return onGenerateRoute({
+      page: Math.max(Math.min(nextPage, totalPages), 1),
+      limit: (typeof nextLimit !== 'number' || nextLimit === defaultPageSize)
+        ? undefined
+        : nextLimit,
     })
+  }, [defaultPageSize, page, onGenerateRoute, pageSize, totalPages])
 
-    nextPage = makePaginatedRoute({
-      route, author, category, page: Math.min(page + 1, totalPages), limit: pageSize,
+  const prevPage = useMemo(() => {
+    return makePageRoute({ page: page - 1 })
+  }, [page, makePageRoute])
+
+  const nextPage = useMemo(() => {
+    return makePageRoute({ page: page + 1 })
+  }, [page, makePageRoute])
+
+  const handlePageInputChange = useCallback((event) => {
+    setPageInput((lastVal) => {
+      return safeParseInt(event.target.value) ?? lastVal
     })
-  }
+  }, [])
 
-  const handlePageChange = (input) => {
-    setCurrentPage(input.target.value)
-  }
+  const handlePageSizeChange = useCallback((event) => {
+    event.preventDefault()
+    router.push(makePageRoute({ limit: safeParseInt(event.target.value) }))
+  }, [makePageRoute, router])
 
-  const handlePageUpdate = (input) => {
-    input.preventDefault()
-
-    let newRoute = makePaginatedRoute({
-      route, author, category, page: Math.max(1, currentPage),
-    })
-
-    if (pageSize !== DEFAULT_PAGE_SIZE) {
-      newRoute = makePaginatedRoute({
-        route, author, category, page: Math.max(1, currentPage), limit: pageSize,
-      })
-    }
-
-    router.push(newRoute)
-  }
+  const handleSubmitNextPage = useCallback((event) => {
+    event.preventDefault()
+    router.push(makePageRoute({ page: pageInput }))
+  }, [makePageRoute, pageInput, router])
 
   return (
     <menu
@@ -74,40 +81,40 @@ function Pagination (props) {
           <a className="button">{'Previous Page'}</a>
         </Link>
       </div>
-
       {
-        (pageInput) && (
+        (showPageInput) && (
           (
-            <form className={styles.pageInput} onSubmit={handlePageUpdate}>
+            <form className={styles.pageInput} onSubmit={handleSubmitNextPage}>
               {'Page'}
               <input
                 aria-label="Page"
                 max={totalPages}
                 min="1"
                 type="number"
-                value={currentPage}
-                onChange={handlePageChange} />
+                value={pageInput}
+                onChange={handlePageInputChange} />
               {`of ${totalPages}`}
             </form>
           )
         )
       }
-
       {
-        (onUpdatePageSize) && (
+        (pageSizeOptions?.length) && (
           <div className={styles.perPage}>
-            <select aria-label="Per Page" value={pageSize} onChange={onUpdatePageSize}>
-              <option value="5">{'5 Rows'}</option>
-              <option value="10">{'10 Rows'}</option>
-              <option value="20">{'20 Rows'}</option>
-              <option value="25">{'25 Rows'}</option>
-              <option value="50">{'50 Rows'}</option>
-              <option value="100">{'100 Rows'}</option>
+            <select aria-label="Per Page" value={pageSize} onChange={handlePageSizeChange}>
+              {
+                pageSizeOptions?.map(({ label, value }) => {
+                  return (
+                    <option key={`${label}${value}`} value={value}>
+                      {label}
+                    </option>
+                  )
+                })
+              }
             </select>
           </div>
         )
       }
-
       <div className="primary" style={{ visibility: showNextPage }}>
         <Link href={nextPage}>
           <a className="button">{'Next Page'}</a>
@@ -117,14 +124,13 @@ function Pagination (props) {
   )
 }
 Pagination.propTypes = {
-  author: PropTypes.string,
-  category: PropTypes.string,
-  onUpdatePageSize: PropTypes.func,
-  page: PropTypes.number,
-  pageInput: PropTypes.bool,
+  defaultPageSize: PropTypes.number,
+  onGenerateRoute: PropTypes.func.isRequired,
+  page: PropTypes.number.isRequired,
   pageSize: PropTypes.number,
-  route: PropTypes.string,
-  totalPages: PropTypes.number,
+  pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
+  showPageInput: PropTypes.bool,
+  totalPages: PropTypes.number.isRequired,
 }
 
 

@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -20,12 +19,18 @@ import safeParseInt from '~/util/safeParseInt'
 
 
 // Component constants
-const BASE_TEN_RADIX = 10
 const DEFAULT_PAGE = 1
 const DEFAULT_PAGE_SIZE = 25
 
+const PAGE_SIZE_OPTIONS = [
+  { value: 25, label: '25 Rows' },
+  { value: 50, label: '50 Rows' },
+  { value: 100, label: '100 Rows' },
+]
+
 function Leaderboard (props) {
   const page = safeParseInt(props.query.page) ?? DEFAULT_PAGE
+  const pageSize = safeParseInt(props.query.limit) ?? DEFAULT_PAGE_SIZE
 
   const dispatch = useDispatch()
   const [retrieving, setRetrieving] = useState(false)
@@ -33,9 +38,6 @@ function Leaderboard (props) {
   const entries = useSelector(selectLeaderboard)
 
   const [filterRat, setFilterRat] = useState('')
-  const [pageSize, setPageSize] = useState(props.query?.limit ?? DEFAULT_PAGE_SIZE)
-
-  const router = useRouter()
 
   const handleInputChange = (input) => {
     const searchTerm = input.target.value
@@ -43,42 +45,23 @@ function Leaderboard (props) {
     setFilterRat(searchTerm)
   }
 
-  const handleUpdatePageSize = (input) => {
-    const newPageSize = input.target.value
-
-    setPageSize(newPageSize)
-
-    const newRoute = makePaginatedRoute({ route: 'leaderboard', page, limit: newPageSize })
-
-    router.push(newRoute)
+  const handleGenerateRoute = (nextParams) => {
+    return makePaginatedRoute('/leaderboard', nextParams)
   }
 
   useEffect(() => {
     const updateList = async () => {
       setRetrieving(true)
 
-      let leaderboardArgs = {
+      await dispatch(getLeaderboard({
         page: {
+          offset: Math.max((page - 1) * pageSize, 0),
           limit: pageSize,
         },
         filter: {
           name: filterRat.length > 0 ? `%${filterRat}%` : undefined,
         },
-      }
-
-      if (page > 1) {
-        leaderboardArgs = {
-          page: {
-            offset: (page - 1) * pageSize,
-            limit: pageSize,
-          },
-          filter: {
-            name: filterRat.length > 0 ? `%${filterRat}%` : undefined,
-          },
-        }
-      }
-
-      await dispatch(getLeaderboard(leaderboardArgs))
+      }))
 
       setRetrieving(false)
     }
@@ -130,12 +113,13 @@ function Leaderboard (props) {
             }
           </ol>
           <Pagination
-            pageInput
+            showPageInput
+            defaultPageSize={DEFAULT_PAGE_SIZE}
             page={page}
-            pageSize={Number(pageSize)}
-            route="leaderboard"
+            pageSize={pageSize}
+            pageSizeOptions={PAGE_SIZE_OPTIONS}
             totalPages={statistics.lastPage}
-            onUpdatePageSize={handleUpdatePageSize} />
+            onGenerateRoute={handleGenerateRoute} />
         </div>
       </section>
     </div>

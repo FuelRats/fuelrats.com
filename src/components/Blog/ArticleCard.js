@@ -4,7 +4,7 @@ import Link from 'next/link'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { selectAuthorByBlogId, selectBlogById, selectCategoriesByBlogId } from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
-import makePaginatedRoute from '~/util/router/makePaginatedRoute'
+import makeBlogRoute from '~/util/router/makeBlogRoute'
 
 import TextPlaceholder from '../TextPlaceholder'
 
@@ -67,7 +67,7 @@ function ArticleCard (props) {
 
         <span className="author">
           <FontAwesomeIcon fixedWidth icon="user" />
-          <Link href={makePaginatedRoute({ author: authorId, route: 'blog' })}>
+          <Link href={makeBlogRoute({ author: authorId })}>
             <a>{authorName}</a>
           </Link>
         </span>
@@ -86,7 +86,7 @@ function ArticleCard (props) {
 
                 return (
                   <li key={categoryId}>
-                    <Link href={makePaginatedRoute({ category: categoryId, route: 'blog' })}>
+                    <Link href={makeBlogRoute({ category: categoryId })}>
                       <a title={description}>{name}</a>
                     </Link>
                   </li>
