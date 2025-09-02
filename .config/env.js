@@ -4,21 +4,20 @@ const path = require('path')
 const DEFAULT_PORT = 3000
 
 // Helper function to read Docker secret or fallback to environment variable
-function getSecret(secretName, envVar) {
+function getSecret (secretName, envVar) {
   // First, try to read from Docker secret
   const secretPath = path.join('/run/secrets', secretName)
   try {
     if (fs.existsSync(secretPath)) {
       const secret = fs.readFileSync(secretPath, 'utf8').trim()
       if (secret) {
-        console.log(`✓ Loaded ${envVar} from Docker secret`)
         return secret
       }
     }
   } catch (err) {
     // Ignore errors, fall back to env var
   }
-  
+
   // Fall back to environment variable
   return process.env[envVar]
 }
