@@ -104,8 +104,8 @@ function UserNicknamesPanel () {
                     {
                       isDisplayNick && (
                         <FontAwesomeIcon
-                          className={styles.displayIcon}
                           fixedWidth
+                          className={styles.displayIcon}
                           icon="star"
                           title="Current display nickname" />
                       )
@@ -122,9 +122,9 @@ function UserNicknamesPanel () {
                             confirmSubText=""
                             denyButtonText="Cancel"
                             name={nickname.id}
+                            title="Set as display nickname"
                             onConfirm={handleSetDisplayNickname}
-                            onConfirmText=""
-                            title="Set as display nickname">
+                            onConfirmText="">
                             <FontAwesomeIcon fixedWidth icon={['far', 'star']} />
                           </ConfirmActionButton>
                           <ConfirmActionButton
@@ -133,9 +133,9 @@ function UserNicknamesPanel () {
                             confirmSubText=""
                             denyButtonText="Cancel"
                             name={nickname.id}
+                            title="Delete nickname"
                             onConfirm={handleDeleteNickname}
-                            onConfirmText=""
-                            title="Delete nickname">
+                            onConfirmText="">
                             <FontAwesomeIcon fixedWidth icon="trash" />
                           </ConfirmActionButton>
                         </>
