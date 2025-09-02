@@ -99,36 +99,46 @@ function UserNicknamesPanel () {
               const isDisplayNick = nickname.attributes?.display === nickname.attributes?.nick
               return (
                 <li key={nickname.id}>
-                  <span>{nickname.attributes?.nick}</span>
-                  <div>
+                  <span>
+                    {nickname.attributes?.nick}
                     {
-                      // Only show set display button for non-display nicks
-                      !isDisplayNick && (
-                        <ConfirmActionButton
-                          className="icon"
-                          confirmButtonText={`Set '${nickname.attributes?.nick}' as display nickname`}
-                          confirmSubText=""
-                          denyButtonText="Cancel"
-                          name={nickname.id}
-                          onConfirm={handleSetDisplayNickname}
-                          onConfirmText="">
-                          <FontAwesomeIcon fixedWidth icon="star" />
-                        </ConfirmActionButton>
+                      isDisplayNick && (
+                        <FontAwesomeIcon
+                          className={styles.displayIcon}
+                          fixedWidth
+                          icon="star"
+                          title="Current display nickname" />
                       )
                     }
+                  </span>
+                  <div className={styles.controlContainer}>
                     {
-                      // Only render for additional nicks, prevent for display nick.
+                      // Only show buttons for non-display nicks
                       !isDisplayNick && (
-                        <ConfirmActionButton
-                          className="icon"
-                          confirmButtonText={`Delete nickname '${nickname.attributes?.nick}'`}
-                          confirmSubText=""
-                          denyButtonText="Cancel"
-                          name={nickname.id}
-                          onConfirm={handleDeleteNickname}
-                          onConfirmText="">
-                          <FontAwesomeIcon fixedWidth icon="trash" />
-                        </ConfirmActionButton>
+                        <>
+                          <ConfirmActionButton
+                            className="icon"
+                            confirmButtonText={`Set '${nickname.attributes?.nick}' as display nickname`}
+                            confirmSubText=""
+                            denyButtonText="Cancel"
+                            name={nickname.id}
+                            onConfirm={handleSetDisplayNickname}
+                            onConfirmText=""
+                            title="Set as display nickname">
+                            <FontAwesomeIcon fixedWidth icon={['far', 'star']} />
+                          </ConfirmActionButton>
+                          <ConfirmActionButton
+                            className="icon"
+                            confirmButtonText={`Delete nickname '${nickname.attributes?.nick}'`}
+                            confirmSubText=""
+                            denyButtonText="Cancel"
+                            name={nickname.id}
+                            onConfirm={handleDeleteNickname}
+                            onConfirmText=""
+                            title="Delete nickname">
+                            <FontAwesomeIcon fixedWidth icon="trash" />
+                          </ConfirmActionButton>
+                        </>
                       )
                     }
                   </div>

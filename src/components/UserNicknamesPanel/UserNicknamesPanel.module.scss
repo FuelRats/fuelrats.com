@@ -21,11 +21,16 @@
   span {
     word-break: break-word;
   }
+}
 
-  div {
-    display: flex;
-    gap: 0.5rem;
-  }
+.controlContainer {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.displayIcon {
+  margin-left: 0.5rem;
+  color: #ffd700;
 }
 
 .addNicknameFloat {
