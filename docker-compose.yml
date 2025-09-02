@@ -1,0 +1,70 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      # Application settings
+      - NODE_ENV=production
+      - PORT=3000
+      - APP_URL=${APP_URL:-http://localhost:3000}
+      - APP_PROXIED=${APP_PROXIED:-false}
+      
+      # Fuel Rats API (non-secret URLs)
+      - FR_API_URL=${FR_API_URL:-https://dev.api.fuelrats.com}
+      - FR_SOCKET_URL=${FR_SOCKET_URL:-wss://dev.api.fuelrats.com}
+      - FR_FALLBACK_URL=${FR_FALLBACK_URL:-https://fallback.fuelrats.com/}
+      
+      # External APIs
+      - FR_EDSM_API_URL=${FR_EDSM_API_URL:-https://www.edsm.net/api-v1}
+      - FR_WORDPRESS_URL=${FR_WORDPRESS_URL:-https://wordpress.fuelrats.com}
+      - FR_SAPI_URL=${FR_SAPI_URL:-https://systems.api.fuelrats.com}
+      
+      # QMS URL (non-secret)
+      - QMS_API_URL=${QMS_API_URL:-https://api.qms.fuelrats.dev}
+      
+      # IRC URLs (non-secret)
+      - FR_CLIENT_IRC_URL=${FR_CLIENT_IRC_URL:-https://qms.fuelrats.dev}
+      - FR_RAT_IRC_URL=${FR_RAT_IRC_URL:-https://kiwi.fuelrats.com}
+      
+      # Fallback environment variables for secrets (if not using Docker secrets)
+      - FR_API_KEY=${FR_API_KEY:-}
+      - FR_API_SECRET=${FR_API_SECRET:-}
+      - FR_STRIPE_API_PK=${FR_STRIPE_API_PK:-}
+      - FR_STRIPE_API_SK=${FR_STRIPE_API_SK:-}
+      - FR_STRIPE_BANS_FILE=${FR_STRIPE_BANS_FILE:-}
+      - QMS_API_TOKEN=${QMS_API_TOKEN:-}
+    secrets:
+      - fr_api_key
+      - fr_api_secret
+      - fr_stripe_api_pk
+      - fr_stripe_api_sk
+      - fr_stripe_bans_file
+      - qms_api_token
+    restart: unless-stopped
+    volumes:
+      # Optional: Mount for environment file
+      - ./.env:/app/.env:ro
+    networks:
+      - fuelrats
+
+# Define secrets (can use files or external secrets)
+secrets:
+  fr_api_key:
+    file: ./secrets/fr_api_key.txt
+  fr_api_secret:
+    file: ./secrets/fr_api_secret.txt
+  fr_stripe_api_pk:
+    file: ./secrets/fr_stripe_api_pk.txt
+  fr_stripe_api_sk:
+    file: ./secrets/fr_stripe_api_sk.txt
+  fr_stripe_bans_file:
+    file: ./secrets/fr_stripe_bans_file.txt
+  qms_api_token:
+    file: ./secrets/qms_api_token.txt
+
+networks:
+  fuelrats:
+    driver: bridge
