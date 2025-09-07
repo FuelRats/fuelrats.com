@@ -1,17 +1,48 @@
 import _debounce from 'lodash/debounce'
-import { useCallback } from 'react'
+import { useMemo, useRef } from 'react'
+
+import { resolveOptsOrSimple } from '~/util/resolveOptsOrSimple'
+
+
 
 export default function useDebouncedCallback (callback, deps, opts = 0) {
-  let wait = opts
-  let _opts = {}
+  const {
+    wait = 0,
+    ...restOpts
+  } = resolveOptsOrSimple(opts, 'wait')
 
-  if (typeof opts === 'object') {
-    ({ wait, ..._opts } = opts)
-  }
+  const callbackRef = useRef(callback)
+  callbackRef.current = callback
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps -- Yeah this is fine :D
-  return useCallback(
-    _debounce(callback, wait, _opts),
-    [wait, _opts.leading, _opts.maxWait, _opts.trailing, ...deps],
+  const debounceCallback = useMemo(
+    () => {
+      return _debounce(
+        (...args) => {
+          return callbackRef.current(...args)
+        },
+        wait,
+        restOpts,
+      )
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- we can't desctructure these options to satisfy rule because debounce internally uses `in` checks.
+    [wait, restOpts.leading, restOpts.maxWait, restOpts.trailing],
   )
+
+  return useMemo(() => {
+    const wrapped = (...args) => {
+      return debounceCallback(...args)
+    }
+    wrapped.cancel = () => {
+      return debounceCallback.cancel()
+    }
+    wrapped.flush = () => {
+      return debounceCallback.flush()
+    }
+    wrapped.immediate = (...args) => {
+      debounceCallback.cancel()
+      return callbackRef.current(...args)
+    }
+    return wrapped
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- We're emulating useCallback here with some extra logic, so static deps not avilable.
+  }, [debounceCallback, ...deps])
 }
