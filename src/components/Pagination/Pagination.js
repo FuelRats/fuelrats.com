@@ -128,7 +128,10 @@ Pagination.propTypes = {
   onGenerateRoute: PropTypes.func.isRequired,
   page: PropTypes.number.isRequired,
   pageSize: PropTypes.number,
-  pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
+  pageSizeOptions: PropTypes.arrayOf(PropTypes.shape({
+    label: PropTypes.string.isRequired,
+    value: PropTypes.number.isRequired,
+  })),
   showPageInput: PropTypes.bool,
   totalPages: PropTypes.number.isRequired,
 }
