@@ -131,6 +131,18 @@ function Leaderboard (props) {
           </div>
           <ol className={['loading', { 'loader-force': retrieving }]}>
             {
+              retrieving && Array(pageSize).fill(undefined).map((_, idx) => {
+                return (
+                  // eslint-disable-next-line react/no-array-index-key -- only key we have
+                  <li key={idx}>
+                    <div className={styles.ratName}>
+                      {''}
+                    </div>
+                  </li>
+                )
+              })
+            }
+            {
               Boolean(!retrieving && entries.length) && entries.map((entry) => {
                 return (
                   <li key={entry.id}>

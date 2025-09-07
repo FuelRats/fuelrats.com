@@ -5,6 +5,8 @@
 
   flex-direction: column;
 
+  border: 1px solid rgba(0, 0, 0, 0.1);
+
   overflow: auto;
 }
 
@@ -23,10 +25,12 @@
 
   flex: 1 0 auto;
 
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  min-height: 60px;
+
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 
   &:nth-child(odd) {
-    background-color: rgba(0, 0, 0, 0.03);
+    background-color: rgba(0, 0, 0, 0.05);
   }
 }
 
