@@ -11,7 +11,8 @@
 
 # Sensitive Files
 /.env
-/.env.local
+/.env.*
+!/.env.local.example
 
 # Package Manager Files
 .yarn/*
