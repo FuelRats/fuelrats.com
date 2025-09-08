@@ -56,3 +56,7 @@ export {
   faPlaystation,
   faXbox,
 } from '@fortawesome/free-brands-svg-icons'
+
+export {
+  faStar as farStar,
+} from '@fortawesome/free-regular-svg-icons'
