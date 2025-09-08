@@ -15,6 +15,9 @@ RUN yarn install --immutable
 FROM node:22-alpine AS builder
 WORKDIR /app
 
+# Accept build-time argument for NODE_ENV (must be explicitly set)
+ARG NODE_ENV
+
 # Copy dependencies from deps stage
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/.yarn ./.yarn
@@ -22,7 +25,8 @@ COPY --from=deps /app/.yarn ./.yarn
 # Copy application source
 COPY . .
 
-# Build the Next.js application
+# Build the Next.js application with the specified NODE_ENV
+ENV NODE_ENV=${NODE_ENV}
 RUN yarn build
 
 # Production stage
