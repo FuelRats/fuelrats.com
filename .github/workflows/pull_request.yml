@@ -32,9 +32,44 @@ jobs:
           stylelint_args: "--max-warnings 0"
           stylelint_extensions: "css,sass,scss"
 
+  build-docker:
+    runs-on: ubuntu-latest
+    name: Build and Test (Docker)
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t fuelrats-web:test .
+
+      - name: Test Docker container starts
+        run: |
+          docker run -d \
+            --name fuelrats-test \
+            -p 3000:3000 \
+            -e NODE_ENV=production \
+            -e APP_URL=http://localhost:3000 \
+            fuelrats-web:test
+          
+          # Wait for container to be ready
+          sleep 10
+          
+          # Check if container is running
+          docker ps | grep fuelrats-test
+          
+          # Test the application responds
+          curl -f http://localhost:3000 || exit 1
+          
+          # Check container logs for errors
+          docker logs fuelrats-test
+          
+          # Cleanup
+          docker stop fuelrats-test
+          docker rm fuelrats-test
+
   build:
     runs-on: ubuntu-latest
-    name: Build Test
+    name: Build Test (Node.js)
     steps:
       - name: Checkout
         uses: actions/checkout@v4

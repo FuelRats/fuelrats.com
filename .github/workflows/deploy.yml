@@ -36,6 +36,9 @@ jobs:
         env:
           NODE_ENV: production
 
+      - name: Test Docker build
+        run: docker build -t fuelrats-web:deploy-test .
+
       - name: Prepare artifact
         run: |
           tar -czf fuelrats-com.tar.gz \
