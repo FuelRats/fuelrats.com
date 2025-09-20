@@ -1,0 +1,23 @@
+@import '../../scss/colors';
+
+.achievement {
+  display: inline-block;
+
+  margin-right: 0.75rem;
+
+  &.codeRed {
+    color: $red;
+  }
+
+  &.rescueCount {
+    color: $blue-dark2;
+  }
+
+  &.crown {
+    color: $gold;
+  }
+
+  svg {
+    vertical-align: middle;
+  }
+}

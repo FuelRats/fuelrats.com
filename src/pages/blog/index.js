@@ -1,13 +1,14 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import ArticleCard from '~/components/Blog/ArticleCard'
-import BlogMenu from '~/components/Blog/BlogMenu'
+import Pagination from '~/components/Pagination/Pagination'
 import { getBlogs } from '~/store/actions/blogs'
 import {
   selectBlogs,
   selectBlogStatistics,
 } from '~/store/selectors'
+import makeBlogRoute from '~/util/router/makeBlogRoute'
 import safeParseInt from '~/util/safeParseInt'
 
 
@@ -15,12 +16,11 @@ import safeParseInt from '~/util/safeParseInt'
 
 
 // Component constants
-const BASE_TEN_RADIX = 10
 const DEFAULT_PAGE = 1
 
 function Blogs (props) {
   const { author, category } = props.query
-  const page = safeParseInt(props.query.page ?? DEFAULT_PAGE, BASE_TEN_RADIX, DEFAULT_PAGE)
+  const page = safeParseInt(props.query.page) ?? DEFAULT_PAGE
 
   const dispatch = useDispatch()
   const [retrieving, setRetrieving] = useState(false)
@@ -41,6 +41,14 @@ function Blogs (props) {
     updateList()
   }, [author, category, dispatch, page])
 
+  const handleGenerateRoute = useCallback((nextParams) => {
+    return makeBlogRoute({
+      ...nextParams,
+      author,
+      category,
+    })
+  }, [author, category])
+
   return (
     <div className="page-content">
       <ol className="article-list loading">
@@ -55,7 +63,10 @@ function Blogs (props) {
         }
       </ol>
 
-      <BlogMenu author={author} category={category} page={page} totalPages={totalPages} />
+      <Pagination
+        page={page}
+        totalPages={totalPages}
+        onGenerateRoute={handleGenerateRoute} />
     </div>
   )
 }

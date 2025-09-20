@@ -25,7 +25,7 @@ export const selectDecalById = (state, { decalId } = {}) => {
 
 
 export const selectUserRedeemableDecals = (state, props) => {
-  return safeParseInt(withCurrentUserId(selectUserById)(state, props)?.meta?.redeemable, undefined, 0)
+  return safeParseInt(withCurrentUserId(selectUserById)(state, props)?.meta?.redeemable) ?? 0
 }
 
 

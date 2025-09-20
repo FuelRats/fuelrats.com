@@ -1,0 +1,38 @@
+@import '../../scss/colors';
+
+.pageInput {
+  display: flex;
+
+  align-items: center;
+
+  order: 2;
+}
+
+.pageInput input {
+  width: 70px;
+  margin: 0 0.75rem;
+  padding: 5px 7px;
+
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+}
+
+.perPage {
+  display: flex;
+
+  align-items: center;
+
+  order: 3;
+}
+
+.perPage select {
+  margin: 0 0.75rem;
+  padding: 5px 7px;
+
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+
+  background: $white;
+
+  text-align: center;
+}

@@ -1,0 +1,94 @@
+@import '../../scss/colors';
+
+.ratLeaderboard {
+  display: flex;
+
+  flex-direction: column;
+
+  border: 1px solid rgba(0, 0, 0, 0.1);
+
+  overflow: auto;
+}
+
+.ratLeaderboard ol {
+  display: flex;
+
+  flex-direction: column;
+
+  margin-bottom: 0;
+}
+
+.ratLeaderboard li {
+  display: inline-flex;
+
+  align-items: center;
+
+  flex: 1 0 auto;
+
+  min-height: 60px;
+
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+  &:nth-child(odd) {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+}
+
+.ratLeaderboard li > div {
+  padding: 1rem;
+
+  border-right: 1px solid rgba(0, 0, 0, 0.02);
+
+  line-height: 2;
+}
+
+.ratLeaderboard menu {
+  padding: 0.75rem;
+}
+
+.ratLeaderboardHeader {
+  display: flex;
+}
+
+.ratLeaderboardHeader div {
+  display: flex;
+
+  padding: 1rem;
+
+  background-color: $black;
+  color: $white;
+
+  line-height: 2;
+}
+
+.ratLeaderboardHeader input {
+  width: 250px;
+  margin-left: 0.75rem;
+  padding: 0 0.75rem;
+
+  color: $black;
+}
+
+.ratName {
+  flex: 210 0 auto;
+
+  width: 210px;
+}
+
+.ratRescues {
+  flex: 65 0 auto;
+
+  width: 65px;
+  max-width: 80px;
+
+  text-align: center;
+}
+
+.ratBadges {
+  flex: 150 0 auto;
+
+  width: 150px;
+  max-width: 200px;
+
+  border-right: 0;
+}
