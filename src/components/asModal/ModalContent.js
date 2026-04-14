@@ -1,6 +1,6 @@
 function ModalContent (props) {
   const {
-    as: Element,
+    as: Element = 'div',
     className,
     children,
     ...restProps
@@ -19,10 +19,6 @@ function ModalContent (props) {
 
 
 
-
-ModalContent.defaultProps = {
-  as: 'div',
-}
 
 
 

@@ -1,5 +1,7 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 
+import '~/util/fontawesome/init'
+
 
 // eslint-disable-next-line no-template-curly-in-string -- intentional
 const noJSMessage = 'Blocking JavaScript in ${currentYear}.... You\'re just asking for trouble at this point.'

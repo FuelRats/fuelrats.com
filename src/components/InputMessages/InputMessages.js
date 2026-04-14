@@ -34,8 +34,8 @@ function InputMessages (props) {
 
   return (
     <ul className={[styles.inputMessages, className]}>
-      <MessageSet icon="exclamation-triangle" messages={messages.errors} type="error" />
-      <MessageSet icon="exclamation-circle" messages={messages.warnings} type="warning" />
+      <MessageSet icon="triangle-exclamation" messages={messages.errors} type="error" />
+      <MessageSet icon="circle-exclamation" messages={messages.warnings} type="warning" />
     </ul>
   )
 }

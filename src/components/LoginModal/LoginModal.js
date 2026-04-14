@@ -30,7 +30,6 @@ function LoginModal () {
 
 
 
-
 export default connectState((_, dispatch) => {
   return {
     onClose: useCallback(() => {

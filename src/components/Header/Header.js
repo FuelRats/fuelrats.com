@@ -132,7 +132,7 @@ function Header () {
           </NavLink>
 
           <NavLink className="button link" href="/acknowledgements">
-            <FontAwesomeIcon fixedWidth icon="hands-helping" />
+            <FontAwesomeIcon fixedWidth icon="handshake-angle" />
             {'Acknowledgements'}
           </NavLink>
 
@@ -165,7 +165,7 @@ function Header () {
             title="Fuel Rats on GitHub" />
           <SocialIcon
             href="https://forums.frontier.co.uk/threads/out-of-fuel-explorer-rescue-service-the-fuel-rats.150703/"
-            icon="space-shuttle"
+            icon="shuttle-space"
             title="Fuel Rats on Frontier Forums"
             transform={{ rotate: -45 }} />
         </div>

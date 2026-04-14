@@ -144,7 +144,7 @@ class ListRescues extends React.Component {
             className="inline"
             type="button"
             onClick={this._handleRefreshClick}>
-            <FontAwesomeIcon fixedWidth icon="sync" spin={loading} />
+            <FontAwesomeIcon fixedWidth icon="arrows-rotate" spin={loading} />
           </button>
         </div>
         <div className="searchInput">

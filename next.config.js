@@ -21,6 +21,8 @@ module.exports = () => {
   return {
     distDir: 'dist',
 
+    serverExternalPackages: ['@fortawesome/fontawesome-svg-core'],
+
     images: {
       disableStaticImages: true,
       remotePatterns: [

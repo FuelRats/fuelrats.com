@@ -104,7 +104,7 @@ function RescueDetailsContent (props) {
             title="Close details"
             type="button"
             onClick={handleCloseRescueDetails}>
-            <FontAwesomeIcon fixedWidth icon="times" />
+            <FontAwesomeIcon fixedWidth icon="xmark" />
           </button> */}
         </div>
 

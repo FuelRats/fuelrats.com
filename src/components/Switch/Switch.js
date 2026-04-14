@@ -32,9 +32,9 @@ function Switch (props) {
     }
   }, [onChange])
 
-  let icon = 'times'
+  let icon = 'xmark'
   if (loading) {
-    icon = 'sync'
+    icon = 'arrows-rotate'
   } else if (props.checked) {
     icon = 'check'
   }

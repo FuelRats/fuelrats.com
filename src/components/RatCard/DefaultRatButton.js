@@ -52,7 +52,7 @@ function DefaultRatButton (props) {
       title={isDefaultRat ? 'This rat represents you.' : 'Use this rat to represent you. (Display Rat)'}
       type="button"
       onClick={handleClick}>
-      <FontAwesomeIcon fixedWidth icon="id-card-alt" size="lg" />
+      <FontAwesomeIcon fixedWidth icon="id-card-clip" size="lg" />
     </button>
   )
 }

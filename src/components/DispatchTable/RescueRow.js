@@ -198,7 +198,7 @@ function RescueRow (props) {
             type="radio"
             value={rescue.id}
             onClick={handleFocusRescue} />
-          <FontAwesomeIcon fixedWidth icon="ellipsis-h" />
+          <FontAwesomeIcon fixedWidth icon="ellipsis" />
         </label>
       </td>
 

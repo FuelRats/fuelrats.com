@@ -34,11 +34,11 @@ function ValidityIcon (props) {
     }
 
     if (validating) {
-      nextProps.icon = 'sync'
+      nextProps.icon = 'arrows-rotate'
       nextProps.spin = true
       nextProps.title = validatingTitle
     } else if (!valid) {
-      nextProps.icon = 'exclamation-triangle'
+      nextProps.icon = 'triangle-exclamation'
       nextProps.title = invalidTitle
     } else if (hasMessages) {
       nextProps.title = validWithMessageTitle
@@ -62,7 +62,7 @@ function ValidityIcon (props) {
           <FontAwesomeIcon
             fixedWidth
             className={[styles.warningIcon, className]}
-            icon="exclamation-circle"
+            icon="circle-exclamation"
             title={validWithMessageTitle} />
         )
       }

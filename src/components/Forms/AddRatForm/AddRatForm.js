@@ -95,7 +95,7 @@ function AddRatForm () {
               className="green compact square"
               disabled={!canSubmit}
               type="submit">
-              <FontAwesomeIcon fixedWidth icon={submitting ? 'sync' : 'arrow-right'} rotate={submitting} />
+              <FontAwesomeIcon fixedWidth icon={submitting ? 'arrows-rotate' : 'arrow-right'} rotate={submitting} />
             </button>
           )
         }
@@ -105,7 +105,7 @@ function AddRatForm () {
           title={formOpen ? 'Cancel' : 'Add new commander'}
           type="button"
           onClick={handleToggleForm}>
-          <FontAwesomeIcon fixedWidth icon={formOpen ? 'times' : 'plus'} />
+          <FontAwesomeIcon fixedWidth icon={formOpen ? 'xmark' : 'plus'} />
         </button>
       </div>
     </Form>

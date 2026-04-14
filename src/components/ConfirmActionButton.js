@@ -84,7 +84,7 @@ class ConfirmActionButton extends React.Component {
               title={denyButtonText}
               type="button"
               onClick={this._handleClick}>
-              <FontAwesomeIcon fixedWidth icon="times" />
+              <FontAwesomeIcon fixedWidth icon="xmark" />
             </button>
           )
         }

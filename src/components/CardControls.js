@@ -84,7 +84,7 @@ function CardControls (props) {
               title={editModeCancelTitle}
               type="button"
               onClick={onCancelClick}>
-              <FontAwesomeIcon fixedWidth icon="times" />
+              <FontAwesomeIcon fixedWidth icon="xmark" />
             </button>
           </>
         )

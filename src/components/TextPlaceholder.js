@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 
 
-function TextPlaceholder ({ size, loading }) {
+function TextPlaceholder ({ size = 10, loading = false }) {
   return (
     <span className="text-placeholder-wrapper">
       <span className={['text-placeholder', { loading }]}>
@@ -12,11 +12,6 @@ function TextPlaceholder ({ size, loading }) {
       </span>
     </span>
   )
-}
-
-TextPlaceholder.defaultProps = {
-  loading: false,
-  size: 10,
 }
 
 TextPlaceholder.propTypes = {

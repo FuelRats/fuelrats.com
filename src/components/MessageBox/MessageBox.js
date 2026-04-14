@@ -8,7 +8,7 @@ import styles from './MessageBox.module.scss'
 
 // Component Constants
 const typeIcons = {
-  info: 'exclamation-circle',
+  info: 'circle-exclamation',
   success: 'check-circle',
 }
 
@@ -27,7 +27,7 @@ function MessageBox (props) {
 
   let { icon } = props
   if (!icon) {
-    icon = typeIcons[type] ?? 'exclamation-triangle'
+    icon = typeIcons[type] ?? 'triangle-exclamation'
   }
 
   return (

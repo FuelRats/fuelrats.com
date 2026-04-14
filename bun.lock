@@ -10,7 +10,7 @@
         "@fortawesome/free-brands-svg-icons": "^6.7.2",
         "@fortawesome/free-regular-svg-icons": "^6.7.2",
         "@fortawesome/free-solid-svg-icons": "^6.7.2",
-        "@fortawesome/react-fontawesome": "^0.2.2",
+        "@fortawesome/react-fontawesome": "^3.0.0",
         "@fuelrats/next-adorable-avatars": "^0.4.0",
         "@fuelrats/validation-util": "^1.2.0",
         "@fuelrats/web-util": "^0.3.3",
@@ -32,7 +32,6 @@
         "motion": "^12.38.0",
         "next": "^15.3.2",
         "next-cookies": "^2.0.3",
-        "next-redux-wrapper": "^8.1.0",
         "next-safe": "^3.5.0",
         "nprogress": "^0.2.0",
         "postcss": "^8.5.3",
@@ -470,7 +469,7 @@
 
     "@fortawesome/free-solid-svg-icons": ["@fortawesome/free-solid-svg-icons@6.7.2", "", { "dependencies": { "@fortawesome/fontawesome-common-types": "6.7.2" } }, "sha512-GsBrnOzU8uj0LECDfD5zomZJIjrPhIlWU82AHwa2s40FKH+kcxQaBvBo3Z4TxyZHIyX8XTDxsyA33/Vx9eFuQA=="],
 
-    "@fortawesome/react-fontawesome": ["@fortawesome/react-fontawesome@0.2.6", "", { "dependencies": { "prop-types": "^15.8.1" }, "peerDependencies": { "@fortawesome/fontawesome-svg-core": "~1 || ~6 || ~7", "react": "^16.3 || ^17.0.0 || ^18.0.0 || ^19.0.0" } }, "sha512-mtBFIi1UsYQo7rYonYFkjgYKGoL8T+fEH6NGUpvuqtY3ytMsAoDaPo5rk25KuMtKDipY4bGYM/CkmCHA1N3FUg=="],
+    "@fortawesome/react-fontawesome": ["@fortawesome/react-fontawesome@3.3.0", "", { "peerDependencies": { "@fortawesome/fontawesome-svg-core": "~6 || ~7", "react": "^18.0.0 || ^19.0.0" } }, "sha512-EHmHeTf8WgO29sdY3iX/7ekE3gNUdlc2RW6mm/FzELlHFKfTrA9S4MlyquRR+RRCRCn8+jXfLFpLGB2l7wCWyw=="],
 
     "@fuelrats/babel-plugin-classnames": ["@fuelrats/babel-plugin-classnames@0.3.0", "", {}, "sha512-qoiY3beWbrl9y9gAgIANoZLgokjBrcHAJMcOX+4A6JzRdez3/3opN53p3/tOS4zA7QHcBG4FTQFU6mh5a0AtPg=="],
 
@@ -1465,8 +1464,6 @@
     "next-connect": ["next-connect@0.10.2", "", { "dependencies": { "trouter": "^3.1.0" } }, "sha512-Tp9PA5YSg6aStF9TP+VmaQwvPH0tlO8VxzFP/oizD60aZwyqfK302J12V0VMlWnWJEQW5IPrblynI4bG193zwA=="],
 
     "next-cookies": ["next-cookies@2.0.3", "", { "dependencies": { "universal-cookie": "^4.0.2" } }, "sha512-YVCQzwZx+sz+KqLO4y9niHH9jjz6jajlEQbAKfsYVT6DOfngb/0k5l6vFK4rmpExVug96pGag8OBsdSRL9FZhQ=="],
-
-    "next-redux-wrapper": ["next-redux-wrapper@8.1.0", "", { "peerDependencies": { "next": ">=9", "react": "*", "react-redux": "*" } }, "sha512-2hIau0hcI6uQszOtrvAFqgc0NkZegKYhBB7ZAKiG3jk7zfuQb4E7OV9jfxViqqojh3SEHdnFfPkN9KErttUKuw=="],
 
     "next-safe": ["next-safe@3.5.0", "", { "peerDependencies": { "next": "^9.5.0 || ^10.2.1 || ^11.1.0 || ^12.1.0 || ^13.0.0 || ^14.0.0" } }, "sha512-TzXfEvAn4T+mPvhz8mlg9AloXfsE6JwxFPr1Vkw/YDKIRDpZzuh1q33vipfSZoWN5BeGpyh0cnCo0Cqp4Lzi6A=="],
 

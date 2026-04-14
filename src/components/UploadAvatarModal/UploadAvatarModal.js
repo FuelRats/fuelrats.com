@@ -218,7 +218,7 @@ function UploadAvatarModal (props) {
         {
           Boolean(!upImg && !result.success) && (
             <label className={['file-dropzone', { active: inputDragActive }]} htmlFor="avatarInput" id="avatarInputLabel">
-              <FontAwesomeIcon fixedWidth icon="file-upload" />
+              <FontAwesomeIcon fixedWidth icon="file-arrow-up" />
               {' Drop image here'}
               <br />
               <small>
@@ -270,7 +270,7 @@ function UploadAvatarModal (props) {
                   <Slider
                     aria-labelledby="Rotation"
                     disabled={submitting}
-                    handleIcon="sync"
+                    handleIcon="arrows-rotate"
                     marks={rotationMarks}
                     max={180}
                     min={-180}

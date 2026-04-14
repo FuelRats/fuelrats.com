@@ -1,8 +1,6 @@
-import { library as faLibrary, config as faConfig } from '@fortawesome/fontawesome-svg-core'
 import { AnimatePresence, LazyMotion, domAnimation, m } from 'motion/react'
 import App from 'next/app'
 import NextHead from 'next/head'
-import { createWrapper } from 'next-redux-wrapper'
 import { StrictMode } from 'react'
 import { Provider } from 'react-redux'
 
@@ -11,14 +9,14 @@ import LoginModal from '~/components/LoginModal'
 import NProgress from '~/components/NProgress'
 import SilentBoundary from '~/components/SilentBoundary'
 import UserMenu from '~/components/UserMenu'
-import { initStore } from '~/store'
 import {
   initUserSession,
   notifyPageDestroyed,
   notifyPageLoading,
 } from '~/store/actions/session'
-import * as faIcons from '~/util/fontawesome/library'
+import '~/util/fontawesome/init'
 import resolvePageMeta from '~/util/getInitialProps/resolvePageMeta'
+import withReduxStore from '~/util/withReduxStore'
 
 import ErrorPage from './_error'
 
@@ -27,10 +25,6 @@ import '~/scss/app.scss'
 
 
 
-
-// Configure and populate FontAwesome library
-faConfig.autoAddCss = false
-faLibrary.add(faIcons)
 
 const pageMotionConfig = {
   initial: { opacity: 0 },
@@ -47,8 +41,6 @@ const pageMotionConfig = {
 
 
 
-
-const wrapper = createWrapper(initStore)
 
 class FuelRatsApp extends App {
   static async getInitialProps (appCtx) {
@@ -175,4 +167,4 @@ class FuelRatsApp extends App {
 
 
 
-export default wrapper.withRedux(FuelRatsApp)
+export default withReduxStore(FuelRatsApp)

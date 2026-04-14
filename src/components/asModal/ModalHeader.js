@@ -15,7 +15,7 @@ function ModalHeader ({ hideClose, onClose, title }) {
             className="danger button-close"
             type="button"
             onClick={onClose}>
-            <FontAwesomeIcon fixedWidth icon="times" />
+            <FontAwesomeIcon fixedWidth icon="xmark" />
           </button>
         )
       }
