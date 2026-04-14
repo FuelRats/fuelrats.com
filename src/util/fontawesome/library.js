@@ -47,6 +47,7 @@ export {
   faUserSecret,
   faUpload,
   faBagShopping,
+  faKey,
   faCircleXmark,
   faChalkboardUser,
   faCode,

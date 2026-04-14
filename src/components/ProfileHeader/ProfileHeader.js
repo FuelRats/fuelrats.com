@@ -1,5 +1,4 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useCallback, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
@@ -13,8 +12,6 @@ import {
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 
 import styles from './ProfileHeader.module.scss'
-import ChangeEmailModal from '../ChangeEmailModal'
-import ChangePasswordModal from '../ChangePasswordModal'
 import ProfileUserAvatar from '../ProfileUserAvatar'
 import UnverifiedUserBanner from './UnverifiedUserBanner'
 
@@ -39,21 +36,6 @@ const groupConfig = {
 }
 
 function ProfileHeader () {
-  const [showChangeEmail, setShowChangeEmail] = useState(false)
-  const [showChangePassword, setShowChangePassword] = useState(false)
-
-  const handleToggleChangeEmail = useCallback(() => {
-    setShowChangeEmail((state) => {
-      return !state
-    })
-  }, [])
-
-  const handleToggleChangePassword = useCallback(() => {
-    setShowChangePassword((state) => {
-      return !state
-    })
-  }, [])
-
   const groups = useSelector(withCurrentUserId(selectGroupsByUserId))
   const displayRat = useSelector(withCurrentUserId(selectDisplayRatByUserId))
   const userIsVerified = useSelectorWithProps({ scope: 'users.verified' }, selectCurrentUserHasScope)
@@ -70,7 +52,7 @@ function ProfileHeader () {
         <ProfileUserAvatar canEdit />
         <div className="profile-basic-info">
           <div className="rat-name">
-            {displayRat?.attributes?.name ?? email.split('@')[0]}
+            {displayRat?.attributes?.name ?? email?.split('@')[0]}
           </div>
           <div className="email">
             <span className="label">{'E-Mail: '}</span>
@@ -78,7 +60,7 @@ function ProfileHeader () {
           </div>
           <div className="member-since">
             <span className="label">{'Date joined: '}</span>
-            <span>{formatAsEliteDateTime(createdAt)}</span>
+            <span>{createdAt ? formatAsEliteDateTime(createdAt) : ''}</span>
           </div>
         </div>
         <div className="profile-user-badges">
@@ -99,25 +81,7 @@ function ProfileHeader () {
             }
           </ul>
         </div>
-        <div className="profile-controls">
-          <button
-            type="button"
-            onClick={handleToggleChangeEmail}>
-            {'Change E-Mail'}
-          </button>
-          <button
-            type="button"
-            onClick={handleToggleChangePassword}>
-            {'Change Password'}
-          </button>
-        </div>
       </div>
-      <ChangeEmailModal
-        isOpen={showChangeEmail}
-        onClose={handleToggleChangeEmail} />
-      <ChangePasswordModal
-        isOpen={showChangePassword}
-        onClose={handleToggleChangePassword} />
     </>
   )
 }

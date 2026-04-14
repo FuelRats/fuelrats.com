@@ -101,6 +101,13 @@ const oauth = {
 
 
 
+const passkeys = {
+  search: 'passkeys/search',
+  create: 'passkeys/create',
+  delete: 'passkeys/delete',
+}
+
+
 const passwords = {
   reset: 'passwords/reset',
   requestReset: 'passwords/requestReset',
@@ -183,6 +190,7 @@ const actionTypes = {
   leaderboard,
   nicknames,
   oauth,
+  passkeys,
   passwords,
   rats,
   rescues,

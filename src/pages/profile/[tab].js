@@ -10,6 +10,7 @@ import TabbedPanel from '~/components/TabbedPanel'
 import UserOverview from '~/components/UserOverview'
 import UserRatsPanel from '~/components/UserRatsPanel'
 import UserRescuesPanel from '~/components/UserRescuesPanel'
+import UserSecurityPanel from '~/components/UserSecurityPanel/UserSecurityPanel'
 import setError from '~/util/getInitialProps/setError'
 
 
@@ -92,6 +93,13 @@ class Profile extends React.Component {
         },
         title: 'Rescues',
         pageTitle: 'Your Rescues',
+      },
+      security: {
+        render: () => {
+          return (<UserSecurityPanel />)
+        },
+        title: 'Security',
+        pageTitle: 'Security',
       },
       developer: {
         render: () => {

@@ -9,6 +9,7 @@ import { selectFlagByName } from '~/store/selectors'
 import styles from './LoginModal.module.scss'
 import LoginModalErrorBox from './LoginModalErrorBox'
 import LoginView from './LoginView'
+import PasskeyPromptView from './PasskeyPromptView'
 import ResetView from './ResetView'
 import VerifyView from './VerifyView'
 
@@ -23,6 +24,7 @@ function LoginModal () {
       {view === 'login' && (<LoginView />)}
       {view === 'verify' && (<VerifyView />)}
       {view === 'reset' && (<ResetView />)}
+      {view === 'passkey-prompt' && (<PasskeyPromptView />)}
     </ModalContent>
   )
 }

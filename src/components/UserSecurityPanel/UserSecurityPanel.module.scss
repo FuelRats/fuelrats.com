@@ -1,0 +1,93 @@
+@import '../../scss/colors';
+
+.content {
+  padding: 1rem;
+}
+
+.error {
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+
+  border-radius: 4px;
+
+  color: white;
+
+  background-color: $red;
+}
+
+.warning {
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+
+  border-radius: 4px;
+
+  color: $black;
+
+  background-color: $yellow;
+}
+
+.empty {
+  padding: 2rem;
+
+  text-align: center;
+
+  color: $grey;
+}
+
+.table {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  th {
+    padding: 0.5rem 1rem;
+
+    font-size: 0.85rem;
+    text-align: left;
+    text-transform: uppercase;
+
+    color: $grey;
+
+    border-bottom: 2px solid $grey-dark;
+  }
+
+  td {
+    padding: 0.5rem 1rem;
+
+    border-bottom: 1px solid $light-grey;
+  }
+}
+
+.date {
+  font-size: 0.85rem;
+
+  color: $grey-darkened;
+}
+
+.synced {
+  color: $green;
+}
+
+.notSynced {
+  color: $grey;
+}
+
+.addPasskey {
+  display: flex;
+
+  gap: 0.5rem;
+
+  margin-top: 1rem;
+}
+
+.nameInput {
+  flex: 1;
+}
+
+.accountActions {
+  display: flex;
+
+  gap: 1rem;
+
+  margin-top: 2rem;
+}
