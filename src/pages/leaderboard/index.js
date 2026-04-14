@@ -146,7 +146,9 @@ function Leaderboard (props) {
               Boolean(!retrieving && entries.length) && entries.map((entry) => {
                 return (
                   <li key={entry.id}>
-                    <div className={styles.ratName}>
+                    <div
+                      className={styles.ratName}
+                      title={entry.attributes.ratNames?.length > 1 ? entry.attributes.ratNames.join(', ') : undefined}>
                       {entry.attributes.preferredName}
                     </div>
                     <div className={styles.ratRescues}>
