@@ -108,6 +108,13 @@ const passkeys = {
 }
 
 
+const totp = {
+  generate: 'totp/generate',
+  link: 'totp/link',
+  remove: 'totp/remove',
+}
+
+
 const passwords = {
   reset: 'passwords/reset',
   requestReset: 'passwords/requestReset',
@@ -200,6 +207,7 @@ const actionTypes = {
   // Special
   images,
   session,
+  totp,
   verify,
 
   // Services

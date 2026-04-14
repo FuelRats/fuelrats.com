@@ -11,6 +11,7 @@ import LoginModalErrorBox from './LoginModalErrorBox'
 import LoginView from './LoginView'
 import PasskeyPromptView from './PasskeyPromptView'
 import ResetView from './ResetView'
+import TotpView from './TotpView'
 import VerifyView from './VerifyView'
 
 
@@ -24,6 +25,7 @@ function LoginModal () {
       {view === 'login' && (<LoginView />)}
       {view === 'verify' && (<VerifyView />)}
       {view === 'reset' && (<ResetView />)}
+      {view === 'totp' && (<TotpView />)}
       {view === 'passkey-prompt' && (<PasskeyPromptView />)}
     </ModalContent>
   )

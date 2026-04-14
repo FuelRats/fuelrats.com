@@ -1,15 +1,19 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { isError } from 'flux-standard-action'
 import { useCallback, useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import ChangeEmailModal from '~/components/ChangeEmailModal'
 import ChangePasswordModal from '~/components/ChangePasswordModal'
 import ConfirmActionButton from '~/components/ConfirmActionButton'
 import { listPasskeys, registerPasskey, deletePasskey } from '~/store/actions/passkeys'
+import { removeTotp } from '~/store/actions/totp'
+import { getUserProfile } from '~/store/actions/user'
+import { selectUserById, withCurrentUserId } from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 import getResponseError from '~/util/getResponseError'
 
+import SetupTotpModal from './SetupTotpModal'
 import styles from './UserSecurityPanel.module.scss'
 
 
@@ -22,6 +26,12 @@ function UserSecurityPanel () {
   const [registering, setRegistering] = useState(false)
   const [showChangeEmail, setShowChangeEmail] = useState(false)
   const [showChangePassword, setShowChangePassword] = useState(false)
+  const [showTotpSetup, setShowTotpSetup] = useState(false)
+  const [removeTotpCode, setRemoveTotpCode] = useState('')
+  const [removingTotp, setRemovingTotp] = useState(false)
+
+  const user = useSelector(withCurrentUserId(selectUserById))
+  const hasTotp = Boolean(user?.relationships?.authenticator?.data)
 
   const fetchPasskeys = useCallback(async () => {
     setLoading(true)
@@ -79,6 +89,29 @@ function UserSecurityPanel () {
       handleRegister()
     }
   }, [handleRegister])
+
+  const handleRemoveTotp = useCallback(async () => {
+    if (removeTotpCode.length !== 6) {
+      return
+    }
+    setRemovingTotp(true)
+    setError(null)
+    const response = await dispatch(removeTotp(removeTotpCode))
+    const err = getResponseError(response)
+    if (err) {
+      setError(err)
+    } else {
+      setRemoveTotpCode('')
+      await dispatch(getUserProfile())
+    }
+    setRemovingTotp(false)
+    return true
+  }, [dispatch, removeTotpCode])
+
+  const handleTotpSetupClose = useCallback(() => {
+    setShowTotpSetup(false)
+    dispatch(getUserProfile())
+  }, [dispatch])
 
   const [webAuthnSupported, setWebAuthnSupported] = useState(false)
   useEffect(() => {
@@ -190,6 +223,55 @@ function UserSecurityPanel () {
           }
         </div>
       </div>
+
+      <div className="panel">
+        <header>{'Two-Factor Authentication'}</header>
+        <div className={styles.content}>
+          {
+            hasTotp
+              ? (
+                <div className={styles.totpEnabled}>
+                  <div className={styles.totpStatus}>
+                    <FontAwesomeIcon className={styles.synced} icon="circle-check" />
+                    {' Two-factor authentication is enabled'}
+                  </div>
+                  <div className={styles.totpRemove}>
+                    <input
+                      disabled={removingTotp}
+                      inputMode="numeric"
+                      maxLength={6}
+                      pattern="[0-9]{6}"
+                      placeholder="Enter 6-digit code to disable"
+                      type="text"
+                      value={removeTotpCode}
+                      onChange={(event) => { return setRemoveTotpCode(event.target.value.replace(/\D/gu, '')) }} />
+                    <button
+                      className="secondary"
+                      disabled={removingTotp || removeTotpCode.length !== 6}
+                      type="button"
+                      onClick={handleRemoveTotp}>
+                      {removingTotp ? 'Removing...' : 'Disable 2FA'}
+                    </button>
+                  </div>
+                </div>
+              )
+              : (
+                <div className={styles.totpDisabled}>
+                  <p>{'Add an extra layer of security by requiring a code from an authenticator app when you log in.'}</p>
+                  <button
+                    type="button"
+                    onClick={() => { return setShowTotpSetup(true) }}>
+                    {'Enable Two-Factor Authentication'}
+                  </button>
+                </div>
+              )
+          }
+        </div>
+      </div>
+
+      <SetupTotpModal
+        isOpen={showTotpSetup}
+        onClose={handleTotpSetupClose} />
 
       <div className={styles.accountActions}>
         <button

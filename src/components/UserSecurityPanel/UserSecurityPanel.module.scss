@@ -84,6 +84,108 @@
   flex: 1;
 }
 
+.totpEnabled {
+  display: flex;
+
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.totpStatus {
+  font-weight: 600;
+}
+
+.totpRemove {
+  display: flex;
+
+  gap: 0.5rem;
+}
+
+.totpDisabled p {
+  margin-bottom: 1rem;
+
+  color: $grey-darkened;
+}
+
+.totpSetup {
+  padding: 1.5rem 2rem;
+}
+
+.qrCode {
+  display: flex;
+
+  justify-content: center;
+
+  margin: 1rem 0;
+
+  img {
+    width: 200px;
+    height: 200px;
+
+    border-radius: 8px;
+  }
+}
+
+.secretDetails {
+  margin: 1rem 0;
+
+  font-size: 0.85rem;
+
+  color: $grey-darkened;
+
+  summary {
+    cursor: pointer;
+  }
+}
+
+.secretKey {
+  display: block;
+
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+
+  border-radius: 4px;
+
+  font-size: 1.1rem;
+  letter-spacing: 0.15em;
+  word-break: break-all;
+
+  background-color: $light-grey;
+}
+
+.totpForm {
+  display: flex;
+
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.totpInput {
+  font-size: 1.5rem;
+  letter-spacing: 0.5em;
+  text-align: center;
+}
+
+.successMessage {
+  padding: 2rem;
+
+  text-align: center;
+
+  h3 {
+    margin: 0.75rem 0 0.5rem;
+  }
+
+  p {
+    color: $grey-darkened;
+  }
+}
+
+.successIcon {
+  font-size: 3rem;
+
+  color: $green;
+}
+
 .accountActions {
   display: flex;
 

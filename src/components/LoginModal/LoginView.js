@@ -49,6 +49,9 @@ function LoginView () {
 
       if (error.status === 'verification_required') {
         nextState.view = 'verify'
+      } else if (error.source?.pointer === '/data/attributes/code') {
+        nextState.view = 'totp'
+        nextState.error = undefined
       }
 
       setModalState(nextState)
