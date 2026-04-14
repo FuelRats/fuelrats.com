@@ -69,10 +69,12 @@
     top: 0;
     left: 0;
 
+    box-sizing: border-box;
     width: 2.2rem;
     height: 2.2rem;
     padding: 0.4rem;
 
+    overflow: hidden;
     border-radius: 50%;
 
     color: $black;
