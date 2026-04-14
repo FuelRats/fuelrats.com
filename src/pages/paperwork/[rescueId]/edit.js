@@ -10,6 +10,7 @@ import RadioInput from '~/components/RadioInput'
 import RatTagsInput from '~/components/RatTagsInput'
 import SystemTagsInput from '~/components/SystemTagsInput'
 import platformRadioOptions from '~/data/platformRadioOptions'
+import { expansionLongRadioOptions } from '~/util/expansion'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { connectState } from '~/store'
 import { getRescue, updateRescue } from '~/store/actions/rescues'
@@ -386,7 +387,9 @@ class Paperwork extends React.Component {
     const pwValidity = this.validate(fieldValues)
 
     const {
+      client,
       codeRed,
+      expansion,
       firstLimpetId,
       notes,
       outcome,
@@ -428,6 +431,17 @@ class Paperwork extends React.Component {
         </header>
 
         <fieldset>
+          <label htmlFor="client">{'Client CMDR name'}</label>
+          <input
+            disabled={submitting}
+            id="client"
+            name="client"
+            type="text"
+            value={client}
+            onChange={this._handleChange} />
+        </fieldset>
+
+        <fieldset>
           <label htmlFor="platform">{'What platform was the rescue on?'}</label>
 
           <RadioInput
@@ -439,6 +453,23 @@ class Paperwork extends React.Component {
             value={platform}
             onChange={this._handleRadioInputChange} />
         </fieldset>
+
+        {
+          platform === 'pc' && (
+            <fieldset>
+              <label htmlFor="expansion">{'Which game version?'}</label>
+
+              <RadioInput
+                className="expansion"
+                disabled={submitting}
+                id="expansion"
+                name="expansion"
+                options={expansionLongRadioOptions}
+                value={expansion}
+                onChange={this._handleRadioInputChange} />
+            </fieldset>
+          )
+        }
 
         <fieldset>
           <label htmlFor="outcome-success">
@@ -675,7 +706,9 @@ class Paperwork extends React.Component {
     }
 
     return {
+      client: getValue('client'),
       codeRed: getValue('codeRed'),
+      expansion: getValue('expansion'),
       // Get FirstLimpetId object first, then try to get the firstLimpet from the assigned rat array, THEN try to get the firstLimpet from the new rat array.
       // Getting firstLimpet from changes is to deal with weird edge cases. This should be resolved by the upcoming major rewrite to paperwork
       firstLimpetId: ifDefined(

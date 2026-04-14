@@ -5,6 +5,7 @@ import Router from 'next/router'
 import React from 'react'
 
 import { authenticated } from '~/components/AppLayout'
+import { expansionLongNameMap } from '~/util/expansion'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { connectState } from '~/store'
 import { deleteRescue, getRescue } from '~/store/actions/rescues'
@@ -292,6 +293,14 @@ class Paperwork extends React.Component {
           <div className={['tag platform', rescue.attributes.platform ?? 'none']}>
             {rescue.attributes.platform || 'No Platform'}
           </div>
+
+          {
+            rescue.attributes.platform === 'pc' && rescue.attributes.expansion && (
+              <div className="tag">
+                {expansionLongNameMap[rescue.attributes.expansion] ?? rescue.attributes.expansion}
+              </div>
+            )
+          }
 
           {
             (rescue.attributes.codeRed) && (
