@@ -115,12 +115,16 @@ class Paperwork extends React.Component {
     }
   }
 
-  _handleRouteChange = (url) => {
+  _handleRouteChange = () => {
     if (this.hasUnsavedChanges && !this.state.submitting) {
       // eslint-disable-next-line no-alert -- intentional confirmation dialog
       if (!window.confirm('You have unsaved changes. Are you sure you want to leave?')) {
         Router.events.emit('routeChangeError')
-        throw new Error('Route change aborted due to unsaved changes')
+
+        // Throw a string to abort the route change.
+        // Next.js catches thrown strings from routeChangeStart without logging them as errors.
+        // eslint-disable-next-line no-throw-literal
+        throw 'Route change aborted'
       }
     }
   }
