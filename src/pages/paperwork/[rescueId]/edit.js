@@ -398,6 +398,11 @@ class Paperwork extends React.Component {
 
     const fieldValues = this.getFieldValues()
     const pwValidity = this.validate(fieldValues)
+    const { errors = {} } = pwValidity
+
+    const fieldError = (name) => {
+      return errors[name] ? <small className="field-error" style={{ display: 'block', color: '#d65050', marginTop: '0.3rem' }}>{errors[name]}</small> : null
+    }
 
     const {
       carrier,
@@ -466,6 +471,7 @@ class Paperwork extends React.Component {
             options={platformRadioOptions}
             value={platform}
             onChange={this._handleRadioInputChange} />
+          {fieldError('platform')}
         </fieldset>
 
         {
@@ -506,6 +512,7 @@ class Paperwork extends React.Component {
             options={outcomeRadioOptions}
             value={outcome}
             onChange={this._handleRadioInputChange} />
+          {fieldError('outcome')}
         </fieldset>
 
         <fieldset>
@@ -544,6 +551,7 @@ class Paperwork extends React.Component {
             valueProp={getRatTag}
             onChange={this._handleRatsChange}
             onRemove={this._handleRatsRemove} />
+          {fieldError('rats')}
         </fieldset>
 
         <fieldset>
@@ -557,6 +565,7 @@ class Paperwork extends React.Component {
             value={firstLimpetId}
             valueProp={getRatTag}
             onChange={this._handleFirstLimpetChange} />
+          {fieldError('firstLimpetId')}
         </fieldset>
 
         <fieldset>
@@ -573,6 +582,7 @@ class Paperwork extends React.Component {
             name="system"
             value={system}
             onChange={this._handleSystemChange} />
+          {fieldError('system')}
         </fieldset>
 
         <fieldset>
@@ -585,14 +595,25 @@ class Paperwork extends React.Component {
             name="notes"
             value={notes}
             onChange={this._handleNotesChange} />
+          {fieldError('notes')}
         </fieldset>
 
         <menu type="toolbar">
           <div className="primary">
-            <div
-              className={['invalidity-explainer', { show: !pwValidity.valid, 'no-change': pwValidity.noChange }]}>
-              {pwValidity.reason}
-            </div>
+            {
+              errors.form && (
+                <div className="invalidity-explainer show">
+                  {errors.form}
+                </div>
+              )
+            }
+            {
+              pwValidity.noChange && (
+                <div className="invalidity-explainer show no-change">
+                  {'No changes have been made yet!'}
+                </div>
+              )
+            }
             <button
               className="green"
               disabled={submitting || !pwValidity.valid}
@@ -635,88 +656,59 @@ class Paperwork extends React.Component {
     )
   }
 
-  lastInvalidReason = null
-
   validate (values) {
     const { rescue, userCanEdit } = this.props
     const { changes } = this.state
 
-    let invalidReason = null
-    let noChange = false
+    const errors = {}
 
     if (!rescue) {
-      return {
-        valid: false,
-        reason: 'Rescue Not Found',
-      }
+      return { valid: false, errors: { form: 'Rescue Not Found' }, noChange: false }
+    }
+
+    if (!userCanEdit) {
+      return { valid: false, errors: { form: 'You cannot edit this rescue.' }, noChange: false }
     }
 
     switch (values.outcome) {
       case 'other':
       case 'invalid':
-        invalidReason = this.validateCaseWithInvalidOutcome(values)
+        if (!values.notes.replace(/\s/gu, '')) {
+          errors.notes = 'This outcome requires notes explaining the reason.'
+        }
         break
 
       case 'success':
       case 'failure':
-        invalidReason = this.validateCaseWithValidOutcome(values)
+        if (!values.rats || !values.rats.length) {
+          errors.rats = 'Must have at least one rat assigned.'
+        }
+        if (!values.system) {
+          errors.system = 'Must have a star system location.'
+        }
+        if (!values.platform) {
+          errors.platform = 'Must have a platform.'
+        }
+        if (values.outcome === 'success' && !values.firstLimpetId) {
+          errors.firstLimpetId = 'Successful rescues must have a first limpet rat.'
+        }
+        if (values.outcome === 'failure' && !values.notes.replace(/\s/gu, '')) {
+          errors.notes = 'Failed cases must have notes explaining what went wrong.'
+        }
         break
 
       default:
-        invalidReason = 'Outcome is not set!'
+        errors.outcome = 'Outcome is not set!'
         break
     }
 
-    if (!userCanEdit) {
-      invalidReason = 'You cannot edit this rescue.'
-    }
+    const noChange = !Object.keys(errors).length && !Object.keys(changes).length
 
-    if (!invalidReason && !Object.keys(changes).length) {
-      invalidReason = 'No changes have been made yet!'
-      noChange = true
-    }
-
-    const response = {
-      valid: !invalidReason,
-      reason: invalidReason || this.lastInvalidReason,
+    return {
+      valid: !Object.keys(errors).length && !noChange,
+      errors,
       noChange,
     }
-
-    this.lastInvalidReason = invalidReason
-
-    return response
-  }
-
-  validateCaseWithValidOutcome = (values) => {
-    if (!values.rats || !values.rats.length) {
-      return 'Valid cases must have at least one rat assigned.'
-    }
-
-    if (!values.system) {
-      return 'Valid cases must have a star system location.'
-    }
-
-    if (!values.platform) {
-      return 'Valid cases must have a platform.'
-    }
-
-    if (values.outcome === 'success' && !values.firstLimpetId) {
-      return 'Successful rescues must have a first limpet rat.'
-    }
-
-    if (values.outcome === 'failure' && !values.notes.replace(/\s/gu, '')) {
-      return 'Failed cases must have notes explaining what went wrong.'
-    }
-
-    return null
-  }
-
-  validateCaseWithInvalidOutcome = (values) => {
-    if (!values.notes.replace(/\s/gu, '')) {
-      return 'Invalid cases must have notes explaining why the rescue is invalid.'
-    }
-
-    return null
   }
 
   getFieldValues () {
