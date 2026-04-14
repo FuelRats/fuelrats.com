@@ -9,7 +9,7 @@ import ConfirmActionButton from '~/components/ConfirmActionButton'
 import { listPasskeys, registerPasskey, deletePasskey } from '~/store/actions/passkeys'
 import { removeTotp } from '~/store/actions/totp'
 import { getUserProfile } from '~/store/actions/user'
-import { selectUserById, withCurrentUserId } from '~/store/selectors'
+import { selectCurrentUserId, selectSessionToken, selectUserById, withCurrentUserId } from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 import getResponseError from '~/util/getResponseError'
 
@@ -30,6 +30,8 @@ function UserSecurityPanel () {
   const [removeTotpCode, setRemoveTotpCode] = useState('')
   const [removingTotp, setRemovingTotp] = useState(false)
 
+  const userId = useSelector(selectCurrentUserId)
+  const token = useSelector(selectSessionToken)
   const user = useSelector(withCurrentUserId(selectUserById))
   const hasTotp = Boolean(user?.relationships?.authenticator?.data)
 
@@ -112,6 +114,42 @@ function UserSecurityPanel () {
     setShowTotpSetup(false)
     dispatch(getUserProfile())
   }, [dispatch])
+
+  const [downloadingCert, setDownloadingCert] = useState(false)
+
+  const handleDownloadCertificate = useCallback(async () => {
+    setDownloadingCert(true)
+    setError(null)
+    try {
+      const response = await fetch(`/api/fr/users/${userId}/certificate`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/vnd.api+json',
+        },
+        body: JSON.stringify({ data: { type: 'certificate-requests', attributes: {} } }),
+      })
+      if (!response.ok) {
+        const errData = await response.json().catch(() => { return null })
+        setError({
+          title: 'Certificate Error',
+          detail: errData?.errors?.[0]?.detail ?? 'Failed to generate certificate.',
+        })
+        setDownloadingCert(false)
+        return
+      }
+      const blob = await response.blob()
+      const url = URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = 'FuelRats-IRC.pem'
+      link.click()
+      URL.revokeObjectURL(url)
+    } catch {
+      setError({ title: 'Certificate Error', detail: 'Failed to download certificate.' })
+    }
+    setDownloadingCert(false)
+  }, [userId, token])
 
   const [webAuthnSupported, setWebAuthnSupported] = useState(false)
   useEffect(() => {
@@ -272,6 +310,22 @@ function UserSecurityPanel () {
       <SetupTotpModal
         isOpen={showTotpSetup}
         onClose={handleTotpSetupClose} />
+
+      <div className="panel">
+        <header>{'IRC Certificate'}</header>
+        <div className={styles.content}>
+          <p className={styles.certDescription}>
+            {'Download an SSL client certificate for connecting to IRC. This certificate identifies you to NickServ automatically.'}
+          </p>
+          <button
+            disabled={downloadingCert}
+            type="button"
+            onClick={handleDownloadCertificate}>
+            <FontAwesomeIcon fixedWidth icon="shield-halved" />
+            {downloadingCert ? ' Generating...' : ' Download IRC Certificate'}
+          </button>
+        </div>
+      </div>
 
       <div className={styles.accountActions}>
         <button

@@ -186,6 +186,22 @@
   color: $green;
 }
 
+.certDescription {
+  margin-bottom: 1rem;
+
+  color: $grey-darkened;
+}
+
+.certForm {
+  display: flex;
+
+  gap: 0.5rem;
+
+  input {
+    flex: 1;
+  }
+}
+
 .accountActions {
   display: flex;
 
