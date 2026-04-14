@@ -2015,6 +2015,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fortawesome/fontawesome-common-types@npm:7.0.1":
+  version: 7.0.1
+  resolution: "@fortawesome/fontawesome-common-types@npm:7.0.1"
+  checksum: 64f7b9fb2a62220d6816c8973836143498c3e7b86559f4db63263b1d5bf98a2f5234da5a66fb6a0609f37b34a6847a5a443b037c74d131aed5e56d9c36d9956c
+  languageName: node
+  linkType: hard
+
 "@fortawesome/fontawesome-common-types@npm:^0.2.36":
   version: 0.2.36
   resolution: "@fortawesome/fontawesome-common-types@npm:0.2.36"
@@ -2037,6 +2044,15 @@ __metadata:
   dependencies:
     "@fortawesome/fontawesome-common-types": ^0.2.36
   checksum: 06e38132fbdf04d8677cf6e47e73cd566f68256f542d68d354e26f5ca7536c714b56f5f3dc6c670065b888ee08bc913bb4f213ab08225faf955d893a6a86ed02
+  languageName: node
+  linkType: hard
+
+"@fortawesome/free-regular-svg-icons@npm:^7.0.1":
+  version: 7.0.1
+  resolution: "@fortawesome/free-regular-svg-icons@npm:7.0.1"
+  dependencies:
+    "@fortawesome/fontawesome-common-types": 7.0.1
+  checksum: 21f479508d58e1f48f928808b6f1553cb5839571149c90ad43c3601dfbd0ff67519d6913f3818397db9e352e40631a6f4aa110dfb7b34cc81d807f3f4d4da513
   languageName: node
   linkType: hard
 
@@ -5852,6 +5868,7 @@ __metadata:
     "@fingerprintjs/fingerprintjs": ^3.3.1
     "@fortawesome/fontawesome-svg-core": ^1.2.36
     "@fortawesome/free-brands-svg-icons": ^5.15.4
+    "@fortawesome/free-regular-svg-icons": ^7.0.1
     "@fortawesome/free-solid-svg-icons": ^5.15.4
     "@fortawesome/react-fontawesome": ^0.1.16
     "@fuelrats/babel-plugin-classnames": ^0.3.0

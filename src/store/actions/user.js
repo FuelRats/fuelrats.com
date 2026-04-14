@@ -103,3 +103,14 @@ export const changeEmail = ({ id, ...data }) => {
     },
   )
 }
+
+export const setDisplayNickname = (nicknameId, displayNick) => {
+  return frApiRequest(
+    actionTypes.nicknames.setDisplay,
+    {
+      url: `/nicknames/${nicknameId}/display`,
+      method: 'put',
+      data: createRequestBody('nicknames', { displayNick }),
+    },
+  )
+}
