@@ -38,8 +38,9 @@ function UserMenu () {
     dispatch(setFlag('showLoginDialog', true))
   }, [dispatch])
 
-  const handleLogout = useCallback(() => {
-    dispatch(logout())
+  const handleLogout = useCallback(async () => {
+    await dispatch(logout())
+    window.location.href = '/'
   }, [dispatch])
 
   return (
@@ -103,9 +104,14 @@ function UserMenu () {
 
 
             <NavSection className={styles.navSection}>
-              <NavLink className="logout" href="/" onClick={handleLogout}>
-                {'Logout'}
-              </NavLink>
+              <li>
+                <button
+                  className="logout"
+                  type="button"
+                  onClick={handleLogout}>
+                  <span>{'Logout'}</span>
+                </button>
+              </li>
             </NavSection>
           </Nav>
         )
