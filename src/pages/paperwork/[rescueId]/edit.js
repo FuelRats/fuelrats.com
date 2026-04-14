@@ -93,6 +93,38 @@ class Paperwork extends React.Component {
     changes: {},
   }
 
+  get hasUnsavedChanges () {
+    return Object.values(this.state.changes).some((v) => {
+      return typeof v !== 'undefined'
+    })
+  }
+
+  componentDidMount () {
+    window.addEventListener('beforeunload', this._handleBeforeUnload)
+    Router.events.on('routeChangeStart', this._handleRouteChange)
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('beforeunload', this._handleBeforeUnload)
+    Router.events.off('routeChangeStart', this._handleRouteChange)
+  }
+
+  _handleBeforeUnload = (event) => {
+    if (this.hasUnsavedChanges) {
+      event.preventDefault()
+    }
+  }
+
+  _handleRouteChange = (url) => {
+    if (this.hasUnsavedChanges && !this.state.submitting) {
+      // eslint-disable-next-line no-alert -- intentional confirmation dialog
+      if (!window.confirm('You have unsaved changes. Are you sure you want to leave?')) {
+        Router.events.emit('routeChangeError')
+        throw new Error('Route change aborted due to unsaved changes')
+      }
+    }
+  }
+
   _handleChange = ({ target }) => {
     const {
       name,

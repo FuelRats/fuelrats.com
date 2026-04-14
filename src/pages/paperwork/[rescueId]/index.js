@@ -243,7 +243,16 @@ class Paperwork extends React.Component {
             }
           </div>
 
-          <div className="secondary" />
+          <div className="secondary">
+            {
+              this.props.query.from === 'profile' && (
+                <Link className="button compact" href="/profile/rescues">
+                  <FontAwesomeIcon fixedWidth icon="arrow-left" />
+                  {' Back to Profile'}
+                </Link>
+              )
+            }
+          </div>
         </menu>
 
         <header className="paperwork-header">

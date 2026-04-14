@@ -46,6 +46,18 @@ export const getDispatchBoard = () => {
 }
 
 
+export const getMyRescues = (params, ...meta) => {
+  return frApiRequest(
+    actionTypes.rescues.search,
+    {
+      url: '/rescues/me',
+      params,
+    },
+    ...meta,
+  )
+}
+
+
 export const getRescue = (rescueId) => {
   return frApiRequest(
     actionTypes.rescues.read,
