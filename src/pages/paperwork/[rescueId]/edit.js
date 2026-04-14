@@ -639,8 +639,19 @@ class Paperwork extends React.Component {
       error,
     } = this.state
 
+    const { userCanEdit } = this.props
+
     return (
       <>
+        {
+          !userCanEdit && (
+            <div className="store-errors">
+              <div className="store-error">
+                <span className="detail">{'You do not have permission to edit this rescue. You may only edit rescues you are assigned to.'}</span>
+              </div>
+            </div>
+          )
+        }
         {
           (error && !submitting) && (
             <div className="store-errors">

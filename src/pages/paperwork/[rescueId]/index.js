@@ -222,23 +222,22 @@ class Paperwork extends React.Component {
             {
               !deleteConfirm && (
                 <>
-                  {
-                    userCanEdit && (
-                      <Link className="button compact" href={makePaperworkRoute({ rescueId: rescue.id, edit: true })}>
-                        {'Edit'}
-                      </Link>
-                    )
-                  }
-                  {
-                    userCanWriteAll && (
-                      <button
-                        className="compact"
-                        type="button"
-                        onClick={this._handleDeleteClick}>
-                        {'Delete'}
-                      </button>
-                    )
-                  }
+                  <Link
+                    aria-disabled={!userCanEdit}
+                    className={['button compact', { disabled: !userCanEdit }]}
+                    href={userCanEdit ? makePaperworkRoute({ rescueId: rescue.id, edit: true }) : '#'}
+                    title={!userCanEdit ? 'You do not have permission to edit this rescue' : undefined}
+                    onClick={!userCanEdit ? (event) => { return event.preventDefault() } : undefined}>
+                    {'Edit'}
+                  </Link>
+                  <button
+                    className="compact"
+                    disabled={!userCanWriteAll}
+                    title={!userCanWriteAll ? 'You do not have permission to delete rescues' : undefined}
+                    type="button"
+                    onClick={this._handleDeleteClick}>
+                    {'Delete'}
+                  </button>
                 </>
               )
             }

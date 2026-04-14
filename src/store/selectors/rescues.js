@@ -71,37 +71,34 @@ export const selectCurrentUserCanEditRescue = createCachedSelector(
       return false
     }
 
-    // Check if user has permission to edit all paperwork.
+    // Check if user has permission to edit all rescues (rescues.write scope)
     if (userCanEditAllRescues) {
       return true
     }
 
-    // If the resuce is still open, don't allow editing
-    if (rescue.attributes.status !== 'closed') {
-      return false
-    }
+    // Check if current user is assigned to this rescue
+    const isAssigned = rescueRats?.some((rat) => {
+      return rat.relationships.user?.data?.id === userId
+    })
 
-    // Check if current user is assigned to case.
-    const usersAssignedRats = rescueRats?.reduce(
-      (acc, rat) => {
-        if (rat.relationships.user?.data?.id === userId) {
-          return [...acc, rat]
-        }
-        return acc
-      },
-      [],
-    )
+    // Check if current user is first limpet
+    const isFirstLimpet = rescue.relationships.firstLimpet?.data
+      && rescueRats?.some((rat) => {
+        return rat.id === rescue.relationships.firstLimpet.data.id
+          && rat.relationships.user?.data?.id === userId
+      })
 
-    if (usersAssignedRats.length) {
+    // Assigned users or first limpet can edit while rescue is open or closed
+    if (isAssigned || isFirstLimpet) {
       return true
     }
 
-    // Check if the paperwork is not yet time locked
-    if ((new Date()).getTime() - (new Date(rescue.attributes.createdAt)).getTime() <= PAPERWORK_MAX_EDIT_TIME) {
+    // Closed rescues within time limit can be edited by dispatchers
+    if (rescue.attributes.status === 'closed'
+      && (Date.now() - new Date(rescue.attributes.createdAt).getTime()) <= PAPERWORK_MAX_EDIT_TIME) {
       return true
     }
 
-    // None of the conditions are met, user cannot edit paperwork
     return false
   },
 )(getRescueId)
