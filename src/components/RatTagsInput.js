@@ -17,11 +17,29 @@ class RatTagsInput extends TagsInput {
     )
   }
 
-  static renderValue (rat) {
+  renderValue (rat) {
+    const platformColors = {
+      pc: '#D65050',
+      ps: '#3068B3',
+      xb: '#1E8C1E',
+    }
+    const platformLabels = {
+      pc: 'PC',
+      ps: 'PS',
+      xb: 'XB',
+    }
+    const platform = rat.attributes?.platform
+    if (!platform) {
+      return super.renderValue(rat)
+    }
     return (
       <span>
-        <span className={['badge platform short', rat.attributes.platform]} />
         {rat.attributes.name}
+        <span
+          className="badge"
+          style={{ backgroundColor: platformColors[platform] ?? '#555', color: 'white', marginLeft: '0.3em', marginRight: 0, fontSize: '0.75em' }}>
+          {platformLabels[platform] ?? platform}
+        </span>
       </span>
     )
   }
