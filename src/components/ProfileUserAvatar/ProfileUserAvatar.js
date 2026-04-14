@@ -2,9 +2,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Image from 'next/image'
 import PropTypes from 'prop-types'
 import { useState, useCallback, useMemo } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
-import { selectAvatarUrlByUserId, withCurrentUserId } from '~/store/selectors'
+import { deleteAvatar, getUserProfile } from '~/store/actions/user'
+import { selectAvatarUrlByUserId, selectUserById, withCurrentUserId } from '~/store/selectors'
 
 import UploadAvatarModal from '../UploadAvatarModal'
 import styles from './ProfileUserAvatar.module.scss'
@@ -17,8 +19,12 @@ function ProfileUserAvatar ({
   size = 170,
 }) {
   const userAvatarUrl = useSelectorWithProps({ size }, withCurrentUserId(selectAvatarUrlByUserId))
+  const user = useSelector(withCurrentUserId(selectUserById))
+  const hasCustomAvatar = Boolean(user?.relationships?.avatar?.data)
+  const dispatch = useDispatch()
 
   const [showUploadAvatar, setShowUploadAvatar] = useState(false)
+  const [deleting, setDeleting] = useState(false)
 
   const handleToggleUploadAvatar = useCallback(() => {
     setShowUploadAvatar((prevState) => {
@@ -29,6 +35,17 @@ function ProfileUserAvatar ({
   const handleAvatarModalClose = useCallback(() => {
     return setShowUploadAvatar(false)
   }, [])
+
+  const handleDeleteAvatar = useCallback(async () => {
+    // eslint-disable-next-line no-alert -- intentional confirmation
+    if (!window.confirm('Are you sure you want to remove your avatar?')) {
+      return
+    }
+    setDeleting(true)
+    await dispatch(deleteAvatar())
+    await dispatch(getUserProfile())
+    setDeleting(false)
+  }, [dispatch])
 
   const sizeMeta = useMemo(() => {
     let icon = undefined
@@ -70,6 +87,18 @@ function ProfileUserAvatar ({
             )
           }
         </div>
+        {
+          canEdit && hasCustomAvatar && (
+            <button
+              aria-label="Remove your avatar"
+              className={styles.deleteButton}
+              disabled={deleting}
+              type="button"
+              onClick={handleDeleteAvatar}>
+              <FontAwesomeIcon icon="trash" />
+            </button>
+          )
+        }
       </div>
       <UploadAvatarModal
         isOpen={showUploadAvatar}

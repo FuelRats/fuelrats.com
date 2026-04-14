@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Image from 'next/image'
+import NextImage from 'next/image'
 import PropTypes from 'prop-types'
 import { useState, useCallback } from 'react'
 import Cropper from 'react-easy-crop'
@@ -22,14 +22,14 @@ const HALF_CIRCLE = 180 // Conversion of rat to deg
 
 // eslint-disable-next-line no-magic-numbers -- Numbers correspond to degree marks to be placed
 const rotationMarks = [0, 45, 90, 135, 180].reduce((acc, value) => {
-  acc[0 - value] = {}
-  acc[value] = {}
+  acc[0 - value] = ''
+  acc[value] = ''
   return acc
 }, {})
 
 // eslint-disable-next-line no-magic-numbers -- Numbers correspond to zoom marks
 const zoomMarks = [1, 1.5, 2, 2.5, 3].reduce((acc, value) => {
-  acc[value] = {}
+  acc[value] = ''
   return acc
 }, {})
 
@@ -204,7 +204,7 @@ function UploadAvatarModal (props) {
       {
         result.success && (
           <div className={styles.avatarPreview}>
-            <Image
+            <NextImage
               unoptimized
               alt="Updated avatar preview"
               height={AVATAR_PREVIEW_SIZE}

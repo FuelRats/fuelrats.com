@@ -93,6 +93,16 @@ export const updateAvatar = (data) => {
   }
 }
 
+export const deleteAvatar = () => {
+  return (dispatch, getState) => {
+    const user = selectCurrentUserId(getState())
+    return dispatch(frApiRequest(actionTypes.users.avatar.update, {
+      url: `/users/${user}/image`,
+      method: 'delete',
+    }))
+  }
+}
+
 export const changeEmail = ({ id, ...data }) => {
   return frApiPlainRequest(
     actionTypes.users.email.update,
