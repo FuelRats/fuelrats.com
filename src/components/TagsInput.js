@@ -44,6 +44,7 @@ export default class TagsInput extends React.Component {
 
   addTag (tag) {
     const { onAdd, onChange } = this.props
+    const isSingle = this.props['data-single']
 
     if (!this.state.allowDuplicates) {
       const isDuplicate = this.state.tags.findIndex((searchTag) => this.getValue(searchTag) === this.getValue(tag)) !== -1
@@ -52,14 +53,13 @@ export default class TagsInput extends React.Component {
       }
     }
 
-    this.setState((prevState) => ({
-      options: [],
-      selectedOption: null,
-      tags: [
-        ...prevState.tags,
-        tag,
-      ],
-    }), () => {
+    this.setState(() => {
+      return {
+        options: [],
+        selectedOption: null,
+        tags: isSingle ? [tag] : [...this.state.tags, tag],
+      }
+    }, () => {
       if (onAdd) {
         onAdd(tag)
       }
@@ -324,7 +324,7 @@ export default class TagsInput extends React.Component {
     event.target.parentNode.classList.remove('focus')
   }
 
-  static onFocus (event) {
+  onFocus = (event) => {
     event.target.parentNode.classList.add('focus')
   }
 
@@ -374,23 +374,37 @@ export default class TagsInput extends React.Component {
     return typeof optionValue !== 'string' ? optionValue : { value: optionValue }
   }
 
-  removeTag = (tag) => this.setState((state) => {
-    const tags = [...state.tags]
-
-    tags.splice(tags.indexOf(tag), 1)
-
-    return { tags }
-  }, () => {
-    const { onChange, onRemove } = this.props
-
-    if (onRemove) {
-      onRemove(tag)
+  removeTag = (tag) => {
+    if (this.props['data-single']) {
+      const currentValue = this.getValue(tag)
+      this.setState({
+        tags: [],
+        currentValue,
+        newFocus: false,
+      }, () => {
+        this.input.value = currentValue
+        this.input.focus()
+        this.input.setSelectionRange(0, currentValue.length)
+      })
+      return
     }
 
-    if (onChange) {
-      onChange(this.state.tags)
-    }
-  })
+    this.setState((state) => {
+      const tags = [...state.tags]
+      tags.splice(tags.indexOf(tag), 1)
+      return { tags }
+    }, () => {
+      const { onChange, onRemove } = this.props
+
+      if (onRemove) {
+        onRemove(tag)
+      }
+
+      if (onChange) {
+        onChange(this.state.tags)
+      }
+    })
+  }
 
   render () {
     const {
@@ -430,7 +444,7 @@ export default class TagsInput extends React.Component {
           placeholder={placeholder}
           type="search"
           onBlur={this.onBlur}
-          onFocus={TagsInput.onFocus}
+          onFocus={this.onFocus}
           onInput={this.onInput}
           onKeyDown={this.onKeyDown} />
 

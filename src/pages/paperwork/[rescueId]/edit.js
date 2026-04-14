@@ -46,6 +46,19 @@ const selectFormattedRatsByRescueId = createSelector(
   },
 )
 
+const carrierRadioOptions = [
+  {
+    value: 'true',
+    label: 'Yes',
+    title: 'The client is on a fleet carrier.',
+  },
+  {
+    value: 'false',
+    label: 'No',
+    title: 'The client is not on a fleet carrier.',
+  },
+]
+
 const codeRedRadioOptions = [
   {
     value: 'true',
@@ -387,6 +400,7 @@ class Paperwork extends React.Component {
     const pwValidity = this.validate(fieldValues)
 
     const {
+      carrier,
       client,
       codeRed,
       expansion,
@@ -503,6 +517,18 @@ class Paperwork extends React.Component {
             name="codeRed"
             options={codeRedRadioOptions}
             value={String(codeRed)}
+            onChange={this._handleRadioInputChange} />
+        </fieldset>
+
+        <fieldset>
+          <label htmlFor="carrier-yes">{'Was it a carrier rescue?'}</label>
+          <RadioInput
+            className="carrier"
+            disabled={submitting}
+            id="carrier"
+            name="carrier"
+            options={carrierRadioOptions}
+            value={String(carrier)}
             onChange={this._handleRadioInputChange} />
         </fieldset>
 
@@ -706,6 +732,7 @@ class Paperwork extends React.Component {
     }
 
     return {
+      carrier: getValue('carrier'),
       client: getValue('client'),
       codeRed: getValue('codeRed'),
       expansion: getValue('expansion'),
