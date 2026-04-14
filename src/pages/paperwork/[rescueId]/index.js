@@ -309,6 +309,12 @@ class Paperwork extends React.Component {
           }
 
           {
+            (rescue.attributes.carrier) && (
+              <div className="tag">{'Carrier'}</div>
+            )
+          }
+
+          {
             rescue.attributes.outcome === 'purge' && (
               <div className="md-group">
                 <div className="marked-for-deletion">{'Marked for Deletion'}</div>
@@ -321,16 +327,10 @@ class Paperwork extends React.Component {
         </div>
 
         <div className="info">
-          {
-            (rescue.attributes.title) && (
-              <>
-                <span className="label">{'Client '}</span>
-                <span className="cmdr-name">{rescue.attributes.client}</span>
-                <span className="label">{'System '}</span>
-                <span className="system">{(rescue.attributes.system) || ('Unknown')}</span>
-              </>
-            )
-          }
+          <span className="label">{'Client '}</span>
+          <span className="cmdr-name">{rescue.attributes.client}</span>
+          <span className="label">{'System '}</span>
+          <span className="system">{rescue.attributes.system || 'Unknown'}</span>
           <span className="label">{'Created'}</span>
           <span className="date-created content">{formatAsEliteDateTime(rescue.attributes.createdAt)}</span>
           <span className="label">{'Updated'}</span>
