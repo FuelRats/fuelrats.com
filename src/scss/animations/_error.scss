@@ -1,26 +1,26 @@
 @keyframes error-start {
   0% {
-    border-color: currentColor;
+    border-color: currentcolor;
 
     transform: rotate(0deg);
   }
 
   100% {
-    border-color: transparent currentColor;
+    border-color: transparent currentcolor;
 
     transform: rotate(405deg);
   }
 }
 @keyframes error {
   0% {
-    border-color: transparent currentColor;
+    border-color: transparent currentcolor;
   }
 
   50% {
-    border-color: currentColor transparent;
+    border-color: currentcolor transparent;
   }
 
   100% {
-    border-color: transparent currentColor;
+    border-color: transparent currentcolor;
   }
 }

@@ -1,11 +1,8 @@
 import { HttpStatus } from '@fuelrats/web-util/http'
-import UUID from 'pure-uuid'
 
 import apiErrorLocalisations from '~/data/apiErrorLocalisations'
 
 import bindMethod from '../decorators/bindMethod'
-
-const UUID_VERSION = 4
 
 /**
  * JSONAPI Compliant Error object.
@@ -13,7 +10,7 @@ const UUID_VERSION = 4
 export class APIError extends Error {
   constructor (source, meta) {
     super()
-    this.id = (new UUID(UUID_VERSION)).toString()
+    this.id = crypto.randomUUID()
     this.source = source
     this.meta = meta
   }

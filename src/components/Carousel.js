@@ -1,4 +1,4 @@
-import { AnimatePresence, m } from 'framer-motion'
+import { AnimatePresence, m } from 'motion/react'
 import getConfig from 'next/config'
 import PropTypes from 'prop-types'
 import { useCallback, useEffect, useRef, useState } from 'react'

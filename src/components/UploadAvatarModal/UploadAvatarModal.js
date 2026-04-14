@@ -1,13 +1,15 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Image from 'next/image'
 import PropTypes from 'prop-types'
 import { useState, useCallback } from 'react'
 import Cropper from 'react-easy-crop'
 import { useDispatch } from 'react-redux'
 
 import asModal, { ModalContent, ModalFooter } from '~/components/asModal'
-import ProfileUserAvatar from '~/components/ProfileUserAvatar'
 import Slider from '~/components/Slider'
+import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { updateAvatar } from '~/store/actions/user'
+import { selectAvatarUrlByUserId, withCurrentUserId } from '~/store/selectors'
 import getResponseError from '~/util/getResponseError'
 
 import UploadAvatarMessageBox from './UploadAvatarMessageBox'
@@ -32,11 +34,15 @@ const zoomMarks = [1, 1.5, 2, 2.5, 3].reduce((acc, value) => {
 }, {})
 
 
+const AVATAR_PREVIEW_SIZE = 170
+
 function UploadAvatarModal (props) {
   const {
     onClose,
     isOpen,
   } = props
+
+  const userAvatarUrl = useSelectorWithProps({ size: AVATAR_PREVIEW_SIZE }, withCurrentUserId(selectAvatarUrlByUserId))
 
   const [result, setResult] = useState({ })
 
@@ -198,7 +204,12 @@ function UploadAvatarModal (props) {
       {
         result.success && (
           <div className={styles.avatarPreview}>
-            <ProfileUserAvatar />
+            <Image
+              unoptimized
+              alt="Updated avatar preview"
+              height={AVATAR_PREVIEW_SIZE}
+              src={userAvatarUrl}
+              width={AVATAR_PREVIEW_SIZE} />
           </div>
         )
       }

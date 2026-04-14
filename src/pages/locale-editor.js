@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { AnimatePresence, m } from 'framer-motion'
+import { AnimatePresence, m } from 'motion/react'
 import getConfig from 'next/config'
 import { useCallback, useEffect, useRef, useState } from 'react'
 

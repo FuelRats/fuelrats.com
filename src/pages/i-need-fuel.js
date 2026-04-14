@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useMemo } from 'react'
 import { useSelector } from 'react-redux'
-import UAParser from 'ua-parser-js'
+import { UAParser } from 'ua-parser-js'
 
 import MessageBox from '~/components/MessageBox'
 import { selectSession } from '~/store/selectors'
@@ -111,13 +111,9 @@ function INeedFuel () {
 
               <strong>
                 {'By connecting to our IRC and using our services, you agree to our '}
-                <Link href="/terms-of-service">
-                  <a>{'Terms of Service'}</a>
-                </Link>
+                <Link href="/terms-of-service">{'Terms of Service'}</Link>
                 {' and '}
-                <Link href="/privacy-policy">
-                  <a>{'Privacy Policy'}</a>
-                </Link>
+                <Link href="/privacy-policy">{'Privacy Policy'}</Link>
                 {'.'}
               </strong>
             </>

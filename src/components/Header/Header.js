@@ -46,12 +46,10 @@ function Header () {
       </label>
 
       <header role="banner">
-        <Link href="/">
-          <a className="brand" title="Home">
-            <div className="brand-animation-wrapper">
-              <Brand id="brandSvg" />
-            </div>
-          </a>
+        <Link className="brand" href="/" title="Home">
+          <div className="brand-animation-wrapper">
+            <Brand id="brandSvg" />
+          </div>
         </Link>
 
         <Nav onClick={handleClick}>

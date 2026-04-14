@@ -190,10 +190,8 @@ function RescueDetailsContent (props) {
               <CopyToClipboard doHint text={`https://fuelrats.com/paperwork/${rescue.id}`}>
                 {rescue.id}
               </CopyToClipboard>
-              <Link href={makePaperworkRoute({ rescueId: rescue.id, edit: true })}>
-                <a className="button icon">
-                  {'paperwork'}
-                </a>
+              <Link className="button icon" href={makePaperworkRoute({ rescueId: rescue.id, edit: true })}>
+                {'paperwork'}
               </Link>
             </td>
           </tr>

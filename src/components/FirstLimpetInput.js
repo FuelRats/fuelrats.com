@@ -12,7 +12,6 @@ class FirstLimpetInput extends RatTagsInput {
       return regex.test(this.getValue(option))
     }))
   }
-  /* eslint-enable */
 }
 
 

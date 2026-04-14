@@ -65,7 +65,7 @@ function Verify ({ token }) {
         <>
           {"The provided token is invalid. This probably means you've already verified your e-mail address."}
           {' Please try checking your '}
-          <Link href="/profile/overview"><a>{'profile'}</a></Link>
+          <Link href="/profile/overview">{'profile'}</Link>
           {' for a '}
           <span className="badge info inline">{'verified'}</span>
           {' badge next to your avatar.'}

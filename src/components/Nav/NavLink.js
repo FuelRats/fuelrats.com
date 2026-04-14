@@ -37,12 +37,10 @@ export default function NavLink (props) {
             </a>
           )
           : (
-            <Link {...restProps}>
-              <a className={[className, { disabled }]} onClick={handleClick}>
-                <span>
-                  {children}
-                </span>
-              </a>
+            <Link {...restProps} className={[className, { disabled }]} onClick={handleClick}>
+              <span>
+                {children}
+              </span>
             </Link>
           )
       }

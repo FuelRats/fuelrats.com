@@ -5,7 +5,7 @@ module.exports = {
       {
         'preset-env': {
           bugfixes: true,
-          targets: 'defaults, not IE 11, not IE_mob 11, node 16',
+          targets: 'defaults, not IE 11, not IE_mob 11, node 20',
         },
       },
     ],

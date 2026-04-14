@@ -1,10 +1,8 @@
 import { errorLoggerMiddleware } from '@fuelrats/web-util/redux-middleware'
+import { configureStore } from '@reduxjs/toolkit'
 import hoistNonReactStatics from 'hoist-non-react-statics'
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { createStore, applyMiddleware } from 'redux'
-import { composeWithDevTools } from 'redux-devtools-extension'
-import thunkMiddleware from 'redux-thunk'
 
 import frSocket from '~/services/frSocket'
 
@@ -17,12 +15,6 @@ const ignoredTypes = [
   actionTypes.wordpress.pages.read,
 ]
 
-const middlewares = [thunkMiddleware, frSocket.createMiddleware(), errorLoggerMiddleware(ignoredTypes)]
-if ($$BUILD.isDev) {
-  middlewares.unshift(require('redux-immutable-state-invariant').default())
-  middlewares.push(require('@fuelrats/web-util/redux-middleware').FSAComplianceMiddleware)
-}
-
 
 
 /**
@@ -31,7 +23,6 @@ if ($$BUILD.isDev) {
  * Provides state returned by the provider function and automatically attaches the dispatch() function.
  *
  * DO NOT INTRODUCE TO NEW COMPONENTS
- *
  * @param {Function} stateProvider a function which returns an object of state values. hook-compatible. props and dispatch are available through arguments.
  * @returns {React.FC}
  */
@@ -51,5 +42,20 @@ export function connectState (stateProvider) {
 }
 
 export const initStore = (state = initialState) => {
-  return createStore(reducer, state, composeWithDevTools(applyMiddleware(...middlewares)))
+  const middlewares = [frSocket.createMiddleware(), errorLoggerMiddleware(ignoredTypes)]
+  if ($$BUILD.isDev) {
+    middlewares.unshift(require('redux-immutable-state-invariant').default())
+    middlewares.push(require('@fuelrats/web-util/redux-middleware').FSAComplianceMiddleware)
+  }
+
+  return configureStore({
+    reducer,
+    preloadedState: state,
+    middleware: (getDefaultMiddleware) => {
+      return getDefaultMiddleware({
+        serializableCheck: false,
+        immutableCheck: false,
+      }).concat(middlewares)
+    },
+  })
 }

@@ -23,9 +23,9 @@ module.exports = () => {
 
     images: {
       disableStaticImages: true,
-      domains: [
-        'wordpress.fuelrats.com',
-        'static-cdn.jtvnw.net',
+      remotePatterns: [
+        { protocol: 'https', hostname: 'wordpress.fuelrats.com' },
+        { protocol: 'https', hostname: 'static-cdn.jtvnw.net' },
       ],
     },
 

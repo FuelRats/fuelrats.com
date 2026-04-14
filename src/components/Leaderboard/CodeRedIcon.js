@@ -1,5 +1,5 @@
-import CodeRedSvg from '../../../public/static/svg/codeRed.svg'
 import styles from './Leaderboard.module.scss'
+import CodeRedSvg from '../../../public/static/svg/codeRed.svg'
 
 
 

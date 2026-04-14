@@ -69,10 +69,8 @@ export default function RescueDetail (props) {
         <tr>
           <td><b>{'Paperwork'}</b></td>
           <td>
-            <Link href={makePaperworkRoute({ rescueId: rescue.id, edit: false })}>
-              <a className="button">
-                {'paperwork'}
-              </a>
+            <Link className="button" href={makePaperworkRoute({ rescueId: rescue.id, edit: false })}>
+              {'paperwork'}
             </Link>
           </td>
         </tr>

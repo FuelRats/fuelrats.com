@@ -106,12 +106,10 @@ class ListRescues extends React.Component {
       <div key={rescue.id} className="rescue-list-item">
         <span className="primary-info">
           <Link href={makePaperworkRoute({ rescueId: rescue.id })}>
-            <a>
-              <small>{'CMDR '}</small>
-              {client}
-              <small>{' in '}</small>
-              {system}
-            </a>
+            <small>{'CMDR '}</small>
+            {client}
+            <small>{' in '}</small>
+            {system}
           </Link>
         </span>
         <span className="secondary-info">

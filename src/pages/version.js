@@ -24,10 +24,8 @@ function Version ({ version }) {
   return (
     <div className="page-content">
       <div>
-        <Link href="/api/version">
-          <a className="button compact">
-            {'Raw'}
-          </a>
+        <Link className="button compact" href="/api/version">
+          {'Raw'}
         </Link>
       </div>
       <div className="page-content text-mono">

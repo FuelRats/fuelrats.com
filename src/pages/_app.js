@@ -1,8 +1,8 @@
 import { library as faLibrary, config as faConfig } from '@fortawesome/fontawesome-svg-core'
-import { AnimatePresence, LazyMotion, domAnimation, m } from 'framer-motion'
-import withRedux from 'next-redux-wrapper'
+import { AnimatePresence, LazyMotion, domAnimation, m } from 'motion/react'
 import App from 'next/app'
 import NextHead from 'next/head'
+import { createWrapper } from 'next-redux-wrapper'
 import { StrictMode } from 'react'
 import { Provider } from 'react-redux'
 
@@ -48,7 +48,8 @@ const pageMotionConfig = {
 
 
 
-@withRedux(initStore)
+const wrapper = createWrapper(initStore)
+
 class FuelRatsApp extends App {
   static async getInitialProps (appCtx) {
     const { Component, ctx } = appCtx
@@ -174,4 +175,4 @@ class FuelRatsApp extends App {
 
 
 
-export default FuelRatsApp
+export default wrapper.withRedux(FuelRatsApp)

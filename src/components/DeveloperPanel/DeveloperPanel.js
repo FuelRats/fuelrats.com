@@ -6,8 +6,8 @@ import { createClient, getClients } from '~/store/actions/clients'
 import { selectCurrentUserId, withCurrentUserId } from '~/store/selectors'
 import { selectClientsByUserId } from '~/store/selectors/clients'
 
-import OAuthClientForm from '../Forms/OAuthClientForm'
 import ClientSubmitMessageBox from './ClientSubmitMessageBox'
+import OAuthClientForm from '../Forms/OAuthClientForm'
 
 
 
@@ -39,7 +39,7 @@ function DeveloperPanel () {
   return (
     <div className="user-developer-tab">
       {"Do you like my pretty page?! It's great, isn't it? Totally not a rush job at all! Actual UI to delete clients and revoke tokens coming soon™."}
-      <Image alt="Kappa" height={18} layout="fixed" src="https://static-cdn.jtvnw.net/emoticons/v1/25/1.0" width={84} />
+      <Image alt="Kappa" height={18} src="https://static-cdn.jtvnw.net/emoticons/v1/25/1.0" width={84} />
 
       <div>
         <h4>{'Create Client'}</h4>

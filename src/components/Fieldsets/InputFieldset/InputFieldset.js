@@ -151,7 +151,6 @@ InputFieldset.propTypes = {
  * `target?` - the underlying input element
  *
  * `messages` can be mutated or an updated object can be returned by the callback.
- *
  * @param {Function} callback
  * @param {any[]} deps
  * @param {Function} parent

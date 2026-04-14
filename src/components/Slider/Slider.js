@@ -29,8 +29,8 @@
 
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import RCSlider, { Handle } from 'rc-slider'
-import { useCallback } from 'react'
+import RCSlider from 'rc-slider'
+import { cloneElement, useCallback } from 'react'
 
 
 
@@ -44,31 +44,30 @@ export default function Slider (props) {
     ...restProps
   } = props
 
-  const renderHandle = useCallback((sliderProps) => {
-    const { index, ...restSliderProps } = sliderProps
-    delete restSliderProps.dragging
-    if (restSliderProps.value === null) {
+  const renderHandle = useCallback((origin, handleProps) => {
+    if (handleProps.value === null) {
       return null
     }
 
-    return (
-      <Handle key={index} {...restSliderProps}>
-        {
-          iconId && (
-            <FontAwesomeIcon
-              fixedWidth
-              className="rc-slider-handle-icon"
-              {...iconProps}
-              icon={iconId} />
-          )
-        }
-      </Handle>
+    if (!iconId) {
+      return origin
+    }
+
+    return cloneElement(
+      origin,
+      origin.props, (
+        <FontAwesomeIcon
+          fixedWidth
+          className="rc-slider-handle-icon"
+          {...iconProps}
+          icon={iconId} />
+      ),
     )
   }, [iconProps, iconId])
 
   return (
     <Component
-      handle={renderHandle}
+      handleRender={renderHandle}
       {...restProps} />
   )
 }

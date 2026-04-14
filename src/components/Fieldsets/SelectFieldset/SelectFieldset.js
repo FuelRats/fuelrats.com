@@ -5,8 +5,8 @@ import { useCallback, useRef } from 'react'
 import { useField, fieldPropTypes } from '~/hooks/useForm'
 import extPropTypes from '~/util/propTypes/extPropTypes'
 
-import inputStyles from '../InputFieldset/InputFieldset.module.scss'
 import styles from './SelectFieldset.module.scss'
+import inputStyles from '../InputFieldset/InputFieldset.module.scss'
 
 
 

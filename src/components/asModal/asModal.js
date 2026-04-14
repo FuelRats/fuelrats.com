@@ -1,5 +1,5 @@
-import { AnimatePresence, m } from 'framer-motion'
 import hoistNonReactStatics from 'hoist-non-react-statics'
+import { AnimatePresence, m } from 'motion/react'
 import React, { useCallback, useMemo, useContext } from 'react'
 
 import useEventListener from '~/hooks/useEventListener'

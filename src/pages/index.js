@@ -68,9 +68,7 @@ function FuelRatsHome (props) {
       </header>
 
       <footer className="call-to-action">
-        <Link href="/i-need-fuel">
-          <a className="button tall">{'Get Fuel'}</a>
-        </Link>
+        <Link className="button tall" href="/i-need-fuel">{'Get Fuel'}</Link>
       </footer>
     </section>
   )

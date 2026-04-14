@@ -1,5 +1,5 @@
-const util = require('@fuelrats/eslint-config-react/util')
 const { withAliasResolver } = require('@fuelrats/eslint-config/util/import')
+const util = require('@fuelrats/eslint-config-react/util')
 
 module.exports = {
   env: {
@@ -19,6 +19,12 @@ module.exports = {
     'import/order': util.extendRule('import/order', {
       'newlines-between': 'always',
     }),
+    'jsx-a11y/control-has-associated-label': ['error', {
+      labelAttributes: ['aria-hidden'],
+      ignoreElements: ['link', 'td', 'tr', 'th'],
+    }],
+    'jsdoc/check-examples': 'off',
+    'react/jsx-sort-default-props': 'off',
     ...util.disable(
       'jsx-a11y/no-noninteractive-element-interactions', // We intend to enable this once we refactor certain key components.
       'jsdoc/require-jsdoc', // we'll get to it someday...

@@ -1,6 +1,6 @@
 /* eslint-disable no-magic-numbers */
 
-import stripeJs from 'stripe'
+import Stripe from 'stripe'
 
 import getEnv from '~/util/server/getEnv'
 import acceptMethod from '~/util/server/middleware/acceptMethod'
@@ -12,7 +12,7 @@ import trafficController from '~/util/server/middleware/trafficController'
 
 
 const env = getEnv()
-const stripe = stripeJs(env.stripe.secret)
+const stripe = new Stripe(env.stripe.secret)
 
 const getDonationItemInfo = (amount) => {
   if (amount >= 3500) {

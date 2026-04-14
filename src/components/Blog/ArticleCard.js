@@ -52,9 +52,7 @@ function ArticleCard (props) {
     <article className={className}>
       <header>
         <h3 className="title">
-          <Link href={`/blog/${blog.id}`}>
-            <a dangerouslySetInnerHTML={{ __html: blog.title.rendered }} />
-          </Link>
+          <Link dangerouslySetInnerHTML={{ __html: blog.title.rendered }} href={`/blog/${blog.id}`} />
         </h3>
       </header>
 
@@ -67,9 +65,7 @@ function ArticleCard (props) {
 
         <span className="author">
           <FontAwesomeIcon fixedWidth icon="user" />
-          <Link href={makeBlogRoute({ author: authorId })}>
-            <a>{authorName}</a>
-          </Link>
+          <Link href={makeBlogRoute({ author: authorId })}>{authorName}</Link>
         </span>
 
         <span>
@@ -86,9 +82,7 @@ function ArticleCard (props) {
 
                 return (
                   <li key={categoryId}>
-                    <Link href={makeBlogRoute({ category: categoryId })}>
-                      <a title={description}>{name}</a>
-                    </Link>
+                    <Link href={makeBlogRoute({ category: categoryId })} title={description}>{name}</Link>
                   </li>
                 )
               })

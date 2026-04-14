@@ -223,10 +223,8 @@ class Paperwork extends React.Component {
                 <>
                   {
                     userCanEdit && (
-                      <Link href={makePaperworkRoute({ rescueId: rescue.id, edit: true })}>
-                        <a className="button compact">
-                          {'Edit'}
-                        </a>
+                      <Link className="button compact" href={makePaperworkRoute({ rescueId: rescue.id, edit: true })}>
+                        {'Edit'}
                       </Link>
                     )
                   }

@@ -78,13 +78,9 @@ export default function TermsFieldset (props) {
 
         <label htmlFor={props.id}>
           {'I agree that I have read and agree to the  '}
-          <Link href="/terms-of-service">
-            <a>{'Terms of Service'}</a>
-          </Link>
+          <Link href="/terms-of-service">{'Terms of Service'}</Link>
           {' and '}
-          <Link href="/privacy-policy">
-            <a>{'Privacy Policy'}</a>
-          </Link>
+          <Link href="/privacy-policy">{'Privacy Policy'}</Link>
           {', and that I am 13 years of age or older.'}
         </label>
       </span>
