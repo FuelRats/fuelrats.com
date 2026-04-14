@@ -68,6 +68,7 @@ function LoginView () {
     }
 
     onClose()
+    Router.push('/profile/overview')
   }, [dispatch, onClose, setModalState, webAuthnSupported])
 
   const handleRegisterClick = useCallback(() => {
@@ -104,6 +105,7 @@ function LoginView () {
 
     dispatch(getUserProfile())
     onClose()
+    Router.push('/profile/overview')
   }, [dispatch, onClose, setModalState])
 
   const { Form, canSubmit, submitting } = useForm({ data: data ?? initialData, onSubmit })

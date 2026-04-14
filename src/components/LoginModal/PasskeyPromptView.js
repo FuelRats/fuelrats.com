@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Router from 'next/router'
 import { useCallback, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
@@ -19,6 +20,7 @@ function PasskeyPromptView () {
   const handleDismiss = useCallback(() => {
     localStorage.setItem('fr.passkeyPromptDismissed', '1')
     onClose()
+    Router.push('/profile/overview')
   }, [onClose])
 
   const handleRegister = useCallback(async () => {
@@ -34,6 +36,7 @@ function PasskeyPromptView () {
 
     if (response) {
       onClose()
+      Router.push('/profile/overview')
     }
 
     setRegistering(false)
