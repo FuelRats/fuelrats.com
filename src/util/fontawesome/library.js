@@ -46,6 +46,14 @@ export {
   faUser,
   faUserSecret,
   faUpload,
+  faBagShopping,
+  faChalkboardUser,
+  faCode,
+  faGavel,
+  faGears,
+  faGraduationCap,
+  faHeadset,
+  faSnowflake,
 } from '@fortawesome/free-solid-svg-icons'
 
 export {

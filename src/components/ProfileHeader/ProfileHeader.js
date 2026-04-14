@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useCallback, useState } from 'react'
 import { useSelector } from 'react-redux'
 
@@ -11,6 +12,7 @@ import {
 } from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 
+import styles from './ProfileHeader.module.scss'
 import ChangeEmailModal from '../ChangeEmailModal'
 import ChangePasswordModal from '../ChangePasswordModal'
 import ProfileUserAvatar from '../ProfileUserAvatar'
@@ -19,6 +21,22 @@ import UnverifiedUserBanner from './UnverifiedUserBanner'
 
 
 
+
+const groupConfig = {
+  verified: { color: '#918f8f', icon: 'circle-check' },
+  rat: { color: '#49c549', icon: 'graduation-cap' },
+  dispatch: { color: '#1e711e', icon: 'headset' },
+  overseer: { color: '#df8122', icon: 'eye' },
+  moderator: { color: '#d15656', icon: 'gavel' },
+  trainer: { color: '#ffb366', icon: 'chalkboard-user' },
+  techrat: { color: '#5d93b9', icon: 'gears' },
+  netadmin: { color: '#276a99', icon: 'gears' },
+  admin: { color: '#aa2020', icon: 'gavel' },
+  owner: { color: '#89308c', icon: 'snowflake' },
+  developer: { color: '#92b1c7', icon: 'code' },
+  operations: { color: '#bb88ff', icon: 'clipboard-list' },
+  merchant: { color: '#b883ba', icon: 'bag-shopping' },
+}
 
 function ProfileHeader () {
   const [showChangeEmail, setShowChangeEmail] = useState(false)
@@ -67,9 +85,14 @@ function ProfileHeader () {
           <ul>
             {
               groups?.map((group) => {
+                const config = groupConfig[group.attributes.name]
                 return (
-                  <li key={group.id} className={['badge info', group.attributes.name]}>
-                    {group.attributes.name}
+                  <li
+                    key={group.id}
+                    className={[styles.groupBadge, group.attributes.name]}
+                    style={config ? { backgroundColor: config.color } : undefined}>
+                    {config?.icon && (<FontAwesomeIcon fixedWidth icon={config.icon} />)}
+                    {group.attributes.displayName ?? group.attributes.name}
                   </li>
                 )
               })
