@@ -19,7 +19,7 @@ class RatTagsInput extends TagsInput {
 
   renderValue (rat) {
     const platformColors = {
-      pc: '#D65050',
+      pc: '#985DB5',
       ps: '#3068B3',
       xb: '#1E8C1E',
     }
