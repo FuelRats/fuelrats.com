@@ -13,7 +13,8 @@ import { selectCurrentUserHasScope } from './users'
 
 
 // Constants
-const PAPERWORK_MAX_EDIT_TIME = 3600000
+const RESCUE_ACCESS_HOURS = 3
+const PAPERWORK_MAX_EDIT_TIME = RESCUE_ACCESS_HOURS * 60 * 60 * 1000
 
 
 
@@ -64,9 +65,20 @@ export const selectCurrentUserCanEditAllRescues = (state) => {
 }
 
 
+const selectCurrentUserHasWriteMeScope = (state) => {
+  return selectCurrentUserHasScope(state, { scope: 'rescues.write.me' })
+}
+
+const selectCurrentUserHasDispatchWriteScope = (state) => {
+  return selectCurrentUserHasScope(state, { scope: 'dispatch.write' })
+}
+
 export const selectCurrentUserCanEditRescue = createCachedSelector(
-  [selectRescueById, selectRatsByRescueId, selectCurrentUserId, selectCurrentUserCanEditAllRescues],
-  (rescue, rescueRats, userId, userCanEditAllRescues) => {
+  [
+    selectRescueById, selectRatsByRescueId, selectCurrentUserId,
+    selectCurrentUserCanEditAllRescues, selectCurrentUserHasWriteMeScope, selectCurrentUserHasDispatchWriteScope,
+  ],
+  (rescue, rescueRats, userId, userCanEditAllRescues, userHasWriteMe, userHasDispatchWrite) => {
     if (!rescue || !userId) {
       return false
     }
@@ -88,14 +100,20 @@ export const selectCurrentUserCanEditRescue = createCachedSelector(
           && rat.relationships.user?.data?.id === userId
       })
 
-    // Assigned users or first limpet can edit while rescue is open or closed
-    if (isAssigned || isFirstLimpet) {
+    // Assigned users or first limpet can always edit their own rescues
+    if ((isAssigned || isFirstLimpet) && userHasWriteMe) {
       return true
     }
 
-    // Closed rescues within time limit can be edited by dispatchers
+    // Open rescues can be edited by anyone with rescues.write.me
+    if (rescue.attributes.status !== 'closed' && userHasWriteMe) {
+      return true
+    }
+
+    // Closed rescues within time limit can be edited by dispatchers (based on updatedAt)
     if (rescue.attributes.status === 'closed'
-      && (Date.now() - new Date(rescue.attributes.createdAt).getTime()) <= PAPERWORK_MAX_EDIT_TIME) {
+      && userHasDispatchWrite
+      && (Date.now() - new Date(rescue.attributes.updatedAt).getTime()) <= PAPERWORK_MAX_EDIT_TIME) {
       return true
     }
 
