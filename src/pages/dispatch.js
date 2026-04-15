@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useRouter } from 'next/router'
+import { useEffect, useRef, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { authenticated } from '~/components/AppLayout'
 import Clock from '~/components/Clock'
@@ -8,6 +9,8 @@ import RescueDetails from '~/components/RescueDetails'
 import styles from '~/scss/pages/dispatch.module.scss'
 import { useRatSocket, useSocketStatus } from '~/services/frSocket'
 import { getDispatchBoard } from '~/store/actions/rescues'
+import { selectDispatchBoard } from '~/store/selectors/dispatch'
+import makeRoute from '~/util/router/makeRoute'
 
 
 
@@ -27,6 +30,26 @@ function DispatchBoard ({ query }) {
 
   useRatSocket()
   const socketStatus = useSocketStatus()
+  const router = useRouter()
+  const rescueIds = useSelector(selectDispatchBoard)
+  const prevRescueIdsRef = useRef(rescueIds)
+
+  useEffect(() => {
+    const prevIds = prevRescueIdsRef.current
+    prevRescueIdsRef.current = rescueIds
+
+    if (!loaded || !prevIds || !rescueIds) {
+      return
+    }
+
+    // If no detail panel is open and a new rescue appeared, auto-open it
+    if (!router.query.rId && rescueIds.length > prevIds.length) {
+      const newId = rescueIds.find((id) => { return !prevIds.includes(id) })
+      if (newId) {
+        router.push(makeRoute('/dispatch', { rId: newId }))
+      }
+    }
+  }, [rescueIds, loaded, router])
 
   const statusConfig = {
     connected: { color: '#49c549', label: 'Live' },
