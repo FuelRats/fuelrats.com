@@ -115,13 +115,16 @@ export const useRescueQueueCount = () => {
       let timeout = null
 
       const fetchData = async () => {
-        const { data, status } = await axios.get('/api/qms/queue')
+        try {
+          const { data, status } = await axios.get('/api/qms/queue')
 
-        if (status === HttpStatus.OK) {
-          setCount(data.data.attributes.queueLength)
-          setMax(data.data.attributes.maxClients)
+          if (status === HttpStatus.OK) {
+            setCount(data.data.attributes.queueLength)
+            setMax(data.data.attributes.maxClients)
+          }
+        } catch {
+          // QMS unavailable, ignore and retry
         }
-
 
         timeout = setTimeout(fetchData, pollTimeoutTime)
       }

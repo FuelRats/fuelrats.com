@@ -11,6 +11,7 @@ import {
   selectAvatarUrlByUserId,
   withCurrentUserId,
   selectCurrentUserCanEditAllRescues,
+  selectCurrentUserHasScope,
 } from '~/store/selectors'
 
 import { Nav, NavLink, NavSection } from '../Nav'
@@ -25,6 +26,7 @@ function UserMenu () {
 
   const { loggedIn } = useSelector(selectSession)
   const userCanSeeRescueAdmin = useSelector(selectCurrentUserCanEditAllRescues)
+  const userCanDispatch = useSelectorWithProps({ scope: 'dispatch.read' }, selectCurrentUserHasScope)
   const user = useSelector(withCurrentUserId(selectUserById))
   const userAvatarUrl = useSelectorWithProps({ size: 64 }, withCurrentUserId(selectAvatarUrlByUserId))
 
@@ -90,6 +92,13 @@ function UserMenu () {
               <NavLink href="/profile/rats">
                 {'My Rats'}
               </NavLink>
+              {
+                userCanDispatch && (
+                  <NavLink href="/dispatch">
+                    {'Dispatch Board'}
+                  </NavLink>
+                )
+              }
             </NavSection>
 
             <NavSection className={styles.navSection} title="Admin">

@@ -6,7 +6,7 @@ import Clock from '~/components/Clock'
 import DispatchTable from '~/components/DispatchTable'
 import RescueDetails from '~/components/RescueDetails'
 import styles from '~/scss/pages/dispatch.module.scss'
-import { useRatSocket } from '~/services/frSocket'
+import { useRatSocket, useSocketStatus } from '~/services/frSocket'
 import { getDispatchBoard } from '~/store/actions/rescues'
 
 
@@ -26,11 +26,28 @@ function DispatchBoard ({ query }) {
   }, [])
 
   useRatSocket()
+  const socketStatus = useSocketStatus()
+
+  const statusConfig = {
+    connected: { color: '#49c549', label: 'Live' },
+    connecting: { color: '#f0ad4e', label: 'Connecting...' },
+    reconnecting: { color: '#f0ad4e', label: 'Reconnecting...' },
+    disconnected: { color: '#d65050', label: 'Disconnected' },
+  }
+  const { color: statusColor, label: statusLabel } = statusConfig[socketStatus] ?? statusConfig.disconnected
+  const isReconnecting = socketStatus === 'reconnecting'
 
   return (
     <>
       <Clock className={styles.clock} />
-      <div className={[styles.layout, { [styles.openDetail]: Boolean(query.rId) }, 'page-content loading loader-dark']}>
+      <div className={styles.statusBar}>
+        <span
+          className={[styles.statusDot, { [styles.pulse]: isReconnecting }]}
+          style={{ backgroundColor: statusColor }}
+          title={`WebSocket: ${socketStatus}`} />
+        {statusLabel}
+      </div>
+      <div className={[styles.layout, { [styles.openDetail]: Boolean(query.rId), [styles.stale]: socketStatus !== 'connected' }, 'page-content loading loader-dark']}>
         {
           loaded && (
             <>

@@ -2,6 +2,58 @@
 
 $bounce-bezier: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
+.statusBar {
+  display: flex;
+  position: absolute;
+  top: 5.5rem;
+  right: 8.5rem;
+
+  align-items: center;
+  gap: 0.5rem;
+
+  color: $grey;
+  font-size: 0.85rem;
+
+  @media screen and (max-width: 768px) {
+    position: static;
+
+    justify-content: flex-end;
+
+    margin-right: 1rem;
+  }
+}
+
+.statusDot {
+  display: inline-block;
+
+  width: 10px;
+  height: 10px;
+
+  border-radius: 50%;
+}
+
+@keyframes status-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.pulse {
+  animation: status-pulse 1.5s ease-in-out infinite;
+}
+
+.stale {
+  filter: grayscale(60%);
+  opacity: 0.5;
+
+  transition: filter 0.5s, opacity 0.5s;
+}
+
 main.dispatchBoard {
   width: 100vw;
 

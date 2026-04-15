@@ -2,6 +2,7 @@ const nextSafe = require('next-safe')
 
 
 module.exports = ({ isDev, frapi, appUrl }) => {
+  const socketUrl = frapi.socket
   // Some headers are set by our reverse proxy in prod, so they should be disabled ouside of dev environments.
   const defaultIfDev = isDev ? undefined : false
   return () => {
@@ -13,7 +14,7 @@ module.exports = ({ isDev, frapi, appUrl }) => {
           contentSecurityPolicy: {
             'default-src': ["'self'", '*.fuelrats.com'],
             'script-src': ["'self'", '*.stripe.com'],
-            'connect-src': ["'self'", 'wss://*.fuelrats.com', frapi.url, appUrl],
+            'connect-src': ["'self'", 'wss://*.fuelrats.com', frapi.url, socketUrl, appUrl],
             'object-src': ["'self'", 'data:'],
             'font-src': ["'self'", 'fonts.gstatic.com'],
             'style-src': ["'self'", "'unsafe-inline'", 'fonts.googleapis.com'],
