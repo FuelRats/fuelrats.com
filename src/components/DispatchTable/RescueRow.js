@@ -1,5 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { differenceInMinutes } from 'date-fns'
+
+import CarrierIcon from '~/components/CarrierIcon'
 import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
 import { useCallback, useState } from 'react'
@@ -80,6 +82,7 @@ function RescueRow (props) {
   }, [rescue.id, router])
 
   const {
+    carrier,
     codeRed,
     status,
     client,
@@ -183,6 +186,7 @@ function RescueRow (props) {
         }
       </CopyToClipboard>
       <td className="rescue-row-rats">
+        {carrier && (<CarrierIcon className={styles.carrierIcon} title="Fleet Carrier" />)}
         {rescueRats}
       </td>
       <td className={styles.rescueRowFocus}>
