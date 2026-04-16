@@ -1,15 +1,15 @@
 import { HttpStatus } from '@fuelrats/web-util/http'
 import axios from 'axios'
 import { useMemo, useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { getLanguage } from '~/data/languageList'
 import { getPlatform } from '~/data/platformList'
 import { getLandmarkList, getSystem } from '~/store/actions/systems'
+import { selectLandmarks, selectSystemInfo } from '~/store/selectors/sapi'
 import { getCardinalDirection } from '~/util/system/cardinalDirection'
 import { getStarDescription, isScoopableStar } from '~/util/system/starDescription'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
-import getResponseError from '~/util/getResponseError'
 
 
 const pollTimeoutTime = 10000
@@ -35,89 +35,29 @@ export const useRescuePermit = (rescue) => {
   return (permit) ? `Permit Required: ${permit.name}` : false
 }
 
-// Module-level cache so the landmark list is fetched at most once per session.
-let cachedLandmarksPromise = null
-
-const ensureLandmarks = (dispatch) => {
-  if (!cachedLandmarksPromise) {
-    cachedLandmarksPromise = dispatch(getLandmarkList()).then((response) => {
-      if (getResponseError(response)) {
-        cachedLandmarksPromise = null
-        return []
-      }
-      return response.payload?.landmarks ?? response.payload?.data?.landmarks ?? []
-    }).catch(() => {
-      cachedLandmarksPromise = null
-      return []
-    })
-  }
-  return cachedLandmarksPromise
-}
-
-const systemInfoCache = new Map()
+// Tracks in-flight requests so we don't fire duplicates when many components
+// mount at once for the same systemId / for landmarks.
+const inflightSystems = new Set()
+let inflightLandmarks = false
 
 export const useRescueSystemInfo = (rescue) => {
-  const systemId = rescue?.attributes?.data?.systemId ?? 0
-  const [info, setInfo] = useState(() => {
-    return systemId ? systemInfoCache.get(systemId) ?? null : null
-  })
+  const systemId = rescue?.attributes?.data?.systemId ?? null
   const dispatch = useDispatch()
+  const cached = useSelector((state) => {
+    return selectSystemInfo(state, { systemId })
+  })
 
   useEffect(() => {
-    if (!systemId) {
-      setInfo(null)
+    if (!systemId || cached || inflightSystems.has(systemId)) {
       return
     }
+    inflightSystems.add(systemId)
+    Promise.resolve(dispatch(getSystem(systemId))).finally(() => {
+      inflightSystems.delete(systemId)
+    })
+  }, [dispatch, systemId, cached])
 
-    const cached = systemInfoCache.get(systemId)
-    if (cached) {
-      setInfo(cached)
-      return
-    }
-
-    let cancelled = false
-
-    const fetchData = async () => {
-      const response = await dispatch(getSystem(systemId))
-      if (getResponseError(response)) {
-        return
-      }
-
-      const payload = response.payload
-      const data = payload?.data
-      if (!data) {
-        return
-      }
-
-      const stars = (payload?.included ?? [])
-        .filter((item) => {
-          return item.type === 'stars'
-        })
-        .map((item) => {
-          return { id: item.id, ...item.attributes }
-        })
-
-      const result = {
-        id: data.id,
-        name: data.attributes?.name,
-        coords: data.attributes?.coords,
-        stars,
-      }
-
-      systemInfoCache.set(systemId, result)
-      if (!cancelled) {
-        setInfo(result)
-      }
-    }
-
-    fetchData()
-
-    return () => {
-      cancelled = true
-    }
-  }, [dispatch, systemId])
-
-  return info
+  return cached
 }
 
 export const useRescueMainStar = (rescue) => {
@@ -159,32 +99,28 @@ export const useRescueHasScoopableStar = (rescue) => {
 }
 
 const useLandmarkCoords = (landmarkName) => {
-  const [coords, setCoords] = useState(null)
   const dispatch = useDispatch()
+  const landmarks = useSelector(selectLandmarks)
 
   useEffect(() => {
-    if (!landmarkName) {
-      setCoords(null)
+    if (landmarks || inflightLandmarks) {
       return
     }
-
-    let cancelled = false
-    ensureLandmarks(dispatch).then((landmarks) => {
-      if (cancelled) {
-        return
-      }
-      const landmark = landmarks.find((item) => {
-        return item.name === landmarkName
-      })
-      setCoords(landmark ? { x: landmark.x, y: landmark.y, z: landmark.z } : null)
+    inflightLandmarks = true
+    Promise.resolve(dispatch(getLandmarkList())).finally(() => {
+      inflightLandmarks = false
     })
+  }, [dispatch, landmarks])
 
-    return () => {
-      cancelled = true
+  return useMemo(() => {
+    if (!landmarkName || !landmarks) {
+      return null
     }
-  }, [dispatch, landmarkName])
-
-  return coords
+    const landmark = landmarks.find((item) => {
+      return item.name === landmarkName
+    })
+    return landmark ? { x: landmark.x, y: landmark.y, z: landmark.z } : null
+  }, [landmarkName, landmarks])
 }
 
 export const useRescueLandmark = (rescue) => {

@@ -39,6 +39,11 @@ const initialState = {
 
   rescues: {},
 
+  sapi: {
+    systems: {},
+    landmarks: null,
+  },
+
   session: {
     error: null,
     loggedIn: false,

@@ -10,6 +10,7 @@ import frSSE from './frSocket'
 import images from './images'
 import leaderboard from './leaderboard'
 import pageViews from './pageViews'
+import sapi from './sapi'
 import session from './session'
 import users from './users'
 import wordpress from './wordpress'
@@ -28,6 +29,7 @@ export default chainReducers(
       images,
       leaderboard,
       pageViews,
+      sapi,
       session,
       users,
       wordpress,
