@@ -15,6 +15,7 @@ import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 import friendlyApiError from '~/util/friendlyApiError'
 import getResponseError from '~/util/getResponseError'
 
+import ActiveSessionsPanel from './ActiveSessionsPanel'
 import RegenerateRecoveryCodesModal from './RegenerateRecoveryCodesModal'
 import SetupTotpModal from './SetupTotpModal'
 import styles from './UserSecurityPanel.module.scss'
@@ -339,6 +340,8 @@ function UserSecurityPanel () {
       <RegenerateRecoveryCodesModal
         isOpen={showRegenerateCodes}
         onClose={() => { return setShowRegenerateCodes(false) }} />
+
+      <ActiveSessionsPanel />
 
       <div className="panel">
         <header>{'IRC Certificate'}</header>

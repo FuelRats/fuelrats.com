@@ -116,6 +116,12 @@ const totp = {
 }
 
 
+const sessions = {
+  list: 'sessions/list',
+  revoke: 'sessions/revoke',
+}
+
+
 const passwords = {
   reset: 'passwords/reset',
   requestReset: 'passwords/requestReset',
@@ -209,6 +215,7 @@ const actionTypes = {
   // Special
   images,
   session,
+  sessions,
   totp,
   verify,
 

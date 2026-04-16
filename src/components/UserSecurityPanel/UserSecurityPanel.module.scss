@@ -279,3 +279,88 @@
 
   margin-top: 0.75rem;
 }
+
+
+.sessionsList {
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.5rem;
+
+  padding: 0;
+  margin: 0;
+
+  list-style: none;
+}
+
+.sessionItem {
+  display: flex;
+
+  align-items: center;
+  gap: 1rem;
+
+  padding: 0.75rem 1rem;
+
+  border: 1px solid $grey-dark;
+  border-radius: 4px;
+
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.sessionIcon {
+  flex-shrink: 0;
+
+  font-size: 1.5rem;
+
+  color: $grey;
+}
+
+.sessionInfo {
+  flex-grow: 1;
+
+  min-width: 0;
+}
+
+.sessionLabel {
+  display: flex;
+  flex-wrap: wrap;
+
+  align-items: center;
+  gap: 0.5rem;
+
+  font-weight: 600;
+}
+
+.currentBadge {
+  padding: 0.1rem 0.5rem;
+
+  border-radius: 3px;
+
+  color: $white;
+  font-size: 0.75rem;
+  font-weight: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+
+  background-color: $green;
+}
+
+.sessionMeta {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 0.25rem 1rem;
+
+  margin-top: 0.25rem;
+
+  color: $grey-darkened;
+  font-size: 0.85rem;
+}
+
+.sessionsActions {
+  display: flex;
+
+  justify-content: flex-end;
+
+  margin-top: 1rem;
+}
