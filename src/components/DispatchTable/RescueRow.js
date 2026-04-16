@@ -92,6 +92,7 @@ function RescueRow (props) {
   } = rescue.attributes
 
   const radioInputId = `rdetail-${rescue.id}`
+  const isSelected = router.query.rId === rescue.id
 
   return (
     <tr
@@ -99,9 +100,11 @@ function RescueRow (props) {
         {
           [styles.codeRed]: codeRed,
           [styles.inactive]: status === 'inactive',
+          [styles.selected]: isSelected,
           'animate-flash': animating,
         }
       }
+      data-rescue-id={rescue.id}
       title={quoteString}
       onAnimationEnd={handleTransitionEnd}>
       <CopyToClipboard

@@ -6,6 +6,7 @@ import { authenticated } from '~/components/AppLayout'
 import Clock from '~/components/Clock'
 import DispatchTable from '~/components/DispatchTable'
 import RescueDetails from '~/components/RescueDetails'
+import useDispatchKeyboardNav from '~/hooks/useDispatchKeyboardNav'
 import styles from '~/scss/pages/dispatch.module.scss'
 import { useRatSocket, useSocketStatus } from '~/services/frSocket'
 import { getDispatchBoard } from '~/store/actions/rescues'
@@ -29,6 +30,7 @@ function DispatchBoard ({ query }) {
   }, [])
 
   useRatSocket()
+  useDispatchKeyboardNav()
   const socketStatus = useSocketStatus()
   const router = useRouter()
   const rescueIds = useSelector(selectDispatchBoard)
