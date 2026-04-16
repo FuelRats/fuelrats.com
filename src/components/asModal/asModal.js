@@ -1,7 +1,8 @@
 import { AnimatePresence, m } from 'motion/react'
-import React, { useCallback, useMemo, useContext } from 'react'
+import React, { useCallback, useContext, useId, useMemo, useRef } from 'react'
 
 import useEventListener from '~/hooks/useEventListener'
+import useFocusTrap from '~/hooks/useFocusTrap'
 import useMergeReducer from '~/hooks/useMergeReducer'
 
 import ModalHeader from './ModalHeader'
@@ -48,6 +49,10 @@ function ModalComponent (props) {
 
   const hideClose = state.hideClose ?? props.hideClose
   const title = state.title ?? props.title
+  const titleId = useId()
+  const containerRef = useRef(null)
+
+  useFocusTrap(containerRef, true)
 
   const sharedContext = useMemo(() => {
     return [{
@@ -69,13 +74,17 @@ function ModalComponent (props) {
     <ModalContext.Provider value={sharedContext}>
       <RootElement
         key="modal"
+        ref={containerRef}
         {...modalMotionConfig}
+        aria-labelledby={title ? titleId : undefined}
+        aria-modal="true"
         className={clsx('modal', className)}
         role="dialog">
 
         <ModalHeader
           hideClose={hideClose}
           title={title}
+          titleId={titleId}
           onClose={onClose} />
 
         {children}
