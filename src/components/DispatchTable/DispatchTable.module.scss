@@ -1,4 +1,5 @@
 @import '../../scss/colors';
+@import '../../scss/fonts';
 
 
 .dispatchTable {
@@ -70,6 +71,21 @@
 
     .languageFlag {
       margin-left: 0.4rem;
+    }
+
+    &.rescueIdCell {
+      background-color: $black-darkened;
+
+      color: $white;
+      font-family: $monospace-fonts;
+      font-size: 1.4em;
+      font-weight: bold;
+
+      text-align: center;
+
+      &.rescueIdCellCr {
+        background-color: $red;
+      }
     }
   }
 }

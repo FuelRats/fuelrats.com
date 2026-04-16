@@ -106,6 +106,7 @@ function RescueRow (props) {
       onAnimationEnd={handleTransitionEnd}>
       <CopyToClipboard
         as="td"
+        className={[styles.rescueIdCell, { [styles.rescueIdCellCr]: codeRed }]}
         text={commandIdentifier ?? '?'}>
         {commandIdentifier ?? '?'}
       </CopyToClipboard>
