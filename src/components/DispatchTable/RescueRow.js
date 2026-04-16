@@ -169,8 +169,11 @@ function RescueRow (props) {
       </td>
       <td
         className="rescue-row-language"
-        title={rescueLanguage.long}>
+        title={rescueLanguage.region ? `${rescueLanguage.long} (${rescueLanguage.region})` : rescueLanguage.long}>
         {rescueLanguage.short}
+        {rescueLanguage.flag && (
+          <span className={styles.languageFlag}>{rescueLanguage.flag}</span>
+        )}
       </td>
       <CopyToClipboard
         doHint

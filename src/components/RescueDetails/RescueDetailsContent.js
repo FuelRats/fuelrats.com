@@ -190,7 +190,17 @@ function RescueDetailsContent (props) {
               <tr>
                 <td className={styles.infoTitle}>{'Language'}</td>
                 <td className={styles.infoValue}>
-                  {rescueLanguage.long}
+                  <span>
+                    {rescueLanguage.long}
+                    {rescueLanguage.region && (
+                      <span className={styles.languageRegion}>
+                        {rescueLanguage.flag && (
+                          <span className={styles.languageFlag}>{rescueLanguage.flag}</span>
+                        )}
+                        {rescueLanguage.region}
+                      </span>
+                    )}
+                  </span>
                 </td>
               </tr>
             )
