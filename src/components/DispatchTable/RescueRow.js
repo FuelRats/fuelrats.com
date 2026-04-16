@@ -149,7 +149,7 @@ function RescueRow (props) {
         {rescueSystem ?? 'N/A'}
         {
           rescuePermit && (
-            <span className={styles.rescueRowPermit} title={rescuePermit}>
+            <span aria-label={rescuePermit} className={styles.rescueRowPermit} role="img" title={rescuePermit}>
               <FontAwesomeIcon fixedWidth icon="lock" />
             </span>
           )

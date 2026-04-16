@@ -47,6 +47,7 @@ function CardControls (props) {
         !(editMode || deleteMode) && (
           <>
             <button
+              aria-label={`Edit ${controlType}`}
               className={clsx('icon', { green: editMode || deleteMode })}
               name="edit"
               title={`Edit ${controlType}`}
@@ -55,6 +56,7 @@ function CardControls (props) {
               <FontAwesomeIcon fixedWidth icon="pen" />
             </button>
             <button
+              aria-label={canDelete ? `Delete ${controlType}` : `You cannot delete this ${controlType}.`}
               className="icon"
               disabled={!canDelete}
               name="delete"
@@ -71,6 +73,7 @@ function CardControls (props) {
         (editMode || deleteMode) && (
           <>
             <button
+              aria-label={editModeSubmitTitle}
               className="icon green"
               disabled={editMode ? !canSubmit : false}
               name="confirm"
@@ -80,6 +83,7 @@ function CardControls (props) {
               <FontAwesomeIcon fixedWidth icon="check" />
             </button>
             <button
+              aria-label={editModeCancelTitle}
               className="icon"
               name="cancel"
               title={editModeCancelTitle}

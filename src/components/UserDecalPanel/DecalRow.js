@@ -20,7 +20,7 @@ function DecalRow ({ decal }) {
     <div key={decal.id} className={styles.decal}>
       <div className={styles.decalCode}>
         <button
-          aria-label="Show decal code"
+          aria-label={visible ? 'Hide decal code' : 'Show decal code'}
           className={clsx('icon', styles.toggle)}
           name={decal.id}
           type="button"

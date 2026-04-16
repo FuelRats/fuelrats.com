@@ -39,7 +39,14 @@ function PasswordFieldset (props) {
 
       {children}
 
-      <button className={styles.showButton} disabled={inputProps.disabled} tabIndex="-1" type="button" onClick={handlePasswordVisibility}>
+      <button
+        aria-label={showPassword ? 'Hide password' : 'Show password'}
+        className={styles.showButton}
+        disabled={inputProps.disabled}
+        tabIndex="-1"
+        title={showPassword ? 'Hide password' : 'Show password'}
+        type="button"
+        onClick={handlePasswordVisibility}>
         <FontAwesomeIcon fixedWidth icon={showPassword ? 'eye-slash' : 'eye'} />
       </button>
 

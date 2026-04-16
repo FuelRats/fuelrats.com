@@ -47,6 +47,7 @@ function DefaultRatButton (props) {
 
   return (
     <button
+      aria-label={isDefaultRat ? 'This rat represents you.' : 'Use this rat to represent you. (Display Rat)'}
       className="inline display-rat-button"
       disabled={isDefaultRat}
       title={isDefaultRat ? 'This rat represents you.' : 'Use this rat to represent you. (Display Rat)'}

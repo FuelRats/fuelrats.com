@@ -12,7 +12,9 @@ function ModalHeader ({ hideClose, onClose, title }) {
       {
         !hideClose && (
           <button
+            aria-label="Close dialog"
             className="danger button-close"
+            title="Close"
             type="button"
             onClick={onClose}>
             <FontAwesomeIcon fixedWidth icon="xmark" />

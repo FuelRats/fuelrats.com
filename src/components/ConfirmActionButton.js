@@ -49,6 +49,7 @@ function ConfirmActionButton (props) {
     <div className={clsx('action-confirmation-button', className)}>
       {confirmingAction && (<span>{confirmSubText}</span>)}
       <button
+        aria-label={confirmButtonText}
         className={clsx(buttonSize, { green: confirmingAction })}
         data-action="confirm"
         title={confirmButtonText}
@@ -66,6 +67,7 @@ function ConfirmActionButton (props) {
       {
         confirmingAction && (
           <button
+            aria-label={denyButtonText}
             className={buttonSize}
             data-action="deny"
             title={denyButtonText}
