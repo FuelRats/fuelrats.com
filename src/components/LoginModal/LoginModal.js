@@ -1,8 +1,9 @@
+import clsx from 'clsx'
 import { useCallback } from 'react'
+import { useDispatch } from 'react-redux'
 
 import asModal, { ModalContent, useModalContext } from '~/components/asModal'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
-import { connectState } from '~/store'
 import { setFlag } from '~/store/actions/flags'
 import { selectFlagByName } from '~/store/selectors'
 
@@ -13,7 +14,6 @@ import PasskeyPromptView from './PasskeyPromptView'
 import ResetView from './ResetView'
 import TotpView from './TotpView'
 import VerifyView from './VerifyView'
-import clsx from 'clsx'
 
 
 
@@ -33,19 +33,22 @@ function LoginModal () {
 }
 
 
+const ModalLoginModal = asModal({
+  className: 'login-dialog',
+  title: 'Login',
+  initialState: { view: 'login' },
+})(LoginModal)
 
 
-export default connectState((_, dispatch) => {
-  return {
-    onClose: useCallback(() => {
-      return dispatch(setFlag('showLoginDialog', false))
-    }, [dispatch]),
-    isOpen: useSelectorWithProps({ name: 'showLoginDialog' }, selectFlagByName),
-  }
-})(asModal(
-  {
-    className: 'login-dialog',
-    title: 'Login',
-    initialState: { view: 'login' },
-  },
-)(LoginModal))
+function LoginModalWrapper () {
+  const dispatch = useDispatch()
+  const isOpen = useSelectorWithProps({ name: 'showLoginDialog' }, selectFlagByName)
+  const onClose = useCallback(() => {
+    return dispatch(setFlag('showLoginDialog', false))
+  }, [dispatch])
+
+  return <ModalLoginModal isOpen={isOpen} onClose={onClose} />
+}
+
+
+export default LoginModalWrapper
