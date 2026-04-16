@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { useCallback, useRef } from 'react'
 import { useSelector } from 'react-redux'
 
-import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { selectCurrentUserHasScope, selectSession } from '~/store/selectors'
 import makeBlogRoute from '~/util/router/makeBlogRoute'
 
@@ -23,9 +22,13 @@ import SocialIcon from './SocialIcon'
 
 function Header () {
   const { loggedIn } = useSelector(selectSession)
-  const userCanDispatch = useSelectorWithProps({ scope: 'dispatch.read' }, selectCurrentUserHasScope)
+  const userCanDispatch = useSelector((state) => {
+    return selectCurrentUserHasScope(state, { scope: 'dispatch.read' })
+  })
   /* Temporarily use 'epics.write' instead of 'epics.write.me' to disable epic nomination for normal users, we're not ready for this yet. */
-  const userCanCreateEpic = useSelectorWithProps({ scope: 'epics.write' }, selectCurrentUserHasScope)
+  const userCanCreateEpic = useSelector((state) => {
+    return selectCurrentUserHasScope(state, { scope: 'epics.write' })
+  })
 
   const checkboxRef = useRef()
 

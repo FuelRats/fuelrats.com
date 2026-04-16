@@ -1,9 +1,8 @@
 import clsx from 'clsx'
 import { useCallback } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import asModal, { ModalContent, useModalContext } from '~/components/asModal'
-import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { setFlag } from '~/store/actions/flags'
 import { selectFlagByName } from '~/store/selectors'
 
@@ -42,7 +41,9 @@ const ModalLoginModal = asModal({
 
 function LoginModalWrapper () {
   const dispatch = useDispatch()
-  const isOpen = useSelectorWithProps({ name: 'showLoginDialog' }, selectFlagByName)
+  const isOpen = useSelector((state) => {
+    return selectFlagByName(state, { name: 'showLoginDialog' })
+  })
   const onClose = useCallback(() => {
     return dispatch(setFlag('showLoginDialog', false))
   }, [dispatch])

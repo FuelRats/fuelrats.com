@@ -1,6 +1,6 @@
 import Link from 'next/link'
+import { useSelector } from 'react-redux'
 
-import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { selectRatsByRescueId } from '~/store/selectors'
 import makePaperworkRoute from '~/util/router/makePaperworkRoute'
 
@@ -17,7 +17,9 @@ export default function RescueDetail (props) {
     createdAt,
   } = rescue.attributes
 
-  const rats = useSelectorWithProps({ rescueId: rescue.id }, selectRatsByRescueId)
+  const rats = useSelector((state) => {
+    return selectRatsByRescueId(state, { rescueId: rescue.id })
+  })
 
   return (
     <table className={styles.table}>

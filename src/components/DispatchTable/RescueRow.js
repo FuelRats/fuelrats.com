@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useSelector } from 'react-redux'
 import { differenceInMinutes } from 'date-fns'
 
 import CarrierIcon from '~/components/CarrierIcon'
@@ -10,7 +11,6 @@ import { useCallback, useState } from 'react'
 import {
   useQuoteString, useRescueLanguage, useRescuePlatform, useRescueSystem, useRescuePermit,
 } from '~/hooks/rescueHooks'
-import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import useStoreEffect from '~/hooks/useStoreEffect'
 import { selectRescueById, createSelectRenderedRatList } from '~/store/selectors'
 import makeRoute from '~/util/router/makeRoute'
@@ -41,8 +41,12 @@ const selectRenderedRatList = createSelectRenderedRatList((rat, index, arr) => {
 
 
 function RescueRow (props) {
-  const rescue = useSelectorWithProps(props, selectRescueById)
-  const rescueRats = useSelectorWithProps(props, selectRenderedRatList)
+  const rescue = useSelector((state) => {
+    return selectRescueById(state, props)
+  })
+  const rescueRats = useSelector((state) => {
+    return selectRenderedRatList(state, props)
+  })
 
   const quoteString = useQuoteString(rescue)
   const rescueLanguage = useRescueLanguage(rescue)

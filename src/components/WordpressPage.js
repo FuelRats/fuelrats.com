@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types'
 import { useEffect, useMemo } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
-import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import useToggleState from '~/hooks/useToggleState'
 import { getWordpressPage } from '~/store/actions/wordpress'
 import { selectWordpressPageBySlug } from '~/store/selectors'
@@ -19,7 +18,9 @@ import clsx from 'clsx'
 
 
 function WordpressPage ({ className, slug }) {
-  const page = useSelectorWithProps({ slug }, selectWordpressPageBySlug)
+  const page = useSelector((state) => {
+    return selectWordpressPageBySlug(state, { slug })
+  })
   const [loading, toggleLoading] = useToggleState(true)
 
   const dispatch = useDispatch()

@@ -1,11 +1,10 @@
 import { AnimatePresence, m } from 'motion/react'
 import PropTypes from 'prop-types'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { createSelector } from 'reselect'
 
 
-import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { getImage } from '~/store/actions/images'
 import { selectImages } from '~/store/selectors'
 import clsx from 'clsx'
@@ -78,8 +77,12 @@ function Carousel (props) {
     interval = 10000,
   } = props
 
-  const slides = useSelectorWithProps(props, selectSlides)
-  const images = useSelectorWithProps(props, selectSlideImages)
+  const slides = useSelector((state) => {
+    return selectSlides(state, props)
+  })
+  const images = useSelector((state) => {
+    return selectSlideImages(state, props)
+  })
   const [curSlideId, setCurSlide] = useState(Object.keys(slides)[0])
 
   const curSlide = slides[curSlideId]

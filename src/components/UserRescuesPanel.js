@@ -2,9 +2,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useCallback, useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
-import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { getMyRescues } from '~/store/actions/rescues'
 import { selectPageViewDataById, selectPageViewMetaById, selectRatsByRescueId } from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
@@ -23,7 +22,9 @@ const PAGE_VIEW_ID = 'user-rescues'
 const PAGE_SIZE = 25
 
 function RescueRatCell ({ rescueId }) {
-  const rats = useSelectorWithProps({ rescueId }, selectRatsByRescueId)
+  const rats = useSelector((state) => {
+    return selectRatsByRescueId(state, { rescueId })
+  })
   return (
     <td className={styles.rats}>
       {rats?.map((rat) => { return rat.attributes.name }).join(', ') || '-'}
@@ -62,8 +63,12 @@ function UserRescuesPanel () {
   const page = useQueryPage()
   const offset = (page - 1) * PAGE_SIZE
 
-  const rescues = useSelectorWithProps({ pageViewId: PAGE_VIEW_ID }, selectPageViewDataById)
-  const meta = useSelectorWithProps({ pageViewId: PAGE_VIEW_ID }, selectPageViewMetaById)
+  const rescues = useSelector((state) => {
+    return selectPageViewDataById(state, { pageViewId: PAGE_VIEW_ID })
+  })
+  const meta = useSelector((state) => {
+    return selectPageViewMetaById(state, { pageViewId: PAGE_VIEW_ID })
+  })
 
   useEffect(() => {
     dispatch(getMyRescues(

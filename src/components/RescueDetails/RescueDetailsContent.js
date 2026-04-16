@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useSelector } from 'react-redux'
 import Link from 'next/link'
 import PropTypes from 'prop-types'
 import { cloneElement, useCallback, useMemo, useState, Fragment } from 'react'
@@ -7,7 +8,6 @@ import {
   useRescuePlatform, useRescueLanguage, useRescuePermit, useRescueLandmark, useRescueHasScoopableStar,
   useRescueMainStarDescription,
 } from '~/hooks/rescueHooks'
-import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { createSelectRenderedRatList } from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 import formatQuoteTime from '~/util/date/formatQuoteTime'
@@ -78,7 +78,9 @@ function RescueDetailsContent (props) {
 
   const rescueLanguage = useRescueLanguage(rescue)
   const rescuePlatform = useRescuePlatform(rescue)
-  const rescueRats = useSelectorWithProps({ rescueId: rescue.id }, selectRenderedRatList)
+  const rescueRats = useSelector((state) => {
+    return selectRenderedRatList(state, { rescueId: rescue.id })
+  })
   const rescuePermit = useRescuePermit(rescue)
   const rescueLandmark = useRescueLandmark(rescue)
   const rescueHasScoopableStar = useRescueHasScoopableStar(rescue)

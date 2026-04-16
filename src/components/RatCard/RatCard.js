@@ -5,7 +5,6 @@ import { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import ExpansionRadioInput from '~/components/ExpansionRadioInput'
-import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { deleteRat, updateRat } from '~/store/actions/rats'
 import {
   selectRatById,
@@ -25,8 +24,12 @@ function RatCard (props) {
   const { className, ratId } = props
 
   const dispatch = useDispatch()
-  const rat = useSelectorWithProps({ ratId }, selectRatById)
-  const statistics = useSelectorWithProps({ ratId }, selectRatStatisticsById)
+  const rat = useSelector((state) => {
+    return selectRatById(state, { ratId })
+  })
+  const statistics = useSelector((state) => {
+    return selectRatStatisticsById(state, { ratId })
+  })
   const user = useSelector(withCurrentUserId(selectUserById))
   const userDisplayRatId = useSelector(withCurrentUserId(selectDisplayRatIdByUserId))
 

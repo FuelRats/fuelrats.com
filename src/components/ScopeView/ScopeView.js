@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
+import { useSelector } from 'react-redux'
 import { createSelector } from 'reselect'
 
-import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { selectCurrentUserScopes } from '~/store/selectors'
 
 import NamespaceDetails from './NamespaceDetails'
@@ -45,7 +45,9 @@ const selectGroupedScopes = createSelector(
 
 
 function ScopeView ({ scopes, className }) {
-  const groupedScopes = useSelectorWithProps({ scopes }, selectGroupedScopes)
+  const groupedScopes = useSelector((state) => {
+    return selectGroupedScopes(state, { scopes })
+  })
   return (
     <div className={clsx(styles.scopeView, className)}>
       {

@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useSelector } from 'react-redux'
 
-import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import {
   selectGroupsByUserId,
   selectUserById,
@@ -39,7 +38,9 @@ const groupConfig = {
 function ProfileHeader () {
   const groups = useSelector(withCurrentUserId(selectGroupsByUserId))
   const displayRat = useSelector(withCurrentUserId(selectDisplayRatByUserId))
-  const userIsVerified = useSelectorWithProps({ scope: 'users.verified' }, selectCurrentUserHasScope)
+  const userIsVerified = useSelector((state) => {
+    return selectCurrentUserHasScope(state, { scope: 'users.verified' })
+  })
   const { createdAt, email } = useSelector(withCurrentUserId(selectUserById))?.attributes ?? {}
 
   return (

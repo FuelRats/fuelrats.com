@@ -2,7 +2,6 @@ import Image from 'next/image'
 import { useCallback, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { setFlag } from '~/store/actions/flags'
 import { logout } from '~/store/actions/session'
 import {
@@ -27,9 +26,13 @@ function UserMenu () {
 
   const { loggedIn } = useSelector(selectSession)
   const userCanSeeRescueAdmin = useSelector(selectCurrentUserCanEditAllRescues)
-  const userCanDispatch = useSelectorWithProps({ scope: 'dispatch.read' }, selectCurrentUserHasScope)
+  const userCanDispatch = useSelector((state) => {
+    return selectCurrentUserHasScope(state, { scope: 'dispatch.read' })
+  })
   const user = useSelector(withCurrentUserId(selectUserById))
-  const userAvatarUrl = useSelectorWithProps({ size: 64 }, withCurrentUserId(selectAvatarUrlByUserId))
+  const userAvatarUrl = useSelector((state) => {
+    return withCurrentUserId(selectAvatarUrlByUserId)(state, { size: 64 })
+  })
 
   const dispatch = useDispatch()
 

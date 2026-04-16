@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useSelector } from 'react-redux'
 import Link from 'next/link'
 
-import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { selectAuthorByBlogId, selectBlogById, selectCategoriesByBlogId } from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 import makeBlogRoute from '~/util/router/makeBlogRoute'
@@ -15,9 +15,15 @@ import TextPlaceholder from '../TextPlaceholder'
 function ArticleCard (props) {
   const { className, renderMode = 'excerpt' } = props
 
-  const author = useSelectorWithProps(props, selectAuthorByBlogId)
-  const blog = useSelectorWithProps(props, selectBlogById)
-  const categories = useSelectorWithProps(props, selectCategoriesByBlogId)
+  const author = useSelector((state) => {
+    return selectAuthorByBlogId(state, props)
+  })
+  const blog = useSelector((state) => {
+    return selectBlogById(state, props)
+  })
+  const categories = useSelector((state) => {
+    return selectCategoriesByBlogId(state, props)
+  })
 
   if (!blog) {
     if (renderMode === 'article') {

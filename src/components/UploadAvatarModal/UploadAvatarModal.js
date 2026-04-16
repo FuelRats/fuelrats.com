@@ -3,11 +3,10 @@ import NextImage from 'next/image'
 import PropTypes from 'prop-types'
 import { useState, useCallback } from 'react'
 import Cropper from 'react-easy-crop'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import asModal, { ModalContent, ModalFooter } from '~/components/asModal'
 import Slider from '~/components/Slider'
-import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { updateAvatar } from '~/store/actions/user'
 import { selectAvatarUrlByUserId, withCurrentUserId } from '~/store/selectors'
 import getResponseError from '~/util/getResponseError'
@@ -43,7 +42,9 @@ function UploadAvatarModal (props) {
     isOpen,
   } = props
 
-  const userAvatarUrl = useSelectorWithProps({ size: AVATAR_PREVIEW_SIZE }, withCurrentUserId(selectAvatarUrlByUserId))
+  const userAvatarUrl = useSelector((state) => {
+    return withCurrentUserId(selectAvatarUrlByUserId)(state, { size: AVATAR_PREVIEW_SIZE })
+  })
 
   const [result, setResult] = useState({ })
 

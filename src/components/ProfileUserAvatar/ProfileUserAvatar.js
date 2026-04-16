@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import { useState, useCallback, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { deleteAvatar, getUserProfile } from '~/store/actions/user'
 import { selectAvatarUrlByUserId, selectUserById, withCurrentUserId } from '~/store/selectors'
 
@@ -19,7 +18,9 @@ function ProfileUserAvatar ({
   canEdit,
   size = 170,
 }) {
-  const userAvatarUrl = useSelectorWithProps({ size }, withCurrentUserId(selectAvatarUrlByUserId))
+  const userAvatarUrl = useSelector((state) => {
+    return withCurrentUserId(selectAvatarUrlByUserId)(state, { size })
+  })
   const user = useSelector(withCurrentUserId(selectUserById))
   const hasCustomAvatar = Boolean(user?.relationships?.avatar?.data)
   const dispatch = useDispatch()

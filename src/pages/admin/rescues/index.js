@@ -2,10 +2,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import debounce from 'lodash/debounce'
 import Link from 'next/link'
 import { useCallback, useMemo, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { authenticated } from '~/components/AppLayout'
-import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { getRescues } from '~/store/actions/rescues'
 import { selectPageViewDataById } from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
@@ -77,7 +76,9 @@ function renderListItem (rescue) {
 
 function ListRescues () {
   const dispatch = useDispatch()
-  const rescues = useSelectorWithProps({ pageViewId: PAGE_VIEW_ID }, selectPageViewDataById) ?? []
+  const rescues = useSelector((state) => {
+    return selectPageViewDataById(state, { pageViewId: PAGE_VIEW_ID })
+  }) ?? []
 
   const [client, setClient] = useState('')
   const [loading, setLoading] = useState(false)

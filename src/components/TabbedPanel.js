@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
-import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { selectCurrentUserHasScope } from '~/store/selectors'
 import clsx from 'clsx'
 
@@ -15,7 +15,9 @@ function TabHandle (props) {
     ...itemProps
   } = props
 
-  const hasPermission = useSelectorWithProps({ scope: tab.permission }, selectCurrentUserHasScope)
+  const hasPermission = useSelector((state) => {
+    return selectCurrentUserHasScope(state, { scope: tab.permission })
+  })
 
   return hasPermission
     ? (
@@ -37,7 +39,9 @@ function TabPanel (props) {
     tab,
   } = props
 
-  const hasPermission = useSelectorWithProps({ scope: tab.permission }, selectCurrentUserHasScope)
+  const hasPermission = useSelector((state) => {
+    return selectCurrentUserHasScope(state, { scope: tab.permission })
+  })
 
   useEffect(() => {
     if (!hasPermission) {

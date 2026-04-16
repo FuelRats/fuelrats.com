@@ -4,10 +4,9 @@ import clsx from 'clsx'
 import Link from 'next/link'
 import Router from 'next/router'
 import { useCallback, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { authenticated } from '~/components/AppLayout'
-import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { deleteRescue, getRescue } from '~/store/actions/rescues'
 import {
   selectRatsByRescueId,
@@ -60,10 +59,18 @@ function renderQuote (quote) {
 
 function Paperwork ({ query }) {
   const dispatch = useDispatch()
-  const rats = useSelectorWithProps(query, selectRatsByRescueId) ?? []
-  const rescue = useSelectorWithProps(query, selectRescueById)
-  const userCanEdit = useSelectorWithProps(query, selectCurrentUserCanEditRescue)
-  const userCanWriteAll = useSelectorWithProps({ scope: 'rescues.write' }, selectCurrentUserHasScope)
+  const rats = useSelector((state) => {
+    return selectRatsByRescueId(state, query)
+  }) ?? []
+  const rescue = useSelector((state) => {
+    return selectRescueById(state, query)
+  })
+  const userCanEdit = useSelector((state) => {
+    return selectCurrentUserCanEditRescue(state, query)
+  })
+  const userCanWriteAll = useSelector((state) => {
+    return selectCurrentUserHasScope(state, { scope: 'rescues.write' })
+  })
 
   const [deleteConfirm, setDeleteConfirm] = useState(false)
   const [deleting, setDeleting] = useState(false)

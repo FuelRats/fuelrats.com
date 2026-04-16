@@ -3,11 +3,10 @@ import clsx from 'clsx'
 import { isError } from 'flux-standard-action'
 import Router from 'next/router'
 import { useCallback, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { createSelector } from 'reselect'
 
 import { authenticated } from '~/components/AppLayout'
-import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import useUnsavedChangesGuard from '~/hooks/useUnsavedChangesGuard'
 import { getRescue, updateRescue } from '~/store/actions/rescues'
 import {
@@ -75,9 +74,15 @@ function renderQuote (quote, index) {
 
 function Paperwork ({ query }) {
   const dispatch = useDispatch()
-  const rats = useSelectorWithProps(query, selectFormattedRatsByRescueId)
-  const rescue = useSelectorWithProps(query, selectRescueById)
-  const userCanEdit = useSelectorWithProps(query, selectCurrentUserCanEditRescue)
+  const rats = useSelector((state) => {
+    return selectFormattedRatsByRescueId(state, query)
+  })
+  const rescue = useSelector((state) => {
+    return selectRescueById(state, query)
+  })
+  const userCanEdit = useSelector((state) => {
+    return selectCurrentUserCanEditRescue(state, query)
+  })
 
   const [submitting, setSubmitting] = useState(false)
   const [error, setErrorState] = useState(null)
