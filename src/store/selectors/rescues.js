@@ -16,6 +16,9 @@ import { selectCurrentUserHasScope } from './users'
 const RESCUE_ACCESS_HOURS = 3
 const PAPERWORK_MAX_EDIT_TIME = RESCUE_ACCESS_HOURS * 60 * 60 * 1000
 
+// Stable empty values keep selector outputs referentially equal across
+// store updates so downstream memoization doesn't bust on every dispatch.
+const EMPTY_ARRAY = Object.freeze([])
 
 
 const getRescueId = (_, props) => {
@@ -40,7 +43,7 @@ export const selectRescueRatRelationship = (state, props) => {
     return undefined
   }
 
-  return rescue.relationships.rats.data ?? []
+  return rescue.relationships.rats.data ?? EMPTY_ARRAY
 }
 
 export const selectRatsByRescueId = createCachedSelector(
