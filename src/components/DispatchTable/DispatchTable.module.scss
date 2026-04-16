@@ -121,60 +121,6 @@
   }
 }
 
-.platform {
-  .platformBadge {
-    order: 1;
-
-    width: 100%;
-
-    color: $white;
-
-    text-align: center;
-
-    > .platformBadgeIcon {
-      display: inline-block;
-
-      width: 27px;
-
-      background-color: $black-lightened;
-
-      > svg {
-        height: 12px;
-      }
-    }
-
-    > .platformBadgeLabel {
-      display: inline-block;
-
-      width: calc(100% - 27px);
-
-      background-color: $red;
-
-      &.horizons3 {
-        background-color: $magenta-dark3;
-      }
-
-      &.horizons4 {
-        background-color: $blue-dark3;
-      }
-
-      &.odyssey {
-        background-color: $gold-dark2;
-      }
-
-      /* Platform-specific classes align with values returned from the API. */
-      &.ps { /* stylelint-disable-line selector-class-pattern */
-        background-color: $playstation-blue-light3;
-      }
-
-      /* Platform-specific classes align with values returned from the API. */
-      &.xb { /* stylelint-disable-line selector-class-pattern */
-        background-color: $xbox-green-light;
-      }
-    }
-  }
-}
-
 .queueLength {
   float: right;
 

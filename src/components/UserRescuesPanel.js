@@ -8,10 +8,10 @@ import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { getMyRescues } from '~/store/actions/rescues'
 import { selectPageViewDataById, selectPageViewMetaById, selectRatsByRescueId } from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
-import { expansionNameMap } from '~/util/expansion'
 import makePaperworkRoute from '~/util/router/makePaperworkRoute'
 
 import Pagination from './Pagination'
+import PlatformBadge from './PlatformBadge'
 
 import styles from './UserRescuesPanel.module.scss'
 
@@ -130,13 +130,7 @@ function UserRescuesPanel () {
                     {system || 'Unknown'}
                   </td>
                   <td>
-                    {
-                      platform && (
-                        <span className={['badge', styles.platform, styles[platform], expansion]}>
-                          {platform === 'pc' && expansion ? expansionNameMap[expansion] ?? platform : platform}
-                        </span>
-                      )
-                    }
+                    <PlatformBadge expansion={expansion} platform={platform} />
                     {codeRed && (<span className={['badge', styles.crBadge]}>{'CR'}</span>)}
                   </td>
                   <RescueRatCell rescueId={rescue.id} />

@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { differenceInMinutes } from 'date-fns'
 
 import CarrierIcon from '~/components/CarrierIcon'
+import PlatformBadge from '~/components/PlatformBadge'
 import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
 import { useCallback, useState } from 'react'
@@ -12,7 +13,6 @@ import {
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import useStoreEffect from '~/hooks/useStoreEffect'
 import { selectRescueById, createSelectRenderedRatList } from '~/store/selectors'
-import { expansionNameMap } from '~/util/expansion'
 import makeRoute from '~/util/router/makeRoute'
 
 import CopyToClipboard from '../CopyToClipboard'
@@ -125,51 +125,9 @@ function RescueRow (props) {
         </CopyToClipboard>
       </td>
       <td
-        className={['rescue-row-platform', styles.platform, styles[rescue.attributes.platform]]}
+        className="rescue-row-platform"
         title={rescuePlatform.long}>
-        {
-          platform === 'pc' && expansion && (
-            <span className={[styles.platformBadge]}>
-              <span className={[styles.platformBadgeIcon]}>
-                <FontAwesomeIcon fixedWidth icon="tv" />
-              </span>
-              <span className={[styles.platformBadgeLabel, styles[platform], styles[expansion]]}>
-                {expansionNameMap[expansion]}
-              </span>
-            </span>
-          )
-        }
-        {
-          platform === 'pc' && !expansion && (
-            <span className={[styles.platformBadge]}>
-              <span className={[styles.platformBadgeIcon]}>
-                <FontAwesomeIcon fixedWidth icon="tv" />
-              </span>
-              <span className={[styles.platformBadgeLabel, styles[platform]]}>{'PC'}</span>
-            </span>
-          )
-        }
-        {
-          platform !== 'pc' && (
-            <span className={[styles.platformBadge]}>
-              <span className={[styles.platformBadgeIcon]}>
-                {
-                  platform === 'ps' && (
-                    <FontAwesomeIcon fixedWidth icon={['fab', 'playstation']} />
-                  )
-                }
-                {
-                  platform === 'xb' && (
-                    <FontAwesomeIcon fixedWidth icon={['fab', 'xbox']} />
-                  )
-                }
-              </span>
-              <span className={[styles.platformBadgeLabel, styles[platform]]}>
-                {rescuePlatform.short}
-              </span>
-            </span>
-          )
-        }
+        <PlatformBadge expansion={expansion} platform={platform} />
       </td>
       <td
         className="rescue-row-language"

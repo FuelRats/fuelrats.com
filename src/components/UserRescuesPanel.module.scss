@@ -70,37 +70,6 @@
   color: $grey-darkened;
 }
 
-.platform {
-  text-transform: uppercase;
-  font-size: 0.85rem;
-
-  padding: 0.25em 0.6em;
-}
-
-.pc {
-  background-color: #985db5;
-
-  &:global(.horizons3) {
-    background-color: darken(#d650d6, 30%);
-  }
-
-  &:global(.horizons4) {
-    background-color: darken(#5bc0de, 30%);
-  }
-
-  &:global(.odyssey) {
-    background-color: darken(#d1b000, 15%);
-  }
-}
-
-.ps {
-  background-color: lighten(#003791, 30%);
-}
-
-.xb {
-  background-color: lighten(#107c10, 10%);
-}
-
 .crBadge {
   margin-left: 0.4rem;
 
