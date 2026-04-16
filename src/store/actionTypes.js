@@ -143,6 +143,7 @@ const session = {
 
 const sapi = {
   systems: 'sapi/systems',
+  landmarks: 'sapi/landmarks',
 }
 
 

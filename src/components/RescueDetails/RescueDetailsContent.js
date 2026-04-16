@@ -5,6 +5,7 @@ import { cloneElement, useCallback, useMemo, useState, Fragment } from 'react'
 
 import {
   useRescuePlatform, useRescueLanguage, useRescuePermit, useRescueLandmark, useRescueHasScoopableStar,
+  useRescueMainStarDescription,
 } from '~/hooks/rescueHooks'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { createSelectRenderedRatList } from '~/store/selectors'
@@ -12,6 +13,7 @@ import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 import formatQuoteTime from '~/util/date/formatQuoteTime'
 import { expansionLongNameMap } from '~/util/expansion'
 import makePaperworkRoute from '~/util/router/makePaperworkRoute'
+import { getEdsmSystemUrl, getSpanshPlotUrl } from '~/util/system/externalLinks'
 
 import CarrierIcon from '../CarrierIcon'
 import CopyToClipboard from '../CopyToClipboard'
@@ -79,6 +81,17 @@ function RescueDetailsContent (props) {
   const rescuePermit = useRescuePermit(rescue)
   const rescueLandmark = useRescueLandmark(rescue)
   const rescueHasScoopableStar = useRescueHasScoopableStar(rescue)
+  const rescueMainStarDescription = useRescueMainStarDescription(rescue)
+  const landmarkDistance = rescue.attributes.data?.landmark?.distance
+  const edsmUrl = useMemo(() => {
+    return getEdsmSystemUrl(system)
+  }, [system])
+  const spanshUrl = useMemo(() => {
+    if (typeof landmarkDistance !== 'number' || landmarkDistance < 2000) {
+      return null
+    }
+    return getSpanshPlotUrl(system)
+  }, [system, landmarkDistance])
 
   const parsedQuotes = useMemo(() => {
     return quotes.map((quote, originalIndex) => {
@@ -179,7 +192,7 @@ function RescueDetailsContent (props) {
             system && (
               <tr>
                 <td className={styles.infoTitle}>{'System'}</td>
-                <td className={styles.infoValue}>
+                <td className={[styles.infoValue, styles.systemRow]}>
                   <span className={styles.systemInfo}>
                     <CopyToClipboard doHint text={system}>
                       {system}
@@ -190,6 +203,13 @@ function RescueDetailsContent (props) {
                           className={styles.scoopable}
                           icon="gas-pump"
                           title={rescueHasScoopableStar} />
+                      )
+                    }
+                    {
+                      rescueMainStarDescription && (
+                        <span className={styles.starDescription}>
+                          {rescueMainStarDescription}
+                        </span>
                       )
                     }
                     {
@@ -209,6 +229,28 @@ function RescueDetailsContent (props) {
                         </span>
                       )
                     }
+                    {edsmUrl && (
+                      <a
+                        className={styles.systemLink}
+                        href={edsmUrl}
+                        rel="noreferrer"
+                        target="_blank"
+                        title="View on EDSM">
+                        {'EDSM'}
+                        <FontAwesomeIcon className={styles.systemLinkIcon} icon="up-right-from-square" />
+                      </a>
+                    )}
+                    {spanshUrl && (
+                      <a
+                        className={styles.systemLink}
+                        href={spanshUrl}
+                        rel="noreferrer"
+                        target="_blank"
+                        title="Plot route on Spansh">
+                        {'Spansh'}
+                        <FontAwesomeIcon className={styles.systemLinkIcon} icon="up-right-from-square" />
+                      </a>
+                    )}
                   </span>
                 </td>
               </tr>
