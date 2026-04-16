@@ -27,11 +27,6 @@ const getRescueId = (_, props) => {
 
 
 
-export const selectRescues = (state) => {
-  return state.rescues.rescues
-}
-
-
 export const selectRescueById = (state, props = {}) => {
   return state.rescues[props.rescueId]
 }
