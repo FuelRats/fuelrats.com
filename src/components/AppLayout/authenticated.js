@@ -1,5 +1,4 @@
 import { HttpStatus } from '@fuelrats/web-util/http'
-import hoistNonReactStatics from 'hoist-non-react-statics'
 
 import { selectSession, selectCurrentUserHasScope } from '~/store/selectors'
 import pageRedirect from '~/util/getInitialProps/pageRedirect'
@@ -40,7 +39,11 @@ const wrapPage = (scope, message, PageComponent) => {
     return (await PageComponent.getInitialProps?.(ctx)) ?? {}
   }
 
-  return hoistNonReactStatics(AuthenticatedPage, PageComponent, { getInitialProps: true })
+  // Carry the only page-level static we care about. getInitialProps is
+  // intentionally NOT copied; we define our own above that calls through.
+  AuthenticatedPage.getPageMeta = PageComponent.getPageMeta
+
+  return AuthenticatedPage
 }
 
 

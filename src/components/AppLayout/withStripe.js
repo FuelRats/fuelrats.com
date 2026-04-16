@@ -1,4 +1,3 @@
-import hoistNonReactStatics from 'hoist-non-react-statics'
 import { useEffect, useState } from 'react'
 
 
@@ -40,8 +39,10 @@ const withStripe = (Component) => {
   }
 
   StripePage.displayName = `StripePage(${Component.displayName ?? Component.name ?? 'Component'})`
+  StripePage.getInitialProps = Component.getInitialProps
+  StripePage.getPageMeta = Component.getPageMeta
 
-  return hoistNonReactStatics(StripePage, Component)
+  return StripePage
 }
 
 
