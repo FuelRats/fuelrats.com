@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 import PropTypes from 'prop-types'
 
@@ -7,10 +8,11 @@ import {
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { createSelectRenderedRatList } from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
-import { expansionNameMap } from '~/util/expansion'
+import { expansionLongNameMap } from '~/util/expansion'
 import makePaperworkRoute from '~/util/router/makePaperworkRoute'
 
 import CopyToClipboard from '../CopyToClipboard'
+import PlatformBadge from '../PlatformBadge'
 import ElapsedTimer from '../ElapsedTimer'
 import styles from './RescueDetails.module.scss'
 
@@ -85,10 +87,8 @@ function RescueDetailsContent (props) {
         <div className={styles.title}>
           {`${typeof commandIdentifier === 'number' ? `#${commandIdentifier} - ` : ''}${title ?? client}`}
           {
-            platform === 'pc' && expansion && (
-              <span className={['badge', styles.expansionBadge, styles[expansion]]}>
-                {expansionNameMap[expansion]}
-              </span>
+            platform && (
+              <PlatformBadge className={styles.titlePlatformBadge} expansion={expansion} platform={platform} />
             )
           }
           {codeRed && <span className="badge">{'CODE RED'}</span>}
@@ -134,28 +134,32 @@ function RescueDetailsContent (props) {
               <tr>
                 <td className={styles.infoTitle}>{'System'}</td>
                 <td className={styles.infoValue}>
-                  <CopyToClipboard doHint text={system}>
-                    {system}
-                  </CopyToClipboard>
-                  <span>
+                  <span className={styles.systemInfo}>
+                    <CopyToClipboard doHint text={system}>
+                      {system}
+                    </CopyToClipboard>
                     {
-                      rescuePermit && (
-                        <span className={styles.chip}>
-                          {rescuePermit}
-                        </span>
+                      rescueHasScoopableStar && (
+                        <FontAwesomeIcon
+                          className={styles.scoopable}
+                          icon="gas-pump"
+                          title={rescueHasScoopableStar} />
                       )
                     }
                     {
                       rescueLandmark && (
-                        <span className={styles.chip}>
+                        <span className={styles.landmark}>
                           {rescueLandmark}
                         </span>
                       )
                     }
+                  </span>
+                  <span className={styles.systemBadges}>
                     {
-                      rescueHasScoopableStar && (
-                        <span className={styles.chip}>
-                          {rescueHasScoopableStar}
+                      rescuePermit && (
+                        <span className={styles.permitBadge} title={rescuePermit}>
+                          <FontAwesomeIcon icon="lock" />
+                          {' Permit Required'}
                         </span>
                       )
                     }
@@ -169,7 +173,14 @@ function RescueDetailsContent (props) {
               <tr>
                 <td className={styles.infoTitle}>{'Platform'}</td>
                 <td className={styles.infoValue}>
-                  {rescuePlatform.long}
+                  <span>
+                    {rescuePlatform.long}
+                    {platform === 'pc' && expansion && (
+                      <span className={['badge', styles.expansionBadge, expansion]}>
+                        {expansionLongNameMap[expansion] ?? expansion}
+                      </span>
+                    )}
+                  </span>
                 </td>
               </tr>
             )
@@ -190,8 +201,9 @@ function RescueDetailsContent (props) {
               <CopyToClipboard doHint text={`https://fuelrats.com/paperwork/${rescue.id}`}>
                 {rescue.id}
               </CopyToClipboard>
-              <Link className="button icon" href={makePaperworkRoute({ rescueId: rescue.id, edit: true })}>
-                {'paperwork'}
+              <Link className={['button', styles.paperworkButton]} href={makePaperworkRoute({ rescueId: rescue.id, edit: true })}>
+                <FontAwesomeIcon fixedWidth icon="box-archive" />
+                {'Paperwork'}
               </Link>
             </td>
           </tr>

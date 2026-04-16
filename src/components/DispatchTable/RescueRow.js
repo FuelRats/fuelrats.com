@@ -180,7 +180,7 @@ function RescueRow (props) {
         {
           rescuePermit && (
             <span className={styles.rescueRowPermit} title={rescuePermit}>
-              <FontAwesomeIcon fixedWidth icon="id-card" />
+              <FontAwesomeIcon fixedWidth icon="lock" />
             </span>
           )
         }

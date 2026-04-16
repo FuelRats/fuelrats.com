@@ -1,0 +1,58 @@
+@import '../scss/colors';
+
+.platformBadge {
+  display: inline-flex;
+
+  align-items: stretch;
+
+  color: $white;
+  font-size: 0.85em;
+
+  text-align: center;
+}
+
+.platformBadgeIcon {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-width: 27px;
+  padding: 0 0.4em;
+
+  background-color: $black-lightened;
+
+  svg {
+    height: 12px;
+  }
+}
+
+.platformBadgeLabel {
+  display: inline-flex;
+
+  align-items: center;
+
+  padding: 0.2em 0.6em;
+
+  background-color: $red;
+
+  &:global(.horizons3) {
+    background-color: $magenta-dark3;
+  }
+
+  &:global(.horizons4) {
+    background-color: $blue-dark3;
+  }
+
+  &:global(.odyssey) {
+    background-color: $gold-dark2;
+  }
+
+  &:global(.ps) {
+    background-color: $playstation-blue-light3;
+  }
+
+  &:global(.xb) {
+    background-color: $xbox-green-light;
+  }
+}

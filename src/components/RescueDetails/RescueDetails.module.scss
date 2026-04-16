@@ -60,18 +60,63 @@
     font-weight: bold;
   }
 
-  .expansionBadge {
-    &.horizons3 {
-      background-color: $magenta-dark3;
-    }
+}
 
-    &.horizons4 {
-      background-color: $blue-dark3;
-    }
+.titlePlatformBadge {
+  margin-left: 1rem;
 
-    &.odyssey {
-      background-color: $gold-dark2;
-    }
+  font-size: 0.6em;
+
+  vertical-align: middle;
+}
+
+.systemInfo {
+  display: inline-flex;
+
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.landmark {
+  color: $grey-darkened;
+  font-size: 0.85em;
+}
+
+.systemBadges {
+  display: inline-flex;
+
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.scoopable {
+  color: $green;
+}
+
+.permitBadge {
+  display: inline-flex;
+
+  align-items: center;
+  gap: 0.4em;
+
+  color: $red;
+  font-size: 0.85em;
+  font-weight: bold;
+}
+
+.expansionBadge {
+  margin-left: 0.5rem;
+
+  &:global(.horizons3) {
+    background-color: $magenta-dark3;
+  }
+
+  &:global(.horizons4) {
+    background-color: $blue-dark3;
+  }
+
+  &:global(.odyssey) {
+    background-color: $gold-dark2;
   }
 }
 
@@ -155,6 +200,51 @@
 
           &:hover {
             border-color: var(--background-color-hover);
+          }
+
+          &.paperworkButton {
+            --background-color: #{$red};
+            --background-color-hover: #{$red-darkened};
+            --text-color: #{$white};
+            --text-color-hover: #{$white};
+
+            display: inline-flex;
+
+            align-items: center;
+            gap: 0.5em;
+
+            margin-left: 1rem;
+            padding: 0.5em 1em;
+
+            border: none;
+            border-radius: 4px;
+
+            color: var(--text-color);
+            font-size: 0.9em;
+            font-weight: normal;
+            line-height: 1.2;
+
+            background-color: var(--background-color);
+            transition: background-color 0.15s ease;
+
+            svg {
+              width: 1em;
+              height: 1em;
+
+              color: var(--text-color);
+            }
+
+            &:hover {
+              border: none;
+
+              color: var(--text-color-hover);
+
+              background-color: var(--background-color-hover);
+
+              svg {
+                color: var(--text-color-hover);
+              }
+            }
           }
         }
       }
