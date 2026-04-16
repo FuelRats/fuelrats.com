@@ -1,16 +1,26 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import PropTypes from 'prop-types'
 import { useState, useCallback, useRef, useEffect } from 'react'
-import { CopyToClipboard as CopyComponent } from 'react-copy-to-clipboard'
 
 import styles from './CopyToClipboard.module.scss'
-import clsx from 'clsx'
 
 
 
 
 // Component Constants
 const CLICKED_STATE_RESET_TIME = 1500 // 1.5 seconds
+
+
+
+
+async function writeToClipboard (text) {
+  if (typeof navigator !== 'undefined' && navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(text)
+    return
+  }
+  throw new Error('Clipboard API unavailable')
+}
 
 
 
@@ -27,7 +37,15 @@ function CopyToClipboard (props) {
   const timeoutRef = useRef()
 
 
-  const handleCopy = useCallback(() => {
+  const handleClick = useCallback(async () => {
+    try {
+      await writeToClipboard(String(text))
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error('Failed to copy to clipboard:', err)
+      return
+    }
+
     if (copied) {
       clearTimeout(timeoutRef.current)
     } else {
@@ -37,7 +55,7 @@ function CopyToClipboard (props) {
       setCopied(false)
       timeoutRef.current = undefined
     }, CLICKED_STATE_RESET_TIME)
-  }, [copied])
+  }, [copied, text])
 
   useEffect(() => {
     return () => {
@@ -47,18 +65,20 @@ function CopyToClipboard (props) {
 
 
   return (
-    <CopyComponent text={String(text)} onCopy={handleCopy}>
-      <Component aria-label={`Click to copy: ${text}`} className={clsx(styles.copyToClipboard, className, { [styles.copied]: copied })} role="button">
-        {children}
-        {
-          doHint && (
-            <span className={styles.icon}>
-              <FontAwesomeIcon icon={copied ? 'clipboard-check' : 'clipboard-list'} size="lg" />
-            </span>
-          )
-        }
-      </Component>
-    </CopyComponent>
+    <Component
+      aria-label={`Click to copy: ${text}`}
+      className={clsx(styles.copyToClipboard, className, { [styles.copied]: copied })}
+      role="button"
+      onClick={handleClick}>
+      {children}
+      {
+        doHint && (
+          <span className={styles.icon}>
+            <FontAwesomeIcon icon={copied ? 'clipboard-check' : 'clipboard-list'} size="lg" />
+          </span>
+        )
+      }
+    </Component>
   )
 }
 

@@ -65,7 +65,6 @@
     "rc-slider": "^11.1.9",
     "re-reselect": "^5.1.0",
     "react": "^19.1.0",
-    "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^19.1.0",
     "react-easy-crop": "^5.5.7",
     "react-is": "^19.1.0",
