@@ -130,3 +130,59 @@
 
   background: $black;
 }
+
+
+/* Skeleton rows shown while the dispatch board is first loading. */
+.skeletonRow {
+  pointer-events: none;
+}
+
+.skeletonBlock {
+  display: inline-block;
+  vertical-align: middle;
+
+  height: 0.9em;
+
+  border-radius: 0.9em;
+
+  background: $white;
+  opacity: 0.12;
+
+  animation: skeleton-pulse 1.2s ease-in-out infinite;
+}
+
+.skeletonCell {
+  /* override the default colored ID cell while loading */
+  background-color: $black-darkened !important;
+}
+
+.skeletonId { width: 1.5em; }
+.skeletonXs { width: 2em; }
+.skeletonSm { width: 3.5em; }
+.skeletonMd { width: 7em; }
+.skeletonLg { width: 9em; }
+.skeletonIcon {
+  width: 1.5em;
+  height: 1.5em;
+
+  border-radius: 0.25em;
+}
+
+
+@keyframes skeleton-pulse {
+  0%, 100% {
+    opacity: 0.08;
+  }
+
+  50% {
+    opacity: 0.18;
+  }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .skeletonBlock {
+    animation: none;
+    opacity: 0.12;
+  }
+}

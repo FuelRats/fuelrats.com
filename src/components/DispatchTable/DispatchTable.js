@@ -11,14 +11,38 @@ import clsx from 'clsx'
 
 
 
+const SKELETON_ROW_COUNT = 4
+
+
+function SkeletonRow () {
+  return (
+    <tr aria-hidden="true" className={styles.skeletonRow}>
+      <td className={clsx(styles.rescueIdCell, styles.skeletonCell)}>
+        <span className={clsx(styles.skeletonBlock, styles.skeletonId)} />
+      </td>
+      <td><span className={clsx(styles.skeletonBlock, styles.skeletonMd)} /></td>
+      <td><span className={clsx(styles.skeletonBlock, styles.skeletonSm)} /></td>
+      <td><span className={clsx(styles.skeletonBlock, styles.skeletonXs)} /></td>
+      <td><span className={clsx(styles.skeletonBlock, styles.skeletonLg)} /></td>
+      <td><span className={clsx(styles.skeletonBlock, styles.skeletonMd)} /></td>
+      <td className={styles.rescueRowFocus}>
+        <span className={clsx(styles.skeletonBlock, styles.skeletonIcon)} />
+      </td>
+    </tr>
+  )
+}
+
+
 
 function DispatchTable (props) {
   const {
     className,
+    loading,
   } = props
 
   const rescueIds = useSelector(selectDispatchBoard)
   const [queueLength, maxClients] = useRescueQueueCount()
+  const showSkeleton = loading && !rescueIds?.length
 
   return (
     <section className={clsx(styles.dispatchTable, className)}>
@@ -34,15 +58,19 @@ function DispatchTable (props) {
             <th width="45px">{'Info'}</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody aria-busy={loading || undefined}>
           {
-            rescueIds?.map((rescueId) => {
-              return (
-                <RescueRow
-                  key={rescueId}
-                  rescueId={rescueId} />
-              )
-            })
+            showSkeleton
+              ? Array.from({ length: SKELETON_ROW_COUNT }, (_, i) => {
+                return <SkeletonRow key={i} />
+              })
+              : rescueIds?.map((rescueId) => {
+                return (
+                  <RescueRow
+                    key={rescueId}
+                    rescueId={rescueId} />
+                )
+              })
           }
         </tbody>
       </table>
@@ -66,6 +94,7 @@ function DispatchTable (props) {
 
 DispatchTable.propTypes = {
   className: PropTypes.string,
+  loading: PropTypes.bool,
 }
 
 

@@ -142,15 +142,9 @@ function DispatchBoard ({ query }) {
       <div aria-atomic="true" aria-live="polite" className="sr-only" role="status">
         {newRescueAnnouncement}
       </div>
-      <div className={clsx(styles.layout, { [styles.openDetail]: Boolean(query.rId), [styles.stale]: socketStatus !== 'connected' }, 'page-content loading loader-dark')}>
-        {
-          loaded && (
-            <>
-              <DispatchTable className={styles.table} />
-              <RescueDetails className={styles.detail} rescueId={query.rId} />
-            </>
-          )
-        }
+      <div className={clsx(styles.layout, { [styles.openDetail]: Boolean(query.rId), [styles.stale]: socketStatus !== 'connected' }, 'page-content')}>
+        <DispatchTable className={styles.table} loading={!loaded} />
+        {loaded && (<RescueDetails className={styles.detail} rescueId={query.rId} />)}
       </div>
     </>
   )
