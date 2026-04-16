@@ -67,6 +67,7 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-easy-crop": "^5.5.7",
+    "react-error-boundary": "^6.1.1",
     "react-is": "^19.1.0",
     "react-redux": "^9.2.0",
     "redux-immutable-state-invariant": "^2.1.0",

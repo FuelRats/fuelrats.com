@@ -6,7 +6,7 @@ import { Provider } from 'react-redux'
 import Header from '~/components/Header'
 import LoginModal from '~/components/LoginModal'
 import NProgress from '~/components/NProgress'
-import SilentBoundary from '~/components/SilentBoundary'
+import PageErrorBoundary from '~/components/PageErrorBoundary'
 import UserMenu from '~/components/UserMenu'
 import {
   initUserSession,
@@ -98,9 +98,9 @@ function FuelRatsApp (props) {
                     </header>
                   )
                 }
-                <SilentBoundary>
+                <PageErrorBoundary>
                   <Page {...pageProps} />
-                </SilentBoundary>
+                </PageErrorBoundary>
               </m.main>
             </AnimatePresence>
 
