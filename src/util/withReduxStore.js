@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { initStore } from '~/store'
 
 const STORE_KEY = '__NEXT_REDUX_STORE__'
@@ -17,33 +15,31 @@ function getOrCreateStore (initialState) {
 }
 
 export default function withReduxStore (App) {
-  return class WrappedApp extends React.Component {
-    static async getInitialProps (appContext) {
-      const store = getOrCreateStore()
+  function WrappedApp (props) {
+    const { initialReduxState, ...passthrough } = props
+    const store = getOrCreateStore(initialReduxState)
+    return <App {...passthrough} store={store} />
+  }
 
-      // Make store available in page getInitialProps via ctx
-      const ctx = { ...appContext.ctx, store }
-      const wrappedAppContext = { ...appContext, ctx }
+  WrappedApp.displayName = `withReduxStore(${App.displayName ?? App.name ?? 'App'})`
 
-      let appProps = {}
-      if (App.getInitialProps) {
-        appProps = await App.getInitialProps(wrappedAppContext)
-      }
+  WrappedApp.getInitialProps = async (appContext) => {
+    const store = getOrCreateStore()
 
-      return {
-        ...appProps,
-        initialReduxState: store.getState(),
-      }
+    // Make store available in page getInitialProps via ctx
+    const ctx = { ...appContext.ctx, store }
+    const wrappedAppContext = { ...appContext, ctx }
+
+    let appProps = {}
+    if (App.getInitialProps) {
+      appProps = await App.getInitialProps(wrappedAppContext)
     }
 
-    constructor (props) {
-      super(props)
-      this.store = getOrCreateStore(props.initialReduxState)
-    }
-
-    render () {
-      const { initialReduxState, ...props } = this.props
-      return <App {...props} store={this.store} />
+    return {
+      ...appProps,
+      initialReduxState: store.getState(),
     }
   }
+
+  return WrappedApp
 }

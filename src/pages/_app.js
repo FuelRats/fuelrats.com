@@ -1,7 +1,6 @@
 import { AnimatePresence, LazyMotion, domAnimation, m } from 'motion/react'
-import App from 'next/app'
 import NextHead from 'next/head'
-import { StrictMode } from 'react'
+import { StrictMode, useCallback } from 'react'
 import { Provider } from 'react-redux'
 
 import Header from '~/components/Header'
@@ -43,125 +42,102 @@ const pageMotionConfig = {
 
 
 
-class FuelRatsApp extends App {
-  static async getInitialProps (appCtx) {
-    const { Component, ctx } = appCtx
+function FuelRatsApp (props) {
+  const {
+    Component,
+    isError,
+    pageMeta,
+    pageProps,
+    router,
+    store,
+  } = props
 
-    await ctx.store.dispatch(initUserSession(ctx))
+  const Page = isError ? ErrorPage : Component
+  const key = pageMeta.key ?? router.asPath
 
-    const initialProps = {
-      accessToken: ctx.accessToken,
-      pageProps: {
-        asPath: ctx.asPath,
-        query: ctx.query,
-        ...((await Component.getInitialProps?.(ctx)) ?? {}),
-      },
-    }
+  const {
+    title,
+    description,
+    forceDrawer,
+    noHeader,
+    className,
+    displayTitle,
+  } = pageMeta
 
-    if (ctx.err) {
-      initialProps.isError = true
-      initialProps.pageProps = (await ErrorPage.getInitialProps?.(ctx)) ?? {}
-      initialProps.pageProps.message = ctx.err.message
-      initialProps.pageMeta = await resolvePageMeta(ErrorPage, ctx, initialProps.pageProps)
-    } else {
-      initialProps.pageMeta = await resolvePageMeta(Component, ctx, initialProps.pageProps)
-    }
+  const handlePageDestroy = useCallback(() => {
+    store.dispatch(notifyPageDestroyed())
+  }, [store])
 
-    await ctx.store.dispatch(notifyPageLoading(appCtx))
+  return (
+    <StrictMode>
+      <NextHead>
+        <title>{`${title} | The Fuel Rats`}</title>
+        <meta content="initial-scale=1.0, viewport-fit=cover, width=device-width" name="viewport" />
+        <meta content={title} property="og:title" />
+        <meta content={description} name="description" />
+        <meta content={description} property="og:description" />
+      </NextHead>
+      <LazyMotion strict features={domAnimation}>
+        <div className={clsx({ forceDrawer })} id="FuelRatsApp" role="application">
+          <Provider store={store}>
+            <NProgress />
+            <Header />
+            <UserMenu />
 
-    return initialProps
+            <AnimatePresence initial={false} onExitComplete={handlePageDestroy}>
+              <m.main
+                key={key}
+                {...pageMotionConfig}
+                className={clsx('page', className)}>
+                {
+                  !noHeader && (
+                    <header className="page-header">
+                      <h1>
+                        {displayTitle ?? title}
+                      </h1>
+                    </header>
+                  )
+                }
+                <SilentBoundary>
+                  <Page {...pageProps} />
+                </SilentBoundary>
+              </m.main>
+            </AnimatePresence>
+
+            <LoginModal />
+          </Provider>
+        </div>
+      </LazyMotion>
+    </StrictMode>
+  )
+}
+
+FuelRatsApp.getInitialProps = async (appCtx) => {
+  const { Component, ctx } = appCtx
+
+  await ctx.store.dispatch(initUserSession(ctx))
+
+  const initialProps = {
+    accessToken: ctx.accessToken,
+    pageProps: {
+      asPath: ctx.asPath,
+      query: ctx.query,
+      ...((await Component.getInitialProps?.(ctx)) ?? {}),
+    },
   }
 
-  handlePageDestroy = () => {
-    this.props.store.dispatch(notifyPageDestroyed())
+  if (ctx.err) {
+    initialProps.isError = true
+    initialProps.pageProps = (await ErrorPage.getInitialProps?.(ctx)) ?? {}
+    initialProps.pageProps.message = ctx.err.message
+    initialProps.pageMeta = await resolvePageMeta(ErrorPage, ctx, initialProps.pageProps)
+  } else {
+    initialProps.pageMeta = await resolvePageMeta(Component, ctx, initialProps.pageProps)
   }
 
-  render () {
-    const { store } = this.props
+  await ctx.store.dispatch(notifyPageLoading(appCtx))
 
-    const {
-      Page,
-      pageProps,
-      pageMeta,
-      key,
-    } = this.pageData
-
-    const {
-      title,
-      description,
-      forceDrawer,
-      noHeader,
-      className,
-      displayTitle,
-    } = pageMeta
-
-    return (
-      <StrictMode>
-        <NextHead>
-          <title>{`${title} | The Fuel Rats`}</title>
-          <meta content="initial-scale=1.0, viewport-fit=cover, width=device-width" name="viewport" />
-          <meta content={title} property="og:title" />
-          <meta content={description} name="description" />
-          <meta content={description} property="og:description" />
-        </NextHead>
-        <LazyMotion strict features={domAnimation}>
-          <div className={clsx({ forceDrawer })} id="FuelRatsApp" role="application">
-            <Provider store={store}>
-              <NProgress />
-              <Header />
-              <UserMenu />
-
-              <AnimatePresence initial={false} onExitComplete={this.handlePageDestroy}>
-                <m.main
-                  key={key}
-                  {...pageMotionConfig}
-                  className={clsx('page', className)}>
-                  {
-                    !noHeader && (
-                      <header className="page-header">
-                        <h1>
-                          {displayTitle ?? title}
-                        </h1>
-                      </header>
-                    )
-                  }
-                  <SilentBoundary>
-                    <Page {...pageProps} />
-                  </SilentBoundary>
-                </m.main>
-              </AnimatePresence>
-
-              <LoginModal />
-            </Provider>
-          </div>
-        </LazyMotion>
-      </StrictMode>
-    )
-  }
-
-
-  get pageData () {
-    const {
-      Component,
-      isError,
-      pageMeta,
-      pageProps,
-      router,
-    } = this.props
-
-    let Page = Component
-
-    if (isError) {
-      Page = ErrorPage
-    }
-
-    return {
-      Page,
-      pageProps,
-      pageMeta,
-      key: pageMeta.key ?? router.asPath,
-    }
-  }
+  return initialProps
 }
 
 
