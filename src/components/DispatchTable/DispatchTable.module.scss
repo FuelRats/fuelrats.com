@@ -132,6 +132,96 @@
 }
 
 
+/* Below 700px the table turns into card-style rows — the 7-column layout
+   gets unusable on phones. Each row uses CSS grid to place the rescue ID
+   as a big left badge, the CMDR / system / platform / lang / rats as a
+   stacked middle column, and the detail toggle on the right. */
+@media screen and (max-width: 700px) {
+  .table {
+    display: block;
+
+    thead {
+      display: none;
+    }
+
+    tbody {
+      display: block;
+
+      > tr {
+        display: grid;
+
+        grid-template-columns: auto 1fr auto;
+        grid-template-areas:
+          "id cmdr  focus"
+          "id sys   focus"
+          "id plat  focus"
+          "id lang  focus"
+          "id rats  focus";
+
+        gap: 0.15rem 0.75rem;
+
+        padding: 0.5rem 0.5rem 0.5rem 0;
+
+        border-bottom: 1px solid var(--table-border-color);
+
+        &:last-child {
+          border-bottom: 0;
+        }
+
+        > td {
+          display: block;
+
+          max-width: none;
+          padding: 0;
+
+          border: 0;
+
+          line-height: 1.3;
+
+          &.rescueIdCell {
+            grid-area: id;
+            align-self: stretch;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            min-width: 3.25rem;
+            padding: 0.5rem 0.75rem;
+          }
+
+          &.cmdrCell {
+            grid-area: cmdr;
+
+            font-weight: bold;
+            font-size: 1.05em;
+          }
+
+          &.systemCell { grid-area: sys; }
+          &.platformCell { grid-area: plat; }
+          &.languageCell { grid-area: lang; opacity: 0.85; font-size: 0.9em; }
+          &.ratsCell { grid-area: rats; font-size: 0.9em; }
+
+          &.rescueRowFocus {
+            grid-area: focus;
+            align-self: stretch;
+
+            height: auto;
+            padding: 0;
+
+            :global(.button) {
+              min-width: 2.5rem;
+              height: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
 /* Skeleton rows shown while the dispatch board is first loading. */
 .skeletonRow {
   pointer-events: none;

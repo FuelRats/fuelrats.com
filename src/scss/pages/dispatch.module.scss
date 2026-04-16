@@ -19,7 +19,17 @@ $bounce-bezier: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     justify-content: flex-end;
 
-    margin-right: 1rem;
+    margin: 0.25rem 1rem 0.5rem;
+
+    color: $grey-lightened;
+    font-size: 0.9rem;
+
+    .statusDot {
+      width: 12px;
+      height: 12px;
+
+      box-shadow: 0 0 6px currentcolor;
+    }
   }
 }
 
@@ -74,6 +84,14 @@ main.dispatchBoard {
       position: absolute;
       top: 3.4rem;
       right: 8.5rem;
+    }
+  }
+
+  @media screen and (max-width: 500px) {
+    .clock {
+      margin: -0.5rem 0.75rem 0.5rem;
+
+      font-size: 0.85em;
     }
   }
 }
@@ -148,6 +166,25 @@ main.dispatchBoard {
     > section {
       &.table {
         margin: 0 1rem 1rem;
+      }
+    }
+  }
+
+  @media screen and (max-width: 700px) {
+    width: calc(100vw - 1rem);
+    margin: 0 0.5rem;
+
+    > section {
+      &.table,
+      &.detail {
+        margin: 0 0 1rem;
+      }
+    }
+
+    &.openDetail > section {
+      &.table,
+      &.detail {
+        margin: 0 0 1rem;
       }
     }
   }

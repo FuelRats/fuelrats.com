@@ -460,3 +460,151 @@
 .timer {
   flex-shrink: 0;
 }
+
+
+/* Marker class applied to empty <tr>s that visually separate info sections
+   (their `<td />` children render the border). The rule needs to exist so
+   CSS modules emit a hashed class name for the JS to reference. */
+.separator {
+  visibility: visible;
+}
+
+
+/* Below 700px the fixed-width label column and inline paperwork button
+   get crushed. Drop the table layout in favour of stacked label/value
+   rows, shrink the header, and give the paperwork button its own line. */
+@media screen and (max-width: 700px) {
+  .body tbody > .separator {
+    display: none;
+  }
+
+  .rescueDetails {
+    padding: 0.75rem 1rem;
+  }
+
+  .header {
+    flex-wrap: wrap;
+
+    padding: 0 0 1rem;
+
+    font-size: 1.25em;
+
+    .title {
+      width: 100%;
+    }
+
+    .timer {
+      margin-top: 0.25rem;
+    }
+
+    :global(.badge) {
+      margin-left: 0.5rem;
+    }
+  }
+
+  .titlePlatformBadge {
+    margin-left: 0.5rem;
+  }
+
+  .body {
+    thead {
+      display: none;
+    }
+
+    tbody > tr {
+      display: flex;
+      flex-direction: column;
+
+      margin-bottom: 0.5rem;
+      padding-bottom: 0.5rem;
+
+      border-bottom: 1px solid var(--table-border-color);
+
+      &:last-child {
+        border-bottom: 0;
+      }
+
+      > td {
+        display: block;
+
+        padding: 0.2rem 0;
+
+        border: 0 !important;
+
+        line-height: 1.4;
+
+        &:empty {
+          display: none;
+        }
+
+        &.infoTitle {
+          padding: 0 0 0.1rem;
+
+          font-size: 0.85em;
+
+          opacity: 0.7;
+
+          &::after {
+            content: '';
+          }
+        }
+
+        &.infoValue {
+          flex-wrap: wrap;
+
+          justify-content: flex-start;
+          gap: 0.5rem;
+
+          &.infoGroup {
+            padding: 0.2rem 0;
+
+            /* Quote rows need explicit left padding to clear the
+               absolutely-positioned index column. Must be nested here
+               so specificity beats the `.infoGroup` rule above. */
+            &.quote {
+              padding: 0 0.5rem 0 calc(22px + 0.5rem);
+
+              .quoteIndex {
+                width: 22px;
+                padding: 0.5rem 0.25rem;
+
+                font-size: 0.9em;
+              }
+
+              .quoteMessage {
+                padding: 0.5rem 0.25rem;
+              }
+
+              .quoteAuthor,
+              .quoteAuthorVia,
+              .quoteTime {
+                font-size: 0.8em;
+              }
+
+              &.eventCollapse .eventCollapseButton {
+                padding: 0.4rem 0.5rem 0.4rem calc(22px + 0.5rem);
+
+                font-size: 0.85em;
+              }
+            }
+          }
+
+          button,
+          :global(.button) {
+            margin-left: 0;
+
+            &.paperworkButton {
+              margin-left: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* System row: tighten the gap between permit / EDSM / Spansh chips. */
+  .systemInfo,
+  .systemBadges {
+    gap: 0.4rem;
+  }
+}

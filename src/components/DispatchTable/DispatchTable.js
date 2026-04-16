@@ -20,11 +20,11 @@ function SkeletonRow () {
       <td className={clsx(styles.rescueIdCell, styles.skeletonCell)}>
         <span className={clsx(styles.skeletonBlock, styles.skeletonId)} />
       </td>
-      <td><span className={clsx(styles.skeletonBlock, styles.skeletonMd)} /></td>
-      <td><span className={clsx(styles.skeletonBlock, styles.skeletonSm)} /></td>
-      <td><span className={clsx(styles.skeletonBlock, styles.skeletonXs)} /></td>
-      <td><span className={clsx(styles.skeletonBlock, styles.skeletonLg)} /></td>
-      <td><span className={clsx(styles.skeletonBlock, styles.skeletonMd)} /></td>
+      <td className={styles.cmdrCell}><span className={clsx(styles.skeletonBlock, styles.skeletonMd)} /></td>
+      <td className={styles.platformCell}><span className={clsx(styles.skeletonBlock, styles.skeletonSm)} /></td>
+      <td className={styles.languageCell}><span className={clsx(styles.skeletonBlock, styles.skeletonXs)} /></td>
+      <td className={styles.systemCell}><span className={clsx(styles.skeletonBlock, styles.skeletonLg)} /></td>
+      <td className={styles.ratsCell}><span className={clsx(styles.skeletonBlock, styles.skeletonMd)} /></td>
       <td className={styles.rescueRowFocus}>
         <span className={clsx(styles.skeletonBlock, styles.skeletonIcon)} />
       </td>

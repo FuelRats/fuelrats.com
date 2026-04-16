@@ -118,7 +118,7 @@ function RescueRow (props) {
         text={commandIdentifier ?? '?'}>
         {commandIdentifier ?? '?'}
       </CopyToClipboard>
-      <td>
+      <td className={styles.cmdrCell}>
         <CopyToClipboard
           doHint
           className={styles.cmdrNameCol}
@@ -130,12 +130,12 @@ function RescueRow (props) {
         </CopyToClipboard>
       </td>
       <td
-        className="rescue-row-platform"
+        className={clsx('rescue-row-platform', styles.platformCell)}
         title={rescuePlatform.long}>
         <PlatformBadge expansion={expansion} platform={platform} />
       </td>
       <td
-        className="rescue-row-language"
+        className={clsx('rescue-row-language', styles.languageCell)}
         title={rescueLanguage.region ? `${rescueLanguage.long} (${rescueLanguage.region})` : rescueLanguage.long}>
         {rescueLanguage.short}
         {rescueLanguage.flag && (
@@ -145,6 +145,7 @@ function RescueRow (props) {
       <CopyToClipboard
         doHint
         as="td"
+        className={styles.systemCell}
         text={rescue.attributes.system ?? 'Unknown'}>
         {rescueSystem ?? 'N/A'}
         {
@@ -155,7 +156,7 @@ function RescueRow (props) {
           )
         }
       </CopyToClipboard>
-      <td className="rescue-row-rats">
+      <td className={clsx('rescue-row-rats', styles.ratsCell)}>
         {carrier && (<CarrierIcon className={styles.carrierIcon} title="Fleet Carrier" />)}
         {rescueRats}
       </td>
