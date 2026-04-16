@@ -3,6 +3,7 @@ import NextHead from 'next/head'
 import { StrictMode, useCallback } from 'react'
 import { Provider } from 'react-redux'
 
+import Breadcrumbs from '~/components/Breadcrumbs'
 import Header from '~/components/Header'
 import LoginModal from '~/components/LoginModal'
 import NProgress from '~/components/NProgress'
@@ -62,6 +63,7 @@ function FuelRatsApp (props) {
     noHeader,
     className,
     displayTitle,
+    breadcrumbs,
   } = pageMeta
 
   const handlePageDestroy = useCallback(() => {
@@ -93,6 +95,7 @@ function FuelRatsApp (props) {
                 {
                   !noHeader && (
                     <header className="page-header">
+                      {breadcrumbs && (<Breadcrumbs items={breadcrumbs} />)}
                       <h1>
                         {displayTitle ?? title}
                       </h1>

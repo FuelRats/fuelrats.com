@@ -148,6 +148,7 @@ ListRescues.getInitialProps = async ({ store }) => {
 ListRescues.getPageMeta = () => {
   return {
     title: 'Rescue Search',
+    breadcrumbs: [{ label: 'Admin' }],
   }
 }
 

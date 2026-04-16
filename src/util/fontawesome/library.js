@@ -9,6 +9,7 @@ export {
   faCalendarAlt,
   faCaretDown,
   faChevronDown,
+  faChevronRight,
   faChevronUp,
   faCheck,
   faCheckCircle,

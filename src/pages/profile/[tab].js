@@ -97,10 +97,14 @@ Profile.getInitialProps = (ctx) => {
 }
 
 Profile.getPageMeta = (ctx) => {
+  const { tab } = ctx.query
   return {
     title: 'Profile',
-    displayTitle: tabs[ctx.query.tab].pageTitle,
+    displayTitle: tabs[tab].pageTitle,
     key: 'profile',
+    breadcrumbs: tab === 'overview'
+      ? undefined
+      : [{ label: 'Profile', href: '/profile/overview' }],
   }
 }
 
