@@ -1,113 +1,79 @@
-import PropTypes from 'prop-types'
-import React from 'react'
 import clsx from 'clsx'
+import PropTypes from 'prop-types'
+import { useCallback } from 'react'
 
 
 
 
+function ValidatedFormSelect (props) {
+  const {
+    className,
+    id,
+    invalidMessage = null,
+    label,
+    onChange = () => { return {} },
+    options,
+    renderLabel = false,
+    required = false,
+    ...selectPassthrough
+  } = props
 
-class ValidatedFormSelect extends React.Component {
-  _handleChange = ({ target }) => {
-    const {
-      invalidMessage,
-      label,
-      onChange,
-      required,
-    } = this.props
-    const {
-      value,
-    } = target
-
+  const handleChange = useCallback(({ target }) => {
     let valid = true
     let message = null
 
-    if (required && value === '') {
+    if (required && target.value === '') {
       valid = false
       message = invalidMessage || `${label} is Required`
     }
 
-    onChange({
-      target,
-      valid,
-      message,
-    })
+    onChange({ target, valid, message })
+  }, [required, invalidMessage, label, onChange])
+
+  const selectProps = {
+    ...selectPassthrough,
+    id,
+    required,
+    name: selectPassthrough.name ?? id,
   }
 
-  render () {
-    const {
-      className,
-      id,
-      label,
-      options,
-      renderLabel,
-      required,
-    } = this.props
+  return (
+    <fieldset>
+      {renderLabel && <label htmlFor={id}>{label}</label>}
+      <div className="select-wrapper">
+        <select
+          autoComplete="country-name"
+          {...selectProps}
+          className={clsx('form-select', { required }, className)}
+          onChange={handleChange}>
+          {!renderLabel && (<option value="">{label}</option>)}
+          {
+            Object.entries(options).map(([key, text]) => {
+              return (
+                <option
+                  key={key}
+                  value={key}>
+                  {text}
+                </option>
+              )
+            })
+          }
+        </select>
+      </div>
+    </fieldset>
+  )
+}
 
-    return (
-      <fieldset>
-        {renderLabel && <label htmlFor={id}>{label}</label>}
-        <div className="select-wrapper">
-          <select
-            autoComplete="country-name"
-            {...this.selectProps}
-            className={clsx('form-select', { required }, className)}
-            onChange={this._handleChange}>
-            {!renderLabel && (<option value="">{label}</option>)}
-            {
-              Object.entries(options).map(([key, text]) => {
-                return (
-                  <option
-                    key={key}
-                    value={key}>
-                    {text}
-                  </option>
-                )
-              })
-            }
-          </select>
-        </div>
-      </fieldset>
-    )
-  }
-
-
-  get selectProps () {
-    const inputProps = { ...this.props }
-
-    delete inputProps.invalidMessage
-    delete inputProps.label
-    delete inputProps.renderLabel
-    delete inputProps.onChange
-
-    if (!inputProps.name) {
-      inputProps.name = inputProps.id
-    }
-
-    return inputProps
-  }
-
-
-  static defaultProps = {
-    invalidMessage: null,
-    name: null,
-    onChange: () => {
-      return {}
-    },
-    renderLabel: false,
-    required: false,
-  }
-
-  static propTypes = {
-    className: PropTypes.string,
-    id: PropTypes.string.isRequired,
-    invalidMessage: PropTypes.string,
-    label: PropTypes.string.isRequired,
-    name: PropTypes.string,
-    onChange: PropTypes.func,
-    options: PropTypes.object.isRequired,
-    renderLabel: PropTypes.bool,
-    required: PropTypes.any,
-  }
+ValidatedFormSelect.propTypes = {
+  className: PropTypes.string,
+  id: PropTypes.string.isRequired,
+  invalidMessage: PropTypes.string,
+  label: PropTypes.string.isRequired,
+  name: PropTypes.string,
+  onChange: PropTypes.func,
+  options: PropTypes.object.isRequired,
+  renderLabel: PropTypes.bool,
+  required: PropTypes.any,
 }
 
 
