@@ -1,8 +1,5 @@
 import { errorLoggerMiddleware } from '@fuelrats/web-util/redux-middleware'
 import { configureStore } from '@reduxjs/toolkit'
-import hoistNonReactStatics from 'hoist-non-react-statics'
-import React from 'react'
-import { useDispatch } from 'react-redux'
 
 import frSocket from '~/services/frSocket'
 
@@ -15,31 +12,6 @@ const ignoredTypes = [
   actionTypes.wordpress.pages.read,
 ]
 
-
-
-/**
- * Transitionary method of connecting state to hard-to-refactor class components.
- *
- * Provides state returned by the provider function and automatically attaches the dispatch() function.
- *
- * DO NOT INTRODUCE TO NEW COMPONENTS
- * @param {Function} stateProvider a function which returns an object of state values. hook-compatible. props and dispatch are available through arguments.
- * @returns {React.FC}
- */
-export function connectState (stateProvider) {
-  return (Component) => {
-    return hoistNonReactStatics((props) => {
-      const dispatch = useDispatch()
-      const stateProps = stateProvider?.(props, dispatch) ?? {}
-      return (
-        <Component
-          {...props}
-          {...stateProps}
-          dispatch={dispatch} />
-      )
-    }, Component)
-  }
-}
 
 export const initStore = (state = initialState) => {
   const middlewares = [frSocket.createMiddleware(), errorLoggerMiddleware(ignoredTypes)]

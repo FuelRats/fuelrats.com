@@ -1,7 +1,9 @@
 import { HttpStatus } from '@fuelrats/web-util/http'
+import clsx from 'clsx'
 import { isError } from 'flux-standard-action'
 import Router from 'next/router'
-import React from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { createSelector } from 'reselect'
 
 import { authenticated } from '~/components/AppLayout'
@@ -10,9 +12,7 @@ import RadioInput from '~/components/RadioInput'
 import RatTagsInput from '~/components/RatTagsInput'
 import SystemTagsInput from '~/components/SystemTagsInput'
 import platformRadioOptions from '~/data/platformRadioOptions'
-import { expansionLongRadioOptions } from '~/util/expansion'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
-import { connectState } from '~/store'
 import { getRescue, updateRescue } from '~/store/actions/rescues'
 import {
   selectRatsByRescueId,
@@ -20,13 +20,12 @@ import {
   selectCurrentUserCanEditRescue,
 } from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
+import { expansionLongRadioOptions } from '~/util/expansion'
 import pageRedirect from '~/util/getInitialProps/pageRedirect'
 import setError from '~/util/getInitialProps/setError'
 import getRatTag from '~/util/getRatTag'
 import getResponseError from '~/util/getResponseError'
 import makePaperworkRoute from '~/util/router/makePaperworkRoute'
-import clsx from 'clsx'
-
 
 
 
@@ -48,118 +47,201 @@ const selectFormattedRatsByRescueId = createSelector(
 )
 
 const carrierRadioOptions = [
-  {
-    value: 'true',
-    label: 'Yes',
-    title: 'The client is on a fleet carrier.',
-  },
-  {
-    value: 'false',
-    label: 'No',
-    title: 'The client is not on a fleet carrier.',
-  },
+  { value: 'true', label: 'Yes', title: 'The client is on a fleet carrier.' },
+  { value: 'false', label: 'No', title: 'The client is not on a fleet carrier.' },
 ]
 
 const codeRedRadioOptions = [
-  {
-    value: 'true',
-    label: 'Yes',
-    title: '$#!7 was on fire, yo.',
-  },
-  {
-    value: 'false',
-    label: 'No',
-    title: 'The client did not experience any undue stress.',
-  },
+  { value: 'true', label: 'Yes', title: '$#!7 was on fire, yo.' },
+  { value: 'false', label: 'No', title: 'The client did not experience any undue stress.' },
 ]
 
 const outcomeRadioOptions = [
-  {
-    value: 'success',
-    label: 'Yes',
-    title: 'Fuel was successfully delivered to the client.',
-  },
-  {
-    value: 'failure',
-    label: 'No',
-    title: 'Fuel wasn\'t successfully delivered to the client. (Explain why)',
-  },
-  {
-    value: 'invalid',
-    label: 'Invalid',
-    title: 'Fuel wasn\'t delivered because the request was illegitimate. (Cats / Trolling)',
-  },
-  {
-    value: 'other',
-    label: 'Other',
-    title: 'Fuel wasn\'t delivered because the client was able to get out of trouble without it. (Explain)',
-  },
+  { value: 'success', label: 'Yes', title: 'Fuel was successfully delivered to the client.' },
+  { value: 'failure', label: 'No', title: 'Fuel wasn\'t successfully delivered to the client. (Explain why)' },
+  { value: 'invalid', label: 'Invalid', title: 'Fuel wasn\'t delivered because the request was illegitimate. (Cats / Trolling)' },
+  { value: 'other', label: 'Other', title: 'Fuel wasn\'t delivered because the client was able to get out of trouble without it. (Explain)' },
 ]
 
 
+function renderQuote (quote, index) {
+  const createdAt = formatAsEliteDateTime(quote.createdAt)
+  const updatedAt = formatAsEliteDateTime(quote.updatedAt)
+  return (
+    <li key={index}>
+      <div className="times">
+        <div className="created" title="Created at">{createdAt}</div>
+        {
+          (updatedAt !== createdAt) && (
+            <div className="updated" title="Updated at"><span className="label">{'Updated at '}</span>{updatedAt}</div>
+          )
+        }
+      </div>
+      <span className="message">{quote.message}</span>
+      <div className="authors">
+        <div className="author" title="Created by">{quote.author}</div>
+        {
+          (quote.author !== quote.lastAuthor) && (
+            <div className="last-author" title="Last updated by"><span className="label">{'Updated by '}</span>{quote.lastAuthor}</div>
+          )
+        }
+      </div>
+    </li>
+  )
+}
 
 
-
-@authenticated
-class Paperwork extends React.Component {
-  state = {
-    submitting: false,
-    error: null,
-    changes: {},
+function getFieldValues (rescue, rats, changes) {
+  const ifDefined = (value, fallback) => {
+    return typeof value === 'undefined' ? fallback : value
+  }
+  const getValue = (key) => {
+    return ifDefined(changes[key], rescue.attributes[key])
   }
 
-  get hasUnsavedChanges () {
-    return Object.values(this.state.changes).some((v) => {
-      return typeof v !== 'undefined'
-    })
+  return {
+    carrier: getValue('carrier'),
+    client: getValue('client'),
+    codeRed: getValue('codeRed'),
+    expansion: getValue('expansion'),
+    firstLimpetId: ifDefined(
+      changes.firstLimpetId,
+      rats[rescue.relationships.firstLimpet.data?.id] ?? changes.rats?.find((rat) => {
+        return rat.id === rescue?.relationships?.firstLimpet.data?.id
+      }),
+    ) ?? null,
+    notes: getValue('notes'),
+    outcome: getValue('outcome'),
+    platform: getValue('platform'),
+    rats: Object.values(ifDefined(changes.rats, rats) ?? {}),
+    system: ifDefined(changes.system, rescue.attributes.system ? { value: rescue.attributes.system.toUpperCase() } : null),
+  }
+}
+
+
+function validate (rescue, userCanEdit, changes, values) {
+  const errors = {}
+
+  if (!rescue) {
+    return { valid: false, errors: { form: 'Rescue Not Found' }, noChange: false }
+  }
+  if (!userCanEdit) {
+    return { valid: false, errors: { form: 'You cannot edit this rescue.' }, noChange: false }
   }
 
-  componentDidMount () {
-    window.addEventListener('beforeunload', this._handleBeforeUnload)
-    Router.events.on('routeChangeStart', this._handleRouteChange)
+  switch (values.outcome) {
+    case 'other':
+    case 'invalid':
+      if (!values.notes.replace(/\s/gu, '')) {
+        errors.notes = 'This outcome requires notes explaining the reason.'
+      }
+      break
+
+    case 'success':
+    case 'failure':
+      if (!values.rats || !values.rats.length) {
+        errors.rats = 'Must have at least one rat assigned.'
+      }
+      if (!values.system) {
+        errors.system = 'Must have a star system location.'
+      }
+      if (!values.platform) {
+        errors.platform = 'Must have a platform.'
+      }
+      if (values.outcome === 'success' && !values.firstLimpetId) {
+        errors.firstLimpetId = 'Successful rescues must have a first limpet rat.'
+      }
+      if (values.outcome === 'failure' && !values.notes.replace(/\s/gu, '')) {
+        errors.notes = 'Failed cases must have notes explaining what went wrong.'
+      }
+      break
+
+    default:
+      errors.outcome = 'Outcome is not set!'
+      break
   }
 
-  componentWillUnmount () {
-    window.removeEventListener('beforeunload', this._handleBeforeUnload)
-    Router.events.off('routeChangeStart', this._handleRouteChange)
+  const noChange = !Object.keys(errors).length && !Object.keys(changes).length
+
+  return {
+    valid: !Object.keys(errors).length && !noChange,
+    errors,
+    noChange,
   }
+}
 
-  _handleBeforeUnload = (event) => {
-    if (this.hasUnsavedChanges) {
-      event.preventDefault()
-    }
-  }
 
-  _handleRouteChange = () => {
-    if (this.hasUnsavedChanges && !this.state.submitting) {
-      // eslint-disable-next-line no-alert -- intentional confirmation dialog
-      if (!window.confirm('You have unsaved changes. Are you sure you want to leave?')) {
-        Router.events.emit('routeChangeError')
+function Paperwork ({ query }) {
+  const dispatch = useDispatch()
+  const rats = useSelectorWithProps(query, selectFormattedRatsByRescueId)
+  const rescue = useSelectorWithProps(query, selectRescueById)
+  const userCanEdit = useSelectorWithProps(query, selectCurrentUserCanEditRescue)
 
-        // Throw a string to abort the route change.
-        // Next.js catches thrown strings from routeChangeStart without logging them as errors.
-        // eslint-disable-next-line no-throw-literal
-        throw 'Route change aborted'
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setErrorState] = useState(null)
+  const [changes, setChangesState] = useState({})
+
+  const hasUnsavedChanges = Object.values(changes).some((value) => {
+    return typeof value !== 'undefined'
+  })
+
+  // Keep refs for lifecycle handlers so they see the current unsaved state
+  // without being re-bound on every change.
+  const hasUnsavedRef = useRef(hasUnsavedChanges)
+  hasUnsavedRef.current = hasUnsavedChanges
+  const submittingRef = useRef(submitting)
+  submittingRef.current = submitting
+
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      if (hasUnsavedRef.current) {
+        event.preventDefault()
       }
     }
-  }
+    const handleRouteChange = () => {
+      if (hasUnsavedRef.current && !submittingRef.current) {
+        // eslint-disable-next-line no-alert -- intentional confirmation dialog
+        if (!window.confirm('You have unsaved changes. Are you sure you want to leave?')) {
+          Router.events.emit('routeChangeError')
+          // Throw a string to abort the route change.
+          // Next.js catches thrown strings from routeChangeStart without logging them as errors.
+          // eslint-disable-next-line no-throw-literal
+          throw 'Route change aborted'
+        }
+      }
+    }
 
-  _handleChange = ({ target }) => {
-    const {
-      name,
-      value,
-    } = target
+    window.addEventListener('beforeunload', handleBeforeUnload)
+    Router.events.on('routeChangeStart', handleRouteChange)
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload)
+      Router.events.off('routeChangeStart', handleRouteChange)
+    }
+  }, [])
 
-    this._setChanges({
-      [name]: value,
+  const setChanges = useCallback((changedFields) => {
+    setChangesState((prev) => {
+      return {
+        ...prev,
+        ...Object.entries(changedFields).reduce((acc, [key, value]) => {
+          return {
+            ...acc,
+            [key]: rescue.attributes[key] === value ? undefined : value,
+          }
+        }, {}),
+      }
     })
-  }
+  }, [rescue])
 
-  _handleNotesChange = (event) => {
-    return this._setChanges({ notes: event.target.value })
-  }
+  const handleChange = useCallback(({ target }) => {
+    setChanges({ [target.name]: target.value })
+  }, [setChanges])
 
-  _handleRadioInputChange = ({ target }) => {
+  const handleNotesChange = useCallback((event) => {
+    return setChanges({ notes: event.target.value })
+  }, [setChanges])
+
+  const handleRadioInputChange = useCallback(({ target }) => {
     const attribute = target.name
     let { value } = target
 
@@ -169,259 +251,159 @@ class Paperwork extends React.Component {
       value = false
     }
 
-    const changes = {}
-
-    if (attribute === 'platform' && value !== this.props.rescue) {
-      changes.firstLimpetId = []
-      changes.rats = []
+    const extraChanges = {}
+    if (attribute === 'platform' && value !== rescue) {
+      extraChanges.firstLimpetId = []
+      extraChanges.rats = []
     }
-
     if (attribute === 'outcome' && value !== 'success') {
-      changes.firstLimpetId = []
+      extraChanges.firstLimpetId = []
     }
 
-    this._setChanges({
-      ...changes,
-      [attribute]: value,
-    })
-  }
+    setChanges({ ...extraChanges, [attribute]: value })
+  }, [setChanges, rescue])
 
-  _handleFirstLimpetChange = (value) => {
+  const handleFirstLimpetChange = useCallback((value) => {
     // Because tagsInput sometimes decides to randomly call onChange when it hasn't changed.
-    if (typeof this.state.changes.firstLimpetId === 'undefined' && value.length && value[0].id === this.props.rescue.relationships.firstLimpet?.data?.id) {
+    if (typeof changes.firstLimpetId === 'undefined' && value.length && value[0].id === rescue.relationships.firstLimpet?.data?.id) {
       return
     }
 
     let newValue = []
-
     if (value.length) {
-      if (value[0].id === this.props.rescue.relationships.firstLimpet?.data?.id) {
+      if (value[0].id === rescue.relationships.firstLimpet?.data?.id) {
         newValue = undefined
       } else {
         newValue = value
       }
     }
 
-    this._setChanges({ firstLimpetId: newValue })
-  }
+    setChanges({ firstLimpetId: newValue })
+  }, [changes, rescue, setChanges])
 
-  _handleSystemChange = (value) => {
+  const handleSystemChange = useCallback((value) => {
     // Because tagsInput sometimes decides to randomly call onChange when it hasn't changed.
-    if (typeof this.state.changes.system === 'undefined' && value.length && value[0].value === this.props.rescue.attributes.system) {
+    if (typeof changes.system === 'undefined' && value.length && value[0].value === rescue.attributes.system) {
       return
     }
 
     let newValue = null
-
     if (value.length) {
-      if (value[0].value === this.props.rescue.attributes.system) {
+      if (value[0].value === rescue.attributes.system) {
         newValue = undefined
       } else {
         newValue = value
       }
     }
 
-    this._setChanges({ system: newValue })
-  }
+    setChanges({ system: newValue })
+  }, [changes, rescue, setChanges])
 
-  _handleRatsChange = (value) => {
-    this._setChanges({ rats: value })
-  }
+  const handleRatsChange = useCallback((value) => {
+    setChanges({ rats: value })
+  }, [setChanges])
 
-  _handleRatsRemove = (rat) => {
-    const firstLimpetId = this.state.changes.firstLimpetId?.[0]?.id ?? this.props.rescue.relationships?.firstLimpet?.data?.id ?? null
+  const handleRatsRemove = useCallback((rat) => {
+    const firstLimpetId = changes.firstLimpetId?.[0]?.id ?? rescue.relationships?.firstLimpet?.data?.id ?? null
     if (rat?.id === firstLimpetId) {
-      this._handleFirstLimpetChange([])
+      handleFirstLimpetChange([])
     }
-  }
+  }, [changes, rescue, handleFirstLimpetChange])
 
-  _handleSubmit = async (event) => {
+  const handleSubmit = useCallback(async (event) => {
     event.preventDefault()
+    setSubmitting(true)
 
-    this.setState({ submitting: true })
+    const { rats: ratsChange, firstLimpetId, ...remainingChanges } = changes
 
-    const { rescue } = this.props
-    const {
-      rats,
-      firstLimpetId,
-      ...changes
-    } = this.state.changes
-
-    if (!rescue.attributes.outcome && !changes.outcome) {
+    if (!rescue.attributes.outcome && !remainingChanges.outcome) {
       return
     }
 
-    if (changes.system) {
-      if (changes.system.length && changes.system[0].value !== rescue.attributes.system) {
-        changes.system = changes.system[0].value.toUpperCase()
+    if (remainingChanges.system) {
+      if (remainingChanges.system.length && remainingChanges.system[0].value !== rescue.attributes.system) {
+        remainingChanges.system = remainingChanges.system[0].value.toUpperCase()
       } else {
-        changes.system = undefined
+        remainingChanges.system = undefined
       }
     }
 
     const updateData = {
       id: rescue.id,
-      attributes: changes,
+      attributes: remainingChanges,
       relationships: {},
     }
 
     if (firstLimpetId?.length && firstLimpetId[0].id !== rescue.relationships.firstLimpet?.data?.id) {
       updateData.relationships.firstLimpet = {
-        data: {
-          type: 'rats',
-          id: firstLimpetId[0].id,
-        },
+        data: { type: 'rats', id: firstLimpetId[0].id },
       }
     } else if (firstLimpetId?.length === 0) {
-      updateData.relationships.firstLimpet = {
-        data: null,
-      }
+      updateData.relationships.firstLimpet = { data: null }
     }
 
-    if (Array.isArray(rats)) {
+    if (Array.isArray(ratsChange)) {
       updateData.relationships.rats = {
-        data: rats.map(({ type, id }) => {
-          return {
-            type,
-            id,
-          }
-        }),
+        data: ratsChange.map(({ type, id }) => { return { type, id } }),
       }
     }
 
-    const response = await this.props.dispatch(updateRescue(updateData))
+    const response = await dispatch(updateRescue(updateData))
 
     if (isError(response)) {
-      this.setState({ error: true, submitting: false })
+      setErrorState(true)
+      setSubmitting(false)
       return
     }
 
     Router.push(makePaperworkRoute({ rescueId: rescue.id }))
+  }, [changes, dispatch, rescue])
+
+  const fieldValues = getFieldValues(rescue, rats, changes)
+  const pwValidity = validate(rescue, userCanEdit, changes, fieldValues)
+  const { errors = {} } = pwValidity
+
+  const fieldError = (name) => {
+    return errors[name] ? <small className="field-error" style={{ display: 'block', color: '#d65050', marginTop: '0.3rem' }}>{errors[name]}</small> : null
   }
 
-  _setChanges = (changedFields) => {
-    return this.setState((prevState) => {
-      return {
-        changes: {
-          ...prevState.changes,
-          ...Object.entries(changedFields).reduce((acc, [key, value]) => {
-            return {
-              ...acc,
-              [key]: this.props.rescue.attributes[key] === value ? undefined : value,
-            }
-          }, {}),
-        },
+  const {
+    carrier,
+    client,
+    codeRed,
+    expansion,
+    firstLimpetId,
+    notes,
+    outcome,
+    platform,
+    rats: ratsValue,
+    system,
+  } = fieldValues
+
+  return (
+    <>
+      {
+        !userCanEdit && (
+          <div className="store-errors">
+            <div className="store-error">
+              <span className="detail">{'You do not have permission to edit this rescue. You may only edit rescues you are assigned to.'}</span>
+            </div>
+          </div>
+        )
       }
-    })
-  }
-
-  static renderQuote = (quote, index) => {
-    const createdAt = formatAsEliteDateTime(quote.createdAt)
-    const updatedAt = formatAsEliteDateTime(quote.updatedAt)
-    return (
-      <li key={index}>
-        <div className="times">
-          <div className="created" title="Created at">{createdAt}</div>
-          {
-            (updatedAt !== createdAt) && (
-              <div className="updated" title="Updated at"><span className="label">{'Updated at '}</span>{updatedAt}</div>
-            )
-          }
-        </div>
-        <span className="message">{quote.message}</span>
-        <div className="authors">
-          <div className="author" title="Created by">{quote.author}</div>
-          {
-            (quote.author !== quote.lastAuthor) && (
-              <div className="last-author" title="Last updated by"><span className="label">{'Updated by '}</span>{quote.lastAuthor}</div>
-            )
-          }
-        </div>
-      </li>
-    )
-  }
-
-  renderQuotes = () => {
-    const { rescue } = this.props
-
-    if (rescue.attributes.quotes) {
-      return (
-        <ol>
-          {rescue.attributes.quotes.map(Paperwork.renderQuote)}
-        </ol>
-      )
-    }
-
-    return (
-      <span>{'N/A'}</span>
-    )
-  }
-
-  static async getInitialProps (ctx) {
-    const { query, store } = ctx
-    const idLower = query.rescueId.toLowerCase()
-    if (query.rescueId !== idLower) {
-      pageRedirect(ctx, {
-        href: '/paperwork/[rescueId]/edit',
-        as: `/paperwork/${idLower}/edit`,
-      })
-    }
-
-    const state = store.getState()
-
-    if (!selectRescueById(state, query)) {
-      const response = await store.dispatch(getRescue(query.rescueId))
-      const error = getResponseError(response)
-
-      if (error) {
-        if (error?.code === HttpStatus.NOT_FOUND) {
-          error.detail = 'We tried looking everywhere, but this rescue doesn\'t exist.'
-        }
-        setError(ctx, error.code, error.detail)
+      {
+        (error && !submitting) && (
+          <div className="store-errors">
+            <div className="store-error">
+              <span className="detail">{'Error while submitting paperwork.'}</span>
+            </div>
+          </div>
+        )
       }
-    }
-  }
 
-  static getPageMeta () {
-    return {
-      title: 'Paperwork',
-    }
-  }
-
-  renderRescueEditForm = () => {
-    const {
-      rescue,
-    } = this.props
-
-    const {
-      submitting,
-    } = this.state
-
-    const fieldValues = this.getFieldValues()
-    const pwValidity = this.validate(fieldValues)
-    const { errors = {} } = pwValidity
-
-    const fieldError = (name) => {
-      return errors[name] ? <small className="field-error" style={{ display: 'block', color: '#d65050', marginTop: '0.3rem' }}>{errors[name]}</small> : null
-    }
-
-    const {
-      carrier,
-      client,
-      codeRed,
-      expansion,
-      firstLimpetId,
-      notes,
-      outcome,
-      platform,
-      rats,
-      system,
-    } = fieldValues
-
-    return (
       <form
         className={clsx('page-content', { 'loading loader-force': submitting })}
-        onSubmit={this._handleSubmit}>
+        onSubmit={handleSubmit}>
         <header className="paperwork-header">
           {
             (rescue.attributes.status !== 'closed') && (
@@ -458,7 +440,7 @@ class Paperwork extends React.Component {
             name="client"
             type="text"
             value={client}
-            onChange={this._handleChange} />
+            onChange={handleChange} />
         </fieldset>
 
         <fieldset>
@@ -471,7 +453,7 @@ class Paperwork extends React.Component {
             name="platform"
             options={platformRadioOptions}
             value={platform}
-            onChange={this._handleRadioInputChange} />
+            onChange={handleRadioInputChange} />
           {fieldError('platform')}
         </fieldset>
 
@@ -487,7 +469,7 @@ class Paperwork extends React.Component {
                 name="expansion"
                 options={expansionLongRadioOptions}
                 value={expansion}
-                onChange={this._handleRadioInputChange} />
+                onChange={handleRadioInputChange} />
             </fieldset>
           )
         }
@@ -512,7 +494,7 @@ class Paperwork extends React.Component {
             name="outcome"
             options={outcomeRadioOptions}
             value={outcome}
-            onChange={this._handleRadioInputChange} />
+            onChange={handleRadioInputChange} />
           {fieldError('outcome')}
         </fieldset>
 
@@ -525,7 +507,7 @@ class Paperwork extends React.Component {
             name="codeRed"
             options={codeRedRadioOptions}
             value={String(codeRed)}
-            onChange={this._handleRadioInputChange} />
+            onChange={handleRadioInputChange} />
         </fieldset>
 
         <fieldset>
@@ -537,7 +519,7 @@ class Paperwork extends React.Component {
             name="carrier"
             options={carrierRadioOptions}
             value={String(carrier)}
-            onChange={this._handleRadioInputChange} />
+            onChange={handleRadioInputChange} />
         </fieldset>
 
         <fieldset>
@@ -548,10 +530,10 @@ class Paperwork extends React.Component {
             data-platform={platform}
             disabled={submitting}
             name="rats"
-            value={rats}
+            value={ratsValue}
             valueProp={getRatTag}
-            onChange={this._handleRatsChange}
-            onRemove={this._handleRatsRemove} />
+            onChange={handleRatsChange}
+            onRemove={handleRatsRemove} />
           {fieldError('rats')}
         </fieldset>
 
@@ -562,10 +544,10 @@ class Paperwork extends React.Component {
             data-single
             disabled={submitting || (outcome !== 'success')}
             name="firstLimpetId"
-            options={rats}
+            options={ratsValue}
             value={firstLimpetId}
             valueProp={getRatTag}
-            onChange={this._handleFirstLimpetChange} />
+            onChange={handleFirstLimpetChange} />
           {fieldError('firstLimpetId')}
         </fieldset>
 
@@ -582,7 +564,7 @@ class Paperwork extends React.Component {
             disabled={submitting}
             name="system"
             value={system}
-            onChange={this._handleSystemChange} />
+            onChange={handleSystemChange} />
           {fieldError('system')}
         </fieldset>
 
@@ -595,7 +577,7 @@ class Paperwork extends React.Component {
             id="notes"
             name="notes"
             value={notes}
-            onChange={this._handleNotesChange} />
+            onChange={handleNotesChange} />
           {fieldError('notes')}
         </fieldset>
 
@@ -628,143 +610,51 @@ class Paperwork extends React.Component {
 
         <div className="panel quotes">
           <header>{'Quotes'}</header>
-          <div className="panel-content">{this.renderQuotes()}</div>
+          <div className="panel-content">
+            {
+              rescue.attributes.quotes
+                ? <ol>{rescue.attributes.quotes.map(renderQuote)}</ol>
+                : <span>{'N/A'}</span>
+            }
+          </div>
         </div>
       </form>
-    )
+    </>
+  )
+}
+
+Paperwork.getInitialProps = async (ctx) => {
+  const { query, store } = ctx
+  const idLower = query.rescueId.toLowerCase()
+  if (query.rescueId !== idLower) {
+    pageRedirect(ctx, {
+      href: '/paperwork/[rescueId]/edit',
+      as: `/paperwork/${idLower}/edit`,
+    })
   }
 
-  render () {
-    const {
-      submitting,
-      error,
-    } = this.state
+  const state = store.getState()
 
-    const { userCanEdit } = this.props
+  if (!selectRescueById(state, query)) {
+    const response = await store.dispatch(getRescue(query.rescueId))
+    const err = getResponseError(response)
 
-    return (
-      <>
-        {
-          !userCanEdit && (
-            <div className="store-errors">
-              <div className="store-error">
-                <span className="detail">{'You do not have permission to edit this rescue. You may only edit rescues you are assigned to.'}</span>
-              </div>
-            </div>
-          )
-        }
-        {
-          (error && !submitting) && (
-            <div className="store-errors">
-              <div className="store-error">
-                <span className="detail">{'Error while submitting paperwork.'}</span>
-              </div>
-            </div>
-          )
-        }
-
-        {this.renderRescueEditForm()}
-      </>
-    )
-  }
-
-  validate (values) {
-    const { rescue, userCanEdit } = this.props
-    const { changes } = this.state
-
-    const errors = {}
-
-    if (!rescue) {
-      return { valid: false, errors: { form: 'Rescue Not Found' }, noChange: false }
-    }
-
-    if (!userCanEdit) {
-      return { valid: false, errors: { form: 'You cannot edit this rescue.' }, noChange: false }
-    }
-
-    switch (values.outcome) {
-      case 'other':
-      case 'invalid':
-        if (!values.notes.replace(/\s/gu, '')) {
-          errors.notes = 'This outcome requires notes explaining the reason.'
-        }
-        break
-
-      case 'success':
-      case 'failure':
-        if (!values.rats || !values.rats.length) {
-          errors.rats = 'Must have at least one rat assigned.'
-        }
-        if (!values.system) {
-          errors.system = 'Must have a star system location.'
-        }
-        if (!values.platform) {
-          errors.platform = 'Must have a platform.'
-        }
-        if (values.outcome === 'success' && !values.firstLimpetId) {
-          errors.firstLimpetId = 'Successful rescues must have a first limpet rat.'
-        }
-        if (values.outcome === 'failure' && !values.notes.replace(/\s/gu, '')) {
-          errors.notes = 'Failed cases must have notes explaining what went wrong.'
-        }
-        break
-
-      default:
-        errors.outcome = 'Outcome is not set!'
-        break
-    }
-
-    const noChange = !Object.keys(errors).length && !Object.keys(changes).length
-
-    return {
-      valid: !Object.keys(errors).length && !noChange,
-      errors,
-      noChange,
+    if (err) {
+      if (err?.code === HttpStatus.NOT_FOUND) {
+        err.detail = 'We tried looking everywhere, but this rescue doesn\'t exist.'
+      }
+      setError(ctx, err.code, err.detail)
     }
   }
+}
 
-  getFieldValues () {
-    const { rescue, rats } = this.props
-    const { changes } = this.state
-
-    const ifDefined = (value, fallback) => {
-      return typeof value === 'undefined' ? fallback : value
-    }
-
-    const getValue = (value) => {
-      return ifDefined(changes[value], rescue.attributes[value])
-    }
-
-    return {
-      carrier: getValue('carrier'),
-      client: getValue('client'),
-      codeRed: getValue('codeRed'),
-      expansion: getValue('expansion'),
-      // Get FirstLimpetId object first, then try to get the firstLimpet from the assigned rat array, THEN try to get the firstLimpet from the new rat array.
-      // Getting firstLimpet from changes is to deal with weird edge cases. This should be resolved by the upcoming major rewrite to paperwork
-      firstLimpetId: ifDefined(
-        changes.firstLimpetId,
-        rats[rescue.relationships.firstLimpet.data?.id] ?? changes.rats?.find((rat) => {
-          return rat.id === rescue?.relationships?.firstLimpet.data?.id
-        }),
-      ) ?? null,
-      notes: getValue('notes'),
-      outcome: getValue('outcome'),
-      platform: getValue('platform'),
-      rats: Object.values(ifDefined(changes.rats, rats) ?? {}),
-      system: ifDefined(changes.system, rescue.attributes.system ? { value: rescue.attributes.system.toUpperCase() } : null),
-    }
+Paperwork.getPageMeta = () => {
+  return {
+    title: 'Paperwork',
   }
 }
 
 
 
 
-
-export default connectState((props) => {
-  return {
-    rats: useSelectorWithProps(props.query, selectFormattedRatsByRescueId),
-    rescue: useSelectorWithProps(props.query, selectRescueById),
-    userCanEdit: useSelectorWithProps(props.query, selectCurrentUserCanEditRescue),
-  }
-})(Paperwork)
+export default authenticated(Paperwork)
