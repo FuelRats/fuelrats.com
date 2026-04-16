@@ -3,8 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        NODE_ENV: ${NODE_ENV}
+      target: prod
     ports:
       - "3000:3000"
     environment:

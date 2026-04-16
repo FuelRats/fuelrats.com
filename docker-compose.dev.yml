@@ -1,5 +1,7 @@
 services:
   web:
+    build:
+      target: dev
     # Mount source code for hot reload in development
     volumes:
       - ./src:/app/src
