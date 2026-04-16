@@ -1,5 +1,4 @@
 import { AnimatePresence, m } from 'motion/react'
-import getConfig from 'next/config'
 import PropTypes from 'prop-types'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
@@ -16,8 +15,7 @@ import clsx from 'clsx'
 
 
 // Component constants
-const { publicRuntimeConfig } = getConfig()
-const { appUrl } = publicRuntimeConfig
+const appUrl = process.env.NEXT_PUBLIC_APP_URL
 
 const getSlides = (_, props) => {
   return props.slides

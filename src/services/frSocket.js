@@ -1,6 +1,5 @@
 import ReduxRatSocket from '@fuelrats/web-util/redux-ratsocket'
 import Cookies from 'js-cookie'
-import getConfig from 'next/config'
 import qs from 'qs'
 import { useCallback, useEffect, useSyncExternalStore } from 'react'
 
@@ -8,8 +7,6 @@ import { updatesResources } from '~/store/reducers/frAPIResources'
 
 
 
-
-const { publicRuntimeConfig } = getConfig()
 
 let socketStatus = 'disconnected'
 const socketStatusListeners = new Set()
@@ -20,7 +17,7 @@ function setSocketStatus (status) {
 }
 
 const frSocket = new ReduxRatSocket(
-  publicRuntimeConfig.frapi.socket,
+  process.env.NEXT_PUBLIC_FR_SOCKET_URL,
   {
     transformAction (action) {
       return {

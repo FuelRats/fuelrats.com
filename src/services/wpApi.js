@@ -1,25 +1,15 @@
 import axios from 'axios'
-import getConfig from 'next/config'
-
-
-
-
-
-const { publicRuntimeConfig } = getConfig()
-const localWordpressApiUrl = publicRuntimeConfig.wordpress.url
-
 
 
 
 
 const wpApi = axios.create({
-  baseURL: localWordpressApiUrl,
+  baseURL: process.env.NEXT_PUBLIC_WORDPRESS_URL,
   timeout: 10000,
   validateStatus: () => {
     return true // Always resolve because it's simpler for the action creators.
   },
 })
-
 
 
 

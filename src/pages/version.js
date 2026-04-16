@@ -1,13 +1,11 @@
 import { HttpStatus } from '@fuelrats/web-util/http'
 import axios from 'axios'
-import getConfig from 'next/config'
 import Link from 'next/link'
 
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 
 // Component constants
-const { publicRuntimeConfig } = getConfig()
-const { appUrl } = publicRuntimeConfig
+const appUrl = process.env.NEXT_PUBLIC_APP_URL
 
 
 

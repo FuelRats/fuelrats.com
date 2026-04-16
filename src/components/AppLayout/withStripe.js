@@ -1,5 +1,4 @@
 import hoistNonReactStatics from 'hoist-non-react-statics'
-import getConfig from 'next/config'
 import React from 'react'
 
 
@@ -7,8 +6,7 @@ import React from 'react'
 
 
 // Component Constants
-const { publicRuntimeConfig } = getConfig()
-const STRIPE_API_PK = publicRuntimeConfig.stripe.public
+const STRIPE_API_PK = process.env.NEXT_PUBLIC_STRIPE_API_PK
 
 
 

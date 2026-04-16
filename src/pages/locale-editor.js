@@ -1,13 +1,11 @@
 import axios from 'axios'
 import { AnimatePresence, m } from 'motion/react'
-import getConfig from 'next/config'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import JsonEditor from '~/components/JsonEditor'
 import styles from '~/scss/pages/locale-editor.module.scss'
 
-const { publicRuntimeConfig } = getConfig()
-const { appUrl } = publicRuntimeConfig
+const appUrl = process.env.NEXT_PUBLIC_APP_URL
 
 /* eslint-disable id-length */
 const formMotionConfig = {
