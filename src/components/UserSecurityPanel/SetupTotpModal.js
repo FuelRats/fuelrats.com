@@ -4,7 +4,9 @@ import { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 import asModal, { ModalContent, ModalFooter } from '~/components/asModal'
+import ApiErrorBox from '~/components/MessageBox/ApiErrorBox'
 import { generateTotpSecret, linkTotp } from '~/store/actions/totp'
+import friendlyApiError from '~/util/friendlyApiError'
 import getResponseError from '~/util/getResponseError'
 
 import styles from './UserSecurityPanel.module.scss'
@@ -66,9 +68,20 @@ function SetupTotpModal ({ onClose }) {
       <div className={styles.totpSetup}>
         {
           error && (
-            <div className={styles.error}>
-              {error.detail ?? error.title ?? 'An error occurred'}
-            </div>
+            <ApiErrorBox
+              error={error}
+              renderError={(err) => {
+                return friendlyApiError(err, {
+                  pointerMessages: {
+                    '/data/attributes/token': { detail: 'That code is incorrect. Double-check your authenticator app and try again.' },
+                    '/data/attributes/secret': { detail: 'Setup session expired. Please close this dialog and try again.' },
+                  },
+                  statusMessages: {
+                    conflict: { detail: 'Two-factor authentication is already enabled on this account.' },
+                  },
+                  fallbackDetail: 'Unable to complete setup. Please try again.',
+                })
+              }} />
           )
         }
 
@@ -125,7 +138,7 @@ function SetupTotpModal ({ onClose }) {
           )
         }
 
-        {step === 'error' && <div className={styles.empty}>{'Failed to generate secret. Please try again.'}</div>}
+        {step === 'error' && !error && <div className={styles.empty}>{'Failed to generate secret. Please try again.'}</div>}
       </div>
 
       <ModalFooter>

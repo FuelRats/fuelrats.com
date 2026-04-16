@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { createSelector } from 'reselect'
 
 import { authenticated } from '~/components/AppLayout'
+import ApiErrorBox from '~/components/MessageBox/ApiErrorBox'
 import useUnsavedChangesGuard from '~/hooks/useUnsavedChangesGuard'
 import { getRescue, updateRescue } from '~/store/actions/rescues'
 import {
@@ -17,6 +18,7 @@ import {
   selectCurrentUserCanEditRescue,
 } from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
+import friendlyApiError from '~/util/friendlyApiError'
 import pageRedirect from '~/util/getInitialProps/pageRedirect'
 import setError from '~/util/getInitialProps/setError'
 import getResponseError from '~/util/getResponseError'
@@ -87,7 +89,7 @@ function Paperwork ({ query }) {
   })
 
   const [submitting, setSubmitting] = useState(false)
-  const [error, setErrorState] = useState(null)
+  const [submitError, setSubmitError] = useState(null)
 
   const {
     changes,
@@ -140,10 +142,11 @@ function Paperwork ({ query }) {
     const response = await dispatch(updateRescue(updateData))
 
     if (isError(response)) {
-      setErrorState(true)
+      setSubmitError(getResponseError(response))
       setSubmitting(false)
       return
     }
+    setSubmitError(null)
 
     Router.push(makePaperworkRoute({
       rescueId: rescue.id,
@@ -165,12 +168,24 @@ function Paperwork ({ query }) {
         )
       }
       {
-        (error && !submitting) && (
-          <div className="store-errors">
-            <div className="store-error">
-              <span className="detail">{'Error while submitting paperwork.'}</span>
-            </div>
-          </div>
+        (submitError && !submitting) && (
+          <ApiErrorBox
+            error={submitError}
+            renderError={(err) => {
+              return friendlyApiError(err, {
+                pointerMessages: {
+                  '/data/attributes/system': { detail: 'Invalid system name. Please check and try again.' },
+                  '/data/attributes/platform': { detail: 'Invalid platform.' },
+                  '/data/attributes/outcome': { detail: 'Invalid outcome.' },
+                  '/data/attributes/title': { detail: 'Invalid operation title.' },
+                  '/data/attributes/notes': { detail: 'Invalid notes.' },
+                },
+                statusMessages: {
+                  forbidden: { detail: 'You do not have permission to edit this rescue.' },
+                },
+                fallbackDetail: 'Unable to submit paperwork. Please try again.',
+              })
+            }} />
         )
       }
 

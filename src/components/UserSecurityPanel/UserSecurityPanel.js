@@ -6,11 +6,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import ChangeEmailModal from '~/components/ChangeEmailModal'
 import ChangePasswordModal from '~/components/ChangePasswordModal'
 import ConfirmActionButton from '~/components/ConfirmActionButton'
+import ApiErrorBox from '~/components/MessageBox/ApiErrorBox'
 import { listPasskeys, registerPasskey, deletePasskey } from '~/store/actions/passkeys'
 import { removeTotp } from '~/store/actions/totp'
 import { getUserProfile } from '~/store/actions/user'
 import { selectCurrentUserId, selectSessionToken, selectUserById, withCurrentUserId } from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
+import friendlyApiError from '~/util/friendlyApiError'
 import getResponseError from '~/util/getResponseError'
 
 import SetupTotpModal from './SetupTotpModal'
@@ -131,9 +133,10 @@ function UserSecurityPanel () {
       })
       if (!response.ok) {
         const errData = await response.json().catch(() => { return null })
-        setError({
+        setError(errData?.errors?.[0] ?? {
+          status: 'internal_server',
           title: 'Certificate Error',
-          detail: errData?.errors?.[0]?.detail ?? 'Failed to generate certificate.',
+          detail: 'Failed to generate certificate.',
         })
         setDownloadingCert(false)
         return
@@ -146,7 +149,11 @@ function UserSecurityPanel () {
       link.click()
       URL.revokeObjectURL(url)
     } catch {
-      setError({ title: 'Certificate Error', detail: 'Failed to download certificate.' })
+      setError({
+        status: 'internal_server',
+        title: 'Certificate Error',
+        detail: 'Failed to download certificate. Please check your connection and try again.',
+      })
     }
     setDownloadingCert(false)
   }, [userId, token])
@@ -163,9 +170,17 @@ function UserSecurityPanel () {
         <div className={styles.content}>
           {
             error && (
-              <div className={styles.error}>
-                {error.detail ?? error.title ?? 'An error occurred'}
-              </div>
+              <ApiErrorBox
+                error={error}
+                renderError={(err) => {
+                  return friendlyApiError(err, {
+                    statusMessages: {
+                      conflict: { detail: 'This passkey is already registered on an account.' },
+                      unprocessable_entity: { detail: 'Passkey verification failed. Please try again.' },
+                    },
+                    fallbackDetail: 'Something went wrong. Please try again.',
+                  })
+                }} />
             )
           }
 
