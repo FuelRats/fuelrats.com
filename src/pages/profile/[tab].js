@@ -1,6 +1,6 @@
 import { HttpStatus } from '@fuelrats/web-util/http'
 import Router from 'next/router'
-import React from 'react'
+import { useCallback } from 'react'
 
 import { authenticated } from '~/components/AppLayout'
 import DeveloperPanel from '~/components/DeveloperPanel'
@@ -16,105 +16,95 @@ import setError from '~/util/getInitialProps/setError'
 
 
 
+const tabs = {
+  overview: {
+    render: () => {
+      return (<UserOverview />)
+    },
+    title: 'Overview',
+    pageTitle: 'Profile',
+  },
+  rats: {
+    render: () => {
+      return (<UserRatsPanel />)
+    },
+    title: 'Rats',
+    pageTitle: 'Your Rats',
+  },
+  rescues: {
+    render: () => {
+      return (<UserRescuesPanel />)
+    },
+    title: 'Rescues',
+    pageTitle: 'Your Rescues',
+  },
+  security: {
+    render: () => {
+      return (<UserSecurityPanel />)
+    },
+    title: 'Security',
+    pageTitle: 'Security',
+  },
+  developer: {
+    render: () => {
+      return (<DeveloperPanel />)
+    },
+    title: 'Developer',
+    pageTitle: 'Developer',
+    permission: 'developer.read',
+  },
+}
 
-@authenticated
-class Profile extends React.Component {
-  _handleFLDClose = () => {
-    Router.replace(`/profile/${this.props.query.tab}`)
-  }
 
-  _handleTabClick = (newTab) => {
+function Profile ({ query }) {
+  const { tab, fl } = query
+
+  const handleFLDClose = useCallback(() => {
+    Router.replace(`/profile/${tab}`)
+  }, [tab])
+
+  const handleTabClick = useCallback((newTab) => {
     Router.replace(`/profile/${newTab}`)
-  }
+  }, [])
 
-  _handlePermissionError = () => {
+  const handlePermissionError = useCallback(() => {
     Router.replace('/profile/overview')
+  }, [])
+
+  return (
+    <>
+      <div className="page-content">
+        <ProfileHeader />
+        <TabbedPanel
+          activeTab={tab || 'overview'}
+          name="User Tabs"
+          tabs={tabs}
+          onPermissionError={handlePermissionError}
+          onTabClick={handleTabClick} />
+      </div>
+
+      <FirstLoginModal
+        isOpen={fl === '1'}
+        onClose={handleFLDClose} />
+    </>
+  )
+}
+
+Profile.getInitialProps = (ctx) => {
+  if (!tabs[ctx.query.tab]) {
+    setError(ctx, HttpStatus.NOT_FOUND)
   }
+}
 
-  static getInitialProps (ctx) {
-    if (!this.tabs[ctx.query.tab]) {
-      setError(ctx, HttpStatus.NOT_FOUND)
-    }
-  }
-
-  static getPageMeta (ctx) {
-    return {
-      title: 'Profile',
-      displayTitle: this.tabs[ctx.query.tab].pageTitle,
-      key: 'profile',
-    }
-  }
-
-  render () {
-    const {
-      tab,
-      fl,
-    } = this.props.query
-
-    return (
-      <>
-        <div className="page-content">
-          <ProfileHeader />
-          <TabbedPanel
-            activeTab={tab || 'overview'}
-            name="User Tabs"
-            tabs={Profile.tabs}
-            onPermissionError={this._handlePermissionError}
-            onTabClick={this._handleTabClick} />
-        </div>
-
-        <FirstLoginModal
-          isOpen={fl === '1'}
-          onClose={this._handleFLDClose} />
-
-      </>
-    )
-  }
-
-  static get tabs () {
-    return {
-      overview: {
-        render: () => {
-          return (<UserOverview />)
-        },
-        title: 'Overview',
-        pageTitle: 'Profile',
-      },
-      rats: {
-        render: () => {
-          return (<UserRatsPanel />)
-        },
-        title: 'Rats',
-        pageTitle: 'Your Rats',
-      },
-      rescues: {
-        render: () => {
-          return (<UserRescuesPanel />)
-        },
-        title: 'Rescues',
-        pageTitle: 'Your Rescues',
-      },
-      security: {
-        render: () => {
-          return (<UserSecurityPanel />)
-        },
-        title: 'Security',
-        pageTitle: 'Security',
-      },
-      developer: {
-        render: () => {
-          return (<DeveloperPanel />)
-        },
-        title: 'Developer',
-        pageTitle: 'Developer',
-        permission: 'developer.read',
-      },
-    }
+Profile.getPageMeta = (ctx) => {
+  return {
+    title: 'Profile',
+    displayTitle: tabs[ctx.query.tab].pageTitle,
+    key: 'profile',
   }
 }
 
 
 
 
-
-export default Profile
+export default authenticated(Profile)
