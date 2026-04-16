@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector, useStore } from 'react-redux'
 
 import { authenticated } from '~/components/AppLayout'
 import Clock from '~/components/Clock'
@@ -26,7 +26,9 @@ const RECONNECT_REFRESH_DEBOUNCE_MS = 1500
 
 function DispatchBoard ({ query }) {
   const dispatch = useDispatch()
+  const store = useStore()
   const [loaded, setLoadedState] = useState(false)
+  const [newRescueAnnouncement, setNewRescueAnnouncement] = useState('')
 
   useEffect(() => {
     (async () => {
@@ -94,14 +96,23 @@ function DispatchBoard ({ query }) {
       return
     }
 
-    // If no detail panel is open and a new rescue appeared, auto-open it
-    if (!router.query.rId && rescueIds.length > prevIds.length) {
+    if (rescueIds.length > prevIds.length) {
       const newId = rescueIds.find((id) => { return !prevIds.includes(id) })
       if (newId) {
-        router.push(makeRoute('/dispatch', { rId: newId }))
+        // Auto-open the new rescue if nothing is currently open
+        if (!router.query.rId) {
+          router.push(makeRoute('/dispatch', { rId: newId }))
+        }
+
+        // Announce to screen readers
+        const rescue = store.getState().rescues?.[newId]
+        const client = rescue?.attributes?.client ?? 'unknown client'
+        const system = rescue?.attributes?.system ?? 'unknown system'
+        const codeRed = rescue?.attributes?.codeRed ? 'Code Red. ' : ''
+        setNewRescueAnnouncement(`${codeRed}New rescue: CMDR ${client} in ${system}.`)
       }
     }
-  }, [rescueIds, loaded, router])
+  }, [rescueIds, loaded, router, store])
 
   const statusConfig = {
     connected: { color: '#49c549', label: 'Live' },
@@ -115,12 +126,21 @@ function DispatchBoard ({ query }) {
   return (
     <>
       <Clock className={styles.clock} />
-      <div className={styles.statusBar}>
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        className={styles.statusBar}
+        role="status">
         <span
+          aria-hidden="true"
           className={clsx(styles.statusDot, { [styles.pulse]: isReconnecting })}
           style={{ backgroundColor: statusColor }}
           title={`WebSocket: ${socketStatus}`} />
+        <span className="sr-only">{'Connection: '}</span>
         {statusLabel}
+      </div>
+      <div aria-atomic="true" aria-live="polite" className="sr-only" role="status">
+        {newRescueAnnouncement}
       </div>
       <div className={clsx(styles.layout, { [styles.openDetail]: Boolean(query.rId), [styles.stale]: socketStatus !== 'connected' }, 'page-content loading loader-dark')}>
         {
