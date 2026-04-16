@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { useCallback, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -7,13 +6,13 @@ import { logout } from '~/store/actions/session'
 import {
   selectSession,
   selectUserById,
-  selectAvatarUrlByUserId,
   withCurrentUserId,
   selectCurrentUserCanEditAllRescues,
   selectCurrentUserHasScope,
 } from '~/store/selectors'
 
 import { Nav, NavLink, NavSection } from '../Nav'
+import UserAvatar from '../UserAvatar'
 import styles from './UserMenu.module.scss'
 import clsx from 'clsx'
 
@@ -30,9 +29,6 @@ function UserMenu () {
     return selectCurrentUserHasScope(state, { scope: 'dispatch.read' })
   })
   const user = useSelector(withCurrentUserId(selectUserById))
-  const userAvatarUrl = useSelector((state) => {
-    return withCurrentUserId(selectAvatarUrlByUserId)(state, { size: 64 })
-  })
 
   const dispatch = useDispatch()
 
@@ -63,16 +59,7 @@ function UserMenu () {
                 type="checkbox" />
 
               <label className={clsx(styles.avatar, styles.navHandle)} htmlFor="UserMenuControl" id="UserMenuToggle">
-                {
-                  Boolean(user) && (
-                    <Image
-                      unoptimized
-                      alt="User's avatar"
-                      height={64}
-                      src={userAvatarUrl}
-                      width={64} />
-                  )
-                }
+                {Boolean(user) && (<UserAvatar size={64} />)}
               </label>
             </>
           )

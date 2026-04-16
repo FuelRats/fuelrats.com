@@ -1,13 +1,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Image from 'next/image'
 import PropTypes from 'prop-types'
 import { useState, useCallback, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { deleteAvatar, getUserProfile } from '~/store/actions/user'
-import { selectAvatarUrlByUserId, selectUserById, withCurrentUserId } from '~/store/selectors'
+import { selectUserById, withCurrentUserId } from '~/store/selectors'
 
 import UploadAvatarModal from '../UploadAvatarModal'
+import UserAvatar from '../UserAvatar'
 import styles from './ProfileUserAvatar.module.scss'
 import clsx from 'clsx'
 
@@ -18,9 +18,6 @@ function ProfileUserAvatar ({
   canEdit,
   size = 170,
 }) {
-  const userAvatarUrl = useSelector((state) => {
-    return withCurrentUserId(selectAvatarUrlByUserId)(state, { size })
-  })
   const user = useSelector(withCurrentUserId(selectUserById))
   const hasCustomAvatar = Boolean(user?.relationships?.avatar?.data)
   const dispatch = useDispatch()
@@ -71,12 +68,7 @@ function ProfileUserAvatar ({
     <>
       <div className={styles.userAvatar}>
         <div className="avatar" style={sizeMeta.style}>
-          <Image
-            unoptimized
-            alt="User's avatar"
-            height={size}
-            src={userAvatarUrl}
-            width={size} />
+          <UserAvatar size={size} />
           {
             canEdit && (
               <button
