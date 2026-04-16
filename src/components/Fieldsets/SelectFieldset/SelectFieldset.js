@@ -7,6 +7,7 @@ import extPropTypes from '~/util/propTypes/extPropTypes'
 
 import styles from './SelectFieldset.module.scss'
 import inputStyles from '../InputFieldset/InputFieldset.module.scss'
+import clsx from 'clsx'
 
 
 
@@ -60,9 +61,9 @@ function SelectFieldset (props) {
         )
       }
 
-      <div className={[inputStyles.inputGroup, styles.select, className]}>
+      <div className={clsx(inputStyles.inputGroup, styles.select, className)}>
         <select
-          className={[inputClassName, { dark, required, valid: validityRef.current, [styles.empty]: !value.length }]}
+          className={clsx(inputClassName, { dark, required, valid: validityRef.current, [styles.empty]: !value.length })}
           disabled={submitting || disabled}
           type="text"
           {...inputProps}

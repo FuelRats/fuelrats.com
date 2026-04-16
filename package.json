@@ -78,13 +78,8 @@
     "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.27.1",
-    "@babel/eslint-parser": "^7.27.1",
-    "@babel/eslint-plugin": "^7.25.9",
-    "@babel/plugin-proposal-decorators": "^7.25.9",
     "@changesets/changelog-github": "^0.5.2",
     "@changesets/cli": "^2.29.4",
-    "@fuelrats/babel-plugin-classnames": "^0.3.0",
     "@fuelrats/eslint-config": "2.4.0-canary.21",
     "@fuelrats/eslint-config-react": "2.4.0-canary.19",
     "@fuelrats/eslint-plugin": "2.4.0-canary.11",
@@ -100,7 +95,6 @@
     "@types/react-dom": "^19.1.5",
     "@types/webpack": "^5.28.5",
     "@types/zxcvbn": "^4.4.5",
-    "babel-loader": "^9.2.1",
     "doctoc": "^2.2.1",
     "eslint": "^8.57.1",
     "eslint-import-resolver-alias": "^1.1.2",

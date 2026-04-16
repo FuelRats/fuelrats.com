@@ -12,6 +12,7 @@ import extPropTypes from '~/util/propTypes/extPropTypes'
 
 import styles from './InputFieldset.module.scss'
 import ValidityIcon from './ValidityIcon'
+import clsx from 'clsx'
 
 
 
@@ -101,13 +102,13 @@ const InputFieldset = React.forwardRef((props, forwardRef) => {
         )
       }
 
-      <div className={[styles.inputGroup, className]}>
+      <div className={clsx(styles.inputGroup, className)}>
         <input
           disabled={submitting}
           type="text"
           {...inputProps}
           ref={inputRef}
-          className={[inputClassName, { dark }]}
+          className={clsx(inputClassName, { dark })}
           data-pattern-message={patternMessage}
           value={value}
           onBlur={onBlur}
@@ -115,12 +116,12 @@ const InputFieldset = React.forwardRef((props, forwardRef) => {
           onFocus={onFocus} />
         {children}
         <ValidityIcon
-          className={{ [styles.hidden]: !value.length }}
+          className={clsx({ [styles.hidden]: !value.length })}
           hasMessages={messages?.hasMessages}
           valid={messages?.valid}
           validating={validating} />
         <InputSuggestions
-          className={{ dark, [styles.hidden]: hideMessages }}
+          className={clsx({ dark, [styles.hidden]: hideMessages })}
           messages={messages} />
       </div>
     </fieldset>

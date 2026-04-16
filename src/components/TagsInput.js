@@ -12,6 +12,7 @@ import debounce from 'lodash/debounce'
 import React from 'react'
 
 import Key from './Key'
+import clsx from 'clsx'
 
 
 
@@ -432,7 +433,7 @@ export default class TagsInput extends React.Component {
     delete divProps.placeholder
 
     return (
-      <div {...divProps} className={['tags-input', { 'has-tags': tags.length > 0 }, className]}>
+      <div {...divProps} className={clsx('tags-input', { 'has-tags': tags.length > 0 }, className)}>
         <ul className="tags">{this.renderTags()}</ul>
 
         <input
@@ -483,7 +484,7 @@ export default class TagsInput extends React.Component {
     return (
       <li
         key={index}
-        className={['option', { focus: selectedOption === index }]}
+        className={clsx('option', { focus: selectedOption === index })}
         onBlur={TagsInput.handleOptionMouseOut}
         onFocus={(event) => this.handleOptionMouseOver(event, index)}
         onMouseDown={() => this.addTag(option)}
@@ -506,7 +507,7 @@ export default class TagsInput extends React.Component {
 
   renderReturnPrompt () {
     return (
-      <div className={['return-prompt', { show: this.input && this.input.value }]}>
+      <div className={clsx('return-prompt', { show: this.input && this.input.value })}>
         <span>{'Press '}<Key>{'Return'}</Key>{' to add'}</span>
       </div>
     )
@@ -516,7 +517,7 @@ export default class TagsInput extends React.Component {
     const { selectedTag } = this.state
 
     return (
-      <li key={index} className={['tag', { focus: selectedTag === index }]}>
+      <li key={index} className={clsx('tag', { focus: selectedTag === index })}>
         {this.renderValue(tag)}
 
         <button

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { selectCurrentUserHasScope } from '~/store/selectors'
+import clsx from 'clsx'
 
 
 
@@ -19,7 +20,7 @@ function TabHandle (props) {
     ? (
       <li
         {...itemProps}
-        className={['tab', { active: name === activeTab }]}
+        className={clsx('tab', { active: name === activeTab })}
         name={name}>
         <span className="tab-inner">
           {tab.title}

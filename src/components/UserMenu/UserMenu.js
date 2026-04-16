@@ -16,6 +16,7 @@ import {
 
 import { Nav, NavLink, NavSection } from '../Nav'
 import styles from './UserMenu.module.scss'
+import clsx from 'clsx'
 
 
 
@@ -46,7 +47,7 @@ function UserMenu () {
   }, [dispatch])
 
   return (
-    <div className={[styles.userMenu, { [styles.loggedIn]: loggedIn }]}>
+    <div className={clsx(styles.userMenu, { [styles.loggedIn]: loggedIn })}>
       {
         loggedIn
           ? (
@@ -58,7 +59,7 @@ function UserMenu () {
                 id="UserMenuControl"
                 type="checkbox" />
 
-              <label className={[styles.avatar, styles.navHandle]} htmlFor="UserMenuControl" id="UserMenuToggle">
+              <label className={clsx(styles.avatar, styles.navHandle)} htmlFor="UserMenuControl" id="UserMenuToggle">
                 {
                   Boolean(user) && (
                     <Image

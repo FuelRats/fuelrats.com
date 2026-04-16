@@ -7,5 +7,4 @@ services:
       - ./src:/app/src
       - ./next.config.js:/app/next.config.js
       - ./.config:/app/.config
-      - ./.babelrc.js:/app/.babelrc.js
       - ./.env:/app/.env:ro

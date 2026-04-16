@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 
 import styles from './Clock.module.scss'
+import clsx from 'clsx'
 
 
 
@@ -42,7 +43,7 @@ function Clock (props) {
 
 
   return (
-    <div className={[styles.clock, className]}>
+    <div className={clsx(styles.clock, className)}>
       {clock}
     </div>
   )

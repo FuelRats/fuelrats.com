@@ -8,6 +8,7 @@ import { registerPasskey } from '~/store/actions/passkeys'
 import getResponseError from '~/util/getResponseError'
 
 import styles from './LoginModal.module.scss'
+import clsx from 'clsx'
 
 
 function PasskeyPromptView () {
@@ -50,7 +51,7 @@ function PasskeyPromptView () {
   }, [handleRegister])
 
   return (
-    <div className={[styles.loginForm, 'dialog']}>
+    <div className={clsx(styles.loginForm, 'dialog')}>
       <div className={styles.passkeyPrompt}>
         <FontAwesomeIcon className={styles.passkeyPromptIcon} icon="key" />
         <h3>{'Set up a passkey?'}</h3>
@@ -70,7 +71,7 @@ function PasskeyPromptView () {
       <ModalFooter className={styles.footer}>
         <FooterSecondary className={styles.secondary}>
           <button
-            className={[styles.button, 'secondary']}
+            className={clsx(styles.button, 'secondary')}
             disabled={registering}
             type="button"
             onClick={handleDismiss}>
@@ -80,7 +81,7 @@ function PasskeyPromptView () {
 
         <FooterPrimary className={styles.primary}>
           <button
-            className={[styles.button, 'green']}
+            className={clsx(styles.button, 'green')}
             disabled={registering}
             type="button"
             onClick={handleRegister}>

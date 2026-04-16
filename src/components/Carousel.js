@@ -9,6 +9,7 @@ import { createSelector } from 'reselect'
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { getImage } from '~/store/actions/images'
 import { selectImages } from '~/store/selectors'
+import clsx from 'clsx'
 
 
 
@@ -134,7 +135,7 @@ function Carousel (props) {
   }, [curSlideUrl])
 
   return (
-    <div className={['carousel', className]} id={id}>
+    <div className={clsx('carousel', className)} id={id}>
       <AnimatePresence>
         {
         Boolean(curSlideUrl) && (
@@ -169,7 +170,7 @@ function Carousel (props) {
             <button
               key={slideId}
               aria-label={`Image carousel slide ${slideId}`}
-              className={['circle-button', { active: curSlideId === slideId }]}
+              className={clsx('circle-button', { active: curSlideId === slideId })}
               name={slideId}
               type="button"
               onClick={handleSlideButtonClick} />

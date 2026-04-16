@@ -12,6 +12,7 @@ import { useRatSocket, useSocketStatus } from '~/services/frSocket'
 import { getDispatchBoard } from '~/store/actions/rescues'
 import { selectDispatchBoard } from '~/store/selectors/dispatch'
 import makeRoute from '~/util/router/makeRoute'
+import clsx from 'clsx'
 
 
 
@@ -67,12 +68,12 @@ function DispatchBoard ({ query }) {
       <Clock className={styles.clock} />
       <div className={styles.statusBar}>
         <span
-          className={[styles.statusDot, { [styles.pulse]: isReconnecting }]}
+          className={clsx(styles.statusDot, { [styles.pulse]: isReconnecting })}
           style={{ backgroundColor: statusColor }}
           title={`WebSocket: ${socketStatus}`} />
         {statusLabel}
       </div>
-      <div className={[styles.layout, { [styles.openDetail]: Boolean(query.rId), [styles.stale]: socketStatus !== 'connected' }, 'page-content loading loader-dark']}>
+      <div className={clsx(styles.layout, { [styles.openDetail]: Boolean(query.rId), [styles.stale]: socketStatus !== 'connected' }, 'page-content loading loader-dark')}>
         {
           loaded && (
             <>

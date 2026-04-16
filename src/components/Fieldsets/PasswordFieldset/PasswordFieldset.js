@@ -4,6 +4,7 @@ import { useReducer, useRef } from 'react'
 
 import InputFieldset from '../InputFieldset'
 import styles from './PasswordFieldset.module.scss'
+import clsx from 'clsx'
 
 
 
@@ -29,7 +30,7 @@ function PasswordFieldset (props) {
     <InputFieldset
       ref={inputRef}
       autoComplete="current-password"
-      className={[styles.passwordInput, className]}
+      className={clsx(styles.passwordInput, className)}
       displayName={displayName}
       placeholder="Sup3r-S3cur3-P4ssw0rd"
       {...inputProps}

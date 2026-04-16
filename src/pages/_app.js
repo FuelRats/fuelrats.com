@@ -21,6 +21,7 @@ import withReduxStore from '~/util/withReduxStore'
 import ErrorPage from './_error'
 
 import '~/scss/app.scss'
+import clsx from 'clsx'
 
 
 
@@ -104,7 +105,7 @@ class FuelRatsApp extends App {
           <meta content={description} property="og:description" />
         </NextHead>
         <LazyMotion strict features={domAnimation}>
-          <div className={{ forceDrawer }} id="FuelRatsApp" role="application">
+          <div className={clsx({ forceDrawer })} id="FuelRatsApp" role="application">
             <Provider store={store}>
               <NProgress />
               <Header />
@@ -114,7 +115,7 @@ class FuelRatsApp extends App {
                 <m.main
                   key={key}
                   {...pageMotionConfig}
-                  className={['page', className]}>
+                  className={clsx('page', className)}>
                   {
                     !noHeader && (
                       <header className="page-header">

@@ -5,6 +5,7 @@ import { useCallback, useState } from 'react'
 import isPromise from '~/util/isPromise'
 
 import styles from './Switch.module.scss'
+import clsx from 'clsx'
 
 
 
@@ -43,7 +44,7 @@ function Switch (props) {
     <div>
       <label
         {...containerProps}
-        className={[styles.switch, { [styles.checked]: props.checked, [styles.loading]: loading, [styles.disabled]: props.disabled }, className]}
+        className={clsx(styles.switch, { [styles.checked]: props.checked, [styles.loading]: loading, [styles.disabled]: props.disabled }, className)}
         htmlFor={id}>
         <input
           {...inputProps}
@@ -56,7 +57,7 @@ function Switch (props) {
         <span className={styles.slider} />
         <FontAwesomeIcon
           fixedWidth
-          className={[styles.handle]}
+          className={clsx(styles.handle)}
           icon={icon} />
 
         {

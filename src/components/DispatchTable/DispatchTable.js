@@ -6,6 +6,7 @@ import { selectDispatchBoard } from '~/store/selectors/dispatch'
 
 import styles from './DispatchTable.module.scss'
 import RescueRow from './RescueRow'
+import clsx from 'clsx'
 
 
 
@@ -20,7 +21,7 @@ function DispatchTable (props) {
   const [queueLength, maxClients] = useRescueQueueCount()
 
   return (
-    <section className={[styles.dispatchTable, className]}>
+    <section className={clsx(styles.dispatchTable, className)}>
       <table className={styles.table}>
         <thead>
           <tr>

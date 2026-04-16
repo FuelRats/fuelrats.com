@@ -14,6 +14,7 @@ import { getUserProfile } from '~/store/actions/user'
 import getResponseError from '~/util/getResponseError'
 
 import styles from './LoginModal.module.scss'
+import clsx from 'clsx'
 
 
 
@@ -114,7 +115,7 @@ function LoginView () {
   const { Form, canSubmit, submitting } = useForm({ data: data ?? initialData, onSubmit })
 
   return (
-    <Form className={[styles.loginForm, 'dialog']}>
+    <Form className={clsx(styles.loginForm, 'dialog')}>
       <EmailFieldset
         autoFocus
         dark
@@ -144,7 +145,7 @@ function LoginView () {
               <span>{'or'}</span>
             </div>
             <button
-              className={[styles.passkeyButton]}
+              className={clsx(styles.passkeyButton)}
               disabled={passkeyLoading || submitting}
               type="button"
               onClick={handlePasskeyLogin}>
@@ -158,7 +159,7 @@ function LoginView () {
       <ModalFooter className={styles.footer}>
         <FooterSecondary className={styles.secondary}>
           <button
-            className={[styles.button, 'secondary']}
+            className={clsx(styles.button, 'secondary')}
             type="button"
             onClick={handleRegisterClick}>
             {'Become a Rat'}
@@ -170,7 +171,7 @@ function LoginView () {
             {'Forgot password?'}
           </button>
           <button
-            className={[styles.button, 'green']}
+            className={clsx(styles.button, 'green')}
             disabled={!canSubmit}
             type="submit">
             {submitting ? 'Submitting...' : 'Login'}

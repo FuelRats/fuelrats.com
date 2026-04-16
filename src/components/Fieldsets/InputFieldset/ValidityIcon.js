@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { useMemo } from 'react'
 
 import styles from './InputFieldset.module.scss'
+import clsx from 'clsx'
 
 
 
@@ -50,18 +51,18 @@ function ValidityIcon (props) {
 
 
   return (
-    <div className={[styles.validityIconGroup, className]}>
+    <div className={clsx(styles.validityIconGroup, className)}>
       <FontAwesomeIcon
         {...restProps}
         {...iconProps}
         fixedWidth
-        className={[styles.validityIcon, { [styles.valid]: valid && !validating }]} />
+        className={clsx(styles.validityIcon, { [styles.valid]: valid && !validating })} />
 
       {
         Boolean(valid && hasMessages) && (
           <FontAwesomeIcon
             fixedWidth
-            className={[styles.warningIcon, className]}
+            className={clsx(styles.warningIcon, className)}
             icon="circle-exclamation"
             title={validWithMessageTitle} />
         )

@@ -4,6 +4,7 @@ import JsonObject from '~/components/JsonEditor/JsonObject'
 import useForm from '~/hooks/useForm'
 
 import styles from './JsonEditor.module.scss'
+import clsx from 'clsx'
 
 
 
@@ -24,7 +25,7 @@ function JsonEditor (props) {
 
   return (
     <>
-      <Form className={[styles.jsonEditor, className]}>
+      <Form className={clsx(styles.jsonEditor, className)}>
         <JsonObject name="object" node={data} />
       </Form>
       <br />

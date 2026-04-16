@@ -5,6 +5,7 @@ import useToggleState from '~/hooks/useToggleState'
 import asModal, { ModalContent, ModalFooter } from '../asModal'
 import WordpressPage from '../WordpressPage'
 import styles from './TermsModal.module.scss'
+import clsx from 'clsx'
 
 
 
@@ -32,7 +33,7 @@ function TermsModal (props) {
 
   return (
     <>
-      <ModalContent as="article" className={[styles.content]}>
+      <ModalContent as="article" className={clsx(styles.content)}>
         <WordpressPage className="loader-dark" slug={slug} />
       </ModalContent>
       <ModalFooter>

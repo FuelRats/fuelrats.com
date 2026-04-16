@@ -7,6 +7,7 @@ import useMergeReducer from '~/hooks/useMergeReducer'
 
 import ModalHeader from './ModalHeader'
 import ModalPortal from './ModalPortal'
+import clsx from 'clsx'
 
 
 
@@ -70,7 +71,7 @@ function ModalComponent (props) {
       <RootElement
         key="modal"
         {...modalMotionConfig}
-        className={['modal', className]}
+        className={clsx('modal', className)}
         role="dialog">
 
         <ModalHeader

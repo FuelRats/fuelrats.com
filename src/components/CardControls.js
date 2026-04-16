@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 
 
 
@@ -32,7 +33,7 @@ function CardControls (props) {
 
   return (
     <div
-      className={['card-controls', { 'has-message': deleteMode }]}>
+      className={clsx('card-controls', { 'has-message': deleteMode })}>
 
       {
         deleteMode && (
@@ -46,7 +47,7 @@ function CardControls (props) {
         !(editMode || deleteMode) && (
           <>
             <button
-              className={['icon', { green: editMode || deleteMode }]}
+              className={clsx('icon', { green: editMode || deleteMode })}
               name="edit"
               title={`Edit ${controlType}`}
               type="button"

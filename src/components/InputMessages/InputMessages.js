@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import PropTypes from 'prop-types'
 
 import styles from './InputMessages.module.scss'
+import clsx from 'clsx'
 
 
 
@@ -17,7 +18,7 @@ function MessageSet (props) {
     return (
       <li
         key={message}
-        className={[styles.message, styles[props.type] ?? '']}>
+        className={clsx(styles.message, styles[props.type] ?? '')}>
         <FontAwesomeIcon fixedWidth icon={props.icon} />
         {message}
       </li>
@@ -33,7 +34,7 @@ function InputMessages (props) {
   } = props
 
   return (
-    <ul className={[styles.inputMessages, className]}>
+    <ul className={clsx(styles.inputMessages, className)}>
       <MessageSet icon="triangle-exclamation" messages={messages.errors} type="error" />
       <MessageSet icon="circle-exclamation" messages={messages.warnings} type="warning" />
     </ul>

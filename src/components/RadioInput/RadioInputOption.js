@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 
 import styles from './RadioInputOption.module.scss'
+import clsx from 'clsx'
 
 
 
@@ -19,7 +20,7 @@ function RadioInputOption (props) {
   const optionId = `${inputProps.name}-${value}`
 
   return (
-    <Element className={[styles.option, { [styles.disabled]: inputProps.disabled, [styles.checked]: inputProps.checked }, className]}>
+    <Element className={clsx(styles.option, { [styles.disabled]: inputProps.disabled, [styles.checked]: inputProps.checked }, className)}>
       <input
         {...inputProps}
         aria-hidden={false}

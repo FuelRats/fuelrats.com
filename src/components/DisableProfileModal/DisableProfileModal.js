@@ -11,6 +11,7 @@ import { selectCurrentUserId } from '~/store/selectors'
 import getResponseError from '~/util/getResponseError'
 
 import DisableProfileErrorBox from './DisableProfileErrorBox'
+import clsx from 'clsx'
 
 
 
@@ -109,7 +110,7 @@ function DisableProfileModal (props) {
             )
           }
           <button
-            className={{ green: !confirming }}
+            className={clsx({ green: !confirming })}
             disabled={(!confirming && !canSubmit) || submitting}
             type="button"
             onClick={handleConfirm}>

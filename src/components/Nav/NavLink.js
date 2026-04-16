@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useCallback } from 'react'
 
 import { useNavContext } from './Nav'
+import clsx from 'clsx'
 
 
 
@@ -30,14 +31,14 @@ export default function NavLink (props) {
       {
         external
           ? (
-            <a {...restProps} className={[className, { disabled }]} onClick={handleClick}>
+            <a {...restProps} className={clsx(className, { disabled })} onClick={handleClick}>
               <span>
                 {children}
               </span>
             </a>
           )
           : (
-            <Link {...restProps} className={[className, { disabled }]} onClick={handleClick}>
+            <Link {...restProps} className={clsx(className, { disabled })} onClick={handleClick}>
               <span>
                 {children}
               </span>

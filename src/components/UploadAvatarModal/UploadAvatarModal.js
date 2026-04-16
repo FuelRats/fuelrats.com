@@ -14,6 +14,7 @@ import getResponseError from '~/util/getResponseError'
 
 import UploadAvatarMessageBox from './UploadAvatarMessageBox'
 import styles from './UploadAvatarModal.module.scss'
+import clsx from 'clsx'
 
 // Component Constants
 const MAX_FILE_SIZE = 26214400 // Server upload max is 25M
@@ -217,7 +218,7 @@ function UploadAvatarModal (props) {
       <div className={styles.body}>
         {
           Boolean(!upImg && !result.success) && (
-            <label className={['file-dropzone', { active: inputDragActive }]} htmlFor="avatarInput" id="avatarInputLabel">
+            <label className={clsx('file-dropzone', { active: inputDragActive })} htmlFor="avatarInput" id="avatarInputLabel">
               <FontAwesomeIcon fixedWidth icon="file-arrow-up" />
               {' Drop image here'}
               <br />

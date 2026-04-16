@@ -5,6 +5,7 @@ import reduceToggle from '~/hooks/reducers/reduceToggle'
 import formatAsEliteDate from '~/util/date/formatAsEliteDate'
 
 import styles from './UserDecalPanel.module.scss'
+import clsx from 'clsx'
 
 
 
@@ -20,7 +21,7 @@ function DecalRow ({ decal }) {
       <div className={styles.decalCode}>
         <button
           aria-label="Show decal code"
-          className={['icon', styles.toggle]}
+          className={clsx('icon', styles.toggle)}
           name={decal.id}
           type="button"
           onClick={handleVisibility}>

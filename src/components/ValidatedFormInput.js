@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import clsx from 'clsx'
 
 
 
@@ -85,7 +86,7 @@ class ValidatedFormInput extends React.Component {
           placeholder={renderLabel ? undefined : label}
           {...this.inputProps}
           onChange={this._handleChange} />
-        <div className={['tooltiptext', { 'should-display': value && errorMessage }]}>
+        <div className={clsx('tooltiptext', { 'should-display': value && errorMessage })}>
           {this.state.errorMessage}
         </div>
         {children}

@@ -10,6 +10,7 @@ import { selectAvatarUrlByUserId, selectUserById, withCurrentUserId } from '~/st
 
 import UploadAvatarModal from '../UploadAvatarModal'
 import styles from './ProfileUserAvatar.module.scss'
+import clsx from 'clsx'
 
 const faIconLgSize = 100
 const faIconMdSize = 64
@@ -79,7 +80,7 @@ function ProfileUserAvatar ({
             canEdit && (
               <button
                 aria-label="Edit your avatar"
-                className={[styles.userAvatarEdit, styles.editFace]}
+                className={clsx(styles.userAvatarEdit, styles.editFace)}
                 type="button"
                 onClick={handleToggleUploadAvatar}>
                 <FontAwesomeIcon icon="upload" size={sizeMeta.icon} />

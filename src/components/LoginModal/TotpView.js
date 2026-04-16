@@ -10,6 +10,7 @@ import { getUserProfile } from '~/store/actions/user'
 import getResponseError from '~/util/getResponseError'
 
 import styles from './LoginModal.module.scss'
+import clsx from 'clsx'
 
 
 function TotpView () {
@@ -80,7 +81,7 @@ function TotpView () {
   }, [setModalState])
 
   return (
-    <div className={[styles.loginForm, 'dialog']}>
+    <div className={clsx(styles.loginForm, 'dialog')}>
       <div className={styles.passkeyPrompt}>
         <FontAwesomeIcon className={styles.passkeyPromptIcon} icon="shield-halved" />
         <h3>{'Two-Factor Authentication'}</h3>
@@ -102,7 +103,7 @@ function TotpView () {
       <ModalFooter className={styles.footer}>
         <FooterSecondary className={styles.secondary}>
           <button
-            className={[styles.button, 'secondary']}
+            className={clsx(styles.button, 'secondary')}
             disabled={submitting}
             type="button"
             onClick={handleBack}>
@@ -112,7 +113,7 @@ function TotpView () {
 
         <FooterPrimary className={styles.primary}>
           <button
-            className={[styles.button, 'green']}
+            className={clsx(styles.button, 'green')}
             disabled={submitting || code.length !== 6}
             type="button"
             onClick={handleSubmit}>

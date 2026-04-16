@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import PropTypes from 'prop-types'
 import React from 'react'
+import clsx from 'clsx'
 
 
 
@@ -59,10 +60,10 @@ class ConfirmActionButton extends React.Component {
     const buttonSize = className.includes('icon') ? 'icon' : 'compact'
 
     return (
-      <div className={['action-confirmation-button', className]}>
+      <div className={clsx('action-confirmation-button', className)}>
         {confirmingAction && (<span>{confirmSubText}</span>)}
         <button
-          className={[buttonSize, { green: confirmingAction }]}
+          className={clsx(buttonSize, { green: confirmingAction })}
           data-action="confirm"
           title={confirmButtonText}
           type="button"

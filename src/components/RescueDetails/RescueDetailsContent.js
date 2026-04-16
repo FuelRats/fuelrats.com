@@ -20,6 +20,7 @@ import CopyToClipboard from '../CopyToClipboard'
 import PlatformBadge from '../PlatformBadge'
 import ElapsedTimer from '../ElapsedTimer'
 import styles from './RescueDetails.module.scss'
+import clsx from 'clsx'
 
 
 
@@ -35,7 +36,7 @@ const selectRenderedRatList = createSelectRenderedRatList((rat, index) => {
           ? (<td className={styles.infoTitle}>{'Rats'}</td>)
           : (<td />)
       }
-      <td className={[styles.infoValue, styles.infoGroup]}>
+      <td className={clsx(styles.infoValue, styles.infoGroup)}>
         {
           rat.type === 'unidentified-rats' && (
             <i title="This rat is unidentified">
@@ -192,7 +193,7 @@ function RescueDetailsContent (props) {
             system && (
               <tr>
                 <td className={styles.infoTitle}>{'System'}</td>
-                <td className={[styles.infoValue, styles.systemRow]}>
+                <td className={clsx(styles.infoValue, styles.systemRow)}>
                   <span className={styles.systemInfo}>
                     <CopyToClipboard doHint text={system}>
                       {system}
@@ -264,7 +265,7 @@ function RescueDetailsContent (props) {
                   <span>
                     {rescuePlatform.long}
                     {platform === 'pc' && expansion && (
-                      <span className={['badge', styles.expansionBadge, expansion]}>
+                      <span className={clsx('badge', styles.expansionBadge, expansion)}>
                         {expansionLongNameMap[expansion] ?? expansion}
                       </span>
                     )}
@@ -299,7 +300,7 @@ function RescueDetailsContent (props) {
               <CopyToClipboard doHint text={`https://fuelrats.com/paperwork/${rescue.id}`}>
                 {rescue.id}
               </CopyToClipboard>
-              <Link className={['button', styles.paperworkButton]} href={makePaperworkRoute({ rescueId: rescue.id, edit: true })}>
+              <Link className={clsx('button', styles.paperworkButton)} href={makePaperworkRoute({ rescueId: rescue.id, edit: true })}>
                 <FontAwesomeIcon fixedWidth icon="box-archive" />
                 {'Paperwork'}
               </Link>
@@ -358,7 +359,7 @@ function RescueDetailsContent (props) {
                               ? (<td className={styles.infoTitle}>{'Quotes'}</td>)
                               : (<td />)
                           }
-                          <td className={[styles.infoValue, styles.infoGroup, styles.quote, { [styles.event]: item.isEvent }]}>
+                          <td className={clsx(styles.infoValue, styles.infoGroup, styles.quote, { [styles.event]: item.isEvent })}>
                             <span className={styles.quoteIndex}>
                               {item.originalIndex}
                             </span>
@@ -372,7 +373,7 @@ function RescueDetailsContent (props) {
                               {item.quoteMessage}
                             </span>
 
-                            <span className={[styles.quoteTime, { [styles.withVia]: item.isViaAuthor }]}>
+                            <span className={clsx(styles.quoteTime, { [styles.withVia]: item.isViaAuthor })}>
                               <span title={formatAsEliteDateTime(item.quote.createdAt)}>{formatQuoteTime(item.quote.createdAt)}</span>
                               {item.isViaAuthor && !item.isEvent && (<span className={styles.quoteAuthorVia}>{`via ${item.quote.lastAuthor ?? item.quote.author}`}</span>)}
                             </span>
@@ -385,7 +386,7 @@ function RescueDetailsContent (props) {
                     const toggleRow = isCollapsible && (
                       <tr key={`${groupKey}-toggle`}>
                         <td />
-                        <td className={[styles.infoValue, styles.infoGroup, styles.quote, styles.eventCollapse]}>
+                        <td className={clsx(styles.infoValue, styles.infoGroup, styles.quote, styles.eventCollapse)}>
                           <button
                             className={styles.eventCollapseButton}
                             type="button"

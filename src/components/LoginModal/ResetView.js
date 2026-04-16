@@ -11,6 +11,7 @@ import { sendPasswordResetEmail } from '~/store/actions/authentication'
 import getResponseError from '~/util/getResponseError'
 
 import styles from './LoginModal.module.scss'
+import clsx from 'clsx'
 
 
 
@@ -46,7 +47,7 @@ function ResetView (props) {
   }, [setModalState])
 
   return (
-    <Form className={[styles.loginForm, 'dialog', className]}>
+    <Form className={clsx(styles.loginForm, 'dialog', className)}>
       {
         !error && (
           <MessageBox className={styles.errorBox} title={resetSubmitted ? 'Incoming Message' : undefined} type="info">
@@ -70,7 +71,7 @@ function ResetView (props) {
       <ModalFooter className={styles.footer}>
         <FooterSecondary className={styles.secondary}>
           <button
-            className={[styles.button, 'secondary']}
+            className={clsx(styles.button, 'secondary')}
             type="button"
             onClick={handleReturnClick}>
             {'Return'}
@@ -79,7 +80,7 @@ function ResetView (props) {
 
         <FooterPrimary className={styles.primary}>
           <button
-            className={[styles.button, 'green']}
+            className={clsx(styles.button, 'green')}
             disabled={!canSubmit}
             type="submit">
             {submitting ? 'Submitting...' : 'Login'}

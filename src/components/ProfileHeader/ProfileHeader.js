@@ -14,6 +14,7 @@ import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 import styles from './ProfileHeader.module.scss'
 import ProfileUserAvatar from '../ProfileUserAvatar'
 import UnverifiedUserBanner from './UnverifiedUserBanner'
+import clsx from 'clsx'
 
 
 
@@ -71,7 +72,7 @@ function ProfileHeader () {
                 return (
                   <li
                     key={group.id}
-                    className={[styles.groupBadge, group.attributes.name]}
+                    className={clsx(styles.groupBadge, group.attributes.name)}
                     style={config ? { backgroundColor: config.color } : undefined}>
                     {config?.icon && (<FontAwesomeIcon fixedWidth icon={config.icon} />)}
                     {group.attributes.displayName ?? group.attributes.name}

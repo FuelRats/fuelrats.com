@@ -6,6 +6,7 @@ import { useMemo } from 'react'
 import permissionNamespaces from '~/data/permissionNamespaces'
 
 import styles from './ScopeView.module.scss'
+import clsx from 'clsx'
 
 
 
@@ -24,7 +25,7 @@ function NamespaceDetails (props) {
       const accessible = action.all || action.self
       const isSelf = action.self && (!action.all || (!action.all && action.self))
       return (
-        <li key={actionName} className={[styles.permission, { [styles.inaccessible]: accessible }]}>
+        <li key={actionName} className={clsx(styles.permission, { [styles.inaccessible]: accessible })}>
           <span>
             {namespace.actionText[actionName]?.[isSelf ? 'self' : 'all'] ?? 'Read'}
             {' '}

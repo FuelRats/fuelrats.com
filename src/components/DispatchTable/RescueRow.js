@@ -17,6 +17,7 @@ import makeRoute from '~/util/router/makeRoute'
 
 import CopyToClipboard from '../CopyToClipboard'
 import styles from './DispatchTable.module.scss'
+import clsx from 'clsx'
 
 
 
@@ -97,19 +98,19 @@ function RescueRow (props) {
   return (
     <tr
       className={
-        {
+        clsx({
           [styles.codeRed]: codeRed,
           [styles.inactive]: status === 'inactive',
           [styles.selected]: isSelected,
           'animate-flash': animating,
-        }
+        })
       }
       data-rescue-id={rescue.id}
       title={quoteString}
       onAnimationEnd={handleTransitionEnd}>
       <CopyToClipboard
         as="td"
-        className={[styles.rescueIdCell, { [styles.rescueIdCellCr]: codeRed }]}
+        className={clsx(styles.rescueIdCell, { [styles.rescueIdCellCr]: codeRed })}
         text={commandIdentifier ?? '?'}>
         {commandIdentifier ?? '?'}
       </CopyToClipboard>
@@ -155,7 +156,7 @@ function RescueRow (props) {
         {rescueRats}
       </td>
       <td className={styles.rescueRowFocus}>
-        <label className={['button icon', { active: router.query.rId === rescue.id }]} htmlFor={radioInputId}>
+        <label className={clsx('button icon', { active: router.query.rId === rescue.id })} htmlFor={radioInputId}>
           <input
             hidden
             readOnly

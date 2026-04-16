@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 function ModalFooter (props) {
   const {
     className,
@@ -5,7 +6,7 @@ function ModalFooter (props) {
   } = props
 
   return (
-    <footer className={['modal-footer', className]}>
+    <footer className={clsx('modal-footer', className)}>
       <menu type="toolbar">
         {children}
       </menu>
@@ -15,7 +16,7 @@ function ModalFooter (props) {
 
 function FooterPrimary ({ children, className, ...props }) {
   return (
-    <div {...props} className={['primary', className]}>
+    <div {...props} className={clsx('primary', className)}>
       {children}
     </div>
   )
@@ -23,7 +24,7 @@ function FooterPrimary ({ children, className, ...props }) {
 
 function FooterSecondary ({ children, className, ...props }) {
   return (
-    <div {...props} className={['secondary', className]}>
+    <div {...props} className={clsx('secondary', className)}>
       {children}
     </div>
   )

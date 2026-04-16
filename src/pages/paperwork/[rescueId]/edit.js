@@ -25,6 +25,7 @@ import setError from '~/util/getInitialProps/setError'
 import getRatTag from '~/util/getRatTag'
 import getResponseError from '~/util/getResponseError'
 import makePaperworkRoute from '~/util/router/makePaperworkRoute'
+import clsx from 'clsx'
 
 
 
@@ -419,7 +420,7 @@ class Paperwork extends React.Component {
 
     return (
       <form
-        className={['page-content', { 'loading loader-force': submitting }]}
+        className={clsx('page-content', { 'loading loader-force': submitting })}
         onSubmit={this._handleSubmit}>
         <header className="paperwork-header">
           {

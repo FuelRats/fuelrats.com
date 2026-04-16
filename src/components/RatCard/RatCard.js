@@ -19,6 +19,7 @@ import formatAsEliteDate from '~/util/date/formatAsEliteDate'
 import CardControls from '../CardControls'
 import InlineEditSpan from '../InlineEditSpan'
 import DefaultRatButton from './DefaultRatButton'
+import clsx from 'clsx'
 
 class RatCard extends React.Component {
   state = {
@@ -165,7 +166,7 @@ class RatCard extends React.Component {
 
     return (
       <div
-        className={['panel rat-panel', { editing, submitting }, className]}
+        className={clsx('panel rat-panel', { editing, submitting }, className)}
         data-loader-text={submitting ? submitText : null}>
         <header>
           <div>

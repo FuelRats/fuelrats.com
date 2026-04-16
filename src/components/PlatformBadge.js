@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { expansionNameMap } from '~/util/expansion'
 
 import styles from './PlatformBadge.module.scss'
+import clsx from 'clsx'
 
 
 function PlatformBadge ({ platform, expansion, className }) {
@@ -27,9 +28,9 @@ function PlatformBadge ({ platform, expansion, className }) {
   }
 
   return (
-    <span className={[styles.platformBadge, className]}>
+    <span className={clsx(styles.platformBadge, className)}>
       <span className={styles.platformBadgeIcon}>{icon}</span>
-      <span className={[styles.platformBadgeLabel, platform, expansion]}>
+      <span className={clsx(styles.platformBadgeLabel, platform, expansion)}>
         {label}
       </span>
     </span>

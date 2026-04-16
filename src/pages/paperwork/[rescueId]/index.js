@@ -20,6 +20,7 @@ import pageRedirect from '~/util/getInitialProps/pageRedirect'
 import setError from '~/util/getInitialProps/setError'
 import getResponseError from '~/util/getResponseError'
 import makePaperworkRoute from '~/util/router/makePaperworkRoute'
+import clsx from 'clsx'
 
 
 
@@ -224,7 +225,7 @@ class Paperwork extends React.Component {
                 <>
                   <Link
                     aria-disabled={!userCanEdit}
-                    className={['button compact', { disabled: !userCanEdit }]}
+                    className={clsx('button compact', { disabled: !userCanEdit })}
                     href={userCanEdit ? makePaperworkRoute({ rescueId: rescue.id, edit: true }) : '#'}
                     title={!userCanEdit ? 'You do not have permission to edit this rescue' : undefined}
                     onClick={!userCanEdit ? (event) => { return event.preventDefault() } : undefined}>
@@ -285,11 +286,11 @@ class Paperwork extends React.Component {
 
         <div className="rescue-tags">
           <div className="tag status-group">
-            <span className={['status', status]}>{status}</span>
+            <span className={clsx('status', status)}>{status}</span>
             <span className="outcome">{outcome || 'unfiled'}</span>
           </div>
 
-          <div className={['tag platform', rescue.attributes.platform ?? 'none']}>
+          <div className={clsx('tag platform', rescue.attributes.platform ?? 'none')}>
             {rescue.attributes.platform || 'No Platform'}
           </div>
 

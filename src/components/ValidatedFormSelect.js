@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import clsx from 'clsx'
 
 
 
@@ -49,7 +50,7 @@ class ValidatedFormSelect extends React.Component {
           <select
             autoComplete="country-name"
             {...this.selectProps}
-            className={['form-select', { required }, className]}
+            className={clsx('form-select', { required }, className)}
             onChange={this._handleChange}>
             {!renderLabel && (<option value="">{label}</option>)}
             {

@@ -6,6 +6,7 @@ import WordpressTermsModal from '~/components/TermsModal'
 import { useField } from '~/hooks/useForm'
 import { getWordpressPage } from '~/store/actions/wordpress'
 import { selectWordpressPageBySlug } from '~/store/selectors'
+import clsx from 'clsx'
 
 
 
@@ -72,7 +73,7 @@ export default function TermsFieldset (props) {
           disabled={submitting}
           {...inputProps}
           checked={Boolean(value)}
-          className={['large', className]}
+          className={clsx('large', className)}
           type="checkbox"
           onChange={handleCheckboxClick} />
 

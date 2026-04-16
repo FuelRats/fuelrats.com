@@ -10,6 +10,7 @@ import { addNickname } from '~/store/actions/user'
 import { selectUserById, withCurrentUserId } from '~/store/selectors'
 
 import styles from './AddNicknameForm.module.scss'
+import clsx from 'clsx'
 
 
 const initialState = {
@@ -54,7 +55,7 @@ function AddNicknameForm (props) {
       <IRCNickFieldset
         required
         aria-label="Nickname"
-        className={[styles.thinInput, error && styles.error]}
+        className={clsx(styles.thinInput, error && styles.error)}
         disabled={props.disabled}
         id="AddNickname"
         name="attributes.nick"

@@ -9,6 +9,7 @@ import useForm from '~/hooks/useForm'
 import { createRat } from '~/store/actions/rats'
 
 import styles from './AddRatForm.module.scss'
+import clsx from 'clsx'
 
 
 
@@ -45,7 +46,7 @@ function AddRatForm () {
   const { Form, canSubmit, submitting, state } = useForm({ onSubmit, data: initialState })
 
   return (
-    <Form className={['compact', styles.addRatForm, { [styles.formOpen]: formOpen }]}>
+    <Form className={clsx('compact', styles.addRatForm, { [styles.formOpen]: formOpen })}>
       {
         formOpen && (
           <div className="formCol">
@@ -101,7 +102,7 @@ function AddRatForm () {
         }
         <button
           aria-label={formOpen ? 'cancel new commander creation' : 'add commander'}
-          className={['compact square', { green: !formOpen }]}
+          className={clsx('compact square', { green: !formOpen })}
           title={formOpen ? 'Cancel' : 'Add new commander'}
           type="button"
           onClick={handleToggleForm}>

@@ -13,6 +13,7 @@ import PasskeyPromptView from './PasskeyPromptView'
 import ResetView from './ResetView'
 import TotpView from './TotpView'
 import VerifyView from './VerifyView'
+import clsx from 'clsx'
 
 
 
@@ -20,7 +21,7 @@ import VerifyView from './VerifyView'
 function LoginModal () {
   const [{ error, view }] = useModalContext()
   return (
-    <ModalContent className={[styles.loginModal, 'no-pad']}>
+    <ModalContent className={clsx(styles.loginModal, 'no-pad')}>
       <LoginModalErrorBox className={styles.errorBox} error={error} />
       {view === 'login' && (<LoginView />)}
       {view === 'verify' && (<VerifyView />)}

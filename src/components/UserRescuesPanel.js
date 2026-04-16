@@ -14,6 +14,7 @@ import Pagination from './Pagination'
 import PlatformBadge from './PlatformBadge'
 
 import styles from './UserRescuesPanel.module.scss'
+import clsx from 'clsx'
 
 
 
@@ -121,7 +122,7 @@ function UserRescuesPanel () {
               return (
                 <tr
                   key={rescue.id}
-                  className={[{ [styles.codeRed]: codeRed }]}>
+                  className={clsx({ [styles.codeRed]: codeRed })}>
                   <td className={styles.cmdr}>
                     <small>{'CMDR '}</small>
                     {client}
@@ -131,13 +132,13 @@ function UserRescuesPanel () {
                   </td>
                   <td>
                     <PlatformBadge expansion={expansion} platform={platform} />
-                    {codeRed && (<span className={['badge', styles.crBadge]}>{'CR'}</span>)}
+                    {codeRed && (<span className={clsx('badge', styles.crBadge)}>{'CR'}</span>)}
                   </td>
                   <RescueRatCell rescueId={rescue.id} />
                   <td>
                     {
                       outcomeInfo && (
-                        <span className={[styles.outcome, outcomeInfo.className]}>
+                        <span className={clsx(styles.outcome, outcomeInfo.className)}>
                           <FontAwesomeIcon fixedWidth icon={outcomeInfo.icon} />
                           {' '}
                           {outcomeInfo.label}

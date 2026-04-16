@@ -15,6 +15,7 @@ import {
 } from '~/store/selectors'
 import makePaginatedRoute from '~/util/router/makePaginatedRoute'
 import safeParseInt from '~/util/safeParseInt'
+import clsx from 'clsx'
 
 const noResultsTexts = [
   'No rodents found. Try adjusting your search.',
@@ -129,7 +130,7 @@ function Leaderboard (props) {
               {'Badges'}
             </div>
           </div>
-          <ol className={['loading', { 'loader-force': retrieving }]}>
+          <ol className={clsx('loading', { 'loader-force': retrieving })}>
             {
               retrieving && Array(pageSize).fill(undefined).map((_, idx) => {
                 return (

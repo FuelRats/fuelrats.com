@@ -6,6 +6,7 @@ import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import useToggleState from '~/hooks/useToggleState'
 import { getWordpressPage } from '~/store/actions/wordpress'
 import { selectWordpressPageBySlug } from '~/store/selectors'
+import clsx from 'clsx'
 
 
 
@@ -48,7 +49,7 @@ function WordpressPage ({ className, slug }) {
   /* eslint-disable react/no-danger */
   return (
     <div
-      className={['article-content loading', { error: !renderedContent && !loading }, className]}
+      className={clsx('article-content loading', { error: !renderedContent && !loading }, className)}
       dangerouslySetInnerHTML={{ __html: renderedContent }} />
   )
   /* eslint-enable */

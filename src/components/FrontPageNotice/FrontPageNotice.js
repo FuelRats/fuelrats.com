@@ -6,6 +6,7 @@ import makePaperworkRoute from '~/util/router/makePaperworkRoute'
 
 import AuthDependantLink from '../AuthDependantLink'
 import styles from './FrontPageNotice.module.scss'
+import clsx from 'clsx'
 
 
 
@@ -28,7 +29,7 @@ function FrontPageNotice (props) {
       elseExternal
       elseHref={TWEET_LINK}
       href={RESCUE_LINK}>
-      <div className={[styles.frontPageNotice, className]}>
+      <div className={clsx(styles.frontPageNotice, className)}>
         <Image height={368} src="/static/images/100k.jpg" width={256} />
         <div className={styles.cardText}>
           <div className={styles.title}>

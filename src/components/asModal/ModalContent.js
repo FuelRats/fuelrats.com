@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 function ModalContent (props) {
   const {
     as: Element = 'div',
@@ -8,7 +9,7 @@ function ModalContent (props) {
 
   return (
     <Element
-      className={['modal-content', className]}
+      className={clsx('modal-content', className)}
       {...restProps}>
 
       {children}

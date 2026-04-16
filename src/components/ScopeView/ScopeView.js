@@ -6,6 +6,7 @@ import { selectCurrentUserScopes } from '~/store/selectors'
 
 import NamespaceDetails from './NamespaceDetails'
 import styles from './ScopeView.module.scss'
+import clsx from 'clsx'
 
 
 
@@ -46,7 +47,7 @@ const selectGroupedScopes = createSelector(
 function ScopeView ({ scopes, className }) {
   const groupedScopes = useSelectorWithProps({ scopes }, selectGroupedScopes)
   return (
-    <div className={[styles.scopeView, className]}>
+    <div className={clsx(styles.scopeView, className)}>
       {
           Object.entries(groupedScopes).map(
             ([namespace, actions]) => {

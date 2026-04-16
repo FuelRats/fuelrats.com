@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import PropTypes from 'prop-types'
 
 import styles from './MessageBox.module.scss'
+import clsx from 'clsx'
 
 
 
@@ -31,7 +32,7 @@ function MessageBox (props) {
   }
 
   return (
-    <div className={[styles.message, styles[type], className]}>
+    <div className={clsx(styles.message, styles[type], className)}>
       <FontAwesomeIcon
         className={styles.icon}
         icon={icon}

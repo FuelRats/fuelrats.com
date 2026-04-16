@@ -14,6 +14,7 @@ import AmountPresetRadioFieldset from './AmountPresetRadioFieldset'
 import CurrencyFieldset from './CurrencyFieldset'
 import CurrencyRadioFieldset from './CurrencyRadioFieldset'
 import DonationErrorBox from './DonationErrorBox'
+import clsx from 'clsx'
 
 
 
@@ -112,7 +113,7 @@ function DonationForm (props) {
   return (
     <>
       <DonationErrorBox error={errorState} />
-      <Form className={['donate-form compact', className]}>
+      <Form className={clsx('donate-form compact', className)}>
         <CurrencyRadioFieldset
           required
           id="DonationCurrency"

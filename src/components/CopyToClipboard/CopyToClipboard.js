@@ -4,6 +4,7 @@ import { useState, useCallback, useRef, useEffect } from 'react'
 import { CopyToClipboard as CopyComponent } from 'react-copy-to-clipboard'
 
 import styles from './CopyToClipboard.module.scss'
+import clsx from 'clsx'
 
 
 
@@ -47,7 +48,7 @@ function CopyToClipboard (props) {
 
   return (
     <CopyComponent text={String(text)} onCopy={handleCopy}>
-      <Component aria-label={`Click to copy: ${text}`} className={[styles.copyToClipboard, className, { [styles.copied]: copied }]} role="button">
+      <Component aria-label={`Click to copy: ${text}`} className={clsx(styles.copyToClipboard, className, { [styles.copied]: copied })} role="button">
         {children}
         {
           doHint && (

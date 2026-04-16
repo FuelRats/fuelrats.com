@@ -5,6 +5,7 @@ import isPromise from '~/util/isPromise'
 
 import styles from './RadioInput.module.scss'
 import RadioInputOption from './RadioInputOption'
+import clsx from 'clsx'
 
 
 
@@ -38,7 +39,7 @@ function RadioInput (props) {
   }, [onChange, value])
 
   return (
-    <Element className={[styles.radioInput, { disabled }, className]}>
+    <Element className={clsx(styles.radioInput, { disabled }, className)}>
       {
         options.map((option) => {
           return (

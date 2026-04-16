@@ -8,6 +8,7 @@ import getResponseError from '~/util/getResponseError'
 
 import MessageBox from '../MessageBox'
 import ApiErrorBox from '../MessageBox/ApiErrorBox'
+import clsx from 'clsx'
 
 
 
@@ -53,7 +54,7 @@ function UnverifiedUserBanner () {
         {'Hey! Your account has not yet been verified. Check your E-Mail for a verification link.'}
         <br />
         {'You have limited access to rat services and tools while unverified.'}
-        <button className={['button', { green: submitted && !submitError }]} disabled={submitting} type="button" onClick={handleResubmit}>
+        <button className={clsx('button', { green: submitted && !submitError })} disabled={submitting} type="button" onClick={handleResubmit}>
           {
             (!submitting && (!submitted || submitError))
               && 'Resend Verification E-Mail'
