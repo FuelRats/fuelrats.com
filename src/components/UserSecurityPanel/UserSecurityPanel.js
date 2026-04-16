@@ -15,6 +15,7 @@ import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 import friendlyApiError from '~/util/friendlyApiError'
 import getResponseError from '~/util/getResponseError'
 
+import RegenerateRecoveryCodesModal from './RegenerateRecoveryCodesModal'
 import SetupTotpModal from './SetupTotpModal'
 import styles from './UserSecurityPanel.module.scss'
 
@@ -29,6 +30,7 @@ function UserSecurityPanel () {
   const [showChangeEmail, setShowChangeEmail] = useState(false)
   const [showChangePassword, setShowChangePassword] = useState(false)
   const [showTotpSetup, setShowTotpSetup] = useState(false)
+  const [showRegenerateCodes, setShowRegenerateCodes] = useState(false)
   const [removeTotpCode, setRemoveTotpCode] = useState('')
   const [removingTotp, setRemovingTotp] = useState(false)
 
@@ -288,6 +290,14 @@ function UserSecurityPanel () {
                     <FontAwesomeIcon className={styles.synced} icon="circle-check" />
                     {' Two-factor authentication is enabled'}
                   </div>
+                  <div className={styles.totpActions}>
+                    <button
+                      type="button"
+                      onClick={() => { return setShowRegenerateCodes(true) }}>
+                      <FontAwesomeIcon fixedWidth icon="key" />
+                      {' Regenerate recovery codes'}
+                    </button>
+                  </div>
                   <div className={styles.totpRemove}>
                     <input
                       disabled={removingTotp}
@@ -325,6 +335,10 @@ function UserSecurityPanel () {
       <SetupTotpModal
         isOpen={showTotpSetup}
         onClose={handleTotpSetupClose} />
+
+      <RegenerateRecoveryCodesModal
+        isOpen={showRegenerateCodes}
+        onClose={() => { return setShowRegenerateCodes(false) }} />
 
       <div className="panel">
         <header>{'IRC Certificate'}</header>

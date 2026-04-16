@@ -48,3 +48,22 @@ export const removeTotp = (token) => {
     ))
   }
 }
+
+
+export const regenerateRecoveryCodes = (tokenOrCode) => {
+  return (dispatch, getState) => {
+    const userId = selectCurrentUserId(getState())
+    const bearerToken = selectSessionToken(getState())
+    return dispatch(frApiPlainRequest(
+      actionTypes.totp.regenerateRecoveryCodes,
+      {
+        url: `/users/${userId}/authenticator/recovery-codes`,
+        method: 'post',
+        headers: {
+          'X-Verify': tokenOrCode,
+          Authorization: `Bearer ${bearerToken}`,
+        },
+      },
+    ))
+  }
+}

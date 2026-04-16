@@ -112,6 +112,7 @@ const totp = {
   generate: 'totp/generate',
   link: 'totp/link',
   remove: 'totp/remove',
+  regenerateRecoveryCodes: 'totp/regenerateRecoveryCodes',
 }
 
 

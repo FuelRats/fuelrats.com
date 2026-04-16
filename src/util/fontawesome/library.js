@@ -57,6 +57,7 @@ export {
   faCircleXmark,
   faChalkboardUser,
   faCode,
+  faDownload,
   faGavel,
   faGears,
   faGraduationCap,

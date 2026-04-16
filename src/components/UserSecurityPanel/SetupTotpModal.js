@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { QRCodeSVG } from 'qrcode.react'
 import { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
@@ -9,6 +8,7 @@ import { generateTotpSecret, linkTotp } from '~/store/actions/totp'
 import friendlyApiError from '~/util/friendlyApiError'
 import getResponseError from '~/util/getResponseError'
 
+import RecoveryCodesDisplay from './RecoveryCodesDisplay'
 import styles from './UserSecurityPanel.module.scss'
 
 
@@ -21,6 +21,7 @@ function SetupTotpModal ({ onClose }) {
   const [description, setDescription] = useState('')
   const [error, setError] = useState(null)
   const [submitting, setSubmitting] = useState(false)
+  const [recoveryCodes, setRecoveryCodes] = useState(null)
 
   useEffect(() => {
     const fetchSecret = async () => {
@@ -52,7 +53,8 @@ function SetupTotpModal ({ onClose }) {
       setSubmitting(false)
       return
     }
-    setStep('success')
+    setRecoveryCodes(response.payload?.recoveryCodes ?? [])
+    setStep('recoveryCodes')
     setSubmitting(false)
   }, [dispatch, secret, token, description])
 
@@ -129,12 +131,11 @@ function SetupTotpModal ({ onClose }) {
         }
 
         {
-          step === 'success' && (
-            <div className={styles.successMessage}>
-              <FontAwesomeIcon className={styles.successIcon} icon="circle-check" />
+          step === 'recoveryCodes' && recoveryCodes && (
+            <>
               <h3>{'Two-factor authentication enabled'}</h3>
-              <p>{'Your account is now protected with an authenticator app.'}</p>
-            </div>
+              <RecoveryCodesDisplay codes={recoveryCodes} />
+            </>
           )
         }
 
@@ -156,12 +157,12 @@ function SetupTotpModal ({ onClose }) {
             )
           }
           {
-            step === 'success' && (
+            step === 'recoveryCodes' && (
               <button
                 className="green"
                 type="button"
                 onClick={onClose}>
-                {'Done'}
+                {'I\'ve saved my codes'}
               </button>
             )
           }
