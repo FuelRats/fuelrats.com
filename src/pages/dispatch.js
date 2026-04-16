@@ -18,6 +18,12 @@ import clsx from 'clsx'
 
 
 
+// After the socket reconnects we re-fetch the board to pick up anything
+// that happened while we were offline. We wait this long after the
+// connection settles so a flapping socket doesn't fire several requests.
+const RECONNECT_REFRESH_DEBOUNCE_MS = 1500
+
+
 function DispatchBoard ({ query }) {
   const dispatch = useDispatch()
   const [loaded, setLoadedState] = useState(false)
@@ -36,6 +42,49 @@ function DispatchBoard ({ query }) {
   const router = useRouter()
   const rescueIds = useSelector(selectDispatchBoard)
   const prevRescueIdsRef = useRef(rescueIds)
+  const prevSocketStatusRef = useRef(socketStatus)
+  const refreshTimeoutRef = useRef(null)
+  const refreshInflightRef = useRef(false)
+
+  // Refresh the board after a real reconnect (we were offline / reconnecting,
+  // and the socket just transitioned back to connected). Debounced so a
+  // flapping connection doesn't queue up multiple fetches.
+  useEffect(() => {
+    const prevStatus = prevSocketStatusRef.current
+    prevSocketStatusRef.current = socketStatus
+
+    if (!loaded) {
+      return undefined
+    }
+
+    if (refreshTimeoutRef.current) {
+      clearTimeout(refreshTimeoutRef.current)
+      refreshTimeoutRef.current = null
+    }
+
+    const wasOffline = prevStatus === 'reconnecting' || prevStatus === 'disconnected'
+    if (socketStatus !== 'connected' || !wasOffline) {
+      return undefined
+    }
+
+    refreshTimeoutRef.current = setTimeout(() => {
+      refreshTimeoutRef.current = null
+      if (refreshInflightRef.current) {
+        return
+      }
+      refreshInflightRef.current = true
+      Promise.resolve(dispatch(getDispatchBoard())).finally(() => {
+        refreshInflightRef.current = false
+      })
+    }, RECONNECT_REFRESH_DEBOUNCE_MS)
+
+    return () => {
+      if (refreshTimeoutRef.current) {
+        clearTimeout(refreshTimeoutRef.current)
+        refreshTimeoutRef.current = null
+      }
+    }
+  }, [socketStatus, loaded, dispatch])
 
   useEffect(() => {
     const prevIds = prevRescueIdsRef.current
