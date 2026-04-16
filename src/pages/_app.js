@@ -1,4 +1,4 @@
-import { AnimatePresence, LazyMotion, domAnimation, m } from 'motion/react'
+import { AnimatePresence, LazyMotion, MotionConfig, domAnimation, m } from 'motion/react'
 import NextHead from 'next/head'
 import { StrictMode, useCallback } from 'react'
 import { Provider } from 'react-redux'
@@ -78,6 +78,7 @@ function FuelRatsApp (props) {
         <meta content={description} property="og:description" />
       </NextHead>
       <LazyMotion strict features={domAnimation}>
+        <MotionConfig reducedMotion="user">
         <div className={clsx({ forceDrawer })} id="FuelRatsApp" role="application">
           <Provider store={store}>
             <NProgress />
@@ -107,6 +108,7 @@ function FuelRatsApp (props) {
             <LoginModal />
           </Provider>
         </div>
+        </MotionConfig>
       </LazyMotion>
     </StrictMode>
   )
