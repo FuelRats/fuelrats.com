@@ -205,6 +205,14 @@ function Paperwork ({ query }) {
               </Link>
             )
           }
+          {
+            query.from === 'dispatch' && (
+              <Link className="button compact" href={`/dispatch?rId=${rescue.id}`}>
+                <FontAwesomeIcon fixedWidth icon="arrow-left" />
+                {' Back to Dispatch'}
+              </Link>
+            )
+          }
         </div>
       </menu>
 

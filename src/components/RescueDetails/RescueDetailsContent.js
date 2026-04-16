@@ -302,7 +302,7 @@ function RescueDetailsContent (props) {
               <CopyToClipboard doHint text={`https://fuelrats.com/paperwork/${rescue.id}`}>
                 {rescue.id}
               </CopyToClipboard>
-              <Link className={clsx('button', styles.paperworkButton)} href={makePaperworkRoute({ rescueId: rescue.id, edit: true })}>
+              <Link className={clsx('button', styles.paperworkButton)} href={makePaperworkRoute({ rescueId: rescue.id, edit: true, from: 'dispatch' })}>
                 <FontAwesomeIcon fixedWidth icon="box-archive" />
                 {'Paperwork'}
               </Link>

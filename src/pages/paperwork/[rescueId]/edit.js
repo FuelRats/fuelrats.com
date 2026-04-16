@@ -1,6 +1,8 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { HttpStatus } from '@fuelrats/web-util/http'
 import clsx from 'clsx'
 import { isError } from 'flux-standard-action'
+import Link from 'next/link'
 import Router from 'next/router'
 import { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -143,8 +145,11 @@ function Paperwork ({ query }) {
       return
     }
 
-    Router.push(makePaperworkRoute({ rescueId: rescue.id }))
-  }, [changes, dispatch, rescue])
+    Router.push(makePaperworkRoute({
+      rescueId: rescue.id,
+      ...(query.from ? { from: query.from } : {}),
+    }))
+  }, [changes, dispatch, rescue, query.from])
 
   const { errors = {} } = validity
 
@@ -230,7 +235,16 @@ function Paperwork ({ query }) {
             </button>
           </div>
 
-          <div className="secondary" />
+          <div className="secondary">
+            {
+              query.from === 'dispatch' && (
+                <Link className="button compact" href={`/dispatch?rId=${rescue.id}`}>
+                  <FontAwesomeIcon fixedWidth icon="arrow-left" />
+                  {' Back to Dispatch'}
+                </Link>
+              )
+            }
+          </div>
         </menu>
 
         <div className="panel quotes">
