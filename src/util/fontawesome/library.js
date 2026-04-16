@@ -8,6 +8,8 @@ export {
   faBook,
   faCalendarAlt,
   faCaretDown,
+  faChevronDown,
+  faChevronUp,
   faCheck,
   faCheckCircle,
   faCircle,

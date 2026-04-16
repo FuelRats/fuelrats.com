@@ -95,6 +95,20 @@
   font-size: 1.1em;
 }
 
+.carrierRatGroup {
+  display: inline-flex;
+
+  align-items: center;
+  gap: 0.4em;
+}
+
+.carrierIcon {
+  width: 1.1em;
+  height: 1.1em;
+
+  color: $white;
+}
+
 .systemBadges {
   display: inline-flex;
 
@@ -289,6 +303,8 @@
 
     background-color: #555555;
 
+    font-family: $monospace-fonts;
+
     text-align: right;
   }
 
@@ -322,6 +338,65 @@
 
     font-style: italic;
     white-space: normal;
+  }
+}
+
+.infoValue.infoGroup.quote.event {
+  .quoteMessage {
+    color: $grey;
+    font-style: normal;
+    font-size: 0.9em;
+  }
+
+  .quoteTime {
+    opacity: 0.7;
+  }
+
+}
+
+.infoValue.infoGroup.quote.eventCollapse {
+  padding: 0;
+
+  .eventCollapseButton {
+    display: flex;
+
+    align-items: center;
+    gap: 0.6em;
+
+    width: 100%;
+    margin: 0;
+    padding: 0.5rem 0.8rem 0.5rem calc(27px + 0.8rem);
+
+    border: none;
+    border-radius: 0;
+
+    color: $light-grey;
+    font-size: 0.9em;
+    font-style: normal;
+    font-weight: normal;
+    text-align: left;
+
+    background-color: rgba(255, 255, 255, 0.04);
+
+    cursor: pointer;
+
+    transition: background-color 0.15s ease, color 0.15s ease;
+
+    .eventCollapseIcon {
+      font-size: 0.9em;
+
+      opacity: 0.8;
+    }
+
+    &:hover {
+      color: $white;
+
+      background-color: rgba(255, 255, 255, 0.1);
+
+      .eventCollapseIcon {
+        opacity: 1;
+      }
+    }
   }
 }
 

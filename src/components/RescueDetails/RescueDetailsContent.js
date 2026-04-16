@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 import PropTypes from 'prop-types'
+import { cloneElement, useCallback, useMemo, useState, Fragment } from 'react'
 
 import {
   useRescuePlatform, useRescueLanguage, useRescuePermit, useRescueLandmark, useRescueHasScoopableStar,
@@ -8,9 +9,11 @@ import {
 import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { createSelectRenderedRatList } from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
+import formatQuoteTime from '~/util/date/formatQuoteTime'
 import { expansionLongNameMap } from '~/util/expansion'
 import makePaperworkRoute from '~/util/router/makePaperworkRoute'
 
+import CarrierIcon from '../CarrierIcon'
 import CopyToClipboard from '../CopyToClipboard'
 import PlatformBadge from '../PlatformBadge'
 import ElapsedTimer from '../ElapsedTimer'
@@ -67,6 +70,7 @@ function RescueDetailsContent (props) {
     createdAt,
     title,
     quotes,
+    carrier,
   } = rescue.attributes
 
   const rescueLanguage = useRescueLanguage(rescue)
@@ -75,6 +79,48 @@ function RescueDetailsContent (props) {
   const rescuePermit = useRescuePermit(rescue)
   const rescueLandmark = useRescueLandmark(rescue)
   const rescueHasScoopableStar = useRescueHasScoopableStar(rescue)
+
+  const parsedQuotes = useMemo(() => {
+    return quotes.map((quote, originalIndex) => {
+      const [isViaAuthor, quoteSender, quoteMessage] = quote.message.match(/^<(.*)>\s(.*)/u)
+        ?? [false, quote.lastAuthor ?? quote.author, quote.message]
+      return {
+        quote,
+        originalIndex,
+        isViaAuthor,
+        quoteSender,
+        quoteMessage,
+        isEvent: quoteSender === 'MechaSqueak[BOT]',
+      }
+    })
+  }, [quotes])
+
+  const quoteGroups = useMemo(() => {
+    const groups = []
+    let current = null
+    parsedQuotes.forEach((item) => {
+      if (current && current.isEvent === item.isEvent) {
+        current.items.push(item)
+      } else {
+        current = { isEvent: item.isEvent, items: [item] }
+        groups.push(current)
+      }
+    })
+    return groups
+  }, [parsedQuotes])
+
+  const [expandedGroups, setExpandedGroups] = useState(() => new Set())
+  const toggleGroup = useCallback((groupKey) => {
+    setExpandedGroups((prev) => {
+      const next = new Set(prev)
+      if (next.has(groupKey)) {
+        next.delete(groupKey)
+      } else {
+        next.add(groupKey)
+      }
+      return next
+    })
+  }, [])
 
   // const router = useRouter()
   // const handleCloseRescueDetails = useCallback(() => {
@@ -224,7 +270,21 @@ function RescueDetailsContent (props) {
                   <td />
                   <td className={styles.infoValue} />
                 </tr>
-                {rescueRats}
+                {rescueRats.map((ratRow, index) => {
+                  if (index !== 0 || !carrier) {
+                    return ratRow
+                  }
+                  const [titleCell, valueCell] = ratRow.props.children
+                  const newValueCell = cloneElement(valueCell, {
+                    children: (
+                      <span className={styles.carrierRatGroup}>
+                        <CarrierIcon className={styles.carrierIcon} title="Fleet Carrier" />
+                        {valueCell.props.children}
+                      </span>
+                    ),
+                  })
+                  return cloneElement(ratRow, { children: [titleCell, newValueCell] })
+                })}
               </>
             )
           }
@@ -236,36 +296,90 @@ function RescueDetailsContent (props) {
                   <td className={styles.infoValue} />
                 </tr>
                 {
-                  quotes.map((quote, index) => {
-                    const [isViaAuthor, quoteSender, quoteMessage] = quote.message.match(/^<(.*)>\s(.*)/u)
-                      ?? [false, quote.lastAuthor ?? quote.author, quote.message]
+                  quoteGroups.map((group, groupIdx) => {
+                    const groupKey = `g-${group.items[0].originalIndex}`
+                    const isCollapsible = group.isEvent && group.items.length >= 4
+                    const isExpanded = expandedGroups.has(groupKey)
+                    const hiddenCount = group.items.length - 2
 
-                    return (
-                      <tr key={quote.createdAt}>
-                        {
-                          index === 0
-                            ? (<td className={styles.infoTitle}>{'Quotes'}</td>)
-                            : (<td />)
-                        }
-                        <td className={[styles.infoValue, styles.infoGroup, styles.quote]}>
-                          <span className={styles.quoteIndex}>
-                            {index}
-                          </span>
-                          <span className={styles.quoteAuthor}>
-                            {`<${quoteSender}>`}
-                          </span>
+                    const itemRows = group.items.map((item, idxInGroup) => {
+                      if (isCollapsible && !isExpanded && idxInGroup !== 0 && idxInGroup !== group.items.length - 1) {
+                        return null
+                      }
 
-                          <span className={styles.quoteMessage}>
-                            {quoteMessage}
-                          </span>
+                      const isFirstOverall = groupIdx === 0 && idxInGroup === 0
 
-                          <span className={[styles.quoteTime, { [styles.withVia]: isViaAuthor }]}>
-                            <span>{`[${formatAsEliteDateTime(quote.createdAt)}]`}</span>
-                            {isViaAuthor && (<span className={styles.quoteAuthorVia}>{`via ${quote.lastAuthor ?? quote.author}`}</span>)}
-                          </span>
+                      return (
+                        <tr key={item.quote.createdAt}>
+                          {
+                            isFirstOverall
+                              ? (<td className={styles.infoTitle}>{'Quotes'}</td>)
+                              : (<td />)
+                          }
+                          <td className={[styles.infoValue, styles.infoGroup, styles.quote, { [styles.event]: item.isEvent }]}>
+                            <span className={styles.quoteIndex}>
+                              {item.originalIndex}
+                            </span>
+                            {!item.isEvent && (
+                              <span className={styles.quoteAuthor}>
+                                {`<${item.quoteSender}>`}
+                              </span>
+                            )}
 
+                            <span className={styles.quoteMessage}>
+                              {item.quoteMessage}
+                            </span>
+
+                            <span className={[styles.quoteTime, { [styles.withVia]: item.isViaAuthor }]}>
+                              <span title={formatAsEliteDateTime(item.quote.createdAt)}>{formatQuoteTime(item.quote.createdAt)}</span>
+                              {item.isViaAuthor && !item.isEvent && (<span className={styles.quoteAuthorVia}>{`via ${item.quote.lastAuthor ?? item.quote.author}`}</span>)}
+                            </span>
+
+                          </td>
+                        </tr>
+                      )
+                    })
+
+                    const toggleRow = isCollapsible && (
+                      <tr key={`${groupKey}-toggle`}>
+                        <td />
+                        <td className={[styles.infoValue, styles.infoGroup, styles.quote, styles.eventCollapse]}>
+                          <button
+                            className={styles.eventCollapseButton}
+                            type="button"
+                            onClick={() => {
+                              return toggleGroup(groupKey)
+                            }}>
+                            <FontAwesomeIcon className={styles.eventCollapseIcon} icon={isExpanded ? 'chevron-up' : 'chevron-down'} />
+                            <span className={styles.eventCollapseText}>
+                              {isExpanded
+                                ? `Hide ${hiddenCount} event${hiddenCount === 1 ? '' : 's'}`
+                                : `Show ${hiddenCount} hidden event${hiddenCount === 1 ? '' : 's'}`}
+                            </span>
+                          </button>
                         </td>
                       </tr>
+                    )
+
+                    if (!isCollapsible) {
+                      return <Fragment key={groupKey}>{itemRows}</Fragment>
+                    }
+
+                    if (isExpanded) {
+                      return (
+                        <Fragment key={groupKey}>
+                          {itemRows}
+                          {toggleRow}
+                        </Fragment>
+                      )
+                    }
+
+                    return (
+                      <Fragment key={groupKey}>
+                        {itemRows[0]}
+                        {toggleRow}
+                        {itemRows[itemRows.length - 1]}
+                      </Fragment>
                     )
                   })
                 }
