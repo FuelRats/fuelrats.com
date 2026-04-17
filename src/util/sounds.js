@@ -38,15 +38,10 @@ export function playNewCaseSound (volume = 0.3) {
 
 
 /**
- * Rapid series of short clicks — like a mechanical split-flap display.
+ * Soft single tick — subtle, like a quiet tap on wood.
  */
 export function playCaseChangeSound (volume = 0.3) {
-  const ticks = 6
-  for (let i = 0; i < ticks; i += 1) {
-    const delay = i * 0.04
-    const tickVolume = volume * (0.4 + (i / ticks) * 0.6)
-    playTone(1200 + (i * 100), 0.02, { type: 'triangle', volume: tickVolume, delay })
-  }
+  playTone(400, 0.06, { type: 'sine', volume: volume * 0.4 })
 }
 
 
