@@ -54,6 +54,14 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+      - name: Setup Bun
+        if: github.ref == 'refs/heads/develop'
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        if: github.ref == 'refs/heads/develop'
+        run: bun install --frozen-lockfile
+
       - name: Create Release Pull Request
         if: github.ref == 'refs/heads/develop'
         uses: changesets/action@v1.4.10
