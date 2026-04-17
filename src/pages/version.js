@@ -4,8 +4,6 @@ import Link from 'next/link'
 
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 
-// Component constants
-const appUrl = process.env.NEXT_PUBLIC_APP_URL
 
 
 
@@ -63,7 +61,7 @@ function Version ({ version }) {
 }
 
 Version.getInitialProps = async () => {
-  const response = await axios.get(`${appUrl}/api/version`)
+  const response = await axios.get('/api/version')
 
   return {
     version: response.status === HttpStatus.OK

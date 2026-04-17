@@ -13,9 +13,6 @@ import { selectImages } from '~/store/selectors'
 
 
 
-// Component constants
-const appUrl = process.env.NEXT_PUBLIC_APP_URL
-
 const getSlides = (_, props) => {
   return props.slides
 }
@@ -116,7 +113,7 @@ function Carousel (props) {
       if (!images[key]) {
         Promise.resolve(dispatch(getImage({
           id: key,
-          url: `${appUrl}/static/images/${slide.filename}`,
+          url: `/static/images/${slide.filename}`,
         }))).catch(() => {})
       }
     })

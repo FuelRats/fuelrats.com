@@ -5,8 +5,6 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import JsonEditor from '~/components/JsonEditor'
 import styles from '~/scss/pages/locale-editor.module.scss'
 
-const appUrl = process.env.NEXT_PUBLIC_APP_URL
-
 /* eslint-disable id-length */
 const formMotionConfig = {
   initial: { y: '-400px', opacity: 0 },
@@ -101,7 +99,7 @@ function LocaleEditor ({ locales }) {
 }
 
 LocaleEditor.getInitialProps = async () => {
-  const { data } = await axios.get(`${appUrl}/api/qms/locales`)
+  const { data } = await axios.get('/api/qms/locales')
 
   return {
     locales: data.data,
