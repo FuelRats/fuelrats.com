@@ -71,14 +71,25 @@ function NotificationPanel ({ className, open, onClose }) {
 
   // Push handlers
   const handleTogglePushFilter = useCallback((key) => {
-    setPushFilters((prev) => { return { ...prev, [key]: !prev[key] } })
-  }, [])
+    setPushFilters((prev) => {
+      const next = { ...prev, [key]: !prev[key] }
+      // Re-register with new filters if already subscribed
+      if (subscribed) {
+        subscribe(next)
+      }
+      return next
+    })
+  }, [subscribed, subscribe])
 
-  const handleSubscribe = useCallback(async () => {
-    setSubscribing(true)
-    await subscribe(pushFilters)
-    setSubscribing(false)
-  }, [subscribe, pushFilters])
+  const handlePushToggle = useCallback(async () => {
+    if (subscribed) {
+      toggle()
+    } else {
+      setSubscribing(true)
+      await subscribe(pushFilters)
+      setSubscribing(false)
+    }
+  }, [subscribed, toggle, subscribe, pushFilters])
 
   // Sound handlers
   const updateSound = useCallback((key, value) => {
@@ -166,13 +177,13 @@ function NotificationPanel ({ className, open, onClose }) {
         <div className={styles.sectionHeader}>
           <h3 className={styles.sectionTitle}>{'Push Notifications'}</h3>
           {
-            pushSupported && pushReady && subscribed && (
+            pushSupported && pushReady && !pushDenied && (
               <button
-                className={clsx(styles.toggle, styles.toggleOn)}
-                disabled={pushLoading}
+                className={clsx(styles.toggle, { [styles.toggleOn]: subscribed })}
+                disabled={pushLoading || subscribing}
                 type="button"
-                onClick={toggle}>
-                {'On'}
+                onClick={handlePushToggle}>
+                {subscribed ? 'On' : 'Off'}
               </button>
             )
           }
@@ -191,7 +202,7 @@ function NotificationPanel ({ className, open, onClose }) {
         }
 
         {
-          pushSupported && !pushDenied && !subscribed && (
+          pushSupported && !pushDenied && (
             <>
               <div className={styles.filterSection}>
                 <div className={styles.filterLabel}>{'Platforms'}</div>
@@ -249,25 +260,7 @@ function NotificationPanel ({ className, open, onClose }) {
                   </button>
                 </div>
               </div>
-
-              <button
-                className={clsx('compact', styles.subscribeButton)}
-                disabled={subscribing || pushLoading}
-                type="button"
-                onClick={handleSubscribe}>
-                {subscribing ? 'Subscribing...' : 'Enable push notifications'}
-              </button>
             </>
-          )
-        }
-
-        {
-          pushSupported && !pushDenied && subscribed && (
-            <p className={styles.muted}>
-              {'Receiving push notifications. Manage filters in '}
-              <a href="/profile/security">{'Security settings'}</a>
-              {'.'}
-            </p>
           )
         }
       </section>
