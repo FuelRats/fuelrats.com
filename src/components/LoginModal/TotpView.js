@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux'
 import { FooterPrimary, FooterSecondary, ModalFooter, useModalContext } from '~/components/asModal'
 import { login } from '~/store/actions/authentication'
 import { listPasskeys } from '~/store/actions/passkeys'
+import { logout } from '~/store/actions/session'
 import { getUserProfile } from '~/store/actions/user'
 import getResponseError from '~/util/getResponseError'
 
@@ -66,7 +67,15 @@ function TotpView () {
       return
     }
 
-    await dispatch(getUserProfile())
+    const profileResponse = await dispatch(getUserProfile())
+    const profileError = getResponseError(profileResponse)
+    if (profileError) {
+      dispatch(logout())
+      setModalState({ error: profileError })
+      setCode('')
+      setSubmitting(false)
+      return
+    }
 
     if (webAuthnSupported && !localStorage.getItem('fr.passkeyPromptDismissed')) {
       const passkeyResponse = await dispatch(listPasskeys())

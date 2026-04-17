@@ -8,6 +8,7 @@ import useForm from '~/hooks/useForm'
 import useMountedState from '~/hooks/useMountedState'
 import useUnloadConfirmation from '~/hooks/useUnloadConfirmation'
 import { login } from '~/store/actions/authentication'
+import { logout } from '~/store/actions/session'
 import { getUserProfile } from '~/store/actions/user'
 import getResponseError from '~/util/getResponseError'
 
@@ -41,7 +42,13 @@ function VerifyView (props) {
       return
     }
 
-    dispatch(getUserProfile())
+    const profileResponse = await dispatch(getUserProfile())
+    const profileError = getResponseError(profileResponse)
+    if (profileError) {
+      dispatch(logout())
+      setModalState({ error: profileError })
+      return
+    }
     onClose()
   }, [dispatch, onClose, setModalState])
 

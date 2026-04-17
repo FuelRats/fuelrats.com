@@ -45,8 +45,8 @@ const apiErrorLocalisations = {
   },
 
   gone: {
-    title: 'Account Unavailable',
-    detail: 'This account is no longer available.',
+    title: 'Account Suspended',
+    detail: 'This account has been suspended. If you believe this is a mistake, please contact ops@fuelrats.com.',
   },
 
   payload_too_large: {

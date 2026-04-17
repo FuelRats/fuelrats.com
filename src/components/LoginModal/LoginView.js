@@ -10,6 +10,7 @@ import SwitchFieldset from '~/components/Fieldsets/SwitchFieldset'
 import useForm from '~/hooks/useForm'
 import { login } from '~/store/actions/authentication'
 import { listPasskeys, loginWithPasskey, registerPasskey } from '~/store/actions/passkeys'
+import { logout } from '~/store/actions/session'
 import { getUserProfile } from '~/store/actions/user'
 import getResponseError from '~/util/getResponseError'
 
@@ -59,7 +60,13 @@ function LoginView () {
       return
     }
 
-    await dispatch(getUserProfile())
+    const profileResponse = await dispatch(getUserProfile())
+    const profileError = getResponseError(profileResponse)
+    if (profileError) {
+      dispatch(logout())
+      setModalState({ error: profileError })
+      return
+    }
 
     // Check if user should be prompted to add a passkey
     if (webAuthnSupported && !localStorage.getItem('fr.passkeyPromptDismissed')) {
@@ -107,7 +114,14 @@ function LoginView () {
       return
     }
 
-    dispatch(getUserProfile())
+    const profileResponse = await dispatch(getUserProfile())
+    const profileError = getResponseError(profileResponse)
+    if (profileError) {
+      dispatch(logout())
+      setModalState({ error: profileError })
+      setPasskeyLoading(false)
+      return
+    }
     onClose()
     Router.push('/profile/overview')
   }, [dispatch, onClose, setModalState])
