@@ -391,12 +391,12 @@
 
 .filterActive,
 .filterInactive {
-  padding: 0.1rem 0.5rem;
+  padding: 0.4rem 0.75rem;
 
   border: 1px solid $grey-dark;
-  border-radius: 3px;
+  border-radius: 4px;
 
-  font-size: 0.75rem;
+  font-size: 0.9rem;
 
   cursor: pointer;
 }
@@ -404,8 +404,8 @@
 .filterActive {
   color: $white;
 
-  background-color: $green;
-  border-color: $green;
+  background-color: rgba($red, 0.25);
+  border-color: $red;
 }
 
 .filterInactive {

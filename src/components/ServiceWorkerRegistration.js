@@ -4,9 +4,9 @@ import { useEffect } from 'react'
 
 
 /**
- * Registers the PWA service worker on mount. Only runs in production
- * builds — registering in dev hides webpack hot updates behind cached
- * responses and leads to confusing stale-state bugs.
+ * Registers the PWA service worker on mount. The SW is needed for push
+ * notifications even in development. The SW itself only caches static
+ * assets and never intercepts webpack HMR requests.
  */
 function ServiceWorkerRegistration () {
   useEffect(() => {
@@ -14,9 +14,6 @@ function ServiceWorkerRegistration () {
       return undefined
     }
     if (!('serviceWorker' in navigator)) {
-      return undefined
-    }
-    if (process.env.NODE_ENV !== 'production') {
       return undefined
     }
 

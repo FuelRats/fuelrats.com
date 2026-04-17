@@ -14,7 +14,11 @@ import styles from './UserSecurityPanel.module.scss'
 
 
 
-const PLATFORM_LABELS = { pc: 'PC', xb: 'Xbox', ps: 'PlayStation' }
+const FILTER_LABELS = {
+  pc: 'PC', xb: 'Xbox', ps: 'PS',
+  horizons3: 'Legacy', horizons4: 'Horizons', odyssey: 'Odyssey',
+}
+const FILTER_KEYS = Object.keys(FILTER_LABELS)
 
 
 function PushSubscriptionsPanel () {
@@ -136,7 +140,6 @@ function PushSubscriptionsPanel () {
               <h4 className={styles.pushSubheading}>{'Subscribed Devices'}</h4>
               <ul className={styles.sessionsList}>
                 {subscriptions.map((sub) => {
-                  const { pc, xb, ps } = sub.attributes
                   return (
                     <li key={sub.id} className={styles.sessionItem}>
                       <FontAwesomeIcon className={styles.sessionIcon} fixedWidth icon="bell" />
@@ -145,16 +148,16 @@ function PushSubscriptionsPanel () {
                           {sub.attributes.endpoint?.split('/').slice(2, 3).join('') ?? 'Push subscription'}
                         </div>
                         <div className={styles.pushFilters}>
-                          {Object.entries(PLATFORM_LABELS).map(([key, label]) => {
+                          {FILTER_KEYS.map((key) => {
                             const active = sub.attributes[key]
                             return (
                               <button
                                 key={key}
                                 className={active ? styles.filterActive : styles.filterInactive}
-                                title={`${active ? 'Disable' : 'Enable'} ${label} notifications`}
+                                title={`${active ? 'Disable' : 'Enable'} ${FILTER_LABELS[key]} notifications`}
                                 type="button"
                                 onClick={() => { return handleToggleFilter(sub.id, key, active) }}>
-                                {label}
+                                {FILTER_LABELS[key]}
                               </button>
                             )
                           })}

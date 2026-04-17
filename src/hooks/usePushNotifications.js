@@ -7,6 +7,7 @@ import getResponseError from '~/util/getResponseError'
 
 
 
+// NEXT_PUBLIC_ prefix makes Next.js inline this from .env at compile time.
 const VAPID_PUBLIC_KEY = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY
 
 
@@ -26,15 +27,18 @@ function urlBase64ToUint8Array (base64String) {
  * Hook for managing push notification subscription state.
  *
  * Returns:
- *   supported  — browser supports push + SW is registered + VAPID key configured
- *   permission — 'default' | 'granted' | 'denied'
- *   subscribed — whether the current browser is actively subscribed
- *   loading    — subscribe/unsubscribe in progress
- *   toggle()   — subscribe if not subscribed, unsubscribe if subscribed
+ *   supported   — browser supports push + SW is registered + VAPID key configured
+ *   ready       — initial subscription check has completed
+ *   permission  — 'default' | 'granted' | 'denied'
+ *   subscribed  — whether the current browser is actively subscribed
+ *   loading     — subscribe/unsubscribe in progress
+ *   toggle()    — unsubscribe if subscribed (for the bell button)
+ *   subscribe(filters) — subscribe with platform/expansion filters
  */
 export default function usePushNotifications () {
   const dispatch = useDispatch()
   const [supported, setSupported] = useState(false)
+  const [ready, setReady] = useState(false)
   const [permission, setPermission] = useState('default')
   const [subscribed, setSubscribed] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -56,11 +60,14 @@ export default function usePushNotifications () {
       return registration.pushManager.getSubscription()
     }).then((subscription) => {
       setSubscribed(Boolean(subscription))
-    }).catch(() => {})
+      setReady(true)
+    }).catch(() => {
+      setReady(true)
+    })
   }, [])
 
 
-  const toggle = useCallback(async () => {
+  const subscribe = useCallback(async (filters = {}) => {
     if (!supported || loading) {
       return
     }
@@ -69,43 +76,56 @@ export default function usePushNotifications () {
 
     try {
       const registration = await navigator.serviceWorker.ready
+      const subscription = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
+      })
 
-      if (subscribed) {
-        // Unsubscribe
-        const subscription = await registration.pushManager.getSubscription()
-        if (subscription) {
-          await dispatch(unsubscribePush(subscription.endpoint))
-          await subscription.unsubscribe()
-        }
-        setSubscribed(false)
-      } else {
-        // Subscribe — this triggers the browser permission prompt if needed
-        const subscription = await registration.pushManager.subscribe({
-          userVisibleOnly: true,
-          applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
-        })
+      setPermission(Notification.permission)
 
-        setPermission(Notification.permission)
-
-        const response = await dispatch(subscribePush(subscription))
-        const err = getResponseError(response)
-        if (err) {
-          // Roll back browser subscription if API rejected it
-          await subscription.unsubscribe()
-          throw new Error(err.detail ?? 'Failed to register push subscription')
-        }
-
-        setSubscribed(true)
+      const response = await dispatch(subscribePush(subscription, filters))
+      const err = getResponseError(response)
+      if (err) {
+        await subscription.unsubscribe()
+        // eslint-disable-next-line no-console
+        console.error('Push subscription rejected by API:', err.detail ?? err.status)
+        return
       }
+
+      setSubscribed(true)
     } catch (err) {
       setPermission(Notification.permission)
       // eslint-disable-next-line no-console
-      console.error('Push notification toggle failed:', err)
+      console.error('Push subscribe failed:', err)
+    } finally {
+      setLoading(false)
+    }
+  }, [supported, loading, dispatch])
+
+
+  const toggle = useCallback(async () => {
+    if (!supported || loading || !subscribed) {
+      return
+    }
+
+    setLoading(true)
+
+    try {
+      const registration = await navigator.serviceWorker.ready
+      const subscription = await registration.pushManager.getSubscription()
+      if (subscription) {
+        await dispatch(unsubscribePush(subscription.endpoint))
+        await subscription.unsubscribe()
+      }
+      setSubscribed(false)
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error('Push unsubscribe failed:', err)
     } finally {
       setLoading(false)
     }
   }, [supported, subscribed, loading, dispatch])
 
 
-  return { supported, permission, subscribed, loading, toggle }
+  return { supported, ready, permission, subscribed, loading, toggle, subscribe }
 }

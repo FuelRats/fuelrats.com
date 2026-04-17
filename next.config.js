@@ -27,7 +27,6 @@ const publicEnv = {
   NEXT_PUBLIC_STRIPE_API_PK: env.stripe.public,
   NEXT_PUBLIC_IRC_CLIENT_URL: env.irc.client,
   NEXT_PUBLIC_IRC_RAT_URL: env.irc.rat,
-  NEXT_PUBLIC_VAPID_PUBLIC_KEY: env.webPush.vapidPublicKey,
 }
 
 for (const [key, value] of Object.entries(publicEnv)) {

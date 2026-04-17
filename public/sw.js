@@ -100,6 +100,11 @@ self.addEventListener('fetch', (event) => {
     return
   }
 
+  // Never intercept webpack HMR or Next.js dev infrastructure.
+  if (url.pathname.startsWith('/_next/webpack-hmr') || url.pathname.startsWith('/__nextjs')) {
+    return
+  }
+
   // Hashed Next.js assets and our own static files are safe to cache aggressively.
   if (
     url.pathname.startsWith('/_next/static/')
