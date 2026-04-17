@@ -4,8 +4,9 @@ import { useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 import {
-  selectAvatarByUserId,
+  selectAvatarUrlByUserId,
   selectCurrentUserId,
+  selectUserById,
 } from '~/store/selectors'
 
 
@@ -17,14 +18,12 @@ const API_MIN_IMAGE_SIZE = 64
 
 
 /**
- * Renders a user's avatar. Tries the API image endpoint first (which
- * serves the custom avatar if one exists, server-side). Falls back to
- * the adorable-avatars deterministic image on error.
+ * Renders a user's avatar.
  *
- * For the current user whose data IS in the store, we add a cache-bust
- * parameter so avatar changes reflect immediately. For other users (e.g.
- * rat owners on the dispatch board) whose user objects aren't loaded, we
- * hit the API endpoint directly — it still serves the right image.
+ * - For users whose data IS in the Redux store (current user, etc.),
+ *   uses the selector-based URL which handles custom-avatar vs adorable.
+ * - For users NOT in the store (e.g. rat owners on the dispatch board),
+ *   tries the API image endpoint directly, falling back to adorable on error.
  */
 function UserAvatar (props) {
   const {
@@ -37,40 +36,44 @@ function UserAvatar (props) {
   const currentUserId = useSelector(selectCurrentUserId)
   const userId = userIdProp ?? currentUserId
 
-  // Only available for users whose data is in the store (typically the
-  // current user). Used purely as a cache-bust so avatar uploads reflect
-  // immediately without waiting for HTTP cache expiry.
-  const avatarData = useSelector((state) => {
-    return userId ? selectAvatarByUserId(state, { userId }) : undefined
+  const fetchSize = Math.max(size, API_MIN_IMAGE_SIZE)
+
+  // Check if this user's data is in the store
+  const userInStore = useSelector((state) => {
+    return userId ? Boolean(selectUserById(state, { userId })) : false
   })
+
+  // For users in the store, the selector knows whether they have a
+  // custom avatar and returns the right URL (API image or adorable).
+  const storeUrl = useSelector((state) => {
+    return (userId && userInStore)
+      ? selectAvatarUrlByUserId(state, { userId, size: fetchSize })
+      : undefined
+  })
+
+  // For users NOT in the store, try the API image endpoint directly.
+  const apiUrl = (!userInStore && userId)
+    ? `/api/fr/users/${userId}/image?size=${fetchSize}`
+    : undefined
+
+  const primarySrc = storeUrl ?? apiUrl
 
   const [hasError, setHasError] = useState(false)
 
-  // Request at least API_MIN_IMAGE_SIZE from the API so small inline
-  // avatars (16-22px) don't get rejected. The browser downscales via
-  // the width/height attributes on the <img>.
-  const fetchSize = Math.max(size, API_MIN_IMAGE_SIZE)
-
-  // Always try the API image endpoint — it serves the custom avatar
-  // server-side regardless of whether we have the user in the store.
-  const src = userId
-    ? `/api/fr/users/${userId}/image?size=${fetchSize}${avatarData?.id ? `&v=${avatarData.id}` : ''}`
-    : undefined
-
   useEffect(() => {
     setHasError(false)
-  }, [src])
+  }, [primarySrc])
 
   const handleError = useCallback(() => {
     setHasError(true)
   }, [])
 
-  if (!src || !userId) {
+  if (!primarySrc || !userId) {
     return null
   }
 
   const fallback = `/api/avatars/${userId}/${fetchSize}`
-  const resolvedSrc = hasError ? fallback : src
+  const resolvedSrc = hasError ? fallback : primarySrc
 
   return (
     <Image
