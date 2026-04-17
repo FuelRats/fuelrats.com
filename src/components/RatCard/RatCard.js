@@ -5,6 +5,7 @@ import { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import ExpansionRadioInput from '~/components/ExpansionRadioInput'
+import ApiErrorBox from '~/components/MessageBox/ApiErrorBox'
 import { deleteRat, updateRat } from '~/store/actions/rats'
 import {
   selectRatById,
@@ -14,6 +15,8 @@ import {
   selectRatStatisticsById,
 } from '~/store/selectors'
 import formatAsEliteDate from '~/util/date/formatAsEliteDate'
+import friendlyApiError from '~/util/friendlyApiError'
+import getResponseError from '~/util/getResponseError'
 
 import CardControls from '../CardControls'
 import InlineEditSpan from '../InlineEditSpan'
@@ -38,6 +41,7 @@ function RatCard (props) {
   const [validity, setValidity] = useState({ name: false })
   const [editing, setEditing] = useState(false)
   const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState(null)
 
   const handleDelete = useCallback(() => {
     setDeleteConfirm(true)
@@ -67,11 +71,18 @@ function RatCard (props) {
     }
 
     setSubmitting(true)
+    setError(null)
 
-    await dispatch(updateRat({
+    const response = await dispatch(updateRat({
       id: rat.id,
       attributes: changes,
     }))
+
+    if (isError(response)) {
+      setError(getResponseError(response))
+      setSubmitting(false)
+      return
+    }
 
     setChanges({})
     setEditing(false)
@@ -91,6 +102,7 @@ function RatCard (props) {
     setEditing(false)
     setChanges({})
     setValidity({ name: false })
+    setError(null)
   }, [deleteConfirm])
 
   const handleDisplayRatClick = useCallback(() => {
@@ -155,6 +167,19 @@ function RatCard (props) {
           <span className="rat-platform">{rat.attributes.platform.toUpperCase()}</span>
         </div>
       </header>
+      {
+        error && (
+          <ApiErrorBox
+            error={error}
+            renderError={(err) => {
+              return friendlyApiError(err, {
+                pointerMessages: {
+                  '/data/attributes/name': { detail: err.detail ?? 'CMDR name is invalid.' },
+                },
+              })
+            }} />
+        )
+      }
       {
         rat.attributes.platform === 'pc' && (
           <div className="panel-content">

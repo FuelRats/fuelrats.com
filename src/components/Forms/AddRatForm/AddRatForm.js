@@ -1,12 +1,16 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { isError } from 'flux-standard-action'
 import { useCallback, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 import CMDRFieldset from '~/components/Fieldsets/CMDRFieldset'
 import ExpansionFieldset from '~/components/Fieldsets/ExpansionFieldset'
+import ApiErrorBox from '~/components/MessageBox/ApiErrorBox'
 import SelectFieldset from '~/components/Fieldsets/SelectFieldset'
 import useForm from '~/hooks/useForm'
 import { createRat } from '~/store/actions/rats'
+import friendlyApiError from '~/util/friendlyApiError'
+import getResponseError from '~/util/getResponseError'
 
 import styles from './AddRatForm.module.scss'
 import clsx from 'clsx'
@@ -24,21 +28,28 @@ const initialState = {
 function AddRatForm () {
   const dispatch = useDispatch()
   const [formOpen, setFormOpen] = useState(false)
+  const [error, setError] = useState(null)
   const handleToggleForm = useCallback(() => {
     setFormOpen((state) => {
       return !state
     })
+    setError(null)
   }, [])
 
 
   const onSubmit = async ({ name, platform, expansion }) => {
-    await dispatch(createRat({
+    setError(null)
+    const response = await dispatch(createRat({
       attributes: {
         name: name.trim(),
         platform,
         expansion: platform === 'pc' ? expansion : 'horizons3',
       },
     }))
+    if (isError(response)) {
+      setError(getResponseError(response))
+      return
+    }
     setFormOpen(false)
   }
 
@@ -47,6 +58,19 @@ function AddRatForm () {
 
   return (
     <Form className={clsx('compact', styles.addRatForm, { [styles.formOpen]: formOpen })}>
+      {
+        error && (
+          <ApiErrorBox
+            error={error}
+            renderError={(err) => {
+              return friendlyApiError(err, {
+                pointerMessages: {
+                  '/data/attributes/name': { detail: err.detail ?? 'CMDR name is invalid.' },
+                },
+              })
+            }} />
+        )
+      }
       {
         formOpen && (
           <div className="formCol">

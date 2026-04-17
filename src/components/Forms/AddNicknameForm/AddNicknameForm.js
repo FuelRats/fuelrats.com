@@ -33,7 +33,7 @@ function AddNicknameForm (props) {
       let errorMessage = 'Unknown error occured.'
 
       if (meta.response.status === HttpStatus.UNPROCESSABLE_ENTITY) {
-        errorMessage = 'Nickname invalid'
+        errorMessage = payload?.errors?.[0]?.detail ?? 'Nickname invalid'
       } else if (meta.response.status === HttpStatus.CONFLICT) {
         errorMessage = 'Nickname already registered'
       } else if (HttpStatus.isClientError(meta.response.status)) {

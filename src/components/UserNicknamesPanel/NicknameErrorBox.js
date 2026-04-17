@@ -13,7 +13,7 @@ function getErrorText (error) {
       return 'Nickname not found or no longer exists.'
 
     case HttpStatus.UNPROCESSABLE_ENTITY:
-      return 'Nickname format is invalid.'
+      return error.detail ?? 'Nickname format is invalid.'
 
     default:
       return undefined
