@@ -36,6 +36,7 @@
   margin: 0.75rem 0;
 
   color: $grey;
+
   font-size: 0.85rem;
   text-transform: uppercase;
 
@@ -43,9 +44,8 @@
   &::after {
     flex: 1;
 
-    height: 1px;
-
     content: '';
+    height: 1px;
 
     background-color: rgba($grey, 0.3);
   }
@@ -68,15 +68,16 @@
     margin-bottom: 1rem;
 
     color: $grey-lightened;
+
     font-size: 0.9rem;
     line-height: 1.5;
   }
 }
 
 .passkeyPromptIcon {
-  font-size: 2.5rem;
-
   color: $grey-lightened;
+
+  font-size: 2.5rem;
 }
 
 .passkeyNameInput {
@@ -88,6 +89,7 @@
 
   font-size: 2rem;
   letter-spacing: 0.5em;
+
   text-align: center;
 }
 
@@ -97,11 +99,11 @@
   width: 100%;
   margin: 0;
 
-  background-color: #4a4a4a;
+  background-color: #4A4A4A;
   color: white;
 
   &:hover {
-    background-color: #5a5a5a;
+    background-color: #5A5A5A;
   }
 }
 

@@ -12,6 +12,7 @@ $bounce-bezier: cubic-bezier(0.68, -0.55, 0.265, 1.55);
   gap: 0.5rem;
 
   color: $grey;
+
   font-size: 0.85rem;
 
   @media screen and (max-width: 768px) {
@@ -22,6 +23,7 @@ $bounce-bezier: cubic-bezier(0.68, -0.55, 0.265, 1.55);
     margin: 0.25rem 1rem 0.5rem;
 
     color: $grey-lightened;
+
     font-size: 0.9rem;
 
     .statusDot {
@@ -59,9 +61,9 @@ $bounce-bezier: cubic-bezier(0.68, -0.55, 0.265, 1.55);
   border: 1px solid $red;
   border-radius: 4px;
 
-  text-align: center;
-
   background: rgba($red, 0.15);
+
+  text-align: center;
 
   button {
     margin-left: 0.5rem;
@@ -89,8 +91,8 @@ $bounce-bezier: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
 .stale {
   filter: grayscale(60%);
-  opacity: 0.5;
 
+  opacity: 0.5;
   transition: filter 0.5s, opacity 0.5s;
 }
 
@@ -116,7 +118,6 @@ main.dispatchBoard {
       right: 8.5rem;
     }
   }
-
   @media screen and (max-width: 500px) {
     .clock {
       margin: -0.5rem 0.75rem 0.5rem;
@@ -199,19 +200,18 @@ main.dispatchBoard {
       }
     }
   }
-
   @media screen and (max-width: 700px) {
     width: calc(100vw - 1rem);
     margin: 0 0.5rem;
 
-    > section {
+    &.openDetail > section {
       &.table,
       &.detail {
         margin: 0 0 1rem;
       }
     }
 
-    &.openDetail > section {
+    > section {
       &.table,
       &.detail {
         margin: 0 0 1rem;

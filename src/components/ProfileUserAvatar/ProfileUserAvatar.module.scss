@@ -43,12 +43,11 @@
 }
 
 .deleteButton {
+  display: flex;
   position: absolute;
   right: -0.25rem;
   bottom: -0.25rem;
   z-index: 2;
-
-  display: flex;
 
   align-items: center;
   justify-content: center;
@@ -62,11 +61,12 @@
   border-radius: 50%;
 
   color: white;
+  background-color: $red;
+  transition: background-color 0.2s;
+
   font-size: 1rem;
 
-  background-color: $red;
   cursor: pointer;
-  transition: background-color 0.2s;
 
   &:hover {
     background-color: darken($red, 10%);

@@ -69,20 +69,21 @@
     top: 0;
     left: 0;
 
-    box-sizing: border-box;
     width: 2.2rem;
     height: 2.2rem;
     padding: 0.4rem;
 
-    overflow: hidden;
     border-radius: 50%;
 
     color: $black;
-
-    will-change: transform;
-
     background: $red;
     transition: 0.2s cubic-bezier(0.19, 1, 0.22, 1);
+
+    overflow: hidden;
+
+    box-sizing: border-box;
+
+    will-change: transform;
   }
 
   .label {

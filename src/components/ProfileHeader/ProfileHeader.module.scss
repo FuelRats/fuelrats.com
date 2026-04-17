@@ -2,7 +2,6 @@
   display: inline-flex;
 
   align-items: center;
-  gap: 0.35em;
 
   margin: 0.25rem;
   padding: 0.2em 0.6em;
@@ -10,9 +9,10 @@
   border-radius: 4px;
 
   color: white;
+  background-color: #555555;
+
   font-size: 0.85rem;
   font-weight: 600;
   text-transform: uppercase;
-
-  background-color: #555;
+  gap: 0.35em;
 }

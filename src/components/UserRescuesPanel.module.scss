@@ -5,11 +5,12 @@
 }
 
 .table {
-  width: 100%;
   min-width: 600px;
+  width: 100%;
+
+  border: 1px solid $grey-dark;
 
   border-collapse: collapse;
-  border: 1px solid $grey-dark;
 
   thead tr {
     border-bottom: 2px solid $grey-dark;
@@ -18,11 +19,11 @@
   th {
     padding: 4px 8px;
 
+    color: $grey;
+
     font-size: 0.85rem;
     text-align: left;
     text-transform: uppercase;
-
-    color: $grey;
   }
 
   td {
@@ -50,9 +51,9 @@
 .empty {
   padding: 2rem;
 
-  text-align: center;
-
   color: $grey;
+
+  text-align: center;
 }
 
 .cmdr {
@@ -60,9 +61,9 @@
   white-space: nowrap;
 
   small {
-    font-weight: normal;
-
     color: $grey;
+
+    font-weight: normal;
   }
 }
 
@@ -109,10 +110,10 @@
 }
 
 .date {
+  color: $grey-darkened;
+
   font-size: 0.85rem;
   white-space: nowrap;
-
-  color: $grey-darkened;
 }
 
 .actions {
@@ -121,6 +122,7 @@
 
 .paperworkLink {
   color: $grey;
+
   font-size: 1.1rem;
 
   &:hover {
@@ -134,8 +136,8 @@
   border: 1px solid $grey-dark;
   border-top: none;
 
+  color: $grey;
+
   font-size: 0.85rem;
   text-align: right;
-
-  color: $grey;
 }

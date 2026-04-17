@@ -63,6 +63,20 @@
       }
     }
 
+    &.rescueIdCell {
+      background-color: $black-darkened;
+      color: $white;
+
+      font-family: $monospace-fonts;
+      font-size: 1.4em;
+      font-weight: bold;
+      text-align: center;
+
+      &.rescueIdCellCr {
+        background-color: $red;
+      }
+    }
+
     .rescueRowPermit {
       margin-left: 0.8rem;
 
@@ -72,28 +86,13 @@
     .languageFlag {
       margin-left: 0.4rem;
     }
-
-    &.rescueIdCell {
-      background-color: $black-darkened;
-
-      color: $white;
-      font-family: $monospace-fonts;
-      font-size: 1.4em;
-      font-weight: bold;
-
-      text-align: center;
-
-      &.rescueIdCellCr {
-        background-color: $red;
-      }
-    }
   }
 }
 
 .carrierIcon {
   margin-right: 0.4rem;
 
-  color: white;
+  color: $white;
 }
 
 .codeRed {
@@ -107,7 +106,6 @@
 
 .selected {
   outline: 2px solid $red;
-
   outline-offset: -2px;
 }
 
@@ -152,11 +150,11 @@
 
         grid-template-columns: auto 1fr auto;
         grid-template-areas:
-          "id cmdr  focus"
-          "id sys   focus"
-          "id plat  focus"
-          "id lang  focus"
-          "id rats  focus";
+          'id cmdr  focus'
+          'id sys   focus'
+          'id plat  focus'
+          'id lang  focus'
+          'id rats  focus';
 
         gap: 0.15rem 0.75rem;
 
@@ -179,13 +177,13 @@
           line-height: 1.3;
 
           &.rescueIdCell {
-            grid-area: id;
-            align-self: stretch;
-
             display: flex;
 
             align-items: center;
             justify-content: center;
+
+            grid-area: id;
+            align-self: stretch;
 
             min-width: 3.25rem;
             padding: 0.5rem 0.75rem;
@@ -198,10 +196,27 @@
             font-size: 1.05em;
           }
 
-          &.systemCell { grid-area: sys; }
-          &.platformCell { grid-area: plat; }
-          &.languageCell { grid-area: lang; opacity: 0.85; font-size: 0.9em; }
-          &.ratsCell { grid-area: rats; font-size: 0.9em; }
+          &.systemCell {
+            grid-area: sys;
+          }
+
+          &.platformCell {
+            grid-area: plat;
+          }
+
+          &.languageCell {
+            grid-area: lang;
+
+            opacity: 0.85;
+
+            font-size: 0.9em;
+          }
+
+          &.ratsCell {
+            grid-area: rats;
+
+            font-size: 0.9em;
+          }
 
           &.rescueRowFocus {
             grid-area: focus;
@@ -242,15 +257,29 @@
 }
 
 .skeletonCell {
-  /* override the default colored ID cell while loading */
-  background-color: $black-darkened !important;
+  background-color: $black-darkened !important; /* stylelint-disable-line declaration-no-important -- override ID cell bg during skeleton loading */
 }
 
-.skeletonId { width: 1.5em; }
-.skeletonXs { width: 2em; }
-.skeletonSm { width: 3.5em; }
-.skeletonMd { width: 7em; }
-.skeletonLg { width: 9em; }
+.skeletonId {
+  width: 1.5em;
+}
+
+.skeletonXs {
+  width: 2em;
+}
+
+.skeletonSm {
+  width: 3.5em;
+}
+
+.skeletonMd {
+  width: 7em;
+}
+
+.skeletonLg {
+  width: 9em;
+}
+
 .skeletonIcon {
   width: 1.5em;
   height: 1.5em;
@@ -260,7 +289,8 @@
 
 
 @keyframes skeleton-pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.08;
   }
 
@@ -273,6 +303,7 @@
 @media (prefers-reduced-motion: reduce) {
   .skeletonBlock {
     animation: none;
+
     opacity: 0.12;
   }
 }

@@ -12,10 +12,10 @@
   border: 1px solid $grey-dark;
   border-radius: 6px;
 
-  font-size: 14px;
-
   background-color: $black-lightened;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+
+  font-size: 14px;
 }
 
 .section {
@@ -38,10 +38,10 @@
 .sectionTitle {
   margin: 0;
 
+  color: $white;
+
   font-size: 1em;
   font-weight: 600;
-
-  color: $white;
 }
 
 .toggle {
@@ -51,9 +51,9 @@
   border-radius: 3px;
 
   color: $grey;
-  font-size: 0.85em;
-
   background-color: transparent;
+
+  font-size: 0.85em;
 
   cursor: pointer;
 
@@ -61,16 +61,15 @@
     border-color: $red;
 
     color: $white;
-
     background-color: rgba($red, 0.25);
   }
 }
 
 
 /* ── Sound section ── */
-
 .soundOptions {
   display: flex;
+
   flex-direction: column;
 
   gap: 0.35rem;
@@ -94,14 +93,13 @@
   border-radius: 4px;
 
   color: $grey;
+  background-color: transparent;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+
   font-size: 0.9em;
   text-align: left;
 
-  background-color: transparent;
-
   cursor: pointer;
-
-  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
 
   &:hover {
     border-color: $grey;
@@ -113,7 +111,6 @@
     border-color: $red;
 
     color: $white;
-
     background-color: rgba($red, 0.25);
   }
 }
@@ -125,9 +122,9 @@
   border-radius: 4px;
 
   color: $grey;
-  font-size: 0.85em;
-
   background-color: transparent;
+
+  font-size: 0.85em;
 
   cursor: pointer;
 
@@ -151,6 +148,7 @@
   gap: 0.5rem;
 
   color: $grey;
+
   font-size: 0.85em;
 }
 
@@ -166,7 +164,6 @@
 
 
 /* ── Push section ── */
-
 .filterSection {
   margin-bottom: 0.5rem;
 }
@@ -174,15 +171,16 @@
 .filterLabel {
   margin-bottom: 0.25rem;
 
+  color: $grey;
+
   font-size: 0.8em;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-
-  color: $grey;
 }
 
 .filterItems {
   display: flex;
+
   flex-wrap: wrap;
 
   gap: 0.3rem;
@@ -195,13 +193,12 @@
   border-radius: 4px;
 
   color: $grey;
+  background-color: transparent;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+
   font-size: 0.9em;
 
-  background-color: transparent;
-
   cursor: pointer;
-
-  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
 
   &:hover {
     border-color: $grey;
@@ -213,14 +210,12 @@
     border-color: $red;
 
     color: $white;
-
     background-color: rgba($red, 0.25);
   }
 }
 
 .subscribeButton {
   width: 100%;
-
   margin-top: 0.5rem;
 }
 
@@ -228,6 +223,7 @@
   margin: 0;
 
   color: $grey;
+
   font-size: 0.85em;
   line-height: 1.4;
 
