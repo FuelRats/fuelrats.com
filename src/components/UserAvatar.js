@@ -11,6 +11,11 @@ import {
 
 
 
+// The API enforces a minimum image size. We request at least this many
+// pixels and let the browser downscale via width/height attributes.
+const API_MIN_IMAGE_SIZE = 64
+
+
 /**
  * Renders a user's avatar. Tries the API image endpoint first (which
  * serves the custom avatar if one exists, server-side). Falls back to
@@ -41,10 +46,15 @@ function UserAvatar (props) {
 
   const [hasError, setHasError] = useState(false)
 
+  // Request at least API_MIN_IMAGE_SIZE from the API so small inline
+  // avatars (16-22px) don't get rejected. The browser downscales via
+  // the width/height attributes on the <img>.
+  const fetchSize = Math.max(size, API_MIN_IMAGE_SIZE)
+
   // Always try the API image endpoint — it serves the custom avatar
   // server-side regardless of whether we have the user in the store.
   const src = userId
-    ? `/api/fr/users/${userId}/image?size=${size}${avatarData?.id ? `&v=${avatarData.id}` : ''}`
+    ? `/api/fr/users/${userId}/image?size=${fetchSize}${avatarData?.id ? `&v=${avatarData.id}` : ''}`
     : undefined
 
   useEffect(() => {
@@ -59,7 +69,7 @@ function UserAvatar (props) {
     return null
   }
 
-  const fallback = `/api/avatars/${userId}/${size}`
+  const fallback = `/api/avatars/${userId}/${fetchSize}`
   const resolvedSrc = hasError ? fallback : src
 
   return (
