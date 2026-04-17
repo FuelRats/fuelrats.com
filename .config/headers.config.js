@@ -22,7 +22,7 @@ module.exports = ({ isDev, frapi, appUrl }) => {
             'frame-src': ['https://js.stripe.com'],
             'child-src': false,
             'prefetch-src': false,
-            'worker-src': false,
+            'worker-src': ["'self'"],
           },
           frameOptions: defaultIfDev,
           contentTypeOptions: defaultIfDev,

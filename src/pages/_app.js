@@ -8,6 +8,7 @@ import Header from '~/components/Header'
 import LoginModal from '~/components/LoginModal'
 import NProgress from '~/components/NProgress'
 import PageErrorBoundary from '~/components/PageErrorBoundary'
+import ServiceWorkerRegistration from '~/components/ServiceWorkerRegistration'
 import UserMenu from '~/components/UserMenu'
 import {
   initUserSession,
@@ -83,6 +84,7 @@ function FuelRatsApp (props) {
         <MotionConfig reducedMotion="user">
         <div className={clsx({ forceDrawer })} id="FuelRatsApp" role="application">
           <Provider store={store}>
+            <ServiceWorkerRegistration />
             <NProgress />
             <Header />
             <UserMenu />

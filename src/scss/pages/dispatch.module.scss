@@ -42,6 +42,12 @@ $bounce-bezier: cubic-bezier(0.68, -0.55, 0.265, 1.55);
   border-radius: 50%;
 }
 
+.installButton {
+  margin-left: 0.5rem;
+
+  font-size: 0.85rem;
+}
+
 @keyframes status-pulse {
   0%,
   100% {

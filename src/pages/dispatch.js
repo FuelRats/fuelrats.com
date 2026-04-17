@@ -5,6 +5,7 @@ import { useDispatch, useSelector, useStore } from 'react-redux'
 import { authenticated } from '~/components/AppLayout'
 import Clock from '~/components/Clock'
 import DispatchTable from '~/components/DispatchTable'
+import InstallPwaButton from '~/components/InstallPwaButton'
 import RescueDetails from '~/components/RescueDetails'
 import useDispatchKeyboardNav from '~/hooks/useDispatchKeyboardNav'
 import styles from '~/scss/pages/dispatch.module.scss'
@@ -138,6 +139,7 @@ function DispatchBoard ({ query }) {
           title={`WebSocket: ${socketStatus}`} />
         <span className="sr-only">{'Connection: '}</span>
         {statusLabel}
+        <InstallPwaButton className={styles.installButton} />
       </div>
       <div aria-atomic="true" aria-live="polite" className="sr-only" role="status">
         {newRescueAnnouncement}
