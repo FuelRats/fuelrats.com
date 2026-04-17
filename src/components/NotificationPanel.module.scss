@@ -1,0 +1,234 @@
+@import '../scss/colors';
+
+.panel {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 100;
+
+  width: 320px;
+  margin-top: 0.5rem;
+
+  border: 1px solid $grey-dark;
+  border-radius: 6px;
+
+  background-color: $black-lightened;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+.section {
+  padding: 1rem;
+
+  & + & {
+    border-top: 1px solid $grey-dark;
+  }
+}
+
+.sectionHeader {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 0.75rem;
+}
+
+.sectionTitle {
+  margin: 0;
+
+  font-size: 1em;
+  font-weight: 600;
+
+  color: $white;
+}
+
+.toggle {
+  padding: 0.2rem 0.6rem;
+
+  border: 1px solid $grey-dark;
+  border-radius: 3px;
+
+  color: $grey;
+  font-size: 0.85em;
+
+  background-color: transparent;
+
+  cursor: pointer;
+
+  &.toggleOn {
+    border-color: $red;
+
+    color: $white;
+
+    background-color: rgba($red, 0.25);
+  }
+}
+
+
+/* ── Sound section ── */
+
+.soundOptions {
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.4rem;
+
+  margin-bottom: 0.75rem;
+}
+
+.soundRow {
+  display: flex;
+
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.soundToggle {
+  flex: 1;
+
+  padding: 0.5rem 0.75rem;
+
+  border: 1px solid $grey-dark;
+  border-radius: 4px;
+
+  color: $grey;
+  font-size: 0.95em;
+  text-align: left;
+
+  background-color: transparent;
+
+  cursor: pointer;
+
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+
+  &:hover {
+    border-color: $grey;
+
+    color: $white;
+  }
+
+  &.active {
+    border-color: $red;
+
+    color: $white;
+
+    background-color: rgba($red, 0.25);
+  }
+}
+
+.previewButton {
+  padding: 0.5rem;
+
+  border: 1px solid $grey-dark;
+  border-radius: 4px;
+
+  color: $grey;
+  font-size: 0.85em;
+
+  background-color: transparent;
+
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    border-color: $grey;
+
+    color: $white;
+  }
+
+  &:disabled {
+    opacity: 0.3;
+
+    cursor: default;
+  }
+}
+
+.volumeRow {
+  display: flex;
+
+  align-items: center;
+  gap: 0.5rem;
+
+  color: $grey;
+  font-size: 0.85em;
+}
+
+.volumeSlider {
+  flex: 1;
+
+  height: 4px;
+
+  accent-color: $red;
+
+  cursor: pointer;
+}
+
+
+/* ── Push section ── */
+
+.filterSection {
+  margin-bottom: 0.6rem;
+}
+
+.filterLabel {
+  margin-bottom: 0.3rem;
+
+  font-size: 0.85em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+
+  color: $grey;
+}
+
+.filterItems {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 0.4rem;
+}
+
+.filterChip {
+  padding: 0.45rem 0.8rem;
+
+  border: 1px solid $grey-dark;
+  border-radius: 4px;
+
+  color: $grey;
+  font-size: 0.95em;
+
+  background-color: transparent;
+
+  cursor: pointer;
+
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+
+  &:hover {
+    border-color: $grey;
+
+    color: $white;
+  }
+
+  &.chipActive {
+    border-color: $red;
+
+    color: $white;
+
+    background-color: rgba($red, 0.25);
+  }
+}
+
+.subscribeButton {
+  width: 100%;
+
+  margin-top: 0.5rem;
+}
+
+.muted {
+  margin: 0;
+
+  color: $grey;
+  font-size: 0.9em;
+
+  a {
+    color: $red;
+  }
+}

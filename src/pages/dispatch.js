@@ -2,13 +2,16 @@ import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector, useStore } from 'react-redux'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 import { authenticated } from '~/components/AppLayout'
 import Clock from '~/components/Clock'
 import DispatchTable from '~/components/DispatchTable'
 import InstallPwaButton from '~/components/InstallPwaButton'
-import PushNotificationButton from '~/components/PushNotificationButton'
+import NotificationPanel from '~/components/NotificationPanel'
 import RescueDetails from '~/components/RescueDetails'
 import useDispatchKeyboardNav from '~/hooks/useDispatchKeyboardNav'
+import useSoundNotifications from '~/hooks/useSoundNotifications'
 import styles from '~/scss/pages/dispatch.module.scss'
 import { useRatSocket, useSocketStatus } from '~/services/frSocket'
 import { getDispatchBoard } from '~/store/actions/rescues'
@@ -32,6 +35,7 @@ function DispatchBoard ({ query }) {
   const [loaded, setLoadedState] = useState(false)
   const [loadError, setLoadError] = useState(false)
   const [newRescueAnnouncement, setNewRescueAnnouncement] = useState('')
+  const [notifPanelOpen, setNotifPanelOpen] = useState(false)
 
   useEffect(() => {
     (async () => {
@@ -46,6 +50,7 @@ function DispatchBoard ({ query }) {
 
   useRatSocket()
   useDispatchKeyboardNav()
+  useSoundNotifications()
   const socketStatus = useSocketStatus()
   const router = useRouter()
   const rescueIds = useSelector(selectDispatchBoard)
@@ -148,7 +153,19 @@ function DispatchBoard ({ query }) {
           title={`WebSocket: ${socketStatus}`} />
         <span className="sr-only">{'Connection: '}</span>
         {statusLabel}
-        <PushNotificationButton className={styles.installButton} />
+        <div className={styles.notifContainer}>
+          <button
+            aria-label="Notification settings"
+            className={clsx('compact', styles.installButton)}
+            title="Notification settings"
+            type="button"
+            onClick={() => { return setNotifPanelOpen((prev) => { return !prev }) }}>
+            <FontAwesomeIcon fixedWidth icon="bell" />
+          </button>
+          <NotificationPanel
+            open={notifPanelOpen}
+            onClose={() => { return setNotifPanelOpen(false) }} />
+        </div>
         <InstallPwaButton className={styles.installButton} />
       </div>
       <div aria-atomic="true" aria-live="polite" className="sr-only" role="status">

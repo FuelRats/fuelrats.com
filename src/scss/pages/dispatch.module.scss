@@ -48,6 +48,10 @@ $bounce-bezier: cubic-bezier(0.68, -0.55, 0.265, 1.55);
   font-size: 0.85rem;
 }
 
+.notifContainer {
+  position: relative;
+}
+
 .loadError {
   width: 100%;
   padding: 1rem 2rem;
