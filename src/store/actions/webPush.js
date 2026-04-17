@@ -5,23 +5,17 @@ import { frApiPlainRequest } from './services'
 
 export const subscribePush = (subscription, filters = {}) => {
   return (dispatch) => {
+    const json = subscription.toJSON()
     return dispatch(frApiPlainRequest(
       actionTypes.webPush.subscribe,
       {
         url: '/web-push',
         method: 'post',
         data: {
-          data: {
-            type: 'web-push-subscriptions',
-            attributes: {
-              endpoint: subscription.endpoint,
-              keys: {
-                auth: subscription.toJSON?.().keys?.auth ?? subscription.keys?.auth,
-                p256dh: subscription.toJSON?.().keys?.p256dh ?? subscription.keys?.p256dh,
-              },
-              ...filters,
-            },
-          },
+          endpoint: json.endpoint,
+          expirationTime: json.expirationTime ?? null,
+          keys: json.keys,
+          ...filters,
         },
       },
     ))
@@ -62,13 +56,7 @@ export const updatePushSubscription = (subscriptionId, filters) => {
       {
         url: `/users/${userId}/web-push-subscriptions/${subscriptionId}`,
         method: 'patch',
-        data: {
-          data: {
-            type: 'web-push-subscriptions',
-            id: subscriptionId,
-            attributes: filters,
-          },
-        },
+        data: filters,
       },
     ))
   }
