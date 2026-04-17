@@ -123,7 +123,7 @@ function ActiveSessionsPanel () {
   }, [dispatch])
 
   const otherSessions = useMemo(() => {
-    return sessions.filter((session) => { return !session.attributes.current })
+    return sessions.filter((session) => { return !session.meta?.current })
   }, [sessions])
 
   const handleSignOutEverywhere = useCallback(async () => {
@@ -168,7 +168,8 @@ function ActiveSessionsPanel () {
           !loading && sessions.length > 0 && (
             <ul className={styles.sessionsList}>
               {sessions.map((session) => {
-                const { userAgent, ip, lastAccess, createdAt, current } = session.attributes
+                const { userAgent, ipAddress, lastAccess, createdAt, authMethod } = session.attributes
+                const isCurrent = session.meta?.current
                 const device = describeDevice(userAgent)
                 const isRevoking = revokingIds.has(session.id)
                 return (
@@ -177,10 +178,11 @@ function ActiveSessionsPanel () {
                     <div className={styles.sessionInfo}>
                       <div className={styles.sessionLabel}>
                         {device.label}
-                        {current && (<span className={styles.currentBadge}>{'This device'}</span>)}
+                        {isCurrent && (<span className={styles.currentBadge}>{'This device'}</span>)}
                       </div>
                       <div className={styles.sessionMeta}>
-                        {ip && (<span title={`IP: ${ip}`}>{ip}</span>)}
+                        {authMethod && (<span>{authMethod === 'passkey' ? 'via passkey' : `via ${authMethod}`}</span>)}
+                        {ipAddress && (<span title={`IP: ${ipAddress}`}>{ipAddress}</span>)}
                         {lastAccess && (
                           <span title={formatAsEliteDateTime(lastAccess)}>
                             {'Last seen '}{formatLastSeen(lastAccess)}
@@ -194,7 +196,7 @@ function ActiveSessionsPanel () {
                       </div>
                     </div>
                     {
-                      !current && (
+                      !isCurrent && (
                         <ConfirmActionButton
                           className="compact"
                           confirmButtonText={`Revoke session from ${device.label}`}
