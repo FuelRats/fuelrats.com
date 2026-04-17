@@ -7,7 +7,6 @@ import {
   selectSession,
   selectUserById,
   withCurrentUserId,
-  selectCurrentUserCanEditAllRescues,
   selectCurrentUserHasScope,
 } from '~/store/selectors'
 
@@ -24,7 +23,6 @@ function UserMenu () {
   const checkboxRef = useRef()
 
   const { loggedIn } = useSelector(selectSession)
-  const userCanSeeRescueAdmin = useSelector(selectCurrentUserCanEditAllRescues)
   const userCanDispatch = useSelector((state) => {
     return selectCurrentUserHasScope(state, { scope: 'dispatch.read' })
   })
@@ -94,17 +92,6 @@ function UserMenu () {
                 )
               }
             </NavSection>
-
-            <NavSection className={styles.navSection} title="Admin">
-              {
-                userCanSeeRescueAdmin && (
-                  <NavLink href="/admin/rescues">
-                    {'Rescues'}
-                  </NavLink>
-                )
-              }
-            </NavSection>
-
 
             <NavSection className={styles.navSection}>
               <li>
