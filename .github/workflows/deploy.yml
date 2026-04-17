@@ -82,10 +82,10 @@ jobs:
         run: |
           case "${{ github.ref }}" in
             refs/heads/develop)
-              echo "name=fr-web_dev" >> "$GITHUB_OUTPUT"
+              echo "name=fr-web-dev_web" >> "$GITHUB_OUTPUT"
               ;;
             refs/heads/release)
-              echo "name=fr-web" >> "$GITHUB_OUTPUT"
+              echo "name=fr-web_web" >> "$GITHUB_OUTPUT"
               ;;
           esac
 
