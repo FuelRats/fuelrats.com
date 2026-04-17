@@ -38,10 +38,11 @@ export function playNewCaseSound (volume = 0.3) {
 
 
 /**
- * Soft single tick — subtle, like a quiet tap on wood.
+ * Soft double-tap — two gentle tones close together, like a quiet knock.
  */
 export function playCaseChangeSound (volume = 0.3) {
-  playTone(400, 0.06, { type: 'sine', volume: volume * 0.4 })
+  playTone(350, 0.08, { type: 'sine', volume: volume * 0.35, delay: 0 })
+  playTone(440, 0.1, { type: 'sine', volume: volume * 0.25, delay: 0.1 })
 }
 
 
