@@ -13,7 +13,7 @@ function ServiceWorkerRegistration () {
     if (typeof window === 'undefined') {
       return undefined
     }
-    if (!('serviceWorker' in navigator)) {
+    if (!Reflect.has(navigator, 'serviceWorker')) {
       return undefined
     }
 
@@ -24,7 +24,7 @@ function ServiceWorkerRegistration () {
         if (cancelled) {
           return
         }
-        // eslint-disable-next-line no-console -- registration failure is rare but worth surfacing
+
         console.error('Service worker registration failed:', err)
       })
 

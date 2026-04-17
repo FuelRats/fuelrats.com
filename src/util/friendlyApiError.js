@@ -35,18 +35,17 @@ function pointerField (pointer) {
  * Convert a JSON:API or OAuth error into a friendly { title, detail } pair.
  *
  * Priority:
- *   1. pointerMessages override keyed by JSON pointer
- *   2. statusMessages override keyed by status string
- *   3. Localised default for the error's status
- *   4. Generic "invalid {field}" when the error has a known pointer
- *   5. The API's own title/detail
- *   6. A last-resort catch-all
- *
- * @param {object}   error                  JSON:API error or OAuth error
- * @param {object}   [options]
- * @param {object}   [options.pointerMessages] Map of JSON pointer → { title?, detail? }
- * @param {object}   [options.statusMessages]  Map of status string → { title?, detail? }
- * @param {string}   [options.fallbackDetail]  Detail to use if nothing else matches
+ * 1. pointerMessages override keyed by JSON pointer
+ * 2. statusMessages override keyed by status string
+ * 3. Localised default for the error's status
+ * 4. Generic "invalid {field}" when the error has a known pointer
+ * 5. The API's own title/detail
+ * 6. A last-resort catch-all
+ * @param {object} error JSON:API error or OAuth error
+ * @param {object} [options]
+ * @param {object} [options.pointerMessages] Map of JSON pointer → { title?, detail? }
+ * @param {object} [options.statusMessages] Map of status string → { title?, detail? }
+ * @param {string} [options.fallbackDetail] Detail to use if nothing else matches
  * @returns {{ title: string, detail: string }}
  */
 export default function friendlyApiError (error, options = {}) {

@@ -80,15 +80,21 @@ export default function useSoundNotifications () {
     const state = store.getState()
 
     // Check for closed rescues (removed from board)
-    const closedIds = prevIds.filter((id) => { return !rescueIds.includes(id) })
+    const closedIds = prevIds.filter((id) => {
+      return !rescueIds.includes(id)
+    })
     if (closedIds.length > 0 && settings.caseClosed) {
       playCaseClosedSound(volume)
     }
 
     // Check for new rescues
-    const newIds = rescueIds.filter((id) => { return !prevIds.includes(id) })
+    const newIds = rescueIds.filter((id) => {
+      return !prevIds.includes(id)
+    })
     if (newIds.length > 0 && closedIds.length === 0 && settings.newCase) {
-      const hasNewCr = newIds.some((id) => { return state.rescues?.[id]?.attributes?.codeRed })
+      const hasNewCr = newIds.some((id) => {
+        return state.rescues?.[id]?.attributes?.codeRed
+      })
       if (hasNewCr) {
         playCodeRedSound(volume)
       } else {
@@ -98,13 +104,14 @@ export default function useSoundNotifications () {
 
     // Check for changes to existing rescues (only if no new-rescue sound played)
     if (newIds.length === 0 && settings.caseChange) {
-      for (const id of rescueIds) {
-        if (!prevIds.includes(id)) {
-          continue
-        }
+      const existingIds = rescueIds.filter((id) => {
+        return prevIds.includes(id)
+      })
+      for (const id of existingIds) {
         const prev = prevRescuesRef.current[id]
         const curr = state.rescues?.[id]
         if (!prev || !curr) {
+          // eslint-disable-next-line no-continue -- skip missing data
           continue
         }
 

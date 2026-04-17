@@ -95,7 +95,6 @@
     "@types/zxcvbn": "^4.4.5",
     "doctoc": "^2.2.1",
     "eslint": "^8.57.1",
-    "eslint-import-resolver-alias": "^1.1.2",
     "eslint-import-resolver-node": "^0.3.9",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jsdoc": "^50.6.17",

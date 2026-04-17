@@ -8,18 +8,19 @@ import getResponseError from '~/util/getResponseError'
 
 
 // NEXT_PUBLIC_ prefix makes Next.js inline this from .env at compile time.
+// eslint-disable-next-line no-undef -- process.env is injected by Next.js at build time
 const VAPID_PUBLIC_KEY = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY
 
+const BASE64_PAD_MODULO = 4
+const READY_TIMEOUT_MS = 3000
 
 function urlBase64ToUint8Array (base64String) {
-  const padding = '='.repeat((4 - (base64String.length % 4)) % 4)
+  const padding = '='.repeat((BASE64_PAD_MODULO - (base64String.length % BASE64_PAD_MODULO)) % BASE64_PAD_MODULO)
   const base64 = (base64String + padding).replace(/-/gu, '+').replace(/_/gu, '/')
   const rawData = atob(base64)
-  const outputArray = new Uint8Array(rawData.length)
-  for (let i = 0; i < rawData.length; i += 1) {
-    outputArray[i] = rawData.charCodeAt(i)
-  }
-  return outputArray
+  return Uint8Array.from(rawData, (ch) => {
+    return ch.charCodeAt(0)
+  })
 }
 
 
@@ -46,8 +47,8 @@ export default function usePushNotifications () {
   useEffect(() => {
     if (
       typeof window === 'undefined'
-      || !('serviceWorker' in navigator)
-      || !('PushManager' in window)
+      || !Reflect.has(navigator, 'serviceWorker')
+      || !Reflect.has(window, 'PushManager')
       || !VAPID_PUBLIC_KEY
     ) {
       return undefined
@@ -65,7 +66,7 @@ export default function usePushNotifications () {
       if (!cancelled) {
         setReady(true)
       }
-    }, 3000)
+    }, READY_TIMEOUT_MS)
 
     navigator.serviceWorker.ready.then((registration) => {
       return registration.pushManager.getSubscription()
@@ -109,7 +110,7 @@ export default function usePushNotifications () {
       const err = getResponseError(response)
       if (err) {
         await subscription.unsubscribe()
-        // eslint-disable-next-line no-console
+
         console.error('Push subscription rejected by API:', err.detail ?? err.status)
         return
       }
@@ -117,7 +118,7 @@ export default function usePushNotifications () {
       setSubscribed(true)
     } catch (err) {
       setPermission(Notification.permission)
-      // eslint-disable-next-line no-console
+
       console.error('Push subscribe failed:', err)
     } finally {
       setLoading(false)
@@ -141,7 +142,6 @@ export default function usePushNotifications () {
       }
       setSubscribed(false)
     } catch (err) {
-      // eslint-disable-next-line no-console
       console.error('Push unsubscribe failed:', err)
     } finally {
       setLoading(false)
@@ -149,5 +149,7 @@ export default function usePushNotifications () {
   }, [supported, subscribed, loading, dispatch])
 
 
-  return { supported, ready, permission, subscribed, loading, toggle, subscribe }
+  return {
+    supported, ready, permission, subscribed, loading, toggle, subscribe,
+  }
 }

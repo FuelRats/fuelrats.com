@@ -1,4 +1,3 @@
-const { withAliasResolver } = require('@fuelrats/eslint-config/util/import')
 const util = require('@fuelrats/eslint-config-react/util')
 
 module.exports = {
@@ -35,9 +34,11 @@ module.exports = {
     'import/ignore': [
       '.worker.js$',
     ],
-    'import/resolver': withAliasResolver([
-      ['~', './src'],
-    ]),
+    'import/resolver': {
+      [require.resolve('./.config/eslint-import-resolver')]: {
+        map: [['~', './src']],
+      },
+    },
   },
   overrides: [
     {
