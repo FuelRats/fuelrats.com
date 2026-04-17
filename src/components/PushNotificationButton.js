@@ -28,6 +28,7 @@ const GAME_VERSION_OPTIONS = [
 const DEFAULT_FILTERS = {
   pc: true, xb: true, ps: true,
   horizons3: true, horizons4: true, odyssey: true,
+  alertsOnly: true,
 }
 
 
@@ -145,6 +146,24 @@ function PushNotificationButton ({ className }) {
                 </div>
               )
             }
+
+            <div className={styles.filterGroup}>
+              <div className={styles.filterGroupLabel}>{'When to notify'}</div>
+              <div className={styles.filterItems}>
+                <button
+                  className={clsx(styles.filterChip, { [styles.active]: filters.alertsOnly })}
+                  type="button"
+                  onClick={() => { return handleToggleFilter('alertsOnly') }}>
+                  {'Dispatch alerts only'}
+                </button>
+                <button
+                  className={clsx(styles.filterChip, { [styles.active]: !filters.alertsOnly })}
+                  type="button"
+                  onClick={() => { return handleToggleFilter('alertsOnly') }}>
+                  {'All new rescues'}
+                </button>
+              </div>
+            </div>
 
             <button
               className={clsx('compact', styles.subscribeButton)}

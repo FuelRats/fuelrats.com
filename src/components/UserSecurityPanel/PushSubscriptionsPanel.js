@@ -162,6 +162,15 @@ function PushSubscriptionsPanel () {
                             )
                           })}
                         </div>
+                        <div className={styles.pushFilters}>
+                          <button
+                            className={sub.attributes.alertsOnly ? styles.filterActive : styles.filterInactive}
+                            title={sub.attributes.alertsOnly ? 'Currently: dispatch alerts only' : 'Currently: all new rescues'}
+                            type="button"
+                            onClick={() => { return handleToggleFilter(sub.id, 'alertsOnly', sub.attributes.alertsOnly) }}>
+                            {sub.attributes.alertsOnly ? 'Alerts only' : 'All rescues'}
+                          </button>
+                        </div>
                       </div>
                       <ConfirmActionButton
                         className="compact"
