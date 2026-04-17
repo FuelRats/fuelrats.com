@@ -81,14 +81,12 @@ export default function useSoundNotifications () {
 
     // Check for new rescues
     const newIds = rescueIds.filter((id) => { return !prevIds.includes(id) })
-    for (const id of newIds) {
-      const rescue = state.rescues?.[id]
-      if (rescue?.attributes?.codeRed && settings.codeRed) {
+    if (newIds.length > 0 && settings.newCase) {
+      const hasNewCr = newIds.some((id) => { return state.rescues?.[id]?.attributes?.codeRed })
+      if (hasNewCr) {
         playCodeRedSound(volume)
-        break // One sound per update cycle is enough
-      } else if (settings.newCase) {
+      } else {
         playNewCaseSound(volume)
-        break
       }
     }
 
@@ -104,8 +102,8 @@ export default function useSoundNotifications () {
           continue
         }
 
-        // Check if the rescue became code red
-        if (curr.attributes?.codeRed && !prev.attributes?.codeRed && settings.codeRed) {
+        // A case going CR gets the alert sound instead of the normal update tick
+        if (curr.attributes?.codeRed && !prev.attributes?.codeRed) {
           playCodeRedSound(volume)
           break
         }

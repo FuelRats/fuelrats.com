@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 
 import usePushNotifications from '~/hooks/usePushNotifications'
 import { loadSoundSettings, saveSoundSettings } from '~/hooks/useSoundNotifications'
-import { playNewCaseSound, playCaseChangeSound, playCodeRedSound } from '~/util/sounds'
+import { playNewCaseSound, playCaseChangeSound } from '~/util/sounds'
 
 import styles from './NotificationPanel.module.scss'
 
@@ -33,7 +33,6 @@ const DEFAULT_PUSH_FILTERS = {
 const SOUND_PREVIEWS = {
   newCase: playNewCaseSound,
   caseChange: playCaseChangeSound,
-  codeRed: playCodeRedSound,
 }
 
 
@@ -131,7 +130,6 @@ function NotificationPanel ({ className, open, onClose }) {
                 {[
                   { key: 'newCase', label: 'New case', icon: 'plus' },
                   { key: 'caseChange', label: 'Case update', icon: 'arrows-rotate' },
-                  { key: 'codeRed', label: 'Code Red', icon: 'exclamation-triangle' },
                 ].map((item) => {
                   return (
                     <div key={item.key} className={styles.soundRow}>
