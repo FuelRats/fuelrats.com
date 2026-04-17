@@ -50,20 +50,42 @@ export default function usePushNotifications () {
       || !('PushManager' in window)
       || !VAPID_PUBLIC_KEY
     ) {
-      return
+      return undefined
     }
 
     setSupported(true)
     setPermission(Notification.permission)
 
+    let cancelled = false
+
+    // navigator.serviceWorker.ready can hang if the SW hasn't activated
+    // yet (e.g. first load or update in progress). Race it with a timeout
+    // so the button still appears — subscribe() will wait for ready itself.
+    const readyTimeout = setTimeout(() => {
+      if (!cancelled) {
+        setReady(true)
+      }
+    }, 3000)
+
     navigator.serviceWorker.ready.then((registration) => {
       return registration.pushManager.getSubscription()
     }).then((subscription) => {
-      setSubscribed(Boolean(subscription))
-      setReady(true)
+      if (!cancelled) {
+        clearTimeout(readyTimeout)
+        setSubscribed(Boolean(subscription))
+        setReady(true)
+      }
     }).catch(() => {
-      setReady(true)
+      if (!cancelled) {
+        clearTimeout(readyTimeout)
+        setReady(true)
+      }
     })
+
+    return () => {
+      cancelled = true
+      clearTimeout(readyTimeout)
+    }
   }, [])
 
 

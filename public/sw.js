@@ -4,7 +4,7 @@
 // Bump this string to force a fresh cache when the SW logic itself changes.
 // Hashed _next/static assets are immutable, so they're safe to leave alone
 // across deploys; we only really need to bust this when changing fetch logic.
-const CACHE_NAME = 'fuelrats-v1'
+const CACHE_NAME = 'fuelrats-v2'
 
 // App shell — what we want available offline at minimum.
 const APP_SHELL = [
