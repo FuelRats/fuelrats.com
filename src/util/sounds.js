@@ -29,11 +29,12 @@ function playTone (frequency, duration, { type = 'sine', volume = 0.3, delay = 0
 
 
 /**
- * Two-tone ascending chime — pleasant, non-urgent.
+ * Three-tone ascending chime — clear and attention-getting.
  */
 export function playNewCaseSound (volume = 0.3) {
-  playTone(523, 0.15, { type: 'sine', volume, delay: 0 })      // C5
-  playTone(659, 0.2, { type: 'sine', volume, delay: 0.15 })     // E5
+  playTone(523, 0.12, { type: 'sine', volume, delay: 0 })         // C5
+  playTone(659, 0.12, { type: 'sine', volume, delay: 0.13 })      // E5
+  playTone(784, 0.25, { type: 'sine', volume, delay: 0.26 })      // G5
 }
 
 
