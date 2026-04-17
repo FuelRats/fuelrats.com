@@ -1,7 +1,7 @@
 version: "3.8"
 
 services:
-  web:
+  dev:
     image: ghcr.io/fuelrats/fuelrats.com:develop
     ports:
       - "8602:3000"
@@ -10,7 +10,7 @@ services:
       - PORT=3000
       - APP_URL=https://fuelrats.dev
       - APP_PROXIED=true
-      - FR_API_URL=http://127.0.0.1:8502
+      - FR_API_URL=http://fr-api-dev:8502
       - FR_SOCKET_URL=wss://api.fuelrats.dev
       - FR_FALLBACK_URL=https://fallback.fuelrats.com/
       - FR_API_KEY=${FR_API_KEY}
