@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import CodeRedIcon from '~/components/Leaderboard/CodeRedIcon'
 import FirstYearIcon from '~/components/Leaderboard/FirstYearIcon'
 import RescueAchievementIcon from '~/components/Leaderboard/RescueAchievementIcon'
+import UserAvatar from '~/components/UserAvatar'
 import Pagination from '~/components/Pagination/Pagination'
 import useDebouncedCallback from '~/hooks/useDebouncedCallback'
 import styles from '~/scss/pages/leaderboard.module.scss'
@@ -155,6 +156,11 @@ function Leaderboard (props) {
                     <div
                       className={styles.ratName}
                       title={entry.attributes.ratNames?.length > 1 ? entry.attributes.ratNames.join(', ') : undefined}>
+                      <UserAvatar
+                        alt=""
+                        size={32}
+                        style={{ borderRadius: '50%', flexShrink: 0 }}
+                        userId={entry.attributes.odpiUserId ?? entry.id} />
                       {entry.attributes.preferredName}
                     </div>
                     <div className={styles.ratRescues}>
