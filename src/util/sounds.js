@@ -29,11 +29,12 @@ function playTone (frequency, duration, { type = 'sine', volume = 0.3, delay = 0
 
 
 /**
- * Short attention tone then a resolving drop — like a phone notification.
+ * Bright double-ping then a resolving drop — unmistakable notification.
  */
 export function playNewCaseSound (volume = 0.3) {
-  playTone(880, 0.1, { type: 'sine', volume, delay: 0 })          // A5 — quick ping
-  playTone(698, 0.15, { type: 'sine', volume: volume * 0.7, delay: 0.12 })  // F5 — settle down
+  playTone(880, 0.12, { type: 'sine', volume: volume * 1.2, delay: 0 })       // A5 — bright ping
+  playTone(880, 0.1, { type: 'sine', volume: volume * 0.8, delay: 0.12 })     // A5 — repeat for emphasis
+  playTone(698, 0.2, { type: 'sine', volume: volume * 0.6, delay: 0.24 })     // F5 — settle down
 }
 
 
