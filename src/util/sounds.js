@@ -48,6 +48,15 @@ export function playCaseChangeSound (volume = 0.3) {
 
 
 /**
+ * Soft marimba-like double knock — warm, low, distinct from the higher-pitched alerts.
+ */
+export function playCaseClosedSound (volume = 0.3) {
+  playTone(294, 0.12, { type: 'triangle', volume: volume * 0.5, delay: 0 })    // D4
+  playTone(262, 0.18, { type: 'triangle', volume: volume * 0.4, delay: 0.13 }) // C4 — settles down
+}
+
+
+/**
  * Urgent alternating two-tone alert.
  */
 export function playCodeRedSound (volume = 0.4) {

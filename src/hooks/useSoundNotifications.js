@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import { useSelector, useStore } from 'react-redux'
 
 import { selectDispatchBoard } from '~/store/selectors/dispatch'
-import { playNewCaseSound, playCaseChangeSound, playCodeRedSound } from '~/util/sounds'
+import { playNewCaseSound, playCaseChangeSound, playCaseClosedSound, playCodeRedSound } from '~/util/sounds'
 
 
 
@@ -12,8 +12,8 @@ const STORAGE_KEY = 'fr.soundNotifications'
 const DEFAULT_SETTINGS = {
   enabled: false,
   newCase: true,
-  caseChange: true,
-  codeRed: true,
+  caseChange: false,
+  caseClosed: false,
   volume: 0.5,
 }
 
@@ -79,9 +79,15 @@ export default function useSoundNotifications () {
     const { volume } = settings
     const state = store.getState()
 
+    // Check for closed rescues (removed from board)
+    const closedIds = prevIds.filter((id) => { return !rescueIds.includes(id) })
+    if (closedIds.length > 0 && settings.caseClosed) {
+      playCaseClosedSound(volume)
+    }
+
     // Check for new rescues
     const newIds = rescueIds.filter((id) => { return !prevIds.includes(id) })
-    if (newIds.length > 0 && settings.newCase) {
+    if (newIds.length > 0 && closedIds.length === 0 && settings.newCase) {
       const hasNewCr = newIds.some((id) => { return state.rescues?.[id]?.attributes?.codeRed })
       if (hasNewCr) {
         playCodeRedSound(volume)
