@@ -22,6 +22,9 @@ function getErrorText (error) {
       return 'Invalid Username or Password'
 
     default:
+      if (error.detail) {
+        return { title: error.title, detail: error.detail }
+      }
       return undefined
   }
 }

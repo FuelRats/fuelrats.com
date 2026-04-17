@@ -11,6 +11,8 @@ import { withCurrentUserId } from './session'
 
 const AVATAR_DEFAULT_SIZE = 256
 
+const EMPTY_ARRAY = Object.freeze([])
+
 
 
 
@@ -63,7 +65,7 @@ export const selectAvatarUrlByUserId = createCachedSelector(
 })
 
 export const selectCurrentUserScopes = (state) => {
-  return withCurrentUserId(selectUserById)(state)?.meta?.permissions ?? []
+  return withCurrentUserId(selectUserById)(state)?.meta?.permissions ?? EMPTY_ARRAY
 }
 
 /**

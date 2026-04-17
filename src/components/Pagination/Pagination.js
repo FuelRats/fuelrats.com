@@ -77,9 +77,7 @@ function Pagination (props) {
     <menu
       type="toolbar">
       <div className="secondary" style={{ visibility: showPrevPage }}>
-        <Link href={prevPage}>
-          <a className="button">{'Previous Page'}</a>
-        </Link>
+        <Link className="button" href={prevPage}>{'Previous Page'}</Link>
       </div>
       {
         (showPageInput) && (
@@ -116,9 +114,7 @@ function Pagination (props) {
         )
       }
       <div className="primary" style={{ visibility: showNextPage }}>
-        <Link href={nextPage}>
-          <a className="button">{'Next Page'}</a>
-        </Link>
+        <Link className="button" href={nextPage}>{'Next Page'}</Link>
       </div>
     </menu>
   )

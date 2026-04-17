@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { useCallback } from 'react'
 
 import useToggleState from '~/hooks/useToggleState'
@@ -32,7 +33,7 @@ function TermsModal (props) {
 
   return (
     <>
-      <ModalContent as="article" className={[styles.content]}>
+      <ModalContent as="article" className={clsx(styles.content)}>
         <WordpressPage className="loader-dark" slug={slug} />
       </ModalContent>
       <ModalFooter>

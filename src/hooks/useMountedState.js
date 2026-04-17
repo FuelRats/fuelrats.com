@@ -8,7 +8,6 @@ import { useEffect } from 'react'
  *
  * This hook is intended for shared state scenarios, and will not account for other changes made while the component is mounted.
  * Use this with care.
- *
  * @param {Function} setState setState function which accepts a state fragment.
  * @param {object} state fragment of state to be updated. Should be defined inline.
  */

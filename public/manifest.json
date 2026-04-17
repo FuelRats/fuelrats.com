@@ -1,19 +1,55 @@
 {
-  "name": "The Fuel Rats",
-  "short_name": "FuelRats",
-  "icons": [
-    {
-      "src": "/static/favicon/favicon-196.png?v=dwa6inFKgBFoaM",
-      "sizes": "196x196",
-      "type": "image/png"
-    },
-    {
-      "src": "/static/favicon/favicon-512.png?v=dwa6inFKgBFoaM",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ],
+  "name": "Fuel Rats Dispatch",
+  "short_name": "FR Dispatch",
+  "id": "/dispatch",
+  "start_url": "/dispatch",
+  "scope": "/",
+  "lang": "en",
+  "dir": "ltr",
+  "description": "Coordinate live emergency refueling rescues for Elite: Dangerous commanders. Real-time dispatch board for the Fuel Rats.",
+  "categories": ["games", "productivity", "utilities"],
   "theme_color": "#d65050",
   "background_color": "#1a1a1a",
-  "display": "standalone"
+  "display": "standalone",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/static/favicon/favicon-196.png",
+      "sizes": "196x196",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/static/favicon/favicon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/static/favicon/favicon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Dispatch Board",
+      "short_name": "Dispatch",
+      "description": "Open the live rescue dispatch board",
+      "url": "/dispatch",
+      "icons": [
+        { "src": "/static/favicon/favicon-196.png", "sizes": "196x196", "type": "image/png" }
+      ]
+    },
+    {
+      "name": "Profile",
+      "short_name": "Profile",
+      "description": "Open your Fuel Rats profile",
+      "url": "/profile/overview",
+      "icons": [
+        { "src": "/static/favicon/favicon-196.png", "sizes": "196x196", "type": "image/png" }
+      ]
+    }
+  ]
 }

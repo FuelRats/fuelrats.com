@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import Link from 'next/link'
 import { useState, useCallback, useEffect } from 'react'
 import { useStore } from 'react-redux'
@@ -57,7 +58,7 @@ export default function TermsFieldset (props) {
         'privacy-policy',
       ].forEach((slug) => {
         if (!selectWordpressPageBySlug(store.getState(), { slug })) {
-          store.dispatch(getWordpressPage(slug))
+          Promise.resolve(store.dispatch(getWordpressPage(slug))).catch(() => {})
         }
       })
     }
@@ -72,19 +73,15 @@ export default function TermsFieldset (props) {
           disabled={submitting}
           {...inputProps}
           checked={Boolean(value)}
-          className={['large', className]}
+          className={clsx('large', className)}
           type="checkbox"
           onChange={handleCheckboxClick} />
 
         <label htmlFor={props.id}>
           {'I agree that I have read and agree to the  '}
-          <Link href="/terms-of-service">
-            <a>{'Terms of Service'}</a>
-          </Link>
+          <Link href="/terms-of-service">{'Terms of Service'}</Link>
           {' and '}
-          <Link href="/privacy-policy">
-            <a>{'Privacy Policy'}</a>
-          </Link>
+          <Link href="/privacy-policy">{'Privacy Policy'}</Link>
           {', and that I am 13 years of age or older.'}
         </label>
       </span>

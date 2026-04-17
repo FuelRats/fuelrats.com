@@ -70,6 +70,11 @@
 }
 
 .ratName {
+  display: flex;
+
+  align-items: center;
+  gap: 0.75rem;
+
   flex: 210 0 auto;
 
   width: 210px;

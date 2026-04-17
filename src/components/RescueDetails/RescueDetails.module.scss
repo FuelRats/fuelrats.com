@@ -59,19 +59,143 @@
     font-family: $paragraph-fonts;
     font-weight: bold;
   }
+}
 
-  .expansionBadge {
-    &.horizons3 {
-      background-color: $magenta-dark3;
-    }
+.titlePlatformBadge {
+  margin-left: 1rem;
 
-    &.horizons4 {
-      background-color: $blue-dark3;
-    }
+  font-size: 0.6em;
 
-    &.odyssey {
-      background-color: $gold-dark2;
-    }
+  vertical-align: middle;
+}
+
+.systemInfo {
+  display: inline-flex;
+
+  flex-wrap: wrap;
+
+  align-items: center;
+  gap: 0.5rem;
+}
+
+
+.landmark {
+  color: $grey-darkened;
+
+  font-size: 0.85em;
+}
+
+.starDescription {
+  color: $grey-darkened;
+
+  font-size: 0.85em;
+  font-style: italic;
+}
+
+.systemLink {
+  display: inline-flex;
+
+  align-items: center;
+
+  padding: 0.15em 0.5em;
+
+  border: 1px solid $grey-dark;
+  border-radius: 4px;
+
+  color: $grey;
+  background-color: transparent;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+
+  font-size: 0.8em;
+  text-decoration: none;
+  gap: 0.3em;
+
+  &:hover {
+    border-color: $grey;
+
+    color: $white;
+    background-color: rgba(255, 255, 255, 0.05);
+
+    text-decoration: none;
+  }
+
+  .systemLinkIcon {
+    opacity: 0.7;
+
+    font-size: 0.75em;
+  }
+}
+
+.languageRegion {
+  margin-left: 0.5em;
+
+  color: $grey-darkened;
+
+  font-size: 0.85em;
+}
+
+.languageFlag {
+  margin-right: 0.4em;
+
+  font-size: 1.1em;
+}
+
+.carrierRatGroup {
+  display: inline-flex;
+
+  align-items: center;
+  gap: 0.4em;
+}
+
+.carrierIcon {
+  width: 1.1em;
+  height: 1.1em;
+
+  color: $white;
+}
+
+.systemBadges {
+  display: inline-flex;
+
+  flex-wrap: wrap;
+
+  align-items: center;
+  gap: 0.75rem;
+
+  > * + * {
+    margin-left: 0;
+  }
+}
+
+.scoopable {
+  color: $green;
+}
+
+.permitBadge {
+  display: inline-flex;
+
+  align-items: center;
+  gap: 0.4em;
+
+  color: $red;
+
+  font-size: 0.85em;
+  font-weight: bold;
+}
+
+.expansionBadge {
+  margin-left: 0.5rem;
+
+  &:global(.horizons3) {
+    background-color: $magenta-dark3;
+  }
+
+  &:global(.horizons4) {
+    background-color: $blue-dark3;
+  }
+
+  &:global(.odyssey) {
+    background-color: $gold-dark2;
   }
 }
 
@@ -124,6 +248,12 @@
 
         border-width: 1px 0 0;
 
+        &.systemRow {
+          flex-wrap: wrap;
+
+          row-gap: 0.5rem;
+        }
+
         &.infoGroup {
           border-width: 1px 1px 0;
         }
@@ -156,6 +286,50 @@
           &:hover {
             border-color: var(--background-color-hover);
           }
+
+          &.paperworkButton {
+            --background-color: #{$red};
+            --background-color-hover: #{$red-darkened};
+            --text-color: #{$white};
+            --text-color-hover: #{$white};
+
+            display: inline-flex;
+
+            align-items: center;
+
+            margin-left: 1rem;
+            padding: 0.5em 1em;
+
+            border: none;
+            border-radius: 4px;
+
+            color: var(--text-color);
+            background-color: var(--background-color);
+            transition: background-color 0.15s ease;
+
+            font-size: 0.9em;
+            font-weight: normal;
+            line-height: 1.2;
+            gap: 0.5em;
+
+            &:hover {
+              border: none;
+
+              color: var(--text-color-hover);
+              background-color: var(--background-color-hover);
+
+              svg {
+                color: var(--text-color-hover);
+              }
+            }
+
+            svg {
+              width: 1em;
+              height: 1em;
+
+              color: var(--text-color);
+            }
+          }
         }
       }
     }
@@ -186,6 +360,7 @@
 
     background-color: #555555;
 
+    font-family: $monospace-fonts;
     text-align: right;
   }
 
@@ -222,6 +397,214 @@
   }
 }
 
+.infoValue.infoGroup.quote.event {
+  .quoteMessage {
+    color: $grey;
+
+    font-style: normal;
+    font-size: 0.9em;
+  }
+
+  .quoteTime {
+    opacity: 0.7;
+  }
+}
+
+.infoValue.infoGroup.quote.eventCollapse {
+  padding: 0;
+
+  .eventCollapseButton {
+    display: flex;
+
+    align-items: center;
+
+    width: 100%;
+    margin: 0;
+    padding: 0.5rem 0.8rem 0.5rem calc(27px + 0.8rem);
+
+    border: none;
+    border-radius: 0;
+
+    color: $light-grey;
+    background-color: rgba(255, 255, 255, 0.04);
+    transition: background-color 0.15s ease, color 0.15s ease;
+
+    font-style: normal;
+    font-size: 0.9em;
+    font-weight: normal;
+    text-align: left;
+
+    cursor: pointer;
+    gap: 0.6em;
+
+    &:hover {
+      color: $white;
+      background-color: rgba(255, 255, 255, 0.1);
+
+      .eventCollapseIcon {
+        opacity: 1;
+      }
+    }
+
+    .eventCollapseIcon {
+      opacity: 0.8;
+
+      font-size: 0.9em;
+    }
+  }
+}
+
 .timer {
   flex-shrink: 0;
+}
+
+
+/* Marker class applied to empty <tr>s that visually separate info sections
+   (their `<td />` children render the border). The rule needs to exist so
+   CSS modules emit a hashed class name for the JS to reference. */
+
+.separator {
+  visibility: visible;
+}
+
+
+/* Below 700px the fixed-width label column and inline paperwork button
+   get crushed. Drop the table layout in favour of stacked label/value
+   rows, shrink the header, and give the paperwork button its own line. */
+@media screen and (max-width: 700px) {
+  .body tbody > .separator {
+    display: none;
+  }
+
+  .rescueDetails {
+    padding: 0.75rem 1rem;
+  }
+
+  .header {
+    flex-wrap: wrap;
+
+    padding: 0 0 1rem;
+
+    font-size: 1.25em;
+
+    .title {
+      width: 100%;
+    }
+
+    .timer {
+      margin-top: 0.25rem;
+    }
+
+    :global(.badge) {
+      margin-left: 0.5rem;
+    }
+  }
+
+  .titlePlatformBadge {
+    margin-left: 0.5rem;
+  }
+
+  .body {
+    thead {
+      display: none;
+    }
+
+    tbody > tr {
+      display: flex;
+
+      flex-direction: column;
+
+      margin-bottom: 0.5rem;
+      padding-bottom: 0.5rem;
+
+      border-bottom: 1px solid var(--table-border-color);
+
+      &:last-child {
+        border-bottom: 0;
+      }
+
+      > td {
+        display: block;
+
+        padding: 0.2rem 0;
+
+        border: 0 !important; /* stylelint-disable-line declaration-no-important -- override deeply nested base td borders on mobile */
+
+        line-height: 1.4;
+
+        &:empty {
+          display: none;
+        }
+
+        &.infoTitle {
+          padding: 0 0 0.1rem;
+
+          opacity: 0.7;
+
+          font-size: 0.85em;
+
+          &::after {
+            content: '';
+          }
+        }
+
+        &.infoValue {
+          flex-wrap: wrap;
+
+          justify-content: flex-start;
+          gap: 0.5rem;
+
+          &.infoGroup {
+            padding: 0.2rem 0;
+
+            /* Quote rows need explicit left padding to clear the
+               absolutely-positioned index column. Must be nested here
+               so specificity beats the `.infoGroup` rule above. */
+
+            &.quote {
+              padding: 0 0.5rem 0 calc(22px + 0.5rem);
+
+              &.eventCollapse .eventCollapseButton {
+                padding: 0.4rem 0.5rem 0.4rem calc(22px + 0.5rem);
+
+                font-size: 0.85em;
+              }
+
+              .quoteIndex {
+                width: 22px;
+                padding: 0.5rem 0.25rem;
+
+                font-size: 0.9em;
+              }
+
+              .quoteMessage {
+                padding: 0.5rem 0.25rem;
+              }
+
+              .quoteAuthor,
+              .quoteAuthorVia,
+              .quoteTime {
+                font-size: 0.8em;
+              }
+            }
+          }
+
+          button,
+          :global(.button) {
+            margin-left: 0;
+
+            &.paperworkButton {
+              margin-left: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* System row: tighten the gap between permit / EDSM / Spansh chips. */
+  .systemInfo,
+  .systemBadges {
+    gap: 0.4rem;
+  }
 }

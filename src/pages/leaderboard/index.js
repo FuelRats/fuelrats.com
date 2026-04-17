@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -6,6 +7,7 @@ import CodeRedIcon from '~/components/Leaderboard/CodeRedIcon'
 import FirstYearIcon from '~/components/Leaderboard/FirstYearIcon'
 import RescueAchievementIcon from '~/components/Leaderboard/RescueAchievementIcon'
 import Pagination from '~/components/Pagination/Pagination'
+import UserAvatar from '~/components/UserAvatar'
 import useDebouncedCallback from '~/hooks/useDebouncedCallback'
 import styles from '~/scss/pages/leaderboard.module.scss'
 import { getLeaderboard } from '~/store/actions/statistics'
@@ -51,6 +53,7 @@ function Leaderboard (props) {
   const dispatch = useDispatch()
 
   const [retrieving, setRetrieving] = useState(false)
+  const [fetchError, setFetchError] = useState(false)
   const [noResultsText, setNoResultsText] = useState('')
   const statistics = useSelector(selectLeaderboardStatistics)
   const entries = useSelector(selectLeaderboard)
@@ -81,7 +84,8 @@ function Leaderboard (props) {
   useEffect(() => {
     const updateList = async () => {
       setRetrieving(true)
-      await dispatch(getLeaderboard({
+      setFetchError(false)
+      const result = await dispatch(getLeaderboard({
         page: {
           offset: Math.max((page - 1) * pageSize, 0),
           limit: pageSize,
@@ -90,6 +94,9 @@ function Leaderboard (props) {
           name: filterRat.length > 0 ? `%${filterRat}%` : undefined,
         },
       }))
+      if (result?.error) {
+        setFetchError(true)
+      }
       setNoResultsText(getRandomNoResultsText())
       setRetrieving(false)
     }
@@ -129,7 +136,7 @@ function Leaderboard (props) {
               {'Badges'}
             </div>
           </div>
-          <ol className={['loading', { 'loader-force': retrieving }]}>
+          <ol className={clsx('loading', { 'loader-force': retrieving })}>
             {
               retrieving && Array(pageSize).fill(undefined).map((_, idx) => {
                 return (
@@ -146,7 +153,14 @@ function Leaderboard (props) {
               Boolean(!retrieving && entries.length) && entries.map((entry) => {
                 return (
                   <li key={entry.id}>
-                    <div className={styles.ratName}>
+                    <div
+                      className={styles.ratName}
+                      title={entry.attributes.ratNames?.length > 1 ? entry.attributes.ratNames.join(', ') : undefined}>
+                      <UserAvatar
+                        alt=""
+                        size={32}
+                        style={{ borderRadius: '50%', flexShrink: 0 }}
+                        userId={entry.attributes.odpiUserId ?? entry.id} />
                       {entry.attributes.preferredName}
                     </div>
                     <div className={styles.ratRescues}>
@@ -162,7 +176,16 @@ function Leaderboard (props) {
               })
             }
             {
-              Boolean(!retrieving && !entries.length) && (
+              Boolean(!retrieving && fetchError) && (
+                <li className={styles.noResults}>
+                  <div className={styles.ratName}>
+                    {'Failed to load leaderboard. Please try again.'}
+                  </div>
+                </li>
+              )
+            }
+            {
+              Boolean(!retrieving && !fetchError && !entries.length) && (
                 <li className={styles.noResults}>
                   <div className={styles.ratName}>
                     {noResultsText}

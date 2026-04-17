@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { HttpStatus } from '@fuelrats/web-util/http'
+import clsx from 'clsx'
 import { isError } from 'flux-standard-action'
 import { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -32,7 +33,7 @@ function AddNicknameForm (props) {
       let errorMessage = 'Unknown error occured.'
 
       if (meta.response.status === HttpStatus.UNPROCESSABLE_ENTITY) {
-        errorMessage = 'Nickname invalid'
+        errorMessage = payload?.errors?.[0]?.detail ?? 'Nickname invalid'
       } else if (meta.response.status === HttpStatus.CONFLICT) {
         errorMessage = 'Nickname already registered'
       } else if (HttpStatus.isClientError(meta.response.status)) {
@@ -54,7 +55,7 @@ function AddNicknameForm (props) {
       <IRCNickFieldset
         required
         aria-label="Nickname"
-        className={[styles.thinInput, error && styles.error]}
+        className={clsx(styles.thinInput, error && styles.error)}
         disabled={props.disabled}
         id="AddNickname"
         name="attributes.nick"

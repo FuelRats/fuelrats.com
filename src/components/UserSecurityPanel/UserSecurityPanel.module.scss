@@ -1,0 +1,424 @@
+@import '../../scss/colors';
+
+.content {
+  padding: 1rem;
+}
+
+.warning {
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+
+  border-radius: 4px;
+
+  color: $black;
+  background-color: $yellow;
+}
+
+.empty {
+  padding: 2rem;
+
+  color: $grey;
+
+  text-align: center;
+}
+
+.table {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  th {
+    padding: 0.5rem 1rem;
+
+    border-bottom: 2px solid $grey-dark;
+
+    color: $grey;
+
+    font-size: 0.85rem;
+    text-align: left;
+    text-transform: uppercase;
+  }
+
+  td {
+    padding: 0.5rem 1rem;
+
+    border-bottom: 1px solid $light-grey;
+  }
+}
+
+.date {
+  color: $grey-darkened;
+
+  font-size: 0.85rem;
+}
+
+.synced {
+  color: $green;
+}
+
+.notSynced {
+  color: $grey;
+}
+
+.addPasskey {
+  display: flex;
+
+  gap: 0.5rem;
+
+  margin-top: 1rem;
+}
+
+.nameInput {
+  flex: 1;
+}
+
+.totpEnabled {
+  display: flex;
+
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.totpStatus {
+  font-weight: 600;
+}
+
+.totpRemove {
+  display: flex;
+
+  gap: 0.5rem;
+}
+
+.totpDisabled p {
+  margin-bottom: 1rem;
+
+  color: $grey-darkened;
+}
+
+.totpSetup {
+  padding: 1.5rem 2rem;
+}
+
+.qrCode {
+  display: flex;
+
+  justify-content: center;
+
+  margin: 1rem 0;
+
+  img {
+    width: 200px;
+    height: 200px;
+
+    border-radius: 8px;
+  }
+}
+
+.secretDetails {
+  margin: 1rem 0;
+
+  color: $grey-darkened;
+
+  font-size: 0.85rem;
+
+  summary {
+    cursor: pointer;
+  }
+}
+
+.secretKey {
+  display: block;
+
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+
+  border-radius: 4px;
+
+  background-color: $light-grey;
+
+  font-size: 1.1rem;
+  letter-spacing: 0.15em;
+  word-break: break-all;
+}
+
+.totpForm {
+  display: flex;
+
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.totpInput {
+  font-size: 1.5rem;
+  letter-spacing: 0.5em;
+
+  text-align: center;
+}
+
+.successMessage {
+  padding: 2rem;
+
+  text-align: center;
+
+  h3 {
+    margin: 0.75rem 0 0.5rem;
+  }
+
+  p {
+    color: $grey-darkened;
+  }
+}
+
+.successIcon {
+  color: $green;
+
+  font-size: 3rem;
+}
+
+.certDescription {
+  margin-bottom: 1rem;
+
+  color: $grey-darkened;
+}
+
+.certForm {
+  display: flex;
+
+  gap: 0.5rem;
+
+  input {
+    flex: 1;
+  }
+}
+
+.accountActions {
+  display: flex;
+
+  gap: 1rem;
+
+  margin-top: 2rem;
+}
+
+
+.recoveryCodes {
+  padding: 1rem 0;
+}
+
+.recoveryCodesWarning {
+  display: flex;
+
+  align-items: flex-start;
+  gap: 0.75rem;
+
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+
+  border: 1px solid $yellow;
+  border-radius: 4px;
+
+  background-color: rgba($yellow, 0.1);
+
+  svg {
+    flex-shrink: 0;
+
+    margin-top: 0.2em;
+
+    color: $yellow;
+  }
+}
+
+.recoveryCodesList {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem 1rem;
+
+  margin: 0 0 1rem;
+  padding: 1rem;
+
+  border: 1px solid $grey-dark;
+  border-radius: 4px;
+
+  background-color: rgba(0, 0, 0, 0.2);
+
+  list-style: none;
+
+  code {
+    color: $white;
+
+    font-size: 1.1em;
+    letter-spacing: 0.1em;
+  }
+}
+
+.recoveryCodesActions {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 0.5rem;
+}
+
+
+.regenerateRecoveryForm {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 0.5rem;
+
+  margin-top: 0.75rem;
+
+  input {
+    max-width: 15rem;
+  }
+}
+
+
+.totpActions {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 0.5rem;
+
+  margin-top: 0.75rem;
+}
+
+
+.sessionsList {
+  display: flex;
+
+  flex-direction: column;
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+
+  gap: 0.5rem;
+}
+
+.sessionItem {
+  display: flex;
+
+  align-items: center;
+  gap: 1rem;
+
+  padding: 0.75rem 1rem;
+
+  border: 1px solid $grey-dark;
+  border-radius: 4px;
+
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.sessionIcon {
+  flex-shrink: 0;
+
+  color: $grey;
+
+  font-size: 1.5rem;
+}
+
+.sessionInfo {
+  flex-grow: 1;
+
+  min-width: 0;
+}
+
+.sessionLabel {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  align-items: center;
+  gap: 0.5rem;
+
+  font-weight: 600;
+}
+
+.currentBadge {
+  padding: 0.1rem 0.5rem;
+
+  border-radius: 3px;
+
+  color: $white;
+  background-color: $green;
+
+  font-size: 0.75rem;
+  font-weight: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.sessionMeta {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 0.25rem 1rem;
+
+  margin-top: 0.25rem;
+
+  color: $grey-darkened;
+
+  font-size: 0.85rem;
+}
+
+.sessionsActions {
+  display: flex;
+
+  justify-content: flex-end;
+
+  margin-top: 1rem;
+}
+
+
+.pushDescription {
+  margin-bottom: 0.75rem;
+
+  color: $grey-darkened;
+}
+
+.pushToggle {
+  margin-bottom: 1rem;
+}
+
+.pushSubheading {
+  margin: 1rem 0 0.5rem;
+}
+
+.pushFilters {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 0.25rem;
+
+  margin-top: 0.25rem;
+}
+
+.filterActive,
+.filterInactive {
+  padding: 0.4rem 0.75rem;
+
+  border: 1px solid $grey-dark;
+  border-radius: 4px;
+
+  font-size: 0.9rem;
+
+  cursor: pointer;
+}
+
+.filterActive {
+  border-color: $red;
+
+  color: $white;
+  background-color: rgba($red, 0.25);
+}
+
+.filterInactive {
+  color: $grey;
+  background-color: transparent;
+}

@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies -- required dev dependencies are only loaded in development context */
-/* eslint-disable no-param-reassign -- reassign is intended for changing configs */
+
 const { DefinePlugin } = require('webpack')
 
 const ciEnv = require('./ciEnv')
@@ -22,9 +22,6 @@ module.exports = () => {
       '$$BUILD.id': JSON.stringify(opt.buildId),
       '$$BUILD.nodeVersion': JSON.stringify(process.version),
     }))
-
-    // Workaround to fix dev warning: https://github.com/vercel/next.js/issues/19865
-    config.output.hotUpdateMainFilename = 'static/webpack/[fullhash].[runtime].hot-update.json'
 
     /* SVGR */
     config.module.rules.push({

@@ -1,61 +1,100 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import qs from 'qs'
+import { useCallback } from 'react'
 
+import RatName from './RatName'
 import TagsInput from './TagsInput'
 
 
 
 
+const PLATFORM_COLORS = {
+  pc: '#985DB5',
+  ps: '#3068B3',
+  xb: '#1E8C1E',
+}
 
-class RatTagsInput extends TagsInput {
-  static renderLoader () {
-    return (
-      <span>
-        <FontAwesomeIcon fixedWidth pulse icon="spinner" />
-        {'Loading...'}
-      </span>
-    )
+const PLATFORM_LABELS = {
+  pc: 'PC',
+  ps: 'PS',
+  xb: 'XB',
+}
+
+const SEARCH_LIMIT = 10
+
+
+
+
+function RatValueTag ({ rat }) {
+  const platform = rat?.attributes?.platform
+  if (!platform) {
+    return rat?.attributes?.name ?? rat?.value ?? ''
   }
-
-  static renderValue (rat) {
-    return (
-      <span>
-        <span className={['badge platform short', rat.attributes.platform]} />
-        {rat.attributes.name}
+  return (
+    <RatName rat={rat} size={16}>
+      <span
+        className="badge"
+        style={
+{
+  backgroundColor: PLATFORM_COLORS[platform] ?? '#555',
+  color: 'white',
+  marginLeft: '0.3em',
+  marginRight: 0,
+  fontSize: '0.75em',
+}
+}>
+        {PLATFORM_LABELS[platform] ?? platform}
       </span>
-    )
-  }
+    </RatName>
+  )
+}
 
-  async search (query) {
-    this.setState({ loading: true })
+function renderRatValue (rat) {
+  return (<RatValueTag rat={rat} />)
+}
 
+function renderRatLoader () {
+  return (
+    <span>
+      <FontAwesomeIcon fixedWidth pulse icon="spinner" />
+      {'Loading...'}
+    </span>
+  )
+}
+
+
+function RatTagsInput (props) {
+  const { onSearch: onSearchProp, 'data-platform': platform } = props
+
+  const defaultOnSearch = useCallback(async (query) => {
+    if (!query) {
+      return []
+    }
     const queryParams = qs.stringify({
-      page: {
-        limit: 10,
-      },
+      page: { limit: SEARCH_LIMIT },
       filter: {
         and: [
           { name: { iLike: `${query}%` } },
-          { platform: this.props['data-platform'] },
+          { platform },
         ],
       },
     })
+    const response = await fetch(`/api/fr/rats?${queryParams}`)
+    const { data } = await response.json()
+    return data ?? []
+  }, [platform])
 
-    if (query) {
-      const response = await fetch(`/api/fr/rats?${queryParams}`)
-      const { data } = await response.json()
-
-      if (!data?.length) {
-        return this.updateOptions([])
-      }
-
-      return this.updateOptions(data)
-    }
-
-    return this.updateOptions([])
-  }
+  return (
+    <TagsInput
+      {...props}
+      renderLoader={renderRatLoader}
+      renderValue={renderRatValue}
+      onSearch={onSearchProp ?? defaultOnSearch} />
+  )
 }
 
 
 
+
 export default RatTagsInput
+export { renderRatValue, renderRatLoader }

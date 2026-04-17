@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { useCallback } from 'react'
 
 import { useField } from '~/hooks/useForm'
@@ -26,7 +27,7 @@ export default function JsonField (props) {
   }, [handleChange, node])
 
   return (
-    <div className={['jsonField', styles.jsonField, { [styles.hasDepth]: depth > 0 }]}>
+    <div className={clsx('jsonField', styles.jsonField, { [styles.hasDepth]: depth > 0 })}>
       <label className={styles.fieldLabel} htmlFor={inputId} id={labelId} title={node}>
         {`"${name}":`}
       </label>

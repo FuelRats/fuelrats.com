@@ -24,6 +24,89 @@
   position: relative;
 }
 
+.passkeySection {
+  padding: 0 2rem;
+}
+
+.divider {
+  display: flex;
+
+  align-items: center;
+
+  margin: 0.75rem 0;
+
+  color: $grey;
+
+  font-size: 0.85rem;
+  text-transform: uppercase;
+
+  &::before,
+  &::after {
+    flex: 1;
+
+    content: '';
+    height: 1px;
+
+    background-color: rgba($grey, 0.3);
+  }
+
+  span {
+    margin: 0 1rem;
+  }
+}
+
+.passkeyPrompt {
+  padding: 1.5rem 2rem;
+
+  text-align: center;
+
+  h3 {
+    margin: 0.75rem 0 0.5rem;
+  }
+
+  p {
+    margin-bottom: 1rem;
+
+    color: $grey-lightened;
+
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+}
+
+.passkeyPromptIcon {
+  color: $grey-lightened;
+
+  font-size: 2.5rem;
+}
+
+.passkeyNameInput {
+  width: 100%;
+}
+
+.totpCodeInput {
+  width: 100%;
+
+  font-size: 2rem;
+  letter-spacing: 0.5em;
+
+  text-align: center;
+}
+
+.passkeyButton {
+  composes: button from global;
+
+  width: 100%;
+  margin: 0;
+
+  background-color: #4A4A4A;
+  color: $white;
+
+  &:hover {
+    background-color: #5A5A5A;
+  }
+}
+
 .verifyToggle {
   position: absolute;
   right: 0;

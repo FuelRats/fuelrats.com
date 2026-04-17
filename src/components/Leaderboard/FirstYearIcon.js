@@ -1,7 +1,7 @@
-import isBefore from 'date-fns/isBefore'
+import { isBefore } from 'date-fns'
 
-import FirstYearSvg from '../../../public/static/svg/firstYear.svg'
 import styles from './Leaderboard.module.scss'
+import FirstYearSvg from '../../../public/static/svg/firstYear.svg'
 
 
 

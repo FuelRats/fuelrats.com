@@ -5,9 +5,9 @@ import createRequestBody from '~/util/jsonapi/createRequestBody'
 
 
 import actionTypes from '../actionTypes'
+import { frApiRequest, frApiPlainRequest } from './services'
 import { deletesResource, deletesRelationship, createsRelationship, RESOURCE } from '../reducers/frAPIResources'
 import { withCurrentUserId, selectUserById, selectCurrentUserId } from '../selectors'
-import { frApiRequest, frApiPlainRequest } from './services'
 
 export const getNickname = (nickId) => {
   return frApiRequest(
@@ -90,6 +90,16 @@ export const updateAvatar = (data) => {
     }
 
     return dispatch(frApiRequest(actionTypes.users.avatar.update, request))
+  }
+}
+
+export const deleteAvatar = () => {
+  return (dispatch, getState) => {
+    const user = selectCurrentUserId(getState())
+    return dispatch(frApiRequest(actionTypes.users.avatar.update, {
+      url: `/users/${user}/image`,
+      method: 'delete',
+    }))
   }
 }
 

@@ -7,7 +7,6 @@ function getWindow () {
 
 /**
  * Hook which attaches an event listener function to a target.
- *
  * @param {string} type A string representing the event type to listen for
  * @param {Function} listener Function which is called when the event is triggered
  * @param {object?} options An options object which determines behavior of the event listener
@@ -21,12 +20,12 @@ export default function useEventListener (type, listener, options = {}, target =
   const { listen = true, capture = false, once = false, passive = false } = options
 
   useEffect(() => {
-    if (listen && typeof target !== undefined) {
+    if (listen && typeof target !== 'undefined') {
       target.addEventListener(type, listener, { capture, once, passive })
     }
 
     return () => {
-      if (listen && typeof target !== undefined) {
+      if (listen && typeof target !== 'undefined') {
         target.removeEventListener(type, listener, { capture, once, passive })
       }
     }

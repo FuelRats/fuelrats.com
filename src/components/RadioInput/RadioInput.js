@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import PropTypes from 'prop-types'
 import { useCallback, useState } from 'react'
 
@@ -38,7 +39,7 @@ function RadioInput (props) {
   }, [onChange, value])
 
   return (
-    <Element className={[styles.radioInput, { disabled }, className]}>
+    <Element className={clsx(styles.radioInput, { disabled }, className)}>
       {
         options.map((option) => {
           return (

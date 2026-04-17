@@ -1,30 +1,30 @@
 @keyframes loading-start {
   0% {
-    border-color: currentColor;
+    border-color: currentcolor;
   }
 
   100% {
-    border-color: transparent currentColor currentColor;
+    border-color: transparent currentcolor currentcolor;
   }
 }
 @keyframes loading {
   0% {
-    border-color: transparent currentColor currentColor;
+    border-color: transparent currentcolor currentcolor;
   }
 
   25% {
-    border-color: currentColor transparent currentColor currentColor;
+    border-color: currentcolor transparent currentcolor currentcolor;
   }
 
   50% {
-    border-bottom-color: currentColor currentColor transparent currentColor;
+    border-bottom-color: currentcolor currentcolor transparent currentcolor;
   }
 
   75% {
-    border-color: currentColor currentColor currentColor transparent;
+    border-color: currentcolor currentcolor currentcolor transparent;
   }
 
   100% {
-    border-color: transparent currentColor currentColor;
+    border-color: transparent currentcolor currentcolor;
   }
 }

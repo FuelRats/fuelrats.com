@@ -1,3 +1,4 @@
+import { isError } from 'flux-standard-action'
 import { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -15,6 +16,7 @@ import styles from './UserDecalPanel.module.scss'
 
 function UserDecalPanel () {
   const [redeeming, setRedeeming] = useState(false)
+  const [error, setError] = useState(null)
 
   const decals = useSelector(withCurrentUserId(selectDecalsByUserId))
   const userId = useSelector(selectCurrentUserId)
@@ -24,8 +26,12 @@ function UserDecalPanel () {
 
   const handleRedeemDecal = useCallback(async () => {
     setRedeeming(true)
+    setError(null)
 
-    await dispatch(redeemDecal(userId))
+    const response = await dispatch(redeemDecal(userId))
+    if (isError(response)) {
+      setError('Failed to redeem decal. Please try again.')
+    }
 
     setRedeeming(false)
   }, [dispatch, userId])
@@ -43,6 +49,7 @@ function UserDecalPanel () {
         }
       </header>
       <div className={styles.panelContent}>
+        {error && (<div className={styles.error}>{error}</div>)}
         {
           Boolean(decals.length) && decals.map((decal) => {
             return (<DecalRow key={decal.id} decal={decal} />)

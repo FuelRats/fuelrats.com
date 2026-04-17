@@ -15,14 +15,7 @@
 !/.env.local.example
 
 # Package Manager Files
-.yarn/*
-!.yarn/releases
-!.yarn/plugins
-!.yarn/sdks
-!.yarn/versions
-.pnp.*
 node_modules
-package-lock.json
 
 # Artifacts
 *.tar.gz

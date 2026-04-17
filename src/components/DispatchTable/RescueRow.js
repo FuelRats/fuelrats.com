@@ -1,20 +1,24 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import { differenceInMinutes } from 'date-fns'
 import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
 import { useCallback, useState } from 'react'
+import { useSelector } from 'react-redux'
 
+import CarrierIcon from '~/components/CarrierIcon'
+import PlatformBadge from '~/components/PlatformBadge'
 import {
   useQuoteString, useRescueLanguage, useRescuePlatform, useRescueSystem, useRescuePermit,
 } from '~/hooks/rescueHooks'
-import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import useStoreEffect from '~/hooks/useStoreEffect'
 import { selectRescueById, createSelectRenderedRatList } from '~/store/selectors'
-import { expansionNameMap } from '~/util/expansion'
 import makeRoute from '~/util/router/makeRoute'
 
 import CopyToClipboard from '../CopyToClipboard'
+import RatName from '../RatName'
 import styles from './DispatchTable.module.scss'
+
 
 
 
@@ -25,11 +29,7 @@ const selectRenderedRatList = createSelectRenderedRatList((rat, index, arr) => {
 
   return (
     <CopyToClipboard key={rat.id} text={name}>
-      {
-        rat.type === 'unidentified-rats'
-          ? (<i title="This rat is unidentified">{name}</i>)
-          : name
-        }
+      <RatName rat={rat} size={18} />
       {isLast ? '' : ', '}
     </CopyToClipboard>
   )
@@ -38,8 +38,12 @@ const selectRenderedRatList = createSelectRenderedRatList((rat, index, arr) => {
 
 
 function RescueRow (props) {
-  const rescue = useSelectorWithProps(props, selectRescueById)
-  const rescueRats = useSelectorWithProps(props, selectRenderedRatList)
+  const rescue = useSelector((state) => {
+    return selectRescueById(state, props)
+  })
+  const rescueRats = useSelector((state) => {
+    return selectRenderedRatList(state, props)
+  })
 
   const quoteString = useQuoteString(rescue)
   const rescueLanguage = useRescueLanguage(rescue)
@@ -80,6 +84,7 @@ function RescueRow (props) {
   }, [rescue.id, router])
 
   const {
+    carrier,
     codeRed,
     status,
     client,
@@ -89,24 +94,28 @@ function RescueRow (props) {
   } = rescue.attributes
 
   const radioInputId = `rdetail-${rescue.id}`
+  const isSelected = router.query.rId === rescue.id
 
   return (
     <tr
       className={
-        {
+        clsx({
           [styles.codeRed]: codeRed,
           [styles.inactive]: status === 'inactive',
+          [styles.selected]: isSelected,
           'animate-flash': animating,
-        }
+        })
       }
+      data-rescue-id={rescue.id}
       title={quoteString}
       onAnimationEnd={handleTransitionEnd}>
       <CopyToClipboard
         as="td"
+        className={clsx(styles.rescueIdCell, { [styles.rescueIdCellCr]: codeRed })}
         text={commandIdentifier ?? '?'}>
         {commandIdentifier ?? '?'}
       </CopyToClipboard>
-      <td>
+      <td className={styles.cmdrCell}>
         <CopyToClipboard
           doHint
           className={styles.cmdrNameCol}
@@ -118,75 +127,40 @@ function RescueRow (props) {
         </CopyToClipboard>
       </td>
       <td
-        className={['rescue-row-platform', styles.platform, styles[rescue.attributes.platform]]}
+        className={clsx('rescue-row-platform', styles.platformCell)}
         title={rescuePlatform.long}>
-        {
-          platform === 'pc' && expansion && (
-            <span className={[styles.platformBadge]}>
-              <span className={[styles.platformBadgeIcon]}>
-                <FontAwesomeIcon fixedWidth icon="tv" />
-              </span>
-              <span className={[styles.platformBadgeLabel, styles[platform], styles[expansion]]}>
-                {expansionNameMap[expansion]}
-              </span>
-            </span>
-          )
-        }
-        {
-          platform === 'pc' && !expansion && (
-            <span className={[styles.platformBadge]}>
-              <span className={[styles.platformBadgeIcon]}>
-                <FontAwesomeIcon fixedWidth icon="tv" />
-              </span>
-              <span className={[styles.platformBadgeLabel, styles[platform]]}>{'PC'}</span>
-            </span>
-          )
-        }
-        {
-          platform !== 'pc' && (
-            <span className={[styles.platformBadge]}>
-              <span className={[styles.platformBadgeIcon]}>
-                {
-                  platform === 'ps' && (
-                    <FontAwesomeIcon fixedWidth icon={['fab', 'playstation']} />
-                  )
-                }
-                {
-                  platform === 'xb' && (
-                    <FontAwesomeIcon fixedWidth icon={['fab', 'xbox']} />
-                  )
-                }
-              </span>
-              <span className={[styles.platformBadgeLabel, styles[platform]]}>
-                {rescuePlatform.short}
-              </span>
-            </span>
-          )
-        }
+        <PlatformBadge expansion={expansion} platform={platform} />
       </td>
       <td
-        className="rescue-row-language"
-        title={rescueLanguage.long}>
+        className={clsx('rescue-row-language', styles.languageCell)}
+        title={rescueLanguage.region ? `${rescueLanguage.long} (${rescueLanguage.region})` : rescueLanguage.long}>
         {rescueLanguage.short}
+        {
+rescueLanguage.flag && (
+  <span className={styles.languageFlag}>{rescueLanguage.flag}</span>
+)
+}
       </td>
       <CopyToClipboard
         doHint
         as="td"
+        className={styles.systemCell}
         text={rescue.attributes.system ?? 'Unknown'}>
         {rescueSystem ?? 'N/A'}
         {
           rescuePermit && (
-            <span className={styles.rescueRowPermit} title={rescuePermit}>
-              <FontAwesomeIcon fixedWidth icon="id-card" />
+            <span aria-label={rescuePermit} className={styles.rescueRowPermit} role="img" title={rescuePermit}>
+              <FontAwesomeIcon fixedWidth icon="lock" />
             </span>
           )
         }
       </CopyToClipboard>
-      <td className="rescue-row-rats">
+      <td className={clsx('rescue-row-rats', styles.ratsCell)}>
+        {carrier && (<CarrierIcon className={styles.carrierIcon} title="Fleet Carrier" />)}
         {rescueRats}
       </td>
       <td className={styles.rescueRowFocus}>
-        <label className={['button icon', { active: router.query.rId === rescue.id }]} htmlFor={radioInputId}>
+        <label className={clsx('button icon', { active: router.query.rId === rescue.id })} htmlFor={radioInputId}>
           <input
             hidden
             readOnly
@@ -198,7 +172,7 @@ function RescueRow (props) {
             type="radio"
             value={rescue.id}
             onClick={handleFocusRescue} />
-          <FontAwesomeIcon fixedWidth icon="ellipsis-h" />
+          <FontAwesomeIcon fixedWidth icon="ellipsis" />
         </label>
       </td>
 

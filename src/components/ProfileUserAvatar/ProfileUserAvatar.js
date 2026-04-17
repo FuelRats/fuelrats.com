@@ -1,13 +1,18 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Image from 'next/image'
+import clsx from 'clsx'
+import { isError } from 'flux-standard-action'
 import PropTypes from 'prop-types'
 import { useState, useCallback, useMemo } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-import useSelectorWithProps from '~/hooks/useSelectorWithProps'
-import { selectAvatarUrlByUserId, withCurrentUserId } from '~/store/selectors'
+
+import { deleteAvatar, getUserProfile } from '~/store/actions/user'
+import { selectUserById, withCurrentUserId } from '~/store/selectors'
 
 import UploadAvatarModal from '../UploadAvatarModal'
+import UserAvatar from '../UserAvatar'
 import styles from './ProfileUserAvatar.module.scss'
+
 
 const faIconLgSize = 100
 const faIconMdSize = 64
@@ -16,9 +21,12 @@ function ProfileUserAvatar ({
   canEdit,
   size = 170,
 }) {
-  const userAvatarUrl = useSelectorWithProps({ size }, withCurrentUserId(selectAvatarUrlByUserId))
+  const user = useSelector(withCurrentUserId(selectUserById))
+  const hasCustomAvatar = Boolean(user?.relationships?.avatar?.data)
+  const dispatch = useDispatch()
 
   const [showUploadAvatar, setShowUploadAvatar] = useState(false)
+  const [deleting, setDeleting] = useState(false)
 
   const handleToggleUploadAvatar = useCallback(() => {
     setShowUploadAvatar((prevState) => {
@@ -29,6 +37,25 @@ function ProfileUserAvatar ({
   const handleAvatarModalClose = useCallback(() => {
     return setShowUploadAvatar(false)
   }, [])
+
+  const handleDeleteAvatar = useCallback(async () => {
+    // eslint-disable-next-line no-alert -- intentional confirmation
+    if (!window.confirm('Are you sure you want to remove your avatar?')) {
+      return
+    }
+    setDeleting(true)
+    const response = await dispatch(deleteAvatar())
+    if (isError(response)) {
+      // eslint-disable-next-line no-alert -- simple feedback for rare failure
+      window.alert('Failed to remove avatar. Please try again.')
+      setDeleting(false)
+      return
+    }
+    // Best-effort refresh — avatar is already deleted, so failing here just
+    // leaves stale profile data until next navigation.
+    await dispatch(getUserProfile()).catch(() => {})
+    setDeleting(false)
+  }, [dispatch])
 
   const sizeMeta = useMemo(() => {
     let icon = undefined
@@ -52,17 +79,12 @@ function ProfileUserAvatar ({
     <>
       <div className={styles.userAvatar}>
         <div className="avatar" style={sizeMeta.style}>
-          <Image
-            unoptimized
-            alt="User's avatar"
-            height={size}
-            src={userAvatarUrl}
-            width={size} />
+          <UserAvatar size={size} />
           {
             canEdit && (
               <button
                 aria-label="Edit your avatar"
-                className={[styles.userAvatarEdit, styles.editFace]}
+                className={clsx(styles.userAvatarEdit, styles.editFace)}
                 type="button"
                 onClick={handleToggleUploadAvatar}>
                 <FontAwesomeIcon icon="upload" size={sizeMeta.icon} />
@@ -70,6 +92,18 @@ function ProfileUserAvatar ({
             )
           }
         </div>
+        {
+          canEdit && hasCustomAvatar && (
+            <button
+              aria-label="Remove your avatar"
+              className={styles.deleteButton}
+              disabled={deleting}
+              type="button"
+              onClick={handleDeleteAvatar}>
+              <FontAwesomeIcon icon="trash" />
+            </button>
+          )
+        }
       </div>
       <UploadAvatarModal
         isOpen={showUploadAvatar}

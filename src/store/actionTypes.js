@@ -101,6 +101,36 @@ const oauth = {
 
 
 
+const passkeys = {
+  search: 'passkeys/search',
+  create: 'passkeys/create',
+  delete: 'passkeys/delete',
+}
+
+
+const totp = {
+  generate: 'totp/generate',
+  link: 'totp/link',
+  remove: 'totp/remove',
+  regenerateRecoveryCodes: 'totp/regenerateRecoveryCodes',
+}
+
+
+const sessions = {
+  list: 'sessions/list',
+  revoke: 'sessions/revoke',
+}
+
+
+const webPush = {
+  subscribe: 'webPush/subscribe',
+  unsubscribe: 'webPush/unsubscribe',
+  list: 'webPush/list',
+  update: 'webPush/update',
+  remove: 'webPush/remove',
+}
+
+
 const passwords = {
   reset: 'passwords/reset',
   requestReset: 'passwords/requestReset',
@@ -129,6 +159,7 @@ const session = {
 
 const sapi = {
   systems: 'sapi/systems',
+  landmarks: 'sapi/landmarks',
 }
 
 
@@ -183,6 +214,7 @@ const actionTypes = {
   leaderboard,
   nicknames,
   oauth,
+  passkeys,
   passwords,
   rats,
   rescues,
@@ -192,7 +224,10 @@ const actionTypes = {
   // Special
   images,
   session,
+  sessions,
+  totp,
   verify,
+  webPush,
 
   // Services
   sapi,

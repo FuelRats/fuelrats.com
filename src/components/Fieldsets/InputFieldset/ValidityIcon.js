@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import PropTypes from 'prop-types'
 import { useMemo } from 'react'
 
@@ -34,11 +35,11 @@ function ValidityIcon (props) {
     }
 
     if (validating) {
-      nextProps.icon = 'sync'
+      nextProps.icon = 'arrows-rotate'
       nextProps.spin = true
       nextProps.title = validatingTitle
     } else if (!valid) {
-      nextProps.icon = 'exclamation-triangle'
+      nextProps.icon = 'triangle-exclamation'
       nextProps.title = invalidTitle
     } else if (hasMessages) {
       nextProps.title = validWithMessageTitle
@@ -50,19 +51,19 @@ function ValidityIcon (props) {
 
 
   return (
-    <div className={[styles.validityIconGroup, className]}>
+    <div className={clsx(styles.validityIconGroup, className)}>
       <FontAwesomeIcon
         {...restProps}
         {...iconProps}
         fixedWidth
-        className={[styles.validityIcon, { [styles.valid]: valid && !validating }]} />
+        className={clsx(styles.validityIcon, { [styles.valid]: valid && !validating })} />
 
       {
         Boolean(valid && hasMessages) && (
           <FontAwesomeIcon
             fixedWidth
-            className={[styles.warningIcon, className]}
-            icon="exclamation-circle"
+            className={clsx(styles.warningIcon, className)}
+            icon="circle-exclamation"
             title={validWithMessageTitle} />
         )
       }

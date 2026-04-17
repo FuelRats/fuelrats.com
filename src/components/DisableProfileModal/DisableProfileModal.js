@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import Router from 'next/router'
 import { useCallback, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -109,7 +110,7 @@ function DisableProfileModal (props) {
             )
           }
           <button
-            className={{ green: !confirming }}
+            className={clsx({ green: !confirming })}
             disabled={(!confirming && !canSubmit) || submitting}
             type="button"
             onClick={handleConfirm}>

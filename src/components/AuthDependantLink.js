@@ -32,9 +32,7 @@ function AuthDependantLink (props) {
 
   return (
     <Link href={destination}>
-      <a>
-        {children}
-      </a>
+      {children}
     </Link>
   )
 }

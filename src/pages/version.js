@@ -1,13 +1,11 @@
 import { HttpStatus } from '@fuelrats/web-util/http'
 import axios from 'axios'
-import getConfig from 'next/config'
 import Link from 'next/link'
 
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 
 // Component constants
-const { publicRuntimeConfig } = getConfig()
-const { appUrl } = publicRuntimeConfig
+const appUrl = process.env.NEXT_PUBLIC_APP_URL
 
 
 
@@ -24,10 +22,8 @@ function Version ({ version }) {
   return (
     <div className="page-content">
       <div>
-        <Link href="/api/version">
-          <a className="button compact">
-            {'Raw'}
-          </a>
+        <Link className="button compact" href="/api/version">
+          {'Raw'}
         </Link>
       </div>
       <div className="page-content text-mono">

@@ -1,0 +1,233 @@
+@import '../scss/colors';
+
+.panel {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 100;
+
+  width: 320px;
+  margin-top: 0.5rem;
+
+  border: 1px solid $grey-dark;
+  border-radius: 6px;
+
+  background-color: $black-lightened;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+
+  font-size: 14px;
+}
+
+.section {
+  padding: 0.85rem;
+
+  & + & {
+    border-top: 1px solid $grey-dark;
+  }
+}
+
+.sectionHeader {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 0.6rem;
+}
+
+.sectionTitle {
+  margin: 0;
+
+  color: $white;
+
+  font-size: 1em;
+  font-weight: 600;
+}
+
+.toggle {
+  padding: 0.2rem 0.5rem;
+
+  border: 1px solid $grey-dark;
+  border-radius: 3px;
+
+  color: $grey;
+  background-color: transparent;
+
+  font-size: 0.85em;
+
+  cursor: pointer;
+
+  &.toggleOn {
+    border-color: $red;
+
+    color: $white;
+    background-color: rgba($red, 0.25);
+  }
+}
+
+
+/* ── Sound section ── */
+.soundOptions {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 0.35rem;
+
+  margin-bottom: 0.6rem;
+}
+
+.soundRow {
+  display: flex;
+
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.soundToggle {
+  flex: 1;
+
+  padding: 0.4rem 0.6rem;
+
+  border: 1px solid $grey-dark;
+  border-radius: 4px;
+
+  color: $grey;
+  background-color: transparent;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+
+  font-size: 0.9em;
+  text-align: left;
+
+  cursor: pointer;
+
+  &:hover {
+    border-color: $grey;
+
+    color: $white;
+  }
+
+  &.active {
+    border-color: $red;
+
+    color: $white;
+    background-color: rgba($red, 0.25);
+  }
+}
+
+.previewButton {
+  padding: 0.4rem 0.45rem;
+
+  border: 1px solid $grey-dark;
+  border-radius: 4px;
+
+  color: $grey;
+  background-color: transparent;
+
+  font-size: 0.85em;
+
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    border-color: $grey;
+
+    color: $white;
+  }
+
+  &:disabled {
+    opacity: 0.3;
+
+    cursor: default;
+  }
+}
+
+.volumeRow {
+  display: flex;
+
+  align-items: center;
+  gap: 0.5rem;
+
+  color: $grey;
+
+  font-size: 0.85em;
+}
+
+.volumeSlider {
+  flex: 1;
+
+  height: 4px;
+
+  accent-color: $red;
+
+  cursor: pointer;
+}
+
+
+/* ── Push section ── */
+.filterSection {
+  margin-bottom: 0.5rem;
+}
+
+.filterLabel {
+  margin-bottom: 0.25rem;
+
+  color: $grey;
+
+  font-size: 0.8em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.filterItems {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 0.3rem;
+}
+
+.filterChip {
+  padding: 0.35rem 0.65rem;
+
+  border: 1px solid $grey-dark;
+  border-radius: 4px;
+
+  color: $grey;
+  background-color: transparent;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+
+  font-size: 0.9em;
+
+  cursor: pointer;
+
+  &:hover {
+    border-color: $grey;
+
+    color: $white;
+  }
+
+  &.chipActive {
+    border-color: $red;
+
+    color: $white;
+    background-color: rgba($red, 0.25);
+  }
+}
+
+.subscribeButton {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.muted {
+  margin: 0;
+
+  color: $grey;
+
+  font-size: 0.85em;
+  line-height: 1.4;
+
+  a {
+    color: $red;
+  }
+}

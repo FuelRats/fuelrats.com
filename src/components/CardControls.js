@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 
 
 
@@ -32,7 +33,7 @@ function CardControls (props) {
 
   return (
     <div
-      className={['card-controls', { 'has-message': deleteMode }]}>
+      className={clsx('card-controls', { 'has-message': deleteMode })}>
 
       {
         deleteMode && (
@@ -46,7 +47,8 @@ function CardControls (props) {
         !(editMode || deleteMode) && (
           <>
             <button
-              className={['icon', { green: editMode || deleteMode }]}
+              aria-label={`Edit ${controlType}`}
+              className={clsx('icon', { green: editMode || deleteMode })}
               name="edit"
               title={`Edit ${controlType}`}
               type="button"
@@ -54,6 +56,7 @@ function CardControls (props) {
               <FontAwesomeIcon fixedWidth icon="pen" />
             </button>
             <button
+              aria-label={canDelete ? `Delete ${controlType}` : `You cannot delete this ${controlType}.`}
               className="icon"
               disabled={!canDelete}
               name="delete"
@@ -70,6 +73,7 @@ function CardControls (props) {
         (editMode || deleteMode) && (
           <>
             <button
+              aria-label={editModeSubmitTitle}
               className="icon green"
               disabled={editMode ? !canSubmit : false}
               name="confirm"
@@ -79,12 +83,13 @@ function CardControls (props) {
               <FontAwesomeIcon fixedWidth icon="check" />
             </button>
             <button
+              aria-label={editModeCancelTitle}
               className="icon"
               name="cancel"
               title={editModeCancelTitle}
               type="button"
               onClick={onCancelClick}>
-              <FontAwesomeIcon fixedWidth icon="times" />
+              <FontAwesomeIcon fixedWidth icon="xmark" />
             </button>
           </>
         )

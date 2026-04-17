@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import PropTypes from 'prop-types'
 import { useMemo } from 'react'
 
@@ -24,7 +25,7 @@ function NamespaceDetails (props) {
       const accessible = action.all || action.self
       const isSelf = action.self && (!action.all || (!action.all && action.self))
       return (
-        <li key={actionName} className={[styles.permission, { [styles.inaccessible]: accessible }]}>
+        <li key={actionName} className={clsx(styles.permission, { [styles.inaccessible]: accessible })}>
           <span>
             {namespace.actionText[actionName]?.[isSelf ? 'self' : 'all'] ?? 'Read'}
             {' '}

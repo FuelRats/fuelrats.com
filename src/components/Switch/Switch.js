@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import PropTypes from 'prop-types'
 import { useCallback, useState } from 'react'
 
@@ -32,9 +33,9 @@ function Switch (props) {
     }
   }, [onChange])
 
-  let icon = 'times'
+  let icon = 'xmark'
   if (loading) {
-    icon = 'sync'
+    icon = 'arrows-rotate'
   } else if (props.checked) {
     icon = 'check'
   }
@@ -43,7 +44,7 @@ function Switch (props) {
     <div>
       <label
         {...containerProps}
-        className={[styles.switch, { [styles.checked]: props.checked, [styles.loading]: loading, [styles.disabled]: props.disabled }, className]}
+        className={clsx(styles.switch, { [styles.checked]: props.checked, [styles.loading]: loading, [styles.disabled]: props.disabled }, className)}
         htmlFor={id}>
         <input
           {...inputProps}
@@ -56,7 +57,7 @@ function Switch (props) {
         <span className={styles.slider} />
         <FontAwesomeIcon
           fixedWidth
-          className={[styles.handle]}
+          className={clsx(styles.handle)}
           icon={icon} />
 
         {

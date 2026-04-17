@@ -20,6 +20,16 @@
     }
   }
 
+  &[disabled] {
+    border-style: dashed;
+    border-color: $grey;
+
+    background-color: rgba($grey, 0.05);
+    opacity: 0.4;
+
+    pointer-events: none;
+  }
+
   &[required]:not(.has-tags) {
     border-color: $red-lightened;
 

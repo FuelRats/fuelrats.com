@@ -3,13 +3,15 @@
 
 
 
+import clsx from 'clsx'
+
+import styles from './Leaderboard.module.scss'
 import Rescue100 from '../../../public/static/svg/rescue100.svg'
 import Rescue1000 from '../../../public/static/svg/rescue1000.svg'
 import Rescue200 from '../../../public/static/svg/rescue200.svg'
 import Rescue300 from '../../../public/static/svg/rescue300.svg'
 import Rescue400 from '../../../public/static/svg/rescue400.svg'
 import Rescue500 from '../../../public/static/svg/rescue500.svg'
-import styles from './Leaderboard.module.scss'
 
 
 
@@ -42,7 +44,7 @@ function RescueAchievementIcon ({ rescueCount, ...iconProps }) {
 
   return Icon && (
     <div
-      className={[`${styles.achievement} ${styles.rescueCount}`, { [styles.crown]: count >= 500 }]}
+      className={clsx(`${styles.achievement} ${styles.rescueCount}`, { [styles.crown]: count >= 500 })}
       title={`This rat has completed at least ${count} rescues!`}>
       <Icon {...iconProps} />
     </div>

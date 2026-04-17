@@ -2,6 +2,100 @@
 
 $bounce-bezier: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
+.statusBar {
+  display: flex;
+  position: absolute;
+  top: 5.5rem;
+  right: 8.5rem;
+
+  align-items: center;
+  gap: 0.5rem;
+
+  color: $grey;
+
+  font-size: 0.85rem;
+
+  @media screen and (max-width: 768px) {
+    position: static;
+
+    justify-content: flex-end;
+
+    margin: 0.25rem 1rem 0.5rem;
+
+    color: $grey-lightened;
+
+    font-size: 0.9rem;
+
+    .statusDot {
+      width: 12px;
+      height: 12px;
+
+      box-shadow: 0 0 6px currentcolor;
+    }
+  }
+}
+
+.statusDot {
+  display: inline-block;
+
+  width: 10px;
+  height: 10px;
+
+  border-radius: 50%;
+}
+
+.installButton {
+  margin-left: 0.5rem;
+
+  font-size: 0.85rem;
+}
+
+.notifContainer {
+  position: relative;
+}
+
+.loadError {
+  width: 100%;
+  padding: 1rem 2rem;
+
+  border: 1px solid $red;
+  border-radius: 4px;
+
+  background: rgba($red, 0.15);
+
+  text-align: center;
+
+  button {
+    margin-left: 0.5rem;
+
+    text-decoration: underline;
+
+    cursor: pointer;
+  }
+}
+
+@keyframes status-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.pulse {
+  animation: status-pulse 1.5s ease-in-out infinite;
+}
+
+.stale {
+  filter: grayscale(60%);
+
+  opacity: 0.5;
+  transition: filter 0.5s, opacity 0.5s;
+}
+
 main.dispatchBoard {
   width: 100vw;
 
@@ -22,6 +116,13 @@ main.dispatchBoard {
       position: absolute;
       top: 3.4rem;
       right: 8.5rem;
+    }
+  }
+  @media screen and (max-width: 500px) {
+    .clock {
+      margin: -0.5rem 0.75rem 0.5rem;
+
+      font-size: 0.85em;
     }
   }
 }
@@ -96,6 +197,24 @@ main.dispatchBoard {
     > section {
       &.table {
         margin: 0 1rem 1rem;
+      }
+    }
+  }
+  @media screen and (max-width: 700px) {
+    width: calc(100vw - 1rem);
+    margin: 0 0.5rem;
+
+    &.openDetail > section {
+      &.table,
+      &.detail {
+        margin: 0 0 1rem;
+      }
+    }
+
+    > section {
+      &.table,
+      &.detail {
+        margin: 0 0 1rem;
       }
     }
   }

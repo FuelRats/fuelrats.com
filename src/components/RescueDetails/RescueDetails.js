@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
 import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
-import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { selectRescueById } from '~/store/selectors'
 
 import RescueDetailsContent from './RescueDetailsContent'
@@ -13,7 +13,9 @@ function RescueDetails (props) {
     rescueId,
   } = props
 
-  const rescue = useSelectorWithProps(props, selectRescueById)
+  const rescue = useSelector((state) => {
+    return selectRescueById(state, props)
+  })
   const router = useRouter()
   useEffect(() => {
     if (rescueId && !rescue) {

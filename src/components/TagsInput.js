@@ -1,577 +1,449 @@
-// Complete rewrite pending. We will ignore these errors for now.
-/* eslint-disable
-    no-magic-numbers,
-    no-negated-condition,
-    no-return-assign,
-    react/no-unsafe,
-    react/state-in-constructor,
-    arrow-body-style,
-*/
-
+import clsx from 'clsx'
 import debounce from 'lodash/debounce'
-import React from 'react'
+import {
+  useCallback, useEffect, useMemo, useRef, useState,
+} from 'react'
 
 import Key from './Key'
 
 
 
 
+// Constants
+const DEFAULT_SEARCH_DEBOUNCE_MS = 500
 
-export default class TagsInput extends React.Component {
-  _bindMethods (methods) {
-    methods.forEach((method) => this[method] = this[method].bind(this))
+const KEYS = {
+  TAB: 9,
+  ENTER: 13,
+  COMMA: 188,
+  BACKSPACE: 8,
+  DELETE: 46,
+  LEFT: 37,
+  UP: 38,
+  RIGHT: 39,
+  DOWN: 40,
+}
+
+
+
+
+function resolveValue (item, valueProp) {
+  if (typeof valueProp === 'function') {
+    return valueProp(item)
+  }
+  if (typeof valueProp !== 'string') {
+    throw new TypeError('valueProp must be either a string pointer or function.')
   }
 
-  static _renderLoader () {
-    return (
-      <div className="loader">
-        {TagsInput.renderLoader()}
-      </div>
-    )
-  }
-
-  static _renderNoResults () {
-    return (
-      <div className="no-results">
-        {TagsInput.renderNoResults()}
-      </div>
-    )
-  }
-
-
-
-
-
-  addTag (tag) {
-    const { onAdd, onChange } = this.props
-
-    if (!this.state.allowDuplicates) {
-      const isDuplicate = this.state.tags.findIndex((searchTag) => this.getValue(searchTag) === this.getValue(tag)) !== -1
-      if (isDuplicate) {
-        return false
-      }
+  let value = item
+  for (const key of valueProp.split('.')) {
+    if (value === null || value === undefined) {
+      return undefined
     }
+    value = value[key]
+  }
+  return value
+}
 
-    this.setState((prevState) => ({
-      options: [],
-      selectedOption: null,
-      tags: [
-        ...prevState.tags,
-        tag,
-      ],
-    }), () => {
-      if (onAdd) {
-        onAdd(tag)
-      }
 
-      if (onChange) {
-        onChange(this.state.tags)
-      }
-    })
+function parseOption (optionValue) {
+  return typeof optionValue === 'string' ? { value: optionValue } : optionValue
+}
 
-    this.input.value = ''
 
+function defaultRenderValue (item, valueProp) {
+  return resolveValue(item, valueProp)
+}
+
+
+function defaultRenderLoader () {
+  return <span>{'Loading...'}</span>
+}
+
+
+function defaultRenderNoResults () {
+  return <span>{'No results'}</span>
+}
+
+
+
+
+function TagsInput (props) {
+  const {
+    'aria-label': ariaLabel,
+    className,
+    disabled,
+    name,
+    options: optionsProp,
+    placeholder,
+    searchDebounce = DEFAULT_SEARCH_DEBOUNCE_MS,
+    value: valueProp,
+    valueProp: valuePropAccessor = 'value',
+    onAdd,
+    onChange,
+    onRemove,
+    onSearch,
+    renderValue,
+    renderLoader = defaultRenderLoader,
+    renderNoResults = defaultRenderNoResults,
+    ...passthroughProps
+  } = props
+
+  const isSingle = Boolean(passthroughProps['data-single'])
+  const allowNew = Boolean(passthroughProps['data-allownew'])
+  const allowDuplicates = Boolean(passthroughProps['data-allowduplicates'])
+
+  const inputRef = useRef(null)
+  const containerRef = useRef(null)
+
+  const getValue = useCallback((item) => {
+    return resolveValue(item, valuePropAccessor)
+  }, [valuePropAccessor])
+
+  const initialTags = useMemo(() => {
+    let asArray = []
+    if (valueProp) {
+      asArray = Array.isArray(valueProp) ? valueProp : [valueProp]
+    }
+    return asArray.map(parseOption)
+  }, [valueProp])
+
+  const [tags, setTags] = useState(initialTags)
+  const [options, setOptions] = useState(() => {
+    if (Array.isArray(optionsProp)) {
+      return optionsProp
+    }
+    return optionsProp ? [optionsProp] : []
+  })
+  const [loading, setLoading] = useState(false)
+  const [currentValue, setCurrentValue] = useState('')
+  const [newFocus, setNewFocus] = useState(true)
+  const [selectedOption, setSelectedOption] = useState(null)
+  const [selectedTag, setSelectedTag] = useState(null)
+
+  // Sync from incoming `value` prop
+  useEffect(() => {
+    setTags(initialTags)
+  }, [initialTags])
+
+  // Sync from incoming `options` prop
+  useEffect(() => {
+    if (optionsProp !== undefined) {
+      setOptions(Array.isArray(optionsProp) ? optionsProp : [optionsProp])
+    }
+  }, [optionsProp])
+
+  const findTag = useCallback((candidate) => {
+    const parsed = parseOption(candidate)
+    return tags.find((tag) => {
+      return getValue(tag) === getValue(parsed)
+    }) ?? null
+  }, [tags, getValue])
+
+  const addTag = useCallback((tag) => {
+    if (!allowDuplicates && findTag(tag)) {
+      return false
+    }
+    const nextTags = isSingle ? [tag] : [...tags, tag]
+    setTags(nextTags)
+    setOptions([])
+    setSelectedOption(null)
+    if (inputRef.current) {
+      inputRef.current.value = ''
+    }
+    onAdd?.(tag)
+    onChange?.(nextTags)
     return true
-  }
+  }, [allowDuplicates, findTag, isSingle, tags, onAdd, onChange])
 
-  UNSAFE_componentWillReceiveProps (nextProps) {
-    const {
-      options,
-      value,
-    } = this.props
-    const { loading } = this.state
-    const newState = {}
-
-    if (value !== nextProps.value) {
-      let tags = nextProps.value || []
-
-      if (!Array.isArray(tags)) {
-        tags = [tags]
-      }
-
-      newState.tags = tags
-    }
-
-    if (options !== nextProps.options) {
-      newState.options = nextProps.options || []
-
-      if (!Array.isArray(newState.options)) {
-        newState.options = [newState.options]
-      }
-    }
-
-    if (loading !== nextProps.loading) {
-      newState.loading = nextProps.loading
-    }
-
-    this.setState(newState)
-  }
-
-  UNSAFE_componentWillUpdate (nextProps, nextState) {
-    const newNextState = { ...nextState }
-
-    if (this.state.tags !== nextState.tags) {
-      newNextState.tags = nextState.tags.map((tag) => TagsInput.parseOption(tag))
-    }
-  }
-
-  constructor (props) {
-    super(props)
-
-    this._bindMethods([
-      'handleOptionMouseOver',
-      'onBlur',
-      'onInput',
-      'onKeyDown',
-      'renderOption',
-      'renderTag',
-      'search',
-      'shouldCaptureKeybind',
-    ])
-
-    this.valueProp = props.valueProp || 'value'
-    this.search = debounce(this.search, props.searchDebounce || 500)
-
-    let tags = props.value || []
-
-    if (!Array.isArray(tags)) {
-      tags = [tags]
-    }
-
-    tags = tags.map((tag) => TagsInput.parseOption(tag))
-
-    this.state = {
-      allowDuplicates: props['data-allowduplicates'],
-      allowNew: props['data-allownew'],
-      currentValue: '',
-      loading: false,
-      newFocus: true,
-      options: props.options || [],
-      selectedOption: null,
-      selectedTag: null,
-      tags,
-    }
-  }
-
-  findOption (optionValue) {
-    const option = typeof optionValue !== 'string' ? optionValue : { value: optionValue }
-    const optionIndex = this.state.options.findIndex((searchOption) => this.getValue(option) === this.getValue(searchOption))
-
-    if (optionIndex === -1) {
-      return false
-    }
-
-    return this.state.options[optionIndex]
-  }
-
-  findTag (tagValue) {
-    const tag = typeof tagValue !== 'string' ? tagValue : { value: tagValue }
-    const tagIndex = this.state.tags.findIndex((searchTag) => this.getValue(tag) === this.getValue(searchTag))
-
-    if (tagIndex === -1) {
-      return false
-    }
-
-    return this.state.tags[tagIndex]
-  }
-
-  getSelectedOption () {
-    if (this.state.selectedOption !== null) {
-      return this.state.options[this.state.selectedOption]
-    }
-
-    return false
-  }
-
-  getValue (option) {
-    let value = option
-
-    switch (typeof this.valueProp) {
-      case 'function':
-        value = this.valueProp(option)
-        break
-      case 'string':
-        for (const key of this.valueProp.split('.')) {
-          value = value[key]
+  const removeTag = useCallback((tag) => {
+    if (isSingle) {
+      const nextValue = getValue(tag)
+      setTags([])
+      setCurrentValue(nextValue)
+      setNewFocus(false)
+      // Put the previous value back into the input so the user can edit it.
+      queueMicrotask(() => {
+        if (inputRef.current) {
+          inputRef.current.value = nextValue
+          inputRef.current.focus()
+          inputRef.current.setSelectionRange(0, nextValue?.length ?? 0)
         }
-        break
-      default:
-        throw new TypeError('valueProp must be either a string pointer or function.')
-    }
-    return value
-  }
-
-  handleDelete (event) {
-    const { input } = this
-    let { selectedTag } = this.state
-
-    if ((selectedTag === null) && ((input.selectionStart + input.selectionEnd) === 0)) {
-      selectedTag = this.state.tags.length - 1
-    }
-
-    if (selectedTag !== null) {
-      event.preventDefault()
-
-      this.removeTag(this.state.tags[selectedTag])
-
-      if (this.state.tags.length && this.state.selectedTag) {
-        selectedTag -= 1
-
-        this.setState({ selectedTag })
-      }
-    }
-  }
-
-  handleDownArrow (event) {
-    if (!this.state.options.length) {
+      })
+      onRemove?.(tag)
+      onChange?.([])
       return
     }
 
-    event.preventDefault()
+    const nextTags = tags.filter((candidate) => {
+      return candidate !== tag
+    })
+    setTags(nextTags)
+    onRemove?.(tag)
+    onChange?.(nextTags)
+  }, [isSingle, tags, getValue, onRemove, onChange])
 
-    let { selectedOption } = this.state
-
-    if ((selectedOption === null) || (selectedOption >= (this.state.options.length - 1))) {
-      selectedOption = 0
-    } else {
-      selectedOption += 1
-    }
-
-    this.setState({ selectedOption })
-  }
-
-  handleLeftArrow (event) {
-    const { input } = this
-
-    if ((input.selectionStart + input.selectionEnd) !== 0) {
+  // Wrapped search with loading-state management and debouncing.
+  const runSearch = useCallback(async (query) => {
+    if (!onSearch) {
       return
     }
-
-    event.preventDefault()
-
-    let { selectedTag } = this.state
-
-    if (selectedTag === null) {
-      selectedTag = this.state.tags.length - 1
-    } else if (selectedTag !== 0) {
-      selectedTag -= 1
+    setLoading(true)
+    try {
+      const result = await onSearch(query)
+      const nextOptions = Array.isArray(result) ? result.map(parseOption) : []
+      // Filter out already-selected tags when duplicates aren't allowed.
+      const filtered = allowDuplicates
+        ? nextOptions
+        : nextOptions.filter((option) => {
+          return !tags.some((tag) => {
+            return getValue(tag) === getValue(option)
+          })
+        })
+      setOptions(filtered)
+      setSelectedOption(null)
+      setNewFocus(false)
+    } finally {
+      setLoading(false)
     }
+  }, [onSearch, allowDuplicates, tags, getValue])
 
-    this.setState({ selectedTag })
-  }
+  const debouncedSearch = useMemo(() => {
+    return debounce((query) => {
+      return runSearch(query)
+    }, searchDebounce)
+  }, [runSearch, searchDebounce])
 
-  static handleOptionMouseOut (event) {
-    event.target.classList.remove('focus')
-  }
+  useEffect(() => {
+    return () => {
+      debouncedSearch.cancel()
+    }
+  }, [debouncedSearch])
 
-  handleOptionMouseOver (event, selectedOption) {
-    this.setState({ selectedOption })
-    event.target.classList.add('focus')
-  }
+  const handleInput = useCallback((event) => {
+    setSelectedTag(null)
+    setCurrentValue(event.target.value)
+    debouncedSearch(event.target.value)
+  }, [debouncedSearch])
 
-  handleReturn (event) {
+  const handleFocus = useCallback((event) => {
+    event.target.parentNode.classList.add('focus')
+  }, [])
+
+  const handleBlur = useCallback((event) => {
+    setNewFocus(true)
+    event.target.parentNode.classList.remove('focus')
+  }, [])
+
+  const handleReturn = useCallback((event) => {
     if (event.target.value) {
       event.preventDefault()
     }
-
-    const selectedOption = this.getSelectedOption()
-
-    if (selectedOption) {
-      this.addTag(selectedOption)
-    } else if (this.state.allowNew) {
-      this.addTag({ value: event.target.value })
+    const selected = selectedOption === null ? null : options[selectedOption]
+    if (selected) {
+      addTag(selected)
+    } else if (allowNew && event.target.value) {
+      addTag({ value: event.target.value })
     }
-  }
+  }, [selectedOption, options, allowNew, addTag])
 
-  handleRightArrow (event) {
-    let { selectedTag } = this.state
+  const handleDelete = useCallback((event) => {
+    const input = inputRef.current
+    if (!input) {
+      return
+    }
+    let target = selectedTag
+    if (selectedTag === null && (input.selectionStart + input.selectionEnd) === 0) {
+      target = tags.length - 1
+    }
+    if (target !== null && target >= 0 && tags[target]) {
+      event.preventDefault()
+      removeTag(tags[target])
+      if (tags.length > 1 && selectedTag !== null) {
+        setSelectedTag(target - 1)
+      }
+    }
+  }, [selectedTag, tags, removeTag])
 
+  const handleLeftArrow = useCallback((event) => {
+    const input = inputRef.current
+    if (!input || (input.selectionStart + input.selectionEnd) !== 0) {
+      return
+    }
+    event.preventDefault()
+    setSelectedTag((prev) => {
+      if (prev === null) {
+        return tags.length - 1
+      }
+      return prev === 0 ? 0 : prev - 1
+    })
+  }, [tags.length])
+
+  const handleRightArrow = useCallback((event) => {
     if (selectedTag === null) {
       return
     }
-
     event.preventDefault()
+    setSelectedTag((prev) => {
+      if (prev < tags.length - 1) {
+        return prev + 1
+      }
+      return null
+    })
+  }, [selectedTag, tags.length])
 
-    if (selectedTag < (this.state.tags.length - 1)) {
-      selectedTag += 1
-    } else {
-      selectedTag = null
-    }
-
-    this.setState({ selectedTag })
-  }
-
-  handleUpArrow (event) {
-    if (!this.state.options.length) {
+  const handleUpArrow = useCallback((event) => {
+    if (!options.length) {
       return
     }
-
     event.preventDefault()
-
-    let { selectedOption } = this.state
-
-    if (!selectedOption) {
-      selectedOption = this.state.options.length - 1
-    } else {
-      selectedOption -= 1
-    }
-
-    this.setState({ selectedOption })
-  }
-
-  onBlur (event) {
-    this.setState({ newFocus: true })
-    event.target.parentNode.classList.remove('focus')
-  }
-
-  static onFocus (event) {
-    event.target.parentNode.classList.add('focus')
-  }
-
-  onInput (event) {
-    this.setState({ selectedTag: null })
-
-    this.search(event.target.value)
-  }
-
-  onKeyDown (event) {
-    switch (event.which) {
-      case 9: // tab
-      case 13: // enter
-      case 188: // comma
-        this.handleReturn(event)
-        break
-
-      case 8: // backspace
-      case 46: // delete
-        this.handleDelete(event)
-        break
-
-      case 37: // left arrow
-        this.handleLeftArrow(event)
-        break
-
-      case 39: // right arrow
-        this.handleRightArrow(event)
-        break
-
-      case 38: // up arrow
-        this.handleUpArrow(event)
-        break
-
-      case 40: // down arrow
-        this.handleDownArrow(event)
-        break
-
-      default: // literally anything else
-        if (event.target.value !== this.state.currentValue) {
-          this.setState({ currentValue: event.target.value })
-        }
-    }
-  }
-
-  static parseOption (optionValue) {
-    return typeof optionValue !== 'string' ? optionValue : { value: optionValue }
-  }
-
-  removeTag = (tag) => this.setState((state) => {
-    const tags = [...state.tags]
-
-    tags.splice(tags.indexOf(tag), 1)
-
-    return { tags }
-  }, () => {
-    const { onChange, onRemove } = this.props
-
-    if (onRemove) {
-      onRemove(tag)
-    }
-
-    if (onChange) {
-      onChange(this.state.tags)
-    }
-  })
-
-  render () {
-    const {
-      'aria-label': ariaLabel,
-      className,
-      name,
-      placeholder,
-    } = this.props
-    const {
-      allowNew,
-      currentValue,
-      loading,
-      newFocus,
-      options,
-      tags,
-    } = this.state
-
-    const divProps = { ...this.props }
-
-    delete divProps.onAdd
-    delete divProps.onChange
-    delete divProps.onRemove
-    delete divProps.options
-    delete divProps.valueProp
-    delete divProps.placeholder
-
-    return (
-      <div {...divProps} className={['tags-input', { 'has-tags': tags.length > 0 }, className]}>
-        <ul className="tags">{this.renderTags()}</ul>
-
-        <input
-          ref={(input) => this.input = input}
-          aria-label={ariaLabel}
-          autoComplete="off"
-          disabled={this.props.disabled}
-          name={name}
-          placeholder={placeholder}
-          type="search"
-          onBlur={this.onBlur}
-          onFocus={TagsInput.onFocus}
-          onInput={this.onInput}
-          onKeyDown={this.onKeyDown} />
-
-        {Boolean(allowNew) && this.renderReturnPrompt()}
-
-        {loading && TagsInput._renderLoader()}
-
-        {(!loading && !newFocus && Boolean(currentValue) && !options.length) && TagsInput._renderNoResults()}
-
-        {
-          (!loading && Boolean(options.length)) && (
-            <ol className="options">
-              {this.renderOptions()}
-            </ol>
-          )
-        }
-      </div>
-    )
-  }
-
-  static renderLoader () {
-    return (
-      <span>{'Loading...'}</span>
-    )
-  }
-
-  static renderNoResults () {
-    return (
-      <span>{'No results'}</span>
-    )
-  }
-
-  renderOption (option, index) {
-    const { selectedOption } = this.state
-
-    return (
-      <li
-        key={index}
-        className={['option', { focus: selectedOption === index }]}
-        onBlur={TagsInput.handleOptionMouseOut}
-        onFocus={(event) => this.handleOptionMouseOver(event, index)}
-        onMouseDown={() => this.addTag(option)}
-        onMouseOut={TagsInput.handleOptionMouseOut}
-        onMouseOver={(event) => this.handleOptionMouseOver(event, index)}>
-        {this.renderValue(option)}
-      </li>
-    )
-  }
-
-  renderOptions () {
-    const { options } = this.state
-
-    return (
-      <ol className="options">
-        {options.map(this.renderOption)}
-      </ol>
-    )
-  }
-
-  renderReturnPrompt () {
-    return (
-      <div className={['return-prompt', { show: this.input && this.input.value }]}>
-        <span>{'Press '}<Key>{'Return'}</Key>{' to add'}</span>
-      </div>
-    )
-  }
-
-  renderTag (tag, index) {
-    const { selectedTag } = this.state
-
-    return (
-      <li key={index} className={['tag', { focus: selectedTag === index }]}>
-        {this.renderValue(tag)}
-
-        <button
-          type="button"
-          onClick={() => this.removeTag(tag)}>
-          {'\u00d7'}
-        </button>
-      </li>
-    )
-  }
-
-  renderTags () {
-    const { tags } = this.state
-
-    return tags.map(this.renderTag)
-  }
-
-  renderValue (original) {
-    return this.getValue(original)
-  }
-
-  search () {
-    /* To be implemented by extending classes. we just silently return here. */
-  }
-
-  shouldCaptureKeybind () {
-    const { input } = this
-
-    if (!input.selectionStart && !input.selectionEnd) {
-      return true
-    }
-
-    return false
-  }
-
-  updateOptions (options, merge = false) {
-    const newState = {
-      loading: false,
-      newFocus: false,
-      options: [...this.state.options],
-    }
-
-    if (!merge) {
-      newState.options = []
-      newState.selectedOption = null
-    }
-
-    options.forEach((optionValue) => {
-      const option = TagsInput.parseOption(optionValue)
-
-      if (merge && this.findOption(option)) {
-        return
+    setSelectedOption((prev) => {
+      if (!prev) {
+        return options.length - 1
       }
-
-      if (!this.props.allowDuplicates && this.findTag(option)) {
-        return
-      }
-
-      newState.options.push(option)
+      return prev - 1
     })
+  }, [options.length])
 
-    this.setState(newState)
-  }
+  const handleDownArrow = useCallback((event) => {
+    if (!options.length) {
+      return
+    }
+    event.preventDefault()
+    setSelectedOption((prev) => {
+      if (prev === null || prev >= options.length - 1) {
+        return 0
+      }
+      return prev + 1
+    })
+  }, [options.length])
 
+  const handleKeyDown = useCallback((event) => {
+    switch (event.which) {
+      case KEYS.TAB:
+      case KEYS.ENTER:
+      case KEYS.COMMA:
+        handleReturn(event)
+        break
+      case KEYS.BACKSPACE:
+      case KEYS.DELETE:
+        handleDelete(event)
+        break
+      case KEYS.LEFT:
+        handleLeftArrow(event)
+        break
+      case KEYS.RIGHT:
+        handleRightArrow(event)
+        break
+      case KEYS.UP:
+        handleUpArrow(event)
+        break
+      case KEYS.DOWN:
+        handleDownArrow(event)
+        break
+      default:
+        break
+    }
+  }, [handleReturn, handleDelete, handleLeftArrow, handleRightArrow, handleUpArrow, handleDownArrow])
 
+  const renderItem = useCallback((item) => {
+    return renderValue ? renderValue(item) : defaultRenderValue(item, valuePropAccessor)
+  }, [renderValue, valuePropAccessor])
 
-
-
-  static get idProp () {
-    return 'id'
-  }
+  return (
+    <div
+      {...passthroughProps}
+      ref={containerRef}
+      className={clsx('tags-input', { 'has-tags': tags.length > 0 }, className)}>
+      {/* eslint-disable react/no-array-index-key -- tags and options have no stable unique id */}
+      <ul className="tags">
+        {
+tags.map((tag, index) => {
+  return (
+    <li key={index} className={clsx('tag', { focus: selectedTag === index })}>
+      {renderItem(tag)}
+      <button
+        type="button"
+        onClick={
+() => {
+  return removeTag(tag)
 }
+}>
+        {'\u00d7'}
+      </button>
+    </li>
+  )
+})
+}
+      </ul>
+
+      <input
+        ref={inputRef}
+        aria-label={ariaLabel}
+        autoComplete="off"
+        disabled={disabled}
+        name={name}
+        placeholder={placeholder}
+        type="search"
+        onBlur={handleBlur}
+        onFocus={handleFocus}
+        onInput={handleInput}
+        onKeyDown={handleKeyDown} />
+
+      {
+allowNew && (
+  <div className={clsx('return-prompt', { show: currentValue })}>
+    <span>{'Press '}<Key>{'Return'}</Key>{' to add'}</span>
+  </div>
+)
+}
+
+      {loading && <div className="loader">{renderLoader()}</div>}
+
+      {
+(!loading && !newFocus && Boolean(currentValue) && !options.length) && (
+  <div className="no-results">{renderNoResults()}</div>
+)
+}
+
+      {
+        (!loading && Boolean(options.length)) && (
+          <ol className="options">
+            {
+options.map((option, index) => {
+  return (
+    <li
+      key={index}
+      className={clsx('option', { focus: selectedOption === index })}
+      onFocus={
+() => {
+  return setSelectedOption(index)
+}
+}
+      onMouseDown={
+() => {
+  return addTag(option)
+}
+}
+      onMouseOver={
+() => {
+  return setSelectedOption(index)
+}
+}>
+      {renderItem(option)}
+    </li>
+  )
+})
+}
+          </ol>
+        )
+      }
+      {/* eslint-enable react/no-array-index-key */}
+    </div>
+  )
+}
+
+
+
+
+export default TagsInput

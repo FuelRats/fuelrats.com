@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react'
+import clsx from 'clsx'
+import { useCallback, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
-import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { selectCurrentUserHasScope } from '~/store/selectors'
+
 
 
 
@@ -13,13 +15,15 @@ function TabHandle (props) {
     ...itemProps
   } = props
 
-  const hasPermission = useSelectorWithProps({ scope: tab.permission }, selectCurrentUserHasScope)
+  const hasPermission = useSelector((state) => {
+    return selectCurrentUserHasScope(state, { scope: tab.permission })
+  })
 
   return hasPermission
     ? (
       <li
         {...itemProps}
-        className={['tab', { active: name === activeTab }]}
+        className={clsx('tab', { active: name === activeTab })}
         name={name}>
         <span className="tab-inner">
           {tab.title}
@@ -35,7 +39,9 @@ function TabPanel (props) {
     tab,
   } = props
 
-  const hasPermission = useSelectorWithProps({ scope: tab.permission }, selectCurrentUserHasScope)
+  const hasPermission = useSelector((state) => {
+    return selectCurrentUserHasScope(state, { scope: tab.permission })
+  })
 
   useEffect(() => {
     if (!hasPermission) {
@@ -53,58 +59,34 @@ function TabPanel (props) {
     : null
 }
 
-class TabbedPanel extends React.Component {
-  _handleTabClick = (event) => {
-    this.props.onTabClick(event.target.getAttribute('name'))
-  }
+function TabbedPanel ({ activeTab, tabs, onTabClick, onPermissionError }) {
+  const handleTabClick = useCallback((event) => {
+    onTabClick(event.target.getAttribute('name'))
+  }, [onTabClick])
 
-  _renderPane = () => {
-    const {
-      activeTab,
-      onPermissionError,
-      tabs,
-    } = this.props
-
-    return (
-      <TabPanel tab={tabs[activeTab]} onPermissionError={onPermissionError} />
-    )
-  }
-
-  _renderTab = ([key, tab]) => {
-    const { activeTab } = this.props
-
-    return (
-      <TabHandle
-        key={key}
-        activeTab={activeTab}
-        name={key}
-        tab={tab}
-        onClick={this._handleTabClick}
-        onKeyPress={this._handleTabClick} />
-    )
-  }
-
-  _renderTabs = () => {
-    const { tabs } = this.props
-
-    return (
+  return (
+    <div className="tabbed-panel">
       <nav className="tabs">
         <ul>
-          {Object.entries(tabs).map(this._renderTab)}
+          {
+Object.entries(tabs).map(([key, tab]) => {
+  return (
+    <TabHandle
+      key={key}
+      activeTab={activeTab}
+      name={key}
+      tab={tab}
+      onClick={handleTabClick}
+      onKeyPress={handleTabClick} />
+  )
+})
+}
         </ul>
       </nav>
-    )
-  }
 
-  render () {
-    return (
-      <div className="tabbed-panel">
-        {this._renderTabs()}
-
-        {this._renderPane()}
-      </div>
-    )
-  }
+      <TabPanel tab={tabs[activeTab]} onPermissionError={onPermissionError} />
+    </div>
+  )
 }
 
 

@@ -5,9 +5,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { createClient, getClients } from '~/store/actions/clients'
 import { selectCurrentUserId, withCurrentUserId } from '~/store/selectors'
 import { selectClientsByUserId } from '~/store/selectors/clients'
+import getResponseError from '~/util/getResponseError'
 
-import OAuthClientForm from '../Forms/OAuthClientForm'
 import ClientSubmitMessageBox from './ClientSubmitMessageBox'
+import OAuthClientForm from '../Forms/OAuthClientForm'
 
 
 
@@ -18,12 +19,20 @@ function DeveloperPanel () {
   const clients = useSelector(withCurrentUserId(selectClientsByUserId))
   const dispatch = useDispatch()
 
+  const [clientListError, setClientListError] = useState(null)
+
   useEffect(() => {
-    dispatch(getClients({
+    setClientListError(null)
+    Promise.resolve(dispatch(getClients({
       filter: {
         userId: { eq: userId },
       },
-    }))
+    }))).then((result) => {
+      const err = getResponseError(result)
+      if (err) {
+        setClientListError(err.detail ?? 'Failed to load clients.')
+      }
+    })
   // eslint-disable-next-line react-hooks/exhaustive-deps -- Only attempt fetch on userId change and mount.
   }, [userId])
 
@@ -39,7 +48,7 @@ function DeveloperPanel () {
   return (
     <div className="user-developer-tab">
       {"Do you like my pretty page?! It's great, isn't it? Totally not a rush job at all! Actual UI to delete clients and revoke tokens coming soon™."}
-      <Image alt="Kappa" height={18} layout="fixed" src="https://static-cdn.jtvnw.net/emoticons/v1/25/1.0" width={84} />
+      <Image alt="Kappa" height={18} src="https://static-cdn.jtvnw.net/emoticons/v1/25/1.0" width={84} />
 
       <div>
         <h4>{'Create Client'}</h4>
@@ -49,6 +58,7 @@ function DeveloperPanel () {
 
       <div>
         <h4>{'Client List'}</h4>
+        {clientListError && (<p>{clientListError}</p>)}
         <ul>
           {
             clients.map((client) => {

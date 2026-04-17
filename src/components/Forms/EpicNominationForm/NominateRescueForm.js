@@ -1,4 +1,5 @@
 import { useEffect, useCallback } from 'react'
+import { useSelector } from 'react-redux'
 
 import InputFieldset from '~/components/Fieldsets/InputFieldset'
 import RescueIdFieldset from '~/components/Fieldsets/RescueIdFieldset'
@@ -6,7 +7,6 @@ import RescueDetail from '~/components/Forms/EpicNominationForm/RescueDetail'
 import useCreateEpicApi from '~/hooks/frapi/useCreateEpicApi'
 import useSearchRescueApi from '~/hooks/frapi/useSearchRescueApi'
 import useForm from '~/hooks/useForm'
-import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { selectRatsByRescueId, selectRescueById } from '~/store/selectors'
 import getValidityErrors from '~/util/getValidityErrors'
 
@@ -24,8 +24,12 @@ export default function NominateRescueForm ({ onSuccess, onError }) {
     epicId: createdEpicId,
   }, createEpic] = useCreateEpicApi()
 
-  const rescue = useSelectorWithProps({ rescueId }, selectRescueById)
-  const rats = useSelectorWithProps({ rescueId }, selectRatsByRescueId)
+  const rescue = useSelector((state) => {
+    return selectRescueById(state, { rescueId })
+  })
+  const rats = useSelector((state) => {
+    return selectRatsByRescueId(state, { rescueId })
+  })
 
   const onChangeRescueUuid = useCallback((props) => {
     if (!rescue && getValidityErrors(props.target).length) {

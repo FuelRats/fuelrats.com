@@ -1,20 +1,12 @@
 services:
   web:
-    environment:
-      # Development overrides
-      - NODE_ENV=development
-      - APP_URL=http://localhost:3000
-      
-      # Use development API endpoints
-      - FR_API_URL=https://dev.api.fuelrats.com
-      - FR_SOCKET_URL=wss://dev.api.fuelrats.com
-    
-    # Remove secrets for development (fallback to env vars)
-    secrets: []
-    
-    # Mount source code for development (if using development build)
+    build:
+      target: dev
+    # Mount source code for hot reload in development
     volumes:
-      - ./.env.local:/app/.env:ro
-
-# Remove secrets definitions for development
-secrets: {}
+      - ./src:/app/src
+      - ./public:/app/public
+      - ./next.config.js:/app/next.config.js
+      - ./.config:/app/.config
+      - ./jsconfig.json:/app/jsconfig.json
+      - ./.env:/app/.env:ro

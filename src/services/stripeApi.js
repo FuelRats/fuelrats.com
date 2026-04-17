@@ -1,25 +1,15 @@
 import axios from 'axios'
-import getConfig from 'next/config'
-
-
-
-
-
-const { publicRuntimeConfig } = getConfig()
-const localStripeApiUrl = publicRuntimeConfig.stripe.url
-
 
 
 
 
 const stripeApi = axios.create({
-  baseURL: localStripeApiUrl,
+  baseURL: process.env.NEXT_PUBLIC_STRIPE_URL,
   timeout: 10000,
   validateStatus: () => {
     return true // Always resolve because it's simpler for the action creators.
   },
 })
-
 
 
 

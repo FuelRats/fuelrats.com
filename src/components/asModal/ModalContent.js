@@ -1,6 +1,8 @@
+import clsx from 'clsx'
+
 function ModalContent (props) {
   const {
-    as: Element,
+    as: Element = 'div',
     className,
     children,
     ...restProps
@@ -8,20 +10,12 @@ function ModalContent (props) {
 
   return (
     <Element
-      className={['modal-content', className]}
+      className={clsx('modal-content', className)}
       {...restProps}>
 
       {children}
     </Element>
   )
-}
-
-
-
-
-
-ModalContent.defaultProps = {
-  as: 'div',
 }
 
 

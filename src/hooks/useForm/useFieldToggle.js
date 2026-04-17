@@ -9,7 +9,7 @@ import { useCallback, useState } from 'react'
  * @param {boolean} initialState Initial visibility state
  * @param {any} value Initial value to set when mounting the component
  * @param {boolean} validity Initial validity to set when mounting the component
- * @returns {[boolean, function]}
+ * @returns {[boolean, Function]}
  */
 export default function useFieldToggle (name = isRequired('name'), ctx = isRequired('context'), initialState, value, validity = false) {
   const { dispatchField } = ctx

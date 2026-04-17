@@ -1,5 +1,5 @@
 import { chainReducers, withDefaultReducers } from '@fuelrats/web-util/reducers'
-import { combineReducers } from 'redux'
+import { combineReducers } from '@reduxjs/toolkit'
 
 import initialState from '../initialState'
 import blogs from './blogs'
@@ -10,6 +10,7 @@ import frSSE from './frSocket'
 import images from './images'
 import leaderboard from './leaderboard'
 import pageViews from './pageViews'
+import sapi from './sapi'
 import session from './session'
 import users from './users'
 import wordpress from './wordpress'
@@ -28,6 +29,7 @@ export default chainReducers(
       images,
       leaderboard,
       pageViews,
+      sapi,
       session,
       users,
       wordpress,

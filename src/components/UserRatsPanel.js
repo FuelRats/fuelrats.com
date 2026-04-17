@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import AddRatForm from '~/components/Forms/AddRatForm'
 import RatCard from '~/components/RatCard'
-import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { getUserStatistics } from '~/store/actions/statistics'
 import {
   selectUserById,
@@ -20,11 +19,13 @@ function UserRatsPanel () {
   const { rats } = user.relationships
 
   const dispatch = useDispatch()
-  const ratStatistics = useSelectorWithProps({ ratId: rats?.data[0].id }, selectRatStatisticsById)
+  const ratStatistics = useSelector((state) => {
+    return selectRatStatisticsById(state, { ratId: rats?.data[0].id })
+  })
 
   useEffect(() => {
     if (!ratStatistics) {
-      dispatch(getUserStatistics(user.id))
+      Promise.resolve(dispatch(getUserStatistics(user.id))).catch(() => {})
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

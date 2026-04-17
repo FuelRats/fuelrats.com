@@ -1,5 +1,8 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 
+// eslint-disable-next-line import/no-unassigned-import -- side-effect: registers FA icon library
+import '~/util/fontawesome/init'
+
 
 // eslint-disable-next-line no-template-curly-in-string -- intentional
 const noJSMessage = 'Blocking JavaScript in ${currentYear}.... You\'re just asking for trouble at this point.'
@@ -21,6 +24,9 @@ class FuelRatsWebsite extends Document {
           <meta content="#d65050" name="theme-color" />
 
           <meta content="Fuel Rats" name="apple-mobile-web-app-title" />
+          <meta content="yes" name="apple-mobile-web-app-capable" />
+          <meta content="yes" name="mobile-web-app-capable" />
+          <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" />
 
           <meta content="/browserconfig.xml" name="msapplication-config" />
           <meta content="#d65050" name="msapplication-TileColor" />
