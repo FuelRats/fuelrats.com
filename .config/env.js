@@ -61,6 +61,9 @@ const env = Object.freeze({
     url: process.env.FR_SAPI_URL ?? 'https://systems.api.fuelrats.com',
     proxy: `${process.env.APP_URL}/api/sapi`,
   },
+  webPush: {
+    vapidPublicKey: process.env.FRAPI_WEBPUSH_PUBLIC_KEY,
+  },
 })
 
 module.exports = env

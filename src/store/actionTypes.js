@@ -122,6 +122,15 @@ const sessions = {
 }
 
 
+const webPush = {
+  subscribe: 'webPush/subscribe',
+  unsubscribe: 'webPush/unsubscribe',
+  list: 'webPush/list',
+  update: 'webPush/update',
+  remove: 'webPush/remove',
+}
+
+
 const passwords = {
   reset: 'passwords/reset',
   requestReset: 'passwords/requestReset',
@@ -218,6 +227,7 @@ const actionTypes = {
   sessions,
   totp,
   verify,
+  webPush,
 
   // Services
   sapi,

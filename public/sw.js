@@ -117,3 +117,53 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(networkFirst(request))
   }
 })
+
+
+// ── Push Notifications ──────────────────────────────────────────────────
+
+self.addEventListener('push', (event) => {
+  if (!event.data) {
+    return
+  }
+
+  let payload
+  try {
+    payload = event.data.json()
+  } catch {
+    payload = { title: 'Fuel Rats', body: event.data.text() }
+  }
+
+  const { title = 'Fuel Rats', ...options } = payload
+
+  event.waitUntil(
+    self.registration.showNotification(title, {
+      badge: '/static/favicon/favicon-96.png',
+      icon: options.icon ?? '/static/favicon/favicon-196.png',
+      ...options,
+    }),
+  )
+})
+
+
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close()
+
+  const url = event.notification.data?.url ?? '/dispatch'
+
+  event.waitUntil(
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((windowClients) => {
+      // Focus an existing tab if one is open on the site.
+      for (const client of windowClients) {
+        if (new URL(client.url).origin === self.location.origin && 'focus' in client) {
+          client.focus()
+          if (url) {
+            client.navigate(url)
+          }
+          return
+        }
+      }
+      // Otherwise open a new window.
+      return self.clients.openWindow(url)
+    }),
+  )
+})

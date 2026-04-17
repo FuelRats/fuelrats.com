@@ -364,3 +364,52 @@
 
   margin-top: 1rem;
 }
+
+
+.pushDescription {
+  margin-bottom: 0.75rem;
+
+  color: $grey-darkened;
+}
+
+.pushToggle {
+  margin-bottom: 1rem;
+}
+
+.pushSubheading {
+  margin: 1rem 0 0.5rem;
+}
+
+.pushFilters {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 0.25rem;
+
+  margin-top: 0.25rem;
+}
+
+.filterActive,
+.filterInactive {
+  padding: 0.1rem 0.5rem;
+
+  border: 1px solid $grey-dark;
+  border-radius: 3px;
+
+  font-size: 0.75rem;
+
+  cursor: pointer;
+}
+
+.filterActive {
+  color: $white;
+
+  background-color: $green;
+  border-color: $green;
+}
+
+.filterInactive {
+  color: $grey;
+
+  background-color: transparent;
+}

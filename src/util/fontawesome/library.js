@@ -5,6 +5,8 @@ export {
   faArrowRight,
   faAsterisk,
   faBars,
+  faBell,
+  faBellSlash,
   faBook,
   faCalendarAlt,
   faCaretDown,
