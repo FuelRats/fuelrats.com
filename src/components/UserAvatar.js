@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 import {
-  selectAvatarUrlByUserId,
+  selectAvatarByUserId,
   selectCurrentUserId,
 } from '~/store/selectors'
 
@@ -12,9 +12,14 @@ import {
 
 
 /**
- * Renders a user's avatar. If the custom avatar image fails to load
- * (missing, API error, etc.) we fall back to the adorable-avatars image
- * generated from their user ID, so users never see a broken-image icon.
+ * Renders a user's avatar. Tries the API image endpoint first (which
+ * serves the custom avatar if one exists, server-side). Falls back to
+ * the adorable-avatars deterministic image on error.
+ *
+ * For the current user whose data IS in the store, we add a cache-bust
+ * parameter so avatar changes reflect immediately. For other users (e.g.
+ * rat owners on the dispatch board) whose user objects aren't loaded, we
+ * hit the API endpoint directly — it still serves the right image.
  */
 function UserAvatar (props) {
   const {
@@ -27,11 +32,20 @@ function UserAvatar (props) {
   const currentUserId = useSelector(selectCurrentUserId)
   const userId = userIdProp ?? currentUserId
 
-  const src = useSelector((state) => {
-    return userId ? selectAvatarUrlByUserId(state, { userId, size }) : undefined
+  // Only available for users whose data is in the store (typically the
+  // current user). Used purely as a cache-bust so avatar uploads reflect
+  // immediately without waiting for HTTP cache expiry.
+  const avatarData = useSelector((state) => {
+    return userId ? selectAvatarByUserId(state, { userId }) : undefined
   })
 
   const [hasError, setHasError] = useState(false)
+
+  // Always try the API image endpoint — it serves the custom avatar
+  // server-side regardless of whether we have the user in the store.
+  const src = userId
+    ? `/api/fr/users/${userId}/image?size=${size}${avatarData?.id ? `&v=${avatarData.id}` : ''}`
+    : undefined
 
   useEffect(() => {
     setHasError(false)
