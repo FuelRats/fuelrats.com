@@ -83,6 +83,9 @@ function UserMenu () {
               <NavLink href="/profile/rats">
                 {'My Rats'}
               </NavLink>
+              <NavLink href="/profile/rescues">
+                {'My Rescues'}
+              </NavLink>
               {
                 userCanDispatch && (
                   <NavLink href="/dispatch">
