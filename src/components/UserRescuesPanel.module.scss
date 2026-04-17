@@ -106,6 +106,7 @@
   color: $grey;
 }
 
+/* stylelint-disable-next-line block-no-empty -- marker class for column styling */
 .rats {
 }
 
@@ -126,7 +127,7 @@
   font-size: 1.1rem;
 
   &:hover {
-    color: white;
+    color: $white;
   }
 }
 

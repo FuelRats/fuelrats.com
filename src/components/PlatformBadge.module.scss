@@ -48,10 +48,12 @@
     background-color: $gold-dark2;
   }
 
+  /* stylelint-disable-next-line selector-class-pattern -- platform codes are short by convention */
   &:global(.ps) {
     background-color: $playstation-blue-light3;
   }
 
+  /* stylelint-disable-next-line selector-class-pattern -- platform codes are short by convention */
   &:global(.xb) {
     background-color: $xbox-green-light;
   }
