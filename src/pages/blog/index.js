@@ -24,17 +24,22 @@ function Blogs (props) {
 
   const dispatch = useDispatch()
   const [retrieving, setRetrieving] = useState(false)
+  const [fetchError, setFetchError] = useState(false)
   const { totalPages } = useSelector(selectBlogStatistics)
   const blogs = useSelector(selectBlogs)
 
   useEffect(() => {
     const updateList = async () => {
       setRetrieving(true)
-      await dispatch(getBlogs({
+      setFetchError(false)
+      const result = await dispatch(getBlogs({
         author,
         categories: category,
         page,
       }))
+      if (result?.error) {
+        setFetchError(true)
+      }
       setRetrieving(false)
     }
 
@@ -51,6 +56,7 @@ function Blogs (props) {
 
   return (
     <div className="page-content">
+      {fetchError && (<p>{'Failed to load blog posts. Please try again.'}</p>)}
       <ol className="article-list loading">
         {
           Boolean(!retrieving && blogs.length) && blogs.map((blog) => {

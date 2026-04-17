@@ -52,6 +52,7 @@ function Leaderboard (props) {
   const dispatch = useDispatch()
 
   const [retrieving, setRetrieving] = useState(false)
+  const [fetchError, setFetchError] = useState(false)
   const [noResultsText, setNoResultsText] = useState('')
   const statistics = useSelector(selectLeaderboardStatistics)
   const entries = useSelector(selectLeaderboard)
@@ -82,7 +83,8 @@ function Leaderboard (props) {
   useEffect(() => {
     const updateList = async () => {
       setRetrieving(true)
-      await dispatch(getLeaderboard({
+      setFetchError(false)
+      const result = await dispatch(getLeaderboard({
         page: {
           offset: Math.max((page - 1) * pageSize, 0),
           limit: pageSize,
@@ -91,6 +93,9 @@ function Leaderboard (props) {
           name: filterRat.length > 0 ? `%${filterRat}%` : undefined,
         },
       }))
+      if (result?.error) {
+        setFetchError(true)
+      }
       setNoResultsText(getRandomNoResultsText())
       setRetrieving(false)
     }
@@ -165,7 +170,16 @@ function Leaderboard (props) {
               })
             }
             {
-              Boolean(!retrieving && !entries.length) && (
+              Boolean(!retrieving && fetchError) && (
+                <li className={styles.noResults}>
+                  <div className={styles.ratName}>
+                    {'Failed to load leaderboard. Please try again.'}
+                  </div>
+                </li>
+              )
+            }
+            {
+              Boolean(!retrieving && !fetchError && !entries.length) && (
                 <li className={styles.noResults}>
                   <div className={styles.ratName}>
                     {noResultsText}

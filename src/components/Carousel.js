@@ -114,10 +114,10 @@ function Carousel (props) {
   useEffect(() => {
     Object.entries(slides).forEach(([key, slide]) => {
       if (!images[key]) {
-        dispatch(getImage({
+        Promise.resolve(dispatch(getImage({
           id: key,
           url: `${appUrl}/static/images/${slide.filename}`,
-        }))
+        }))).catch(() => {})
       }
     })
   // eslint-disable-next-line react-hooks/exhaustive-deps -- Only perform this on mount since this is a fetch operation.

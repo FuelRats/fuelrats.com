@@ -25,7 +25,7 @@ function UserRatsPanel () {
 
   useEffect(() => {
     if (!ratStatistics) {
-      dispatch(getUserStatistics(user.id))
+      Promise.resolve(dispatch(getUserStatistics(user.id))).catch(() => {})
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

@@ -62,6 +62,7 @@ function UserRescuesPanel () {
   const dispatch = useDispatch()
   const page = useQueryPage()
   const offset = (page - 1) * PAGE_SIZE
+  const [fetchError, setFetchError] = useState(false)
 
   const rescues = useSelector((state) => {
     return selectPageViewDataById(state, { pageViewId: PAGE_VIEW_ID })
@@ -71,7 +72,8 @@ function UserRescuesPanel () {
   })
 
   useEffect(() => {
-    dispatch(getMyRescues(
+    setFetchError(false)
+    Promise.resolve(dispatch(getMyRescues(
       {
         sort: '-createdAt',
         include: 'rats',
@@ -84,7 +86,11 @@ function UserRescuesPanel () {
           type: 'rescues',
         },
       },
-    ))
+    ))).then((result) => {
+      if (result?.error) {
+        setFetchError(true)
+      }
+    })
   }, [dispatch, offset])
 
   const total = meta?.total ?? meta?.count ?? 0
@@ -114,7 +120,7 @@ function UserRescuesPanel () {
             (!rescues || rescues.length === 0) && (
               <tr>
                 <td className={styles.empty} colSpan={7}>
-                  {rescues ? 'No rescues found.' : 'Loading...'}
+                  {fetchError ? 'Failed to load rescues.' : (rescues ? 'No rescues found.' : 'Loading...')}
                 </td>
               </tr>
             )

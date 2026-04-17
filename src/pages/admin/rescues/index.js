@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { authenticated } from '~/components/AppLayout'
 import { getRescues } from '~/store/actions/rescues'
+import getResponseError from '~/util/getResponseError'
 import { selectPageViewDataById } from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 import makePaperworkRoute from '~/util/router/makePaperworkRoute'
@@ -82,15 +83,21 @@ function ListRescues () {
 
   const [client, setClient] = useState('')
   const [loading, setLoading] = useState(false)
+  const [searchError, setSearchError] = useState(null)
 
   const runView = useCallback(async (nextClient) => {
     setLoading(true)
-    await dispatch(getRescues(
+    setSearchError(null)
+    const response = await dispatch(getRescues(
       nextClient
         ? { 'client.ilike': `${nextClient}%` }
         : { 'status.ne': 'closed' },
       { pageView: PAGE_VIEW_ID },
     ))
+    const err = getResponseError(response)
+    if (err) {
+      setSearchError(err.detail ?? 'Failed to search rescues.')
+    }
     setLoading(false)
   }, [dispatch])
 
@@ -129,6 +136,13 @@ function ListRescues () {
           value={client}
           onChange={handleSearchChange} />
       </div>
+      {searchError && (
+        <div className="store-errors">
+          <div className="store-error">
+            <span className="detail">{searchError}</span>
+          </div>
+        </div>
+      )}
       <div className="rescue-list flex column">
         {rescues.map(renderListItem)}
       </div>

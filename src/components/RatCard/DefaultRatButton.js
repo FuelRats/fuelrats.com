@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { isError } from 'flux-standard-action'
 import PropTypes from 'prop-types'
 import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -39,6 +40,11 @@ function DefaultRatButton (props) {
         },
       },
     }))
+
+    if (isError(response)) {
+      // eslint-disable-next-line no-alert -- simple feedback for rare failure
+      window.alert('Failed to update display rat. Please try again.')
+    }
 
     if (onUpdate) {
       onUpdate(response)

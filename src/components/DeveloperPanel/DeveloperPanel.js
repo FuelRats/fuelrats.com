@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { createClient, getClients } from '~/store/actions/clients'
 import { selectCurrentUserId, withCurrentUserId } from '~/store/selectors'
 import { selectClientsByUserId } from '~/store/selectors/clients'
+import getResponseError from '~/util/getResponseError'
 
 import ClientSubmitMessageBox from './ClientSubmitMessageBox'
 import OAuthClientForm from '../Forms/OAuthClientForm'
@@ -18,12 +19,20 @@ function DeveloperPanel () {
   const clients = useSelector(withCurrentUserId(selectClientsByUserId))
   const dispatch = useDispatch()
 
+  const [clientListError, setClientListError] = useState(null)
+
   useEffect(() => {
-    dispatch(getClients({
+    setClientListError(null)
+    Promise.resolve(dispatch(getClients({
       filter: {
         userId: { eq: userId },
       },
-    }))
+    }))).then((result) => {
+      const err = getResponseError(result)
+      if (err) {
+        setClientListError(err.detail ?? 'Failed to load clients.')
+      }
+    })
   // eslint-disable-next-line react-hooks/exhaustive-deps -- Only attempt fetch on userId change and mount.
   }, [userId])
 
@@ -49,6 +58,7 @@ function DeveloperPanel () {
 
       <div>
         <h4>{'Client List'}</h4>
+        {clientListError && (<p>{clientListError}</p>)}
         <ul>
           {
             clients.map((client) => {

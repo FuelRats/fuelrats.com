@@ -7,6 +7,7 @@ import { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { authenticated } from '~/components/AppLayout'
+import { isError } from 'flux-standard-action'
 import { deleteRescue, getRescue } from '~/store/actions/rescues'
 import {
   selectRatsByRescueId,
@@ -74,11 +75,19 @@ function Paperwork ({ query }) {
 
   const [deleteConfirm, setDeleteConfirm] = useState(false)
   const [deleting, setDeleting] = useState(false)
+  const [deleteError, setDeleteError] = useState(null)
 
   const handleDeleteClick = useCallback(async () => {
     if (deleteConfirm) {
       setDeleting(true)
-      await dispatch(deleteRescue(rescue))
+      setDeleteError(null)
+      const response = await dispatch(deleteRescue(rescue))
+      if (isError(response)) {
+        setDeleteError('Failed to delete rescue. Please try again.')
+        setDeleting(false)
+        setDeleteConfirm(false)
+        return
+      }
       Router.push(userCanWriteAll ? '/admin/rescues' : '/')
       return
     }
@@ -138,6 +147,15 @@ function Paperwork ({ query }) {
 
   return (
     <div className="page-content">
+      {
+        deleteError && (
+          <div className="store-errors">
+            <div className="store-error">
+              <span className="detail">{deleteError}</span>
+            </div>
+          </div>
+        )
+      }
       <menu type="toolbar">
         <div className="primary">
           {

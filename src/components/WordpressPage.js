@@ -47,11 +47,17 @@ function WordpressPage ({ className, slug }) {
       .replace(/<ol>/giu, '<ol class="numbered">')
   }, [page?.content?.rendered])
 
+  const hasError = !renderedContent && !loading
+
   /* eslint-disable react/no-danger */
   return (
-    <div
-      className={clsx('article-content loading', { error: !renderedContent && !loading }, className)}
-      dangerouslySetInnerHTML={{ __html: renderedContent }} />
+    <div className={clsx('article-content loading', { error: hasError }, className)}>
+      {
+        hasError
+          ? <p>{'Failed to load content. Please refresh and try again.'}</p>
+          : <div dangerouslySetInnerHTML={{ __html: renderedContent }} />
+      }
+    </div>
   )
   /* eslint-enable */
 }

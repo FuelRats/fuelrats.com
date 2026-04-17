@@ -29,11 +29,15 @@ function DispatchBoard ({ query }) {
   const dispatch = useDispatch()
   const store = useStore()
   const [loaded, setLoadedState] = useState(false)
+  const [loadError, setLoadError] = useState(false)
   const [newRescueAnnouncement, setNewRescueAnnouncement] = useState('')
 
   useEffect(() => {
     (async () => {
-      await dispatch(getDispatchBoard())
+      const response = await dispatch(getDispatchBoard())
+      if (response?.error) {
+        setLoadError(true)
+      }
       setLoadedState(true)
     })()
   // eslint-disable-next-line react-hooks/exhaustive-deps -- only on mount
@@ -76,7 +80,11 @@ function DispatchBoard ({ query }) {
         return
       }
       refreshInflightRef.current = true
-      Promise.resolve(dispatch(getDispatchBoard())).finally(() => {
+      Promise.resolve(dispatch(getDispatchBoard())).then((result) => {
+        if (result?.error) {
+          setLoadError(true)
+        }
+      }).finally(() => {
         refreshInflightRef.current = false
       })
     }, RECONNECT_REFRESH_DEBOUNCE_MS)
@@ -145,6 +153,14 @@ function DispatchBoard ({ query }) {
         {newRescueAnnouncement}
       </div>
       <div className={clsx(styles.layout, { [styles.openDetail]: Boolean(query.rId), [styles.stale]: socketStatus !== 'connected' }, 'page-content')}>
+        {
+          loadError && (
+            <div className={styles.loadError}>
+              {'Failed to load the dispatch board. '}
+              <button type="button" onClick={() => { return window.location.reload() }}>{'Reload'}</button>
+            </div>
+          )
+        }
         <DispatchTable className={styles.table} loading={!loaded} />
         {loaded && (<RescueDetails className={styles.detail} rescueId={query.rId} />)}
       </div>

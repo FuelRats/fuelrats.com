@@ -58,7 +58,7 @@ export default function TermsFieldset (props) {
         'privacy-policy',
       ].forEach((slug) => {
         if (!selectWordpressPageBySlug(store.getState(), { slug })) {
-          store.dispatch(getWordpressPage(slug))
+          Promise.resolve(store.dispatch(getWordpressPage(slug))).catch(() => {})
         }
       })
     }

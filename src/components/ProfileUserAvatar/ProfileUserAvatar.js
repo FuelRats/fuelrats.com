@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import { useState, useCallback, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+import { isError } from 'flux-standard-action'
+
 import { deleteAvatar, getUserProfile } from '~/store/actions/user'
 import { selectUserById, withCurrentUserId } from '~/store/selectors'
 
@@ -41,8 +43,16 @@ function ProfileUserAvatar ({
       return
     }
     setDeleting(true)
-    await dispatch(deleteAvatar())
-    await dispatch(getUserProfile())
+    const response = await dispatch(deleteAvatar())
+    if (isError(response)) {
+      // eslint-disable-next-line no-alert -- simple feedback for rare failure
+      window.alert('Failed to remove avatar. Please try again.')
+      setDeleting(false)
+      return
+    }
+    // Best-effort refresh — avatar is already deleted, so failing here just
+    // leaves stale profile data until next navigation.
+    await dispatch(getUserProfile()).catch(() => {})
     setDeleting(false)
   }, [dispatch])
 

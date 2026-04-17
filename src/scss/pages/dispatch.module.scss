@@ -48,6 +48,26 @@ $bounce-bezier: cubic-bezier(0.68, -0.55, 0.265, 1.55);
   font-size: 0.85rem;
 }
 
+.loadError {
+  width: 100%;
+  padding: 1rem 2rem;
+
+  border: 1px solid $red;
+  border-radius: 4px;
+
+  text-align: center;
+
+  background: rgba($red, 0.15);
+
+  button {
+    margin-left: 0.5rem;
+
+    text-decoration: underline;
+
+    cursor: pointer;
+  }
+}
+
 @keyframes status-pulse {
   0%,
   100% {
