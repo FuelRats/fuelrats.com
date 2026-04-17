@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -5,8 +6,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import CodeRedIcon from '~/components/Leaderboard/CodeRedIcon'
 import FirstYearIcon from '~/components/Leaderboard/FirstYearIcon'
 import RescueAchievementIcon from '~/components/Leaderboard/RescueAchievementIcon'
-import UserAvatar from '~/components/UserAvatar'
 import Pagination from '~/components/Pagination/Pagination'
+import UserAvatar from '~/components/UserAvatar'
 import useDebouncedCallback from '~/hooks/useDebouncedCallback'
 import styles from '~/scss/pages/leaderboard.module.scss'
 import { getLeaderboard } from '~/store/actions/statistics'
@@ -16,7 +17,6 @@ import {
 } from '~/store/selectors'
 import makePaginatedRoute from '~/util/router/makePaginatedRoute'
 import safeParseInt from '~/util/safeParseInt'
-import clsx from 'clsx'
 
 const noResultsTexts = [
   'No rodents found. Try adjusting your search.',

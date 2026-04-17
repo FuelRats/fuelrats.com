@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import PropTypes from 'prop-types'
 import { useCallback, useRef } from 'react'
 
@@ -7,7 +8,6 @@ import extPropTypes from '~/util/propTypes/extPropTypes'
 
 import styles from './SelectFieldset.module.scss'
 import inputStyles from '../InputFieldset/InputFieldset.module.scss'
-import clsx from 'clsx'
 
 
 

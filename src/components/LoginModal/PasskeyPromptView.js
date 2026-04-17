@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import Router from 'next/router'
 import { useCallback, useState } from 'react'
 import { useDispatch } from 'react-redux'
@@ -8,7 +9,6 @@ import { registerPasskey } from '~/store/actions/passkeys'
 import getResponseError from '~/util/getResponseError'
 
 import styles from './LoginModal.module.scss'
-import clsx from 'clsx'
 
 
 function PasskeyPromptView () {
@@ -59,12 +59,17 @@ function PasskeyPromptView () {
           {'Passkeys let you sign in quickly and securely using your device\'s biometrics or screen lock — no password needed.'}
         </p>
         <input
+          aria-label="Passkey name"
           className={styles.passkeyNameInput}
           disabled={registering}
           placeholder="Passkey name (e.g. MacBook, iPhone)"
           type="text"
           value={name}
-          onChange={(event) => { return setName(event.target.value) }}
+          onChange={
+(event) => {
+  return setName(event.target.value)
+}
+}
           onKeyDown={handleNameKeyDown} />
       </div>
 

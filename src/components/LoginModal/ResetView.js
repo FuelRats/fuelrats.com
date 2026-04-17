@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import PropTypes from 'prop-types'
 import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
@@ -11,7 +12,6 @@ import { sendPasswordResetEmail } from '~/store/actions/authentication'
 import getResponseError from '~/util/getResponseError'
 
 import styles from './LoginModal.module.scss'
-import clsx from 'clsx'
 
 
 

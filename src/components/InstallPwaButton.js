@@ -16,6 +16,9 @@ const DISMISSED_KEY = 'fr.pwaInstallDismissed'
  * that triggers the native install dialog. Renders nothing on browsers
  * that don't support installable PWAs (iOS Safari, etc.) or once the app
  * has been installed / dismissed.
+ * @param {object} root0 - Component props.
+ * @param {string} root0.className - Optional CSS class name.
+ * @returns {import('react').ReactElement|null} The install button or null.
  */
 function InstallPwaButton ({ className }) {
   const [deferredPrompt, setDeferredPrompt] = useState(null)

@@ -25,9 +25,9 @@ export const selectGroupsByUserId = createCachedSelector(
           return groups[id]
         })
         .filter(Boolean)
-        .sort((a, b) => {
-          return (b.attributes.priority ?? 0) - (a.attributes.priority ?? 0)
-            || a.attributes.name.localeCompare(b.attributes.name)
+        .sort((groupA, groupB) => {
+          return (groupB.attributes.priority ?? 0) - (groupA.attributes.priority ?? 0)
+            || groupA.attributes.name.localeCompare(groupB.attributes.name)
         })
     }
     return []

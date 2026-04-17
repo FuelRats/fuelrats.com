@@ -1,9 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 
 import { expansionNameMap } from '~/util/expansion'
 
 import styles from './PlatformBadge.module.scss'
-import clsx from 'clsx'
 
 
 function PlatformBadge ({ platform, expansion, className }) {
@@ -16,7 +16,7 @@ function PlatformBadge ({ platform, expansion, className }) {
 
   if (platform === 'pc') {
     icon = <FontAwesomeIcon fixedWidth icon="tv" />
-    label = expansion ? expansionNameMap[expansion] ?? 'PC' : 'PC'
+    label = expansion ? (expansionNameMap[expansion] ?? 'PC') : 'PC'
   } else if (platform === 'ps') {
     icon = <FontAwesomeIcon fixedWidth icon={['fab', 'playstation']} />
     label = 'PS'

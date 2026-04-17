@@ -1,19 +1,19 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import { isError } from 'flux-standard-action'
 import { useCallback, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 import CMDRFieldset from '~/components/Fieldsets/CMDRFieldset'
 import ExpansionFieldset from '~/components/Fieldsets/ExpansionFieldset'
-import ApiErrorBox from '~/components/MessageBox/ApiErrorBox'
 import SelectFieldset from '~/components/Fieldsets/SelectFieldset'
+import ApiErrorBox from '~/components/MessageBox/ApiErrorBox'
 import useForm from '~/hooks/useForm'
 import { createRat } from '~/store/actions/rats'
 import friendlyApiError from '~/util/friendlyApiError'
 import getResponseError from '~/util/getResponseError'
 
 import styles from './AddRatForm.module.scss'
-import clsx from 'clsx'
 
 
 
@@ -62,13 +62,15 @@ function AddRatForm () {
         error && (
           <ApiErrorBox
             error={error}
-            renderError={(err) => {
-              return friendlyApiError(err, {
-                pointerMessages: {
-                  '/data/attributes/name': { detail: err.detail ?? 'CMDR name is invalid.' },
-                },
-              })
-            }} />
+            renderError={
+(err) => {
+  return friendlyApiError(err, {
+    pointerMessages: {
+      '/data/attributes/name': { detail: err.detail ?? 'CMDR name is invalid.' },
+    },
+  })
+}
+} />
         )
       }
       {

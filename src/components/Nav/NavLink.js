@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events -- links are interactable, but eslint cannot statically check it here. */
+import clsx from 'clsx'
 import Link from 'next/link'
 import { useCallback } from 'react'
 
 import { useNavContext } from './Nav'
-import clsx from 'clsx'
 
 
 

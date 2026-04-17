@@ -1,11 +1,11 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import PropTypes from 'prop-types'
 import { useCallback, useState } from 'react'
 
 import isPromise from '~/util/isPromise'
 
 import styles from './Switch.module.scss'
-import clsx from 'clsx'
 
 
 

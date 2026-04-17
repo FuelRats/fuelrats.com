@@ -7,6 +7,7 @@ import { useEffect } from 'react'
  * Registers the PWA service worker on mount. The SW is needed for push
  * notifications even in development. The SW itself only caches static
  * assets and never intercepts webpack HMR requests.
+ * @returns {null} Renders nothing.
  */
 function ServiceWorkerRegistration () {
   useEffect(() => {

@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import PropTypes from 'prop-types'
 import { useCallback, useState } from 'react'
 
@@ -5,7 +6,6 @@ import isPromise from '~/util/isPromise'
 
 import styles from './RadioInput.module.scss'
 import RadioInputOption from './RadioInputOption'
-import clsx from 'clsx'
 
 
 

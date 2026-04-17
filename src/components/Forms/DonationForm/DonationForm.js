@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import PropTypes from 'prop-types'
 import { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -14,7 +15,6 @@ import AmountPresetRadioFieldset from './AmountPresetRadioFieldset'
 import CurrencyFieldset from './CurrencyFieldset'
 import CurrencyRadioFieldset from './CurrencyRadioFieldset'
 import DonationErrorBox from './DonationErrorBox'
-import clsx from 'clsx'
 
 
 

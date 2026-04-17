@@ -14,7 +14,7 @@ function FirstLimpetInput (props) {
     }
     let value = item
     for (const key of valueProp.split('.')) {
-      if (value == null) {
+      if (value === null || value === undefined) {
         return undefined
       }
       value = value[key]

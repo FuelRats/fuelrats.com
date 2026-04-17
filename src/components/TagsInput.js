@@ -1,6 +1,8 @@
 import clsx from 'clsx'
 import debounce from 'lodash/debounce'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import {
+  useCallback, useEffect, useMemo, useRef, useState,
+} from 'react'
 
 import Key from './Key'
 
@@ -35,7 +37,7 @@ function resolveValue (item, valueProp) {
 
   let value = item
   for (const key of valueProp.split('.')) {
-    if (value == null) {
+    if (value === null || value === undefined) {
       return undefined
     }
     value = value[key]
@@ -99,13 +101,19 @@ function TagsInput (props) {
   }, [valuePropAccessor])
 
   const initialTags = useMemo(() => {
-    const asArray = valueProp ? (Array.isArray(valueProp) ? valueProp : [valueProp]) : []
+    let asArray = []
+    if (valueProp) {
+      asArray = Array.isArray(valueProp) ? valueProp : [valueProp]
+    }
     return asArray.map(parseOption)
   }, [valueProp])
 
   const [tags, setTags] = useState(initialTags)
   const [options, setOptions] = useState(() => {
-    return (Array.isArray(optionsProp) ? optionsProp : (optionsProp ? [optionsProp] : []))
+    if (Array.isArray(optionsProp)) {
+      return optionsProp
+    }
+    return optionsProp ? [optionsProp] : []
   })
   const [loading, setLoading] = useState(false)
   const [currentValue, setCurrentValue] = useState('')
@@ -231,7 +239,7 @@ function TagsInput (props) {
     if (event.target.value) {
       event.preventDefault()
     }
-    const selected = selectedOption !== null ? options[selectedOption] : null
+    const selected = selectedOption === null ? null : options[selectedOption]
     if (selected) {
       addTag(selected)
     } else if (allowNew && event.target.value) {
@@ -245,7 +253,7 @@ function TagsInput (props) {
       return
     }
     let target = selectedTag
-    if (target === null && (input.selectionStart + input.selectionEnd) === 0) {
+    if (selectedTag === null && (input.selectionStart + input.selectionEnd) === 0) {
       target = tags.length - 1
     }
     if (target !== null && target >= 0 && tags[target]) {
@@ -347,21 +355,26 @@ function TagsInput (props) {
       {...passthroughProps}
       ref={containerRef}
       className={clsx('tags-input', { 'has-tags': tags.length > 0 }, className)}>
+      {/* eslint-disable react/no-array-index-key -- tags and options have no stable unique id */}
       <ul className="tags">
-        {tags.map((tag, index) => {
-          return (
-            <li key={index} className={clsx('tag', { focus: selectedTag === index })}>
-              {renderItem(tag)}
-              <button
-                type="button"
-                onClick={() => {
-                  return removeTag(tag)
-                }}>
-                {'\u00d7'}
-              </button>
-            </li>
-          )
-        })}
+        {
+tags.map((tag, index) => {
+  return (
+    <li key={index} className={clsx('tag', { focus: selectedTag === index })}>
+      {renderItem(tag)}
+      <button
+        type="button"
+        onClick={
+() => {
+  return removeTag(tag)
+}
+}>
+        {'\u00d7'}
+      </button>
+    </li>
+  )
+})
+}
       </ul>
 
       <input
@@ -377,42 +390,55 @@ function TagsInput (props) {
         onInput={handleInput}
         onKeyDown={handleKeyDown} />
 
-      {allowNew && (
-        <div className={clsx('return-prompt', { show: currentValue })}>
-          <span>{'Press '}<Key>{'Return'}</Key>{' to add'}</span>
-        </div>
-      )}
+      {
+allowNew && (
+  <div className={clsx('return-prompt', { show: currentValue })}>
+    <span>{'Press '}<Key>{'Return'}</Key>{' to add'}</span>
+  </div>
+)
+}
 
       {loading && <div className="loader">{renderLoader()}</div>}
 
-      {(!loading && !newFocus && Boolean(currentValue) && !options.length) && (
-        <div className="no-results">{renderNoResults()}</div>
-      )}
+      {
+(!loading && !newFocus && Boolean(currentValue) && !options.length) && (
+  <div className="no-results">{renderNoResults()}</div>
+)
+}
 
       {
         (!loading && Boolean(options.length)) && (
           <ol className="options">
-            {options.map((option, index) => {
-              return (
-                <li
-                  key={index}
-                  className={clsx('option', { focus: selectedOption === index })}
-                  onMouseDown={() => {
-                    return addTag(option)
-                  }}
-                  onMouseOver={() => {
-                    return setSelectedOption(index)
-                  }}
-                  onFocus={() => {
-                    return setSelectedOption(index)
-                  }}>
-                  {renderItem(option)}
-                </li>
-              )
-            })}
+            {
+options.map((option, index) => {
+  return (
+    <li
+      key={index}
+      className={clsx('option', { focus: selectedOption === index })}
+      onFocus={
+() => {
+  return setSelectedOption(index)
+}
+}
+      onMouseDown={
+() => {
+  return addTag(option)
+}
+}
+      onMouseOver={
+() => {
+  return setSelectedOption(index)
+}
+}>
+      {renderItem(option)}
+    </li>
+  )
+})
+}
           </ol>
         )
       }
+      {/* eslint-enable react/no-array-index-key */}
     </div>
   )
 }

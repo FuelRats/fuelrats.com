@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import { createSelector } from 'reselect'
@@ -6,7 +7,6 @@ import { selectCurrentUserScopes } from '~/store/selectors'
 
 import NamespaceDetails from './NamespaceDetails'
 import styles from './ScopeView.module.scss'
-import clsx from 'clsx'
 
 
 

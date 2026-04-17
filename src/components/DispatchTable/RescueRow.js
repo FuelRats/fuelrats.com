@@ -1,13 +1,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useSelector } from 'react-redux'
+import clsx from 'clsx'
 import { differenceInMinutes } from 'date-fns'
-
-import CarrierIcon from '~/components/CarrierIcon'
-import PlatformBadge from '~/components/PlatformBadge'
 import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
 import { useCallback, useState } from 'react'
+import { useSelector } from 'react-redux'
 
+import CarrierIcon from '~/components/CarrierIcon'
+import PlatformBadge from '~/components/PlatformBadge'
 import {
   useQuoteString, useRescueLanguage, useRescuePlatform, useRescueSystem, useRescuePermit,
 } from '~/hooks/rescueHooks'
@@ -18,7 +18,7 @@ import makeRoute from '~/util/router/makeRoute'
 import CopyToClipboard from '../CopyToClipboard'
 import RatName from '../RatName'
 import styles from './DispatchTable.module.scss'
-import clsx from 'clsx'
+
 
 
 
@@ -135,9 +135,11 @@ function RescueRow (props) {
         className={clsx('rescue-row-language', styles.languageCell)}
         title={rescueLanguage.region ? `${rescueLanguage.long} (${rescueLanguage.region})` : rescueLanguage.long}>
         {rescueLanguage.short}
-        {rescueLanguage.flag && (
-          <span className={styles.languageFlag}>{rescueLanguage.flag}</span>
-        )}
+        {
+rescueLanguage.flag && (
+  <span className={styles.languageFlag}>{rescueLanguage.flag}</span>
+)
+}
       </td>
       <CopyToClipboard
         doHint

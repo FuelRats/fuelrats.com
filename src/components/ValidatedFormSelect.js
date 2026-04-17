@@ -11,7 +11,9 @@ function ValidatedFormSelect (props) {
     id,
     invalidMessage = null,
     label,
-    onChange = () => { return {} },
+    onChange = () => {
+      return {}
+    },
     options,
     renderLabel = false,
     required = false,

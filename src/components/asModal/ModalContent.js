@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+
 function ModalContent (props) {
   const {
     as: Element = 'div',
@@ -16,10 +17,6 @@ function ModalContent (props) {
     </Element>
   )
 }
-
-
-
-
 
 
 

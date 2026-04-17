@@ -23,15 +23,14 @@ function PageErrorFallback () {
 }
 
 
-function logPageError (error, info) {
-  // eslint-disable-next-line no-console
+function handleError (error, info) {
   console.error('[PageErrorBoundary]', error, info.componentStack)
 }
 
 
 export default function PageErrorBoundary ({ children }) {
   return (
-    <ErrorBoundary FallbackComponent={PageErrorFallback} onError={logPageError}>
+    <ErrorBoundary FallbackComponent={PageErrorFallback} onError={handleError}>
       {children}
     </ErrorBoundary>
   )

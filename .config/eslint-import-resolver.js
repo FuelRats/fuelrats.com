@@ -3,8 +3,8 @@
  * Replaces eslint-import-resolver-alias which crashes under Bun because
  * it relies on Node.js-internal Module._extensions.
  */
-const path = require('path')
 const fs = require('fs')
+const path = require('path')
 
 const EXTENSIONS = ['.js', '.jsx', '.mjs', '.cjs', '.json']
 const ROOT = path.resolve(__dirname, '..')
@@ -32,10 +32,14 @@ exports.resolve = (source, file, config) => {
 
     for (const attempt of [
       base,
-      ...EXTENSIONS.map((ext) => { return base + ext }),
-      ...EXTENSIONS.map((ext) => { return path.join(base, `index${ext}`) }),
+      ...EXTENSIONS.map((ext) => {
+        return base + ext
+      }),
+      ...EXTENSIONS.map((ext) => {
+        return path.join(base, `index${ext}`)
+      }),
     ]) {
-      if (fs.existsSync(attempt)) {
+      if (fs.existsSync(attempt) && fs.statSync(attempt).isFile()) {
         return { found: true, path: attempt }
       }
     }

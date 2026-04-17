@@ -27,11 +27,11 @@ const getRescueId = (_, props) => {
 
 
 
-export const selectRescueById = (state, props = {}) => {
+const selectRescueById = (state, props = {}) => {
   return state.rescues[props.rescueId]
 }
 
-export const selectRescueRatRelationship = (state, props) => {
+const selectRescueRatRelationship = (state, props) => {
   const rescue = selectRescueById(state, props)
 
   if (!rescue || !rescue.relationships?.rats) {
@@ -41,7 +41,7 @@ export const selectRescueRatRelationship = (state, props) => {
   return rescue.relationships.rats.data ?? EMPTY_ARRAY
 }
 
-export const selectRatsByRescueId = createCachedSelector(
+const selectRatsByRescueId = createCachedSelector(
   [selectRats, selectRescueRatRelationship],
   (rats, rescueRats) => {
     if (rats) {
@@ -58,24 +58,25 @@ export const selectRatsByRescueId = createCachedSelector(
 )(getRescueId)
 
 
-export const selectCurrentUserCanEditAllRescues = (state) => {
+const selectCanEditAllRescues = (state) => {
   return selectCurrentUserHasScope(state, { scope: 'rescues.write' })
 }
 
 
-const selectCurrentUserHasWriteMeScope = (state) => {
+const selectHasWriteMeScope = (state) => {
   return selectCurrentUserHasScope(state, { scope: 'rescues.write.me' })
 }
 
-const selectCurrentUserHasDispatchWriteScope = (state) => {
+const selectHasDispatchWrite = (state) => {
   return selectCurrentUserHasScope(state, { scope: 'dispatch.write' })
 }
 
-export const selectCurrentUserCanEditRescue = createCachedSelector(
+const selectCurrentUserCanEditRescue = createCachedSelector(
   [
     selectRescueById, selectRatsByRescueId, selectCurrentUserId,
-    selectCurrentUserCanEditAllRescues, selectCurrentUserHasWriteMeScope, selectCurrentUserHasDispatchWriteScope,
+    selectCanEditAllRescues, selectHasWriteMeScope, selectHasDispatchWrite,
   ],
+  // eslint-disable-next-line max-params -- selector combines six input selectors
   (rescue, rescueRats, userId, userCanEditAllRescues, userHasWriteMe, userHasDispatchWrite) => {
     if (!rescue || !userId) {
       return false
@@ -119,11 +120,11 @@ export const selectCurrentUserCanEditRescue = createCachedSelector(
   },
 )(getRescueId)
 
-export const selectRescueUnidentifiedRats = (state, props) => {
+const selectRescueUnidentifiedRats = (state, props) => {
   return selectRescueById(state, props)?.attributes.unidentifiedRats ?? undefined
 }
 
-export const createSelectRenderedRatList = (renderer) => {
+const createSelectRenderedRatList = (renderer) => {
   return createCachedSelector(
     [selectRatsByRescueId, selectRescueUnidentifiedRats],
     (rats = [], unidentifiedRats = []) => {
@@ -143,4 +144,14 @@ export const createSelectRenderedRatList = (renderer) => {
       })
     },
   )(getRescueId)
+}
+
+export {
+  selectRescueById,
+  selectRescueRatRelationship,
+  selectRatsByRescueId,
+  selectCanEditAllRescues as selectCurrentUserCanEditAllRescues,
+  selectCurrentUserCanEditRescue,
+  selectRescueUnidentifiedRats,
+  createSelectRenderedRatList,
 }

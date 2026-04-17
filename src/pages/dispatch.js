@@ -1,8 +1,9 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector, useStore } from 'react-redux'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { authenticated } from '~/components/AppLayout'
 import Clock from '~/components/Clock'
@@ -17,7 +18,6 @@ import { useRatSocket, useSocketStatus } from '~/services/frSocket'
 import { getDispatchBoard } from '~/store/actions/rescues'
 import { selectDispatchBoard } from '~/store/selectors/dispatch'
 import makeRoute from '~/util/router/makeRoute'
-import clsx from 'clsx'
 
 
 
@@ -112,7 +112,9 @@ function DispatchBoard ({ query }) {
     }
 
     if (rescueIds.length > prevIds.length) {
-      const newId = rescueIds.find((id) => { return !prevIds.includes(id) })
+      const newId = rescueIds.find((id) => {
+        return !prevIds.includes(id)
+      })
       if (newId) {
         // Auto-open the new rescue if nothing is currently open
         if (!router.query.rId) {
@@ -159,12 +161,22 @@ function DispatchBoard ({ query }) {
             className={clsx('compact', styles.installButton)}
             title="Notification settings"
             type="button"
-            onClick={() => { return setNotifPanelOpen((prev) => { return !prev }) }}>
+            onClick={
+() => {
+  return setNotifPanelOpen((prev) => {
+    return !prev
+  })
+}
+}>
             <FontAwesomeIcon fixedWidth icon="bell" />
           </button>
           <NotificationPanel
             open={notifPanelOpen}
-            onClose={() => { return setNotifPanelOpen(false) }} />
+            onClose={
+() => {
+  return setNotifPanelOpen(false)
+}
+} />
         </div>
         <InstallPwaButton className={styles.installButton} />
       </div>
@@ -176,7 +188,14 @@ function DispatchBoard ({ query }) {
           loadError && (
             <div className={styles.loadError}>
               {'Failed to load the dispatch board. '}
-              <button type="button" onClick={() => { return window.location.reload() }}>{'Reload'}</button>
+              <button
+                type="button"
+                onClick={
+() => {
+  return window.location.reload()
+}
+}>{'Reload'}
+              </button>
             </div>
           )
         }

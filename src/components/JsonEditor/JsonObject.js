@@ -1,9 +1,9 @@
+import clsx from 'clsx'
 import _isPlainObject from 'lodash/isPlainObject'
 
 import JsonField from '~/components/JsonEditor/JsonField'
 
 import styles from './JsonEditor.module.scss'
-import clsx from 'clsx'
 
 function getComponent (value) {
   if (_isPlainObject(value)) {

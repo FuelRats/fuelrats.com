@@ -3,8 +3,8 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { UAParser } from 'ua-parser-js'
 
-import ApiErrorBox from '~/components/MessageBox/ApiErrorBox'
 import ConfirmActionButton from '~/components/ConfirmActionButton'
+import ApiErrorBox from '~/components/MessageBox/ApiErrorBox'
 import { listSessions, revokeSession } from '~/store/actions/sessions'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 import friendlyApiError from '~/util/friendlyApiError'
@@ -47,12 +47,12 @@ function describeDevice (userAgent) {
   if (!userAgent) {
     return { label: 'Unknown device', icon: 'circle-question' }
   }
-  const parsed = UAParser(userAgent)
+  const parsed = new UAParser(userAgent).getResult()
   const browser = parsed.browser?.name
   const os = parsed.os?.name
   const deviceType = parsed.device?.type
 
-  let label
+  let label = 'Unknown device'
   if (browser && os) {
     label = `${browser} on ${os}`
   } else if (browser) {
@@ -76,7 +76,9 @@ function ActiveSessionsPanel () {
   const [sessions, setSessions] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const [revokingIds, setRevokingIds] = useState(() => new Set())
+  const [revokingIds, setRevokingIds] = useState(() => {
+    return new Set()
+  })
   const [signingOutAll, setSigningOutAll] = useState(false)
 
   const fetchSessions = useCallback(async () => {
@@ -111,7 +113,9 @@ function ActiveSessionsPanel () {
       setError(err)
     } else {
       setSessions((prev) => {
-        return prev.filter((session) => { return session.id !== sessionId })
+        return prev.filter((session) => {
+          return session.id !== sessionId
+        })
       })
     }
     setRevokingIds((prev) => {
@@ -123,7 +127,9 @@ function ActiveSessionsPanel () {
   }, [dispatch])
 
   const otherSessions = useMemo(() => {
-    return sessions.filter((session) => { return !session.meta?.current })
+    return sessions.filter((session) => {
+      return !session.meta?.current
+    })
   }, [sessions])
 
   const handleSignOutEverywhere = useCallback(async () => {
@@ -148,11 +154,13 @@ function ActiveSessionsPanel () {
           error && (
             <ApiErrorBox
               error={error}
-              renderError={(err) => {
-                return friendlyApiError(err, {
-                  fallbackDetail: 'Unable to load sessions. Please try again.',
-                })
-              }} />
+              renderError={
+(err) => {
+  return friendlyApiError(err, {
+    fallbackDetail: 'Unable to load sessions. Please try again.',
+  })
+}
+} />
           )
         }
 
@@ -167,35 +175,42 @@ function ActiveSessionsPanel () {
         {
           !loading && sessions.length > 0 && (
             <ul className={styles.sessionsList}>
-              {sessions.map((session) => {
-                const { userAgent, ipAddress, lastAccess, createdAt, authMethod } = session.attributes
-                const isCurrent = session.meta?.current
-                const device = describeDevice(userAgent)
-                const isRevoking = revokingIds.has(session.id)
-                return (
-                  <li key={session.id} className={styles.sessionItem}>
-                    <FontAwesomeIcon className={styles.sessionIcon} fixedWidth icon={device.icon} />
-                    <div className={styles.sessionInfo}>
-                      <div className={styles.sessionLabel}>
-                        {device.label}
-                        {isCurrent && (<span className={styles.currentBadge}>{'This device'}</span>)}
-                      </div>
-                      <div className={styles.sessionMeta}>
-                        {authMethod && (<span>{authMethod === 'passkey' ? 'via passkey' : `via ${authMethod}`}</span>)}
-                        {ipAddress && (<span title={`IP: ${ipAddress}`}>{ipAddress}</span>)}
-                        {lastAccess && (
-                          <span title={formatAsEliteDateTime(lastAccess)}>
-                            {'Last seen '}{formatLastSeen(lastAccess)}
-                          </span>
-                        )}
-                        {createdAt && (
-                          <span title={formatAsEliteDateTime(createdAt)}>
-                            {'Signed in '}{formatLastSeen(createdAt)}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                    {
+              {
+sessions.map((session) => {
+  const {
+    userAgent, ipAddress, lastAccess, createdAt, authMethod,
+  } = session.attributes
+  const isCurrent = session.meta?.current
+  const device = describeDevice(userAgent)
+  const isRevoking = revokingIds.has(session.id)
+  return (
+    <li key={session.id} className={styles.sessionItem}>
+      <FontAwesomeIcon fixedWidth className={styles.sessionIcon} icon={device.icon} />
+      <div className={styles.sessionInfo}>
+        <div className={styles.sessionLabel}>
+          {device.label}
+          {isCurrent && (<span className={styles.currentBadge}>{'This device'}</span>)}
+        </div>
+        <div className={styles.sessionMeta}>
+          {authMethod && (<span>{authMethod === 'passkey' ? 'via passkey' : `via ${authMethod}`}</span>)}
+          {ipAddress && (<span title={`IP: ${ipAddress}`}>{ipAddress}</span>)}
+          {
+lastAccess && (
+  <span title={formatAsEliteDateTime(lastAccess)}>
+    {'Last seen '}{formatLastSeen(lastAccess)}
+  </span>
+)
+}
+          {
+createdAt && (
+  <span title={formatAsEliteDateTime(createdAt)}>
+    {'Signed in '}{formatLastSeen(createdAt)}
+  </span>
+)
+}
+        </div>
+      </div>
+      {
                       !isCurrent && (
                         <ConfirmActionButton
                           className="compact"
@@ -210,9 +225,10 @@ function ActiveSessionsPanel () {
                         </ConfirmActionButton>
                       )
                     }
-                  </li>
-                )
-              })}
+    </li>
+  )
+})
+}
             </ul>
           )
         }

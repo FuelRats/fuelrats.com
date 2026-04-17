@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useCallback, useEffect, useState } from 'react'
@@ -11,9 +12,7 @@ import makePaperworkRoute from '~/util/router/makePaperworkRoute'
 
 import Pagination from './Pagination'
 import PlatformBadge from './PlatformBadge'
-
 import styles from './UserRescuesPanel.module.scss'
-import clsx from 'clsx'
 
 
 
@@ -27,7 +26,11 @@ function RescueRatCell ({ rescueId }) {
   })
   return (
     <td className={styles.rats}>
-      {rats?.map((rat) => { return rat.attributes.name }).join(', ') || '-'}
+      {
+rats?.map((rat) => {
+  return rat.attributes.name
+}).join(', ') || '-'
+}
     </td>
   )
 }
@@ -46,7 +49,7 @@ function useQueryPage () {
 
   useEffect(() => {
     const handleRouteChange = (url) => {
-      const match = url.match(/[?&]rpage=(\d+)/)
+      const match = url.match(/[?&]rpage=(\d+)/u)
       setPage(match ? Math.max(Number(match[1]), 1) : 1)
     }
     router.events.on('routeChangeComplete', handleRouteChange)
@@ -94,7 +97,12 @@ function UserRescuesPanel () {
   }, [dispatch, offset])
 
   const total = meta?.total ?? meta?.count ?? 0
-  const totalPages = total ? Math.ceil(total / PAGE_SIZE) : (rescues?.length === PAGE_SIZE ? page + 1 : page)
+  let totalPages = page
+  if (total) {
+    totalPages = Math.ceil(total / PAGE_SIZE)
+  } else if (rescues?.length === PAGE_SIZE) {
+    totalPages = page + 1
+  }
 
 
   const handleGenerateRoute = useCallback(({ page: nextPage }) => {
@@ -120,14 +128,18 @@ function UserRescuesPanel () {
             (!rescues || rescues.length === 0) && (
               <tr>
                 <td className={styles.empty} colSpan={7}>
-                  {fetchError ? 'Failed to load rescues.' : (rescues ? 'No rescues found.' : 'Loading...')}
+                  {fetchError && 'Failed to load rescues.'}
+                  {!fetchError && rescues && 'No rescues found.'}
+                  {!fetchError && !rescues && 'Loading...'}
                 </td>
               </tr>
             )
           }
           {
             rescues?.map((rescue) => {
-              const { client, system, platform, expansion, outcome, codeRed, createdAt } = rescue.attributes
+              const {
+                client, system, platform, expansion, outcome, codeRed, createdAt,
+              } = rescue.attributes
               const outcomeInfo = outcomeLabels[outcome]
 
               return (

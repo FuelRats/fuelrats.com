@@ -1,10 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import PropTypes from 'prop-types'
 import { useReducer, useRef } from 'react'
 
 import InputFieldset from '../InputFieldset'
 import styles from './PasswordFieldset.module.scss'
-import clsx from 'clsx'
 
 
 

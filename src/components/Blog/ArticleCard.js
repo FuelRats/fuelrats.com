@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useSelector } from 'react-redux'
 import Link from 'next/link'
+import { useSelector } from 'react-redux'
 
 import { selectAuthorByBlogId, selectBlogById, selectCategoriesByBlogId } from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'

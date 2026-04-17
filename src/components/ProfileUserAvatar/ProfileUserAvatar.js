@@ -1,9 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
+import { isError } from 'flux-standard-action'
 import PropTypes from 'prop-types'
 import { useState, useCallback, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { isError } from 'flux-standard-action'
 
 import { deleteAvatar, getUserProfile } from '~/store/actions/user'
 import { selectUserById, withCurrentUserId } from '~/store/selectors'
@@ -11,7 +12,7 @@ import { selectUserById, withCurrentUserId } from '~/store/selectors'
 import UploadAvatarModal from '../UploadAvatarModal'
 import UserAvatar from '../UserAvatar'
 import styles from './ProfileUserAvatar.module.scss'
-import clsx from 'clsx'
+
 
 const faIconLgSize = 100
 const faIconMdSize = 64

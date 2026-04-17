@@ -18,13 +18,13 @@ const SUBTYPE_MAP = {
 
 const ALL_CLASSES = ['O', 'B', 'A', 'F', 'G', 'K', 'M', 'L', 'T', 'Y', 'TTS', 'W', 'C', 'S', 'MS', 'DA', 'HAeBe', 'N']
 
-export function getSpectralClass (star) {
-  const candidate = star.type === 'Star' && star.subType ? star.subType : star.type
+function getSpectralClass (star) {
+  const candidate = (star.type === 'Star' && star.subType) ? star.subType : star.type
   if (!candidate) {
     return null
   }
 
-  const firstWord = candidate.split(' ')[0]
+  const [firstWord] = candidate.split(' ')
   if (ALL_CLASSES.includes(firstWord)) {
     return firstWord
   }
@@ -36,16 +36,19 @@ function within (value, list) {
   return value && list.includes(value)
 }
 
-export function getStarDescription (star) {
+const HYPERGIANT_MAG_THRESHOLD = -8
+const HYPERGIANT_RADIUS_THRESHOLD = 500
+
+function getStarDescription (star) {
   if (!star) {
     return null
   }
 
   const spectral = getSpectralClass(star)
-  const luminosity = star.luminosity
+  const { luminosity } = star
   const magnitude = star.absoluteMagnitude
   const radius = star.solarRadius ?? 0
-  const isHypergiantSize = (typeof magnitude === 'number' && magnitude < -8) || radius > 500
+  const isHypergiantSize = (typeof magnitude === 'number' && magnitude < HYPERGIANT_MAG_THRESHOLD) || radius > HYPERGIANT_RADIUS_THRESHOLD
 
   if (within(spectral, ['O', 'B', 'A']) && within(luminosity, SUPERGIANT_LUMINOSITY)) {
     return isHypergiantSize ? 'Blue hypergiant' : 'Blue supergiant'
@@ -105,10 +108,12 @@ export function getStarDescription (star) {
   }
 }
 
-export function isScoopableStar (star) {
+function isScoopableStar (star) {
   if (star?.isScoopable === true) {
     return true
   }
   const spectral = getSpectralClass(star)
   return spectral ? SCOOPABLE_CLASSES.includes(spectral) : false
 }
+
+export { getSpectralClass, getStarDescription, isScoopableStar }

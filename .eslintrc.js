@@ -5,6 +5,14 @@ module.exports = {
     browser: true,
     commonjs: true,
   },
+  parserOptions: {
+    babelOptions: {
+      plugins: [
+        '@babel/plugin-syntax-jsx',
+        ['@babel/plugin-proposal-decorators', { legacy: true }],
+      ],
+    },
+  },
   extends: [
     '@fuelrats/eslint-config',
     '@fuelrats/eslint-config-react',
@@ -13,6 +21,7 @@ module.exports = {
   globals: {
     $$BUILD: 'readonly',
     fetch: 'readonly',
+    process: 'readonly',
   },
   rules: {
     'import/order': util.extendRule('import/order', {

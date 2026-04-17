@@ -27,8 +27,7 @@ function getFocusableElements (container) {
  * Traps focus within the given container while enabled. On enable, moves
  * focus to the first focusable element inside. On disable/unmount,
  * restores focus to whatever had it when the trap engaged.
- *
- * @param {React.RefObject<HTMLElement>} containerRef
+ * @param {import('react').RefObject<HTMLElement>} containerRef
  * @param {boolean} [enabled]
  */
 export default function useFocusTrap (containerRef, enabled = true) {
@@ -57,7 +56,7 @@ export default function useFocusTrap (containerRef, enabled = true) {
         event.preventDefault()
         return
       }
-      const first = focusables[0]
+      const [first] = focusables
       const last = focusables[focusables.length - 1]
       const active = document.activeElement
 

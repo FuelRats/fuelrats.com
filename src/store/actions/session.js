@@ -89,7 +89,7 @@ export const initUserSession = (ctx) => {
       const response = await dispatch(getUserProfile())
 
       if (isError(response)) {
-        const status = response.meta.response.status
+        const { status } = response.meta.response
         if (status === HttpStatus.UNAUTHORIZED || status === HttpStatus.GONE) {
           dispatch(logout(ctx))
           ctx.accessToken = null

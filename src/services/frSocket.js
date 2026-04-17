@@ -13,7 +13,9 @@ const socketStatusListeners = new Set()
 
 function setSocketStatus (status) {
   socketStatus = status
-  socketStatusListeners.forEach((listener) => { return listener() })
+  socketStatusListeners.forEach((listener) => {
+    return listener()
+  })
 }
 
 const frSocket = new ReduxRatSocket(
@@ -33,7 +35,7 @@ const frSocket = new ReduxRatSocket(
 
 // Wrap createMiddleware to intercept dispatched actions for socket status tracking
 const originalCreateMiddleware = frSocket.createMiddleware.bind(frSocket)
-frSocket.createMiddleware = function () {
+frSocket.createMiddleware = function createMiddleware () {
   const socketMiddleware = originalCreateMiddleware()
   return (store) => {
     const next = socketMiddleware(store)
@@ -88,10 +90,16 @@ function useRatSocket () {
 function useSocketStatus () {
   const subscribe = useCallback((onChange) => {
     socketStatusListeners.add(onChange)
-    return () => { return socketStatusListeners.delete(onChange) }
+    return () => {
+      return socketStatusListeners.delete(onChange)
+    }
   }, [])
 
-  return useSyncExternalStore(subscribe, () => { return socketStatus }, () => { return 'disconnected' })
+  return useSyncExternalStore(subscribe, () => {
+    return socketStatus
+  }, () => {
+    return 'disconnected'
+  })
 }
 
 

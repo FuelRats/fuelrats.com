@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import Link from 'next/link'
 import { useState, useCallback, useEffect } from 'react'
 import { useStore } from 'react-redux'
@@ -6,7 +7,6 @@ import WordpressTermsModal from '~/components/TermsModal'
 import { useField } from '~/hooks/useForm'
 import { getWordpressPage } from '~/store/actions/wordpress'
 import { selectWordpressPageBySlug } from '~/store/selectors'
-import clsx from 'clsx'
 
 
 

@@ -7,9 +7,9 @@ import { getLanguage } from '~/data/languageList'
 import { getPlatform } from '~/data/platformList'
 import { getLandmarkList, getSystem } from '~/store/actions/systems'
 import { selectLandmarks, selectSystemInfo } from '~/store/selectors/sapi'
+import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 import { getCardinalDirection } from '~/util/system/cardinalDirection'
 import { getStarDescription, isScoopableStar } from '~/util/system/starDescription'
-import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 
 
 const pollTimeoutTime = 10000
@@ -21,7 +21,7 @@ const specialSystems = {
   'NLTT 48288': 'NLTT 48288 🥃',
 }
 
-export const useRescueSystem = (rescue) => {
+const useRescueSystem = (rescue) => {
   const { system } = rescue?.attributes ?? {}
 
   return useMemo(() => {
@@ -29,7 +29,7 @@ export const useRescueSystem = (rescue) => {
   }, [system])
 }
 
-export const useRescuePermit = (rescue) => {
+const useRescuePermit = (rescue) => {
   const permit = rescue?.attributes?.data?.permit ?? ''
 
   return (permit) ? `Permit Required: ${permit.name}` : false
@@ -40,7 +40,7 @@ export const useRescuePermit = (rescue) => {
 const inflightSystems = new Set()
 let inflightLandmarks = false
 
-export const useRescueSystemInfo = (rescue) => {
+const useRescueSystemInfo = (rescue) => {
   const systemId = rescue?.attributes?.data?.systemId ?? null
   const dispatch = useDispatch()
   const cached = useSelector((state) => {
@@ -60,7 +60,7 @@ export const useRescueSystemInfo = (rescue) => {
   return cached
 }
 
-export const useRescueMainStar = (rescue) => {
+const useRescueMainStar = (rescue) => {
   const info = useRescueSystemInfo(rescue)
   return useMemo(() => {
     if (!info?.stars?.length) {
@@ -72,14 +72,14 @@ export const useRescueMainStar = (rescue) => {
   }, [info])
 }
 
-export const useRescueMainStarDescription = (rescue) => {
+const useRescueMainStarDescription = (rescue) => {
   const mainStar = useRescueMainStar(rescue)
   return useMemo(() => {
     return getStarDescription(mainStar)
   }, [mainStar])
 }
 
-export const useRescueHasScoopableStar = (rescue) => {
+const useRescueHasScoopableStar = (rescue) => {
   const info = useRescueSystemInfo(rescue)
   return useMemo(() => {
     if (!info?.stars?.length) {
@@ -119,11 +119,15 @@ const useLandmarkCoords = (landmarkName) => {
     const landmark = landmarks.find((item) => {
       return item.name === landmarkName
     })
-    return landmark ? { x: landmark.x, y: landmark.y, z: landmark.z } : null
+    if (!landmark) {
+      return null
+    }
+    // eslint-disable-next-line id-length -- x, y, z are standard coordinate names
+    return { x: landmark.x, y: landmark.y, z: landmark.z }
   }, [landmarkName, landmarks])
 }
 
-export const useRescueLandmark = (rescue) => {
+const useRescueLandmark = (rescue) => {
   const { distance, name } = rescue?.attributes?.data?.landmark ?? {}
   const systemInfo = useRescueSystemInfo(rescue)
   const landmarkCoords = useLandmarkCoords(name)
@@ -138,7 +142,7 @@ export const useRescueLandmark = (rescue) => {
   }, [distance, name, systemInfo?.coords, landmarkCoords])
 }
 
-export const useQuoteString = (rescue) => {
+const useQuoteString = (rescue) => {
   return useMemo(() => {
     if (!rescue?.attributes?.quotes?.length) {
       return undefined
@@ -150,20 +154,20 @@ export const useQuoteString = (rescue) => {
   }, [rescue?.attributes?.quotes])
 }
 
-export const useRescueLanguage = (rescue) => {
+const useRescueLanguage = (rescue) => {
   return useMemo(() => {
     return getLanguage(rescue.attributes.clientLanguage)
   }, [rescue.attributes.clientLanguage])
 }
 
-export const useRescuePlatform = (rescue) => {
+const useRescuePlatform = (rescue) => {
   return useMemo(() => {
     return getPlatform(rescue.attributes.platform)
   }, [rescue.attributes.platform])
 }
 
 
-export const useRescueQueueCount = () => {
+const useRescueQueueCount = () => {
   const [queueLength, setCount] = useState(0)
   const [maxClients, setMax] = useState(0)
 
@@ -199,4 +203,18 @@ export const useRescueQueueCount = () => {
 
 
   return [queueLength, maxClients]
+}
+
+export {
+  useRescueSystem,
+  useRescuePermit,
+  useRescueSystemInfo,
+  useRescueMainStar,
+  useRescueMainStarDescription,
+  useRescueHasScoopableStar,
+  useRescueLandmark,
+  useQuoteString,
+  useRescueLanguage,
+  useRescuePlatform,
+  useRescueQueueCount,
 }

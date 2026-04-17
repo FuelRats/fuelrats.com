@@ -19,11 +19,10 @@ const API_MIN_IMAGE_SIZE = 64
 
 /**
  * Renders a user's avatar.
- *
- * - For users whose data IS in the Redux store (current user, etc.),
- *   uses the selector-based URL which handles custom-avatar vs adorable.
- * - For users NOT in the store (e.g. rat owners on the dispatch board),
- *   tries the API image endpoint directly, falling back to adorable on error.
+ * For users in the Redux store, uses the selector-based URL.
+ * For users not in the store, tries the API image endpoint, falling back on error.
+ * @param {object} props - Component props.
+ * @returns {import('react').ReactElement|null} The rendered avatar or null.
  */
 function UserAvatar (props) {
   const {
@@ -77,10 +76,10 @@ function UserAvatar (props) {
 
   return (
     <Image
+      unoptimized
       alt={alt}
       height={size}
       src={resolvedSrc}
-      unoptimized
       width={size}
       {...imageProps}
       onError={handleError} />

@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { HttpStatus } from '@fuelrats/web-util/http'
+import clsx from 'clsx'
 import { isError } from 'flux-standard-action'
 import { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -10,7 +11,6 @@ import { addNickname } from '~/store/actions/user'
 import { selectUserById, withCurrentUserId } from '~/store/selectors'
 
 import styles from './AddNicknameForm.module.scss'
-import clsx from 'clsx'
 
 
 const initialState = {

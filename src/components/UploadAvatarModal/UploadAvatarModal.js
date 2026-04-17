@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import PropTypes from 'prop-types'
 import { useState, useCallback } from 'react'
 import Cropper from 'react-easy-crop'
@@ -12,7 +13,6 @@ import getResponseError from '~/util/getResponseError'
 
 import UploadAvatarMessageBox from './UploadAvatarMessageBox'
 import styles from './UploadAvatarModal.module.scss'
-import clsx from 'clsx'
 
 // Component Constants
 const MAX_FILE_SIZE = 26214400 // Server upload max is 25M

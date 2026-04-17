@@ -1,10 +1,10 @@
+import clsx from 'clsx'
 import PropTypes from 'prop-types'
 import { useEffect, useState } from 'react'
 
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 
 import styles from './Clock.module.scss'
-import clsx from 'clsx'
 
 
 

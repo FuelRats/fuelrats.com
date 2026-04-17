@@ -1,9 +1,9 @@
 import Cookies from 'js-cookie'
 import { useCallback } from 'react'
 
+import { renderRatLoader } from './RatTagsInput'
 import TagsInput from './TagsInput'
 
-import { renderRatLoader } from './RatTagsInput'
 
 
 

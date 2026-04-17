@@ -25,8 +25,12 @@ const GAME_VERSION_OPTIONS = [
 ]
 
 const DEFAULT_PUSH_FILTERS = {
-  pc: true, xb: true, ps: true,
-  horizons3: true, horizons4: true, odyssey: true,
+  pc: true,
+  xb: true,
+  ps: true,
+  horizons3: true,
+  horizons4: true,
+  odyssey: true,
   alertsOnly: true,
 }
 
@@ -39,14 +43,18 @@ const SOUND_PREVIEWS = {
 
 function NotificationPanel ({ className, open, onClose }) {
   const panelRef = useRef(null)
-  const { supported: pushSupported, ready: pushReady, permission, subscribed, loading: pushLoading, toggle, subscribe } = usePushNotifications()
+  const {
+    supported: pushSupported, ready: pushReady, permission, subscribed, loading: pushLoading, toggle, subscribe,
+  } = usePushNotifications()
 
   // Push filters
   const [pushFilters, setPushFilters] = useState(DEFAULT_PUSH_FILTERS)
   const [subscribing, setSubscribing] = useState(false)
 
   // Sound settings
-  const [sound, setSound] = useState(() => { return loadSoundSettings() })
+  const [sound, setSound] = useState(() => {
+    return loadSoundSettings()
+  })
 
   // Reload sound settings when panel opens
   useEffect(() => {
@@ -66,7 +74,9 @@ function NotificationPanel ({ className, open, onClose }) {
       }
     }
     document.addEventListener('mousedown', handleClick)
-    return () => { document.removeEventListener('mousedown', handleClick) }
+    return () => {
+      document.removeEventListener('mousedown', handleClick)
+    }
   }, [open, onClose])
 
   // Push handlers
@@ -119,7 +129,11 @@ function NotificationPanel ({ className, open, onClose }) {
           <button
             className={clsx(styles.toggle, { [styles.toggleOn]: sound.enabled })}
             type="button"
-            onClick={() => { return updateSound('enabled', !sound.enabled) }}>
+            onClick={
+() => {
+  return updateSound('enabled', !sound.enabled)
+}
+}>
             {sound.enabled ? 'On' : 'Off'}
           </button>
         </div>
@@ -128,43 +142,58 @@ function NotificationPanel ({ className, open, onClose }) {
           sound.enabled && (
             <>
               <div className={styles.soundOptions}>
-                {[
-                  { key: 'newCase', label: 'New case', icon: 'plus' },
-                  { key: 'caseChange', label: 'Case update', icon: 'arrows-rotate' },
-                  { key: 'caseClosed', label: 'Case closed', icon: 'check' },
-                ].map((item) => {
-                  return (
-                    <div key={item.key} className={styles.soundRow}>
-                      <button
-                        className={clsx(styles.soundToggle, { [styles.active]: sound[item.key] })}
-                        type="button"
-                        onClick={() => { return updateSound(item.key, !sound[item.key]) }}>
-                        <FontAwesomeIcon fixedWidth icon={item.icon} />
-                        {` ${item.label}`}
-                      </button>
-                      <button
-                        aria-label={`Preview ${item.label} sound`}
-                        className={styles.previewButton}
-                        disabled={!sound[item.key]}
-                        type="button"
-                        onClick={() => { return handlePreview(item.key) }}>
-                        <FontAwesomeIcon fixedWidth icon="play" />
-                      </button>
-                    </div>
-                  )
-                })}
+                {
+[
+  { key: 'newCase', label: 'New case', icon: 'plus' },
+  { key: 'caseChange', label: 'Case update', icon: 'arrows-rotate' },
+  { key: 'caseClosed', label: 'Case closed', icon: 'check' },
+].map((item) => {
+  return (
+    <div key={item.key} className={styles.soundRow}>
+      <button
+        className={clsx(styles.soundToggle, { [styles.active]: sound[item.key] })}
+        type="button"
+        onClick={
+() => {
+  return updateSound(item.key, !sound[item.key])
+}
+}>
+        <FontAwesomeIcon fixedWidth icon={item.icon} />
+        {` ${item.label}`}
+      </button>
+      <button
+        aria-label={`Preview ${item.label} sound`}
+        className={styles.previewButton}
+        disabled={!sound[item.key]}
+        type="button"
+        onClick={
+() => {
+  return handlePreview(item.key)
+}
+}>
+        <FontAwesomeIcon fixedWidth icon="play" />
+      </button>
+    </div>
+  )
+})
+}
               </div>
 
               <div className={styles.volumeRow}>
                 <FontAwesomeIcon fixedWidth icon="volume-low" />
                 <input
+                  aria-label="Notification volume"
                   className={styles.volumeSlider}
                   max={1}
                   min={0}
                   step={0.1}
                   type="range"
                   value={sound.volume}
-                  onChange={(event) => { return updateSound('volume', parseFloat(event.target.value)) }} />
+                  onChange={
+(event) => {
+  return updateSound('volume', parseFloat(event.target.value))
+}
+} />
                 <FontAwesomeIcon fixedWidth icon="volume-high" />
               </div>
             </>
@@ -207,18 +236,24 @@ function NotificationPanel ({ className, open, onClose }) {
               <div className={styles.filterSection}>
                 <div className={styles.filterLabel}>{'Platforms'}</div>
                 <div className={styles.filterItems}>
-                  {PLATFORM_OPTIONS.map((item) => {
-                    return (
-                      <button
-                        key={item.key}
-                        className={clsx(styles.filterChip, { [styles.chipActive]: pushFilters[item.key] })}
-                        type="button"
-                        onClick={() => { return handleTogglePushFilter(item.key) }}>
-                        {item.icon && (<FontAwesomeIcon fixedWidth icon={item.icon} />)}
-                        {` ${item.label}`}
-                      </button>
-                    )
-                  })}
+                  {
+PLATFORM_OPTIONS.map((item) => {
+  return (
+    <button
+      key={item.key}
+      className={clsx(styles.filterChip, { [styles.chipActive]: pushFilters[item.key] })}
+      type="button"
+      onClick={
+() => {
+  return handleTogglePushFilter(item.key)
+}
+}>
+      {item.icon && (<FontAwesomeIcon fixedWidth icon={item.icon} />)}
+      {` ${item.label}`}
+    </button>
+  )
+})
+}
                 </div>
               </div>
 
@@ -227,17 +262,23 @@ function NotificationPanel ({ className, open, onClose }) {
                   <div className={styles.filterSection}>
                     <div className={styles.filterLabel}>{'PC Game Version'}</div>
                     <div className={styles.filterItems}>
-                      {GAME_VERSION_OPTIONS.map((item) => {
-                        return (
-                          <button
-                            key={item.key}
-                            className={clsx(styles.filterChip, { [styles.chipActive]: pushFilters[item.key] })}
-                            type="button"
-                            onClick={() => { return handleTogglePushFilter(item.key) }}>
-                            {item.label}
-                          </button>
-                        )
-                      })}
+                      {
+GAME_VERSION_OPTIONS.map((item) => {
+  return (
+    <button
+      key={item.key}
+      className={clsx(styles.filterChip, { [styles.chipActive]: pushFilters[item.key] })}
+      type="button"
+      onClick={
+() => {
+  return handleTogglePushFilter(item.key)
+}
+}>
+      {item.label}
+    </button>
+  )
+})
+}
                     </div>
                   </div>
                 )
@@ -249,13 +290,21 @@ function NotificationPanel ({ className, open, onClose }) {
                   <button
                     className={clsx(styles.filterChip, { [styles.chipActive]: pushFilters.alertsOnly })}
                     type="button"
-                    onClick={() => { return handleTogglePushFilter('alertsOnly') }}>
+                    onClick={
+() => {
+  return handleTogglePushFilter('alertsOnly')
+}
+}>
                     {'Dispatch alerts only'}
                   </button>
                   <button
                     className={clsx(styles.filterChip, { [styles.chipActive]: !pushFilters.alertsOnly })}
                     type="button"
-                    onClick={() => { return handleTogglePushFilter('alertsOnly') }}>
+                    onClick={
+() => {
+  return handleTogglePushFilter('alertsOnly')
+}
+}>
                     {'All new rescues'}
                   </button>
                 </div>

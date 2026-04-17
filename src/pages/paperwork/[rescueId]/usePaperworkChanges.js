@@ -93,6 +93,10 @@ export function validate (rescue, userCanEdit, changes, values) {
  * Owns the paperwork form's pending-change state and all the field
  * handlers. Returns the derived field values, a validity object, and the
  * set of handlers that get passed down into the various form fields.
+ * @param {object} rescue - The rescue resource object.
+ * @param {object} rats - Rats keyed by ID.
+ * @param {boolean} userCanEdit - Whether the current user can edit this rescue.
+ * @returns {object} Changes state, field values, validity, and handlers.
  */
 export default function usePaperworkChanges (rescue, rats, userCanEdit) {
   const [changes, setChangesState] = useState({})

@@ -41,7 +41,6 @@ function CopyToClipboard (props) {
     try {
       await writeToClipboard(String(text))
     } catch (err) {
-      // eslint-disable-next-line no-console
       console.error('Failed to copy to clipboard:', err)
       return
     }

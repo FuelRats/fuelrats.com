@@ -1,5 +1,5 @@
-import { startRegistration, startAuthentication } from '@simplewebauthn/browser'
 import { createAxiosFSA } from '@fuelrats/web-util/actions'
+import { startRegistration, startAuthentication } from '@simplewebauthn/browser'
 import { isError } from 'flux-standard-action'
 import Cookies from 'js-cookie'
 
@@ -10,10 +10,10 @@ import createRequestBody from '~/util/jsonapi/createRequestBody'
 import actionTypes from '../actionTypes'
 import { selectCurrentUserId, selectSessionToken } from '../selectors'
 import { frApiRequest, frApiPlainRequest } from './services'
-import { getUserProfile } from './user'
 
 
 const SESSION_TOKEN_LENGTH = 365
+const HTTP_OK = 200
 
 
 export const loginWithPasskey = (email, remember) => {
@@ -28,13 +28,13 @@ export const loginWithPasskey = (email, remember) => {
       data: createRequestBody('passkey-authentication', { email }),
     })
 
-    if (optionsResponse.status !== 200) {
+    if (optionsResponse.status !== HTTP_OK) {
       return dispatch(createAxiosFSA(actionTypes.session.login, optionsResponse))
     }
 
     // Step 2: Prompt user's authenticator
     const options = optionsResponse.data?.data?.attributes ?? optionsResponse.data
-    let credential
+    let credential = null
     try {
       credential = await startAuthentication({ optionsJSON: options })
     } catch {
@@ -85,14 +85,14 @@ export const registerPasskey = (name) => {
       headers: { Authorization: `Bearer ${token}` },
     })
 
-    if (optionsResponse.status !== 200) {
+    if (optionsResponse.status !== HTTP_OK) {
       return dispatch(createAxiosFSA(actionTypes.passkeys.create, optionsResponse))
     }
 
     const options = optionsResponse.data?.data?.attributes ?? optionsResponse.data
 
     // Step 2: Create credential
-    let credential
+    let credential = null
     try {
       credential = await startRegistration({ optionsJSON: options })
     } catch {

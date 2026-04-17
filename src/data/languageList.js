@@ -142,8 +142,6 @@ const languageList = {
 }
 
 
-export default languageList
-
 function getRegionName (regionCode) {
   try {
     return new Intl.DisplayNames(['en'], { type: 'region' }).of(regionCode.toUpperCase())
@@ -152,18 +150,20 @@ function getRegionName (regionCode) {
   }
 }
 
+const REGIONAL_INDICATOR_BASE = 0x1F1E6
+
 function getRegionFlag (regionCode) {
   if (!/^[a-zA-Z]{2}$/u.test(regionCode)) {
     return null
   }
 
-  const offset = 0x1F1E6 - 'A'.charCodeAt(0)
+  const offset = REGIONAL_INDICATOR_BASE - 'A'.charCodeAt(0)
   const upper = regionCode.toUpperCase()
 
   return String.fromCodePoint(upper.charCodeAt(0) + offset, upper.charCodeAt(1) + offset)
 }
 
-export function getLanguage (lang) {
+function getLanguage (lang) {
   if (!lang) {
     return languageList.unknown
   }
@@ -184,3 +184,6 @@ export function getLanguage (lang) {
     flag: getRegionFlag(regionCode),
   }
 }
+
+export default languageList
+export { getLanguage }

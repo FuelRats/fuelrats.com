@@ -46,8 +46,9 @@ function UserSecurityPanel () {
     const response = await dispatch(listPasskeys())
     const err = getResponseError(response)
     if (err) {
+      const HTTP_FORBIDDEN = 403
       // If forbidden, just show empty list — user may not have permission
-      if (err.code === 403) {
+      if (err.code === HTTP_FORBIDDEN) {
         setPasskeys([])
       } else {
         setError(err)
@@ -98,9 +99,10 @@ function UserSecurityPanel () {
     }
   }, [handleRegister])
 
+  const TOTP_CODE_LENGTH = 6
   const handleRemoveTotp = useCallback(async () => {
-    if (removeTotpCode.length !== 6) {
-      return
+    if (removeTotpCode.length !== TOTP_CODE_LENGTH) {
+      return false
     }
     setRemovingTotp(true)
     setError(null)
@@ -136,7 +138,9 @@ function UserSecurityPanel () {
         body: JSON.stringify({ data: { type: 'certificate-requests', attributes: {} } }),
       })
       if (!response.ok) {
-        const errData = await response.json().catch(() => { return null })
+        const errData = await response.json().catch(() => {
+          return null
+        })
         setError(errData?.errors?.[0] ?? {
           status: 'internal_server',
           title: 'Certificate Error',
@@ -176,15 +180,17 @@ function UserSecurityPanel () {
             error && (
               <ApiErrorBox
                 error={error}
-                renderError={(err) => {
-                  return friendlyApiError(err, {
-                    statusMessages: {
-                      conflict: { detail: 'This passkey is already registered on an account.' },
-                      unprocessable_entity: { detail: 'Passkey verification failed. Please try again.' },
-                    },
-                    fallbackDetail: 'Something went wrong. Please try again.',
-                  })
-                }} />
+                renderError={
+(err) => {
+  return friendlyApiError(err, {
+    statusMessages: {
+      conflict: { detail: 'This passkey is already registered on an account.' },
+      unprocessable_entity: { detail: 'Passkey verification failed. Please try again.' },
+    },
+    fallbackDetail: 'Something went wrong. Please try again.',
+  })
+}
+} />
             )
           }
 
@@ -260,12 +266,17 @@ function UserSecurityPanel () {
             webAuthnSupported && (
               <div className={styles.addPasskey}>
                 <input
+                  aria-label="New passkey name"
                   className={styles.nameInput}
                   disabled={registering}
                   placeholder="Passkey name (e.g. MacBook, iPhone)"
                   type="text"
                   value={newPasskeyName}
-                  onChange={(event) => { return setNewPasskeyName(event.target.value) }}
+                  onChange={
+(event) => {
+  return setNewPasskeyName(event.target.value)
+}
+}
                   onKeyDown={handleNameKeyDown} />
                 <button
                   className="green"
@@ -295,13 +306,18 @@ function UserSecurityPanel () {
                   <div className={styles.totpActions}>
                     <button
                       type="button"
-                      onClick={() => { return setShowRegenerateCodes(true) }}>
+                      onClick={
+() => {
+  return setShowRegenerateCodes(true)
+}
+}>
                       <FontAwesomeIcon fixedWidth icon="key" />
                       {' Regenerate recovery codes'}
                     </button>
                   </div>
                   <div className={styles.totpRemove}>
                     <input
+                      aria-label="TOTP code to disable two-factor authentication"
                       disabled={removingTotp}
                       inputMode="numeric"
                       maxLength={6}
@@ -309,10 +325,14 @@ function UserSecurityPanel () {
                       placeholder="Enter 6-digit code to disable"
                       type="text"
                       value={removeTotpCode}
-                      onChange={(event) => { return setRemoveTotpCode(event.target.value.replace(/\D/gu, '')) }} />
+                      onChange={
+(event) => {
+  return setRemoveTotpCode(event.target.value.replace(/\D/gu, ''))
+}
+} />
                     <button
                       className="secondary"
-                      disabled={removingTotp || removeTotpCode.length !== 6}
+                      disabled={removingTotp || removeTotpCode.length !== TOTP_CODE_LENGTH}
                       type="button"
                       onClick={handleRemoveTotp}>
                       {removingTotp ? 'Removing...' : 'Disable 2FA'}
@@ -325,7 +345,11 @@ function UserSecurityPanel () {
                   <p>{'Add an extra layer of security by requiring a code from an authenticator app when you log in.'}</p>
                   <button
                     type="button"
-                    onClick={() => { return setShowTotpSetup(true) }}>
+                    onClick={
+() => {
+  return setShowTotpSetup(true)
+}
+}>
                     {'Enable Two-Factor Authentication'}
                   </button>
                 </div>
@@ -340,7 +364,11 @@ function UserSecurityPanel () {
 
       <RegenerateRecoveryCodesModal
         isOpen={showRegenerateCodes}
-        onClose={() => { return setShowRegenerateCodes(false) }} />
+        onClose={
+() => {
+  return setShowRegenerateCodes(false)
+}
+} />
 
       <PushSubscriptionsPanel />
 
@@ -365,22 +393,38 @@ function UserSecurityPanel () {
       <div className={styles.accountActions}>
         <button
           type="button"
-          onClick={() => { return setShowChangeEmail(true) }}>
+          onClick={
+() => {
+  return setShowChangeEmail(true)
+}
+}>
           {'Change E-Mail'}
         </button>
         <button
           type="button"
-          onClick={() => { return setShowChangePassword(true) }}>
+          onClick={
+() => {
+  return setShowChangePassword(true)
+}
+}>
           {'Change Password'}
         </button>
       </div>
 
       <ChangeEmailModal
         isOpen={showChangeEmail}
-        onClose={() => { return setShowChangeEmail(false) }} />
+        onClose={
+() => {
+  return setShowChangeEmail(false)
+}
+} />
       <ChangePasswordModal
         isOpen={showChangePassword}
-        onClose={() => { return setShowChangePassword(false) }} />
+        onClose={
+() => {
+  return setShowChangePassword(false)
+}
+} />
     </div>
   )
 }

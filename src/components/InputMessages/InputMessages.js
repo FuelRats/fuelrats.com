@@ -1,8 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import PropTypes from 'prop-types'
 
 import styles from './InputMessages.module.scss'
-import clsx from 'clsx'
 
 
 

@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import Router from 'next/router'
 import { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
@@ -11,7 +12,6 @@ import { getUserProfile } from '~/store/actions/user'
 import getResponseError from '~/util/getResponseError'
 
 import styles from './LoginModal.module.scss'
-import clsx from 'clsx'
 
 
 function TotpView () {
@@ -27,9 +27,12 @@ function TotpView () {
     setWebAuthnSupported(typeof window !== 'undefined' && window.PublicKeyCredential !== undefined)
   }, [])
 
+  const RECOVERY_CODE_LENGTH = 8
+  const TOTP_CODE_LENGTH = 6
+
   const codeIsValid = useRecoveryCode
-    ? code.replace(/[^a-f0-9]/giu, '').length === 8
-    : code.length === 6
+    ? code.replace(/[^a-f0-9]/giu, '').length === RECOVERY_CODE_LENGTH
+    : code.length === TOTP_CODE_LENGTH
 
   const handleSubmit = useCallback(async () => {
     if (!codeIsValid) {
@@ -115,27 +118,33 @@ function TotpView () {
         <FontAwesomeIcon className={styles.passkeyPromptIcon} icon="shield-halved" />
         <h3>{'Two-Factor Authentication'}</h3>
         <p>
-          {useRecoveryCode
-            ? 'Enter one of your recovery codes.'
-            : 'Enter the 6-digit code from your authenticator app.'}
+          {
+useRecoveryCode
+  ? 'Enter one of your recovery codes.'
+  : 'Enter the 6-digit code from your authenticator app.'
+}
         </p>
         {
           useRecoveryCode
             ? (
               <input
-                autoFocus
+                aria-label="Recovery code"
                 className={styles.totpCodeInput}
                 disabled={submitting}
                 maxLength={9}
                 placeholder="xxxx-xxxx"
                 type="text"
                 value={code}
-                onChange={(event) => { return setCode(event.target.value.toLowerCase().replace(/[^a-f0-9-]/giu, '')) }}
+                onChange={
+(event) => {
+  return setCode(event.target.value.toLowerCase().replace(/[^a-f0-9-]/giu, ''))
+}
+}
                 onKeyDown={handleKeyDown} />
             )
             : (
               <input
-                autoFocus
+                aria-label="Authentication code"
                 className={styles.totpCodeInput}
                 disabled={submitting}
                 inputMode="numeric"
@@ -144,7 +153,11 @@ function TotpView () {
                 placeholder="000000"
                 type="text"
                 value={code}
-                onChange={(event) => { return setCode(event.target.value.replace(/\D/gu, '')) }}
+                onChange={
+(event) => {
+  return setCode(event.target.value.replace(/\D/gu, ''))
+}
+}
                 onKeyDown={handleKeyDown} />
             )
         }

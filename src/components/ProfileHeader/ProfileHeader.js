@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import { useSelector } from 'react-redux'
 
 import {
@@ -13,7 +14,6 @@ import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 import styles from './ProfileHeader.module.scss'
 import ProfileUserAvatar from '../ProfileUserAvatar'
 import UnverifiedUserBanner from './UnverifiedUserBanner'
-import clsx from 'clsx'
 
 
 
@@ -44,30 +44,29 @@ function ProfileHeader () {
   const { createdAt, email } = useSelector(withCurrentUserId(selectUserById))?.attributes ?? {}
 
   return (
-    <>
-      <div className="profile-header">
-        {
+    <div className="profile-header">
+      {
           !userIsVerified && (
             <UnverifiedUserBanner />
           )
         }
-        <ProfileUserAvatar canEdit />
-        <div className="profile-basic-info">
-          <div className="rat-name">
-            {displayRat?.attributes?.name ?? email?.split('@')[0]}
-          </div>
-          <div className="email">
-            <span className="label">{'E-Mail: '}</span>
-            <span>{email}</span>
-          </div>
-          <div className="member-since">
-            <span className="label">{'Date joined: '}</span>
-            <span>{createdAt ? formatAsEliteDateTime(createdAt) : ''}</span>
-          </div>
+      <ProfileUserAvatar canEdit />
+      <div className="profile-basic-info">
+        <div className="rat-name">
+          {displayRat?.attributes?.name ?? email?.split('@')[0]}
         </div>
-        <div className="profile-user-badges">
-          <ul>
-            {
+        <div className="email">
+          <span className="label">{'E-Mail: '}</span>
+          <span>{email}</span>
+        </div>
+        <div className="member-since">
+          <span className="label">{'Date joined: '}</span>
+          <span>{createdAt ? formatAsEliteDateTime(createdAt) : ''}</span>
+        </div>
+      </div>
+      <div className="profile-user-badges">
+        <ul>
+          {
               groups?.map((group) => {
                 const config = groupConfig[group.attributes.name]
                 return (
@@ -81,10 +80,9 @@ function ProfileHeader () {
                 )
               })
             }
-          </ul>
-        </div>
+        </ul>
       </div>
-    </>
+    </div>
   )
 }
 

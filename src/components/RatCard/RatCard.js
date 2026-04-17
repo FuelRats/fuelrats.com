@@ -171,13 +171,15 @@ function RatCard (props) {
         error && (
           <ApiErrorBox
             error={error}
-            renderError={(err) => {
-              return friendlyApiError(err, {
-                pointerMessages: {
-                  '/data/attributes/name': { detail: err.detail ?? 'CMDR name is invalid.' },
-                },
-              })
-            }} />
+            renderError={
+(err) => {
+  return friendlyApiError(err, {
+    pointerMessages: {
+      '/data/attributes/name': { detail: err.detail ?? 'CMDR name is invalid.' },
+    },
+  })
+}
+} />
         )
       }
       {

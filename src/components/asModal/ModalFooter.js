@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+
 function ModalFooter (props) {
   const {
     className,

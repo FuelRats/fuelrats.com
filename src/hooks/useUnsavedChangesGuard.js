@@ -14,12 +14,11 @@ const DEFAULT_MESSAGE = 'You have unsaved changes. Are you sure you want to leav
  *
  * Uses refs internally so the listener reads the latest flags without
  * having to re-bind on every change.
- *
  * @param {boolean} hasUnsavedChanges
  * @param {object} [options]
  * @param {boolean} [options.isSubmitting] Bypasses the prompt on route
- *   change while a submit is in-flight (the form is about to navigate
- *   intentionally).
+ * change while a submit is in-flight (the form is about to navigate
+ * intentionally).
  * @param {string} [options.message] Prompt text shown to the user.
  */
 export default function useUnsavedChangesGuard (hasUnsavedChanges, options = {}) {

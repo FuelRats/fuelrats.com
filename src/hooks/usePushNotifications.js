@@ -8,7 +8,6 @@ import getResponseError from '~/util/getResponseError'
 
 
 // NEXT_PUBLIC_ prefix makes Next.js inline this from .env at compile time.
-// eslint-disable-next-line no-undef -- process.env is injected by Next.js at build time
 const VAPID_PUBLIC_KEY = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY
 
 const BASE64_PAD_MODULO = 4
@@ -26,15 +25,8 @@ function urlBase64ToUint8Array (base64String) {
 
 /**
  * Hook for managing push notification subscription state.
- *
- * Returns:
- *   supported   — browser supports push + SW is registered + VAPID key configured
- *   ready       — initial subscription check has completed
- *   permission  — 'default' | 'granted' | 'denied'
- *   subscribed  — whether the current browser is actively subscribed
- *   loading     — subscribe/unsubscribe in progress
- *   toggle()    — unsubscribe if subscribed (for the bell button)
- *   subscribe(filters) — subscribe with platform/expansion filters
+ * Returns supported, ready, permission, subscribed, loading, toggle(), and subscribe(filters).
+ * @returns {object} Push notification state and controls.
  */
 export default function usePushNotifications () {
   const dispatch = useDispatch()

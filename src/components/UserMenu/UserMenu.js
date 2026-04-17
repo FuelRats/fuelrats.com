@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { useCallback, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -13,7 +14,6 @@ import {
 import { Nav, NavLink, NavSection } from '../Nav'
 import UserAvatar from '../UserAvatar'
 import styles from './UserMenu.module.scss'
-import clsx from 'clsx'
 
 
 

@@ -1,5 +1,8 @@
+import clsx from 'clsx'
 import { AnimatePresence, m } from 'motion/react'
-import React, { useCallback, useContext, useId, useMemo, useRef } from 'react'
+import React, {
+  useCallback, useContext, useId, useMemo, useRef,
+} from 'react'
 
 import useEventListener from '~/hooks/useEventListener'
 import useFocusTrap from '~/hooks/useFocusTrap'
@@ -7,7 +10,6 @@ import useMergeReducer from '~/hooks/useMergeReducer'
 
 import ModalHeader from './ModalHeader'
 import ModalPortal from './ModalPortal'
-import clsx from 'clsx'
 
 
 

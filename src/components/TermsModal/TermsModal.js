@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { useCallback } from 'react'
 
 import useToggleState from '~/hooks/useToggleState'
@@ -5,7 +6,6 @@ import useToggleState from '~/hooks/useToggleState'
 import asModal, { ModalContent, ModalFooter } from '../asModal'
 import WordpressPage from '../WordpressPage'
 import styles from './TermsModal.module.scss'
-import clsx from 'clsx'
 
 
 

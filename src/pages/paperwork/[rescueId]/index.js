@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { HttpStatus } from '@fuelrats/web-util/http'
 import clsx from 'clsx'
+import { isError } from 'flux-standard-action'
 import Link from 'next/link'
 import Router from 'next/router'
 import { useCallback, useState } from 'react'
@@ -8,7 +9,6 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { authenticated } from '~/components/AppLayout'
 import RatName from '~/components/RatName'
-import { isError } from 'flux-standard-action'
 import { deleteRescue, getRescue } from '~/store/actions/rescues'
 import {
   selectRatsByRescueId,
@@ -97,6 +97,10 @@ function Paperwork ({ query }) {
 
   const handleDeleteCancel = useCallback(() => {
     setDeleteConfirm(false)
+  }, [])
+
+  const handlePreventDefault = useCallback((event) => {
+    event.preventDefault()
   }, [])
 
   const renderRat = useCallback((rat) => {
@@ -193,20 +197,21 @@ function Paperwork ({ query }) {
           }
 
           {
-            !deleteConfirm && (
+            deleteConfirm === false && (
               <>
                 <Link
                   aria-disabled={!userCanEdit}
                   className={clsx('button compact', { disabled: !userCanEdit })}
                   href={userCanEdit ? makePaperworkRoute({ rescueId: rescue.id, edit: true }) : '#'}
-                  title={!userCanEdit ? 'You do not have permission to edit this rescue' : undefined}
-                  onClick={!userCanEdit ? (event) => { return event.preventDefault() } : undefined}>
+                  title={userCanEdit ? undefined : 'You do not have permission to edit this rescue'}
+                  // eslint-disable-next-line react/jsx-handler-names -- conditional handler
+                  onClick={userCanEdit ? undefined : handlePreventDefault}>
                   {'Edit'}
                 </Link>
                 <button
                   className="compact"
                   disabled={!userCanWriteAll}
-                  title={!userCanWriteAll ? 'You do not have permission to delete rescues' : undefined}
+                  title={userCanWriteAll ? undefined : 'You do not have permission to delete rescues'}
                   type="button"
                   onClick={handleDeleteClick}>
                   {'Delete'}

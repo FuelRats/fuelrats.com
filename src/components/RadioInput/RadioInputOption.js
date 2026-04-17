@@ -1,7 +1,7 @@
+import clsx from 'clsx'
 import PropTypes from 'prop-types'
 
 import styles from './RadioInputOption.module.scss'
-import clsx from 'clsx'
 
 
 

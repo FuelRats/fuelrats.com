@@ -6,9 +6,9 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { authenticated } from '~/components/AppLayout'
 import { getRescues } from '~/store/actions/rescues'
-import getResponseError from '~/util/getResponseError'
 import { selectPageViewDataById } from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
+import getResponseError from '~/util/getResponseError'
 import makePaperworkRoute from '~/util/router/makePaperworkRoute'
 
 
@@ -136,13 +136,15 @@ function ListRescues () {
           value={client}
           onChange={handleSearchChange} />
       </div>
-      {searchError && (
-        <div className="store-errors">
-          <div className="store-error">
-            <span className="detail">{searchError}</span>
-          </div>
-        </div>
-      )}
+      {
+searchError && (
+  <div className="store-errors">
+    <div className="store-error">
+      <span className="detail">{searchError}</span>
+    </div>
+  </div>
+)
+}
       <div className="rescue-list flex column">
         {rescues.map(renderListItem)}
       </div>

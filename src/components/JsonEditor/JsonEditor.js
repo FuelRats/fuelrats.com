@@ -1,10 +1,10 @@
+import clsx from 'clsx'
 import PropTypes from 'prop-types'
 
 import JsonObject from '~/components/JsonEditor/JsonObject'
 import useForm from '~/hooks/useForm'
 
 import styles from './JsonEditor.module.scss'
-import clsx from 'clsx'
 
 
 

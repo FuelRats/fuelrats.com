@@ -31,7 +31,7 @@ function playTone (frequency, duration, { type = 'sine', volume = 0.3, delay = 0
 
 /**
  * Bright double-ping then a resolving drop — unmistakable notification.
- * @param volume
+ * @param {number} volume - Playback volume (0–1).
  */
 export function playNewCaseSound (volume = 0.3) {
   playTone(880, 0.12, { type: 'sine', volume: volume * 1.2, delay: 0 }) // A5 — bright ping
@@ -42,7 +42,7 @@ export function playNewCaseSound (volume = 0.3) {
 
 /**
  * Soft double-tap — two gentle tones close together, like a quiet knock.
- * @param volume
+ * @param {number} volume - Playback volume (0–1).
  */
 export function playCaseChangeSound (volume = 0.3) {
   playTone(350, 0.08, { type: 'sine', volume: volume * 0.35, delay: 0 })
@@ -52,7 +52,7 @@ export function playCaseChangeSound (volume = 0.3) {
 
 /**
  * Soft marimba-like double knock — warm, low, distinct from the higher-pitched alerts.
- * @param volume
+ * @param {number} volume - Playback volume (0–1).
  */
 export function playCaseClosedSound (volume = 0.3) {
   playTone(294, 0.12, { type: 'triangle', volume: volume * 0.5, delay: 0 }) // D4
@@ -62,7 +62,7 @@ export function playCaseClosedSound (volume = 0.3) {
 
 /**
  * Urgent alternating two-tone alert.
- * @param volume
+ * @param {number} volume - Playback volume (0–1).
  */
 export function playCodeRedSound (volume = 0.4) {
   const pattern = [880, 660, 880, 660, 880]

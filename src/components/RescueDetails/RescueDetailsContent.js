@@ -1,8 +1,11 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useSelector } from 'react-redux'
+import clsx from 'clsx'
 import Link from 'next/link'
 import PropTypes from 'prop-types'
-import { cloneElement, useCallback, useMemo, useState, Fragment } from 'react'
+import {
+  cloneElement, useCallback, useMemo, useState, Fragment,
+} from 'react'
+import { useSelector } from 'react-redux'
 
 import {
   useRescuePlatform, useRescueLanguage, useRescuePermit, useRescueLandmark, useRescueHasScoopableStar,
@@ -17,11 +20,10 @@ import { getEdsmSystemUrl, getSpanshPlotUrl } from '~/util/system/externalLinks'
 
 import CarrierIcon from '../CarrierIcon'
 import CopyToClipboard from '../CopyToClipboard'
+import ElapsedTimer from '../ElapsedTimer'
 import PlatformBadge from '../PlatformBadge'
 import RatName from '../RatName'
-import ElapsedTimer from '../ElapsedTimer'
 import styles from './RescueDetails.module.scss'
-import clsx from 'clsx'
 
 
 
@@ -78,7 +80,8 @@ function RescueDetailsContent (props) {
     return getEdsmSystemUrl(system)
   }, [system])
   const spanshUrl = useMemo(() => {
-    if (typeof landmarkDistance !== 'number' || landmarkDistance < 2000) {
+    const SPANSH_MIN_DISTANCE = 2000
+    if (typeof landmarkDistance !== 'number' || landmarkDistance < SPANSH_MIN_DISTANCE) {
       return null
     }
     return getSpanshPlotUrl(system)
@@ -113,7 +116,9 @@ function RescueDetailsContent (props) {
     return groups
   }, [parsedQuotes])
 
-  const [expandedGroups, setExpandedGroups] = useState(() => new Set())
+  const [expandedGroups, setExpandedGroups] = useState(() => {
+    return new Set()
+  })
   const toggleGroup = useCallback((groupKey) => {
     setExpandedGroups((prev) => {
       const next = new Set(prev)
@@ -220,28 +225,32 @@ function RescueDetailsContent (props) {
                         </span>
                       )
                     }
-                    {edsmUrl && (
-                      <a
-                        className={styles.systemLink}
-                        href={edsmUrl}
-                        rel="noreferrer"
-                        target="_blank"
-                        title="View on EDSM">
-                        {'EDSM'}
-                        <FontAwesomeIcon className={styles.systemLinkIcon} icon="up-right-from-square" />
-                      </a>
-                    )}
-                    {spanshUrl && (
-                      <a
-                        className={styles.systemLink}
-                        href={spanshUrl}
-                        rel="noreferrer"
-                        target="_blank"
-                        title="Plot route on Spansh">
-                        {'Spansh'}
-                        <FontAwesomeIcon className={styles.systemLinkIcon} icon="up-right-from-square" />
-                      </a>
-                    )}
+                    {
+edsmUrl && (
+  <a
+    className={styles.systemLink}
+    href={edsmUrl}
+    rel="noreferrer"
+    target="_blank"
+    title="View on EDSM">
+    {'EDSM'}
+    <FontAwesomeIcon className={styles.systemLinkIcon} icon="up-right-from-square" />
+  </a>
+)
+}
+                    {
+spanshUrl && (
+  <a
+    className={styles.systemLink}
+    href={spanshUrl}
+    rel="noreferrer"
+    target="_blank"
+    title="Plot route on Spansh">
+    {'Spansh'}
+    <FontAwesomeIcon className={styles.systemLinkIcon} icon="up-right-from-square" />
+  </a>
+)
+}
                   </span>
                 </td>
               </tr>
@@ -254,11 +263,13 @@ function RescueDetailsContent (props) {
                 <td className={styles.infoValue}>
                   <span>
                     {rescuePlatform.long}
-                    {platform === 'pc' && expansion && (
-                      <span className={clsx('badge', styles.expansionBadge, expansion)}>
-                        {expansionLongNameMap[expansion] ?? expansion}
-                      </span>
-                    )}
+                    {
+platform === 'pc' && expansion && (
+  <span className={clsx('badge', styles.expansionBadge, expansion)}>
+    {expansionLongNameMap[expansion] ?? expansion}
+  </span>
+)
+}
                   </span>
                 </td>
               </tr>
@@ -271,14 +282,18 @@ function RescueDetailsContent (props) {
                 <td className={styles.infoValue}>
                   <span>
                     {rescueLanguage.long}
-                    {rescueLanguage.region && (
-                      <span className={styles.languageRegion}>
-                        {rescueLanguage.flag && (
-                          <span className={styles.languageFlag}>{rescueLanguage.flag}</span>
-                        )}
-                        {rescueLanguage.region}
-                      </span>
-                    )}
+                    {
+rescueLanguage.region && (
+  <span className={styles.languageRegion}>
+    {
+rescueLanguage.flag && (
+  <span className={styles.languageFlag}>{rescueLanguage.flag}</span>
+)
+}
+    {rescueLanguage.region}
+  </span>
+)
+}
                   </span>
                 </td>
               </tr>
@@ -303,21 +318,23 @@ function RescueDetailsContent (props) {
                   <td />
                   <td className={styles.infoValue} />
                 </tr>
-                {rescueRats.map((ratRow, index) => {
-                  if (index !== 0 || !carrier) {
-                    return ratRow
-                  }
-                  const [titleCell, valueCell] = ratRow.props.children
-                  const newValueCell = cloneElement(valueCell, {
-                    children: (
-                      <span className={styles.carrierRatGroup}>
-                        <CarrierIcon className={styles.carrierIcon} title="Fleet Carrier" />
-                        {valueCell.props.children}
-                      </span>
-                    ),
-                  })
-                  return cloneElement(ratRow, { children: [titleCell, newValueCell] })
-                })}
+                {
+rescueRats.map((ratRow, index) => {
+  if (index !== 0 || !carrier) {
+    return ratRow
+  }
+  const [titleCell, valueCell] = ratRow.props.children
+  const newValueCell = cloneElement(valueCell, {
+    children: (
+      <span className={styles.carrierRatGroup}>
+        <CarrierIcon className={styles.carrierIcon} title="Fleet Carrier" />
+        {valueCell.props.children}
+      </span>
+    ),
+  })
+  return cloneElement(ratRow, { children: [titleCell, newValueCell] })
+})
+}
               </>
             )
           }
@@ -331,7 +348,8 @@ function RescueDetailsContent (props) {
                 {
                   quoteGroups.map((group, groupIdx) => {
                     const groupKey = `g-${group.items[0].originalIndex}`
-                    const isCollapsible = group.isEvent && group.items.length >= 4
+                    const MIN_COLLAPSIBLE_EVENTS = 4
+                    const isCollapsible = group.isEvent && group.items.length >= MIN_COLLAPSIBLE_EVENTS
                     const isExpanded = expandedGroups.has(groupKey)
                     const hiddenCount = group.items.length - 2
 
@@ -353,11 +371,13 @@ function RescueDetailsContent (props) {
                             <span className={styles.quoteIndex}>
                               {item.originalIndex}
                             </span>
-                            {!item.isEvent && (
-                              <span className={styles.quoteAuthor}>
-                                {`<${item.quoteSender}>`}
-                              </span>
-                            )}
+                            {
+!item.isEvent && (
+  <span className={styles.quoteAuthor}>
+    {`<${item.quoteSender}>`}
+  </span>
+)
+}
 
                             <span className={styles.quoteMessage}>
                               {item.quoteMessage}
@@ -380,14 +400,18 @@ function RescueDetailsContent (props) {
                           <button
                             className={styles.eventCollapseButton}
                             type="button"
-                            onClick={() => {
-                              return toggleGroup(groupKey)
-                            }}>
+                            onClick={
+() => {
+  return toggleGroup(groupKey)
+}
+}>
                             <FontAwesomeIcon className={styles.eventCollapseIcon} icon={isExpanded ? 'chevron-up' : 'chevron-down'} />
                             <span className={styles.eventCollapseText}>
-                              {isExpanded
-                                ? `Hide ${hiddenCount} event${hiddenCount === 1 ? '' : 's'}`
-                                : `Show ${hiddenCount} hidden event${hiddenCount === 1 ? '' : 's'}`}
+                              {
+isExpanded
+  ? `Hide ${hiddenCount} event${hiddenCount === 1 ? '' : 's'}`
+  : `Show ${hiddenCount} hidden event${hiddenCount === 1 ? '' : 's'}`
+}
                             </span>
                           </button>
                         </td>

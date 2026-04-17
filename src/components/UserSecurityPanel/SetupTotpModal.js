@@ -12,6 +12,8 @@ import RecoveryCodesDisplay from './RecoveryCodesDisplay'
 import styles from './UserSecurityPanel.module.scss'
 
 
+const TOTP_CODE_LENGTH = 6
+
 function SetupTotpModal ({ onClose }) {
   const dispatch = useDispatch()
   const [step, setStep] = useState('loading')
@@ -41,7 +43,7 @@ function SetupTotpModal ({ onClose }) {
   }, [dispatch])
 
   const handleSubmit = useCallback(async () => {
-    if (token.length !== 6) {
+    if (token.length !== TOTP_CODE_LENGTH) {
       return
     }
     setSubmitting(true)
@@ -72,18 +74,20 @@ function SetupTotpModal ({ onClose }) {
           error && (
             <ApiErrorBox
               error={error}
-              renderError={(err) => {
-                return friendlyApiError(err, {
-                  pointerMessages: {
-                    '/data/attributes/token': { detail: 'That code is incorrect. Double-check your authenticator app and try again.' },
-                    '/data/attributes/secret': { detail: 'Setup session expired. Please close this dialog and try again.' },
-                  },
-                  statusMessages: {
-                    conflict: { detail: 'Two-factor authentication is already enabled on this account.' },
-                  },
-                  fallbackDetail: 'Unable to complete setup. Please try again.',
-                })
-              }} />
+              renderError={
+(err) => {
+  return friendlyApiError(err, {
+    pointerMessages: {
+      '/data/attributes/token': { detail: 'That code is incorrect. Double-check your authenticator app and try again.' },
+      '/data/attributes/secret': { detail: 'Setup session expired. Please close this dialog and try again.' },
+    },
+    statusMessages: {
+      conflict: { detail: 'Two-factor authentication is already enabled on this account.' },
+    },
+    fallbackDetail: 'Unable to complete setup. Please try again.',
+  })
+}
+} />
           )
         }
 
@@ -107,7 +111,7 @@ function SetupTotpModal ({ onClose }) {
 
               <div className={styles.totpForm}>
                 <input
-                  autoFocus
+                  aria-label="Verification code"
                   className={styles.totpInput}
                   disabled={submitting}
                   inputMode="numeric"
@@ -116,15 +120,24 @@ function SetupTotpModal ({ onClose }) {
                   placeholder="6-digit code"
                   type="text"
                   value={token}
-                  onChange={(event) => { return setToken(event.target.value.replace(/\D/gu, '')) }}
+                  onChange={
+(event) => {
+  return setToken(event.target.value.replace(/\D/gu, ''))
+}
+}
                   onKeyDown={handleTokenKeyDown} />
                 <input
+                  aria-label="Authenticator description"
                   className={styles.descriptionInput}
                   disabled={submitting}
                   placeholder="Description (e.g. Google Authenticator)"
                   type="text"
                   value={description}
-                  onChange={(event) => { return setDescription(event.target.value) }} />
+                  onChange={
+(event) => {
+  return setDescription(event.target.value)
+}
+} />
               </div>
             </>
           )
@@ -149,7 +162,7 @@ function SetupTotpModal ({ onClose }) {
             step === 'scan' && (
               <button
                 className="green"
-                disabled={submitting || token.length !== 6}
+                disabled={submitting || token.length !== TOTP_CODE_LENGTH}
                 type="button"
                 onClick={handleSubmit}>
                 {submitting ? 'Verifying...' : 'Verify & Enable'}

@@ -135,7 +135,9 @@ function Paperwork ({ query }) {
 
     if (Array.isArray(ratsChange)) {
       updateData.relationships.rats = {
-        data: ratsChange.map(({ type, id }) => { return { type, id } }),
+        data: ratsChange.map(({ type, id }) => {
+          return { type, id }
+        }),
       }
     }
 
@@ -171,21 +173,23 @@ function Paperwork ({ query }) {
         (submitError && !submitting) && (
           <ApiErrorBox
             error={submitError}
-            renderError={(err) => {
-              return friendlyApiError(err, {
-                pointerMessages: {
-                  '/data/attributes/system': { detail: 'Invalid system name. Please check and try again.' },
-                  '/data/attributes/platform': { detail: 'Invalid platform.' },
-                  '/data/attributes/outcome': { detail: 'Invalid outcome.' },
-                  '/data/attributes/title': { detail: 'Invalid operation title.' },
-                  '/data/attributes/notes': { detail: 'Invalid notes.' },
-                },
-                statusMessages: {
-                  forbidden: { detail: 'You do not have permission to edit this rescue.' },
-                },
-                fallbackDetail: 'Unable to submit paperwork. Please try again.',
-              })
-            }} />
+            renderError={
+(err) => {
+  return friendlyApiError(err, {
+    pointerMessages: {
+      '/data/attributes/system': { detail: 'Invalid system name. Please check and try again.' },
+      '/data/attributes/platform': { detail: 'Invalid platform.' },
+      '/data/attributes/outcome': { detail: 'Invalid outcome.' },
+      '/data/attributes/title': { detail: 'Invalid operation title.' },
+      '/data/attributes/notes': { detail: 'Invalid notes.' },
+    },
+    statusMessages: {
+      forbidden: { detail: 'You do not have permission to edit this rescue.' },
+    },
+    fallbackDetail: 'Unable to submit paperwork. Please try again.',
+  })
+}
+} />
         )
       }
 

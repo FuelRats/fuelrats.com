@@ -51,15 +51,17 @@ function RegenerateRecoveryCodesModal ({ onClose }) {
           error && (
             <ApiErrorBox
               error={error}
-              renderError={(err) => {
-                return friendlyApiError(err, {
-                  statusMessages: {
-                    unauthorized: { detail: 'That code is incorrect. Check your authenticator app and try again.' },
-                    not_found: { detail: 'Two-factor authentication is not enabled on this account.' },
-                  },
-                  fallbackDetail: 'Unable to regenerate recovery codes. Please try again.',
-                })
-              }} />
+              renderError={
+(err) => {
+  return friendlyApiError(err, {
+    statusMessages: {
+      unauthorized: { detail: 'That code is incorrect. Check your authenticator app and try again.' },
+      not_found: { detail: 'Two-factor authentication is not enabled on this account.' },
+    },
+    fallbackDetail: 'Unable to regenerate recovery codes. Please try again.',
+  })
+}
+} />
           )
         }
 
@@ -73,13 +75,17 @@ function RegenerateRecoveryCodesModal ({ onClose }) {
               </p>
               <div className={styles.totpForm}>
                 <input
-                  autoFocus
+                  aria-label="Authenticator or recovery code"
                   className={styles.totpInput}
                   disabled={submitting}
                   placeholder="6-digit code or recovery code"
                   type="text"
                   value={code}
-                  onChange={(event) => { return setCode(event.target.value) }}
+                  onChange={
+(event) => {
+  return setCode(event.target.value)
+}
+}
                   onKeyDown={handleKeyDown} />
               </div>
             </>

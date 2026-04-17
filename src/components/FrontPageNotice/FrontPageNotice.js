@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import Image from 'next/image'
 import PropTypes from 'prop-types'
 
@@ -6,7 +7,6 @@ import makePaperworkRoute from '~/util/router/makePaperworkRoute'
 
 import AuthDependantLink from '../AuthDependantLink'
 import styles from './FrontPageNotice.module.scss'
-import clsx from 'clsx'
 
 
 

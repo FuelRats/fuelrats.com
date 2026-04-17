@@ -1,4 +1,7 @@
-import { AnimatePresence, LazyMotion, MotionConfig, domAnimation, m } from 'motion/react'
+import clsx from 'clsx'
+import {
+  AnimatePresence, LazyMotion, MotionConfig, domAnimation, m,
+} from 'motion/react'
 import NextHead from 'next/head'
 import { StrictMode, useCallback } from 'react'
 import { Provider } from 'react-redux'
@@ -15,14 +18,14 @@ import {
   notifyPageDestroyed,
   notifyPageLoading,
 } from '~/store/actions/session'
-import '~/util/fontawesome/init'
 import resolvePageMeta from '~/util/getInitialProps/resolvePageMeta'
 import withReduxStore from '~/util/withReduxStore'
 
-import ErrorPage from './_error'
-
+// eslint-disable-next-line import/no-unassigned-import -- side-effect: registers FA icon library
+import '~/util/fontawesome/init'
 import '~/scss/app.scss'
-import clsx from 'clsx'
+
+import ErrorPage from './_error'
 
 
 
@@ -82,19 +85,19 @@ function FuelRatsApp (props) {
       </NextHead>
       <LazyMotion strict features={domAnimation}>
         <MotionConfig reducedMotion="user">
-        <div className={clsx({ forceDrawer })} id="FuelRatsApp" role="application">
-          <Provider store={store}>
-            <ServiceWorkerRegistration />
-            <NProgress />
-            <Header />
-            <UserMenu />
+          <div className={clsx({ forceDrawer })} id="FuelRatsApp" role="application">
+            <Provider store={store}>
+              <ServiceWorkerRegistration />
+              <NProgress />
+              <Header />
+              <UserMenu />
 
-            <AnimatePresence initial={false} onExitComplete={handlePageDestroy}>
-              <m.main
-                key={key}
-                {...pageMotionConfig}
-                className={clsx('page', className)}>
-                {
+              <AnimatePresence initial={false} onExitComplete={handlePageDestroy}>
+                <m.main
+                  key={key}
+                  {...pageMotionConfig}
+                  className={clsx('page', className)}>
+                  {
                   !noHeader && (
                     <header className="page-header">
                       {breadcrumbs && (<Breadcrumbs items={breadcrumbs} />)}
@@ -104,15 +107,15 @@ function FuelRatsApp (props) {
                     </header>
                   )
                 }
-                <PageErrorBoundary>
-                  <Page {...pageProps} />
-                </PageErrorBoundary>
-              </m.main>
-            </AnimatePresence>
+                  <PageErrorBoundary>
+                    <Page {...pageProps} />
+                  </PageErrorBoundary>
+                </m.main>
+              </AnimatePresence>
 
-            <LoginModal />
-          </Provider>
-        </div>
+              <LoginModal />
+            </Provider>
+          </div>
         </MotionConfig>
       </LazyMotion>
     </StrictMode>

@@ -34,24 +34,26 @@ function RatValueTag ({ rat }) {
     <RatName rat={rat} size={16}>
       <span
         className="badge"
-        style={{
-          backgroundColor: PLATFORM_COLORS[platform] ?? '#555',
-          color: 'white',
-          marginLeft: '0.3em',
-          marginRight: 0,
-          fontSize: '0.75em',
-        }}>
+        style={
+{
+  backgroundColor: PLATFORM_COLORS[platform] ?? '#555',
+  color: 'white',
+  marginLeft: '0.3em',
+  marginRight: 0,
+  fontSize: '0.75em',
+}
+}>
         {PLATFORM_LABELS[platform] ?? platform}
       </span>
     </RatName>
   )
 }
 
-export function renderRatValue (rat) {
+function renderRatValue (rat) {
   return (<RatValueTag rat={rat} />)
 }
 
-export function renderRatLoader () {
+function renderRatLoader () {
   return (
     <span>
       <FontAwesomeIcon fixedWidth pulse icon="spinner" />
@@ -95,3 +97,4 @@ function RatTagsInput (props) {
 
 
 export default RatTagsInput
+export { renderRatValue, renderRatLoader }

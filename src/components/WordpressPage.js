@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import PropTypes from 'prop-types'
 import { useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -5,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import useToggleState from '~/hooks/useToggleState'
 import { getWordpressPage } from '~/store/actions/wordpress'
 import { selectWordpressPageBySlug } from '~/store/selectors'
-import clsx from 'clsx'
 
 
 

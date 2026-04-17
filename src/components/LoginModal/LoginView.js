@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import Router from 'next/router'
 import { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
@@ -9,13 +10,12 @@ import PasswordFieldset from '~/components/Fieldsets/PasswordFieldset'
 import SwitchFieldset from '~/components/Fieldsets/SwitchFieldset'
 import useForm from '~/hooks/useForm'
 import { login } from '~/store/actions/authentication'
-import { listPasskeys, loginWithPasskey, registerPasskey } from '~/store/actions/passkeys'
+import { listPasskeys, loginWithPasskey } from '~/store/actions/passkeys'
 import { logout } from '~/store/actions/session'
 import { getUserProfile } from '~/store/actions/user'
 import getResponseError from '~/util/getResponseError'
 
 import styles from './LoginModal.module.scss'
-import clsx from 'clsx'
 
 
 

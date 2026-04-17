@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
-import { useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
 import { selectRescueById } from '~/store/selectors'
 

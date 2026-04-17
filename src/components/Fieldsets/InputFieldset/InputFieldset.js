@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import _get from 'lodash/get'
 import PropTypes from 'prop-types'
 import React, { useCallback, useRef, useState } from 'react'
@@ -12,7 +13,6 @@ import extPropTypes from '~/util/propTypes/extPropTypes'
 
 import styles from './InputFieldset.module.scss'
 import ValidityIcon from './ValidityIcon'
-import clsx from 'clsx'
 
 
 

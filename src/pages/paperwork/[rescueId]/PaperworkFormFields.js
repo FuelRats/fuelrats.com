@@ -64,6 +64,7 @@ function PaperworkFormFields (props) {
       <fieldset>
         <label htmlFor="client">{'Client CMDR name'}</label>
         <input
+          aria-label="Client CMDR name"
           disabled={submitting}
           id="client"
           name="client"

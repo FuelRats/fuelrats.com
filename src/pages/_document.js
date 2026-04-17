@@ -1,5 +1,6 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 
+// eslint-disable-next-line import/no-unassigned-import -- side-effect: registers FA icon library
 import '~/util/fontawesome/init'
 
 

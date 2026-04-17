@@ -11,6 +11,9 @@ import styles from './UserSecurityPanel.module.scss'
  * Shows the one-time recovery codes returned by the API after TOTP setup
  * or regeneration. Users can copy them to the clipboard or download a
  * .txt file so they have them saved before dismissing the dialog.
+ * @param {object} root0 - Component props.
+ * @param {string[]} root0.codes - Array of recovery code strings.
+ * @returns {import('react').ReactElement} The rendered recovery codes display.
  */
 function RecoveryCodesDisplay ({ codes }) {
   const [copied, setCopied] = useState(false)
@@ -18,8 +21,11 @@ function RecoveryCodesDisplay ({ codes }) {
   const handleCopy = useCallback(async () => {
     try {
       await navigator.clipboard.writeText(codes.join('\n'))
+      const COPY_FEEDBACK_MS = 2000
       setCopied(true)
-      setTimeout(() => { return setCopied(false) }, 2000)
+      setTimeout(() => {
+        return setCopied(false)
+      }, COPY_FEEDBACK_MS)
     } catch {
       // Fallback: nothing — user can still manually copy from the list
     }
@@ -54,9 +60,11 @@ function RecoveryCodesDisplay ({ codes }) {
       </div>
 
       <ul className={styles.recoveryCodesList}>
-        {codes.map((code) => {
-          return (<li key={code}><code>{code}</code></li>)
-        })}
+        {
+codes.map((code) => {
+  return (<li key={code}><code>{code}</code></li>)
+})
+}
       </ul>
 
       <div className={styles.recoveryCodesActions}>

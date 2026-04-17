@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 
@@ -6,7 +7,6 @@ import { selectDispatchBoard } from '~/store/selectors/dispatch'
 
 import styles from './DispatchTable.module.scss'
 import RescueRow from './RescueRow'
-import clsx from 'clsx'
 
 
 
@@ -61,8 +61,8 @@ function DispatchTable (props) {
         <tbody aria-busy={loading || undefined}>
           {
             showSkeleton
-              ? Array.from({ length: SKELETON_ROW_COUNT }, (_, i) => {
-                return <SkeletonRow key={i} />
+              ? Array.from({ length: SKELETON_ROW_COUNT }, (_, idx) => {
+                return <SkeletonRow key={idx} />
               })
               : rescueIds?.map((rescueId) => {
                 return (

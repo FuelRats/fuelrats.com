@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+
 function InlineEditSpan ({
   canEdit,
   className,
