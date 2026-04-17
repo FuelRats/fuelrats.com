@@ -7,6 +7,7 @@ import { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { authenticated } from '~/components/AppLayout'
+import RatName from '~/components/RatName'
 import { isError } from 'flux-standard-action'
 import { deleteRescue, getRescue } from '~/store/actions/rescues'
 import {
@@ -101,12 +102,13 @@ function Paperwork ({ query }) {
   const renderRat = useCallback((rat) => {
     return (
       <li key={rat.id} className="first-limpet">
-        {rat.attributes.name}
-        {
-          (rat.id === rescue.relationships.firstLimpet?.data?.id) && (
-            <span className="badge first-limpet">{'1st'}</span>
-          )
-        }
+        <RatName rat={rat} size={20}>
+          {
+            (rat.id === rescue.relationships.firstLimpet?.data?.id) && (
+              <span className="badge first-limpet">{'1st'}</span>
+            )
+          }
+        </RatName>
       </li>
     )
   }, [rescue])

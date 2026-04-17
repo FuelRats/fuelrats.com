@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import qs from 'qs'
 import { useCallback } from 'react'
 
+import RatName from './RatName'
 import TagsInput from './TagsInput'
 
 
@@ -24,14 +25,13 @@ const SEARCH_LIMIT = 10
 
 
 
-export function renderRatValue (rat) {
+function RatValueTag ({ rat }) {
   const platform = rat?.attributes?.platform
   if (!platform) {
     return rat?.attributes?.name ?? rat?.value ?? ''
   }
   return (
-    <span>
-      {rat.attributes.name}
+    <RatName rat={rat} size={16}>
       <span
         className="badge"
         style={{
@@ -43,8 +43,12 @@ export function renderRatValue (rat) {
         }}>
         {PLATFORM_LABELS[platform] ?? platform}
       </span>
-    </span>
+    </RatName>
   )
+}
+
+export function renderRatValue (rat) {
+  return (<RatValueTag rat={rat} />)
 }
 
 export function renderRatLoader () {

@@ -18,6 +18,7 @@ import { getEdsmSystemUrl, getSpanshPlotUrl } from '~/util/system/externalLinks'
 import CarrierIcon from '../CarrierIcon'
 import CopyToClipboard from '../CopyToClipboard'
 import PlatformBadge from '../PlatformBadge'
+import RatName from '../RatName'
 import ElapsedTimer from '../ElapsedTimer'
 import styles from './RescueDetails.module.scss'
 import clsx from 'clsx'
@@ -27,8 +28,6 @@ import clsx from 'clsx'
 
 
 const selectRenderedRatList = createSelectRenderedRatList((rat, index) => {
-  const { name } = rat.attributes
-
   return (
     <tr key={rat.id}>
       {
@@ -37,18 +36,7 @@ const selectRenderedRatList = createSelectRenderedRatList((rat, index) => {
           : (<td />)
       }
       <td className={clsx(styles.infoValue, styles.infoGroup)}>
-        {
-          rat.type === 'unidentified-rats' && (
-            <i title="This rat is unidentified">
-              {`${name}*`}
-            </i>
-          )
-        }
-        {
-          rat.type === 'rats' && (
-            <span>{name}</span>
-          )
-        }
+        <RatName rat={rat} size={22} />
       </td>
     </tr>
   )

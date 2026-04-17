@@ -16,6 +16,7 @@ import { selectRescueById, createSelectRenderedRatList } from '~/store/selectors
 import makeRoute from '~/util/router/makeRoute'
 
 import CopyToClipboard from '../CopyToClipboard'
+import RatName from '../RatName'
 import styles from './DispatchTable.module.scss'
 import clsx from 'clsx'
 
@@ -28,11 +29,7 @@ const selectRenderedRatList = createSelectRenderedRatList((rat, index, arr) => {
 
   return (
     <CopyToClipboard key={rat.id} text={name}>
-      {
-        rat.type === 'unidentified-rats'
-          ? (<i title="This rat is unidentified">{name}</i>)
-          : name
-        }
+      <RatName rat={rat} size={18} />
       {isLast ? '' : ', '}
     </CopyToClipboard>
   )
