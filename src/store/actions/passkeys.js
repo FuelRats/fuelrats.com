@@ -95,7 +95,9 @@ export const registerPasskey = (name) => {
     let credential = null
     try {
       credential = await startRegistration({ optionsJSON: options })
-    } catch {
+    } catch (err) {
+      // eslint-disable-next-line no-console -- user cancelled or browser rejected
+      console.error('Passkey registration failed:', err)
       return undefined
     }
 
