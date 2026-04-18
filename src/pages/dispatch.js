@@ -103,6 +103,23 @@ function DispatchBoard ({ query }) {
     }
   }, [socketStatus, loaded, dispatch])
 
+  // Update app badge with active rescue count, clear on unmount
+  useEffect(() => {
+    if (navigator.setAppBadge) {
+      if (rescueIds?.length) {
+        navigator.setAppBadge(rescueIds.length)
+      } else {
+        navigator.clearAppBadge()
+      }
+    }
+  }, [rescueIds])
+
+  useEffect(() => {
+    return () => {
+      navigator.clearAppBadge?.()
+    }
+  }, [])
+
   useEffect(() => {
     const prevIds = prevRescueIdsRef.current
     prevRescueIdsRef.current = rescueIds

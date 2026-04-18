@@ -44,20 +44,37 @@ self.addEventListener('push', (event) => {
 self.addEventListener('notificationclick', (event) => {
   event.notification.close()
 
-  const url = event.notification.data?.url ?? '/dispatch'
+  const data = event.notification.data ?? {}
+  const rescueId = data.rescueId
+  const targetUrl = data.url ?? '/dispatch'
+  const targetPath = rescueId ? `/dispatch?rId=${rescueId}` : targetUrl
 
   event.waitUntil(
     self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((windowClients) => {
+      // Prefer a window already on the dispatch board
       for (const client of windowClients) {
-        if (new URL(client.url).origin === self.location.origin && 'focus' in client) {
-          client.focus()
-          if (url) {
-            client.navigate(url)
-          }
-          return
+        const clientUrl = new URL(client.url)
+        if (clientUrl.origin !== self.location.origin) {
+          continue
+        }
+
+        if (clientUrl.pathname === '/dispatch') {
+          // Already on dispatch — just navigate to the rescue and focus
+          client.navigate(targetPath)
+          return client.focus()
         }
       }
-      return self.clients.openWindow(url)
+
+      // Fall back to any same-origin window
+      for (const client of windowClients) {
+        if (new URL(client.url).origin === self.location.origin && 'focus' in client) {
+          client.navigate(targetPath)
+          return client.focus()
+        }
+      }
+
+      // No existing window — open a new one
+      return self.clients.openWindow(targetPath)
     }),
   )
 })
