@@ -5,7 +5,7 @@ import { UAParser } from 'ua-parser-js'
 
 import ConfirmActionButton from '~/components/ConfirmActionButton'
 import ApiErrorBox from '~/components/MessageBox/ApiErrorBox'
-import { listSessions, revokeSession } from '~/store/actions/sessions'
+import { listSessions, revokeSession, revokeAllSessions } from '~/store/actions/sessions'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 import friendlyApiError from '~/util/friendlyApiError'
 import getResponseError from '~/util/getResponseError'
@@ -135,16 +135,14 @@ function ActiveSessionsPanel () {
   const handleSignOutEverywhere = useCallback(async () => {
     setSigningOutAll(true)
     setError(null)
-    const results = await Promise.all(otherSessions.map((session) => {
-      return dispatch(revokeSession(session.id))
-    }))
-    const firstError = results.map(getResponseError).find(Boolean)
-    if (firstError) {
-      setError(firstError)
+    const response = await dispatch(revokeAllSessions())
+    const err = getResponseError(response)
+    if (err) {
+      setError(err)
     }
     await fetchSessions()
     setSigningOutAll(false)
-  }, [dispatch, fetchSessions, otherSessions])
+  }, [dispatch, fetchSessions])
 
   return (
     <div className="panel">
