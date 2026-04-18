@@ -79,7 +79,8 @@ function LoginView () {
     }
 
     onClose()
-    Router.push('/profile/overview')
+    const dest = new URLSearchParams(window.location.search).get('destination')
+    Router.push(dest || '/profile/overview')
   }, [dispatch, onClose, setModalState, webAuthnSupported])
 
   const handleRegisterClick = useCallback(() => {
@@ -123,7 +124,8 @@ function LoginView () {
       return
     }
     onClose()
-    Router.push('/profile/overview')
+    const dest = new URLSearchParams(window.location.search).get('destination')
+    Router.push(dest || '/profile/overview')
   }, [dispatch, onClose, setModalState])
 
   const { Form, canSubmit, submitting } = useForm({ data: data ?? initialData, onSubmit })

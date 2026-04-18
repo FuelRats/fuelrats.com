@@ -97,7 +97,7 @@ $bounce-bezier: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 main.dispatchBoard {
-  width: 100vw;
+  width: 100%;
 
   color: $white;
   background: fixed $black url('/static/images/dispatch/ratdecal.png') center no-repeat;
@@ -132,7 +132,7 @@ main.dispatchBoard {
 
   flex-direction: row;
 
-  width: calc(100vw - 2rem);
+  width: calc(100% - 2rem);
   margin: 0 1rem;
 
   &:empty {
@@ -166,7 +166,7 @@ main.dispatchBoard {
       flex-grow: 1;
 
       max-width: 100%;
-      margin: 0 8rem 1rem;
+      margin: 0 2rem 1rem;
     }
 
     &.detail {
@@ -201,7 +201,7 @@ main.dispatchBoard {
     }
   }
   @media screen and (max-width: 700px) {
-    width: calc(100vw - 1rem);
+    width: calc(100% - 1rem);
     margin: 0 0.5rem;
 
     &.openDetail > section {

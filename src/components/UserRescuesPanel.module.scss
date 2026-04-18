@@ -5,7 +5,7 @@
 }
 
 .table {
-  min-width: 600px;
+  min-width: 500px;
   width: 100%;
 
   border: 1px solid $grey-dark;
@@ -50,6 +50,64 @@
       background-color: rgba(255, 87, 69, 0.25);
     }
   }
+
+  @media only screen and (max-width: 768px) {
+    display: block;
+
+    min-width: 0;
+
+    border: none;
+
+    thead {
+      display: none;
+    }
+
+    tbody {
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 0.5rem;
+    }
+
+    tbody tr {
+      display: grid;
+
+      grid-template-columns: 1fr auto;
+      gap: 0.25rem 0.75rem;
+
+      padding: 0.75rem;
+
+      border: 1px solid $grey-dark;
+      border-radius: 4px;
+
+      background-color: transparent;
+
+      &:nth-child(even) {
+        background-color: $light-grey;
+      }
+    }
+
+    td {
+      padding: 0;
+
+      border: none;
+
+      line-height: 1.6;
+    }
+
+    .cmdr {
+      grid-column: 1;
+      grid-row: 1;
+
+      font-size: 1rem;
+    }
+
+    .actions {
+      grid-column: 2;
+      grid-row: 1;
+    }
+  }
 }
 
 .empty {
@@ -62,7 +120,6 @@
 
 .cmdr {
   font-weight: 600;
-  white-space: nowrap;
 
   small {
     color: $grey;
@@ -118,7 +175,6 @@
   color: $grey-darkened;
 
   font-size: 0.85rem;
-  white-space: nowrap;
 }
 
 .actions {

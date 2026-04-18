@@ -1,3 +1,16 @@
 .page.home {
+  padding-top: 0;
+
   background-color: #0D1011;
+
+  .hero {
+    padding-top: calc(6rem + env(safe-area-inset-top, 0px));
+
+    @media only screen and (max-width: 768px) {
+      padding-top: calc(3rem + env(safe-area-inset-top, 0px));
+    }
+    @media only screen and (max-width: 480px) {
+      padding-top: calc(2rem + env(safe-area-inset-top, 0px));
+    }
+  }
 }

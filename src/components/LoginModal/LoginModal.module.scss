@@ -125,6 +125,14 @@
 }
 
 @media screen and (max-width: 768px) {
+  .loginForm {
+    padding: 0 1rem;
+  }
+
+  .passkeySection {
+    padding: 0 1rem;
+  }
+
   [role='dialog'] .footer > menu[type='toolbar'] {
     flex-direction: column-reverse;
 

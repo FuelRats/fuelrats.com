@@ -16,7 +16,7 @@ import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 import formatQuoteTime from '~/util/date/formatQuoteTime'
 import { expansionLongNameMap } from '~/util/expansion'
 import makePaperworkRoute from '~/util/router/makePaperworkRoute'
-import { getEdsmSystemUrl, getSpanshPlotUrl } from '~/util/system/externalLinks'
+import { getEdsmSystemUrl, submitSpanshRoute } from '~/util/system/externalLinks'
 
 import CarrierIcon from '../CarrierIcon'
 import CopyToClipboard from '../CopyToClipboard'
@@ -79,13 +79,13 @@ function RescueDetailsContent (props) {
   const edsmUrl = useMemo(() => {
     return getEdsmSystemUrl(system)
   }, [system])
-  const spanshUrl = useMemo(() => {
-    const SPANSH_MIN_DISTANCE = 2000
-    if (typeof landmarkDistance !== 'number' || landmarkDistance < SPANSH_MIN_DISTANCE) {
-      return null
+  const showSpansh = typeof landmarkDistance === 'number' && landmarkDistance >= 2000
+  const handleSpanshClick = useCallback(async () => {
+    const url = await submitSpanshRoute(system)
+    if (url) {
+      window.open(url, '_blank', 'noreferrer')
     }
-    return getSpanshPlotUrl(system)
-  }, [system, landmarkDistance])
+  }, [system])
 
   const parsedQuotes = useMemo(() => {
     return quotes.map((quote, originalIndex) => {
@@ -240,13 +240,15 @@ edsmUrl && (
 )
 }
                     {
-spanshUrl && (
+showSpansh && (
   <a
     className={styles.systemLink}
-    href={spanshUrl}
-    rel="noreferrer"
-    target="_blank"
-    title="Plot route on Spansh">
+    href="#"
+    title="Plot route on Spansh"
+    onClick={(event) => {
+      event.preventDefault()
+      handleSpanshClick()
+    }}>
     {'Spansh'}
     <FontAwesomeIcon className={styles.systemLinkIcon} icon="up-right-from-square" />
   </a>

@@ -1,6 +1,8 @@
 .row {
   display: flex;
 
+  flex-wrap: wrap;
+
   align-items: flex-start;
   align-content: stretch;
 
@@ -18,7 +20,7 @@
 
   > * {
     flex-grow: 1;
-    flex-basis: 0;
+    flex-basis: 20rem;
 
     margin-right: 2rem;
 

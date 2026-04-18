@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import { useCallback, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -63,10 +64,11 @@ function UserMenu () {
           )
           : (
             <button
-              className="secondary"
+              className={clsx('secondary', styles.loginButton)}
               type="button"
               onClick={handleLogin}>
-              {'Rat Login'}
+              <FontAwesomeIcon icon="user" />
+              <span className={styles.loginText}>{'Rat Login'}</span>
             </button>
           )
       }

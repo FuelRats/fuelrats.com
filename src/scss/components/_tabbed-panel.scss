@@ -6,6 +6,7 @@
     border-color: $red;
     border-bottom-width: 0.2rem;
 
+
     ul {
       display: flex;
 
@@ -19,11 +20,19 @@
     li {
       flex-shrink: 0;
     }
+
+    @media only screen and (max-width: 768px) {
+      margin: 0 0 1rem;
+
+      ul {
+        margin-left: 0;
+      }
+    }
   }
 
   .tab {
     margin-bottom: -0.2rem;
-    padding: 0.5rem 2rem 0.7rem;
+    padding: 0.5rem 1.5rem 0.7rem;
 
     border: 0.2rem solid $red;
     border-bottom-width: 0;

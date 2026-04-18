@@ -34,6 +34,9 @@ const env = Object.freeze({
   sapi: {
     url: process.env.FR_SAPI_URL ?? 'https://systems.api.fuelrats.com',
   },
+  vapid: {
+    publicKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
+  },
 })
 
 module.exports = env

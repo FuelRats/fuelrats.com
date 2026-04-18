@@ -23,7 +23,7 @@ class FuelRatsWebsite extends Document {
           <meta content="Fuel Rats" name="application-name" />
           <meta content="#d65050" name="theme-color" />
 
-          <meta content="Fuel Rats" name="apple-mobile-web-app-title" />
+          <meta content="Dispatch Board" name="apple-mobile-web-app-title" />
           <meta content="yes" name="apple-mobile-web-app-capable" />
           <meta content="yes" name="mobile-web-app-capable" />
           <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" />
@@ -36,14 +36,15 @@ class FuelRatsWebsite extends Document {
           <meta content="/static/favicon/mstile-310x150.png" name="msapplication-wide310x150logo" />
           <meta content="/static/favicon/mstile-310x310.png" name="msapplication-square310x310logo" />
 
-          <link href="/static/favicon/apple-touch-icon-57x57.png" rel="apple-touch-icon-precomposed" sizes="57x57" />
-          <link href="/static/favicon/apple-touch-icon-114x114.png" rel="apple-touch-icon-precomposed" sizes="114x114" />
-          <link href="/static/favicon/apple-touch-icon-72x72.png" rel="apple-touch-icon-precomposed" sizes="72x72" />
-          <link href="/static/favicon/apple-touch-icon-144x144.png" rel="apple-touch-icon-precomposed" sizes="144x144" />
-          <link href="/static/favicon/apple-touch-icon-60x60.png" rel="apple-touch-icon-precomposed" sizes="60x60" />
-          <link href="/static/favicon/apple-touch-icon-120x120.png" rel="apple-touch-icon-precomposed" sizes="120x120" />
-          <link href="/static/favicon/apple-touch-icon-76x76.png" rel="apple-touch-icon-precomposed" sizes="76x76" />
-          <link href="/static/favicon/apple-touch-icon-152x152.png" rel="apple-touch-icon-precomposed" sizes="152x152" />
+          <link href="/static/favicon/pwa-icon-180.png" rel="apple-touch-icon" sizes="180x180" />
+          <link href="/static/favicon/pwa-icon-152.png" rel="apple-touch-icon" sizes="152x152" />
+          <link href="/static/favicon/pwa-icon-144.png" rel="apple-touch-icon" sizes="144x144" />
+          <link href="/static/favicon/pwa-icon-120.png" rel="apple-touch-icon" sizes="120x120" />
+          <link href="/static/favicon/pwa-icon-114.png" rel="apple-touch-icon" sizes="114x114" />
+          <link href="/static/favicon/pwa-icon-76.png" rel="apple-touch-icon" sizes="76x76" />
+          <link href="/static/favicon/pwa-icon-72.png" rel="apple-touch-icon" sizes="72x72" />
+          <link href="/static/favicon/pwa-icon-60.png" rel="apple-touch-icon" sizes="60x60" />
+          <link href="/static/favicon/pwa-icon-57.png" rel="apple-touch-icon" sizes="57x57" />
 
 
           <link href="/static/favicon/favicon-196.png" rel="icon" sizes="196x196" type="image/png" />

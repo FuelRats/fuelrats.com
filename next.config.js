@@ -26,7 +26,7 @@ module.exports = () => {
       stripeApiPk: env.stripe.public,
       ircClientUrl: env.irc.client,
       ircRatUrl: env.irc.rat,
-      vapidPublicKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
+      vapidPublicKey: env.vapid.publicKey,
     },
 
     images: {

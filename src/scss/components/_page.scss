@@ -9,11 +9,15 @@ main.page {
   flex-grow: 1;
 
   margin-left: 21rem;
+  padding-top: env(safe-area-inset-top);
 
   background: #FFFFFF;
   transition: margin 0.2s;
 
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 1024px) {
+    margin-left: 0;
+  }
+  @media (display-mode: standalone) {
     margin-left: 0;
   }
 }

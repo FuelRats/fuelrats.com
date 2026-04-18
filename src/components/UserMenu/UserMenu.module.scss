@@ -18,14 +18,14 @@ $user-menu-width-mobile: 21rem;
 .userMenu {
   display: flex;
   position: absolute;
-  top: $login-top-margin;
+  top: calc(#{$login-top-margin} + env(safe-area-inset-top));
   right: $avatar-right-margin;
   z-index: 100;
 
   transition: top 0.2s;
 
   &.loggedIn {
-    top: $avatar-top-margin;
+    top: calc(#{$avatar-top-margin} + env(safe-area-inset-top));
   }
 }
 
@@ -228,5 +228,18 @@ $user-menu-width-mobile: 21rem;
       color: $red-darkened;
       background: $grey-darkened;
     }
+  }
+}
+
+.loginButton {
+  display: flex;
+
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.loginText {
+  @media only screen and (max-width: 1024px) {
+    display: none;
   }
 }

@@ -1,7 +1,7 @@
 #Burger {
   display: inline-block;
   position: absolute;
-  top: 1.5rem;
+  top: calc(1.5rem + env(safe-area-inset-top));
   left: 23rem;
   z-index: 150;
 
@@ -20,6 +20,10 @@
       opacity 0.2s,
       max-width 0.2s,
       max-height 0.2s;
+  }
+
+  @media (display-mode: standalone) {
+    display: none;
   }
 }
 
@@ -60,7 +64,7 @@
   }
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1024px) {
   #NavControl {
     &:checked {
       ~ header,
@@ -299,5 +303,9 @@
         color: $red;
       }
     }
+  }
+
+  @media (display-mode: standalone) {
+    display: none;
   }
 }
