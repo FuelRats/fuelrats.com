@@ -21,7 +21,8 @@ function PasskeyPromptView () {
   const handleDismiss = useCallback(() => {
     localStorage.setItem('fr.passkeyPromptDismissed', '1')
     onClose()
-    Router.push('/profile/overview')
+    const dest = new URLSearchParams(window.location.search).get('destination')
+    Router.push(dest || '/profile/overview')
   }, [onClose])
 
   const handleRegister = useCallback(async () => {
@@ -37,7 +38,8 @@ function PasskeyPromptView () {
 
     if (response) {
       onClose()
-      Router.push('/profile/overview')
+      const dest = new URLSearchParams(window.location.search).get('destination')
+      Router.push(dest || '/profile/overview')
     }
 
     setRegistering(false)
