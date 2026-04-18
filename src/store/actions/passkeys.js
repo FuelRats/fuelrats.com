@@ -37,7 +37,9 @@ export const loginWithPasskey = (email, remember) => {
     let credential = null
     try {
       credential = await startAuthentication({ optionsJSON: options })
-    } catch {
+    } catch (err) {
+      // eslint-disable-next-line no-console -- user cancelled or browser rejected
+      console.error('Passkey authentication failed:', err)
       return undefined
     }
 
