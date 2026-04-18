@@ -148,3 +148,20 @@ input {
   /* MS Edge Sucks */
   border-radius: 0;
 }
+
+
+/* Respect the user's OS-level motion preference. Honors the status dot
+   pulse, row flash, page transitions done via CSS animations, etc.
+   Motion/react animations are handled separately via MotionConfig. */
+/* stylelint-disable declaration-no-important, unit-allowed-list -- must override all animations */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+/* stylelint-enable declaration-no-important, unit-allowed-list */

@@ -1,17 +1,16 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { HttpStatus } from '@fuelrats/web-util/http'
+import clsx from 'clsx'
 import { isError } from 'flux-standard-action'
+import Link from 'next/link'
 import Router from 'next/router'
-import React from 'react'
+import { useCallback, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { createSelector } from 'reselect'
 
 import { authenticated } from '~/components/AppLayout'
-import FirstLimpetInput from '~/components/FirstLimpetInput'
-import RadioInput from '~/components/RadioInput'
-import RatTagsInput from '~/components/RatTagsInput'
-import SystemTagsInput from '~/components/SystemTagsInput'
-import platformRadioOptions from '~/data/platformRadioOptions'
-import useSelectorWithProps from '~/hooks/useSelectorWithProps'
-import { connectState } from '~/store'
+import ApiErrorBox from '~/components/MessageBox/ApiErrorBox'
+import useUnsavedChangesGuard from '~/hooks/useUnsavedChangesGuard'
 import { getRescue, updateRescue } from '~/store/actions/rescues'
 import {
   selectRatsByRescueId,
@@ -19,12 +18,14 @@ import {
   selectCurrentUserCanEditRescue,
 } from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
+import friendlyApiError from '~/util/friendlyApiError'
 import pageRedirect from '~/util/getInitialProps/pageRedirect'
 import setError from '~/util/getInitialProps/setError'
-import getRatTag from '~/util/getRatTag'
 import getResponseError from '~/util/getResponseError'
 import makePaperworkRoute from '~/util/router/makePaperworkRoute'
 
+import PaperworkFormFields from './PaperworkFormFields'
+import usePaperworkChanges from './usePaperworkChanges'
 
 
 
@@ -45,324 +46,156 @@ const selectFormattedRatsByRescueId = createSelector(
   },
 )
 
-const codeRedRadioOptions = [
-  {
-    value: 'true',
-    label: 'Yes',
-    title: '$#!7 was on fire, yo.',
-  },
-  {
-    value: 'false',
-    label: 'No',
-    title: 'The client did not experience any undue stress.',
-  },
-]
 
-const outcomeRadioOptions = [
-  {
-    value: 'success',
-    label: 'Yes',
-    title: 'Fuel was successfully delivered to the client.',
-  },
-  {
-    value: 'failure',
-    label: 'No',
-    title: 'Fuel wasn\'t successfully delivered to the client. (Explain why)',
-  },
-  {
-    value: 'invalid',
-    label: 'Invalid',
-    title: 'Fuel wasn\'t delivered because the request was illegitimate. (Cats / Trolling)',
-  },
-  {
-    value: 'other',
-    label: 'Other',
-    title: 'Fuel wasn\'t delivered because the client was able to get out of trouble without it. (Explain)',
-  },
-]
+function renderQuote (quote, index) {
+  const createdAt = formatAsEliteDateTime(quote.createdAt)
+  const updatedAt = formatAsEliteDateTime(quote.updatedAt)
+  return (
+    <li key={index}>
+      <div className="times">
+        <div className="created" title="Created at">{createdAt}</div>
+        {
+          (updatedAt !== createdAt) && (
+            <div className="updated" title="Updated at"><span className="label">{'Updated at '}</span>{updatedAt}</div>
+          )
+        }
+      </div>
+      <span className="message">{quote.message}</span>
+      <div className="authors">
+        <div className="author" title="Created by">{quote.author}</div>
+        {
+          (quote.author !== quote.lastAuthor) && (
+            <div className="last-author" title="Last updated by"><span className="label">{'Updated by '}</span>{quote.lastAuthor}</div>
+          )
+        }
+      </div>
+    </li>
+  )
+}
 
 
 
 
+function Paperwork ({ query }) {
+  const dispatch = useDispatch()
+  const rats = useSelector((state) => {
+    return selectFormattedRatsByRescueId(state, query)
+  })
+  const rescue = useSelector((state) => {
+    return selectRescueById(state, query)
+  })
+  const userCanEdit = useSelector((state) => {
+    return selectCurrentUserCanEditRescue(state, query)
+  })
 
-@authenticated
-class Paperwork extends React.Component {
-  state = {
-    submitting: false,
-    error: null,
-    changes: {},
-  }
+  const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState(null)
 
-  _handleChange = ({ target }) => {
-    const {
-      name,
-      value,
-    } = target
+  const {
+    changes,
+    fieldValues,
+    validity,
+    hasUnsavedChanges,
+    handlers,
+  } = usePaperworkChanges(rescue, rats, userCanEdit)
 
-    this._setChanges({
-      [name]: value,
-    })
-  }
+  useUnsavedChangesGuard(hasUnsavedChanges, { isSubmitting: submitting })
 
-  _handleNotesChange = (event) => {
-    return this._setChanges({ notes: event.target.value })
-  }
-
-  _handleRadioInputChange = ({ target }) => {
-    const attribute = target.name
-    let { value } = target
-
-    if (value === 'true') {
-      value = true
-    } else if (value === 'false') {
-      value = false
-    }
-
-    const changes = {}
-
-    if (attribute === 'platform' && value !== this.props.rescue) {
-      changes.firstLimpetId = []
-      changes.rats = []
-    }
-
-    if (attribute === 'outcome' && value !== 'success') {
-      changes.firstLimpetId = []
-    }
-
-    this._setChanges({
-      ...changes,
-      [attribute]: value,
-    })
-  }
-
-  _handleFirstLimpetChange = (value) => {
-    // Because tagsInput sometimes decides to randomly call onChange when it hasn't changed.
-    if (typeof this.state.changes.firstLimpetId === 'undefined' && value.length && value[0].id === this.props.rescue.relationships.firstLimpet?.data?.id) {
-      return
-    }
-
-    let newValue = []
-
-    if (value.length) {
-      if (value[0].id === this.props.rescue.relationships.firstLimpet?.data?.id) {
-        newValue = undefined
-      } else {
-        newValue = value
-      }
-    }
-
-    this._setChanges({ firstLimpetId: newValue })
-  }
-
-  _handleSystemChange = (value) => {
-    // Because tagsInput sometimes decides to randomly call onChange when it hasn't changed.
-    if (typeof this.state.changes.system === 'undefined' && value.length && value[0].value === this.props.rescue.attributes.system) {
-      return
-    }
-
-    let newValue = null
-
-    if (value.length) {
-      if (value[0].value === this.props.rescue.attributes.system) {
-        newValue = undefined
-      } else {
-        newValue = value
-      }
-    }
-
-    this._setChanges({ system: newValue })
-  }
-
-  _handleRatsChange = (value) => {
-    this._setChanges({ rats: value })
-  }
-
-  _handleRatsRemove = (rat) => {
-    const firstLimpetId = this.state.changes.firstLimpetId?.[0]?.id ?? this.props.rescue.relationships?.firstLimpet?.data?.id ?? null
-    if (rat?.id === firstLimpetId) {
-      this._handleFirstLimpetChange([])
-    }
-  }
-
-  _handleSubmit = async (event) => {
+  const handleSubmit = useCallback(async (event) => {
     event.preventDefault()
+    setSubmitting(true)
 
-    this.setState({ submitting: true })
+    const { rats: ratsChange, firstLimpetId, ...remainingChanges } = changes
 
-    const { rescue } = this.props
-    const {
-      rats,
-      firstLimpetId,
-      ...changes
-    } = this.state.changes
-
-    if (!rescue.attributes.outcome && !changes.outcome) {
+    if (!rescue.attributes.outcome && !remainingChanges.outcome) {
       return
     }
 
-    if (changes.system) {
-      if (changes.system.length && changes.system[0].value !== rescue.attributes.system) {
-        changes.system = changes.system[0].value.toUpperCase()
+    if (remainingChanges.system) {
+      if (remainingChanges.system.length && remainingChanges.system[0].value !== rescue.attributes.system) {
+        remainingChanges.system = remainingChanges.system[0].value.toUpperCase()
       } else {
-        changes.system = undefined
+        remainingChanges.system = undefined
       }
     }
 
     const updateData = {
       id: rescue.id,
-      attributes: changes,
+      attributes: remainingChanges,
       relationships: {},
     }
 
     if (firstLimpetId?.length && firstLimpetId[0].id !== rescue.relationships.firstLimpet?.data?.id) {
       updateData.relationships.firstLimpet = {
-        data: {
-          type: 'rats',
-          id: firstLimpetId[0].id,
-        },
+        data: { type: 'rats', id: firstLimpetId[0].id },
       }
     } else if (firstLimpetId?.length === 0) {
-      updateData.relationships.firstLimpet = {
-        data: null,
-      }
+      updateData.relationships.firstLimpet = { data: null }
     }
 
-    if (Array.isArray(rats)) {
+    if (Array.isArray(ratsChange)) {
       updateData.relationships.rats = {
-        data: rats.map(({ type, id }) => {
-          return {
-            type,
-            id,
-          }
+        data: ratsChange.map(({ type, id }) => {
+          return { type, id }
         }),
       }
     }
 
-    const response = await this.props.dispatch(updateRescue(updateData))
+    const response = await dispatch(updateRescue(updateData))
 
     if (isError(response)) {
-      this.setState({ error: true, submitting: false })
+      setSubmitError(getResponseError(response))
+      setSubmitting(false)
       return
     }
+    setSubmitError(null)
 
-    Router.push(makePaperworkRoute({ rescueId: rescue.id }))
-  }
+    Router.push(makePaperworkRoute({
+      rescueId: rescue.id,
+      ...(query.from ? { from: query.from } : {}),
+    }))
+  }, [changes, dispatch, rescue, query.from])
 
-  _setChanges = (changedFields) => {
-    return this.setState((prevState) => {
-      return {
-        changes: {
-          ...prevState.changes,
-          ...Object.entries(changedFields).reduce((acc, [key, value]) => {
-            return {
-              ...acc,
-              [key]: this.props.rescue.attributes[key] === value ? undefined : value,
-            }
-          }, {}),
-        },
+  const { errors = {} } = validity
+
+  return (
+    <>
+      {
+        !userCanEdit && (
+          <div className="store-errors">
+            <div className="store-error">
+              <span className="detail">{'You do not have permission to edit this rescue. You may only edit rescues you are assigned to.'}</span>
+            </div>
+          </div>
+        )
       }
-    })
-  }
-
-  static renderQuote = (quote, index) => {
-    const createdAt = formatAsEliteDateTime(quote.createdAt)
-    const updatedAt = formatAsEliteDateTime(quote.updatedAt)
-    return (
-      <li key={index}>
-        <div className="times">
-          <div className="created" title="Created at">{createdAt}</div>
-          {
-            (updatedAt !== createdAt) && (
-              <div className="updated" title="Updated at"><span className="label">{'Updated at '}</span>{updatedAt}</div>
-            )
-          }
-        </div>
-        <span className="message">{quote.message}</span>
-        <div className="authors">
-          <div className="author" title="Created by">{quote.author}</div>
-          {
-            (quote.author !== quote.lastAuthor) && (
-              <div className="last-author" title="Last updated by"><span className="label">{'Updated by '}</span>{quote.lastAuthor}</div>
-            )
-          }
-        </div>
-      </li>
-    )
-  }
-
-  renderQuotes = () => {
-    const { rescue } = this.props
-
-    if (rescue.attributes.quotes) {
-      return (
-        <ol>
-          {rescue.attributes.quotes.map(Paperwork.renderQuote)}
-        </ol>
-      )
-    }
-
-    return (
-      <span>{'N/A'}</span>
-    )
-  }
-
-  static async getInitialProps (ctx) {
-    const { query, store } = ctx
-    const idLower = query.rescueId.toLowerCase()
-    if (query.rescueId !== idLower) {
-      pageRedirect(ctx, {
-        href: '/paperwork/[rescueId]/edit',
-        as: `/paperwork/${idLower}/edit`,
-      })
-    }
-
-    const state = store.getState()
-
-    if (!selectRescueById(state, query)) {
-      const response = await store.dispatch(getRescue(query.rescueId))
-      const error = getResponseError(response)
-
-      if (error) {
-        if (error?.code === HttpStatus.NOT_FOUND) {
-          error.detail = 'We tried looking everywhere, but this rescue doesn\'t exist.'
-        }
-        setError(ctx, error.code, error.detail)
+      {
+        (submitError && !submitting) && (
+          <ApiErrorBox
+            error={submitError}
+            renderError={
+(err) => {
+  return friendlyApiError(err, {
+    pointerMessages: {
+      '/data/attributes/system': { detail: 'Invalid system name. Please check and try again.' },
+      '/data/attributes/platform': { detail: 'Invalid platform.' },
+      '/data/attributes/outcome': { detail: 'Invalid outcome.' },
+      '/data/attributes/title': { detail: 'Invalid operation title.' },
+      '/data/attributes/notes': { detail: 'Invalid notes.' },
+    },
+    statusMessages: {
+      forbidden: { detail: 'You do not have permission to edit this rescue.' },
+    },
+    fallbackDetail: 'Unable to submit paperwork. Please try again.',
+  })
+}
+} />
+        )
       }
-    }
-  }
 
-  static getPageMeta () {
-    return {
-      title: 'Paperwork',
-    }
-  }
-
-  renderRescueEditForm = () => {
-    const {
-      rescue,
-    } = this.props
-
-    const {
-      submitting,
-    } = this.state
-
-    const fieldValues = this.getFieldValues()
-    const pwValidity = this.validate(fieldValues)
-
-    const {
-      codeRed,
-      firstLimpetId,
-      notes,
-      outcome,
-      platform,
-      rats,
-      system,
-    } = fieldValues
-
-    return (
       <form
-        className={['page-content', { 'loading loader-force': submitting }]}
-        onSubmit={this._handleSubmit}>
+        className={clsx('page-content', { 'loading loader-force': submitting })}
+        onSubmit={handleSubmit}>
         <header className="paperwork-header">
           {
             (rescue.attributes.status !== 'closed') && (
@@ -391,280 +224,95 @@ class Paperwork extends React.Component {
           </div>
         </header>
 
-        <fieldset>
-          <label htmlFor="platform">{'What platform was the rescue on?'}</label>
-
-          <RadioInput
-            className="platform"
-            disabled={submitting}
-            id="platform"
-            name="platform"
-            options={platformRadioOptions}
-            value={platform}
-            onChange={this._handleRadioInputChange} />
-        </fieldset>
-
-        <fieldset>
-          <label htmlFor="outcome-success">
-            {'Was the rescue successful?'}
-            <a
-              className="inline"
-              href="https://t.fuelr.at/caseguide"
-              rel="noopener noreferrer"
-              target="_blank"
-              title="How to file cases - Fuel Rats Confluence">
-              <small>{' (How do I choose?)'}</small>
-            </a>
-          </label>
-
-          <RadioInput
-            className="outcome"
-            disabled={submitting}
-            id="outcome"
-            name="outcome"
-            options={outcomeRadioOptions}
-            value={outcome}
-            onChange={this._handleRadioInputChange} />
-        </fieldset>
-
-        <fieldset>
-          <label htmlFor="codeRed-yes">{'Was it a code red?'}</label>
-          <RadioInput
-            className="codeRed"
-            disabled={submitting}
-            id="codeRed"
-            name="codeRed"
-            options={codeRedRadioOptions}
-            value={String(codeRed)}
-            onChange={this._handleRadioInputChange} />
-        </fieldset>
-
-        <fieldset>
-          <label htmlFor="rats">{'Who was assigned to this rescue?'}</label>
-
-          <RatTagsInput
-            aria-label="Assigned rats"
-            data-platform={platform}
-            disabled={submitting}
-            name="rats"
-            value={rats}
-            valueProp={getRatTag}
-            onChange={this._handleRatsChange}
-            onRemove={this._handleRatsRemove} />
-        </fieldset>
-
-        <fieldset>
-          <label htmlFor="firstLimpetId">{'Who fired the first limpet?'}</label>
-
-          <FirstLimpetInput
-            data-single
-            disabled={submitting || (outcome !== 'success')}
-            name="firstLimpetId"
-            options={rats}
-            value={firstLimpetId}
-            valueProp={getRatTag}
-            onChange={this._handleFirstLimpetChange} />
-        </fieldset>
-
-        <fieldset>
-          <label htmlFor="system">
-            {'Where did it happen? '}
-            <small>{'In what star system did the rescue took place? (put "n/a" if not applicable)'}</small>
-          </label>
-
-          <SystemTagsInput
-            data-allownew
-            data-single
-            aira-label="Rescue system"
-            disabled={submitting}
-            name="system"
-            value={system}
-            onChange={this._handleSystemChange} />
-        </fieldset>
-
-        <fieldset>
-          <label htmlFor="notes">{'Notes'}</label>
-
-          <textarea
-            aria-label="case notes"
-            disabled={submitting}
-            id="notes"
-            name="notes"
-            value={notes}
-            onChange={this._handleNotesChange} />
-        </fieldset>
+        <PaperworkFormFields
+          errors={errors}
+          fieldValues={fieldValues}
+          handlers={handlers}
+          submitting={submitting} />
 
         <menu type="toolbar">
           <div className="primary">
-            <div
-              className={['invalidity-explainer', { show: !pwValidity.valid, 'no-change': pwValidity.noChange }]}>
-              {pwValidity.reason}
-            </div>
+            {
+              errors.form && (
+                <div className="invalidity-explainer show">
+                  {errors.form}
+                </div>
+              )
+            }
+            {
+              validity.noChange && (
+                <div className="invalidity-explainer show no-change">
+                  {'No changes have been made yet!'}
+                </div>
+              )
+            }
             <button
               className="green"
-              disabled={submitting || !pwValidity.valid}
+              disabled={submitting || !validity.valid}
               type="submit">
               {submitting ? 'Submitting...' : 'Submit'}
             </button>
           </div>
 
-          <div className="secondary" />
+          <div className="secondary">
+            {
+              query.from === 'dispatch' && (
+                <Link className="button compact" href={`/dispatch?rId=${rescue.id}`}>
+                  <FontAwesomeIcon fixedWidth icon="arrow-left" />
+                  {' Back to Dispatch'}
+                </Link>
+              )
+            }
+          </div>
         </menu>
 
         <div className="panel quotes">
           <header>{'Quotes'}</header>
-          <div className="panel-content">{this.renderQuotes()}</div>
+          <div className="panel-content">
+            {
+              rescue.attributes.quotes
+                ? <ol>{rescue.attributes.quotes.map(renderQuote)}</ol>
+                : <span>{'N/A'}</span>
+            }
+          </div>
         </div>
       </form>
-    )
+    </>
+  )
+}
+
+Paperwork.getInitialProps = async (ctx) => {
+  const { query, store } = ctx
+  const idLower = query.rescueId.toLowerCase()
+  if (query.rescueId !== idLower) {
+    pageRedirect(ctx, {
+      href: '/paperwork/[rescueId]/edit',
+      as: `/paperwork/${idLower}/edit`,
+    })
   }
 
-  render () {
-    const {
-      submitting,
-      error,
-    } = this.state
+  const state = store.getState()
 
-    return (
-      <>
-        {
-          (error && !submitting) && (
-            <div className="store-errors">
-              <div className="store-error">
-                <span className="detail">{'Error while submitting paperwork.'}</span>
-              </div>
-            </div>
-          )
-        }
+  if (!selectRescueById(state, query)) {
+    const response = await store.dispatch(getRescue(query.rescueId))
+    const err = getResponseError(response)
 
-        {this.renderRescueEditForm()}
-      </>
-    )
-  }
-
-  lastInvalidReason = null
-
-  validate (values) {
-    const { rescue, userCanEdit } = this.props
-    const { changes } = this.state
-
-    let invalidReason = null
-    let noChange = false
-
-    if (!rescue) {
-      return {
-        valid: false,
-        reason: 'Rescue Not Found',
+    if (err) {
+      if (err?.code === HttpStatus.NOT_FOUND) {
+        err.detail = 'We tried looking everywhere, but this rescue doesn\'t exist.'
       }
+      setError(ctx, err.code, err.detail)
     }
-
-    switch (values.outcome) {
-      case 'other':
-      case 'invalid':
-        invalidReason = this.validateCaseWithInvalidOutcome(values)
-        break
-
-      case 'success':
-      case 'failure':
-        invalidReason = this.validateCaseWithValidOutcome(values)
-        break
-
-      default:
-        invalidReason = 'Outcome is not set!'
-        break
-    }
-
-    if (!userCanEdit) {
-      invalidReason = 'You cannot edit this rescue.'
-    }
-
-    if (!invalidReason && !Object.keys(changes).length) {
-      invalidReason = 'No changes have been made yet!'
-      noChange = true
-    }
-
-    const response = {
-      valid: !invalidReason,
-      reason: invalidReason || this.lastInvalidReason,
-      noChange,
-    }
-
-    this.lastInvalidReason = invalidReason
-
-    return response
   }
+}
 
-  validateCaseWithValidOutcome = (values) => {
-    if (!values.rats || !values.rats.length) {
-      return 'Valid cases must have at least one rat assigned.'
-    }
-
-    if (!values.system) {
-      return 'Valid cases must have a star system location.'
-    }
-
-    if (!values.platform) {
-      return 'Valid cases must have a platform.'
-    }
-
-    if (values.outcome === 'success' && !values.firstLimpetId) {
-      return 'Successful rescues must have a first limpet rat.'
-    }
-
-    if (values.outcome === 'failure' && !values.notes.replace(/\s/gu, '')) {
-      return 'Failed cases must have notes explaining what went wrong.'
-    }
-
-    return null
-  }
-
-  validateCaseWithInvalidOutcome = (values) => {
-    if (!values.notes.replace(/\s/gu, '')) {
-      return 'Invalid cases must have notes explaining why the rescue is invalid.'
-    }
-
-    return null
-  }
-
-  getFieldValues () {
-    const { rescue, rats } = this.props
-    const { changes } = this.state
-
-    const ifDefined = (value, fallback) => {
-      return typeof value === 'undefined' ? fallback : value
-    }
-
-    const getValue = (value) => {
-      return ifDefined(changes[value], rescue.attributes[value])
-    }
-
-    return {
-      codeRed: getValue('codeRed'),
-      // Get FirstLimpetId object first, then try to get the firstLimpet from the assigned rat array, THEN try to get the firstLimpet from the new rat array.
-      // Getting firstLimpet from changes is to deal with weird edge cases. This should be resolved by the upcoming major rewrite to paperwork
-      firstLimpetId: ifDefined(
-        changes.firstLimpetId,
-        rats[rescue.relationships.firstLimpet.data?.id] ?? changes.rats?.find((rat) => {
-          return rat.id === rescue?.relationships?.firstLimpet.data?.id
-        }),
-      ) ?? null,
-      notes: getValue('notes'),
-      outcome: getValue('outcome'),
-      platform: getValue('platform'),
-      rats: Object.values(ifDefined(changes.rats, rats) ?? {}),
-      system: ifDefined(changes.system, rescue.attributes.system ? { value: rescue.attributes.system.toUpperCase() } : null),
-    }
+Paperwork.getPageMeta = () => {
+  return {
+    title: 'Paperwork',
   }
 }
 
 
 
 
-
-export default connectState((props) => {
-  return {
-    rats: useSelectorWithProps(props.query, selectFormattedRatsByRescueId),
-    rescue: useSelectorWithProps(props.query, selectRescueById),
-    userCanEdit: useSelectorWithProps(props.query, selectCurrentUserCanEditRescue),
-  }
-})(Paperwork)
+export default authenticated(Paperwork)

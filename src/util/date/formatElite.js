@@ -1,4 +1,4 @@
-import { format as formatTz } from 'date-fns-tz'
+import { formatInTimeZone } from 'date-fns-tz'
 
 import toEliteDate from './toEliteDate'
 
@@ -8,9 +8,9 @@ import toEliteDate from './toEliteDate'
  * @returns {string}
  */
 export default function formatElite (value, format) {
-  return formatTz(
+  return formatInTimeZone(
     toEliteDate(value),
+    'UTC',
     format,
-    { timeZone: 'UTC' },
   )
 }

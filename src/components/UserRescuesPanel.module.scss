@@ -1,0 +1,144 @@
+@import '../scss/colors';
+
+.container {
+  overflow-x: auto;
+}
+
+.table {
+  min-width: 600px;
+  width: 100%;
+
+  border: 1px solid $grey-dark;
+
+  border-collapse: collapse;
+
+  thead tr {
+    border-bottom: 2px solid $grey-dark;
+  }
+
+  th {
+    padding: 4px 8px;
+
+    color: $grey;
+
+    font-size: 0.85rem;
+    text-align: left;
+    text-transform: uppercase;
+  }
+
+  td {
+    padding: 0.5rem 0.8rem;
+
+    border-top: 1px solid $grey-dark;
+
+    line-height: 27px;
+    vertical-align: middle;
+  }
+
+  tbody tr {
+    transition: background-color 0.15s;
+
+    &:nth-child(even) {
+      background-color: $light-grey;
+    }
+
+    &:hover {
+      background-color: rgba($grey, 0.2);
+    }
+  }
+}
+
+.empty {
+  padding: 2rem;
+
+  color: $grey;
+
+  text-align: center;
+}
+
+.cmdr {
+  font-weight: 600;
+  white-space: nowrap;
+
+  small {
+    color: $grey;
+
+    font-weight: normal;
+  }
+}
+
+.system {
+  color: $grey-darkened;
+}
+
+.crBadge {
+  margin-left: 0.4rem;
+
+  background-color: rgba(255, 87, 69, 0.8);
+}
+
+.codeRed {
+  background-color: rgba(255, 87, 69, 0.25);
+}
+
+.outcome {
+  display: inline-flex;
+
+  align-items: center;
+  gap: 0.3rem;
+
+  white-space: nowrap;
+}
+
+.success {
+  color: $green;
+}
+
+.failure {
+  color: $red;
+}
+
+.invalid {
+  color: $yellow;
+}
+
+.other {
+  color: $grey;
+}
+
+/* stylelint-disable-next-line block-no-empty -- marker class for column styling */
+.rats {
+}
+
+.date {
+  color: $grey-darkened;
+
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.actions {
+  text-align: center;
+}
+
+.paperworkLink {
+  color: $grey;
+
+  font-size: 1.1rem;
+
+  &:hover {
+    color: $white;
+  }
+}
+
+.footer {
+  padding: 0.5rem 1rem;
+
+  border: 1px solid $grey-dark;
+  border-top: none;
+
+  color: $grey;
+
+  font-size: 0.85rem;
+  text-align: right;
+}

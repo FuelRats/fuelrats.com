@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import PropTypes from 'prop-types'
 
 import styles from './MessageBox.module.scss'
@@ -8,7 +9,7 @@ import styles from './MessageBox.module.scss'
 
 // Component Constants
 const typeIcons = {
-  info: 'exclamation-circle',
+  info: 'circle-exclamation',
   success: 'check-circle',
 }
 
@@ -27,11 +28,11 @@ function MessageBox (props) {
 
   let { icon } = props
   if (!icon) {
-    icon = typeIcons[type] ?? 'exclamation-triangle'
+    icon = typeIcons[type] ?? 'triangle-exclamation'
   }
 
   return (
-    <div className={[styles.message, styles[type], className]}>
+    <div className={clsx(styles.message, styles[type], className)}>
       <FontAwesomeIcon
         className={styles.icon}
         icon={icon}

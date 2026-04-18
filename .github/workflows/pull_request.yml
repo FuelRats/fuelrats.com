@@ -13,49 +13,30 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Use Node.js (.nvmrc)
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: '.nvmrc'
-          cache: 'yarn'
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
 
       - name: Install dependencies
-        run: yarn install --immutable
+        run: bun install --frozen-lockfile
 
-      - name: Lint
-        uses: wearerequired/lint-action@v2.3.0
-        with:
-          github_token: ${{ secrets.github_token }}
-          eslint: true
-          eslint_args: "--max-warnings 0"
-          stylelint: true
-          stylelint_args: "--max-warnings 0"
-          stylelint_extensions: "css,sass,scss"
+      - name: Lint JS
+        run: bun run lint:js -- --max-warnings 0
+
+      - name: Lint CSS
+        run: bun run lint:css -- --max-warnings 0
 
   build:
     runs-on: ubuntu-latest
-    name: Build Test
+    name: Docker Build Test
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Use Node.js (.nvmrc)
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: '.nvmrc'
-          cache: 'yarn'
-
-      - name: Load Next Cache
-        uses: actions/cache@v4
-        with:
-          path: ${{ github.workspace }}/dist/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
-          restore-keys: ${{ runner.os }}-nextjs-${{ hashFiles('**/yarn.lock') }}-
-
-      - name: Install dependencies
-        run: yarn install --immutable
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
       - name: Build
-        run: yarn build
-        env:
-          NODE_ENV: production
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false

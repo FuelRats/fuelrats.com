@@ -1,0 +1,46 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: prod
+    ports:
+      - "3000:3000"
+    environment:
+      # Application settings
+      - NODE_ENV=${NODE_ENV}
+      - PORT=${PORT:-3000}
+      - APP_URL=${APP_URL:-http://localhost:3000}
+      - APP_PROXIED=${APP_PROXIED:-false}
+
+      # Fuel Rats API
+      - FR_API_URL=${FR_API_URL:-https://dev.api.fuelrats.com}
+      - FR_SOCKET_URL=${FR_SOCKET_URL:-wss://dev.api.fuelrats.com}
+      - FR_FALLBACK_URL=${FR_FALLBACK_URL:-https://fallback.fuelrats.com/}
+      - FR_API_KEY=${FR_API_KEY:-}
+      - FR_API_SECRET=${FR_API_SECRET:-}
+
+      # External APIs
+      - FR_EDSM_API_URL=${FR_EDSM_API_URL:-https://www.edsm.net/api-v1}
+      - FR_WORDPRESS_URL=${FR_WORDPRESS_URL:-https://wordpress.fuelrats.com}
+      - FR_SAPI_URL=${FR_SAPI_URL:-https://systems.api.fuelrats.com}
+
+      # Stripe
+      - FR_STRIPE_API_PK=${FR_STRIPE_API_PK:-}
+      - FR_STRIPE_API_SK=${FR_STRIPE_API_SK:-}
+      - FR_STRIPE_BANS_FILE=${FR_STRIPE_BANS_FILE:-}
+
+      # QMS
+      - QMS_API_URL=${QMS_API_URL:-https://api.qms.fuelrats.dev}
+      - QMS_API_TOKEN=${QMS_API_TOKEN:-}
+
+      # IRC
+      - FR_CLIENT_IRC_URL=${FR_CLIENT_IRC_URL:-https://qms.fuelrats.dev}
+      - FR_RAT_IRC_URL=${FR_RAT_IRC_URL:-https://kiwi.fuelrats.com}
+    restart: unless-stopped
+    networks:
+      - fuelrats
+
+networks:
+  fuelrats:
+    driver: bridge

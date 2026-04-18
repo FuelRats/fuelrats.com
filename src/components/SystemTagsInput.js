@@ -1,23 +1,37 @@
+import { useCallback } from 'react'
+
 import TagsInput from './TagsInput'
 
 
 
 
-
-class SystemTagsInput extends TagsInput {
-  async search (query) {
-    if (query) {
-      let response = await fetch(`/api/edsm/typeahead/systems/query/${query}`)
-      response = await response.json()
-
-      if (!response) {
-        response = []
-      }
-
-      this.updateOptions(response)
+async function searchSystems (query) {
+  if (!query) {
+    return []
+  }
+  try {
+    const response = await fetch(`/api/sapi/mecha?name=${encodeURIComponent(query)}`)
+    if (!response.ok) {
+      return []
     }
+    const json = await response.json()
+    return json?.data?.map((system) => {
+      return system.name
+    }) ?? []
+  } catch {
+    return []
   }
 }
+
+
+function SystemTagsInput (props) {
+  const onSearch = useCallback((query) => {
+    return searchSystems(query)
+  }, [])
+
+  return <TagsInput {...props} onSearch={onSearch} />
+}
+
 
 
 

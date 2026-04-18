@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+  web:
+    image: ghcr.io/fuelrats/fuelrats.com:develop
+    ports:
+      - "8602:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - APP_URL=${APP_URL:-https://fuelrats.dev}
+      - APP_PROXIED=true
+      - FR_API_URL=${FR_API_URL:-http://fr-api-dev:8502}
+      - FR_SOCKET_URL=${FR_SOCKET_URL:-wss://api.fuelrats.dev}
+      - FR_FALLBACK_URL=https://fallback.fuelrats.com/
+      - FR_API_KEY=${FR_API_KEY}
+      - FR_API_SECRET=${FR_API_SECRET}
+      - FR_EDSM_API_URL=https://www.edsm.net/api-v1
+      - FR_WORDPRESS_URL=https://wordpress.fuelrats.com
+      - FR_SAPI_URL=https://systems.api.fuelrats.com
+      - FR_STRIPE_API_PK=${FR_STRIPE_API_PK}
+      - FR_STRIPE_API_SK=${FR_STRIPE_API_SK}
+      - FR_STRIPE_BANS_FILE=${FR_STRIPE_BANS_FILE:-}
+      - QMS_API_URL=https://api.qms.fuelrats.dev
+      - QMS_API_TOKEN=${QMS_API_TOKEN}
+      - FR_CLIENT_IRC_URL=https://qms.fuelrats.dev
+      - FR_RAT_IRC_URL=https://kiwi.fuelrats.com
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname == emmental
+      update_config:
+        parallelism: 1
+        delay: 10s
+        order: start-first
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+    networks:
+      - fuelrats
+
+networks:
+  fuelrats:
+    external: true

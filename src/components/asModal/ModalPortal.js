@@ -1,52 +1,48 @@
-import React from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 
 
 
+function ModalPortal ({ isOpen, children }) {
+  const modalRootRef = useRef(null)
+  const [mounted, setMounted] = useState(false)
 
-class ModalPortal extends React.Component {
-  modalRoot = null
-
-  componentWillUnmount () {
-    if (this.modalRoot) {
-      this.container.removeChild(this.modalRoot)
-    }
-    this.modalRoot = null
-  }
-
-  componentDidUpdate () {
-    if (this.modalRoot) {
-      if (this.props.isOpen) {
-        this.modalRoot.classList.add('open')
-      } else {
-        this.modalRoot.classList.remove('open')
-      }
-    }
-  }
-
-  render () {
-    const { container } = this
+  useEffect(() => {
+    const container = document.getElementById('ModalContainer')
     if (!container) {
-      return null
+      return undefined
     }
 
-    if (!this.modalRoot) {
-      this.modalRoot = document.createElement('div')
-      container.appendChild(this.modalRoot)
-    }
+    const modalRoot = document.createElement('div')
+    container.appendChild(modalRoot)
+    modalRootRef.current = modalRoot
+    setMounted(true)
 
-    return createPortal(this.props.children, this.modalRoot)
+    return () => {
+      container.removeChild(modalRoot)
+      modalRootRef.current = null
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!modalRootRef.current) {
+      return
+    }
+    if (isOpen) {
+      modalRootRef.current.classList.add('open')
+    } else {
+      modalRootRef.current.classList.remove('open')
+    }
+  }, [isOpen, mounted])
+
+  if (!mounted || !modalRootRef.current) {
+    return null
   }
 
-  get container () {
-    if (typeof document !== 'undefined') {
-      return document.getElementById('ModalContainer')
-    }
-
-    return undefined
-  }
+  return createPortal(children, modalRootRef.current)
 }
+
 
 
 

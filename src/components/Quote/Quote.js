@@ -18,7 +18,7 @@ function Quote (props) {
           <div className="header">
             {
               props.date && (
-                <span className={styles.quoteDate}><FontAwesomeIcon fixedWidth icon="calendar-alt" /> {date}</span>
+                <span className={styles.quoteDate}><FontAwesomeIcon fixedWidth icon="calendar-days" /> {date}</span>
               )
             }
             {

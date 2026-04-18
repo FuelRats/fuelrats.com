@@ -8,21 +8,17 @@ const env = Object.freeze({
   fallbackUrl: process.env.FR_FALLBACK_URL ?? 'https://fallback.fuelrats.com/',
   frapi: {
     url: process.env.FR_API_URL ?? 'https://dev.api.fuelrats.com',
-    proxy: `${process.env.APP_URL}/api/fr`,
     socket: process.env.FR_SOCKET_URL ?? 'wss://dev.api.fuelrats.com',
     clientId: process.env.FR_API_KEY,
     clientSecret: process.env.FR_API_SECRET,
   },
   edsm: {
     url: process.env.FR_EDSM_API_URL ?? 'https://www.edsm.net/api-v1',
-    proxy: `${process.env.APP_URL}/api/edsm`,
   },
   wordpress: {
     url: process.env.FR_WORDPRESS_URL ?? 'https://wordpress.fuelrats.com',
-    proxy: `${process.env.APP_URL}/api/wp`,
   },
   stripe: {
-    url: `${process.env.APP_URL}/api/stripe`,
     public: process.env.FR_STRIPE_API_PK,
     secret: process.env.FR_STRIPE_API_SK,
     bansFile: process.env.FR_STRIPE_BANS_FILE,
@@ -37,7 +33,6 @@ const env = Object.freeze({
   },
   sapi: {
     url: process.env.FR_SAPI_URL ?? 'https://systems.api.fuelrats.com',
-    proxy: `${process.env.APP_URL}/api/sapi`,
   },
 })
 

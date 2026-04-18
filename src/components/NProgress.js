@@ -1,55 +1,45 @@
 import Router from 'next/router'
 import NProgressLib from 'nprogress'
-import React from 'react'
-
+import { useEffect } from 'react'
 
 
 
 
 // Component constants
-const minimumChangeTime = 250
+const MINIMUM_CHANGE_TIME = 250
 
 
 
 
+function NProgress ({ minimum = 0.15, showSpinner = false, ...config }) {
+  useEffect(() => {
+    NProgressLib.configure({ minimum, showSpinner, ...config })
 
-class NProgress extends React.Component {
-  timer = null
+    let timer = null
+    const handleRouteChangeStart = () => {
+      clearTimeout(timer)
+      timer = setTimeout(NProgressLib.start, MINIMUM_CHANGE_TIME)
+    }
+    const handleRouteChangeDone = () => {
+      clearTimeout(timer)
+      NProgressLib.done()
+    }
 
-  _handleRouteChangeStart = () => {
-    clearTimeout(this.timer)
-    this.timer = setTimeout(NProgressLib.start, minimumChangeTime)
-  }
+    Router.events.on('routeChangeStart', handleRouteChangeStart)
+    Router.events.on('routeChangeComplete', handleRouteChangeDone)
+    Router.events.on('routeChangeError', handleRouteChangeDone)
 
-  _handleRouteChangeDone = () => {
-    clearTimeout(this.timer)
-    NProgressLib.done()
-  }
+    return () => {
+      clearTimeout(timer)
+      Router.events.off('routeChangeStart', handleRouteChangeStart)
+      Router.events.off('routeChangeComplete', handleRouteChangeDone)
+      Router.events.off('routeChangeError', handleRouteChangeDone)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- mount-only
+  }, [])
 
-  componentDidMount () {
-    NProgressLib.configure(this.props)
-
-    Router.events.on('routeChangeStart', this._handleRouteChangeStart)
-    Router.events.on('routeChangeComplete', this._handleRouteChangeDone)
-    Router.events.on('routeChangeError', this._handleRouteChangeDone)
-  }
-
-  componentWillUnmount () {
-    Router.events.off('routeChangeStart', this._handleRouteChangeStart)
-    Router.events.off('routeChangeComplete', this._handleRouteChangeDone)
-    Router.events.off('routeChangeError', this._handleRouteChangeDone)
-  }
-
-  render () {
-    return null
-  }
-
-  static defaultProps = {
-    minimum: 0.15,
-    showSpinner: false,
-  }
+  return null
 }
-
 
 
 

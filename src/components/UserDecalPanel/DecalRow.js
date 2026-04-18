@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import { useReducer } from 'react'
 
 import reduceToggle from '~/hooks/reducers/reduceToggle'
@@ -19,8 +20,8 @@ function DecalRow ({ decal }) {
     <div key={decal.id} className={styles.decal}>
       <div className={styles.decalCode}>
         <button
-          aria-label="Show decal code"
-          className={['icon', styles.toggle]}
+          aria-label={visible ? 'Hide decal code' : 'Show decal code'}
+          className={clsx('icon', styles.toggle)}
           name={decal.id}
           type="button"
           onClick={handleVisibility}>

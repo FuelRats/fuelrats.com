@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import PropTypes from 'prop-types'
 import { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -112,7 +113,7 @@ function DonationForm (props) {
   return (
     <>
       <DonationErrorBox error={errorState} />
-      <Form className={['donate-form compact', className]}>
+      <Form className={clsx('donate-form compact', className)}>
         <CurrencyRadioFieldset
           required
           id="DonationCurrency"

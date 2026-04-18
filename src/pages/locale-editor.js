@@ -1,13 +1,9 @@
 import axios from 'axios'
-import { AnimatePresence, m } from 'framer-motion'
-import getConfig from 'next/config'
+import { AnimatePresence, m } from 'motion/react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import JsonEditor from '~/components/JsonEditor'
 import styles from '~/scss/pages/locale-editor.module.scss'
-
-const { publicRuntimeConfig } = getConfig()
-const { appUrl } = publicRuntimeConfig
 
 /* eslint-disable id-length */
 const formMotionConfig = {
@@ -103,7 +99,7 @@ function LocaleEditor ({ locales }) {
 }
 
 LocaleEditor.getInitialProps = async () => {
-  const { data } = await axios.get(`${appUrl}/api/qms/locales`)
+  const { data } = await axios.get('/api/qms/locales')
 
   return {
     locales: data.data,

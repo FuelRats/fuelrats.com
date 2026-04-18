@@ -9,8 +9,7 @@
     left: 50%;
 
     align-items: center;
-    align-content: center;
-    justify-content: center;
+    place-content: center center;
 
     width: $loader-size;
     height: $loader-size;
@@ -27,7 +26,7 @@
   &::after {
     content: '';
 
-    border-color: currentColor;
+    border-color: currentcolor;
 
     animation-delay:
       0s,

@@ -1,19 +1,18 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { HttpStatus } from '@fuelrats/web-util/http'
-import { isError } from 'flux-standard-action'
 import { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import ConfirmActionButton from '~/components/ConfirmActionButton'
 import AddNicknameForm from '~/components/Forms/AddNicknameForm/AddNicknameForm'
-import MessageBox from '~/components/MessageBox'
-import { deleteNickname } from '~/store/actions/user'
+import { deleteNickname, setDisplayNickname, getUserProfile } from '~/store/actions/user'
 import {
   selectUserById,
   withCurrentUserId,
   selectNicknamesByUserId,
 } from '~/store/selectors'
+import getResponseError from '~/util/getResponseError'
 
+import NicknameErrorBox from './NicknameErrorBox'
 import styles from './UserNicknamesPanel.module.scss'
 
 
@@ -34,28 +33,38 @@ function UserNicknamesPanel () {
   const user = useSelector(withCurrentUserId(selectUserById))
 
   const handleDeleteNickname = useCallback(async (event) => {
+    setError(null)
     const response = await dispatch(deleteNickname(user, nicknames.find((nick) => {
       return nick.id === event.target.name
     })))
 
-    if (isError(response)) {
-      const { meta, payload } = response
-      let errorMessage = 'Unknown error occurred.'
-
-      if (HttpStatus.isClientError(meta.response.status)) {
-        errorMessage = payload.errors?.length ? payload.errors[0].detail : 'Client communication error'
-      }
-
-      if (HttpStatus.isServerError(meta.response.status)) {
-        errorMessage = 'Server communication error'
-      }
-
-      setError(errorMessage)
-      return errorMessage
+    const responseError = getResponseError(response)
+    if (responseError) {
+      setError(responseError)
+      return responseError
     }
 
-    return undefined
+    return true
   }, [dispatch, nicknames, user])
+
+  const handleSetDisplayNickname = useCallback(async (event) => {
+    setError(null)
+    const nickname = nicknames.find((nick) => {
+      return nick.id === event.target.name
+    })
+
+    const response = await dispatch(setDisplayNickname(nickname.id, nickname.attributes.nick))
+
+    const responseError = getResponseError(response)
+    if (responseError) {
+      setError(responseError)
+      return responseError
+    }
+
+    // Refresh user profile to get updated nicknames
+    await dispatch(getUserProfile())
+    return true
+  }, [dispatch, nicknames])
 
   const nickCount = nicknames?.length
   const maxNicksReached = (nickCount >= MAX_NICKS)
@@ -72,7 +81,7 @@ function UserNicknamesPanel () {
       <div className={styles.userNicknames}>
         {
           error && (
-            <MessageBox>{error}</MessageBox>
+            <NicknameErrorBox error={error} />
           )
         }
         <ul className={styles.nickList}>
@@ -83,24 +92,52 @@ function UserNicknamesPanel () {
           }
           {
             nicknames?.map((nickname) => {
+              const isDisplayNick = nickname.attributes?.display === nickname.attributes?.nick
               return (
                 <li key={nickname.id}>
-                  <span>{nickname.attributes?.nick}</span>
-                  {
-                    // Only render for additional nicks, prevent for display nick.
-                    nickname.attributes?.display !== nickname.attributes?.nick && (
-                      <ConfirmActionButton
-                        className="icon"
-                        confirmButtonText={`Delete nickname '${nickname.attributes?.nick}'`}
-                        confirmSubText=""
-                        denyButtonText="Cancel"
-                        name={nickname.id}
-                        onConfirm={handleDeleteNickname}
-                        onConfirmText="">
-                        <FontAwesomeIcon fixedWidth icon="trash" />
-                      </ConfirmActionButton>
-                    )
-                  }
+                  <span>
+                    {nickname.attributes?.nick}
+                    {
+                      isDisplayNick && (
+                        <FontAwesomeIcon
+                          fixedWidth
+                          className={styles.displayIcon}
+                          icon="star"
+                          title="Current display nickname" />
+                      )
+                    }
+                  </span>
+                  <div className={styles.controlContainer}>
+                    {
+                      // Only show buttons for non-display nicks
+                      !isDisplayNick && (
+                        <>
+                          <ConfirmActionButton
+                            className="icon"
+                            confirmButtonText={`Set '${nickname.attributes?.nick}' as display nickname`}
+                            confirmSubText=""
+                            denyButtonText="Cancel"
+                            name={nickname.id}
+                            title="Set as display nickname"
+                            onConfirm={handleSetDisplayNickname}
+                            onConfirmText="">
+                            <FontAwesomeIcon fixedWidth icon={['far', 'star']} title="Set as display nickname" />
+                          </ConfirmActionButton>
+                          <ConfirmActionButton
+                            className="icon"
+                            confirmButtonText={`Delete nickname '${nickname.attributes?.nick}'`}
+                            confirmSubText=""
+                            denyButtonText="Cancel"
+                            name={nickname.id}
+                            title="Delete nickname"
+                            onConfirm={handleDeleteNickname}
+                            onConfirmText="">
+                            <FontAwesomeIcon fixedWidth icon="trash" title="Delete nickname" />
+                          </ConfirmActionButton>
+                        </>
+                      )
+                    }
+                  </div>
                 </li>
               )
             }) ?? null

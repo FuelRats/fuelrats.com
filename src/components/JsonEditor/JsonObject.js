@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import _isPlainObject from 'lodash/isPlainObject'
 
 import JsonField from '~/components/JsonEditor/JsonField'
@@ -23,7 +24,7 @@ export default function JsonObject (props) {
   const propDepth = depth + 1
   const nodeLength = Object.keys(node).length
   return (
-    <div className={['jsonObject', styles.jsonObject, { [styles.hasDepth]: depth > 0 }]}>
+    <div className={clsx('jsonObject', styles.jsonObject, { [styles.hasDepth]: depth > 0 })}>
       <span className={styles.fieldLabel}>{`${depth ? `"${name}": ` : ''}{`}</span>
       {
         Object.entries(node).map(([propName, propNode], idx) => {

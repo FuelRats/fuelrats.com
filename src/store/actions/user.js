@@ -5,9 +5,9 @@ import createRequestBody from '~/util/jsonapi/createRequestBody'
 
 
 import actionTypes from '../actionTypes'
+import { frApiRequest, frApiPlainRequest } from './services'
 import { deletesResource, deletesRelationship, createsRelationship, RESOURCE } from '../reducers/frAPIResources'
 import { withCurrentUserId, selectUserById, selectCurrentUserId } from '../selectors'
-import { frApiRequest, frApiPlainRequest } from './services'
 
 export const getNickname = (nickId) => {
   return frApiRequest(
@@ -93,6 +93,16 @@ export const updateAvatar = (data) => {
   }
 }
 
+export const deleteAvatar = () => {
+  return (dispatch, getState) => {
+    const user = selectCurrentUserId(getState())
+    return dispatch(frApiRequest(actionTypes.users.avatar.update, {
+      url: `/users/${user}/image`,
+      method: 'delete',
+    }))
+  }
+}
+
 export const changeEmail = ({ id, ...data }) => {
   return frApiPlainRequest(
     actionTypes.users.email.update,
@@ -100,6 +110,17 @@ export const changeEmail = ({ id, ...data }) => {
       url: `/users/${id}/email`,
       method: 'patch',
       data: createRequestBody('email-changes', data),
+    },
+  )
+}
+
+export const setDisplayNickname = (nicknameId, displayNick) => {
+  return frApiRequest(
+    actionTypes.nicknames.setDisplay,
+    {
+      url: `/nicknames/${nicknameId}/display`,
+      method: 'put',
+      data: createRequestBody('nicknames', { displayNick }),
     },
   )
 }

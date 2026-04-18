@@ -1,15 +1,11 @@
 import axios from 'axios'
-import getConfig from 'next/config'
 import qs from 'qs'
 
 
-
-
-
-const { publicRuntimeConfig } = getConfig()
+const isServer = typeof window === 'undefined'
 
 const frApi = axios.create({
-  baseURL: publicRuntimeConfig.frapi.url,
+  baseURL: isServer ? `${process.env.APP_URL}/api/fr` : '/api/fr',
   timeout: 10000,
   paramsSerializer: qs.stringify,
 
@@ -17,7 +13,6 @@ const frApi = axios.create({
     return true // Always resolve because it's simpler for the action creators.
   },
 })
-
 
 
 

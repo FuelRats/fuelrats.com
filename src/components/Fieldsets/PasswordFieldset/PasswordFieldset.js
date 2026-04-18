@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import PropTypes from 'prop-types'
 import { useReducer, useRef } from 'react'
 
@@ -29,7 +30,7 @@ function PasswordFieldset (props) {
     <InputFieldset
       ref={inputRef}
       autoComplete="current-password"
-      className={[styles.passwordInput, className]}
+      className={clsx(styles.passwordInput, className)}
       displayName={displayName}
       placeholder="Sup3r-S3cur3-P4ssw0rd"
       {...inputProps}
@@ -38,7 +39,14 @@ function PasswordFieldset (props) {
 
       {children}
 
-      <button className={styles.showButton} disabled={inputProps.disabled} tabIndex="-1" type="button" onClick={handlePasswordVisibility}>
+      <button
+        aria-label={showPassword ? 'Hide password' : 'Show password'}
+        className={styles.showButton}
+        disabled={inputProps.disabled}
+        tabIndex="-1"
+        title={showPassword ? 'Hide password' : 'Show password'}
+        type="button"
+        onClick={handlePasswordVisibility}>
         <FontAwesomeIcon fixedWidth icon={showPassword ? 'eye-slash' : 'eye'} />
       </button>
 

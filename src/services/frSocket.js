@@ -1,18 +1,25 @@
 import ReduxRatSocket from '@fuelrats/web-util/redux-ratsocket'
 import Cookies from 'js-cookie'
-import getConfig from 'next/config'
 import qs from 'qs'
-import { useEffect } from 'react'
+import { useCallback, useEffect, useSyncExternalStore } from 'react'
 
 import { updatesResources } from '~/store/reducers/frAPIResources'
 
 
 
 
-const { publicRuntimeConfig } = getConfig()
+let socketStatus = 'disconnected'
+const socketStatusListeners = new Set()
+
+function setSocketStatus (status) {
+  socketStatus = status
+  socketStatusListeners.forEach((listener) => {
+    return listener()
+  })
+}
 
 const frSocket = new ReduxRatSocket(
-  publicRuntimeConfig.frapi.socket,
+  process.env.NEXT_PUBLIC_FR_SOCKET_URL,
   {
     transformAction (action) {
       return {
@@ -26,6 +33,27 @@ const frSocket = new ReduxRatSocket(
   },
 )
 
+// Wrap createMiddleware to intercept dispatched actions for socket status tracking
+const originalCreateMiddleware = frSocket.createMiddleware.bind(frSocket)
+frSocket.createMiddleware = function createMiddleware () {
+  const socketMiddleware = originalCreateMiddleware()
+  return (store) => {
+    const next = socketMiddleware(store)
+    return (nextMiddleware) => {
+      return (action) => {
+        if (typeof action.type === 'string') {
+          if (action.type.endsWith('/open')) {
+            setSocketStatus('connected')
+          } else if (action.type.endsWith('/close')) {
+            setSocketStatus(action.payload?.wasClean ? 'disconnected' : 'reconnecting')
+          }
+        }
+        return next(nextMiddleware)(action)
+      }
+    }
+  }
+}
+
 
 /**
  * A hook which connects ReduxEventSource to the fr API while mounted. Once unmounted, it will disconnect.
@@ -37,16 +65,43 @@ function useRatSocket () {
       const token = Cookies.get('access_token')
 
       if (token) {
-        frSocket.connect(qs.stringify({ bearer: token }))
+        setSocketStatus('connecting')
+        // Delay slightly to ensure Redux middleware has initialized dispatch
+        const connectTimeout = setTimeout(() => {
+          try {
+            frSocket.connect(qs.stringify({ bearer: token }))
+          } catch {
+            setSocketStatus('disconnected')
+          }
+        }, 0)
+
+        return () => {
+          clearTimeout(connectTimeout)
+          frSocket.close()
+          setSocketStatus('disconnected')
+        }
       }
     }
 
+    return undefined
+  }, [])
+}
+
+function useSocketStatus () {
+  const subscribe = useCallback((onChange) => {
+    socketStatusListeners.add(onChange)
     return () => {
-      frSocket.close()
+      return socketStatusListeners.delete(onChange)
     }
   }, [])
+
+  return useSyncExternalStore(subscribe, () => {
+    return socketStatus
+  }, () => {
+    return 'disconnected'
+  })
 }
 
 
 export default frSocket
-export { useRatSocket }
+export { useRatSocket, useSocketStatus }

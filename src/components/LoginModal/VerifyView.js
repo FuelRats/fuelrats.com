@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import PropTypes from 'prop-types'
 import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
@@ -8,6 +9,7 @@ import useForm from '~/hooks/useForm'
 import useMountedState from '~/hooks/useMountedState'
 import useUnloadConfirmation from '~/hooks/useUnloadConfirmation'
 import { login } from '~/store/actions/authentication'
+import { logout } from '~/store/actions/session'
 import { getUserProfile } from '~/store/actions/user'
 import getResponseError from '~/util/getResponseError'
 
@@ -40,7 +42,13 @@ function VerifyView (props) {
       return
     }
 
-    dispatch(getUserProfile())
+    const profileResponse = await dispatch(getUserProfile())
+    const profileError = getResponseError(profileResponse)
+    if (profileError) {
+      dispatch(logout())
+      setModalState({ error: profileError })
+      return
+    }
     onClose()
   }, [dispatch, onClose, setModalState])
 
@@ -51,7 +59,7 @@ function VerifyView (props) {
   }, [setModalState])
 
   return (
-    <Form className={[styles.loginForm, 'dialog', className]}>
+    <Form className={clsx(styles.loginForm, 'dialog', className)}>
       <LoginTokenFieldset
         dark
         required
@@ -63,7 +71,7 @@ function VerifyView (props) {
       <ModalFooter className={styles.footer}>
         <FooterSecondary className={styles.secondary}>
           <button
-            className={[styles.button, 'secondary']}
+            className={clsx(styles.button, 'secondary')}
             type="button"
             onClick={handleReturnClick}>
             {'Return'}
@@ -72,7 +80,7 @@ function VerifyView (props) {
 
         <FooterPrimary className={styles.primary}>
           <button
-            className={[styles.button, 'green']}
+            className={clsx(styles.button, 'green')}
             disabled={!canSubmit}
             type="submit">
             {submitting ? 'Submitting...' : 'Login'}

@@ -1,12 +1,11 @@
 import Link from 'next/link'
 import Router from 'next/router'
 import { useState, useCallback } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import PasswordResetForm from '~/components/Forms/PasswordResetForm'
 import MessageBox from '~/components/MessageBox'
 import ApiErrorBox from '~/components/MessageBox/ApiErrorBox'
-import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { validatePasswordResetToken, resetPassword } from '~/store/actions/authentication'
 import { verifyEmailToken } from '~/store/actions/verify'
 import { selectCurrentUserHasScope } from '~/store/selectors'
@@ -31,7 +30,9 @@ function Verify ({ token }) {
 
   const dispatch = useDispatch()
 
-  const userIsVerified = useSelectorWithProps({ scope: 'users.verified' }, selectCurrentUserHasScope)
+  const userIsVerified = useSelector((state) => {
+    return selectCurrentUserHasScope(state, { scope: 'users.verified' })
+  })
 
   const onSubmit = useCallback(async (formData) => {
     const response = await dispatch(resetPassword(token.value, formData))
@@ -65,7 +66,7 @@ function Verify ({ token }) {
         <>
           {"The provided token is invalid. This probably means you've already verified your e-mail address."}
           {' Please try checking your '}
-          <Link href="/profile/overview"><a>{'profile'}</a></Link>
+          <Link href="/profile/overview">{'profile'}</Link>
           {' for a '}
           <span className="badge info inline">{'verified'}</span>
           {' badge next to your avatar.'}

@@ -1,12 +1,17 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
+import { isError } from 'flux-standard-action'
 import { useCallback, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 import CMDRFieldset from '~/components/Fieldsets/CMDRFieldset'
 import ExpansionFieldset from '~/components/Fieldsets/ExpansionFieldset'
 import SelectFieldset from '~/components/Fieldsets/SelectFieldset'
+import ApiErrorBox from '~/components/MessageBox/ApiErrorBox'
 import useForm from '~/hooks/useForm'
 import { createRat } from '~/store/actions/rats'
+import friendlyApiError from '~/util/friendlyApiError'
+import getResponseError from '~/util/getResponseError'
 
 import styles from './AddRatForm.module.scss'
 
@@ -23,21 +28,28 @@ const initialState = {
 function AddRatForm () {
   const dispatch = useDispatch()
   const [formOpen, setFormOpen] = useState(false)
+  const [error, setError] = useState(null)
   const handleToggleForm = useCallback(() => {
     setFormOpen((state) => {
       return !state
     })
+    setError(null)
   }, [])
 
 
   const onSubmit = async ({ name, platform, expansion }) => {
-    await dispatch(createRat({
+    setError(null)
+    const response = await dispatch(createRat({
       attributes: {
         name: name.trim(),
         platform,
         expansion: platform === 'pc' ? expansion : 'horizons3',
       },
     }))
+    if (isError(response)) {
+      setError(getResponseError(response))
+      return
+    }
     setFormOpen(false)
   }
 
@@ -45,7 +57,22 @@ function AddRatForm () {
   const { Form, canSubmit, submitting, state } = useForm({ onSubmit, data: initialState })
 
   return (
-    <Form className={['compact', styles.addRatForm, { [styles.formOpen]: formOpen }]}>
+    <Form className={clsx('compact', styles.addRatForm, { [styles.formOpen]: formOpen })}>
+      {
+        error && (
+          <ApiErrorBox
+            error={error}
+            renderError={
+(err) => {
+  return friendlyApiError(err, {
+    pointerMessages: {
+      '/data/attributes/name': { detail: err.detail ?? 'CMDR name is invalid.' },
+    },
+  })
+}
+} />
+        )
+      }
       {
         formOpen && (
           <div className="formCol">
@@ -95,17 +122,17 @@ function AddRatForm () {
               className="green compact square"
               disabled={!canSubmit}
               type="submit">
-              <FontAwesomeIcon fixedWidth icon={submitting ? 'sync' : 'arrow-right'} rotate={submitting} />
+              <FontAwesomeIcon fixedWidth icon={submitting ? 'arrows-rotate' : 'arrow-right'} rotate={submitting} />
             </button>
           )
         }
         <button
           aria-label={formOpen ? 'cancel new commander creation' : 'add commander'}
-          className={['compact square', { green: !formOpen }]}
+          className={clsx('compact square', { green: !formOpen })}
           title={formOpen ? 'Cancel' : 'Add new commander'}
           type="button"
           onClick={handleToggleForm}>
-          <FontAwesomeIcon fixedWidth icon={formOpen ? 'times' : 'plus'} />
+          <FontAwesomeIcon fixedWidth icon={formOpen ? 'xmark' : 'plus'} />
         </button>
       </div>
     </Form>

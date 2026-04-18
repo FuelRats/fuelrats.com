@@ -1,19 +1,18 @@
-import Image from 'next/image'
+import clsx from 'clsx'
 import { useCallback, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { setFlag } from '~/store/actions/flags'
 import { logout } from '~/store/actions/session'
 import {
   selectSession,
   selectUserById,
-  selectAvatarUrlByUserId,
   withCurrentUserId,
-  selectCurrentUserCanEditAllRescues,
+  selectCurrentUserHasScope,
 } from '~/store/selectors'
 
 import { Nav, NavLink, NavSection } from '../Nav'
+import UserAvatar from '../UserAvatar'
 import styles from './UserMenu.module.scss'
 
 
@@ -24,9 +23,10 @@ function UserMenu () {
   const checkboxRef = useRef()
 
   const { loggedIn } = useSelector(selectSession)
-  const userCanSeeRescueAdmin = useSelector(selectCurrentUserCanEditAllRescues)
+  const userCanDispatch = useSelector((state) => {
+    return selectCurrentUserHasScope(state, { scope: 'dispatch.read' })
+  })
   const user = useSelector(withCurrentUserId(selectUserById))
-  const userAvatarUrl = useSelectorWithProps({ size: 64 }, withCurrentUserId(selectAvatarUrlByUserId))
 
   const dispatch = useDispatch()
 
@@ -38,12 +38,13 @@ function UserMenu () {
     dispatch(setFlag('showLoginDialog', true))
   }, [dispatch])
 
-  const handleLogout = useCallback(() => {
-    dispatch(logout())
+  const handleLogout = useCallback(async () => {
+    await dispatch(logout())
+    window.location.href = '/'
   }, [dispatch])
 
   return (
-    <div className={[styles.userMenu, { [styles.loggedIn]: loggedIn }]}>
+    <div className={clsx(styles.userMenu, { [styles.loggedIn]: loggedIn })}>
       {
         loggedIn
           ? (
@@ -55,17 +56,8 @@ function UserMenu () {
                 id="UserMenuControl"
                 type="checkbox" />
 
-              <label className={[styles.avatar, styles.navHandle]} htmlFor="UserMenuControl" id="UserMenuToggle">
-                {
-                  Boolean(user) && (
-                    <Image
-                      unoptimized
-                      alt="User's avatar"
-                      height={64}
-                      src={userAvatarUrl}
-                      width={64} />
-                  )
-                }
+              <label className={clsx(styles.avatar, styles.navHandle)} htmlFor="UserMenuControl" id="UserMenuToggle">
+                {Boolean(user) && (<UserAvatar size={64} />)}
               </label>
             </>
           )
@@ -89,23 +81,27 @@ function UserMenu () {
               <NavLink href="/profile/rats">
                 {'My Rats'}
               </NavLink>
-            </NavSection>
-
-            <NavSection className={styles.navSection} title="Admin">
+              <NavLink href="/profile/rescues">
+                {'My Rescues'}
+              </NavLink>
               {
-                userCanSeeRescueAdmin && (
-                  <NavLink href="/admin/rescues">
-                    {'Rescues'}
+                userCanDispatch && (
+                  <NavLink href="/dispatch">
+                    {'Dispatch Board'}
                   </NavLink>
                 )
               }
             </NavSection>
 
-
             <NavSection className={styles.navSection}>
-              <NavLink className="logout" href="/" onClick={handleLogout}>
-                {'Logout'}
-              </NavLink>
+              <li>
+                <button
+                  className="logout"
+                  type="button"
+                  onClick={handleLogout}>
+                  <span>{'Logout'}</span>
+                </button>
+              </li>
             </NavSection>
           </Nav>
         )

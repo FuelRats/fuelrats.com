@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { useCallback, useRef } from 'react'
 import { useSelector } from 'react-redux'
 
-import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { selectCurrentUserHasScope, selectSession } from '~/store/selectors'
 import makeBlogRoute from '~/util/router/makeBlogRoute'
 
@@ -23,9 +22,13 @@ import SocialIcon from './SocialIcon'
 
 function Header () {
   const { loggedIn } = useSelector(selectSession)
-  const userCanDispatch = useSelectorWithProps({ scope: 'dispatch.read' }, selectCurrentUserHasScope)
+  const userCanDispatch = useSelector((state) => {
+    return selectCurrentUserHasScope(state, { scope: 'dispatch.read' })
+  })
   /* Temporarily use 'epics.write' instead of 'epics.write.me' to disable epic nomination for normal users, we're not ready for this yet. */
-  const userCanCreateEpic = useSelectorWithProps({ scope: 'epics.write' }, selectCurrentUserHasScope)
+  const userCanCreateEpic = useSelector((state) => {
+    return selectCurrentUserHasScope(state, { scope: 'epics.write' })
+  })
 
   const checkboxRef = useRef()
 
@@ -46,12 +49,10 @@ function Header () {
       </label>
 
       <header role="banner">
-        <Link href="/">
-          <a className="brand" title="Home">
-            <div className="brand-animation-wrapper">
-              <Brand id="brandSvg" />
-            </div>
-          </a>
+        <Link className="brand" href="/" title="Home">
+          <div className="brand-animation-wrapper">
+            <Brand id="brandSvg" />
+          </div>
         </Link>
 
         <Nav onClick={handleClick}>
@@ -134,7 +135,7 @@ function Header () {
           </NavLink>
 
           <NavLink className="button link" href="/acknowledgements">
-            <FontAwesomeIcon fixedWidth icon="hands-helping" />
+            <FontAwesomeIcon fixedWidth icon="handshake-angle" />
             {'Acknowledgements'}
           </NavLink>
 
@@ -167,7 +168,7 @@ function Header () {
             title="Fuel Rats on GitHub" />
           <SocialIcon
             href="https://forums.frontier.co.uk/threads/out-of-fuel-explorer-rescue-service-the-fuel-rats.150703/"
-            icon="space-shuttle"
+            icon="shuttle-space"
             title="Fuel Rats on Frontier Forums"
             transform={{ rotate: -45 }} />
         </div>

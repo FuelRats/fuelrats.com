@@ -1,12 +1,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import PropTypes from 'prop-types'
 import { useState, useCallback } from 'react'
 import Cropper from 'react-easy-crop'
 import { useDispatch } from 'react-redux'
 
 import asModal, { ModalContent, ModalFooter } from '~/components/asModal'
-import ProfileUserAvatar from '~/components/ProfileUserAvatar'
 import Slider from '~/components/Slider'
+import UserAvatar from '~/components/UserAvatar'
 import { updateAvatar } from '~/store/actions/user'
 import getResponseError from '~/util/getResponseError'
 
@@ -20,17 +21,19 @@ const HALF_CIRCLE = 180 // Conversion of rat to deg
 
 // eslint-disable-next-line no-magic-numbers -- Numbers correspond to degree marks to be placed
 const rotationMarks = [0, 45, 90, 135, 180].reduce((acc, value) => {
-  acc[0 - value] = {}
-  acc[value] = {}
+  acc[0 - value] = ''
+  acc[value] = ''
   return acc
 }, {})
 
 // eslint-disable-next-line no-magic-numbers -- Numbers correspond to zoom marks
 const zoomMarks = [1, 1.5, 2, 2.5, 3].reduce((acc, value) => {
-  acc[value] = {}
+  acc[value] = ''
   return acc
 }, {})
 
+
+const AVATAR_PREVIEW_SIZE = 170
 
 function UploadAvatarModal (props) {
   const {
@@ -198,7 +201,7 @@ function UploadAvatarModal (props) {
       {
         result.success && (
           <div className={styles.avatarPreview}>
-            <ProfileUserAvatar />
+            <UserAvatar alt="Updated avatar preview" size={AVATAR_PREVIEW_SIZE} />
           </div>
         )
       }
@@ -206,8 +209,8 @@ function UploadAvatarModal (props) {
       <div className={styles.body}>
         {
           Boolean(!upImg && !result.success) && (
-            <label className={['file-dropzone', { active: inputDragActive }]} htmlFor="avatarInput" id="avatarInputLabel">
-              <FontAwesomeIcon fixedWidth icon="file-upload" />
+            <label className={clsx('file-dropzone', { active: inputDragActive })} htmlFor="avatarInput" id="avatarInputLabel">
+              <FontAwesomeIcon fixedWidth icon="file-arrow-up" />
               {' Drop image here'}
               <br />
               <small>
@@ -259,7 +262,7 @@ function UploadAvatarModal (props) {
                   <Slider
                     aria-labelledby="Rotation"
                     disabled={submitting}
-                    handleIcon="sync"
+                    handleIcon="arrows-rotate"
                     marks={rotationMarks}
                     max={180}
                     min={-180}

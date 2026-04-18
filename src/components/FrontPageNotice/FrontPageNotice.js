@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import Image from 'next/image'
 import PropTypes from 'prop-types'
 
@@ -28,7 +29,7 @@ function FrontPageNotice (props) {
       elseExternal
       elseHref={TWEET_LINK}
       href={RESCUE_LINK}>
-      <div className={[styles.frontPageNotice, className]}>
+      <div className={clsx(styles.frontPageNotice, className)}>
         <Image height={368} src="/static/images/100k.jpg" width={256} />
         <div className={styles.cardText}>
           <div className={styles.title}>

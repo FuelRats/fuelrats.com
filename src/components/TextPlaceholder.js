@@ -1,22 +1,18 @@
+import clsx from 'clsx'
 import PropTypes from 'prop-types'
 
 
 
 
 
-function TextPlaceholder ({ size, loading }) {
+function TextPlaceholder ({ size = 10, loading = false }) {
   return (
     <span className="text-placeholder-wrapper">
-      <span className={['text-placeholder', { loading }]}>
+      <span className={clsx('text-placeholder', { loading })}>
         {'\u00A0'.repeat(size)}
       </span>
     </span>
   )
-}
-
-TextPlaceholder.defaultProps = {
-  loading: false,
-  size: 10,
 }
 
 TextPlaceholder.propTypes = {

@@ -1,12 +1,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import PropTypes from 'prop-types'
 import { useCallback, useRef } from 'react'
 
 import { useField, fieldPropTypes } from '~/hooks/useForm'
 import extPropTypes from '~/util/propTypes/extPropTypes'
 
-import inputStyles from '../InputFieldset/InputFieldset.module.scss'
 import styles from './SelectFieldset.module.scss'
+import inputStyles from '../InputFieldset/InputFieldset.module.scss'
 
 
 
@@ -60,9 +61,9 @@ function SelectFieldset (props) {
         )
       }
 
-      <div className={[inputStyles.inputGroup, styles.select, className]}>
+      <div className={clsx(inputStyles.inputGroup, styles.select, className)}>
         <select
-          className={[inputClassName, { dark, required, valid: validityRef.current, [styles.empty]: !value.length }]}
+          className={clsx(inputClassName, { dark, required, valid: validityRef.current, [styles.empty]: !value.length })}
           disabled={submitting || disabled}
           type="text"
           {...inputProps}

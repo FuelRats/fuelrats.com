@@ -1,25 +1,15 @@
 import axios from 'axios'
-import getConfig from 'next/config'
 
 
-
-
-
-const { publicRuntimeConfig } = getConfig()
-const localWordpressApiUrl = publicRuntimeConfig.wordpress.url
-
-
-
-
+const isServer = typeof window === 'undefined'
 
 const wpApi = axios.create({
-  baseURL: localWordpressApiUrl,
+  baseURL: isServer ? `${process.env.APP_URL}/api/wp` : '/api/wp',
   timeout: 10000,
   validateStatus: () => {
     return true // Always resolve because it's simpler for the action creators.
   },
 })
-
 
 
 

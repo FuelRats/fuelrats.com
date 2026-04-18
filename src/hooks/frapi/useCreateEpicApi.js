@@ -1,3 +1,4 @@
+import { isError } from 'flux-standard-action'
 import { useEffect, useReducer, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
@@ -91,7 +92,7 @@ export default function useCreateEpicApi () {
       const result = await reduxDispatch(createEpic(postBody))
 
       if (!didCancel) {
-        if (result.error) {
+        if (isError(result)) {
           dispatch({ type: 'CREATE_FAILURE' })
         } else {
           dispatch({

@@ -1,9 +1,9 @@
 import createRequestBody from '~/util/jsonapi/createRequestBody'
 
 import actionTypes from '../actionTypes'
+import { frApiRequest } from './services'
 import { DISPATCH_VIEW } from '../reducers/dispatch'
 import { deletesResource } from '../reducers/frAPIResources'
-import { frApiRequest } from './services'
 
 
 
@@ -42,6 +42,18 @@ export const getDispatchBoard = () => {
       sort: '-createdAt',
     },
     { [DISPATCH_VIEW]: true },
+  )
+}
+
+
+export const getMyRescues = (params, ...meta) => {
+  return frApiRequest(
+    actionTypes.rescues.search,
+    {
+      url: '/rescues/me',
+      params,
+    },
+    ...meta,
   )
 }
 

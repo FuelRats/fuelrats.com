@@ -1,3 +1,5 @@
+import clsx from 'clsx'
+
 function InlineEditSpan ({
   canEdit,
   className,
@@ -8,13 +10,13 @@ function InlineEditSpan ({
   return canEdit
     ? (
       <input
-        className={['inline-editor inline', inputClassName]}
+        className={clsx('inline-editor inline', inputClassName)}
         type="text"
         value={value}
         {...inputProps} />
     )
     : (
-      <span className={['inline-editor', className]}>
+      <span className={clsx('inline-editor', className)}>
         {value}
       </span>
     )

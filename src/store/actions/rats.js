@@ -4,13 +4,13 @@ import createRequestBody from '~/util/jsonapi/createRequestBody'
 
 
 import actionTypes from '../actionTypes'
+import { frApiRequest } from './services'
 import {
   createsRelationship,
   deletesRelationship,
   deletesResource,
   RESOURCE,
 } from '../reducers/frAPIResources'
-import { frApiRequest } from './services'
 
 
 

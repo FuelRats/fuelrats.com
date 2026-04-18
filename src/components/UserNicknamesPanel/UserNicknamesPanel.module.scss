@@ -23,6 +23,17 @@
   }
 }
 
+.controlContainer {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.displayIcon {
+  margin-left: 0.5rem;
+
+  color: #FFD700;
+}
+
 .addNicknameFloat {
   position: relative;
 

@@ -1,5 +1,7 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import Router from 'next/router'
-import { useCallback } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 import { FooterPrimary, FooterSecondary, ModalFooter, useModalContext } from '~/components/asModal'
@@ -8,6 +10,8 @@ import PasswordFieldset from '~/components/Fieldsets/PasswordFieldset'
 import SwitchFieldset from '~/components/Fieldsets/SwitchFieldset'
 import useForm from '~/hooks/useForm'
 import { login } from '~/store/actions/authentication'
+import { listPasskeys, loginWithPasskey } from '~/store/actions/passkeys'
+import { logout } from '~/store/actions/session'
 import { getUserProfile } from '~/store/actions/user'
 import getResponseError from '~/util/getResponseError'
 
@@ -30,6 +34,12 @@ function LoginView () {
   const [{ formData: data, onClose }, setModalState] = useModalContext()
 
   const dispatch = useDispatch()
+
+  const [webAuthnSupported, setWebAuthnSupported] = useState(false)
+  useEffect(() => {
+    setWebAuthnSupported(typeof window !== 'undefined' && window.PublicKeyCredential !== undefined)
+  }, [])
+
   const onSubmit = useCallback(async (formData) => {
     setModalState({ error: undefined })
 
@@ -41,15 +51,36 @@ function LoginView () {
 
       if (error.status === 'verification_required') {
         nextState.view = 'verify'
+      } else if (error.source?.pointer === '/data/attributes/code') {
+        nextState.view = 'totp'
+        nextState.error = undefined
       }
 
       setModalState(nextState)
       return
     }
 
-    dispatch(getUserProfile())
+    const profileResponse = await dispatch(getUserProfile())
+    const profileError = getResponseError(profileResponse)
+    if (profileError) {
+      dispatch(logout())
+      setModalState({ error: profileError })
+      return
+    }
+
+    // Check if user should be prompted to add a passkey
+    if (webAuthnSupported && !localStorage.getItem('fr.passkeyPromptDismissed')) {
+      const passkeyResponse = await dispatch(listPasskeys())
+      const passkeys = passkeyResponse?.payload?.data ?? []
+      if (passkeys.length === 0) {
+        setModalState({ view: 'passkey-prompt' })
+        return
+      }
+    }
+
     onClose()
-  }, [dispatch, onClose, setModalState])
+    Router.push('/profile/overview')
+  }, [dispatch, onClose, setModalState, webAuthnSupported])
 
   const handleRegisterClick = useCallback(() => {
     onClose()
@@ -60,10 +91,45 @@ function LoginView () {
     setModalState({ error: null, view: 'reset' })
   }, [setModalState])
 
+  const [passkeyLoading, setPasskeyLoading] = useState(false)
+  const handlePasskeyLogin = useCallback(async () => {
+    setModalState({ error: undefined })
+    setPasskeyLoading(true)
+
+    const emailInput = document.getElementById('LoginEmail')
+    const email = emailInput?.value || undefined
+
+    const response = await dispatch(loginWithPasskey(email))
+
+    if (!response) {
+      // User cancelled the passkey prompt
+      setPasskeyLoading(false)
+      return
+    }
+
+    const error = getResponseError(response)
+    if (error) {
+      setModalState({ error })
+      setPasskeyLoading(false)
+      return
+    }
+
+    const profileResponse = await dispatch(getUserProfile())
+    const profileError = getResponseError(profileResponse)
+    if (profileError) {
+      dispatch(logout())
+      setModalState({ error: profileError })
+      setPasskeyLoading(false)
+      return
+    }
+    onClose()
+    Router.push('/profile/overview')
+  }, [dispatch, onClose, setModalState])
+
   const { Form, canSubmit, submitting } = useForm({ data: data ?? initialData, onSubmit })
 
   return (
-    <Form className={[styles.loginForm, 'dialog']}>
+    <Form className={clsx(styles.loginForm, 'dialog')}>
       <EmailFieldset
         autoFocus
         dark
@@ -86,10 +152,28 @@ function LoginView () {
         label="Remember me"
         name="remember" />
 
+      {
+        webAuthnSupported && (
+          <div className={styles.passkeySection}>
+            <div className={styles.divider}>
+              <span>{'or'}</span>
+            </div>
+            <button
+              className={clsx(styles.passkeyButton)}
+              disabled={passkeyLoading || submitting}
+              type="button"
+              onClick={handlePasskeyLogin}>
+              <FontAwesomeIcon fixedWidth icon="key" />
+              {passkeyLoading ? ' Waiting for passkey...' : ' Sign in with passkey'}
+            </button>
+          </div>
+        )
+      }
+
       <ModalFooter className={styles.footer}>
         <FooterSecondary className={styles.secondary}>
           <button
-            className={[styles.button, 'secondary']}
+            className={clsx(styles.button, 'secondary')}
             type="button"
             onClick={handleRegisterClick}>
             {'Become a Rat'}
@@ -101,7 +185,7 @@ function LoginView () {
             {'Forgot password?'}
           </button>
           <button
-            className={[styles.button, 'green']}
+            className={clsx(styles.button, 'green')}
             disabled={!canSubmit}
             type="submit">
             {submitting ? 'Submitting...' : 'Login'}

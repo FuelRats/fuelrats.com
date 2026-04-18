@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import PropTypes from 'prop-types'
 
 import JsonObject from '~/components/JsonEditor/JsonObject'
@@ -24,7 +25,7 @@ function JsonEditor (props) {
 
   return (
     <>
-      <Form className={[styles.jsonEditor, className]}>
+      <Form className={clsx(styles.jsonEditor, className)}>
         <JsonObject name="object" node={data} />
       </Form>
       <br />

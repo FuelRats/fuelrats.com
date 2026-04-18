@@ -1,20 +1,40 @@
-import RatTagsInput from './RatTagsInput'
+import { useCallback } from 'react'
+
+import RatTagsInput, { renderRatValue } from './RatTagsInput'
 
 
 
 
+function FirstLimpetInput (props) {
+  const { options = [], valueProp = 'value' } = props
 
-class FirstLimpetInput extends RatTagsInput {
-  // no-op
-  search (query) {
+  const resolveItemValue = useCallback((item) => {
+    if (typeof valueProp === 'function') {
+      return valueProp(item)
+    }
+    let value = item
+    for (const key of valueProp.split('.')) {
+      if (value === null || value === undefined) {
+        return undefined
+      }
+      value = value[key]
+    }
+    return value
+  }, [valueProp])
+
+  const onSearch = useCallback((query) => {
+    if (!query) {
+      return options
+    }
     const regex = new RegExp(`.*${query}.*`, 'giu')
-    this.updateOptions(this.props.options.filter((option) => {
-      return regex.test(this.getValue(option))
-    }))
-  }
-  /* eslint-enable */
-}
+    return options.filter((option) => {
+      const text = resolveItemValue(option) ?? renderRatValue(option)
+      return regex.test(typeof text === 'string' ? text : '')
+    })
+  }, [options, resolveItemValue])
 
+  return <RatTagsInput {...props} onSearch={onSearch} />
+}
 
 
 

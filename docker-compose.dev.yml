@@ -1,0 +1,12 @@
+services:
+  web:
+    build:
+      target: dev
+    # Mount source code for hot reload in development
+    volumes:
+      - ./src:/app/src
+      - ./public:/app/public
+      - ./next.config.js:/app/next.config.js
+      - ./.config:/app/.config
+      - ./jsconfig.json:/app/jsconfig.json
+      - ./.env:/app/.env:ro

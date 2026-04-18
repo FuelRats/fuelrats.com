@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events -- links are interactable, but eslint cannot statically check it here. */
+import clsx from 'clsx'
 import Link from 'next/link'
 import { useCallback } from 'react'
 
@@ -30,19 +31,17 @@ export default function NavLink (props) {
       {
         external
           ? (
-            <a {...restProps} className={[className, { disabled }]} onClick={handleClick}>
+            <a {...restProps} className={clsx(className, { disabled })} onClick={handleClick}>
               <span>
                 {children}
               </span>
             </a>
           )
           : (
-            <Link {...restProps}>
-              <a className={[className, { disabled }]} onClick={handleClick}>
-                <span>
-                  {children}
-                </span>
-              </a>
+            <Link {...restProps} className={clsx(className, { disabled })} onClick={handleClick}>
+              <span>
+                {children}
+              </span>
             </Link>
           )
       }

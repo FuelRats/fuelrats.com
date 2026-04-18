@@ -46,6 +46,7 @@ function Acknowledgements () {
         return (
           <div key={brand.key} className={`credit-section credit-${brand.key}`}>
             <a
+              aria-label={brand.key}
               href={brand.homepage}
               rel="noopener noreferrer"
               target="_blank">

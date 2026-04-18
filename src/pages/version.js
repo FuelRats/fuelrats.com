@@ -1,13 +1,9 @@
 import { HttpStatus } from '@fuelrats/web-util/http'
 import axios from 'axios'
-import getConfig from 'next/config'
 import Link from 'next/link'
 
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 
-// Component constants
-const { publicRuntimeConfig } = getConfig()
-const { appUrl } = publicRuntimeConfig
 
 
 
@@ -24,10 +20,8 @@ function Version ({ version }) {
   return (
     <div className="page-content">
       <div>
-        <Link href="/api/version">
-          <a className="button compact">
-            {'Raw'}
-          </a>
+        <Link className="button compact" href="/api/version">
+          {'Raw'}
         </Link>
       </div>
       <div className="page-content text-mono">
@@ -67,7 +61,7 @@ function Version ({ version }) {
 }
 
 Version.getInitialProps = async () => {
-  const response = await axios.get(`${appUrl}/api/version`)
+  const response = await axios.get('/api/version')
 
   return {
     version: response.status === HttpStatus.OK

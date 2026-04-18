@@ -13,8 +13,12 @@ import { selectCurrentUserHasScope } from './users'
 
 
 // Constants
-const PAPERWORK_MAX_EDIT_TIME = 3600000
+const RESCUE_ACCESS_HOURS = 3
+const PAPERWORK_MAX_EDIT_TIME = RESCUE_ACCESS_HOURS * 60 * 60 * 1000
 
+// Stable empty values keep selector outputs referentially equal across
+// store updates so downstream memoization doesn't bust on every dispatch.
+const EMPTY_ARRAY = Object.freeze([])
 
 
 const getRescueId = (_, props) => {
@@ -23,26 +27,21 @@ const getRescueId = (_, props) => {
 
 
 
-export const selectRescues = (state) => {
-  return state.rescues.rescues
-}
-
-
-export const selectRescueById = (state, props = {}) => {
+const selectRescueById = (state, props = {}) => {
   return state.rescues[props.rescueId]
 }
 
-export const selectRescueRatRelationship = (state, props) => {
+const selectRescueRatRelationship = (state, props) => {
   const rescue = selectRescueById(state, props)
 
   if (!rescue || !rescue.relationships?.rats) {
     return undefined
   }
 
-  return rescue.relationships.rats.data ?? []
+  return rescue.relationships.rats.data ?? EMPTY_ARRAY
 }
 
-export const selectRatsByRescueId = createCachedSelector(
+const selectRatsByRescueId = createCachedSelector(
   [selectRats, selectRescueRatRelationship],
   (rats, rescueRats) => {
     if (rats) {
@@ -59,58 +58,73 @@ export const selectRatsByRescueId = createCachedSelector(
 )(getRescueId)
 
 
-export const selectCurrentUserCanEditAllRescues = (state) => {
+const selectCanEditAllRescues = (state) => {
   return selectCurrentUserHasScope(state, { scope: 'rescues.write' })
 }
 
 
-export const selectCurrentUserCanEditRescue = createCachedSelector(
-  [selectRescueById, selectRatsByRescueId, selectCurrentUserId, selectCurrentUserCanEditAllRescues],
-  (rescue, rescueRats, userId, userCanEditAllRescues) => {
+const selectHasWriteMeScope = (state) => {
+  return selectCurrentUserHasScope(state, { scope: 'rescues.write.me' })
+}
+
+const selectHasDispatchWrite = (state) => {
+  return selectCurrentUserHasScope(state, { scope: 'dispatch.write' })
+}
+
+const selectCurrentUserCanEditRescue = createCachedSelector(
+  [
+    selectRescueById, selectRatsByRescueId, selectCurrentUserId,
+    selectCanEditAllRescues, selectHasWriteMeScope, selectHasDispatchWrite,
+  ],
+  // eslint-disable-next-line max-params -- selector combines six input selectors
+  (rescue, rescueRats, userId, userCanEditAllRescues, userHasWriteMe, userHasDispatchWrite) => {
     if (!rescue || !userId) {
       return false
     }
 
-    // Check if user has permission to edit all paperwork.
+    // Check if user has permission to edit all rescues (rescues.write scope)
     if (userCanEditAllRescues) {
       return true
     }
 
-    // If the resuce is still open, don't allow editing
-    if (rescue.attributes.status !== 'closed') {
-      return false
-    }
+    // Check if current user is assigned to this rescue
+    const isAssigned = rescueRats?.some((rat) => {
+      return rat.relationships.user?.data?.id === userId
+    })
 
-    // Check if current user is assigned to case.
-    const usersAssignedRats = rescueRats?.reduce(
-      (acc, rat) => {
-        if (rat.relationships.user?.data?.id === userId) {
-          return [...acc, rat]
-        }
-        return acc
-      },
-      [],
-    )
+    // Check if current user is first limpet
+    const isFirstLimpet = rescue.relationships.firstLimpet?.data
+      && rescueRats?.some((rat) => {
+        return rat.id === rescue.relationships.firstLimpet.data.id
+          && rat.relationships.user?.data?.id === userId
+      })
 
-    if (usersAssignedRats.length) {
+    // Assigned users or first limpet can always edit their own rescues
+    if ((isAssigned || isFirstLimpet) && userHasWriteMe) {
       return true
     }
 
-    // Check if the paperwork is not yet time locked
-    if ((new Date()).getTime() - (new Date(rescue.attributes.createdAt)).getTime() <= PAPERWORK_MAX_EDIT_TIME) {
+    // Open rescues can be edited by anyone with rescues.write.me
+    if (rescue.attributes.status !== 'closed' && userHasWriteMe) {
       return true
     }
 
-    // None of the conditions are met, user cannot edit paperwork
+    // Closed rescues within time limit can be edited by dispatchers (based on updatedAt)
+    if (rescue.attributes.status === 'closed'
+      && userHasDispatchWrite
+      && (Date.now() - new Date(rescue.attributes.updatedAt).getTime()) <= PAPERWORK_MAX_EDIT_TIME) {
+      return true
+    }
+
     return false
   },
 )(getRescueId)
 
-export const selectRescueUnidentifiedRats = (state, props) => {
+const selectRescueUnidentifiedRats = (state, props) => {
   return selectRescueById(state, props)?.attributes.unidentifiedRats ?? undefined
 }
 
-export const createSelectRenderedRatList = (renderer) => {
+const createSelectRenderedRatList = (renderer) => {
   return createCachedSelector(
     [selectRatsByRescueId, selectRescueUnidentifiedRats],
     (rats = [], unidentifiedRats = []) => {
@@ -130,4 +144,14 @@ export const createSelectRenderedRatList = (renderer) => {
       })
     },
   )(getRescueId)
+}
+
+export {
+  selectRescueById,
+  selectRescueRatRelationship,
+  selectRatsByRescueId,
+  selectCanEditAllRescues as selectCurrentUserCanEditAllRescues,
+  selectCurrentUserCanEditRescue,
+  selectRescueUnidentifiedRats,
+  createSelectRenderedRatList,
 }

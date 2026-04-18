@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import _get from 'lodash/get'
 import PropTypes from 'prop-types'
 import React, { useCallback, useRef, useState } from 'react'
@@ -101,13 +102,13 @@ const InputFieldset = React.forwardRef((props, forwardRef) => {
         )
       }
 
-      <div className={[styles.inputGroup, className]}>
+      <div className={clsx(styles.inputGroup, className)}>
         <input
           disabled={submitting}
           type="text"
           {...inputProps}
           ref={inputRef}
-          className={[inputClassName, { dark }]}
+          className={clsx(inputClassName, { dark })}
           data-pattern-message={patternMessage}
           value={value}
           onBlur={onBlur}
@@ -115,12 +116,12 @@ const InputFieldset = React.forwardRef((props, forwardRef) => {
           onFocus={onFocus} />
         {children}
         <ValidityIcon
-          className={{ [styles.hidden]: !value.length }}
+          className={clsx({ [styles.hidden]: !value.length })}
           hasMessages={messages?.hasMessages}
           valid={messages?.valid}
           validating={validating} />
         <InputSuggestions
-          className={{ dark, [styles.hidden]: hideMessages }}
+          className={clsx({ dark, [styles.hidden]: hideMessages })}
           messages={messages} />
       </div>
     </fieldset>
@@ -151,7 +152,6 @@ InputFieldset.propTypes = {
  * `target?` - the underlying input element
  *
  * `messages` can be mutated or an updated object can be returned by the callback.
- *
  * @param {Function} callback
  * @param {any[]} deps
  * @param {Function} parent

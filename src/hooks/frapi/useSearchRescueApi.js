@@ -1,3 +1,4 @@
+import { isError } from 'flux-standard-action'
 import { useEffect, useReducer, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
@@ -58,7 +59,7 @@ export default function useSearchRescueApi (initialRescueId = null) {
       const result = await reduxDispatch(getRescue(rescueId))
 
       if (!didCancel) {
-        if (result.error) {
+        if (isError(result)) {
           dispatch({ type: 'FETCH_FAILURE' })
         } else {
           dispatch({

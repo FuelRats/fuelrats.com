@@ -1,25 +1,15 @@
 import axios from 'axios'
-import getConfig from 'next/config'
 
 
-
-
-
-const { publicRuntimeConfig } = getConfig()
-const localSystemsApiUrl = publicRuntimeConfig.sapi.url
-
-
-
-
+const isServer = typeof window === 'undefined'
 
 const systemsApi = axios.create({
-  baseURL: localSystemsApiUrl,
+  baseURL: isServer ? `${process.env.APP_URL}/api/sapi` : '/api/sapi',
   timeout: 10000,
   validateStatus: () => {
     return true // Always resolve because it's simpler for the action creators.
   },
 })
-
 
 
 

@@ -1,9 +1,8 @@
-import getConfig from 'next/config'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useMemo } from 'react'
 import { useSelector } from 'react-redux'
-import UAParser from 'ua-parser-js'
+import { UAParser } from 'ua-parser-js'
 
 import MessageBox from '~/components/MessageBox'
 import { selectSession } from '~/store/selectors'
@@ -12,8 +11,10 @@ import { selectSession } from '~/store/selectors'
 
 
 
-const { publicRuntimeConfig } = getConfig()
-const { irc: ircURLs } = publicRuntimeConfig
+const ircURLs = {
+  client: process.env.NEXT_PUBLIC_IRC_CLIENT_URL,
+  rat: process.env.NEXT_PUBLIC_IRC_RAT_URL,
+}
 const unsupportedPlatforms = {
   Sony: {
     type: 'error',
@@ -111,13 +112,9 @@ function INeedFuel () {
 
               <strong>
                 {'By connecting to our IRC and using our services, you agree to our '}
-                <Link href="/terms-of-service">
-                  <a>{'Terms of Service'}</a>
-                </Link>
+                <Link href="/terms-of-service">{'Terms of Service'}</Link>
                 {' and '}
-                <Link href="/privacy-policy">
-                  <a>{'Privacy Policy'}</a>
-                </Link>
+                <Link href="/privacy-policy">{'Privacy Policy'}</Link>
                 {'.'}
               </strong>
             </>

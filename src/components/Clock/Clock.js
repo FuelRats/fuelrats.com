@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import PropTypes from 'prop-types'
 import { useEffect, useState } from 'react'
 
@@ -42,7 +43,7 @@ function Clock (props) {
 
 
   return (
-    <div className={[styles.clock, className]}>
+    <div className={clsx(styles.clock, className)}>
       {clock}
     </div>
   )

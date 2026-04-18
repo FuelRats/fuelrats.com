@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
+import { useSelector } from 'react-redux'
 
-import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { selectAuthorByBlogId, selectBlogById, selectCategoriesByBlogId } from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 import makeBlogRoute from '~/util/router/makeBlogRoute'
@@ -15,9 +15,15 @@ import TextPlaceholder from '../TextPlaceholder'
 function ArticleCard (props) {
   const { className, renderMode = 'excerpt' } = props
 
-  const author = useSelectorWithProps(props, selectAuthorByBlogId)
-  const blog = useSelectorWithProps(props, selectBlogById)
-  const categories = useSelectorWithProps(props, selectCategoriesByBlogId)
+  const author = useSelector((state) => {
+    return selectAuthorByBlogId(state, props)
+  })
+  const blog = useSelector((state) => {
+    return selectBlogById(state, props)
+  })
+  const categories = useSelector((state) => {
+    return selectCategoriesByBlogId(state, props)
+  })
 
   if (!blog) {
     if (renderMode === 'article') {
@@ -52,9 +58,7 @@ function ArticleCard (props) {
     <article className={className}>
       <header>
         <h3 className="title">
-          <Link href={`/blog/${blog.id}`}>
-            <a dangerouslySetInnerHTML={{ __html: blog.title.rendered }} />
-          </Link>
+          <Link dangerouslySetInnerHTML={{ __html: blog.title.rendered }} href={`/blog/${blog.id}`} />
         </h3>
       </header>
 
@@ -67,9 +71,7 @@ function ArticleCard (props) {
 
         <span className="author">
           <FontAwesomeIcon fixedWidth icon="user" />
-          <Link href={makeBlogRoute({ author: authorId })}>
-            <a>{authorName}</a>
-          </Link>
+          <Link href={makeBlogRoute({ author: authorId })}>{authorName}</Link>
         </span>
 
         <span>
@@ -86,9 +88,7 @@ function ArticleCard (props) {
 
                 return (
                   <li key={categoryId}>
-                    <Link href={makeBlogRoute({ category: categoryId })}>
-                      <a title={description}>{name}</a>
-                    </Link>
+                    <Link href={makeBlogRoute({ category: categoryId })} title={description}>{name}</Link>
                   </li>
                 )
               })

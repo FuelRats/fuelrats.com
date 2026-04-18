@@ -7,7 +7,7 @@ const ELITE_GAME_YEAR_DISPARITY = 1286 // Years between IRL year and Elite unive
 export default function toEliteDate (value) {
   const date = new Date(value)
 
-  return new Date(
+  return new Date(Date.UTC(
     date.getUTCFullYear() + ELITE_GAME_YEAR_DISPARITY,
     date.getUTCMonth(),
     date.getUTCDate(),
@@ -15,5 +15,5 @@ export default function toEliteDate (value) {
     date.getUTCMinutes(),
     date.getUTCSeconds(),
     date.getUTCMilliseconds(),
-  )
+  ))
 }

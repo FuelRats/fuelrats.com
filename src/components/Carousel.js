@@ -1,22 +1,17 @@
-import { AnimatePresence, m } from 'framer-motion'
-import getConfig from 'next/config'
+import clsx from 'clsx'
+import { AnimatePresence, m } from 'motion/react'
 import PropTypes from 'prop-types'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { createSelector } from 'reselect'
 
 
-import useSelectorWithProps from '~/hooks/useSelectorWithProps'
 import { getImage } from '~/store/actions/images'
 import { selectImages } from '~/store/selectors'
 
 
 
 
-
-// Component constants
-const { publicRuntimeConfig } = getConfig()
-const { appUrl } = publicRuntimeConfig
 
 const getSlides = (_, props) => {
   return props.slides
@@ -79,8 +74,12 @@ function Carousel (props) {
     interval = 10000,
   } = props
 
-  const slides = useSelectorWithProps(props, selectSlides)
-  const images = useSelectorWithProps(props, selectSlideImages)
+  const slides = useSelector((state) => {
+    return selectSlides(state, props)
+  })
+  const images = useSelector((state) => {
+    return selectSlideImages(state, props)
+  })
   const [curSlideId, setCurSlide] = useState(Object.keys(slides)[0])
 
   const curSlide = slides[curSlideId]
@@ -112,10 +111,10 @@ function Carousel (props) {
   useEffect(() => {
     Object.entries(slides).forEach(([key, slide]) => {
       if (!images[key]) {
-        dispatch(getImage({
+        Promise.resolve(dispatch(getImage({
           id: key,
-          url: `${appUrl}/static/images/${slide.filename}`,
-        }))
+          url: `/static/images/${slide.filename}`,
+        }))).catch(() => {})
       }
     })
   // eslint-disable-next-line react-hooks/exhaustive-deps -- Only perform this on mount since this is a fetch operation.
@@ -134,7 +133,7 @@ function Carousel (props) {
   }, [curSlideUrl])
 
   return (
-    <div className={['carousel', className]} id={id}>
+    <div className={clsx('carousel', className)} id={id}>
       <AnimatePresence>
         {
         Boolean(curSlideUrl) && (
@@ -169,7 +168,7 @@ function Carousel (props) {
             <button
               key={slideId}
               aria-label={`Image carousel slide ${slideId}`}
-              className={['circle-button', { active: curSlideId === slideId }]}
+              className={clsx('circle-button', { active: curSlideId === slideId })}
               name={slideId}
               type="button"
               onClick={handleSlideButtonClick} />
