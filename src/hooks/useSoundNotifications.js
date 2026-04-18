@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { useSelector, useStore } from 'react-redux'
+import { useStore } from 'react-redux'
 
 import { selectDispatchBoard } from '~/store/selectors/dispatch'
 import { playNewCaseSound, playCaseChangeSound, playCaseClosedSound, playCodeRedSound } from '~/util/sounds'
@@ -37,118 +37,166 @@ export function saveSoundSettings (settings) {
 }
 
 
+function snapshotBoard (state, ids) {
+  const snapshot = {}
+  if (ids) {
+    ids.forEach((id) => {
+      snapshot[id] = state.rescues?.[id]
+    })
+  }
+  return snapshot
+}
+
+
 /**
  * Watches the dispatch board for rescue changes and plays sounds.
- * Reads settings from localStorage so it doesn't need React state.
+ * Uses store.subscribe() to catch both ID list changes AND attribute
+ * changes on existing rescues (e.g. rats assigned via websocket).
  */
 export default function useSoundNotifications () {
   const store = useStore()
-  const rescueIds = useSelector(selectDispatchBoard)
-  const prevIdsRef = useRef(null)
-  const prevRescuesRef = useRef({})
-  const initialLoadRef = useRef(true)
+  const stateRef = useRef({
+    ids: null,
+    rescues: {},
+    settled: false,
+  })
 
   useEffect(() => {
-    const prevIds = prevIdsRef.current
-    prevIdsRef.current = rescueIds
+    return store.subscribe(() => {
+      const state = store.getState()
+      const currentIds = selectDispatchBoard(state)
+      const prev = stateRef.current
 
-    // Skip the first render — we don't want to fire sounds for the initial load
-    if (initialLoadRef.current) {
-      initialLoadRef.current = false
-      // Snapshot current rescue state so we can detect changes later
-      if (rescueIds?.length) {
-        const state = store.getState()
-        const snapshot = {}
-        rescueIds.forEach((id) => {
-          snapshot[id] = state.rescues?.[id]
+      // Wait for the board to be populated at least once before comparing.
+      // The initial transition from [] → [id1, id2, ...] is the page load,
+      // not new rescues arriving.
+      if (!prev.settled) {
+        if (currentIds?.length > 0) {
+          stateRef.current = {
+            ids: currentIds,
+            rescues: snapshotBoard(state, currentIds),
+            settled: true,
+          }
+        }
+        return
+      }
+
+      // Nothing to compare if IDs haven't changed and rescue objects are identical
+      const prevIds = prev.ids ?? []
+      const idsChanged = currentIds !== prevIds
+
+      // Quick check: if IDs haven't changed, see if any rescue object reference changed
+      if (!idsChanged) {
+        let anyRescueChanged = false
+        for (const id of currentIds) {
+          if (state.rescues?.[id] !== prev.rescues[id]) {
+            anyRescueChanged = true
+            break
+          }
+        }
+        if (!anyRescueChanged) {
+          return
+        }
+      }
+
+      const settings = loadSoundSettings()
+      if (!settings.enabled) {
+        // Still update snapshot so we don't pile up stale diffs
+        stateRef.current = {
+          ids: currentIds,
+          rescues: snapshotBoard(state, currentIds),
+          settled: true,
+        }
+        return
+      }
+
+      const { volume } = settings
+      let soundPlayed = false
+
+      // Check for closed rescues (removed from board)
+      if (idsChanged) {
+        const closedIds = prevIds.filter((id) => {
+          return !currentIds.includes(id)
         })
-        prevRescuesRef.current = snapshot
-      }
-      return
-    }
-
-    if (!prevIds || !rescueIds) {
-      return
-    }
-
-    const settings = loadSoundSettings()
-    if (!settings.enabled) {
-      return
-    }
-
-    const { volume } = settings
-    const state = store.getState()
-
-    // Check for closed rescues (removed from board)
-    const closedIds = prevIds.filter((id) => {
-      return !rescueIds.includes(id)
-    })
-    if (closedIds.length > 0 && settings.caseClosed) {
-      playCaseClosedSound(volume)
-    }
-
-    // Check for new rescues
-    const newIds = rescueIds.filter((id) => {
-      return !prevIds.includes(id)
-    })
-    if (newIds.length > 0 && closedIds.length === 0 && settings.newCase) {
-      const hasNewCr = newIds.some((id) => {
-        return state.rescues?.[id]?.attributes?.codeRed
-      })
-      if (hasNewCr) {
-        playCodeRedSound(volume)
-      } else {
-        playNewCaseSound(volume)
-      }
-    }
-
-    // Check for changes to existing rescues (only if no new-rescue sound played)
-    if (newIds.length === 0 && settings.caseChange) {
-      const existingIds = rescueIds.filter((id) => {
-        return prevIds.includes(id)
-      })
-      for (const id of existingIds) {
-        const prev = prevRescuesRef.current[id]
-        const curr = state.rescues?.[id]
-        if (!prev || !curr) {
-          // eslint-disable-next-line no-continue -- skip missing data
-          continue
+        if (closedIds.length > 0 && settings.caseClosed) {
+          playCaseClosedSound(volume)
+          soundPlayed = true
         }
 
-        // A case going CR gets the alert sound instead of the normal update tick
-        if (curr.attributes?.codeRed && !prev.attributes?.codeRed) {
-          playCodeRedSound(volume)
-          break
-        }
-
-        // Check for meaningful attribute changes
-        const pa = prev.attributes ?? {}
-        const ca = curr.attributes ?? {}
-        if (
-          pa.status !== ca.status
-          || pa.system !== ca.system
-          || pa.platform !== ca.platform
-          || pa.codeRed !== ca.codeRed
-        ) {
-          playCaseChangeSound(volume)
-          break
-        }
-
-        // Check for rat assignment changes
-        const prevRats = prev.relationships?.rats?.data
-        const currRats = curr.relationships?.rats?.data
-        if (prevRats?.length !== currRats?.length) {
-          playCaseChangeSound(volume)
-          break
+        // Check for new rescues
+        const newIds = currentIds.filter((id) => {
+          return !prevIds.includes(id)
+        })
+        if (newIds.length > 0 && !soundPlayed && settings.newCase) {
+          const hasNewCr = newIds.some((id) => {
+            return state.rescues?.[id]?.attributes?.codeRed
+          })
+          if (hasNewCr) {
+            playCodeRedSound(volume)
+          } else {
+            playNewCaseSound(volume)
+          }
+          soundPlayed = true
         }
       }
-    }
 
-    // Snapshot current rescue state for next comparison
-    const snapshot = {}
-    rescueIds.forEach((id) => {
-      snapshot[id] = state.rescues?.[id]
+      // Check for changes to existing rescues
+      if (!soundPlayed && settings.caseChange) {
+        for (const id of currentIds) {
+          const prevRescue = prev.rescues[id]
+          const currRescue = state.rescues?.[id]
+          if (!prevRescue || !currRescue || prevRescue === currRescue) {
+            // eslint-disable-next-line no-continue -- skip unchanged or missing
+            continue
+          }
+
+          // Case going CR gets the alert sound
+          if (currRescue.attributes?.codeRed && !prevRescue.attributes?.codeRed) {
+            playCodeRedSound(volume)
+            soundPlayed = true
+            break
+          }
+
+          // Meaningful attribute changes
+          const pa = prevRescue.attributes ?? {}
+          const ca = currRescue.attributes ?? {}
+          if (
+            pa.status !== ca.status
+            || pa.system !== ca.system
+            || pa.platform !== ca.platform
+            || pa.expansion !== ca.expansion
+            || pa.codeRed !== ca.codeRed
+            || pa.carrier !== ca.carrier
+            || pa.client !== ca.client
+            || pa.clientNick !== ca.clientNick
+            || pa.clientLanguage !== ca.clientLanguage
+            || pa.outcome !== ca.outcome
+            || pa.title !== ca.title
+            || pa.notes !== ca.notes
+            || pa.quotes !== ca.quotes
+          ) {
+            playCaseChangeSound(volume)
+            soundPlayed = true
+            break
+          }
+
+          // Rat assignment changes
+          const prevRats = prevRescue.relationships?.rats?.data
+          const currRats = currRescue.relationships?.rats?.data
+          if (prevRats?.length !== currRats?.length) {
+            playCaseChangeSound(volume)
+            soundPlayed = true
+            break
+          }
+        }
+      }
+
+      // Update snapshot
+      stateRef.current = {
+        ids: currentIds,
+        rescues: snapshotBoard(state, currentIds),
+        settled: true,
+      }
     })
-    prevRescuesRef.current = snapshot
-  }, [rescueIds, store])
+  }, [store])
 }

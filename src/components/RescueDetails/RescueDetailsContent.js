@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import Link from 'next/link'
 import PropTypes from 'prop-types'
 import {
-  cloneElement, useCallback, useMemo, useState, Fragment,
+  useCallback, useMemo, useState, Fragment,
 } from 'react'
 import { useSelector } from 'react-redux'
 
@@ -146,6 +146,7 @@ function RescueDetailsContent (props) {
               <PlatformBadge className={styles.titlePlatformBadge} expansion={expansion} platform={platform} />
             )
           }
+          {carrier && <CarrierIcon className={styles.titleCarrierIcon} title="Fleet Carrier" />}
           {codeRed && <span className="badge">{'CODE RED'}</span>}
           {status === 'inactive' && <span className="badge warn">{'Inactive'}</span>}
         </div>
@@ -318,23 +319,7 @@ rescueLanguage.flag && (
                   <td />
                   <td className={styles.infoValue} />
                 </tr>
-                {
-rescueRats.map((ratRow, index) => {
-  if (index !== 0 || !carrier) {
-    return ratRow
-  }
-  const [titleCell, valueCell] = ratRow.props.children
-  const newValueCell = cloneElement(valueCell, {
-    children: (
-      <span className={styles.carrierRatGroup}>
-        <CarrierIcon className={styles.carrierIcon} title="Fleet Carrier" />
-        {valueCell.props.children}
-      </span>
-    ),
-  })
-  return cloneElement(ratRow, { children: [titleCell, newValueCell] })
-})
-}
+                {rescueRats}
               </>
             )
           }
