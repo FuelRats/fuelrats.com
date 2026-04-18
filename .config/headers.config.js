@@ -24,6 +24,12 @@ module.exports = ({ isDev, frapi, appUrl }) => {
             'prefetch-src': false,
             'worker-src': ["'self'"],
           },
+          permissionsPolicy: {
+            'clipboard-read': "'self'",
+            'clipboard-write': "'self'",
+            'publickey-credentials-get': "'self'",
+            'web-share': "'self'",
+          },
           frameOptions: defaultIfDev,
           contentTypeOptions: defaultIfDev,
           referrerPolicy: defaultIfDev,
