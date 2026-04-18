@@ -1,7 +1,7 @@
 #Burger {
   display: inline-block;
   position: absolute;
-  top: 1.5rem;
+  top: calc(1.5rem + env(safe-area-inset-top));
   left: 23rem;
   z-index: 150;
 

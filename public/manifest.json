@@ -1,6 +1,6 @@
 {
   "name": "Dispatch Board",
-  "short_name": "Dispatch",
+  "short_name": "Dispatch Board",
   "id": "/dispatch",
   "start_url": "/dispatch",
   "scope": "/",

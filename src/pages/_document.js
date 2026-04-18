@@ -23,7 +23,7 @@ class FuelRatsWebsite extends Document {
           <meta content="Fuel Rats" name="application-name" />
           <meta content="#d65050" name="theme-color" />
 
-          <meta content="Fuel Rats" name="apple-mobile-web-app-title" />
+          <meta content="Dispatch Board" name="apple-mobile-web-app-title" />
           <meta content="yes" name="apple-mobile-web-app-capable" />
           <meta content="yes" name="mobile-web-app-capable" />
           <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" />
