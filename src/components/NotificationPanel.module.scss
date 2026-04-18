@@ -7,6 +7,7 @@
   z-index: 100;
 
   width: 320px;
+  max-width: calc(100vw - 2rem);
   margin-top: 0.5rem;
 
   border: 1px solid $grey-dark;

@@ -67,6 +67,8 @@
     }
   }
   @media only screen and (max-width: 768px) {
+    padding: 3rem;
+
     h1 {
       font-size: 3em;
     }
@@ -77,6 +79,17 @@
 
     .call-to-action .button {
       font-size: 1em;
+    }
+  }
+  @media only screen and (max-width: 480px) {
+    padding: 2rem;
+
+    h1 {
+      font-size: 2.2em;
+    }
+
+    h2 {
+      font-size: 1.3em;
     }
   }
 }

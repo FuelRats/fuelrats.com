@@ -104,6 +104,10 @@ textarea {
   @extend %text-input;
 
   min-height: 10rem;
+
+  @media screen and (max-width: 768px) {
+    min-height: 6rem;
+  }
 }
 
 
@@ -114,8 +118,10 @@ input[type='checkbox'] {
 
   place-content: center;
 
-  width: 1em;
-  height: 1em;
+  min-width: 20px;
+  width: 1.25em;
+  min-height: 20px;
+  height: 1.25em;
   margin-right: 16px;
 
   border: 0.2rem solid $red;
@@ -123,7 +129,7 @@ input[type='checkbox'] {
   background: transparent;
   outline: none;
 
-  font-size: 13px;
+  font-size: 16px;
 
   vertical-align: baseline;
 

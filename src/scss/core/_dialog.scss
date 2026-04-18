@@ -4,7 +4,7 @@
 
   flex-direction: column;
 
-  min-width: 60rem;
+  min-width: min(60rem, 95vw);
   padding: 2rem;
 
   border: none;
@@ -132,10 +132,30 @@
   }
 
   @media screen and (max-width: 768px) {
-    min-width: 100vw;
+    min-width: 100%;
+    padding: 1rem;
 
-    > .modal-content .info {
-      max-width: initial;
+    > .modal-header {
+      padding-bottom: 1rem;
+
+      h2 {
+        padding: 0.5rem 1rem;
+      }
+    }
+
+    > .modal-content {
+      padding: 0 1rem;
+
+      .info {
+        max-width: initial;
+        padding: 0 0 1rem;
+      }
+    }
+
+    menu[type='toolbar'] {
+      flex-wrap: wrap;
+
+      gap: 0.5rem;
     }
   }
 }

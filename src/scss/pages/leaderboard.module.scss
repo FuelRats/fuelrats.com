@@ -63,6 +63,7 @@
 
 .ratLeaderboardHeader input {
   width: 250px;
+  max-width: 50vw;
   margin-left: 0.75rem;
   padding: 0 0.75rem;
 
@@ -75,25 +76,27 @@
   align-items: center;
   gap: 0.75rem;
 
-  flex: 210 0 auto;
+  flex: 3 1 0;
 
-  width: 210px;
+  min-width: 0;
 }
 
 .ratRescues {
-  flex: 65 0 auto;
+  flex: 0 0 auto;
 
   width: 65px;
-  max-width: 80px;
 
   text-align: center;
 }
 
 .ratBadges {
-  flex: 150 0 auto;
+  flex: 2 1 0;
 
-  width: 150px;
-  max-width: 200px;
+  min-width: 0;
 
   border-right: 0;
+
+  @media screen and (max-width: 500px) {
+    display: none;
+  }
 }

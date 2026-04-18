@@ -5,7 +5,7 @@
     left: 3.5%;
     z-index: 99;
 
-    max-width: 28rem;
+    max-width: min(28rem, 90vw);
     padding: 1rem 2rem;
 
     border-color: $red-darkened;

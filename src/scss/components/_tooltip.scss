@@ -35,4 +35,10 @@
     font-size: 1.2em;
     font-weight: bold;
   }
+
+  @media screen and (max-width: 768px) {
+    max-width: 80vw;
+
+    white-space: normal;
+  }
 }
