@@ -311,6 +311,14 @@
   border-radius: 4px;
 
   background-color: rgba(0, 0, 0, 0.1);
+
+  &.currentDeviceItem {
+    border-color: $grey;
+
+    .sessionIcon {
+      color: $white;
+    }
+  }
 }
 
 .sessionIcon {
@@ -415,7 +423,7 @@
   border-color: $red;
 
   color: $white;
-  background-color: rgba($red, 0.25);
+  background-color: $red;
 }
 
 .filterInactive {

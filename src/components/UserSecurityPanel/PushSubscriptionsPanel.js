@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
@@ -28,11 +29,22 @@ const FILTER_KEYS = Object.keys(FILTER_LABELS)
 function PushSubscriptionsPanel () {
   const dispatch = useDispatch()
   const {
-    supported, permission, subscribed, loading: toggleLoading, toggle,
+    supported, permission, subscribed, loading: toggleLoading, toggle, subscribe,
   } = usePushNotifications()
   const [subscriptions, setSubscriptions] = useState([])
   const [loadingList, setLoadingList] = useState(true)
   const [error, setError] = useState(null)
+  const [currentEndpoint, setCurrentEndpoint] = useState(null)
+
+  useEffect(() => {
+    if (typeof navigator !== 'undefined' && navigator.serviceWorker) {
+      navigator.serviceWorker.ready.then((reg) => {
+        return reg.pushManager.getSubscription()
+      }).then((sub) => {
+        setCurrentEndpoint(sub?.endpoint ?? null)
+      }).catch(() => {})
+    }
+  }, [subscribed])
 
   const fetchSubscriptions = useCallback(async () => {
     setLoadingList(true)
@@ -138,7 +150,15 @@ function PushSubscriptionsPanel () {
                   type="button"
                   onClick={
 async () => {
-  await toggle()
+  if (subscribed) {
+    await toggle()
+  } else {
+    await subscribe({
+      pc: true, xb: true, ps: true,
+      horizons3: true, horizons4: true, odyssey: true,
+      alertsOnly: false,
+    })
+  }
   await fetchSubscriptions()
 }
 }>
@@ -159,8 +179,9 @@ async () => {
               <ul className={styles.sessionsList}>
                 {
 subscriptions.map((sub) => {
+  const isCurrentDevice = currentEndpoint && sub.attributes.endpoint === currentEndpoint
   return (
-    <li key={sub.id} className={styles.sessionItem}>
+    <li key={sub.id} className={clsx(styles.sessionItem, { [styles.currentDeviceItem]: isCurrentDevice })}>
       <FontAwesomeIcon fixedWidth className={styles.sessionIcon} icon="bell" />
       <div className={styles.sessionInfo}>
         <div className={styles.sessionLabel}>
@@ -171,6 +192,7 @@ subscriptions.map((sub) => {
               return parts?.[ENDPOINT_HOST_INDEX] ?? 'Push subscription'
             })()
           }
+          {isCurrentDevice && <span className={styles.currentBadge}>{'This device'}</span>}
         </div>
         <div className={styles.pushFilters}>
           {

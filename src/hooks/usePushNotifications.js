@@ -119,7 +119,12 @@ export default function usePushNotifications () {
 
 
   const toggle = useCallback(async () => {
-    if (!supported || loading || !subscribed) {
+    if (!supported || loading) {
+      return
+    }
+
+    if (!subscribed) {
+      await subscribe()
       return
     }
 
@@ -138,7 +143,7 @@ export default function usePushNotifications () {
     } finally {
       setLoading(false)
     }
-  }, [supported, subscribed, loading, dispatch])
+  }, [supported, subscribed, loading, dispatch, subscribe])
 
 
   return {
