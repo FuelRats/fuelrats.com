@@ -2,10 +2,10 @@ import axios from 'axios'
 import qs from 'qs'
 
 
-
+const isServer = typeof window === 'undefined'
 
 const frApi = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_FR_API_URL,
+  baseURL: isServer ? `${process.env.APP_URL}/api/fr` : '/api/fr',
   timeout: 10000,
   paramsSerializer: qs.stringify,
 

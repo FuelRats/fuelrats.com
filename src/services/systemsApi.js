@@ -1,10 +1,10 @@
 import axios from 'axios'
 
 
-
+const isServer = typeof window === 'undefined'
 
 const systemsApi = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_SAPI_URL,
+  baseURL: isServer ? `${process.env.APP_URL}/api/sapi` : '/api/sapi',
   timeout: 10000,
   validateStatus: () => {
     return true // Always resolve because it's simpler for the action creators.

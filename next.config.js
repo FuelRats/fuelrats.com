@@ -18,12 +18,7 @@ const DEV_BUILD_ID_LENGTH = 16
 // (before the Next.js server finishes booting) makes them available for
 // both server-side runtime reads and client-side compile-time replacement.
 const publicEnv = {
-  NEXT_PUBLIC_APP_URL: env.appUrl,
-  NEXT_PUBLIC_FR_API_URL: env.frapi.proxy,
   NEXT_PUBLIC_FR_SOCKET_URL: env.frapi.socket,
-  NEXT_PUBLIC_SAPI_URL: env.sapi.proxy,
-  NEXT_PUBLIC_WORDPRESS_URL: env.wordpress.proxy,
-  NEXT_PUBLIC_STRIPE_URL: env.stripe.url,
   NEXT_PUBLIC_STRIPE_API_PK: env.stripe.public,
   NEXT_PUBLIC_IRC_CLIENT_URL: env.irc.client,
   NEXT_PUBLIC_IRC_RAT_URL: env.irc.rat,
