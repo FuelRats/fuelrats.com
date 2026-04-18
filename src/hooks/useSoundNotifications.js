@@ -167,6 +167,7 @@ export default function useSoundNotifications () {
             || pa.codeRed !== ca.codeRed
             || pa.client !== ca.client
             || pa.clientNick !== ca.clientNick
+            || pa.quotes !== ca.quotes
           ) {
             playCaseChangeSound(volume)
             soundPlayed = true
