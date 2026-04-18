@@ -46,20 +46,30 @@
     transform-origin: left bottom;
   }
 
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 1024px) {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
     min-width: 100%;
     max-width: 100%;
-    padding: 1rem 2rem;
+    min-height: 6.5rem;
+    padding: 0.8rem 8rem;
 
     text-align: center;
 
     &::after {
       transform: skewX(0) translateX(0);
     }
+
+    h1 {
+      font-size: 1.6rem;
+    }
   }
 }
 
-@media only screen and (min-width: 769px) {
+@media only screen and (min-width: 1025px) {
   #FuelRatsApp.forceDrawer .page-header {
     padding-left: 9.5rem;
   }

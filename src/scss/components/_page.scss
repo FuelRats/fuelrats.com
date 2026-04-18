@@ -9,6 +9,7 @@ main.page {
   flex-grow: 1;
 
   margin-left: 21rem;
+  padding-top: env(safe-area-inset-top);
 
   background: #FFFFFF;
   transition: margin 0.2s;

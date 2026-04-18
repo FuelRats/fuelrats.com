@@ -2,6 +2,8 @@ services:
   web:
     build:
       target: dev
+    env_file:
+      - .env
     # Mount source code for hot reload in development
     volumes:
       - ./src:/app/src

@@ -17,6 +17,10 @@
     justify-content: center;
   }
 
+  &.login-dialog {
+    min-width: min(45rem, 95vw);
+  }
+
   > .modal-header {
     display: flex;
 
@@ -139,7 +143,7 @@
       padding-bottom: 1rem;
 
       h2 {
-        padding: 0.5rem 1rem;
+        padding: 0.5rem 2rem;
       }
     }
 

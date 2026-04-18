@@ -15,6 +15,8 @@
 .decal {
   display: flex;
 
+  flex-wrap: wrap;
+
   &:nth-child(2n) {
     background-color: $light-grey;
   }
@@ -28,9 +30,12 @@
   }
 
   .decalCode {
-    flex: 1 0 auto;
+    flex: 1 1 auto;
+
+    min-width: 0;
 
     font-family: $monospace-fonts;
+    word-break: break-all;
   }
 
   .decalClaimedAt {
