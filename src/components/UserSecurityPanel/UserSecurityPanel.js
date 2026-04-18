@@ -70,9 +70,14 @@ function UserSecurityPanel () {
     setRegistering(true)
     setError(null)
     const response = await dispatch(registerPasskey(newPasskeyName.trim()))
-    if (response && isError(response)) {
+    if (!response) {
+      // User cancelled the browser prompt
+      setRegistering(false)
+      return
+    }
+    if (isError(response)) {
       setError(getResponseError(response))
-    } else if (response) {
+    } else {
       setNewPasskeyName('')
       await fetchPasskeys()
     }
