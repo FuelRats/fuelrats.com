@@ -102,9 +102,6 @@ Profile.getPageMeta = (ctx) => {
     title: 'Profile',
     displayTitle: tabs[tab].pageTitle,
     key: 'profile',
-    breadcrumbs: tab === 'overview'
-      ? undefined
-      : [{ label: 'Profile', href: '/profile/overview' }],
   }
 }
 
