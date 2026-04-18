@@ -43,6 +43,12 @@
   }
 
   .title {
+    display: flex;
+
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+
     font-family: $title-fonts;
   }
 
@@ -62,11 +68,12 @@
 }
 
 .titlePlatformBadge {
-  margin-left: 1rem;
-
   font-size: 0.6em;
+}
 
-  vertical-align: middle;
+.titleCarrierIcon {
+  width: 1.1em;
+  height: 1.1em;
 }
 
 .systemInfo {
