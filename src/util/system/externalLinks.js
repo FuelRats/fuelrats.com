@@ -7,7 +7,7 @@ export function getEdsmSystemUrl (systemName) {
   if (!systemName) {
     return null
   }
-  return `https://www.edsm.net/en/system/name/${encodeURIComponent(systemName)}`
+  return `https://www.edsm.net/en/system?systemName=${encodeURIComponent(systemName)}`
 }
 
 export function getSpanshPlotUrl (systemName, { from = 'Sol', range = SPANSH_DEFAULT_RANGE, efficiency = SPANSH_DEFAULT_EFFICIENCY } = {}) {
