@@ -164,9 +164,15 @@ export default function useSoundNotifications () {
             pa.status !== ca.status
             || pa.system !== ca.system
             || pa.platform !== ca.platform
+            || pa.expansion !== ca.expansion
             || pa.codeRed !== ca.codeRed
+            || pa.carrier !== ca.carrier
             || pa.client !== ca.client
             || pa.clientNick !== ca.clientNick
+            || pa.clientLanguage !== ca.clientLanguage
+            || pa.outcome !== ca.outcome
+            || pa.title !== ca.title
+            || pa.notes !== ca.notes
             || pa.quotes !== ca.quotes
           ) {
             playCaseChangeSound(volume)
