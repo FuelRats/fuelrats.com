@@ -1,10 +1,8 @@
+import getConfig from 'next/config'
 import { useEffect, useState } from 'react'
 
 
-
-
-// Component Constants
-const STRIPE_API_PK = process.env.NEXT_PUBLIC_STRIPE_API_PK
+const { publicRuntimeConfig } = getConfig() ?? {}
 
 
 
@@ -18,7 +16,7 @@ const withStripe = (Component) => {
 
     useEffect(() => {
       if (window.Stripe) {
-        setStripe(window.Stripe(STRIPE_API_PK))
+        setStripe(window.Stripe(publicRuntimeConfig?.stripeApiPk))
         return undefined
       }
 
@@ -27,7 +25,7 @@ const withStripe = (Component) => {
         return undefined
       }
       const handleLoad = () => {
-        setStripe(window.Stripe(STRIPE_API_PK))
+        setStripe(window.Stripe(publicRuntimeConfig?.stripeApiPk))
       }
       script.addEventListener('load', handleLoad)
       return () => {

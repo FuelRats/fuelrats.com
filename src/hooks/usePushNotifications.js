@@ -1,3 +1,4 @@
+import getConfig from 'next/config'
 import { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
@@ -6,9 +7,8 @@ import getResponseError from '~/util/getResponseError'
 
 
 
-
-// NEXT_PUBLIC_ prefix makes Next.js inline this from .env at compile time.
-const VAPID_PUBLIC_KEY = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY
+const { publicRuntimeConfig } = getConfig() ?? {}
+const VAPID_PUBLIC_KEY = publicRuntimeConfig?.vapidPublicKey
 
 const BASE64_PAD_MODULO = 4
 const READY_TIMEOUT_MS = 3000

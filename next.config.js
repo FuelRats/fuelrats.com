@@ -13,33 +13,21 @@ const webpackConfig = require('./.config/webpack.config')
 const DEV_BUILD_ID_LENGTH = 16
 
 
-// Derive the client-exposed values from the existing env.js config and
-// expose them under NEXT_PUBLIC_* names. Setting them on process.env here
-// (before the Next.js server finishes booting) makes them available for
-// both server-side runtime reads and client-side compile-time replacement.
-const publicEnv = {
-  NEXT_PUBLIC_FR_SOCKET_URL: env.frapi.socket,
-  NEXT_PUBLIC_STRIPE_API_PK: env.stripe.public,
-  NEXT_PUBLIC_IRC_CLIENT_URL: env.irc.client,
-  NEXT_PUBLIC_IRC_RAT_URL: env.irc.rat,
-}
-
-for (const [key, value] of Object.entries(publicEnv)) {
-  if (value !== undefined && process.env[key] === undefined) {
-    process.env[key] = value
-  }
-}
-
-
 module.exports = () => {
   return {
     distDir: 'dist',
 
     serverExternalPackages: ['@fortawesome/fontawesome-svg-core'],
 
-    // Client-side static replacement via Next.js. Replaces the deprecated
-    // publicRuntimeConfig.
-    env: publicEnv,
+    // Runtime config — read from process.env at startup, not baked at build.
+    // Available client-side via getConfig().publicRuntimeConfig.
+    publicRuntimeConfig: {
+      frSocketUrl: env.frapi.socket,
+      stripeApiPk: env.stripe.public,
+      ircClientUrl: env.irc.client,
+      ircRatUrl: env.irc.rat,
+      vapidPublicKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
+    },
 
     images: {
       disableStaticImages: true,

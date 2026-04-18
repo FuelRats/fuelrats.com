@@ -1,3 +1,4 @@
+import getConfig from 'next/config'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useMemo } from 'react'
@@ -11,9 +12,11 @@ import { selectSession } from '~/store/selectors'
 
 
 
+const { publicRuntimeConfig } = getConfig() ?? {}
+
 const ircURLs = {
-  client: process.env.NEXT_PUBLIC_IRC_CLIENT_URL,
-  rat: process.env.NEXT_PUBLIC_IRC_RAT_URL,
+  client: publicRuntimeConfig?.ircClientUrl,
+  rat: publicRuntimeConfig?.ircRatUrl,
 }
 const unsupportedPlatforms = {
   Sony: {
