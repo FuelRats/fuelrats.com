@@ -8,8 +8,17 @@ import toEliteDate from './toEliteDate'
  * @returns {string}
  */
 export default function formatElite (value, format) {
+  if (value === null || value === undefined) {
+    return ''
+  }
+
+  const date = toEliteDate(value)
+  if (Number.isNaN(date.getTime())) {
+    return ''
+  }
+
   return formatInTimeZone(
-    toEliteDate(value),
+    date,
     'UTC',
     format,
   )
