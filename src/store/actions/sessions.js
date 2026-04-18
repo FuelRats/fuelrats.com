@@ -26,3 +26,17 @@ export const revokeSession = (sessionId) => {
     ))
   }
 }
+
+
+export const revokeAllSessions = () => {
+  return (dispatch, getState) => {
+    const userId = selectCurrentUserId(getState())
+    return dispatch(frApiPlainRequest(
+      actionTypes.sessions.revokeAll,
+      {
+        url: `/users/${userId}/sessions`,
+        method: 'delete',
+      },
+    ))
+  }
+}

@@ -119,6 +119,7 @@ const totp = {
 const sessions = {
   list: 'sessions/list',
   revoke: 'sessions/revoke',
+  revokeAll: 'sessions/revokeAll',
 }
 
 
