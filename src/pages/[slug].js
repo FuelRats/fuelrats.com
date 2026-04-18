@@ -36,7 +36,7 @@ WordpressProxy.getPageMeta = ({ store, query }) => {
 
   return {
     className: 'wordpress-page',
-    title: page.title.rendered,
+    title: page?.title?.rendered ?? query.slug,
     key: query.slug,
   }
 }
