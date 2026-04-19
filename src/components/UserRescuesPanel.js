@@ -165,7 +165,7 @@ function UserRescuesPanel () {
     if (debouncedFilters.outcome) {
       filter.outcome = debouncedFilters.outcome
     } else {
-      filter.outcome = { ne: 'purge' }
+      filter.or = [{ outcome: { ne: 'purge' } }, { outcome: null }]
     }
     if (debouncedFilters.status) {
       filter.status = debouncedFilters.status
