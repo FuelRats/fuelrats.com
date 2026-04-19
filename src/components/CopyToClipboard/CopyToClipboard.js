@@ -16,10 +16,24 @@ const CLICKED_STATE_RESET_TIME = 1500 // 1.5 seconds
 
 async function writeToClipboard (text) {
   if (typeof navigator !== 'undefined' && navigator.clipboard?.writeText) {
-    await navigator.clipboard.writeText(text)
-    return
+    try {
+      await navigator.clipboard.writeText(text)
+      return
+    } catch (err) {
+      console.warn('[Clipboard] writeText failed, using fallback:', err.message)
+    }
   }
-  throw new Error('Clipboard API unavailable')
+
+  const textarea = document.createElement('textarea')
+  textarea.value = text
+  textarea.style.position = 'fixed'
+  textarea.style.opacity = '0'
+  document.body.appendChild(textarea)
+  textarea.select()
+  if (!document.execCommand('copy')) {
+    console.error('[Clipboard] execCommand fallback also failed')
+  }
+  document.body.removeChild(textarea)
 }
 
 
