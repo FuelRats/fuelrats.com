@@ -34,16 +34,12 @@
   }
 }
 
-.ratLeaderboard li > div {
+.ratLeaderboard ol > li > div {
   padding: 1rem;
 
   border-right: 1px solid rgba(0, 0, 0, 0.02);
 
   line-height: 2;
-}
-
-.ratLeaderboard menu {
-  padding: 0.75rem;
 }
 
 .ratLeaderboardHeader {

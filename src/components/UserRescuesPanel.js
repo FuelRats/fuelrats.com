@@ -2,9 +2,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useCallback, useEffect, useState } from 'react'
+import {
+  useCallback, useEffect, useReducer, useState,
+} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+import useDebouncedCallback from '~/hooks/useDebouncedCallback'
 import { getMyRescues } from '~/store/actions/rescues'
 import { selectPageViewDataById, selectPageViewMetaById, selectRatsByRescueId } from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
@@ -19,6 +22,64 @@ import styles from './UserRescuesPanel.module.scss'
 
 const PAGE_VIEW_ID = 'user-rescues'
 const PAGE_SIZE = 25
+const SEARCH_DEBOUNCE_MS = 500
+
+const SORT_OPTIONS = [
+  { value: '-createdAt', label: 'Created (newest)' },
+  { value: 'createdAt', label: 'Created (oldest)' },
+  { value: '-updatedAt', label: 'Updated (newest)' },
+  { value: 'updatedAt', label: 'Updated (oldest)' },
+  { value: 'client', label: 'Client (A-Z)' },
+  { value: '-client', label: 'Client (Z-A)' },
+  { value: 'system', label: 'System (A-Z)' },
+  { value: '-system', label: 'System (Z-A)' },
+]
+
+const PLATFORM_OPTIONS = [
+  { value: 'pc', label: 'PC', icon: 'tv' },
+  { value: 'xb', label: 'XB', icon: ['fab', 'xbox'] },
+  { value: 'ps', label: 'PS', icon: ['fab', 'playstation'] },
+]
+const EXPANSION_OPTIONS = [
+  { value: 'horizons3', label: 'Legacy' },
+  { value: 'horizons4', label: 'Horizons' },
+  { value: 'odyssey', label: 'Odyssey' },
+]
+const OUTCOME_OPTIONS = [
+  { value: 'success', label: 'Success' },
+  { value: 'failure', label: 'Failure' },
+  { value: 'invalid', label: 'Invalid' },
+  { value: 'other', label: 'Other' },
+  { value: 'purge', label: 'Trash' },
+]
+
+
+const STATUS_OPTIONS = [
+  { value: 'open', label: 'Open' },
+  { value: 'inactive', label: 'Inactive' },
+  { value: 'closed', label: 'Closed' },
+]
+
+const initialFilters = {
+  client: '',
+  system: '',
+  platform: '',
+  expansion: '',
+  outcome: '',
+  status: '',
+  codeRed: '',
+  carrier: '',
+  firstLimpet: '',
+  notes: '',
+  sort: '-createdAt',
+}
+
+function filterReducer (state, action) {
+  if (action.type === 'reset') {
+    return initialFilters
+  }
+  return { ...state, [action.field]: action.value }
+}
 
 function RescueRatCell ({ rescueId }) {
   const rats = useSelector((state) => {
@@ -40,6 +101,7 @@ const outcomeLabels = {
   failure: { label: 'Failure', icon: 'circle-xmark', className: styles.failure },
   invalid: { label: 'Invalid', icon: 'triangle-exclamation', className: styles.invalid },
   other: { label: 'Other', icon: 'circle-exclamation', className: styles.other },
+  purge: { label: 'Trash', icon: 'trash', className: styles.other },
 }
 
 
@@ -66,6 +128,17 @@ function UserRescuesPanel () {
   const page = useQueryPage()
   const offset = (page - 1) * PAGE_SIZE
   const [fetchError, setFetchError] = useState(false)
+  const [filters, setFilter] = useReducer(filterReducer, initialFilters)
+  const [debouncedFilters, setDebouncedFilters] = useState(initialFilters)
+  const [showFilters, setShowFilters] = useState(false)
+
+  const applyFilters = useDebouncedCallback((nextFilters) => {
+    setDebouncedFilters(nextFilters)
+  }, [], SEARCH_DEBOUNCE_MS)
+
+  useEffect(() => {
+    applyFilters(filters)
+  }, [filters, applyFilters])
 
   const rescues = useSelector((state) => {
     return selectPageViewDataById(state, { pageViewId: PAGE_VIEW_ID })
@@ -76,13 +149,49 @@ function UserRescuesPanel () {
 
   useEffect(() => {
     setFetchError(false)
+    const filter = {}
+    if (debouncedFilters.client.trim()) {
+      filter.client = { iLike: `%${debouncedFilters.client.trim()}%` }
+    }
+    if (debouncedFilters.system.trim()) {
+      filter.system = { iLike: `%${debouncedFilters.system.trim()}%` }
+    }
+    if (debouncedFilters.platform) {
+      filter.platform = debouncedFilters.platform
+    }
+    if (debouncedFilters.expansion) {
+      filter.expansion = debouncedFilters.expansion
+    }
+    if (debouncedFilters.outcome) {
+      filter.outcome = debouncedFilters.outcome
+    } else {
+      filter.outcome = { ne: 'purge' }
+    }
+    if (debouncedFilters.status) {
+      filter.status = debouncedFilters.status
+    }
+    if (debouncedFilters.codeRed) {
+      filter.codeRed = debouncedFilters.codeRed === 'yes'
+    }
+    if (debouncedFilters.carrier) {
+      filter.carrier = debouncedFilters.carrier === 'yes'
+    }
+    if (debouncedFilters.notes.trim()) {
+      filter.notes = { iLike: `%${debouncedFilters.notes.trim()}%` }
+    }
+
+    const params = {
+      sort: debouncedFilters.sort,
+      include: 'rats',
+      'page[offset]': offset,
+      'page[limit]': PAGE_SIZE,
+      filter: JSON.stringify(filter),
+    }
+    if (debouncedFilters.firstLimpet) {
+      params._firstLimpet = 'me'
+    }
     Promise.resolve(dispatch(getMyRescues(
-      {
-        sort: '-createdAt',
-        include: 'rats',
-        'page[offset]': offset,
-        'page[limit]': PAGE_SIZE,
-      },
+      params,
       {
         pageView: {
           id: PAGE_VIEW_ID,
@@ -94,7 +203,11 @@ function UserRescuesPanel () {
         setFetchError(true)
       }
     })
-  }, [dispatch, offset])
+  }, [dispatch, offset, debouncedFilters])
+
+  const handleResetFilters = useCallback(() => {
+    setFilter({ type: 'reset' })
+  }, [])
 
   const total = meta?.total ?? meta?.count ?? 0
   let totalPages = page
@@ -111,6 +224,245 @@ function UserRescuesPanel () {
 
   return (
     <div className={styles.container}>
+      <div className={styles.searchBar}>
+        <div className={styles.searchRow}>
+          <FontAwesomeIcon className={styles.searchIcon} icon="search" />
+          <input
+            aria-label="Search by CMDR"
+            className={styles.searchInput}
+            placeholder="Search by CMDR name..."
+            type="text"
+            value={filters.client}
+            onChange={
+              (event) => {
+                return setFilter({ field: 'client', value: event.target.value })
+              }
+            } />
+          <button
+            aria-label="Advanced filters"
+            className={styles.filterToggle}
+            title="Advanced filters"
+            type="button"
+            onClick={
+              () => {
+                return setShowFilters((prev) => {
+                  return !prev
+                })
+              }
+            }>
+            <FontAwesomeIcon icon="sliders" />
+          </button>
+        </div>
+        {
+          showFilters && (
+            <div className={styles.filterPanel}>
+              <label className={styles.filterField}>
+                <span>{'System'}</span>
+                <input
+                  aria-label="System"
+                  placeholder="e.g. SOL"
+                  type="text"
+                  value={filters.system}
+                  onChange={
+                    (event) => {
+                      return setFilter({ field: 'system', value: event.target.value })
+                    }
+                  } />
+              </label>
+
+              <div className={styles.filterRow}>
+                <span className={styles.filterLabel}>{'Platform'}</span>
+                <div className={styles.chipGroup}>
+                  {
+                    PLATFORM_OPTIONS.map((plat) => {
+                      return (
+                        <button
+                          key={plat.value}
+                          className={clsx(styles.chip, { [styles.chipActive]: filters.platform === plat.value })}
+                          type="button"
+                          onClick={
+                            () => {
+                              return setFilter({
+                                field: 'platform',
+                                value: filters.platform === plat.value ? '' : plat.value,
+                              })
+                            }
+                          }>
+                          <FontAwesomeIcon fixedWidth icon={plat.icon} />
+                          {` ${plat.label}`}
+                        </button>
+                      )
+                    })
+                  }
+                </div>
+              </div>
+
+              <div className={styles.filterRow}>
+                <span className={styles.filterLabel}>{'Game Mode'}</span>
+                <div className={styles.chipGroup}>
+                  {
+                    EXPANSION_OPTIONS.map((exp) => {
+                      return (
+                        <button
+                          key={exp.value}
+                          className={clsx(styles.chip, { [styles.chipActive]: filters.expansion === exp.value })}
+                          type="button"
+                          onClick={
+                            () => {
+                              return setFilter({
+                                field: 'expansion',
+                                value: filters.expansion === exp.value ? '' : exp.value,
+                              })
+                            }
+                          }>
+                          {exp.label}
+                        </button>
+                      )
+                    })
+                  }
+                </div>
+              </div>
+
+              <div className={styles.filterRow}>
+                <span className={styles.filterLabel}>{'Status'}</span>
+                <div className={styles.chipGroup}>
+                  {
+                    STATUS_OPTIONS.map((st) => {
+                      return (
+                        <button
+                          key={st.value}
+                          className={clsx(styles.chip, { [styles.chipActive]: filters.status === st.value })}
+                          type="button"
+                          onClick={
+                            () => {
+                              return setFilter({
+                                field: 'status',
+                                value: filters.status === st.value ? '' : st.value,
+                              })
+                            }
+                          }>
+                          {st.label}
+                        </button>
+                      )
+                    })
+                  }
+                </div>
+              </div>
+
+              <div className={styles.filterRow}>
+                <span className={styles.filterLabel}>{'Outcome'}</span>
+                <div className={styles.chipGroup}>
+                  {
+                    OUTCOME_OPTIONS.map((oc) => {
+                      const isActive = filters.outcome === oc.value
+                      return (
+                        <button
+                          key={oc.value}
+                          className={clsx(styles.chip, { [styles.chipActive]: isActive })}
+                          type="button"
+                          onClick={
+                            () => {
+                              return setFilter({
+                                field: 'outcome',
+                                value: isActive ? '' : oc.value,
+                              })
+                            }
+                          }>
+                          {oc.label}
+                        </button>
+                      )
+                    })
+                  }
+                </div>
+              </div>
+
+              <div className={styles.filterInputRow}>
+                <label className={styles.filterField}>
+                  <span>{'Notes'}</span>
+                  <input
+                    aria-label="Notes"
+                    placeholder="Search notes..."
+                    type="text"
+                    value={filters.notes}
+                    onChange={
+                      (event) => {
+                        return setFilter({ field: 'notes', value: event.target.value })
+                      }
+                    } />
+                </label>
+              </div>
+
+              <div className={styles.filterFooter}>
+                <button
+                  className={clsx(styles.chip, styles.crChip, { [styles.chipActive]: filters.codeRed === 'yes' })}
+                  type="button"
+                  onClick={
+                    () => {
+                      return setFilter({
+                        field: 'codeRed',
+                        value: filters.codeRed === 'yes' ? '' : 'yes',
+                      })
+                    }
+                  }>
+                  {'Code Red only'}
+                </button>
+
+                <button
+                  className={clsx(styles.chip, { [styles.chipActive]: filters.carrier === 'yes' })}
+                  type="button"
+                  onClick={
+                    () => {
+                      return setFilter({
+                        field: 'carrier',
+                        value: filters.carrier === 'yes' ? '' : 'yes',
+                      })
+                    }
+                  }>
+                  {'Carrier only'}
+                </button>
+
+                <button
+                  className={clsx(styles.chip, { [styles.chipActive]: filters.firstLimpet === 'yes' })}
+                  type="button"
+                  onClick={
+                    () => {
+                      return setFilter({
+                        field: 'firstLimpet',
+                        value: filters.firstLimpet === 'yes' ? '' : 'yes',
+                      })
+                    }
+                  }>
+                  {'First limpet'}
+                </button>
+
+                <label className={styles.sortField}>
+                  <span>{'Sort'}</span>
+                  <select
+                    value={filters.sort}
+                    onChange={
+                      (event) => {
+                        return setFilter({ field: 'sort', value: event.target.value })
+                      }
+                    }>
+                    {
+                      SORT_OPTIONS.map((opt) => {
+                        return <option key={opt.value} value={opt.value}>{opt.label}</option>
+                      })
+                    }
+                  </select>
+                </label>
+
+                <button
+                  className={styles.resetButton}
+                  type="button"
+                  onClick={handleResetFilters}>
+                  {'Reset'}
+                </button>
+              </div>
+            </div>
+          )
+        }
+      </div>
       <table className={styles.table}>
         <thead>
           <tr>

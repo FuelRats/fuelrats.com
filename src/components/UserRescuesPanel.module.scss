@@ -4,6 +4,242 @@
   overflow-x: auto;
 }
 
+.searchBar {
+  background-color: $black;
+  color: $white;
+}
+
+.searchRow {
+  display: flex;
+
+  align-items: center;
+  gap: 0.5rem;
+
+  padding: 0.75rem 1rem;
+}
+
+.searchIcon {
+  color: $grey-lightened;
+
+  font-size: 0.9rem;
+}
+
+.searchInput {
+  flex: 1;
+
+  padding: 0.5rem 0.75rem;
+
+  border: none;
+
+  color: $white;
+  background-color: $black-lightened;
+
+  font-size: 0.9rem;
+
+  &::placeholder {
+    color: $grey;
+  }
+}
+
+.filterToggle {
+  padding: 0.5rem 0.75rem;
+
+  border: none;
+
+  color: $grey-lightened;
+  background-color: transparent;
+
+  font-size: 0.9rem;
+
+  cursor: pointer;
+
+  &:hover {
+    color: $white;
+  }
+}
+
+.filterPanel {
+  display: flex;
+
+  flex-direction: column;
+  gap: 0.6rem;
+
+  padding: 0.75rem 1rem;
+
+  background-color: $black-lightened;
+}
+
+.filterField {
+  display: flex;
+
+  flex-direction: column;
+  gap: 0.3rem;
+
+  span {
+    color: $grey;
+
+    font-size: 0.9em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  input {
+    padding: 0.4em 0.6em;
+
+    border: 1px solid $grey-dark;
+
+    color: $white;
+    background-color: $black;
+
+    font-size: 0.9em;
+
+    &::placeholder {
+      color: $grey;
+    }
+  }
+}
+
+.filterRow {
+  display: flex;
+
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.filterLabel {
+  margin-right: 0.25rem;
+
+  color: $grey;
+
+  font-size: 0.9em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.chipGroup {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 0.3rem;
+}
+
+.chip {
+  padding: 0.35em 0.75em;
+
+  border: 1px solid $grey-dark;
+  border-radius: 3px;
+
+  color: $grey-lightened;
+  background-color: transparent;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+
+  font-size: 0.9em;
+
+  cursor: pointer;
+
+  &:hover {
+    border-color: $grey;
+
+    color: $white;
+  }
+
+  &.chipActive {
+    border-color: $red;
+
+    color: $white;
+    background-color: $red;
+  }
+}
+
+.crChip.chipActive {
+  background-color: rgba(255, 87, 69, 0.8);
+}
+
+.filterInputRow {
+  display: flex;
+
+  gap: 0.75rem;
+
+  .filterField {
+    flex: 1;
+  }
+
+  @media screen and (max-width: 500px) {
+    flex-direction: column;
+  }
+}
+
+.filterFooter {
+  display: flex;
+
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+
+  padding-top: 0.5rem;
+
+  border-top: 1px solid $grey-dark;
+}
+
+.sortField {
+  display: flex;
+
+  align-items: center;
+  gap: 0.4rem;
+
+  margin-left: auto;
+
+  span {
+    color: $grey;
+
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  select {
+    appearance: none;
+
+    padding: 0.35em 1.5em 0.35em 0.5em;
+
+    border: 1px solid $grey;
+    border-radius: 3px;
+
+    color: $white;
+    background-color: $black;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23999" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M6 8l4 4 4-4"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 0.3em center;
+    background-size: 1em;
+
+    font-size: 0.9em;
+  }
+}
+
+.resetButton {
+  padding: 0.35em 0.75em;
+
+  border: 1px solid $grey-dark;
+  border-radius: 3px;
+
+  color: $grey-lightened;
+  background-color: transparent;
+
+  font-size: 0.9em;
+
+  cursor: pointer;
+
+  &:hover {
+    border-color: $red;
+
+    color: $red;
+  }
+}
+
 .table {
   min-width: 500px;
   width: 100%;
