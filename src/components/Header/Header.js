@@ -29,6 +29,9 @@ function Header () {
   const userCanCreateEpic = useSelector((state) => {
     return selectCurrentUserHasScope(state, { scope: 'epics.write' })
   })
+  const userCanAdminRescues = useSelector((state) => {
+    return selectCurrentUserHasScope(state, { scope: 'rescues.write' })
+  })
 
   const checkboxRef = useRef()
 
@@ -110,6 +113,13 @@ function Header () {
                   userCanCreateEpic && (
                     <NavLink href="/epic/nominate">
                       {'Epic Nomination'}
+                    </NavLink>
+                  )
+                }
+                {
+                  userCanAdminRescues && (
+                    <NavLink href="/admin/rescues">
+                      {'Rescue Admin'}
                     </NavLink>
                   )
                 }

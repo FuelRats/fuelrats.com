@@ -1,0 +1,309 @@
+@import '../../../scss/colors';
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.errorBanner {
+  padding: 0.75rem 1rem;
+
+  border: 1px solid $red;
+
+  color: $red;
+  background-color: rgba($red, 0.1);
+
+  font-size: 0.9rem;
+}
+
+.table {
+  min-width: 800px;
+  width: 100%;
+
+  border: 1px solid $grey-dark;
+
+  border-collapse: collapse;
+
+  thead tr {
+    border-bottom: 2px solid $grey-dark;
+  }
+
+  th {
+    padding: 4px 8px;
+
+    color: $grey;
+
+    font-size: 0.85rem;
+    text-align: left;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 0.5rem 0.8rem;
+
+    border-top: 1px solid $grey-dark;
+
+    line-height: 27px;
+    vertical-align: middle;
+  }
+
+  tbody tr {
+    transition: background-color 0.15s;
+
+    &:nth-child(even) {
+      background-color: $light-grey;
+    }
+
+    &:hover {
+      background-color: rgba($grey, 0.2);
+    }
+
+    &.codeRed {
+      background-color: rgba(255, 87, 69, 0.25);
+    }
+  }
+}
+
+.empty {
+  padding: 2rem;
+
+  color: $grey;
+
+  text-align: center;
+}
+
+.cmdr {
+  font-weight: 600;
+  white-space: nowrap;
+
+  small {
+    color: $grey;
+
+    font-weight: normal;
+  }
+}
+
+.system {
+  color: $grey-darkened;
+}
+
+.rats {
+  vertical-align: top;
+}
+
+.ratEntry {
+  padding: 0.1em 0;
+
+  line-height: 1.4;
+}
+
+/* stylelint-disable-next-line block-no-empty -- marker class for column styling */
+.firstLimpet {
+}
+
+.crBadge {
+  margin-left: 0.4rem;
+
+  background-color: rgba(255, 87, 69, 0.8);
+}
+
+.codeRed {
+  background-color: rgba(255, 87, 69, 0.25);
+}
+
+.statusBadge {
+  padding: 0.3em 0.6em;
+
+  border-radius: 3px;
+
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.statusOpen {
+  color: $green;
+  background-color: rgba($green, 0.15);
+}
+
+.statusInactive {
+  color: $yellow;
+  background-color: rgba($yellow, 0.15);
+}
+
+.statusQueued {
+  color: $blue;
+  background-color: rgba($blue, 0.15);
+}
+
+.statusClosed {
+  color: $grey;
+  background-color: rgba($grey, 0.15);
+}
+
+.outcome {
+  display: inline-flex;
+
+  align-items: center;
+  gap: 0.3rem;
+
+  white-space: nowrap;
+}
+
+.success {
+  color: $green;
+}
+
+.failure {
+  color: $red;
+}
+
+.invalid {
+  color: $yellow;
+}
+
+.other {
+  color: $grey;
+}
+
+.date {
+  color: $grey-lightened;
+
+  white-space: nowrap;
+}
+
+.idCell {
+  cursor: pointer;
+
+  &:hover code {
+    color: $white;
+  }
+
+  code {
+    color: $white;
+  }
+}
+
+.actionsCell {
+  white-space: nowrap;
+  text-align: right;
+
+  > * {
+    margin-left: 0.25rem;
+  }
+}
+
+.actionButton {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 0.3em 0.5em;
+
+  border: 1px solid $grey-dark;
+  border-radius: 3px;
+
+  color: $grey-lightened;
+
+  font-size: 0.9rem;
+
+  &:hover {
+    border-color: $grey;
+
+    color: $white;
+  }
+}
+
+.ratFilterRow {
+  display: flex;
+
+  gap: 0.75rem;
+
+  @media screen and (max-width: 500px) {
+    flex-direction: column;
+  }
+}
+
+.ratFilterField {
+  display: flex;
+
+  flex-direction: column;
+
+  flex: 1;
+
+  gap: 0.3rem;
+
+  > span {
+    color: $grey;
+
+    font-size: 0.9em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* stylelint-disable selector-class-pattern -- overriding global TagsInput classes */
+  :global(.tags-input) {
+    display: flex;
+
+    width: 100%;
+
+    border: 1px solid $grey-dark;
+
+    background-color: $black;
+
+    &:global(.focus) {
+      border-color: $grey;
+
+      box-shadow: none;
+    }
+
+    input[type='search'] {
+      color: $white;
+      background-color: transparent;
+
+      font-size: 0.9em;
+
+      &::placeholder {
+        color: $grey;
+      }
+    }
+
+    :global(.tag) {
+      color: $white;
+      background-color: $grey-dark;
+    }
+
+    :global(.options),
+    :global(.loader),
+    :global(.no-results) {
+      border-color: $grey-dark;
+
+      color: $white;
+      background-color: $black-lightened;
+    }
+
+    :global(.option) {
+      color: $white;
+
+      &:global(.focus) {
+        background-color: rgba($grey, 0.3);
+      }
+    }
+  }
+
+  /* stylelint-enable selector-class-pattern */
+}
+
+.footer {
+  padding: 0.5rem 1rem;
+
+  border: 1px solid $grey-dark;
+  border-top: none;
+
+  color: $grey;
+
+  font-size: 0.85rem;
+  text-align: right;
+}
