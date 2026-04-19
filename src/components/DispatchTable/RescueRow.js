@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import { differenceInMinutes } from 'date-fns'
 import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
-import { useCallback, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 import CarrierIcon from '~/components/CarrierIcon'
@@ -59,15 +59,30 @@ function RescueRow (props) {
   }, [])
 
   const router = useRouter()
+  const prevAttrsRef = useRef(rescue.attributes)
   useStoreEffect(
     (nextState) => {
       if (nextState.attributes.status === 'closed') {
         if (router.query.rId === nextState.id) {
           router.push('/dispatch')
         }
-      } else {
+        return
+      }
+
+      const pa = prevAttrsRef.current
+      const ca = nextState.attributes
+      if (
+        pa.status !== ca.status
+        || pa.system !== ca.system
+        || pa.platform !== ca.platform
+        || pa.codeRed !== ca.codeRed
+        || pa.client !== ca.client
+        || pa.outcome !== ca.outcome
+        || pa.quotes?.length !== ca.quotes?.length
+      ) {
         setAnimating(true)
       }
+      prevAttrsRef.current = ca
     },
     [router],
     `rescues.${rescue.id}`,

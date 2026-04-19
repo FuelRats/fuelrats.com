@@ -173,7 +173,7 @@ export default function useSoundNotifications () {
             || pa.outcome !== ca.outcome
             || pa.title !== ca.title
             || pa.notes !== ca.notes
-            || pa.quotes !== ca.quotes
+            || pa.quotes?.length !== ca.quotes?.length
           ) {
             playCaseChangeSound(volume)
             soundPlayed = true
