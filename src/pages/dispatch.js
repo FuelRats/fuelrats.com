@@ -7,11 +7,13 @@ import { useDispatch, useSelector, useStore } from 'react-redux'
 
 import { authenticated } from '~/components/AppLayout'
 import Clock from '~/components/Clock'
+import DispatchSettingsPanel from '~/components/DispatchSettingsPanel'
 import DispatchTable from '~/components/DispatchTable'
 import InstallPwaButton from '~/components/InstallPwaButton'
 import NotificationPanel from '~/components/NotificationPanel'
 import RescueDetails from '~/components/RescueDetails'
 import useDispatchKeyboardNav from '~/hooks/useDispatchKeyboardNav'
+import useDispatchSettings from '~/hooks/useDispatchSettings'
 import useSoundNotifications from '~/hooks/useSoundNotifications'
 import styles from '~/scss/pages/dispatch.module.scss'
 import { useRatSocket, useSocketStatus } from '~/services/frSocket'
@@ -36,6 +38,8 @@ function DispatchBoard ({ query }) {
   const [loadError, setLoadError] = useState(false)
   const [newRescueAnnouncement, setNewRescueAnnouncement] = useState('')
   const [notifPanelOpen, setNotifPanelOpen] = useState(false)
+  const [settingsPanelOpen, setSettingsPanelOpen] = useState(false)
+  const [dispatchSettings, handleUpdateSetting] = useDispatchSettings()
 
   useEffect(() => {
     (async () => {
@@ -134,7 +138,7 @@ function DispatchBoard ({ query }) {
       })
       if (newId) {
         // Auto-open the new rescue if nothing is currently open
-        if (!router.query.rId) {
+        if (dispatchSettings.autoOpenNewCases && !router.query.rId) {
           router.push(makeRoute('/dispatch', { rId: newId }))
         }
 
@@ -146,7 +150,7 @@ function DispatchBoard ({ query }) {
         setNewRescueAnnouncement(`${codeRed}New rescue: CMDR ${client} in ${system}.`)
       }
     }
-  }, [rescueIds, loaded, router, store])
+  }, [rescueIds, loaded, router, store, dispatchSettings.autoOpenNewCases])
 
   const statusConfig = {
     connected: { color: '#49c549', label: 'Live' },
@@ -194,6 +198,31 @@ function DispatchBoard ({ query }) {
   return setNotifPanelOpen(false)
 }
 } />
+        </div>
+        <div className={styles.notifContainer}>
+          <button
+            aria-label="Board settings"
+            className={clsx('compact', styles.installButton)}
+            title="Board settings"
+            type="button"
+            onClick={
+              () => {
+                return setSettingsPanelOpen((prev) => {
+                  return !prev
+                })
+              }
+            }>
+            <FontAwesomeIcon fixedWidth icon="gears" />
+          </button>
+          <DispatchSettingsPanel
+            open={settingsPanelOpen}
+            settings={dispatchSettings}
+            onClose={
+              () => {
+                return setSettingsPanelOpen(false)
+              }
+            }
+            onUpdate={handleUpdateSetting} />
         </div>
         <InstallPwaButton className={styles.installButton} />
       </div>
