@@ -109,6 +109,34 @@
   outline-offset: -2px;
 }
 
+@keyframes rescue-close-fade {
+  0% {
+    opacity: 1;
+    filter: grayscale(0);
+  }
+
+  50% {
+    opacity: 0.5;
+    filter: grayscale(100%);
+  }
+
+  100% {
+    max-height: 0;
+    padding: 0;
+
+    opacity: 0;
+    filter: grayscale(100%);
+
+    overflow: hidden;
+  }
+}
+
+.closing {
+  animation: rescue-close-fade 1.5s ease-out forwards;
+
+  pointer-events: none;
+}
+
 .cmdrNameCol {
   display: flex;
 

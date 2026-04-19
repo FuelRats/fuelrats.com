@@ -38,9 +38,15 @@ const selectRenderedRatList = createSelectRenderedRatList((rat, index, arr) => {
 
 
 function RescueRow (props) {
-  const rescue = useSelector((state) => {
+  const liveRescue = useSelector((state) => {
     return selectRescueById(state, props)
   })
+  const cachedRescueRef = useRef(liveRescue)
+  if (liveRescue) {
+    cachedRescueRef.current = liveRescue
+  }
+  const rescue = liveRescue ?? cachedRescueRef.current
+
   const rescueRats = useSelector((state) => {
     return selectRenderedRatList(state, props)
   })
@@ -52,6 +58,7 @@ function RescueRow (props) {
   const rescuePermit = useRescuePermit(rescue)
 
   // Flash any rescue under a minute old on mount. This flashes all new rescues when they are created, and any immediately new ones on page load.
+  const { closing } = props
   const [animating, setAnimating] = useState(differenceInMinutes(Date.now(), new Date(rescue.attributes.createdAt)) < 1)
 
   const handleTransitionEnd = useCallback(() => {
@@ -96,7 +103,11 @@ function RescueRow (props) {
     }
 
     router.push(makeRoute('/dispatch', query))
-  }, [rescue.id, router])
+  }, [rescue?.id, router])
+
+  if (!rescue) {
+    return null
+  }
 
   const {
     carrier,
@@ -118,6 +129,7 @@ function RescueRow (props) {
           [styles.codeRed]: codeRed,
           [styles.inactive]: status === 'inactive',
           [styles.selected]: isSelected,
+          [styles.closing]: closing,
           'animate-flash': animating,
         })
       }
@@ -196,6 +208,7 @@ rescueLanguage.flag && (
 }
 
 RescueRow.propTypes = {
+  closing: PropTypes.bool,
   // eslint-disable-next-line react/no-unused-prop-types
   rescueId: PropTypes.string.isRequired,
 }

@@ -151,16 +151,19 @@ main.dispatchBoard {
         min-width: calc(50% - 2rem);
 
         opacity: 1;
+
+        transform: translateX(0);
       }
     }
   }
 
   > section {
     transition:
-      max-width 0.2s $bounce-bezier,
-      min-width 0.2s $bounce-bezier,
-      margin 0.2s $bounce-bezier,
-      opacity 0.15s ease 0.2s;
+      max-width 0.3s ease,
+      min-width 0.3s ease,
+      margin 0.3s ease,
+      opacity 0.2s ease,
+      transform 0.3s ease;
 
     &.table {
       flex-grow: 1;
@@ -177,6 +180,8 @@ main.dispatchBoard {
       margin: 0;
 
       opacity: 0;
+
+      transform: translateX(2rem);
     }
   }
 
