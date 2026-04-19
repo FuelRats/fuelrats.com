@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
-import { useCallback, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { setFlag } from '~/store/actions/flags'
@@ -22,6 +22,19 @@ import styles from './UserMenu.module.scss'
 
 function UserMenu () {
   const checkboxRef = useRef()
+  const menuRef = useRef()
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (checkboxRef.current?.checked && menuRef.current && !menuRef.current.contains(event.target)) {
+        checkboxRef.current.checked = false
+      }
+    }
+    document.addEventListener('mousedown', handleOutsideClick)
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick)
+    }
+  }, [])
 
   const { loggedIn } = useSelector(selectSession)
   const userCanDispatch = useSelector((state) => {
@@ -45,7 +58,7 @@ function UserMenu () {
   }, [dispatch])
 
   return (
-    <div className={clsx(styles.userMenu, { [styles.loggedIn]: loggedIn })}>
+    <div ref={menuRef} className={clsx(styles.userMenu, { [styles.loggedIn]: loggedIn })}>
       {
         loggedIn
           ? (
