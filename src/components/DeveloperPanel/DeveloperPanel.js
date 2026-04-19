@@ -1,29 +1,78 @@
-import Image from 'next/image'
-import { useCallback, useEffect, useState } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { createClient, getClients } from '~/store/actions/clients'
-import { selectCurrentUserId, withCurrentUserId } from '~/store/selectors'
+import { deleteClient, getClients } from '~/store/actions/clients'
+import {
+  selectCurrentUserId, selectCurrentUserHasScope, withCurrentUserId,
+} from '~/store/selectors'
 import { selectClientsByUserId } from '~/store/selectors/clients'
 import getResponseError from '~/util/getResponseError'
 
-import ClientSubmitMessageBox from './ClientSubmitMessageBox'
-import OAuthClientForm from '../Forms/OAuthClientForm'
+import ClientCard from './ClientCard'
+import CreateClientModal from './CreateClientModal'
+import styles from './DeveloperPanel.module.scss'
 
 
+function ClientTable ({ clients, onDelete, isAdmin }) {
+  const showNamespaces = useMemo(() => {
+    return clients.some((cl) => {
+      return cl.attributes.namespaces?.length > 0
+    })
+  }, [clients])
 
+  const showFirstParty = useMemo(() => {
+    return clients.some((cl) => {
+      return cl.attributes.firstParty
+    })
+  }, [clients])
+
+  return (
+    <table className={styles.table}>
+      <thead>
+        <tr>
+          <th>{'Name'}</th>
+          <th>{'Client ID'}</th>
+          <th>{'Redirect URI'}</th>
+          {showNamespaces && (<th>{'Namespaces'}</th>)}
+          {showFirstParty && (<th>{'1st Party'}</th>)}
+          <th />
+        </tr>
+      </thead>
+      <tbody>
+        {
+          clients.map((client) => {
+            return (
+              <ClientCard
+                key={client.id}
+                client={client}
+                isAdmin={isAdmin}
+                showFirstParty={showFirstParty}
+                showNamespaces={showNamespaces}
+                onDelete={onDelete} />
+            )
+          })
+        }
+      </tbody>
+    </table>
+  )
+}
 
 
 function DeveloperPanel () {
   const userId = useSelector(selectCurrentUserId)
   const clients = useSelector(withCurrentUserId(selectClientsByUserId))
+  const isAdmin = useSelector((state) => {
+    return selectCurrentUserHasScope(state, { scope: 'clients.write' })
+  })
   const dispatch = useDispatch()
 
   const [clientListError, setClientListError] = useState(null)
+  const [showCreateModal, setShowCreateModal] = useState(false)
 
-  useEffect(() => {
+  const fetchClients = useCallback(() => {
     setClientListError(null)
-    Promise.resolve(dispatch(getClients({
+    return Promise.resolve(dispatch(getClients({
       filter: {
         userId: { eq: userId },
       },
@@ -33,60 +82,68 @@ function DeveloperPanel () {
         setClientListError(err.detail ?? 'Failed to load clients.')
       }
     })
+  }, [dispatch, userId])
+
+  useEffect(() => {
+    fetchClients()
   // eslint-disable-next-line react-hooks/exhaustive-deps -- Only attempt fetch on userId change and mount.
   }, [userId])
 
+  const handleDeleteClient = useCallback(async (event) => {
+    const clientId = event.target.name
+    await dispatch(deleteClient(clientId))
+    fetchClients()
+    return true
+  }, [dispatch, fetchClients])
 
-  const [clientResponse, setClientResponse] = useState(null)
-
-
-  const handleClientSubmit = useCallback(async (formData) => {
-    const response = await dispatch(createClient(formData))
-    setClientResponse(response)
-  }, [dispatch])
+  const handleCreateModalClose = useCallback(() => {
+    setShowCreateModal(false)
+    fetchClients()
+  }, [fetchClients])
 
   return (
-    <div className="user-developer-tab">
-      {"Do you like my pretty page?! It's great, isn't it? Totally not a rush job at all! Actual UI to delete clients and revoke tokens coming soon™."}
-      <Image alt="Kappa" height={18} src="https://static-cdn.jtvnw.net/emoticons/v1/25/1.0" width={84} />
-
-      <div>
-        <h4>{'Create Client'}</h4>
-        <ClientSubmitMessageBox response={clientResponse} />
-        <OAuthClientForm onSubmit={handleClientSubmit} />
-      </div>
-
-      <div>
-        <h4>{'Client List'}</h4>
-        {clientListError && (<p>{clientListError}</p>)}
-        <ul>
+    <div className={styles.developerTab}>
+      <div className="panel">
+        <header>
+          {'OAuth Clients'}
+          <menu>
+            <button
+              className="compact green"
+              type="button"
+              onClick={
+                () => {
+                  return setShowCreateModal(true)
+                }
+              }>
+              <FontAwesomeIcon fixedWidth icon="plus" />
+              {' New Client'}
+            </button>
+          </menu>
+        </header>
+        <div className={styles.content}>
+          {clientListError && (<p className={styles.error}>{clientListError}</p>)}
           {
-            clients.map((client) => {
-              return (
-                <li key={client.id}>
-                  <code>{client.attributes.name}</code>
-                  {': '}
-                  <code>{client.id}</code>
-                  {
-                    client.attributes.redirectUri && (
-                      <>
-                        {' | RedirectUri: '}
-                        <code>{client.attributes.redirectUri ?? '(No Redirect URI)'}</code>
-                      </>
-                    )
-                  }
-                </li>
-              )
-            })
+            clients.length === 0 && !clientListError && (
+              <div className={styles.empty}>{'No OAuth clients registered.'}</div>
+            )
           }
-        </ul>
+          {
+            clients.length > 0 && (
+              <ClientTable
+                clients={clients}
+                isAdmin={isAdmin}
+                onDelete={handleDeleteClient} />
+            )
+          }
+        </div>
       </div>
+
+      <CreateClientModal
+        isOpen={showCreateModal}
+        onClose={handleCreateModalClose} />
     </div>
   )
 }
-
-
-
 
 
 export default DeveloperPanel

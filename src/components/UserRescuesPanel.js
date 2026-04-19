@@ -9,7 +9,10 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import useDebouncedCallback from '~/hooks/useDebouncedCallback'
 import { getMyRescues } from '~/store/actions/rescues'
-import { selectPageViewDataById, selectPageViewMetaById, selectRatsByRescueId } from '~/store/selectors'
+import {
+  selectPageViewDataById, selectPageViewMetaById, selectRatsByRescueId,
+  withCurrentUserId, selectRatsByUserId,
+} from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 import makePaperworkRoute from '~/util/router/makePaperworkRoute'
 
@@ -70,7 +73,12 @@ const initialFilters = {
   codeRed: '',
   carrier: '',
   firstLimpet: '',
+  rat: '',
   notes: '',
+  createdAfter: '',
+  createdBefore: '',
+  updatedAfter: '',
+  updatedBefore: '',
   sort: '-createdAt',
 }
 
@@ -128,6 +136,7 @@ function UserRescuesPanel () {
   const page = useQueryPage()
   const offset = (page - 1) * PAGE_SIZE
   const [fetchError, setFetchError] = useState(false)
+  const userRats = useSelector(withCurrentUserId(selectRatsByUserId))
   const [filters, setFilter] = useReducer(filterReducer, initialFilters)
   const [debouncedFilters, setDebouncedFilters] = useState(initialFilters)
   const [showFilters, setShowFilters] = useState(false)
@@ -165,7 +174,7 @@ function UserRescuesPanel () {
     if (debouncedFilters.outcome) {
       filter.outcome = debouncedFilters.outcome
     } else {
-      filter.outcome = { ne: 'purge' }
+      filter.or = [{ outcome: { ne: 'purge' } }, { outcome: null }]
     }
     if (debouncedFilters.status) {
       filter.status = debouncedFilters.status
@@ -179,6 +188,24 @@ function UserRescuesPanel () {
     if (debouncedFilters.notes.trim()) {
       filter.notes = { iLike: `%${debouncedFilters.notes.trim()}%` }
     }
+    if (debouncedFilters.createdAfter || debouncedFilters.createdBefore) {
+      filter.createdAt = {}
+      if (debouncedFilters.createdAfter) {
+        filter.createdAt.gte = debouncedFilters.createdAfter
+      }
+      if (debouncedFilters.createdBefore) {
+        filter.createdAt.lte = `${debouncedFilters.createdBefore}T23:59:59Z`
+      }
+    }
+    if (debouncedFilters.updatedAfter || debouncedFilters.updatedBefore) {
+      filter.updatedAt = {}
+      if (debouncedFilters.updatedAfter) {
+        filter.updatedAt.gte = debouncedFilters.updatedAfter
+      }
+      if (debouncedFilters.updatedBefore) {
+        filter.updatedAt.lte = `${debouncedFilters.updatedBefore}T23:59:59Z`
+      }
+    }
 
     const params = {
       sort: debouncedFilters.sort,
@@ -189,6 +216,9 @@ function UserRescuesPanel () {
     }
     if (debouncedFilters.firstLimpet) {
       params._firstLimpet = 'me'
+    }
+    if (debouncedFilters.rat) {
+      params._rat = debouncedFilters.rat
     }
     Promise.resolve(dispatch(getMyRescues(
       params,
@@ -376,6 +406,36 @@ function UserRescuesPanel () {
                 </div>
               </div>
 
+              {
+                userRats?.length > 1 && (
+                  <div className={styles.filterRow}>
+                    <span className={styles.filterLabel}>{'Rat'}</span>
+                    <div className={styles.chipGroup}>
+                      {
+                        userRats.map((rat) => {
+                          return (
+                            <button
+                              key={rat.id}
+                              className={clsx(styles.chip, { [styles.chipActive]: filters.rat === rat.id })}
+                              type="button"
+                              onClick={
+                                () => {
+                                  return setFilter({
+                                    field: 'rat',
+                                    value: filters.rat === rat.id ? '' : rat.id,
+                                  })
+                                }
+                              }>
+                              {rat.attributes.name}
+                            </button>
+                          )
+                        })
+                      }
+                    </div>
+                  </div>
+                )
+              }
+
               <div className={styles.filterInputRow}>
                 <label className={styles.filterField}>
                   <span>{'Notes'}</span>
@@ -387,6 +447,57 @@ function UserRescuesPanel () {
                     onChange={
                       (event) => {
                         return setFilter({ field: 'notes', value: event.target.value })
+                      }
+                    } />
+                </label>
+              </div>
+
+              <div className={styles.filterInputRow}>
+                <label className={styles.filterField}>
+                  <span>{'Created after'}</span>
+                  <input
+                    aria-label="Created after"
+                    type="date"
+                    value={filters.createdAfter}
+                    onChange={
+                      (event) => {
+                        return setFilter({ field: 'createdAfter', value: event.target.value })
+                      }
+                    } />
+                </label>
+                <label className={styles.filterField}>
+                  <span>{'Created before'}</span>
+                  <input
+                    aria-label="Created before"
+                    type="date"
+                    value={filters.createdBefore}
+                    onChange={
+                      (event) => {
+                        return setFilter({ field: 'createdBefore', value: event.target.value })
+                      }
+                    } />
+                </label>
+                <label className={styles.filterField}>
+                  <span>{'Updated after'}</span>
+                  <input
+                    aria-label="Updated after"
+                    type="date"
+                    value={filters.updatedAfter}
+                    onChange={
+                      (event) => {
+                        return setFilter({ field: 'updatedAfter', value: event.target.value })
+                      }
+                    } />
+                </label>
+                <label className={styles.filterField}>
+                  <span>{'Updated before'}</span>
+                  <input
+                    aria-label="Updated before"
+                    type="date"
+                    value={filters.updatedBefore}
+                    onChange={
+                      (event) => {
+                        return setFilter({ field: 'updatedBefore', value: event.target.value })
                       }
                     } />
                 </label>
