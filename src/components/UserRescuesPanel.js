@@ -9,7 +9,10 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import useDebouncedCallback from '~/hooks/useDebouncedCallback'
 import { getMyRescues } from '~/store/actions/rescues'
-import { selectPageViewDataById, selectPageViewMetaById, selectRatsByRescueId } from '~/store/selectors'
+import {
+  selectPageViewDataById, selectPageViewMetaById, selectRatsByRescueId,
+  withCurrentUserId, selectRatsByUserId,
+} from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 import makePaperworkRoute from '~/util/router/makePaperworkRoute'
 
@@ -70,6 +73,7 @@ const initialFilters = {
   codeRed: '',
   carrier: '',
   firstLimpet: '',
+  rat: '',
   notes: '',
   sort: '-createdAt',
 }
@@ -128,6 +132,7 @@ function UserRescuesPanel () {
   const page = useQueryPage()
   const offset = (page - 1) * PAGE_SIZE
   const [fetchError, setFetchError] = useState(false)
+  const userRats = useSelector(withCurrentUserId(selectRatsByUserId))
   const [filters, setFilter] = useReducer(filterReducer, initialFilters)
   const [debouncedFilters, setDebouncedFilters] = useState(initialFilters)
   const [showFilters, setShowFilters] = useState(false)
@@ -189,6 +194,9 @@ function UserRescuesPanel () {
     }
     if (debouncedFilters.firstLimpet) {
       params._firstLimpet = 'me'
+    }
+    if (debouncedFilters.rat) {
+      params._rat = debouncedFilters.rat
     }
     Promise.resolve(dispatch(getMyRescues(
       params,
@@ -375,6 +383,36 @@ function UserRescuesPanel () {
                   }
                 </div>
               </div>
+
+              {
+                userRats?.length > 1 && (
+                  <div className={styles.filterRow}>
+                    <span className={styles.filterLabel}>{'Rat'}</span>
+                    <div className={styles.chipGroup}>
+                      {
+                        userRats.map((rat) => {
+                          return (
+                            <button
+                              key={rat.id}
+                              className={clsx(styles.chip, { [styles.chipActive]: filters.rat === rat.id })}
+                              type="button"
+                              onClick={
+                                () => {
+                                  return setFilter({
+                                    field: 'rat',
+                                    value: filters.rat === rat.id ? '' : rat.id,
+                                  })
+                                }
+                              }>
+                              {rat.attributes.name}
+                            </button>
+                          )
+                        })
+                      }
+                    </div>
+                  </div>
+                )
+              }
 
               <div className={styles.filterInputRow}>
                 <label className={styles.filterField}>
