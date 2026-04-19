@@ -75,6 +75,10 @@ const initialFilters = {
   firstLimpet: '',
   rat: '',
   notes: '',
+  createdAfter: '',
+  createdBefore: '',
+  updatedAfter: '',
+  updatedBefore: '',
   sort: '-createdAt',
 }
 
@@ -183,6 +187,24 @@ function UserRescuesPanel () {
     }
     if (debouncedFilters.notes.trim()) {
       filter.notes = { iLike: `%${debouncedFilters.notes.trim()}%` }
+    }
+    if (debouncedFilters.createdAfter || debouncedFilters.createdBefore) {
+      filter.createdAt = {}
+      if (debouncedFilters.createdAfter) {
+        filter.createdAt.gte = debouncedFilters.createdAfter
+      }
+      if (debouncedFilters.createdBefore) {
+        filter.createdAt.lte = `${debouncedFilters.createdBefore}T23:59:59Z`
+      }
+    }
+    if (debouncedFilters.updatedAfter || debouncedFilters.updatedBefore) {
+      filter.updatedAt = {}
+      if (debouncedFilters.updatedAfter) {
+        filter.updatedAt.gte = debouncedFilters.updatedAfter
+      }
+      if (debouncedFilters.updatedBefore) {
+        filter.updatedAt.lte = `${debouncedFilters.updatedBefore}T23:59:59Z`
+      }
     }
 
     const params = {
@@ -425,6 +447,57 @@ function UserRescuesPanel () {
                     onChange={
                       (event) => {
                         return setFilter({ field: 'notes', value: event.target.value })
+                      }
+                    } />
+                </label>
+              </div>
+
+              <div className={styles.filterInputRow}>
+                <label className={styles.filterField}>
+                  <span>{'Created after'}</span>
+                  <input
+                    aria-label="Created after"
+                    type="date"
+                    value={filters.createdAfter}
+                    onChange={
+                      (event) => {
+                        return setFilter({ field: 'createdAfter', value: event.target.value })
+                      }
+                    } />
+                </label>
+                <label className={styles.filterField}>
+                  <span>{'Created before'}</span>
+                  <input
+                    aria-label="Created before"
+                    type="date"
+                    value={filters.createdBefore}
+                    onChange={
+                      (event) => {
+                        return setFilter({ field: 'createdBefore', value: event.target.value })
+                      }
+                    } />
+                </label>
+                <label className={styles.filterField}>
+                  <span>{'Updated after'}</span>
+                  <input
+                    aria-label="Updated after"
+                    type="date"
+                    value={filters.updatedAfter}
+                    onChange={
+                      (event) => {
+                        return setFilter({ field: 'updatedAfter', value: event.target.value })
+                      }
+                    } />
+                </label>
+                <label className={styles.filterField}>
+                  <span>{'Updated before'}</span>
+                  <input
+                    aria-label="Updated before"
+                    type="date"
+                    value={filters.updatedBefore}
+                    onChange={
+                      (event) => {
+                        return setFilter({ field: 'updatedBefore', value: event.target.value })
                       }
                     } />
                 </label>
