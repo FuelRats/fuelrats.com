@@ -15,14 +15,17 @@ $bounce-bezier: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
   color: $grey;
 
-  font-size: 0.85rem;
+  font-size: 1em;
 
-  @media screen and (max-width: 768px) {
-    right: 10rem;
+  @media screen and (max-width: 1024px) {
+    position: static;
+
+    justify-content: flex-end;
+
+    height: auto;
+    padding: 0.5rem 1rem;
 
     color: $grey-lightened;
-
-    font-size: 0.9rem;
 
     .statusDot {
       width: 12px;
