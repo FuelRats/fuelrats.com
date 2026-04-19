@@ -1,9 +1,10 @@
 import clsx from 'clsx'
 import PropTypes from 'prop-types'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 import { useRescueQueueCount } from '~/hooks/rescueHooks'
+import useBoardEvents from '~/hooks/useBoardEvents'
 import { selectDispatchBoard } from '~/store/selectors/dispatch'
 
 import styles from './DispatchTable.module.scss'
@@ -45,45 +46,25 @@ function DispatchTable (props) {
   const [queueLength, maxClients] = useRescueQueueCount()
   const showSkeleton = loading && !rescueIds?.length
 
-  // Keep removed IDs visible briefly so the close animation can play
-  const CLOSE_FADE_MS = 1500
-  const prevIdsRef = useRef(rescueIds)
-  const closingRef = useRef([])
-  const [, forceUpdate] = useState(0)
+  const [flashingIds, setFlashingIds] = useState([])
 
-  // Detect removals synchronously during render
-  const prev = prevIdsRef.current ?? []
-  if (rescueIds && rescueIds !== prev && prev.length > 0) {
-    const removed = prev.filter((id) => {
-      return !rescueIds.includes(id) && !closingRef.current.includes(id)
+  const handleClearFlash = useCallback((rescueId) => {
+    setFlashingIds((cur) => {
+      return cur.filter((id) => {
+        return id !== rescueId
+      })
     })
-    if (removed.length > 0) {
-      closingRef.current = [...closingRef.current, ...removed]
-    }
-    prevIdsRef.current = rescueIds
-  }
+  }, [])
 
-  // Schedule cleanup of closing IDs after animation
-  useEffect(() => {
-    if (closingRef.current.length === 0) {
-      return undefined
-    }
-    const toRemove = [...closingRef.current]
-    const timer = setTimeout(() => {
-      closingRef.current = closingRef.current.filter((id) => {
-        return !toRemove.includes(id)
+  useBoardEvents(({
+    changedIds,
+  }) => {
+    if (changedIds.length > 0) {
+      setFlashingIds((cur) => {
+        return [...new Set([...cur, ...changedIds])]
       })
-      forceUpdate((count) => {
-        return count + 1
-      })
-    }, CLOSE_FADE_MS)
-    return () => {
-      return clearTimeout(timer)
     }
-  }, [closingRef.current.length])
-
-  const closingIds = closingRef.current
-  const displayIds = [...(rescueIds ?? []), ...closingIds]
+  })
 
   return (
     <section className={clsx(styles.dispatchTable, className)}>
@@ -105,12 +86,13 @@ function DispatchTable (props) {
               ? Array.from({ length: SKELETON_ROW_COUNT }, (_, idx) => {
                 return <SkeletonRow key={idx} />
               })
-              : displayIds?.map((rescueId) => {
+              : rescueIds?.map((rescueId) => {
                 return (
                   <RescueRow
                     key={rescueId}
-                    closing={closingIds.includes(rescueId)}
-                    rescueId={rescueId} />
+                    flashing={flashingIds.includes(rescueId)}
+                    rescueId={rescueId}
+                    onFlashEnd={handleClearFlash} />
                 )
               })
           }

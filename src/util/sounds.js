@@ -1,7 +1,26 @@
 /* eslint-disable no-magic-numbers -- audio synthesis parameters are inherently numeric constants */
 let audioCtx = null
+let gestureReceived = false
+
+if (typeof window !== 'undefined') {
+  const unlockAudio = () => {
+    gestureReceived = true
+    if (audioCtx?.state === 'suspended') {
+      audioCtx.resume()
+    }
+    window.removeEventListener('click', unlockAudio)
+    window.removeEventListener('keydown', unlockAudio)
+    window.removeEventListener('touchstart', unlockAudio)
+  }
+  window.addEventListener('click', unlockAudio)
+  window.addEventListener('keydown', unlockAudio)
+  window.addEventListener('touchstart', unlockAudio)
+}
 
 function getContext () {
+  if (!gestureReceived) {
+    return null
+  }
   if (!audioCtx) {
     audioCtx = new (window.AudioContext ?? window.webkitAudioContext)()
   }
@@ -12,8 +31,15 @@ function getContext () {
 }
 
 
+export function isAudioReady () {
+  return gestureReceived
+}
+
 function playTone (frequency, duration, { type = 'sine', volume = 0.3, delay = 0 } = {}) {
   const ctx = getContext()
+  if (!ctx) {
+    return
+  }
   const osc = ctx.createOscillator()
   const gain = ctx.createGain()
 
