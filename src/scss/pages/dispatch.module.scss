@@ -5,22 +5,20 @@ $bounce-bezier: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 .statusBar {
   display: flex;
   position: absolute;
-  top: 5.5rem;
-  right: 8.5rem;
+  top: 0.5rem;
+  right: 10rem;
 
   align-items: center;
   gap: 0.5rem;
+
+  height: 6.5rem;
 
   color: $grey;
 
   font-size: 0.85rem;
 
   @media screen and (max-width: 768px) {
-    position: static;
-
-    justify-content: flex-end;
-
-    margin: 0.25rem 1rem 0.5rem;
+    right: 10rem;
 
     color: $grey-lightened;
 
@@ -105,24 +103,13 @@ main.dispatchBoard {
 
   overflow-x: hidden;
 
-  .clock {
-    align-self: flex-end;
-
-    margin: -1rem 1rem 0.5rem;
-  }
-
-  @media screen and (min-width: 769px) {
-    .clock {
-      position: absolute;
-      top: 3.4rem;
-      right: 8.5rem;
+  @media (display-mode: standalone) {
+    > :global(.page-header) {
+      display: none;
     }
-  }
-  @media screen and (max-width: 500px) {
-    .clock {
-      margin: -0.5rem 0.75rem 0.5rem;
 
-      font-size: 0.85em;
+    > :global(.page-content) {
+      margin-top: 8rem;
     }
   }
 }

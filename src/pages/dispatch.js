@@ -163,12 +163,12 @@ function DispatchBoard ({ query }) {
 
   return (
     <>
-      <Clock className={styles.clock} />
       <div
         aria-atomic="true"
         aria-live="polite"
         className={styles.statusBar}
         role="status">
+        <Clock className={styles.clock} />
         <span
           aria-hidden="true"
           className={clsx(styles.statusDot, { [styles.pulse]: isReconnecting })}
