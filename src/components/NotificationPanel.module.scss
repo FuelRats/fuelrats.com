@@ -1,5 +1,19 @@
 @import '../scss/colors';
 
+@keyframes notif-panel-in {
+  from {
+    opacity: 0;
+
+    transform: translateY(-0.5rem) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0) scale(1);
+  }
+}
+
 .panel {
   position: absolute;
   top: 100%;
@@ -15,8 +29,18 @@
 
   background-color: $black-lightened;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  animation: notif-panel-in 0.15s ease-out;
 
   font-size: 14px;
+
+  transform-origin: top right;
+
+  &.closing {
+    opacity: 0;
+
+    transform: translateY(-0.5rem) scale(0.95);
+    transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+  }
 }
 
 .section {

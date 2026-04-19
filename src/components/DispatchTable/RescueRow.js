@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import { differenceInMinutes } from 'date-fns'
 import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 import CarrierIcon from '~/components/CarrierIcon'
@@ -11,7 +11,6 @@ import PlatformBadge from '~/components/PlatformBadge'
 import {
   useQuoteString, useRescueLanguage, useRescuePlatform, useRescueSystem, useRescuePermit,
 } from '~/hooks/rescueHooks'
-import useStoreEffect from '~/hooks/useStoreEffect'
 import { selectRescueById, createSelectRenderedRatList } from '~/store/selectors'
 import makeRoute from '~/util/router/makeRoute'
 
@@ -41,6 +40,7 @@ function RescueRow (props) {
   const rescue = useSelector((state) => {
     return selectRescueById(state, props)
   })
+
   const rescueRats = useSelector((state) => {
     return selectRenderedRatList(state, props)
   })
@@ -51,27 +51,44 @@ function RescueRow (props) {
   const rescueSystem = useRescueSystem(rescue)
   const rescuePermit = useRescuePermit(rescue)
 
-  // Flash any rescue under a minute old on mount. This flashes all new rescues when they are created, and any immediately new ones on page load.
-  const [animating, setAnimating] = useState(differenceInMinutes(Date.now(), new Date(rescue.attributes.createdAt)) < 1)
+  const { flashing, onFlashEnd } = props
+  const isNew = differenceInMinutes(Date.now(), new Date(rescue.attributes.createdAt)) < 1
+  const [animating, setAnimating] = useState(isNew)
+  const [newest, setNewest] = useState(isNew)
 
-  const handleTransitionEnd = useCallback(() => {
+  useEffect(() => {
+    if (flashing) {
+      setAnimating(true)
+    }
+  }, [flashing])
+
+  useEffect(() => {
+    if (!newest) {
+      return undefined
+    }
+    const ageMs = Date.now() - new Date(rescue.attributes.createdAt).getTime()
+    const NEWEST_DURATION_MS = 60000
+    const remaining = NEWEST_DURATION_MS - ageMs
+    if (remaining <= 0) {
+      setNewest(false)
+      return undefined
+    }
+    const timer = setTimeout(() => {
+      setNewest(false)
+    }, remaining)
+    return () => {
+      return clearTimeout(timer)
+    }
+  }, [newest, rescue.attributes.createdAt])
+
+  const handleAnimationEnd = useCallback(() => {
     setAnimating(false)
-  }, [])
+    if (onFlashEnd) {
+      onFlashEnd(rescue.id)
+    }
+  }, [onFlashEnd, rescue.id])
 
   const router = useRouter()
-  useStoreEffect(
-    (nextState) => {
-      if (nextState.attributes.status === 'closed') {
-        if (router.query.rId === nextState.id) {
-          router.push('/dispatch')
-        }
-      } else {
-        setAnimating(true)
-      }
-    },
-    [router],
-    `rescues.${rescue.id}`,
-  )
 
   const handleFocusRescue = useCallback(() => {
     const query = {}
@@ -81,7 +98,11 @@ function RescueRow (props) {
     }
 
     router.push(makeRoute('/dispatch', query))
-  }, [rescue.id, router])
+  }, [rescue?.id, router])
+
+  if (!rescue) {
+    return null
+  }
 
   const {
     carrier,
@@ -103,12 +124,13 @@ function RescueRow (props) {
           [styles.codeRed]: codeRed,
           [styles.inactive]: status === 'inactive',
           [styles.selected]: isSelected,
+          [styles.newest]: newest,
           'animate-flash': animating,
         })
       }
       data-rescue-id={rescue.id}
       title={quoteString}
-      onAnimationEnd={handleTransitionEnd}>
+      onAnimationEnd={handleAnimationEnd}>
       <CopyToClipboard
         as="td"
         className={clsx(styles.rescueIdCell, { [styles.rescueIdCellCr]: codeRed })}
@@ -181,6 +203,8 @@ rescueLanguage.flag && (
 }
 
 RescueRow.propTypes = {
+  flashing: PropTypes.bool,
+  onFlashEnd: PropTypes.func,
   // eslint-disable-next-line react/no-unused-prop-types
   rescueId: PropTypes.string.isRequired,
 }

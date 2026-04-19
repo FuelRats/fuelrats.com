@@ -71,6 +71,7 @@ export {
   faGraduationCap,
   faHeadset,
   faSnowflake,
+  faSliders,
   faUpRightFromSquare,
 } from '@fortawesome/free-solid-svg-icons'
 

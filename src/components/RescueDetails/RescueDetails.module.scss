@@ -371,6 +371,25 @@
     text-align: right;
   }
 
+  .quoteAvatarSlot {
+    display: inline-block;
+
+    min-width: 20px;
+    min-height: 20px;
+    margin-right: 0.4rem;
+
+    vertical-align: middle;
+  }
+
+  .quoteAvatar {
+    width: 20px;
+    height: 20px;
+
+    border-radius: 50%;
+
+    vertical-align: middle;
+  }
+
   .quoteAuthorVia,
   .quoteAuthor,
   .quoteTime {
@@ -414,6 +433,18 @@
 
   .quoteTime {
     opacity: 0.7;
+  }
+}
+
+.infoValue.infoGroup.quote.jumpCall {
+  border-left: 3px solid $yellow;
+
+  background-color: rgba($yellow, 0.08);
+
+  .quoteMessage {
+    color: $yellow;
+
+    font-weight: 600;
   }
 }
 

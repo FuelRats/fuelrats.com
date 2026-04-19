@@ -1,0 +1,92 @@
+@import '../scss/colors';
+
+@keyframes settings-panel-in {
+  from {
+    opacity: 0;
+
+    transform: translateY(-0.5rem) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0) scale(1);
+  }
+}
+
+.panel {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 100;
+
+  width: 280px;
+  max-width: calc(100vw - 2rem);
+  margin-top: 0.5rem;
+
+  border: 1px solid $grey-dark;
+  border-radius: 6px;
+
+  background-color: $black-lightened;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  animation: settings-panel-in 0.15s ease-out;
+
+  font-size: 14px;
+
+  transform-origin: top right;
+
+  &.closing {
+    opacity: 0;
+    transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+    transform: translateY(-0.5rem) scale(0.95);
+  }
+}
+
+.section {
+  padding: 0.85rem;
+}
+
+.sectionTitle {
+  margin: 0 0 0.6rem;
+
+  color: $white;
+
+  font-size: 1em;
+  font-weight: 600;
+}
+
+.optionRow {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0.3rem 0;
+}
+
+.optionLabel {
+  color: $grey-lightened;
+
+  font-size: 0.9em;
+}
+
+.toggle {
+  padding: 0.2rem 0.5rem;
+
+  border: 1px solid $grey-dark;
+  border-radius: 3px;
+
+  color: $grey;
+  background-color: transparent;
+
+  font-size: 0.85em;
+
+  cursor: pointer;
+
+  &.toggleOn {
+    border-color: $red;
+
+    color: $white;
+    background-color: rgba($red, 0.25);
+  }
+}

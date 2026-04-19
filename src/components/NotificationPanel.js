@@ -1,7 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import PropTypes from 'prop-types'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import {
+  useCallback, useEffect, useLayoutEffect, useRef, useState,
+} from 'react'
 
 import usePushNotifications from '~/hooks/usePushNotifications'
 import { loadSoundSettings, saveSoundSettings } from '~/hooks/useSoundNotifications'
@@ -114,14 +116,35 @@ function NotificationPanel ({ className, open, onClose }) {
     SOUND_PREVIEWS[key]?.(sound.volume)
   }, [sound.volume])
 
-  if (!open) {
+  const [visible, setVisible] = useState(false)
+  const [closing, setClosing] = useState(false)
+
+  useLayoutEffect(() => {
+    if (open) {
+      setVisible(true)
+      setClosing(false)
+    } else if (visible) {
+      setClosing(true)
+      const CLOSE_ANIMATION_MS = 150
+      const timer = setTimeout(() => {
+        setVisible(false)
+        setClosing(false)
+      }, CLOSE_ANIMATION_MS)
+      return () => {
+        return clearTimeout(timer)
+      }
+    }
+    return undefined
+  }, [open]) // eslint-disable-line react-hooks/exhaustive-deps -- only react to open changes
+
+  if (!visible) {
     return null
   }
 
   const pushDenied = permission === 'denied'
 
   return (
-    <div ref={panelRef} className={clsx(styles.panel, className)}>
+    <div ref={panelRef} className={clsx(styles.panel, { [styles.closing]: closing }, className)}>
       {/* ── Sound Notifications ── */}
       <section className={styles.section}>
         <div className={styles.sectionHeader}>

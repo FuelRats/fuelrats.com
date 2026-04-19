@@ -1,8 +1,10 @@
 import clsx from 'clsx'
 import PropTypes from 'prop-types'
+import { useCallback, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 import { useRescueQueueCount } from '~/hooks/rescueHooks'
+import useBoardEvents from '~/hooks/useBoardEvents'
 import { selectDispatchBoard } from '~/store/selectors/dispatch'
 
 import styles from './DispatchTable.module.scss'
@@ -44,6 +46,26 @@ function DispatchTable (props) {
   const [queueLength, maxClients] = useRescueQueueCount()
   const showSkeleton = loading && !rescueIds?.length
 
+  const [flashingIds, setFlashingIds] = useState([])
+
+  const handleClearFlash = useCallback((rescueId) => {
+    setFlashingIds((cur) => {
+      return cur.filter((id) => {
+        return id !== rescueId
+      })
+    })
+  }, [])
+
+  useBoardEvents(({
+    changedIds,
+  }) => {
+    if (changedIds.length > 0) {
+      setFlashingIds((cur) => {
+        return [...new Set([...cur, ...changedIds])]
+      })
+    }
+  })
+
   return (
     <section className={clsx(styles.dispatchTable, className)}>
       <table className={styles.table}>
@@ -68,7 +90,9 @@ function DispatchTable (props) {
                 return (
                   <RescueRow
                     key={rescueId}
-                    rescueId={rescueId} />
+                    flashing={flashingIds.includes(rescueId)}
+                    rescueId={rescueId}
+                    onFlashEnd={handleClearFlash} />
                 )
               })
           }
