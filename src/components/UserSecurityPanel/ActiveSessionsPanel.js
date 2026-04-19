@@ -1,11 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { UAParser } from 'ua-parser-js'
 
 import ConfirmActionButton from '~/components/ConfirmActionButton'
 import ApiErrorBox from '~/components/MessageBox/ApiErrorBox'
 import { listSessions, revokeSession, revokeAllSessions } from '~/store/actions/sessions'
+import { selectClients } from '~/store/selectors/clients'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 import friendlyApiError from '~/util/friendlyApiError'
 import getResponseError from '~/util/getResponseError'
@@ -73,6 +74,7 @@ function describeDevice (userAgent) {
 
 function ActiveSessionsPanel () {
   const dispatch = useDispatch()
+  const clients = useSelector(selectClients)
   const [sessions, setSessions] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -179,6 +181,8 @@ sessions.map((session) => {
     userAgent, ipAddress, lastAccess, createdAt, authMethod,
   } = session.attributes
   const isCurrent = session.meta?.current
+  const clientId = session.relationships?.client?.data?.id
+  const clientName = clientId ? clients[clientId]?.attributes?.name : null
   const device = describeDevice(userAgent)
   const isRevoking = revokingIds.has(session.id)
   return (
@@ -187,6 +191,7 @@ sessions.map((session) => {
       <div className={styles.sessionInfo}>
         <div className={styles.sessionLabel}>
           {device.label}
+          {clientName && (<span className={styles.clientBadge}>{clientName}</span>)}
           {isCurrent && (<span className={styles.currentBadge}>{'This device'}</span>)}
         </div>
         <div className={styles.sessionMeta}>
