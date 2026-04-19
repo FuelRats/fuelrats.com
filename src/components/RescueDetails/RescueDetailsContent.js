@@ -79,13 +79,16 @@ function RescueDetailsContent (props) {
   const edsmUrl = useMemo(() => {
     return getEdsmSystemUrl(system)
   }, [system])
-  const showSpansh = typeof landmarkDistance === 'number' && landmarkDistance >= 2000
+  const SPANSH_MIN_DISTANCE = 2000
+  const showSpansh = typeof landmarkDistance === 'number' && landmarkDistance >= SPANSH_MIN_DISTANCE
   const handleSpanshClick = useCallback(async () => {
     const url = await submitSpanshRoute(system)
     if (url) {
       window.open(url, '_blank', 'noreferrer')
     }
   }, [system])
+
+  const jumpCallPattern = /(?:(\d{1,3})[jJ]\s*#\d{1,3}|#\d{1,3}\s*(\d{1,3})[jJ])/u
 
   const parsedQuotes = useMemo(() => {
     return quotes.map((quote, originalIndex) => {
@@ -98,8 +101,10 @@ function RescueDetailsContent (props) {
         quoteSender,
         quoteMessage,
         isEvent: quoteSender === 'MechaSqueak[BOT]',
+        isJumpCall: jumpCallPattern.test(quote.message),
       }
     })
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- jumpCallPattern is stable
   }, [quotes])
 
   const quoteGroups = useMemo(() => {
@@ -245,10 +250,12 @@ showSpansh && (
     className={styles.systemLink}
     href="#"
     title="Plot route on Spansh"
-    onClick={(event) => {
-      event.preventDefault()
-      handleSpanshClick()
-    }}>
+    onClick={
+      (event) => {
+        event.preventDefault()
+        handleSpanshClick()
+      }
+    }>
     {'Spansh'}
     <FontAwesomeIcon className={styles.systemLinkIcon} icon="up-right-from-square" />
   </a>
@@ -354,7 +361,7 @@ rescueLanguage.flag && (
                               ? (<td className={styles.infoTitle}>{'Quotes'}</td>)
                               : (<td />)
                           }
-                          <td className={clsx(styles.infoValue, styles.infoGroup, styles.quote, { [styles.event]: item.isEvent })}>
+                          <td className={clsx(styles.infoValue, styles.infoGroup, styles.quote, { [styles.event]: item.isEvent, [styles.jumpCall]: item.isJumpCall })}>
                             <span className={styles.quoteIndex}>
                               {item.originalIndex}
                             </span>

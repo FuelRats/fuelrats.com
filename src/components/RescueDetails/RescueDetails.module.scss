@@ -417,6 +417,18 @@
   }
 }
 
+.infoValue.infoGroup.quote.jumpCall {
+  border-left: 3px solid $yellow;
+
+  background-color: rgba($yellow, 0.08);
+
+  .quoteMessage {
+    color: $yellow;
+
+    font-weight: 600;
+  }
+}
+
 .infoValue.infoGroup.quote.eventCollapse {
   padding: 0;
 
