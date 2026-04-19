@@ -1,6 +1,10 @@
 const clients = {
   create: 'clients/create',
+  delete: 'clients/delete',
+  regenerateSecret: 'clients/regenerateSecret',
+  revokeTokens: 'clients/revokeTokens',
   search: 'clients/search',
+  update: 'clients/update',
 }
 
 const decals = {

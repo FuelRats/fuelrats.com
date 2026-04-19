@@ -1,0 +1,240 @@
+@import '../../scss/colors';
+
+.developerTab {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 2rem;
+}
+
+.content {
+  padding: 1rem;
+}
+
+.table {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  th {
+    padding: 0.5rem 1rem;
+
+    border-bottom: 2px solid $grey-dark;
+
+    color: $grey;
+
+    font-size: 0.85rem;
+    text-align: left;
+    text-transform: uppercase;
+  }
+
+  td {
+    padding: 0.5rem 1rem;
+
+    border-bottom: 1px solid $light-grey;
+
+    vertical-align: middle;
+  }
+}
+
+.idCell {
+  color: $grey;
+
+  font-size: 0.8em;
+
+  cursor: pointer;
+
+  code {
+    word-break: break-all;
+  }
+}
+
+.actionsCell {
+  white-space: nowrap;
+
+  > * {
+    display: inline-block;
+
+    margin-left: 0.25rem;
+  }
+}
+
+.firstPartyIcon {
+  color: $green;
+}
+
+.editInput {
+  width: 100%;
+  padding: 0.35rem 0.5rem;
+
+  border: 1px solid $grey-dark;
+  border-radius: 3px;
+
+  font-size: 0.9em;
+}
+
+.createForm {
+  padding: 0;
+}
+
+.modalForm {
+  display: flex;
+
+  flex-direction: column;
+  gap: 1rem;
+
+  padding: 0 2rem;
+}
+
+.modalField {
+  display: flex;
+
+  flex-direction: column;
+  gap: 0.3rem;
+
+  span {
+    color: $grey;
+
+    font-size: 0.85em;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  input[type='text'],
+  input[type='url'] {
+    padding: 0.5rem 0.75rem;
+
+    border: none;
+    border-bottom: 0.3rem solid $red;
+
+    color: $white;
+    background-color: $black-lightened;
+
+    font-size: 1em;
+
+    &:valid {
+      border-color: $green;
+    }
+  }
+}
+
+.checkboxRow {
+  padding: 0.25rem 0;
+}
+
+.checkboxLabel {
+  display: inline-flex;
+
+  align-items: center;
+  gap: 0.5rem;
+
+  color: $white;
+
+  font-size: 1em;
+
+  cursor: pointer;
+}
+
+.resultPanel {
+  padding: 0 2rem;
+}
+
+.resultField {
+  margin-bottom: 1rem;
+}
+
+.resultLabel {
+  display: block;
+
+  margin-bottom: 0.3rem;
+
+  color: $grey;
+
+  font-size: 0.85em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.resultValue {
+  display: block;
+
+  padding: 0.6rem 0.8rem;
+
+  border: 1px solid $grey-dark;
+  border-radius: 4px;
+
+  color: $white;
+  background-color: $black;
+
+  font-family: monospace;
+
+  cursor: pointer;
+
+  &:hover {
+    border-color: $grey;
+  }
+
+  code {
+    word-break: break-all;
+  }
+}
+
+.secretWarning {
+  color: $yellow;
+
+  font-weight: 600;
+}
+
+.newSecretBanner {
+  display: flex;
+
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+
+  padding: 0.5rem;
+
+  border: 1px solid $yellow;
+  border-radius: 4px;
+
+  background-color: rgba($yellow, 0.08);
+
+  font-size: 0.9em;
+}
+
+.secretWarningIcon {
+  color: $yellow;
+}
+
+.secretCode {
+  padding: 0.2rem 0.5rem;
+
+  border-radius: 3px;
+
+  background-color: rgba(0, 0, 0, 0.15);
+
+  word-break: break-all;
+}
+
+.secretNote {
+  color: $grey;
+
+  font-style: italic;
+}
+
+.empty {
+  padding: 1rem;
+
+  color: $grey;
+
+  text-align: center;
+}
+
+.error {
+  margin: 0.25rem 0 0;
+
+  color: $red;
+
+  font-size: 0.85em;
+}
