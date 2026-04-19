@@ -371,6 +371,25 @@
     text-align: right;
   }
 
+  .quoteAvatarSlot {
+    display: inline-block;
+
+    min-width: 20px;
+    min-height: 20px;
+    margin-right: 0.4rem;
+
+    vertical-align: middle;
+  }
+
+  .quoteAvatar {
+    width: 20px;
+    height: 20px;
+
+    border-radius: 50%;
+
+    vertical-align: middle;
+  }
+
   .quoteAuthorVia,
   .quoteAuthor,
   .quoteTime {

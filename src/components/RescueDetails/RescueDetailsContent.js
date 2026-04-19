@@ -19,6 +19,7 @@ import makePaperworkRoute from '~/util/router/makePaperworkRoute'
 import { getEdsmSystemUrl, submitSpanshRoute } from '~/util/system/externalLinks'
 
 import CarrierIcon from '../CarrierIcon'
+import QuoteAvatar from './QuoteAvatar'
 import CopyToClipboard from '../CopyToClipboard'
 import ElapsedTimer from '../ElapsedTimer'
 import PlatformBadge from '../PlatformBadge'
@@ -367,9 +368,12 @@ rescueLanguage.flag && (
                             </span>
                             {
 !item.isEvent && (
-  <span className={styles.quoteAuthor}>
-    {`<${item.quoteSender}>`}
-  </span>
+  <>
+    <QuoteAvatar nick={item.quoteSender} />
+    <span className={styles.quoteAuthor}>
+      {`<${item.quoteSender}>`}
+    </span>
+  </>
 )
 }
 
