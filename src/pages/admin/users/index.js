@@ -15,6 +15,7 @@ import RatTagsInput from '~/components/RatTagsInput'
 import SearchFilterPanel from '~/components/SearchFilterPanel'
 import TagsInput from '~/components/TagsInput'
 import UserAvatar from '~/components/UserAvatar'
+import { SuspendModal, ResetPasswordModal, EditRatsModal, EditNicksModal } from '~/components/UserSearch/UserAdminModals'
 import {
   USER_SORT_OPTIONS,
   initialUserFilters,
@@ -42,7 +43,6 @@ import getRatTag from '~/util/getRatTag'
 import getResponseError from '~/util/getResponseError'
 
 import styles from './AdminUsers.module.scss'
-import { SuspendModal, ResetPasswordModal, EditRatsModal, EditNicksModal } from './UserAdminModals'
 
 
 

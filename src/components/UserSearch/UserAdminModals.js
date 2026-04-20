@@ -12,7 +12,7 @@ import { selectRatsByUserId, selectNicknamesByUserId } from '~/store/selectors'
 import getRatTag from '~/util/getRatTag'
 import getResponseError from '~/util/getResponseError'
 
-import styles from './AdminUsers.module.scss'
+import styles from '../../pages/admin/users/AdminUsers.module.scss'
 
 
 const PERMANENT_SUSPENSION_DATE = '3000-01-01T00:00:00Z'
