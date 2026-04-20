@@ -178,6 +178,27 @@ function UserSecurityPanel () {
 
   return (
     <div>
+      <div className={styles.accountActions}>
+        <button
+          type="button"
+          onClick={
+() => {
+  return setShowChangeEmail(true)
+}
+}>
+          {'Change E-Mail'}
+        </button>
+        <button
+          type="button"
+          onClick={
+() => {
+  return setShowChangePassword(true)
+}
+}>
+          {'Change Password'}
+        </button>
+      </div>
+
       <div className="panel">
         <header>{'Passkeys'}</header>
         <div className={styles.content}>
@@ -377,8 +398,6 @@ function UserSecurityPanel () {
 
       <PushSubscriptionsPanel />
 
-      <ActiveSessionsPanel />
-
       <div className="panel">
         <header>{'IRC Certificate'}</header>
         <div className={styles.content}>
@@ -395,26 +414,7 @@ function UserSecurityPanel () {
         </div>
       </div>
 
-      <div className={styles.accountActions}>
-        <button
-          type="button"
-          onClick={
-() => {
-  return setShowChangeEmail(true)
-}
-}>
-          {'Change E-Mail'}
-        </button>
-        <button
-          type="button"
-          onClick={
-() => {
-  return setShowChangePassword(true)
-}
-}>
-          {'Change Password'}
-        </button>
-      </div>
+      <ActiveSessionsPanel />
 
       <ChangeEmailModal
         isOpen={showChangeEmail}
