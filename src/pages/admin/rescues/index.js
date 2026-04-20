@@ -23,6 +23,7 @@ import {
 } from '~/components/RescueSearch/rescueFilterConfig'
 import SearchFilterPanel from '~/components/SearchFilterPanel'
 import useDebouncedCallback from '~/hooks/useDebouncedCallback'
+import useUrlFilters from '~/hooks/useUrlFilters'
 import { deleteRescue, getRescues } from '~/store/actions/rescues'
 import {
   selectPageViewDataById, selectPageViewMetaById,
@@ -126,9 +127,18 @@ function AdminRescues () {
   const [filterRat, setFilterRat] = useState(null)
   const [filterFirstLimpet, setFilterFirstLimpet] = useState(null)
 
+  const { updateUrl, hasUrlFilters } = useUrlFilters(filters, setFilter, initialRescueFilters, '/admin/rescues')
+
+  useEffect(() => {
+    if (hasUrlFilters) {
+      setShowFilters(true)
+    }
+  }, [hasUrlFilters])
+
   const applyFilters = useDebouncedCallback((nextFilters) => {
     setDebouncedFilters(nextFilters)
-  }, [], SEARCH_DEBOUNCE_MS)
+    updateUrl(nextFilters, page)
+  }, [updateUrl, page], SEARCH_DEBOUNCE_MS)
 
   useEffect(() => {
     applyFilters(filters)
@@ -250,8 +260,18 @@ function AdminRescues () {
   }
 
   const handleGenerateRoute = useCallback(({ page: nextPage }) => {
-    return nextPage > 1 ? `/admin/rescues?rpage=${nextPage}` : '/admin/rescues'
-  }, [])
+    const params = new URLSearchParams()
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value && value !== initialRescueFilters[key]) {
+        params.set(key, value)
+      }
+    })
+    if (nextPage > 1) {
+      params.set('rpage', nextPage)
+    }
+    const queryString = params.toString()
+    return queryString ? `/admin/rescues?${queryString}` : '/admin/rescues'
+  }, [filters])
 
   return (
     <div className="page-content">
@@ -357,12 +377,14 @@ function AdminRescues () {
                       <Link
                         className={clsx('compact', styles.actionButton)}
                         href={makePaperworkRoute({ rescueId: rescue.id, from: 'admin' })}
+                        target="_blank"
                         title="View paperwork">
                         <FontAwesomeIcon fixedWidth icon="eye" />
                       </Link>
                       <Link
                         className={clsx('compact', styles.actionButton)}
                         href={makePaperworkRoute({ rescueId: rescue.id, edit: true, from: 'admin' })}
+                        target="_blank"
                         title="Edit paperwork">
                         <FontAwesomeIcon fixedWidth icon="pen" />
                       </Link>

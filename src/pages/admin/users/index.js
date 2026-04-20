@@ -24,6 +24,7 @@ import {
   getUserFilterFields,
 } from '~/components/UserSearch/userFilterConfig'
 import useDebouncedCallback from '~/hooks/useDebouncedCallback'
+import useUrlFilters from '~/hooks/useUrlFilters'
 import {
   getUsers,
   searchNicknames,
@@ -475,9 +476,18 @@ function AdminUsers () {
   const [filterGroups, setFilterGroups] = useState([])
   const allGroups = useSelector(selectGroups)
 
+  const { updateUrl, hasUrlFilters } = useUrlFilters(filters, setFilter, initialUserFilters, '/admin/users')
+
+  useEffect(() => {
+    if (hasUrlFilters) {
+      setShowFilters(true)
+    }
+  }, [hasUrlFilters])
+
   const applyFilters = useDebouncedCallback((nextFilters) => {
     setDebouncedFilters(nextFilters)
-  }, [], SEARCH_DEBOUNCE_MS)
+    updateUrl(nextFilters, page)
+  }, [updateUrl, page], SEARCH_DEBOUNCE_MS)
 
   useEffect(() => {
     applyFilters(filters)
@@ -722,8 +732,18 @@ function AdminUsers () {
   const handleRefresh = fetchUsersData
 
   const handleGenerateRoute = useCallback(({ page: nextPage }) => {
-    return nextPage > 1 ? `/admin/users?rpage=${nextPage}` : '/admin/users'
-  }, [])
+    const params = new URLSearchParams()
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value && value !== initialUserFilters[key]) {
+        params.set(key, value)
+      }
+    })
+    if (nextPage > 1) {
+      params.set('rpage', nextPage)
+    }
+    const queryString = params.toString()
+    return queryString ? `/admin/users?${queryString}` : '/admin/users'
+  }, [filters])
 
   return (
     <div className="page-content">
