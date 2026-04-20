@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
 import { selectRescueById } from '~/store/selectors'
+import { selectDispatchBoard } from '~/store/selectors/dispatch'
 
 import RescueDetailsContent from './RescueDetailsContent'
 
@@ -16,12 +17,14 @@ function RescueDetails (props) {
   const rescue = useSelector((state) => {
     return selectRescueById(state, props)
   })
+  const board = useSelector(selectDispatchBoard)
+  const isOnBoard = rescueId && board?.includes(rescueId)
   const router = useRouter()
   useEffect(() => {
-    if (rescueId && !rescue) {
+    if (rescueId && (!rescue || !isOnBoard)) {
       router.replace('/dispatch')
     }
-  }, [router, rescue, rescueId])
+  }, [router, rescue, rescueId, isOnBoard])
 
   return (
     <section className={className}>
