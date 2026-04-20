@@ -32,6 +32,9 @@ function Header () {
   const userCanAdminRescues = useSelector((state) => {
     return selectCurrentUserHasScope(state, { scope: 'rescues.write' })
   })
+  const userCanAdminUsers = useSelector((state) => {
+    return selectCurrentUserHasScope(state, { scope: 'users.write' })
+  })
 
   const checkboxRef = useRef()
 
@@ -120,6 +123,13 @@ function Header () {
                   userCanAdminRescues && (
                     <NavLink href="/admin/rescues">
                       {'Rescue Admin'}
+                    </NavLink>
+                  )
+                }
+                {
+                  userCanAdminUsers && (
+                    <NavLink href="/admin/users">
+                      {'User Admin'}
                     </NavLink>
                   )
                 }

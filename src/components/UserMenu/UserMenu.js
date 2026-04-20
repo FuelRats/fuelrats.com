@@ -43,6 +43,9 @@ function UserMenu () {
   const userCanAdminRescues = useSelector((state) => {
     return selectCurrentUserHasScope(state, { scope: 'rescues.write' })
   })
+  const userCanAdminUsers = useSelector((state) => {
+    return selectCurrentUserHasScope(state, { scope: 'users.write' })
+  })
   const user = useSelector(withCurrentUserId(selectUserById))
 
   const dispatch = useDispatch()
@@ -112,11 +115,22 @@ function UserMenu () {
             </NavSection>
 
             {
-              userCanAdminRescues && (
+              (userCanAdminRescues || userCanAdminUsers) && (
                 <NavSection className={styles.navSection} title="Admin">
-                  <NavLink href="/admin/rescues">
-                    {'Rescue Search'}
-                  </NavLink>
+                  {
+                    userCanAdminRescues && (
+                      <NavLink href="/admin/rescues">
+                        {'Rescue Search'}
+                      </NavLink>
+                    )
+                  }
+                  {
+                    userCanAdminUsers && (
+                      <NavLink href="/admin/users">
+                        {'User Admin'}
+                      </NavLink>
+                    )
+                  }
                 </NavSection>
               )
             }

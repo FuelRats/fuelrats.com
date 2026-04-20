@@ -82,3 +82,27 @@ export const updateRat = (data) => {
     },
   )
 }
+
+
+export const reassignRat = (ratId, newUserId) => {
+  return frApiRequest(
+    actionTypes.rats.update,
+    {
+      url: `/rats/${ratId}/relationships/user`,
+      method: 'patch',
+      data: { data: { type: 'users', id: newUserId } },
+    },
+  )
+}
+
+
+export const transferRescues = (sourceRatId, targetRatId) => {
+  return frApiRequest(
+    actionTypes.rats.update,
+    {
+      url: `/rats/${sourceRatId}/transfer`,
+      method: 'post',
+      data: createRequestBody('rat-transfers', { targetRatId }),
+    },
+  )
+}

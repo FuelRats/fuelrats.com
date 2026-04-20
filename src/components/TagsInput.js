@@ -86,6 +86,10 @@ function TagsInput (props) {
     renderValue,
     renderLoader = defaultRenderLoader,
     renderNoResults = defaultRenderNoResults,
+    tagClassName,
+    tagStyle,
+    optionClassName,
+    optionStyle,
     ...passthroughProps
   } = props
 
@@ -360,7 +364,7 @@ function TagsInput (props) {
         {
 tags.map((tag, index) => {
   return (
-    <li key={index} className={clsx('tag', { focus: selectedTag === index })}>
+    <li key={index} className={clsx('tag', tagClassName, { focus: selectedTag === index })} style={tagStyle?.(tag)}>
       {renderItem(tag)}
       <button
         type="button"
@@ -414,7 +418,8 @@ options.map((option, index) => {
   return (
     <li
       key={index}
-      className={clsx('option', { focus: selectedOption === index })}
+      className={clsx('option', optionClassName, { focus: selectedOption === index })}
+      style={optionStyle?.(option)}
       onFocus={
 () => {
   return setSelectedOption(index)

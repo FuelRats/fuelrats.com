@@ -124,3 +124,104 @@ export const setDisplayNickname = (nicknameId, displayNick) => {
     },
   )
 }
+
+
+export const getUsers = (params, ...meta) => {
+  return frApiRequest(
+    actionTypes.users.search,
+    {
+      url: '/users',
+      params,
+    },
+    ...meta,
+  )
+}
+
+
+export const searchNicknames = (params, ...meta) => {
+  return frApiRequest(
+    actionTypes.nicknames.read,
+    {
+      url: '/nicknames',
+      params,
+    },
+    ...meta,
+  )
+}
+
+
+export const adminUpdateUser = (data) => {
+  return frApiRequest(
+    actionTypes.users.update,
+    {
+      url: `/users/${data.id}`,
+      method: 'put',
+      data: createRequestBody('users', data),
+    },
+  )
+}
+
+
+export const adminAddGroups = (userId, groupIds) => {
+  const groupRefs = groupIds.map((id) => {
+    return { type: 'groups', id }
+  })
+  return frApiRequest(
+    actionTypes.users.update,
+    {
+      url: `/users/${userId}/relationships/groups`,
+      method: 'post',
+      data: { data: groupRefs },
+    },
+    createsRelationship(
+      defineRelationship(
+        { type: 'users', id: userId },
+        { groups: groupRefs },
+      ),
+    ),
+  )
+}
+
+
+export const adminRemoveGroups = (userId, groupIds) => {
+  const groupRefs = groupIds.map((id) => {
+    return { type: 'groups', id }
+  })
+  return frApiRequest(
+    actionTypes.users.update,
+    {
+      url: `/users/${userId}/relationships/groups`,
+      method: 'delete',
+      data: { data: groupRefs },
+    },
+    deletesRelationship(
+      defineRelationship(
+        { type: 'users', id: userId },
+        { groups: groupRefs },
+      ),
+    ),
+  )
+}
+
+
+export const adminRemoveTotp = (userId) => {
+  return frApiPlainRequest(
+    actionTypes.totp.remove,
+    {
+      url: `/users/${userId}/authenticator`,
+      method: 'delete',
+    },
+  )
+}
+
+
+export const adminResetPassword = (userId, newPassword) => {
+  return frApiPlainRequest(
+    actionTypes.passwords.update,
+    {
+      url: `/users/${userId}/password`,
+      method: 'patch',
+      data: createRequestBody('password-changes', { newPassword }),
+    },
+  )
+}

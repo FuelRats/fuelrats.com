@@ -1,0 +1,770 @@
+@import '../../../scss/colors';
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.table {
+  min-width: 800px;
+  width: 100%;
+
+  border: 1px solid $grey-dark;
+
+  border-collapse: collapse;
+  table-layout: auto;
+
+  thead tr {
+    border-bottom: 2px solid $grey-dark;
+  }
+
+  th {
+    padding: 4px 8px;
+
+    color: $grey;
+
+    font-size: 0.85rem;
+    text-align: left;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 0.5rem 0.8rem;
+
+    border-top: 1px solid $grey-dark;
+
+    line-height: 27px;
+    vertical-align: middle;
+
+    &.avatarCell {
+      padding: 0.5rem 0.25rem 0.5rem 0.8rem;
+    }
+  }
+
+  tbody tr {
+    transition: background-color 0.15s;
+
+    &:hover {
+      background-color: rgba($grey, 0.1);
+    }
+  }
+}
+
+/* stylelint-disable-next-line block-no-empty -- marker class */
+.userRow {
+}
+
+.suspendedRow {
+  background-color: rgba(255, 87, 69, 0.15);
+}
+
+.deactivatedRow {
+  opacity: 0.6;
+}
+
+.empty {
+  padding: 2rem;
+
+  color: $grey;
+
+  text-align: center;
+}
+
+.clickable {
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba($grey, 0.15);
+  }
+}
+
+.avatarCell {
+  img {
+    display: block;
+
+    min-width: 36px;
+    width: 36px;
+    height: 36px;
+
+    border-radius: 50%;
+  }
+}
+
+.email {
+  max-width: 220px;
+
+  font-weight: 600;
+  white-space: nowrap;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.inlineInput {
+  width: 100%;
+  padding: 0.25em 0.4em;
+
+  border: 1px solid $grey;
+
+  color: $white;
+  background-color: $black;
+
+  font-size: inherit;
+  font-weight: inherit;
+
+  &:focus {
+    border-color: $grey-lightened;
+
+    outline: none;
+  }
+}
+
+.inlineSelect {
+  appearance: none;
+
+  width: 100%;
+  padding: 0.25em 1.5em 0.25em 0.4em;
+
+  border: 1px solid $grey;
+
+  color: $white;
+  background-color: $black;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23999" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M6 8l4 4 4-4"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 0.3em center;
+  background-size: 1em;
+
+  font-size: inherit;
+
+  &:focus {
+    border-color: $grey-lightened;
+
+    outline: none;
+  }
+}
+
+.rats {
+  vertical-align: top;
+}
+
+.ratEntry {
+  display: flex;
+
+  align-items: center;
+  gap: 0.3em;
+
+  padding: 0.1em 0;
+
+  line-height: 1.4;
+
+  .smallBadge {
+    flex-shrink: 0;
+
+    > span:last-child {
+      justify-content: center;
+
+      min-width: 3.5em;
+    }
+  }
+}
+
+.smallBadge {
+  font-size: 0.7em;
+
+  transform: scale(0.85);
+  transform-origin: left center;
+}
+
+.nicks {
+  font-size: 0.9rem;
+  vertical-align: top;
+}
+
+.groupsCell {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 0.25rem;
+}
+
+/* stylelint-disable selector-class-pattern -- overriding global TagsInput classes */
+.groupsEditCell {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 0.4rem;
+
+  :global(.tags-input) {
+    :global(.options) {
+      border-color: $grey-dark;
+
+      background-color: $black;
+    }
+
+    :global(.option) {
+      border-bottom: 1px solid $grey-dark;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+}
+
+/* stylelint-enable selector-class-pattern */
+.groupBadge {
+  display: inline-flex;
+
+  align-items: center;
+  gap: 0.35em;
+
+  padding: 0.2em 0.6em;
+
+  border-radius: 4px;
+
+  color: $white;
+  background-color: #555555;
+
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.groupBadgeInline {
+  display: inline-flex;
+
+  align-items: center;
+  gap: 0.3em;
+
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.groupTagItem {
+  padding-left: 0.5em;
+
+  background-color: transparent;
+}
+
+.groupOption {
+  padding: 0.5rem 0.75rem;
+}
+
+.groupTagEditable {
+  display: inline-flex;
+
+  align-items: center;
+  gap: 0.35em;
+
+  padding: 0.2em 0.6em;
+
+  border-radius: 4px;
+
+  color: $white;
+  background-color: #555555;
+
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.groupRemoveButton {
+  padding: 0;
+
+  border: none;
+
+  color: rgba($white, 0.6);
+  background: none;
+
+  font-size: 0.7rem;
+
+  cursor: pointer;
+
+  &:hover {
+    color: $white;
+  }
+}
+
+.statusBadge {
+  padding: 0.3em 0.6em;
+
+  border-radius: 3px;
+
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.statusActive {
+  color: $green;
+  background-color: rgba($green, 0.15);
+}
+
+.statusInactive {
+  color: $yellow;
+  background-color: rgba($yellow, 0.15);
+}
+
+.statusLegacy {
+  color: $blue;
+  background-color: rgba($blue, 0.15);
+}
+
+.statusDeactivated {
+  color: $grey;
+  background-color: rgba($grey, 0.15);
+}
+
+.suspendedBadge {
+  padding: 0.2em 0.5em;
+
+  border-radius: 3px;
+
+  color: $red;
+  background-color: rgba($red, 0.15);
+
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+
+  cursor: pointer;
+}
+
+/* stylelint-disable-next-line block-no-empty -- marker class */
+.notSuspended {
+}
+
+.date {
+  color: $grey-lightened;
+
+  white-space: nowrap;
+}
+
+.idCell {
+  cursor: pointer;
+
+  &:hover code {
+    color: $white;
+  }
+
+  code {
+    color: $white;
+  }
+}
+
+.actionsCell {
+  white-space: nowrap;
+  text-align: right;
+
+  > * {
+    margin-left: 0.25rem;
+  }
+}
+
+.actionButton {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 0.3em 0.5em;
+
+  border: 1px solid $grey-dark;
+  border-radius: 3px;
+
+  color: $grey-lightened;
+
+  font-size: 0.9rem;
+
+  cursor: pointer;
+
+  &:hover {
+    border-color: $grey;
+
+    color: $white;
+  }
+}
+
+.modalError {
+  margin-bottom: 0.75rem;
+  padding: 0.5rem 0.75rem;
+
+  border: 1px solid $red;
+  border-radius: 3px;
+
+  color: $red;
+  background-color: rgba($red, 0.1);
+
+  font-size: 0.85rem;
+}
+
+.modalField {
+  margin-bottom: 1rem;
+
+  label {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 0.4rem;
+
+    color: $grey;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  /* stylelint-disable selector-class-pattern -- need specificity to override global dialog input color */
+  :global([role='dialog']) :global(.modal-content) & input,
+  input[type='text'],
+  input[type='email'] {
+    padding: 0.5em 0.75em;
+
+    border: 1px solid $grey-dark;
+
+    color: $white;
+    background-color: $black;
+
+    font-size: 1rem;
+    font-weight: normal;
+    text-transform: none;
+
+    &::placeholder {
+      color: $grey;
+    }
+  }
+
+  /* stylelint-enable selector-class-pattern */
+}
+
+/* stylelint-disable selector-class-pattern -- need specificity to override global dialog input color */
+:global([role='dialog']) :global(.modal-content) input.dateInput {
+  padding: 0.5em 0.75em;
+
+  border: 1px solid $grey-dark;
+
+  color: $white;
+  background-color: $black;
+  color-scheme: dark;
+
+  font-size: 1rem;
+}
+
+/* stylelint-enable selector-class-pattern */
+.permCheck {
+  display: flex;
+
+  flex-direction: row;
+  align-items: center;
+  gap: 0.4rem;
+
+  color: $grey-lightened;
+
+  font-size: 0.9rem;
+
+  cursor: pointer;
+}
+
+.relationshipFilters {
+  display: flex;
+
+  gap: 0.75rem;
+
+  @media screen and (max-width: 500px) {
+    flex-direction: column;
+  }
+}
+
+.filterField {
+  display: flex;
+
+  flex-direction: column;
+
+  flex: 1;
+
+  gap: 0.3rem;
+
+  > span {
+    color: $grey;
+
+    font-size: 0.9em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* stylelint-disable selector-class-pattern -- overriding global TagsInput classes */
+  :global(.tags-input) {
+    display: flex;
+
+    width: 100%;
+
+    border: 1px solid $grey-dark;
+
+    background-color: $black;
+
+    &:global(.focus) {
+      border-color: $grey;
+
+      box-shadow: none;
+    }
+
+    input[type='search'] {
+      color: $white;
+      background-color: transparent;
+
+      font-size: 0.9em;
+
+      &::placeholder {
+        color: $grey;
+      }
+    }
+
+    :global(.tag) {
+      color: $white;
+      background-color: $grey-dark;
+    }
+
+    :global(.options),
+    :global(.loader),
+    :global(.no-results) {
+      border-color: $grey-dark;
+
+      color: $white;
+      background-color: $black;
+    }
+
+    :global(.option) {
+      border-bottom: 1px solid $grey-dark;
+
+      color: $white;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &:global(.focus) {
+        background-color: rgba($grey, 0.3);
+      }
+    }
+  }
+
+  /* stylelint-enable selector-class-pattern */
+}
+
+.ratEditRow {
+  padding: 0.75rem 0;
+
+  border-bottom: 1px solid $grey-dark;
+
+  font-size: 0.9rem;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.ratEditError {
+  margin-bottom: 0.5rem;
+
+  color: $red;
+
+  font-size: 0.85rem;
+}
+
+.ratEditFields {
+  display: flex;
+
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ratEditBadge {
+  font-size: 0.75em;
+}
+
+/* stylelint-disable selector-class-pattern -- need specificity to override global dialog input color */
+:global([role='dialog']) :global(.modal-content) .ratEditInput {
+  padding: 0.35em 0.5em;
+
+  border: 1px solid $grey-dark;
+
+  color: $white;
+  background-color: $black;
+
+  font-size: inherit;
+
+  &::placeholder {
+    color: $grey;
+  }
+}
+
+:global([role='dialog']) :global(.modal-content) .ratEditSelect {
+  appearance: none;
+
+  padding: 0.35em 1.5em 0.35em 0.5em;
+
+  border: 1px solid $grey-dark;
+
+  color: $white;
+  background-color: $black;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23999" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M6 8l4 4 4-4"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 0.3em center;
+  background-size: 1em;
+
+  font-size: inherit;
+}
+
+/* stylelint-enable selector-class-pattern */
+.ratEditActions {
+  display: flex;
+
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+
+  margin-top: 0.4rem;
+}
+
+.ratReassign,
+.ratTransfer {
+  display: flex;
+
+  align-items: center;
+  gap: 0.3rem;
+
+  .ratEditInput {
+    width: 16rem;
+  }
+
+  /* stylelint-disable selector-class-pattern -- overriding global TagsInput classes */
+  :global(.tags-input) {
+    display: flex;
+
+    flex: 1;
+
+    border: 1px solid $grey-dark;
+
+    background-color: $black;
+
+    &:global(.focus) {
+      border-color: $grey;
+
+      box-shadow: none;
+    }
+
+    input[type='search'] {
+      color: $white;
+      background-color: transparent;
+
+      font-size: inherit;
+
+      &::placeholder {
+        color: $grey;
+      }
+    }
+
+    :global(.tag) {
+      color: $white;
+      background-color: $grey-dark;
+    }
+
+    :global(.options),
+    :global(.loader),
+    :global(.no-results) {
+      border-color: $grey-dark;
+
+      color: $white;
+      background-color: $black;
+    }
+
+    :global(.option) {
+      border-bottom: 1px solid $grey-dark;
+
+      color: $white;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &:global(.focus) {
+        background-color: rgba($grey, 0.3);
+      }
+    }
+  }
+
+  /* stylelint-enable selector-class-pattern */
+}
+
+.nickEditRow {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0.5rem 0;
+
+  border-bottom: 1px solid $grey-dark;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.nickName {
+  display: flex;
+
+  align-items: center;
+  gap: 0.5rem;
+
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.primaryBadge {
+  padding: 0.15em 0.4em;
+
+  border-radius: 3px;
+
+  color: $white;
+  background-color: $green;
+
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.nickActions {
+  display: flex;
+
+  gap: 0.3rem;
+}
+
+.addNickRow {
+  display: flex;
+
+  gap: 0.4rem;
+
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+
+  border-top: 1px solid $grey-dark;
+}
+
+.footer {
+  padding: 0.5rem 1rem;
+
+  border: 1px solid $grey-dark;
+  border-top: none;
+
+  color: $grey;
+
+  font-size: 0.85rem;
+  text-align: right;
+}
