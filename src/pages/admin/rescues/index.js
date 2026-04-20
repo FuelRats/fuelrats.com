@@ -301,7 +301,7 @@ function AdminRescues () {
               )
             }
             {
-              rescues?.map((rescue) => {
+              rescues?.filter(Boolean).map((rescue) => {
                 const {
                   client, system, platform, expansion, outcome, codeRed, status, createdAt,
                 } = rescue.attributes
