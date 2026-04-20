@@ -1,0 +1,72 @@
+@import '../scss/colors';
+
+.header {
+  color: $yellow;
+}
+
+.content {
+  padding: 0.75rem 1rem;
+}
+
+.description {
+  margin: 0 0 0.75rem;
+
+  color: $grey-lightened;
+
+  font-size: 0.9rem;
+}
+
+.rescueList {
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.rescueItem {
+  border-bottom: 1px solid $grey-dark;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.rescueLink {
+  display: flex;
+
+  align-items: center;
+  gap: 0.5rem;
+
+  padding: 0.5rem 0.25rem;
+
+  color: $white;
+
+  font-size: 0.9rem;
+  text-decoration: none;
+
+  &:hover {
+    background-color: rgba($grey, 0.1);
+  }
+}
+
+.client {
+  font-weight: 600;
+}
+
+.system {
+  color: $grey-lightened;
+}
+
+.date {
+  margin-left: auto;
+
+  color: $grey;
+
+  font-size: 0.85rem;
+}
+
+.arrow {
+  color: $grey;
+
+  font-size: 0.8rem;
+}
