@@ -1,22 +1,14 @@
-import { HttpStatus } from '@fuelrats/web-util/http'
-import axios from 'axios'
 import Link from 'next/link'
 
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 
+import pkgFile from '../../package.json'
 
 
+const { version: appVersion } = pkgFile
 
 
-
-function Version ({ version }) {
-  const {
-    branch,
-    versions,
-    builtAt,
-    buildUrl,
-    commit,
-  } = version.attributes
+function Version () {
   return (
     <div className="page-content">
       <div>
@@ -27,47 +19,37 @@ function Version ({ version }) {
       <div className="page-content text-mono">
         <span>
           {'App Version: '}
-          <a href={`https://github.com/FuelRats/fuelrats.com/releases/tag/${versions.app}`} rel="noopener noreferrer" target="_blank">
-            {versions.app}
+          <a href={`https://github.com/FuelRats/fuelrats.com/releases/tag/v${appVersion}`} rel="noopener noreferrer" target="_blank">
+            {`v${appVersion}`}
           </a>
         </span>
         <span>
           {'Node Version: '}
-          <a href={`https://github.com/nodejs/node/releases/tag/${versions.node}`} rel="noopener noreferrer" target="_blank">
-            {versions.node}
+          <a href={`https://github.com/nodejs/node/releases/tag/${$$BUILD.nodeVersion}`} rel="noopener noreferrer" target="_blank">
+            {$$BUILD.nodeVersion}
           </a>
         </span>
         <span>
           {'Built On: '}
-          <a href={buildUrl} rel="noopener noreferrer" target="_blank">
-            <time dateTime={builtAt}>{formatAsEliteDateTime(builtAt)}</time>
+          <a href={$$BUILD.url} rel="noopener noreferrer" target="_blank">
+            <time dateTime={$$BUILD.date}>{formatAsEliteDateTime($$BUILD.date)}</time>
           </a>
         </span>
         <span>
           {'Branch: '}
-          <a href={`https://github.com/FuelRats/fuelrats.com/tree/${branch}`} rel="noopener noreferrer" target="_blank">
-            {branch}
+          <a href={`https://github.com/FuelRats/fuelrats.com/tree/${$$BUILD.branch}`} rel="noopener noreferrer" target="_blank">
+            {$$BUILD.branch}
           </a>
         </span>
         <span>
           {'Commit: '}
-          <a href={`https://github.com/FuelRats/fuelrats.com/commit/${commit}`} rel="noopener noreferrer" target="_blank">
-            {commit || 'N/A'}
+          <a href={`https://github.com/FuelRats/fuelrats.com/commit/${$$BUILD.commit}`} rel="noopener noreferrer" target="_blank">
+            {$$BUILD.commit || 'N/A'}
           </a>
         </span>
       </div>
     </div>
   )
-}
-
-Version.getInitialProps = async () => {
-  const response = await axios.get('/api/version')
-
-  return {
-    version: response.status === HttpStatus.OK
-      ? response.data.data
-      : null,
-  }
 }
 
 Version.getPageMeta = () => {
@@ -76,8 +58,6 @@ Version.getPageMeta = () => {
     title: 'Version Information',
   }
 }
-
-
 
 
 export default Version
