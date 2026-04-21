@@ -116,7 +116,7 @@ function DonationForm (props) {
 
 
 
-  const finalAmount = canSubmit && getMoney(getAmount(state.amountPreset, state.amount), state.currency)
+  const finalAmount = canSubmit && state.currency && getMoney(getAmount(state.amountPreset, state.amount), state.currency)
 
   if (clientSecret) {
     return (
