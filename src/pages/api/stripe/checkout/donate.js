@@ -81,13 +81,17 @@ export default jsonApiRoute(
       customer_email: email,
       customer,
       line_items: [{
-        name: 'One-time Donation',
-        description: donationInfo?.description,
-        images: [
-          donationInfo?.image,
-        ],
-        amount,
-        currency,
+        price_data: {
+          currency,
+          unit_amount: amount,
+          product_data: {
+            name: 'One-time Donation',
+            description: donationInfo?.description,
+            images: [
+              donationInfo?.image,
+            ],
+          },
+        },
         quantity: 1,
       }],
       metadata: {
