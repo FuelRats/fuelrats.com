@@ -83,10 +83,12 @@ export const updateAvatar = (data) => {
     const user = selectCurrentUserId(getState())
     const formData = new FormData()
     formData.append('image', data)
+    const UPLOAD_TIMEOUT_MS = 60000
     const request = {
       url: `/users/${user}/image`,
       method: 'post',
       data: formData,
+      timeout: UPLOAD_TIMEOUT_MS,
     }
 
     return dispatch(frApiRequest(actionTypes.users.avatar.update, request))
