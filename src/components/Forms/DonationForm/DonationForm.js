@@ -1,8 +1,12 @@
+import { EmbeddedCheckout, EmbeddedCheckoutProvider } from '@stripe/react-stripe-js'
+import { loadStripe } from '@stripe/stripe-js'
 import clsx from 'clsx'
+import getConfig from 'next/config'
 import PropTypes from 'prop-types'
 import { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+import SwitchFieldset from '~/components/Fieldsets/SwitchFieldset'
 import StripeBadge from '~/components/StripeBadge'
 import useForm from '~/hooks/useForm'
 import { createDonationSession } from '~/store/actions/stripe'
@@ -18,6 +22,8 @@ import DonationErrorBox from './DonationErrorBox'
 
 
 
+const { publicRuntimeConfig } = getConfig() ?? {}
+const stripePromise = loadStripe(publicRuntimeConfig?.stripeApiPk)
 
 
 // Component Constants
@@ -25,6 +31,7 @@ const formData = {
   currency: '',
   amountPreset: 0,
   amount: undefined,
+  recurring: false,
 }
 
 const presetAmounts = {
@@ -33,7 +40,6 @@ const presetAmounts = {
   ten: 1000,
   twenty: 2000,
 }
-
 
 
 
@@ -49,11 +55,13 @@ const preparePayload = async (data, user) => {
     currency,
     amount,
     amountPreset,
+    recurring,
   } = data
 
   const sessionData = {
     currency,
     amount: getAmount(amountPreset, amount),
+    recurring: Boolean(recurring),
     fingerprint,
   }
 
@@ -73,19 +81,20 @@ const preparePayload = async (data, user) => {
 
 
 
-
 function DonationForm (props) {
   const {
     className,
-    stripe,
   } = props
 
   const [errorState, setErrorState] = useState()
+  const [clientSecret, setClientSecret] = useState(null)
   const currentUser = useSelector(withCurrentUserId(selectUserById))
 
   const dispatch = useDispatch()
 
   const onSubmit = useCallback(async (data) => {
+    setErrorState(undefined)
+    setClientSecret(null)
     const sessionData = await preparePayload(data, currentUser)
 
     const response = await dispatch(createDonationSession(sessionData))
@@ -95,20 +104,29 @@ function DonationForm (props) {
       return
     }
 
-    try {
-      await stripe.redirectToCheckout({ sessionId: response.payload.data.id })
-    } catch (redirectError) {
-      setErrorState({
-        detail: redirectError.message,
-      })
+    const secret = response.payload?.data?.attributes?.clientSecret
+    if (secret) {
+      setClientSecret(secret)
+    } else {
+      setErrorState({ detail: 'Failed to create checkout session.' })
     }
-  }, [currentUser, dispatch, stripe])
+  }, [currentUser, dispatch])
 
   const { Form, canSubmit, state } = useForm({ data: formData, onSubmit })
 
 
 
   const finalAmount = canSubmit && getMoney(getAmount(state.amountPreset, state.amount), state.currency)
+
+  if (clientSecret) {
+    return (
+      <EmbeddedCheckoutProvider
+        options={{ clientSecret }}
+        stripe={stripePromise}>
+        <EmbeddedCheckout />
+      </EmbeddedCheckoutProvider>
+    )
+  }
 
   return (
     <>
@@ -140,13 +158,19 @@ function DonationForm (props) {
           )
         }
 
+        <SwitchFieldset
+          id="DonationRecurring"
+          label="Make this a monthly donation"
+          name="recurring" />
+
         <div className="fieldset">
           <button
             className="green"
             disabled={!canSubmit}
             type="submit">
-            {'Donate'}
+            {state.recurring ? 'Donate Monthly' : 'Donate'}
             {Boolean(canSubmit) && ` ${finalAmount}`}
+            {Boolean(canSubmit) && state.recurring && '/mo'}
           </button>
         </div>
 
@@ -158,9 +182,7 @@ function DonationForm (props) {
 
 DonationForm.propTypes = {
   className: PropTypes.string,
-  stripe: PropTypes.object,
 }
-
 
 
 

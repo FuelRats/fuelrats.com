@@ -56,8 +56,6 @@ class FuelRatsWebsite extends Document {
           <link href="/manifest.json" rel="manifest" />
 
           <link href="/favicon.ico" rel="shortcut icon" />
-
-          <script async defer id="stripe-js" nonce={nonce} src="https://js.stripe.com/v3/" />
         </Head>
 
         <body>

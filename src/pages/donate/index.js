@@ -1,11 +1,10 @@
-import { withStripe } from '~/components/AppLayout'
 import DonationForm from '~/components/Forms/DonationForm/DonationForm'
 
 
+const STRIPE_PORTAL_URL = 'https://billing.stripe.com/p/login/4gM00i10D6nr3tt8umcQU00'
 
 
-
-function Donate ({ stripe }) {
+function Donate () {
   return (
     <div className="page-content">
       <div className="intro-text">
@@ -16,7 +15,16 @@ function Donate ({ stripe }) {
         {'Donations are processed via stripe. Any questions may be directed to '}
         <a href="mailto:support@fuelrats.com">{'support@fuelrats.com'}</a>
       </div>
-      <DonationForm stripe={stripe} />
+      <DonationForm />
+      <div className="panel">
+        <header>{'Manage Donations'}</header>
+        <div style={{ padding: '1rem' }}>
+          <p>{'Have an existing monthly donation? Manage your subscription, update payment details, or cancel.'}</p>
+          <a className="button" href={STRIPE_PORTAL_URL} rel="noopener noreferrer" target="_blank">
+            {'Manage Subscription'}
+          </a>
+        </div>
+      </div>
     </div>
   )
 }
@@ -30,6 +38,4 @@ Donate.getPageMeta = () => {
 
 
 
-
-
-export default withStripe(Donate)
+export default Donate

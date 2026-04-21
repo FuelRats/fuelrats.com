@@ -2,6 +2,7 @@
 
 import Stripe from 'stripe'
 
+import { BadRequestAPIError } from '~/util/server/errors'
 import getEnv from '~/util/server/getEnv'
 import acceptMethod from '~/util/server/middleware/acceptMethod'
 import ipFilter from '~/util/server/middleware/ipFilter'
@@ -13,6 +14,9 @@ import trafficController from '~/util/server/middleware/trafficController'
 
 const env = getEnv()
 const stripe = new Stripe(env.stripe.secret)
+
+const SUPPORTED_CURRENCIES = ['usd', 'eur', 'gbp']
+const MIN_AMOUNT = 100
 
 const getDonationItemInfo = (amount) => {
   if (amount >= 3500) {
@@ -68,40 +72,59 @@ export default jsonApiRoute(
       currency,
       email,
       customer,
+      recurring,
     } = body
 
+    if (!Number.isInteger(amount) || amount < MIN_AMOUNT) {
+      throw new BadRequestAPIError({ pointer: '/data/attributes/amount' })
+    }
+
+    if (!currency || !SUPPORTED_CURRENCIES.includes(currency.toLowerCase())) {
+      throw new BadRequestAPIError({ pointer: '/data/attributes/currency' })
+    }
+
+    const isRecurring = Boolean(recurring)
     const donationInfo = getDonationItemInfo(amount)
 
+    const priceData = {
+      currency,
+      unit_amount: amount,
+      product_data: {
+        name: isRecurring ? 'Monthly Donation' : 'One-time Donation',
+        description: donationInfo?.description,
+        images: [
+          donationInfo?.image,
+        ],
+      },
+    }
+
+    if (isRecurring) {
+      priceData.recurring = { interval: 'month' }
+    }
+
     const session = await stripe.checkout.sessions.create({
-      success_url: `${env.appUrl}/donate/success`,
-      cancel_url: `${env.appUrl}/donate/cancel`,
-      submit_type: 'donate',
-      payment_method_types: ['card'],
+      mode: isRecurring ? 'subscription' : 'payment',
+      ui_mode: 'embedded',
+      return_url: `${env.appUrl}/donate/success?session_id={CHECKOUT_SESSION_ID}`,
+      submit_type: isRecurring ? undefined : 'donate',
       allow_promotion_codes: false,
-      customer_email: email,
-      customer,
+      customer_email: customer ? undefined : email,
+      customer: customer || undefined,
       line_items: [{
-        price_data: {
-          currency,
-          unit_amount: amount,
-          product_data: {
-            name: 'One-time Donation',
-            description: donationInfo?.description,
-            images: [
-              donationInfo?.image,
-            ],
-          },
-        },
+        price_data: priceData,
         quantity: 1,
       }],
       metadata: {
-        fr_payment_type: 'donate',
+        fr_payment_type: isRecurring ? 'donate_recurring' : 'donate',
       },
     })
 
     ctx.send({
       id: session.id,
       type: 'stripe-checkout-session',
+      attributes: {
+        clientSecret: session.client_secret,
+      },
     })
   },
 )
