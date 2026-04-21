@@ -1,9 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import {
-  useCallback, useEffect, useMemo, useReducer, useState,
+  useCallback, useEffect, useMemo, useState,
 } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -95,50 +94,26 @@ function FirstLimpetCell ({ rescue }) {
 }
 
 
-function useQueryPage () {
-  const router = useRouter()
-  const [page, setPage] = useState(1)
-
-  useEffect(() => {
-    const handleRouteChange = (url) => {
-      const match = url.match(/[?&]rpage=(\d+)/u)
-      setPage(match ? Math.max(Number(match[1]), 1) : 1)
-    }
-    router.events.on('routeChangeComplete', handleRouteChange)
-    return () => {
-      router.events.off('routeChangeComplete', handleRouteChange)
-    }
-  }, [router.events])
-
-  return page
-}
-
-
 function AdminRescues () {
   const dispatch = useDispatch()
-  const page = useQueryPage()
+
+  const {
+    filters, setFilter, page, hasUrlFilters, syncUrl, handleGenerateRoute,
+  } = useUrlFilters(initialRescueFilters, rescueFilterReducer, '/admin/rescues')
+
   const offset = (page - 1) * PAGE_SIZE
   const [fetchError, setFetchError] = useState(false)
   const [deleteError, setDeleteError] = useState(null)
-  const [filters, setFilter] = useReducer(rescueFilterReducer, initialRescueFilters)
-  const [debouncedFilters, setDebouncedFilters] = useState(initialRescueFilters)
-  const [showFilters, setShowFilters] = useState(false)
+  const [debouncedFilters, setDebouncedFilters] = useState(filters)
+  const [showFilters, setShowFilters] = useState(hasUrlFilters)
 
   const [filterRat, setFilterRat] = useState(null)
   const [filterFirstLimpet, setFilterFirstLimpet] = useState(null)
 
-  const { updateUrl, hasUrlFilters } = useUrlFilters(filters, setFilter, initialRescueFilters, '/admin/rescues')
-
-  useEffect(() => {
-    if (hasUrlFilters) {
-      setShowFilters(true)
-    }
-  }, [hasUrlFilters])
-
   const applyFilters = useDebouncedCallback((nextFilters) => {
     setDebouncedFilters(nextFilters)
-    updateUrl(nextFilters, page)
-  }, [updateUrl, page], SEARCH_DEBOUNCE_MS)
+    syncUrl(nextFilters)
+  }, [syncUrl], SEARCH_DEBOUNCE_MS)
 
   useEffect(() => {
     applyFilters(filters)
@@ -259,19 +234,6 @@ function AdminRescues () {
     totalPages = page + 1
   }
 
-  const handleGenerateRoute = useCallback(({ page: nextPage }) => {
-    const params = new URLSearchParams()
-    Object.entries(filters).forEach(([key, value]) => {
-      if (value && value !== initialRescueFilters[key]) {
-        params.set(key, value)
-      }
-    })
-    if (nextPage > 1) {
-      params.set('rpage', nextPage)
-    }
-    const queryString = params.toString()
-    return queryString ? `/admin/rescues?${queryString}` : '/admin/rescues'
-  }, [filters])
 
   return (
     <div className="page-content">

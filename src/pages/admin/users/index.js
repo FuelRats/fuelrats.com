@@ -1,8 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
-import { useRouter } from 'next/router'
 import {
-  useCallback, useEffect, useMemo, useReducer, useRef, useState,
+  useCallback, useEffect, useMemo, useRef, useState,
 } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -441,33 +440,17 @@ function UserNicksCell ({ userId, onEdit }) {
 }
 
 
-function useQueryPage () {
-  const router = useRouter()
-  const [page, setPage] = useState(1)
-
-  useEffect(() => {
-    const handleRouteChange = (url) => {
-      const match = url.match(/[?&]rpage=(\d+)/u)
-      setPage(match ? Math.max(Number(match[1]), 1) : 1)
-    }
-    router.events.on('routeChangeComplete', handleRouteChange)
-    return () => {
-      router.events.off('routeChangeComplete', handleRouteChange)
-    }
-  }, [router.events])
-
-  return page
-}
-
-
 function AdminUsers () {
   const dispatch = useDispatch()
-  const page = useQueryPage()
+
+  const {
+    filters, setFilter, page, hasUrlFilters, syncUrl, handleGenerateRoute,
+  } = useUrlFilters(initialUserFilters, userFilterReducer, '/admin/users')
+
   const offset = (page - 1) * PAGE_SIZE
   const [fetchError, setFetchError] = useState(false)
-  const [filters, setFilter] = useReducer(userFilterReducer, initialUserFilters)
-  const [debouncedFilters, setDebouncedFilters] = useState(initialUserFilters)
-  const [showFilters, setShowFilters] = useState(false)
+  const [debouncedFilters, setDebouncedFilters] = useState(filters)
+  const [showFilters, setShowFilters] = useState(hasUrlFilters)
   const [suspendUserId, setSuspendUserId] = useState(null)
   const [resetPasswordUserId, setResetPasswordUserId] = useState(null)
   const [editRatsUserId, setEditRatsUserId] = useState(null)
@@ -476,18 +459,10 @@ function AdminUsers () {
   const [filterGroups, setFilterGroups] = useState([])
   const allGroups = useSelector(selectGroups)
 
-  const { updateUrl, hasUrlFilters } = useUrlFilters(filters, setFilter, initialUserFilters, '/admin/users')
-
-  useEffect(() => {
-    if (hasUrlFilters) {
-      setShowFilters(true)
-    }
-  }, [hasUrlFilters])
-
   const applyFilters = useDebouncedCallback((nextFilters) => {
     setDebouncedFilters(nextFilters)
-    updateUrl(nextFilters, page)
-  }, [updateUrl, page], SEARCH_DEBOUNCE_MS)
+    syncUrl(nextFilters)
+  }, [syncUrl], SEARCH_DEBOUNCE_MS)
 
   useEffect(() => {
     applyFilters(filters)
@@ -731,19 +706,6 @@ function AdminUsers () {
 
   const handleRefresh = fetchUsersData
 
-  const handleGenerateRoute = useCallback(({ page: nextPage }) => {
-    const params = new URLSearchParams()
-    Object.entries(filters).forEach(([key, value]) => {
-      if (value && value !== initialUserFilters[key]) {
-        params.set(key, value)
-      }
-    })
-    if (nextPage > 1) {
-      params.set('rpage', nextPage)
-    }
-    const queryString = params.toString()
-    return queryString ? `/admin/users?${queryString}` : '/admin/users'
-  }, [filters])
 
   return (
     <div className="page-content">
