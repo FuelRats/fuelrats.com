@@ -7,7 +7,7 @@ import createRequestBody from '~/util/jsonapi/createRequestBody'
 import actionTypes from '../actionTypes'
 import { frApiRequest, frApiPlainRequest } from './services'
 import { deletesResource, deletesRelationship, createsRelationship, RESOURCE } from '../reducers/frAPIResources'
-import { withCurrentUserId, selectUserById, selectCurrentUserId } from '../selectors'
+import { withCurrentUserId, selectUserById, selectCurrentUserId, selectSessionToken } from '../selectors'
 
 export const getNickname = (nickId) => {
   return frApiRequest(
@@ -79,19 +79,31 @@ export const updateUser = (data, password) => {
 }
 
 export const updateAvatar = (data) => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const user = selectCurrentUserId(getState())
+    const token = selectSessionToken(getState())
     const formData = new FormData()
     formData.append('image', data)
-    const UPLOAD_TIMEOUT_MS = 60000
-    const request = {
-      url: `/users/${user}/image`,
-      method: 'post',
-      data: formData,
-      timeout: UPLOAD_TIMEOUT_MS,
+
+    const response = await fetch(`/api/fr/avatar-upload?userId=${user}`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${token}` },
+      body: formData,
+    })
+
+    if (response.ok) {
+      await dispatch(getUserProfile())
     }
 
-    return dispatch(frApiRequest(actionTypes.users.avatar.update, request))
+    const result = await response.json().catch(() => {
+      return null
+    })
+
+    return dispatch({
+      type: actionTypes.users.avatar.update,
+      payload: result,
+      error: !response.ok,
+    })
   }
 }
 
