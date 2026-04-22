@@ -296,6 +296,54 @@
   /* stylelint-enable selector-class-pattern */
 }
 
+.expandedRowActive {
+  background-color: rgba($grey, 0.15);
+}
+
+.expandedRow {
+  > td {
+    padding: 0;
+
+    border-top: none;
+
+    background-color: rgba($grey, 0.08);
+  }
+}
+
+.expandedContent {
+  padding: 1rem 2rem;
+
+  /* stylelint-disable-next-line selector-class-pattern -- global paperwork class */
+  :global(.rescue-tags) {
+    margin: 0 0 1rem;
+  }
+
+  .info {
+    margin: 0;
+  }
+
+  .panel {
+    margin: 1rem 0 0;
+  }
+}
+
+.expandedBody {
+  display: flex;
+
+  flex-wrap: wrap;
+  gap: 1.5rem;
+
+  .info {
+    flex: 1 1 auto;
+  }
+
+  .panel {
+    flex: 1 1 auto;
+
+    margin: 0;
+  }
+}
+
 .footer {
   padding: 0.5rem 1rem;
 

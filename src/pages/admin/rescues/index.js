@@ -27,6 +27,7 @@ import { deleteRescue, getRescues } from '~/store/actions/rescues'
 import {
   selectPageViewDataById, selectPageViewMetaById,
   selectRatsByRescueId, selectRatById,
+  selectDisplayRatByUserId,
 } from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 import getRatTag from '~/util/getRatTag'
@@ -94,6 +95,187 @@ function FirstLimpetCell ({ rescue }) {
 }
 
 
+function ExpandedRescueRow ({ rescue }) {
+  const rats = useSelector((state) => {
+    return selectRatsByRescueId(state, { rescueId: rescue.id })
+  })
+  const firstLimpetId = rescue.relationships?.firstLimpet?.data?.id
+  const dispatcherRats = useSelector((state) => {
+    return (rescue.relationships?.dispatchers?.data ?? []).map(({ id }) => {
+      return selectDisplayRatByUserId(state, { userId: id })
+    }).filter(Boolean)
+  })
+  const lastEditRat = useSelector((state) => {
+    const lastEditId = rescue.relationships?.lastEditUser?.data?.id
+    return lastEditId ? selectDisplayRatByUserId(state, { userId: lastEditId }) : null
+  })
+
+  const {
+    client, clientNick, clientLanguage, system, platform, expansion,
+    outcome, status, codeRed, carrier, notes, quotes,
+    createdAt, updatedAt, commandIdentifier, title,
+  } = rescue.attributes
+
+  let displayStatus = status
+  let displayOutcome = outcome
+  if (status === 'inactive') {
+    displayStatus = 'open'
+    displayOutcome = 'inactive'
+  } else if (status === 'open') {
+    displayOutcome = 'active'
+  }
+
+  return (
+    <tr className={styles.expandedRow}>
+      <td colSpan={10}>
+        <div className={clsx('page paperwork', styles.expandedContent)}>
+          <div className="rescue-tags">
+            <div className="tag status-group">
+              <span className={clsx('status', displayStatus)}>{displayStatus}</span>
+              <span className="outcome">{displayOutcome || 'unfiled'}</span>
+            </div>
+            <div className={clsx('tag platform', platform ?? 'none')}>
+              {platform || 'No Platform'}
+            </div>
+            {
+              platform === 'pc' && expansion && (
+                <div className="tag">{expansion}</div>
+              )
+            }
+            {codeRed && (<div className="tag code-red">{'CR'}</div>)}
+            {carrier && (<div className="tag">{'Carrier'}</div>)}
+            {
+              typeof commandIdentifier === 'number' && (
+                <div className="tag">{`#${commandIdentifier}`}</div>
+              )
+            }
+          </div>
+
+          <div className={styles.expandedBody}>
+            <div className="info">
+              <span className="label">{'Client'}</span>
+              <span className="cmdr-name">{client}</span>
+              <span className="label">{'System'}</span>
+              <span className="system">{system || 'Unknown'}</span>
+              {
+                clientNick && (
+                  <>
+                    <span className="label">{'IRC Nick'}</span>
+                    <span>{clientNick}</span>
+                  </>
+                )
+              }
+              {
+                clientLanguage && (
+                  <>
+                    <span className="label">{'Language'}</span>
+                    <span>{clientLanguage}</span>
+                  </>
+                )
+              }
+              {
+                title && (
+                  <>
+                    <span className="label">{'Title'}</span>
+                    <span>{title}</span>
+                  </>
+                )
+              }
+              <span className="label">{'Created'}</span>
+              <span>{formatAsEliteDateTime(createdAt)}</span>
+              <span className="label">{'Updated'}</span>
+              <span>{formatAsEliteDateTime(updatedAt)}</span>
+              {
+                dispatcherRats.length > 0 && (
+                  <>
+                    <span className="label">{'Dispatcher'}</span>
+                    <span>
+                      {
+                        dispatcherRats.map((rat) => {
+                          return <RatName key={rat.id} rat={rat} size={18} />
+                        })
+                      }
+                    </span>
+                  </>
+                )
+              }
+              {
+                lastEditRat && (
+                  <>
+                    <span className="label">{'Last Edit'}</span>
+                    <span><RatName rat={lastEditRat} size={18} /></span>
+                  </>
+                )
+              }
+              <span className="label">{'ID'}</span>
+              <CopyToClipboard text={rescue.id}>
+                <code>{rescue.id}</code>
+              </CopyToClipboard>
+            </div>
+
+            <div className="panel rats">
+              <header>{'Rats'}</header>
+              <div className="panel-content">
+                <ul>
+                  {
+                    rats?.map((rat) => {
+                      return (
+                        <li key={rat.id}>
+                          <RatName rat={rat} size={20}>
+                            {rat.id === firstLimpetId && (<span className="badge first-limpet">{'1st'}</span>)}
+                          </RatName>
+                        </li>
+                      )
+                    })
+                  }
+                </ul>
+                {(!rats || rats.length === 0) && <span>{'No rats assigned'}</span>}
+              </div>
+            </div>
+          </div>
+
+          {
+            quotes?.length > 0 && (
+              <div className="panel quotes">
+                <header>{`Quotes (${quotes.length})`}</header>
+                <div className="panel-content">
+                  <ol>
+                    {
+                      quotes.map((quote) => {
+                        return (
+                          <li key={quote.createdAt}>
+                            <div className="times">
+                              <div className="created">{formatAsEliteDateTime(quote.createdAt)}</div>
+                            </div>
+                            <span className="message">{quote.message}</span>
+                            <div className="authors">
+                              <div className="author">{quote.author}</div>
+                            </div>
+                          </li>
+                        )
+                      })
+                    }
+                  </ol>
+                </div>
+              </div>
+            )
+          }
+
+          {
+            notes && outcome !== 'purge' && (
+              <div className="panel notes">
+                <header>{'Notes'}</header>
+                <div className="panel-content">{notes}</div>
+              </div>
+            )
+          }
+        </div>
+      </td>
+    </tr>
+  )
+}
+
+
 function AdminRescues () {
   const dispatch = useDispatch()
 
@@ -104,6 +286,7 @@ function AdminRescues () {
   const offset = (page - 1) * PAGE_SIZE
   const [fetchError, setFetchError] = useState(false)
   const [deleteError, setDeleteError] = useState(null)
+  const [expandedId, setExpandedId] = useState(null)
   const [debouncedFilters, setDebouncedFilters] = useState(filters)
   const [showFilters, setShowFilters] = useState(hasUrlFilters)
 
@@ -290,11 +473,12 @@ function AdminRescues () {
                 const outcomeInfo = outcomeLabels[outcome]
                 const statusInfo = statusLabels[status]
                 const shortId = rescue.id.slice(0, SHORT_ID_LENGTH)
+                const isExpanded = expandedId === rescue.id
 
-                return (
+                return [
                   <tr
                     key={rescue.id}
-                    className={clsx({ [styles.codeRed]: codeRed })}>
+                    className={clsx({ [styles.codeRed]: codeRed, [styles.expandedRowActive]: isExpanded })}>
                     <td className={styles.cmdr}>
                       <small>{'CMDR '}</small>
                       {client}
@@ -364,9 +548,23 @@ function AdminRescues () {
                         onConfirmText="">
                         <FontAwesomeIcon fixedWidth icon="trash" />
                       </ConfirmActionButton>
+                      <button
+                        className={clsx('compact', styles.actionButton)}
+                        title={isExpanded ? 'Collapse' : 'Details'}
+                        type="button"
+                        onClick={
+                          () => {
+                            return setExpandedId(isExpanded ? null : rescue.id)
+                          }
+                        }>
+                        <FontAwesomeIcon fixedWidth icon={isExpanded ? 'chevron-up' : 'chevron-down'} />
+                      </button>
                     </td>
-                  </tr>
-                )
+                  </tr>,
+                  isExpanded && (
+                    <ExpandedRescueRow key={`${rescue.id}-detail`} rescue={rescue} />
+                  ),
+                ]
               })
             }
           </tbody>
