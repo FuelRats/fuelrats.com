@@ -232,7 +232,10 @@ function TagsInput (props) {
 
   const handleFocus = useCallback((event) => {
     event.target.parentNode.classList.add('focus')
-  }, [])
+    if (!event.target.value && onSearch) {
+      runSearch('')
+    }
+  }, [onSearch, runSearch])
 
   const handleBlur = useCallback((event) => {
     setNewFocus(true)
