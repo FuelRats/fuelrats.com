@@ -237,6 +237,28 @@ export const adminRemoveTotp = (userId) => {
 }
 
 
+export const adminDeleteUser = (userId) => {
+  return frApiRequest(
+    actionTypes.users.delete,
+    {
+      url: `/users/${userId}`,
+      method: 'delete',
+    },
+  )
+}
+
+
+export const adminAnonymiseUser = (userId) => {
+  return frApiPlainRequest(
+    actionTypes.users.update,
+    {
+      url: `/users/${userId}/gdpr-anonymise`,
+      method: 'post',
+    },
+  )
+}
+
+
 export const adminResetPassword = (userId, newPassword) => {
   return frApiPlainRequest(
     actionTypes.passwords.update,

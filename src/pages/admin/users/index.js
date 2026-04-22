@@ -33,6 +33,8 @@ import {
   adminRemoveGroups,
   adminRemoveTotp,
   adminResetPassword,
+  adminDeleteUser,
+  adminAnonymiseUser,
 } from '~/store/actions/user'
 import {
   selectPageViewDataById, selectPageViewMetaById,
@@ -646,6 +648,26 @@ function AdminUsers () {
     return true
   }, [dispatch, fetchUsersData])
 
+  const handleDeleteUser = useCallback(async (userId) => {
+    const response = await dispatch(adminDeleteUser(userId))
+    const err = getResponseError(response)
+    if (err) {
+      return false
+    }
+    fetchUsersData()
+    return true
+  }, [dispatch, fetchUsersData])
+
+  const handleAnonymiseUser = useCallback(async (userId) => {
+    const response = await dispatch(adminAnonymiseUser(userId))
+    const err = getResponseError(response)
+    if (err) {
+      return false
+    }
+    fetchUsersData()
+    return true
+  }, [dispatch, fetchUsersData])
+
   const handleAddGroup = useCallback(async (userId, groupIds) => {
     await dispatch(adminAddGroups(userId, groupIds))
     fetchUsersData()
@@ -853,6 +875,34 @@ function AdminUsers () {
                         }>
                         <FontAwesomeIcon fixedWidth icon="key" />
                       </button>
+                      <ConfirmActionButton
+                        className={clsx('compact', styles.actionButton)}
+                        confirmButtonText="Anonymise"
+                        confirmSubText="GDPR anonymise this user? This cannot be undone."
+                        denyButtonText="Cancel"
+                        name={user.id}
+                        onConfirm={
+                          () => {
+                            return handleAnonymiseUser(user.id)
+                          }
+                        }
+                        onConfirmText="">
+                        <FontAwesomeIcon fixedWidth icon="user-secret" title="GDPR Anonymise" />
+                      </ConfirmActionButton>
+                      <ConfirmActionButton
+                        className={clsx('compact', styles.actionButton)}
+                        confirmButtonText="Delete"
+                        confirmSubText="Permanently delete this user? This cannot be undone."
+                        denyButtonText="Cancel"
+                        name={user.id}
+                        onConfirm={
+                          () => {
+                            return handleDeleteUser(user.id)
+                          }
+                        }
+                        onConfirmText="">
+                        <FontAwesomeIcon fixedWidth icon="trash" title="Delete user" />
+                      </ConfirmActionButton>
                     </td>
                   </tr>
                 )
