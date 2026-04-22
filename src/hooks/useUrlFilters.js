@@ -1,36 +1,43 @@
 import { useRouter } from 'next/router'
 import {
-  useCallback, useMemo, useReducer, useRef, useState,
+  useCallback, useEffect, useMemo, useReducer, useRef, useState,
 } from 'react'
 
 
 export default function useUrlFilters (initialFilters, filterReducer, basePath) {
   const router = useRouter()
+  const lastSyncedRef = useRef(JSON.stringify(initialFilters))
+  const [filters, setFilter] = useReducer(filterReducer, initialFilters)
+  const [hasUrlFilters, setHasUrlFilters] = useState(false)
 
-  // Initialize filters from URL query on first render
-  const [initializedFilters] = useState(() => {
-    const restored = { ...initialFilters }
-    if (typeof window !== 'undefined') {
-      const urlParams = new URLSearchParams(window.location.search)
-      urlParams.forEach((value, key) => {
-        if (Object.hasOwn(initialFilters, key)) {
-          restored[key] = value
-        }
-      })
+  // Restore filters from URL after mount (avoids hydration mismatch)
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return
     }
-    return restored
-  })
-
-  const lastSyncedRef = useRef(JSON.stringify(initializedFilters))
-  const [filters, setFilter] = useReducer(filterReducer, initializedFilters)
+    const urlParams = new URLSearchParams(window.location.search)
+    let found = false
+    urlParams.forEach((value, key) => {
+      if (Object.hasOwn(initialFilters, key) && value !== initialFilters[key]) {
+        setFilter({ field: key, value })
+        if (key !== 'sort') {
+          found = true
+        }
+      }
+    })
+    if (found) {
+      setHasUrlFilters(true)
+    }
+    lastSyncedRef.current = JSON.stringify(filters)
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps -- mount only
 
   const page = Number(router.query.rpage) || 1
 
-  const hasUrlFilters = useMemo(() => {
-    return Object.entries(filters).some(([key, value]) => {
+  const computedHasUrlFilters = useMemo(() => {
+    return hasUrlFilters || Object.entries(filters).some(([key, value]) => {
       return key !== 'sort' && value && value !== initialFilters[key]
     })
-  }, [filters, initialFilters])
+  }, [filters, initialFilters, hasUrlFilters])
 
   const buildUrl = useCallback((currentFilters, nextPage) => {
     const params = new URLSearchParams()
@@ -46,7 +53,7 @@ export default function useUrlFilters (initialFilters, filterReducer, basePath) 
     return queryString ? `${basePath}?${queryString}` : basePath
   }, [initialFilters, basePath])
 
-  // Only updates URL when filters actually change — skips if same as last sync
+  // Only updates URL when filters actually change
   const syncUrl = useCallback((currentFilters) => {
     const serialized = JSON.stringify(currentFilters)
     if (serialized === lastSyncedRef.current) {
@@ -54,8 +61,8 @@ export default function useUrlFilters (initialFilters, filterReducer, basePath) 
     }
     lastSyncedRef.current = serialized
     const newPath = buildUrl(currentFilters, 1)
-    router.replace(newPath, undefined, { shallow: true })
-  }, [buildUrl, router])
+    window.history.replaceState(null, '', newPath)
+  }, [buildUrl])
 
   const handleGenerateRoute = useCallback(({ page: nextPage }) => {
     return buildUrl(filters, nextPage)
@@ -65,7 +72,7 @@ export default function useUrlFilters (initialFilters, filterReducer, basePath) 
     filters,
     setFilter,
     page,
-    hasUrlFilters,
+    hasUrlFilters: computedHasUrlFilters,
     syncUrl,
     handleGenerateRoute,
   }
