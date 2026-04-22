@@ -1,6 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 
+import SystemTagsInput from '~/components/SystemTagsInput'
+
 import styles from './SearchFilterPanel.module.scss'
 
 
@@ -100,6 +102,34 @@ function DateRangeField ({ field, filters, onFilterChange }) {
 }
 
 
+function SystemSearchField ({ field, filters, onFilterChange }) {
+  const handleChange = (value) => {
+    if (value?.length) {
+      onFilterChange(field.field, typeof value[0] === 'string' ? value[0] : value[0].value)
+    } else {
+      onFilterChange(field.field, '')
+    }
+  }
+
+  const currentValue = filters[field.field]
+    ? [{ value: filters[field.field] }]
+    : []
+
+  return (
+    <label className={styles.filterField}>
+      <span>{field.label}</span>
+      <SystemTagsInput
+        data-allownew
+        data-single
+        aria-label={field.label}
+        placeholder={field.placeholder}
+        value={currentValue}
+        onChange={handleChange} />
+    </label>
+  )
+}
+
+
 function renderField (field, filters, onFilterChange) {
   switch (field.type) {
     case 'chips':
@@ -108,6 +138,8 @@ function renderField (field, filters, onFilterChange) {
       return <ToggleField key={field.field} field={field} filters={filters} onFilterChange={onFilterChange} />
     case 'text':
       return <TextField key={field.field} field={field} filters={filters} onFilterChange={onFilterChange} />
+    case 'systemSearch':
+      return <SystemSearchField key={field.field} field={field} filters={filters} onFilterChange={onFilterChange} />
     case 'dateRange':
       return <DateRangeField key={field.fieldAfter} field={field} filters={filters} onFilterChange={onFilterChange} />
     case 'custom':

@@ -95,6 +95,64 @@
       color: $grey;
     }
   }
+
+  /* stylelint-disable selector-class-pattern -- overriding global TagsInput classes */
+  :global(.tags-input) {
+    display: flex;
+
+    width: 100%;
+
+    border: 1px solid $grey-dark;
+
+    background-color: $black;
+
+    &:global(.focus) {
+      border-color: $grey;
+
+      box-shadow: none;
+    }
+
+    input[type='search'] {
+      color: $white;
+      background-color: transparent;
+
+      font-size: 0.9em;
+
+      &::placeholder {
+        color: $grey;
+      }
+    }
+
+    :global(.tag) {
+      color: $white;
+      background-color: $grey-dark;
+    }
+
+    :global(.options),
+    :global(.loader),
+    :global(.no-results) {
+      border-color: $grey-dark;
+
+      color: $white;
+      background-color: $black;
+    }
+
+    :global(.option) {
+      border-bottom: 1px solid $grey-dark;
+
+      color: $white;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &:global(.focus) {
+        background-color: rgba($grey, 0.3);
+      }
+    }
+  }
+
+  /* stylelint-enable selector-class-pattern */
 }
 
 .filterRow {

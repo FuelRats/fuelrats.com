@@ -143,7 +143,7 @@ function getRescueFilterFields (options = {}) {
   const { userRats, crChipClassName, admin } = options
 
   const fields = [
-    { type: 'text', field: 'system', label: 'System', placeholder: 'e.g. SOL' },
+    { type: 'systemSearch', field: 'system', label: 'System', placeholder: 'e.g. SOL' },
     { type: 'chips', field: 'platform', label: 'Platform', options: PLATFORM_OPTIONS },
     { type: 'chips', field: 'expansion', label: 'Game Mode', options: EXPANSION_OPTIONS },
     { type: 'chips', field: 'status', label: 'Status', options: admin ? ADMIN_STATUS_OPTIONS : STATUS_OPTIONS },
