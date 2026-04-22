@@ -92,15 +92,9 @@ function Header () {
               {'Leaderboard'}
             </NavLink>
           </SubNav>
-          <SubNav id="support" title="Support Us">
-            <NavLink href="/store">
-              {'Merch Store'}
-            </NavLink>
-
-            <NavLink href="/donate">
-              {'Donations'}
-            </NavLink>
-          </SubNav>
+          <NavLink href="/donate">
+            {'Donate'}
+          </NavLink>
 
           {
             loggedIn && (
