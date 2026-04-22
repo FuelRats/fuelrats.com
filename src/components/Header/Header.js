@@ -119,6 +119,22 @@ function Header () {
                     </NavLink>
                   )
                 }
+                <NavLink external href="https://confluence.fuelrats.com/display/FRKB/Fuel+Rats+Knowledge+Base">
+                  {'Knowledge Base'}
+                </NavLink>
+                <NavLink external href="https://t.fuelr.at/help">
+                  {'Support Desk'}
+                </NavLink>
+                <NavLink external href="https://fuelrats.cloud/">
+                  {'FuelRats Cloud'}
+                </NavLink>
+              </SubNav>
+            )
+          }
+
+          {
+            (userCanAdminRescues || userCanAdminUsers) && (
+              <SubNav id="admin" title="Admin">
                 {
                   userCanAdminRescues && (
                     <NavLink href="/admin/rescues">
@@ -133,12 +149,6 @@ function Header () {
                     </NavLink>
                   )
                 }
-                <NavLink external href="https://confluence.fuelrats.com/display/FRKB/Fuel+Rats+Knowledge+Base">
-                  {'Knowledge Base'}
-                </NavLink>
-                <NavLink external href="https://t.fuelr.at/help">
-                  {'Support Desk'}
-                </NavLink>
               </SubNav>
             )
           }
