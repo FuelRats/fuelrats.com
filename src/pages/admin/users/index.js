@@ -5,8 +5,8 @@ import {
 } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+import ActionMenu from '~/components/ActionMenu'
 import { authenticated } from '~/components/AppLayout'
-import ConfirmActionButton from '~/components/ConfirmActionButton'
 import CopyToClipboard from '~/components/CopyToClipboard'
 import Pagination from '~/components/Pagination'
 import PlatformBadge from '~/components/PlatformBadge'
@@ -846,63 +846,62 @@ function AdminUsers () {
                       <code title={user.id}>{shortId}</code>
                     </CopyToClipboard>
                     <td className={styles.actionsCell}>
-                      {
-                        has2fa && (
-                          <ConfirmActionButton
-                            className={clsx('compact', styles.actionButton)}
-                            confirmButtonText="Remove 2FA"
-                            confirmSubText="Remove this user's 2FA?"
-                            denyButtonText="Cancel"
-                            name={user.id}
-                            onConfirm={
-                              () => {
-                                return handleRemoveTotp(user.id)
-                              }
-                            }
-                            onConfirmText="">
-                            <FontAwesomeIcon fixedWidth icon="lock" title="Remove 2FA" />
-                          </ConfirmActionButton>
-                        )
-                      }
-                      <button
-                        className={clsx('compact', styles.actionButton)}
-                        title="Reset password"
-                        type="button"
-                        onClick={
-                          () => {
-                            return setResetPasswordUserId(user.id)
-                          }
-                        }>
-                        <FontAwesomeIcon fixedWidth icon="key" />
-                      </button>
-                      <ConfirmActionButton
-                        className={clsx('compact', styles.actionButton)}
-                        confirmButtonText="Anonymise"
-                        confirmSubText="GDPR anonymise this user? This cannot be undone."
-                        denyButtonText="Cancel"
-                        name={user.id}
-                        onConfirm={
-                          () => {
-                            return handleAnonymiseUser(user.id)
-                          }
-                        }
-                        onConfirmText="">
-                        <FontAwesomeIcon fixedWidth icon="user-secret" title="GDPR Anonymise" />
-                      </ConfirmActionButton>
-                      <ConfirmActionButton
-                        className={clsx('compact', styles.actionButton)}
-                        confirmButtonText="Delete"
-                        confirmSubText="Permanently delete this user? This cannot be undone."
-                        denyButtonText="Cancel"
-                        name={user.id}
-                        onConfirm={
-                          () => {
-                            return handleDeleteUser(user.id)
-                          }
-                        }
-                        onConfirmText="">
-                        <FontAwesomeIcon fixedWidth icon="trash" title="Delete user" />
-                      </ConfirmActionButton>
+                      <ActionMenu
+                        items={
+                          [
+                            {
+                              key: 'resetPassword',
+                              icon: 'key',
+                              label: 'Reset Password',
+                              onAction: () => {
+                                return setResetPasswordUserId(user.id)
+                              },
+                            },
+                            {
+                              key: 'suspend',
+                              icon: 'circle-xmark',
+                              label: 'Suspend',
+                              onAction: () => {
+                                return setSuspendUserId(user.id)
+                              },
+                            },
+                            ...(has2fa
+                              ? [{
+                                key: 'removeTotp',
+                                icon: 'lock',
+                                label: 'Remove 2FA',
+                                confirm: true,
+                                confirmLabel: 'Confirm Remove 2FA?',
+                                onAction: () => {
+                                  return handleRemoveTotp(user.id)
+                                },
+                              }]
+                              : []),
+                            { key: 'divider1', divider: true },
+                            {
+                              key: 'anonymise',
+                              icon: 'user-secret',
+                              label: 'GDPR Anonymise',
+                              danger: true,
+                              confirm: true,
+                              confirmLabel: 'Confirm Anonymise?',
+                              onAction: () => {
+                                return handleAnonymiseUser(user.id)
+                              },
+                            },
+                            {
+                              key: 'delete',
+                              icon: 'trash',
+                              label: 'Delete User',
+                              danger: true,
+                              confirm: true,
+                              confirmLabel: 'Confirm Delete?',
+                              onAction: () => {
+                                return handleDeleteUser(user.id)
+                              },
+                            },
+                          ]
+                        } />
                     </td>
                   </tr>
                 )

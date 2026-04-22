@@ -1,0 +1,79 @@
+@import '../../scss/colors';
+
+.actionMenu {
+  display: inline-block;
+  position: relative;
+}
+
+.trigger {
+  padding: 0.3em 0.6em;
+
+  border: 1px solid $grey-dark;
+  border-radius: 3px;
+
+  color: $grey-lightened;
+
+  font-size: 0.9rem;
+
+  cursor: pointer;
+
+  &:hover {
+    border-color: $grey;
+
+    color: $white;
+  }
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 10;
+
+  min-width: 180px;
+  margin-top: 0.25rem;
+
+  border: 1px solid $grey-dark;
+  border-radius: 4px;
+
+  background-color: $black;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.item {
+  display: flex;
+
+  align-items: center;
+  gap: 0.5rem;
+
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+
+  border: none;
+
+  color: $white;
+  background: none;
+
+  font-size: 1.1rem;
+  text-align: left;
+
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba($grey, 0.2);
+  }
+}
+
+.danger {
+  color: $red;
+
+  &:hover {
+    background-color: rgba($red, 0.15);
+  }
+}
+
+.divider {
+  margin: 0.25rem 0;
+
+  border-top: 1px solid $grey-dark;
+}
