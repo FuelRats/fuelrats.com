@@ -145,6 +145,25 @@ function SearchFilterPanel ({
               return onFilterChange(searchField.field, event.target.value)
             }
           } />
+        {
+          sortOptions && (
+            <label className={styles.sortField}>
+              <select
+                value={filters[sortField]}
+                onChange={
+                  (event) => {
+                    return onFilterChange(sortField, event.target.value)
+                  }
+                }>
+                {
+                  sortOptions.map((opt) => {
+                    return <option key={opt.value} value={opt.value}>{opt.label}</option>
+                  })
+                }
+              </select>
+            </label>
+          )
+        }
         <button
           aria-label="Advanced filters"
           className={styles.filterToggle}
@@ -168,27 +187,6 @@ function SearchFilterPanel ({
                 footerFields?.map((field) => {
                   return renderField(field, filters, onFilterChange)
                 })
-              }
-
-              {
-                sortOptions && (
-                  <label className={styles.sortField}>
-                    <span>{'Sort'}</span>
-                    <select
-                      value={filters[sortField]}
-                      onChange={
-                        (event) => {
-                          return onFilterChange(sortField, event.target.value)
-                        }
-                      }>
-                      {
-                        sortOptions.map((opt) => {
-                          return <option key={opt.value} value={opt.value}>{opt.label}</option>
-                        })
-                      }
-                    </select>
-                  </label>
-                )
               }
 
               <button
