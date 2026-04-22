@@ -53,6 +53,13 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-args: |
+            CI=true
+            GITHUB_REF=${{ github.ref }}
+            GITHUB_SHA=${{ github.sha }}
+            GITHUB_RUN_ID=${{ github.run_id }}
+            GITHUB_SERVER_URL=${{ github.server_url }}
+            GITHUB_REPOSITORY=${{ github.repository }}
 
       - name: Setup Bun
         if: github.ref == 'refs/heads/develop'

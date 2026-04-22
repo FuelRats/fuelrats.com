@@ -32,6 +32,20 @@ CMD ["bun", "run", "next", "dev"]
 # Compiles the production bundle into ./dist and runs as an unprivileged user.
 FROM base AS prod
 ENV NODE_ENV=production
+
+ARG GITHUB_REF
+ARG GITHUB_SHA
+ARG GITHUB_RUN_ID
+ARG GITHUB_SERVER_URL
+ARG GITHUB_REPOSITORY
+ARG CI
+ENV GITHUB_REF=${GITHUB_REF}
+ENV GITHUB_SHA=${GITHUB_SHA}
+ENV GITHUB_RUN_ID=${GITHUB_RUN_ID}
+ENV GITHUB_SERVER_URL=${GITHUB_SERVER_URL}
+ENV GITHUB_REPOSITORY=${GITHUB_REPOSITORY}
+ENV CI=${CI}
+
 RUN bun run build
 RUN groupadd --system --gid 1001 nodejs \
     && useradd --system --uid 1001 --gid nodejs nextjs \
