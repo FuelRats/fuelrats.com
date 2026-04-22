@@ -25,6 +25,7 @@ import {
 import useDebouncedCallback from '~/hooks/useDebouncedCallback'
 import useUrlFilters from '~/hooks/useUrlFilters'
 import {
+  getGroups,
   getUsers,
   searchNicknames,
   adminUpdateUser,
@@ -323,7 +324,9 @@ function EditableGroupsCell ({ userId, onAdd, onRemove }) {
     }
     const lower = query.toLowerCase()
     return allGroupsList.filter((group) => {
-      return group.attributes.name.toLowerCase().includes(lower)
+      const name = group.attributes.name?.toLowerCase() ?? ''
+      const displayName = group.attributes.displayName?.toLowerCase() ?? ''
+      return name.includes(lower) || displayName.includes(lower)
     })
   }, [allGroups])
 
@@ -459,6 +462,10 @@ function AdminUsers () {
   const [filterGroups, setFilterGroups] = useState([])
   const allGroups = useSelector(selectGroups)
 
+  useEffect(() => {
+    dispatch(getGroups())
+  }, [dispatch])
+
   const applyFilters = useDebouncedCallback((nextFilters) => {
     setDebouncedFilters(nextFilters)
     syncUrl(nextFilters)
@@ -513,7 +520,9 @@ function AdminUsers () {
     }
     const lower = query.toLowerCase()
     return allGroupsList.filter((group) => {
-      return group.attributes.name.toLowerCase().includes(lower)
+      const name = group.attributes.name?.toLowerCase() ?? ''
+      const displayName = group.attributes.displayName?.toLowerCase() ?? ''
+      return name.includes(lower) || displayName.includes(lower)
     })
   }, [allGroups])
 
