@@ -39,7 +39,7 @@ export const getDispatchBoard = () => {
       filter: {
         status: { ne: 'closed' },
       },
-      include: 'dispatchers',
+      include: 'rats,dispatchers',
       sort: '-createdAt',
     },
     { [DISPATCH_VIEW]: true },
