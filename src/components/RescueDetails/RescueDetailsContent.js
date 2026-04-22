@@ -339,20 +339,6 @@ rescueLanguage.flag && (
             )
           }
           {
-            dispatcherRats.length > 0 && (
-              <tr>
-                <td className={styles.infoTitle}>{'Dispatcher'}</td>
-                <td className={clsx(styles.infoValue, styles.infoGroup)}>
-                  {
-                    dispatcherRats.map((rat) => {
-                      return <RatName key={rat.id} rat={rat} size={22} />
-                    })
-                  }
-                </td>
-              </tr>
-            )
-          }
-          {
             Boolean(quotes.length) && (
               <>
                 <tr className={styles.separator}>
@@ -457,6 +443,26 @@ isExpanded
                     )
                   })
                 }
+              </>
+            )
+          }
+          {
+            dispatcherRats.length > 0 && (
+              <>
+                <tr className={styles.separator}>
+                  <td />
+                  <td className={styles.infoValue} />
+                </tr>
+                <tr>
+                  <td className={styles.infoTitle}>{'Dispatcher'}</td>
+                  <td className={clsx(styles.infoValue, styles.infoGroup)}>
+                    {
+                      dispatcherRats.map((rat) => {
+                        return <RatName key={rat.id} rat={rat} size={22} />
+                      })
+                    }
+                  </td>
+                </tr>
               </>
             )
           }
