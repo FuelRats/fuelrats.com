@@ -8,7 +8,7 @@ function ifDefined (value, fallback) {
 }
 
 
-function getFieldValues (rescue, rats, changes) {
+function getFieldValues (rescue, rats, changes, dispatcherRats) {
   const getValue = (key) => {
     return ifDefined(changes[key], rescue.attributes[key])
   }
@@ -17,6 +17,7 @@ function getFieldValues (rescue, rats, changes) {
     carrier: getValue('carrier'),
     client: getValue('client'),
     codeRed: getValue('codeRed'),
+    dispatchers: ifDefined(changes.dispatcherRats, dispatcherRats),
     expansion: getValue('expansion'),
     // Get FirstLimpetId object first, then try to get the firstLimpet from
     // the assigned rat array, then from the new rat array.
@@ -98,7 +99,7 @@ export function validate (rescue, userCanEdit, changes, values) {
  * @param {boolean} userCanEdit - Whether the current user can edit this rescue.
  * @returns {object} Changes state, field values, validity, and handlers.
  */
-export default function usePaperworkChanges (rescue, rats, userCanEdit) {
+export default function usePaperworkChanges (rescue, rats, userCanEdit, dispatcherRats = []) {
   const [changes, setChangesState] = useState({})
 
   const hasUnsavedChanges = Object.values(changes).some((value) => {
@@ -193,6 +194,16 @@ export default function usePaperworkChanges (rescue, rats, userCanEdit) {
     setChanges({ rats: value })
   }, [setChanges])
 
+  const handleDispatchersChange = useCallback((selectedRats) => {
+    // Store both: rats for TagsInput display, users for submission
+    const users = selectedRats.map((rat) => {
+      return rat.relationships?.user?.data
+    }).filter(Boolean)
+    setChangesState((prev) => {
+      return { ...prev, dispatchers: users, dispatcherRats: selectedRats }
+    })
+  }, [])
+
   const handleRatsRemove = useCallback((rat) => {
     const firstLimpetId = changes.firstLimpetId?.[0]?.id ?? rescue.relationships?.firstLimpet?.data?.id ?? null
     if (rat?.id === firstLimpetId) {
@@ -201,8 +212,8 @@ export default function usePaperworkChanges (rescue, rats, userCanEdit) {
   }, [changes, rescue, handleFirstLimpetChange])
 
   const fieldValues = useMemo(() => {
-    return getFieldValues(rescue, rats, changes)
-  }, [rescue, rats, changes])
+    return getFieldValues(rescue, rats, changes, dispatcherRats)
+  }, [rescue, rats, changes, dispatcherRats])
 
   const validity = useMemo(() => {
     return validate(rescue, userCanEdit, changes, fieldValues)
@@ -222,6 +233,7 @@ export default function usePaperworkChanges (rescue, rats, userCanEdit) {
       handleSystemChange,
       handleRatsChange,
       handleRatsRemove,
+      handleDispatchersChange,
     },
   }
 }

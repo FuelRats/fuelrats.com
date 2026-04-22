@@ -16,6 +16,7 @@ import {
   selectRatsByRescueId,
   selectRescueById,
   selectCurrentUserCanEditRescue,
+  selectDisplayRatByUserId,
 } from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 import friendlyApiError from '~/util/friendlyApiError'
@@ -87,6 +88,15 @@ function Paperwork ({ query }) {
   const userCanEdit = useSelector((state) => {
     return selectCurrentUserCanEditRescue(state, query)
   })
+  const lastEditRat = useSelector((state) => {
+    const lastEditId = rescue?.relationships?.lastEditUser?.data?.id
+    return lastEditId ? selectDisplayRatByUserId(state, { userId: lastEditId }) : null
+  })
+  const initialDispatcherRats = useSelector((state) => {
+    return (rescue?.relationships?.dispatchers?.data ?? []).map(({ id }) => {
+      return selectDisplayRatByUserId(state, { userId: id })
+    }).filter(Boolean)
+  })
 
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState(null)
@@ -97,7 +107,7 @@ function Paperwork ({ query }) {
     validity,
     hasUnsavedChanges,
     handlers,
-  } = usePaperworkChanges(rescue, rats, userCanEdit)
+  } = usePaperworkChanges(rescue, rats, userCanEdit, initialDispatcherRats)
 
   useUnsavedChangesGuard(hasUnsavedChanges, { isSubmitting: submitting })
 
@@ -105,7 +115,9 @@ function Paperwork ({ query }) {
     event.preventDefault()
     setSubmitting(true)
 
-    const { rats: ratsChange, firstLimpetId, ...remainingChanges } = changes
+    const {
+      rats: ratsChange, firstLimpetId, dispatchers: dispatchersChange, dispatcherRats: _dr, ...remainingChanges
+    } = changes
 
     if (!rescue.attributes.outcome && !remainingChanges.outcome) {
       return
@@ -137,6 +149,14 @@ function Paperwork ({ query }) {
       updateData.relationships.rats = {
         data: ratsChange.map(({ type, id }) => {
           return { type, id }
+        }),
+      }
+    }
+
+    if (Array.isArray(dispatchersChange)) {
+      updateData.relationships.dispatchers = {
+        data: dispatchersChange.map(({ id }) => {
+          return { type: 'users', id }
         }),
       }
     }
@@ -228,6 +248,7 @@ function Paperwork ({ query }) {
           errors={errors}
           fieldValues={fieldValues}
           handlers={handlers}
+          lastEditRat={lastEditRat}
           submitting={submitting} />
 
         <menu type="toolbar">

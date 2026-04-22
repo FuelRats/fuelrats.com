@@ -9,12 +9,14 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { authenticated } from '~/components/AppLayout'
 import RatName from '~/components/RatName'
+import UserAvatar from '~/components/UserAvatar'
 import { deleteRescue, getRescue } from '~/store/actions/rescues'
 import {
   selectRatsByRescueId,
   selectRescueById,
   selectCurrentUserCanEditRescue,
   selectCurrentUserHasScope,
+  selectDisplayRatByUserId,
 } from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 import { expansionLongNameMap } from '~/util/expansion'
@@ -55,6 +57,48 @@ function renderQuote (quote) {
         }
       </div>
     </li>
+  )
+}
+
+
+function DispatchersList ({ rescue }) {
+  const dispatcherIds = rescue.relationships?.dispatchers?.data ?? []
+  const dispatcherRats = useSelector((state) => {
+    return dispatcherIds.map(({ id }) => {
+      return selectDisplayRatByUserId(state, { userId: id })
+    }).filter(Boolean)
+  })
+  if (dispatcherRats.length === 0) {
+    return <span className="content">{'-'}</span>
+  }
+  return (
+    <span className="content">
+      {
+        dispatcherRats.map((rat) => {
+          return (
+            <span key={rat.id} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3em', marginRight: '0.75em' }}>
+              <RatName rat={rat} size={18} />
+            </span>
+          )
+        })
+      }
+    </span>
+  )
+}
+
+function LastEditedBy ({ rescue }) {
+  const lastEditId = rescue.relationships?.lastEditUser?.data?.id
+  const lastEditRat = useSelector((state) => {
+    return lastEditId ? selectDisplayRatByUserId(state, { userId: lastEditId }) : null
+  })
+  if (!lastEditRat) {
+    return <span className="content">{'-'}</span>
+  }
+  return (
+    <span className="content" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3em' }}>
+      <UserAvatar size={18} userId={lastEditId} />
+      {lastEditRat.attributes?.name}
+    </span>
   )
 }
 
@@ -324,6 +368,10 @@ function Paperwork ({ query }) {
         <span className="irc-nick content">{rescue.attributes.clientNick}</span>
         <span className="label">{'Language'}</span>
         <span className="language content">{rescue.attributes.clientLanguage}</span>
+        <span className="label">{'Dispatcher'}</span>
+        <DispatchersList rescue={rescue} />
+        <span className="label">{'Last Edited By'}</span>
+        <LastEditedBy rescue={rescue} />
       </div>
 
       <div className="panel rats">

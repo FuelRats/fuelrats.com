@@ -1,5 +1,6 @@
 import FirstLimpetInput from '~/components/FirstLimpetInput'
 import RadioInput from '~/components/RadioInput'
+import RatName from '~/components/RatName'
 import RatTagsInput from '~/components/RatTagsInput'
 import SystemTagsInput from '~/components/SystemTagsInput'
 import platformRadioOptions from '~/data/platformRadioOptions'
@@ -45,11 +46,14 @@ function FieldError ({ message }) {
 
 
 function PaperworkFormFields (props) {
-  const { submitting, fieldValues, errors, handlers } = props
+  const {
+    submitting, fieldValues, errors, handlers, lastEditRat,
+  } = props
   const {
     carrier,
     client,
     codeRed,
+    dispatchers,
     expansion,
     firstLimpetId,
     notes,
@@ -203,6 +207,27 @@ function PaperworkFormFields (props) {
           onChange={handlers.handleNotesChange} />
         <FieldError message={errors.notes} />
       </fieldset>
+
+      <fieldset>
+        <label htmlFor="dispatchers">{'Dispatcher(s)'}</label>
+        <RatTagsInput
+          aria-label="Dispatchers"
+          disabled={submitting}
+          name="dispatchers"
+          placeholder="Search by rat name..."
+          value={dispatchers}
+          valueProp={getRatTag}
+          onChange={handlers.handleDispatchersChange} />
+      </fieldset>
+
+      {
+        lastEditRat && (
+          <fieldset>
+            <label>{'Last Edited By'}</label>
+            <RatName rat={lastEditRat} size={20} />
+          </fieldset>
+        )
+      }
     </>
   )
 }

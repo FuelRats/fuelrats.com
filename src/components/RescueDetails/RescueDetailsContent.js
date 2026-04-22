@@ -11,7 +11,7 @@ import {
   useRescuePlatform, useRescueLanguage, useRescuePermit, useRescueLandmark, useRescueHasScoopableStar,
   useRescueMainStarDescription,
 } from '~/hooks/rescueHooks'
-import { createSelectRenderedRatList } from '~/store/selectors'
+import { createSelectRenderedRatList, selectDisplayRatByUserId } from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 import formatQuoteTime from '~/util/date/formatQuoteTime'
 import { expansionLongNameMap } from '~/util/expansion'
@@ -71,6 +71,11 @@ function RescueDetailsContent (props) {
   const rescuePlatform = useRescuePlatform(rescue)
   const rescueRats = useSelector((state) => {
     return selectRenderedRatList(state, { rescueId: rescue.id })
+  })
+  const dispatcherRats = useSelector((state) => {
+    return (rescue.relationships?.dispatchers?.data ?? []).map(({ id }) => {
+      return selectDisplayRatByUserId(state, { userId: id })
+    }).filter(Boolean)
   })
   const rescuePermit = useRescuePermit(rescue)
   const rescueLandmark = useRescueLandmark(rescue)
@@ -331,6 +336,20 @@ rescueLanguage.flag && (
                 </tr>
                 {rescueRats}
               </>
+            )
+          }
+          {
+            dispatcherRats.length > 0 && (
+              <tr>
+                <td className={styles.infoTitle}>{'Dispatcher'}</td>
+                <td className={clsx(styles.infoValue, styles.infoGroup)}>
+                  {
+                    dispatcherRats.map((rat) => {
+                      return <RatName key={rat.id} rat={rat} size={22} />
+                    })
+                  }
+                </td>
+              </tr>
             )
           }
           {
