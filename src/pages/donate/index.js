@@ -16,7 +16,7 @@ function Donate () {
         <a href="mailto:support@fuelrats.com">{'support@fuelrats.com'}</a>
       </div>
       <DonationForm />
-      <div className="panel">
+      <div className="panel" style={{ marginTop: '10rem' }}>
         <header>{'Manage Donations'}</header>
         <div style={{ padding: '1rem' }}>
           <p>{'Have an existing monthly donation? Manage your subscription, update payment details, or cancel.'}</p>
