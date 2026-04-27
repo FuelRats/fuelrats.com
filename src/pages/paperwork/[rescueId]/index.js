@@ -404,6 +404,7 @@ Paperwork.getInitialProps = async (ctx) => {
       href: '/paperwork/[rescueId]',
       as: `/paperwork/${idLower}`,
     })
+    return {}
   }
 
   const state = store.getState()
