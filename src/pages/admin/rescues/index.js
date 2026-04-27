@@ -261,14 +261,10 @@ function ExpandedRescueRow ({ rescue }) {
             )
           }
 
-          {
-            notes && outcome !== 'purge' && (
-              <div className="panel notes">
-                <header>{'Notes'}</header>
-                <div className="panel-content">{notes}</div>
-              </div>
-            )
-          }
+          <div className="panel notes">
+            <header>{'Notes'}</header>
+            <div className="panel-content">{notes || 'No notes'}</div>
+          </div>
         </div>
       </td>
     </tr>
