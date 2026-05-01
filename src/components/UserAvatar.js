@@ -42,16 +42,26 @@ function UserAvatar (props) {
     return userId ? Boolean(selectUserById(state, { userId })) : false
   })
 
-  // For users in the store, the selector knows whether they have a
-  // custom avatar and returns the right URL (API image or adorable).
+  // Check if the store has avatar relationship data for this user.
+  // A user may be in the store from a partial API response (e.g.
+  // included via a rat relationship) without avatar data.
+  const hasAvatarData = useSelector((state) => {
+    if (!userId || !userInStore) {
+      return false
+    }
+    const user = selectUserById(state, { userId })
+    return user?.relationships?.avatar !== undefined
+  })
+
+  // When avatar data is in the store, use the selector URL.
+  // Otherwise try the API image endpoint directly.
   const storeUrl = useSelector((state) => {
-    return (userId && userInStore)
+    return (userId && hasAvatarData)
       ? selectAvatarUrlByUserId(state, { userId, size: fetchSize })
       : undefined
   })
 
-  // For users NOT in the store, try the API image endpoint directly.
-  const apiUrl = (!userInStore && userId)
+  const apiUrl = (!hasAvatarData && userId)
     ? `/api/fr/users/${userId}/image?size=${fetchSize}`
     : undefined
 
