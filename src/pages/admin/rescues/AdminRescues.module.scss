@@ -73,8 +73,13 @@
 }
 
 .cmdr {
+  max-width: 180px;
+
   font-weight: 600;
   white-space: nowrap;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   small {
     color: $grey;
@@ -84,7 +89,14 @@
 }
 
 .system {
+  max-width: 180px;
+
   color: $grey-darkened;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .rats {
@@ -187,6 +199,8 @@
 .actionsCell {
   white-space: nowrap;
   text-align: right;
+
+  overflow: visible;
 
   > * {
     margin-left: 0.25rem;
