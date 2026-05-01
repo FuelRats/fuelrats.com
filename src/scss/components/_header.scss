@@ -305,6 +305,16 @@
     }
   }
 
+  .support-link {
+    color: $gold;
+
+    font-weight: bold;
+
+    &:hover {
+      color: lighten($gold, 15%);
+    }
+  }
+
   @media (display-mode: standalone) {
     display: none;
   }

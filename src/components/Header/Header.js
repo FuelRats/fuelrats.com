@@ -62,6 +62,12 @@ function Header () {
         </Link>
 
         <Nav onClick={handleClick}>
+          <NavLink className="support-link" href="/donate">
+            {'Donate'}
+          </NavLink>
+          <NavLink className="support-link" external href="https://shop.fuelrats.com">
+            {'Merch'}
+          </NavLink>
           <SubNav id="about" title="About Us">
             <NavLink href="/vision">
               {'Surly\'s Vision'}
@@ -92,9 +98,6 @@ function Header () {
               {'Leaderboard'}
             </NavLink>
           </SubNav>
-          <NavLink href="/donate">
-            {'Donate'}
-          </NavLink>
 
           {
             loggedIn && (
