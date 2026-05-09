@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 
 import styles from './ActionMenu.module.scss'
 
@@ -8,17 +9,46 @@ import styles from './ActionMenu.module.scss'
 function ActionMenu ({ items }) {
   const [open, setOpen] = useState(false)
   const [confirming, setConfirming] = useState(null)
-  const menuRef = useRef(null)
+  const [position, setPosition] = useState(null)
+  const triggerRef = useRef(null)
+  const dropdownRef = useRef(null)
+
+  useEffect(() => {
+    if (!open || !triggerRef.current) {
+      setPosition(null)
+      return undefined
+    }
+
+    const updatePosition = () => {
+      const rect = triggerRef.current.getBoundingClientRect()
+      setPosition({
+        top: rect.bottom + 4,
+        left: rect.right,
+      })
+    }
+
+    updatePosition()
+    window.addEventListener('scroll', updatePosition, true)
+    window.addEventListener('resize', updatePosition)
+    return () => {
+      window.removeEventListener('scroll', updatePosition, true)
+      window.removeEventListener('resize', updatePosition)
+    }
+  }, [open])
 
   useEffect(() => {
     if (!open) {
       return undefined
     }
     const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setOpen(false)
-        setConfirming(null)
+      if (
+        triggerRef.current?.contains(event.target)
+        || dropdownRef.current?.contains(event.target)
+      ) {
+        return
       }
+      setOpen(false)
+      setConfirming(null)
     }
     document.addEventListener('mousedown', handleClickOutside)
     return () => {
@@ -36,9 +66,14 @@ function ActionMenu ({ items }) {
     item.onAction()
   }, [confirming])
 
+  const portalContainer = typeof document !== 'undefined'
+    ? document.getElementById('ModalContainer')
+    : null
+
   return (
-    <div ref={menuRef} className={styles.actionMenu}>
+    <div className={styles.actionMenu}>
       <button
+        ref={triggerRef}
         className={styles.trigger}
         title="Actions"
         type="button"
@@ -53,8 +88,11 @@ function ActionMenu ({ items }) {
         <FontAwesomeIcon fixedWidth icon="ellipsis-h" />
       </button>
       {
-        open && (
-          <div className={styles.dropdown}>
+        open && position && portalContainer && createPortal(
+          <div
+            ref={dropdownRef}
+            className={styles.dropdown}
+            style={{ top: position.top, left: position.left }}>
             {
               items.map((item) => {
                 if (item.divider) {
@@ -76,7 +114,8 @@ function ActionMenu ({ items }) {
                 )
               })
             }
-          </div>
+          </div>,
+          portalContainer,
         )
       }
     </div>
