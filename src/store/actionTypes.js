@@ -128,6 +128,12 @@ const sessions = {
 }
 
 
+const memoMail = {
+  read: 'memoMail/read',
+  update: 'memoMail/update',
+}
+
+
 const webPush = {
   subscribe: 'webPush/subscribe',
   unsubscribe: 'webPush/unsubscribe',
@@ -229,6 +235,7 @@ const actionTypes = {
 
   // Special
   images,
+  memoMail,
   session,
   sessions,
   totp,

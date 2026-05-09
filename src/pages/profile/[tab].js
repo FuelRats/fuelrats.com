@@ -10,6 +10,7 @@ import TabbedPanel from '~/components/TabbedPanel'
 import UserOverview from '~/components/UserOverview'
 import UserRatsPanel from '~/components/UserRatsPanel'
 import UserRescuesPanel from '~/components/UserRescuesPanel'
+import UserNotificationsPanel from '~/components/UserNotificationsPanel/UserNotificationsPanel'
 import UserSecurityPanel from '~/components/UserSecurityPanel/UserSecurityPanel'
 import setError from '~/util/getInitialProps/setError'
 
@@ -37,6 +38,13 @@ const tabs = {
     },
     title: 'Rescues',
     pageTitle: 'Your Rescues',
+  },
+  notifications: {
+    render: () => {
+      return (<UserNotificationsPanel />)
+    },
+    title: 'Notifications',
+    pageTitle: 'Notifications',
   },
   security: {
     render: () => {

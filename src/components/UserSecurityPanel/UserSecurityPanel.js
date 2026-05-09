@@ -16,7 +16,6 @@ import friendlyApiError from '~/util/friendlyApiError'
 import getResponseError from '~/util/getResponseError'
 
 import ActiveSessionsPanel from './ActiveSessionsPanel'
-import PushSubscriptionsPanel from './PushSubscriptionsPanel'
 import RegenerateRecoveryCodesModal from './RegenerateRecoveryCodesModal'
 import SetupTotpModal from './SetupTotpModal'
 import styles from './UserSecurityPanel.module.scss'
@@ -395,8 +394,6 @@ function UserSecurityPanel () {
   return setShowRegenerateCodes(false)
 }
 } />
-
-      <PushSubscriptionsPanel />
 
       <div className="panel">
         <header>{'IRC Certificate'}</header>
