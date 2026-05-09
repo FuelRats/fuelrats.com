@@ -47,11 +47,17 @@ class FuelRatsWebsite extends Document {
           <link href="/static/favicon/pwa-icon-57.png" rel="apple-touch-icon" sizes="57x57" />
 
 
-          <link href="/static/favicon/favicon-196.png" rel="icon" sizes="196x196" type="image/png" />
-          <link href="/static/favicon/favicon-96.png" rel="icon" sizes="96x96" type="image/png" />
-          <link href="/static/favicon/favicon-32.png" rel="icon" sizes="32x32" type="image/png" />
-          <link href="/static/favicon/favicon-16.png" rel="icon" sizes="16x16" type="image/png" />
-          <link href="/static/favicon/favicon-128.png" rel="icon" sizes="128x128" type="image/png" />
+          <link href="/static/favicon/favicon-196.png" media="(prefers-color-scheme: light)" rel="icon" sizes="196x196" type="image/png" />
+          <link href="/static/favicon/favicon-96.png" media="(prefers-color-scheme: light)" rel="icon" sizes="96x96" type="image/png" />
+          <link href="/static/favicon/favicon-32.png" media="(prefers-color-scheme: light)" rel="icon" sizes="32x32" type="image/png" />
+          <link href="/static/favicon/favicon-16.png" media="(prefers-color-scheme: light)" rel="icon" sizes="16x16" type="image/png" />
+          <link href="/static/favicon/favicon-128.png" media="(prefers-color-scheme: light)" rel="icon" sizes="128x128" type="image/png" />
+
+          <link href="/static/favicon/favicon-196-light.png" media="(prefers-color-scheme: dark)" rel="icon" sizes="196x196" type="image/png" />
+          <link href="/static/favicon/favicon-96-light.png" media="(prefers-color-scheme: dark)" rel="icon" sizes="96x96" type="image/png" />
+          <link href="/static/favicon/favicon-32-light.png" media="(prefers-color-scheme: dark)" rel="icon" sizes="32x32" type="image/png" />
+          <link href="/static/favicon/favicon-16-light.png" media="(prefers-color-scheme: dark)" rel="icon" sizes="16x16" type="image/png" />
+          <link href="/static/favicon/favicon-128-light.png" media="(prefers-color-scheme: dark)" rel="icon" sizes="128x128" type="image/png" />
 
           <link href="/manifest.json" rel="manifest" />
 
