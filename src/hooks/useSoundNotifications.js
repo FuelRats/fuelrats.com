@@ -1,4 +1,6 @@
-import { isAudioReady, playNewCaseSound, playCaseChangeSound, playCaseClosedSound, playCodeRedSound } from '~/util/sounds'
+import {
+  isAudioReady, playNewCaseSound, playCaseChangeSound, playCaseClosedSound, playCodeRedSound,
+} from '~/util/sounds'
 
 import useBoardEvents from './useBoardEvents'
 

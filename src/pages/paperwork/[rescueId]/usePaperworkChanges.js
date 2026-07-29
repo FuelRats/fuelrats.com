@@ -97,6 +97,7 @@ export function validate (rescue, userCanEdit, changes, values) {
  * @param {object} rescue - The rescue resource object.
  * @param {object} rats - Rats keyed by ID.
  * @param {boolean} userCanEdit - Whether the current user can edit this rescue.
+ * @param {object[]} dispatcherRats - Rats currently assigned as dispatchers.
  * @returns {object} Changes state, field values, validity, and handlers.
  */
 export default function usePaperworkChanges (rescue, rats, userCanEdit, dispatcherRats = []) {

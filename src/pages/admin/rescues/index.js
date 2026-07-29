@@ -334,13 +334,13 @@ function AdminRescues () {
 
   const handleFilterChange = useCallback((field, value) => {
     setFilter({ field, value })
-  }, [])
+  }, [setFilter])
 
   const handleResetFilters = useCallback(() => {
     setFilter({ type: 'reset' })
     setFilterRat(null)
     setFilterFirstLimpet(null)
-  }, [])
+  }, [setFilter])
 
   const handleToggleFilters = useCallback(() => {
     setShowFilters((prev) => {

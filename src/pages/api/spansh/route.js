@@ -1,19 +1,23 @@
+import { HttpStatus } from '@fuelrats/web-util/http'
+
+const DEFAULT_RANGE = 65
+
 export default async function handler (req, res) {
   if (req.method !== 'POST') {
-    res.status(405).end()
+    res.status(HttpStatus.METHOD_NOT_ALLOWED).end()
     return
   }
 
   const { from, to, range, efficiency } = req.body ?? {}
   if (!from || !to) {
-    res.status(400).json({ error: 'from and to are required' })
+    res.status(HttpStatus.BAD_REQUEST).json({ error: 'from and to are required' })
     return
   }
 
   const body = new URLSearchParams({
     from,
     to,
-    range: String(range ?? 65),
+    range: String(range ?? DEFAULT_RANGE),
     efficiency: String(efficiency ?? 60),
   })
 

@@ -326,6 +326,8 @@ Paperwork.getInitialProps = async (ctx) => {
       setError(ctx, err.code, err.detail)
     }
   }
+
+  return {}
 }
 
 Paperwork.getPageMeta = () => {
