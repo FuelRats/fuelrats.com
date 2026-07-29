@@ -154,8 +154,12 @@ async () => {
     await toggle()
   } else {
     await subscribe({
-      pc: true, xb: true, ps: true,
-      horizons3: true, horizons4: true, odyssey: true,
+      pc: true,
+      xb: true,
+      ps: true,
+      horizons3: true,
+      horizons4: true,
+      odyssey: true,
       alertsOnly: false,
     })
   }

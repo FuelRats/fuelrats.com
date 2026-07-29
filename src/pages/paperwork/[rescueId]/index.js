@@ -416,6 +416,8 @@ Paperwork.getInitialProps = async (ctx) => {
       setError(ctx, HttpStatus.NOT_FOUND, 'We tried looking everywhere, but this rescue doesn\'t exist.')
     }
   }
+
+  return {}
 }
 
 Paperwork.getPageMeta = () => {

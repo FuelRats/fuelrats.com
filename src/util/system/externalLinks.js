@@ -14,12 +14,6 @@ export async function submitSpanshRoute (systemName, { from = 'Sol', range = SPA
   if (!systemName) {
     return null
   }
-  const body = new URLSearchParams({
-    from,
-    to: systemName,
-    range: String(range),
-    efficiency: String(efficiency),
-  })
   const res = await fetch('/api/spansh/route', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

@@ -6,6 +6,9 @@ import { createPortal } from 'react-dom'
 import styles from './ActionMenu.module.scss'
 
 
+const DROPDOWN_GAP = 4
+
+
 function ActionMenu ({ items }) {
   const [open, setOpen] = useState(false)
   const [confirming, setConfirming] = useState(null)
@@ -22,7 +25,7 @@ function ActionMenu ({ items }) {
     const updatePosition = () => {
       const rect = triggerRef.current.getBoundingClientRect()
       setPosition({
-        top: rect.bottom + 4,
+        top: rect.bottom + DROPDOWN_GAP,
         left: rect.right,
       })
     }
@@ -66,9 +69,9 @@ function ActionMenu ({ items }) {
     item.onAction()
   }, [confirming])
 
-  const portalContainer = typeof document !== 'undefined'
-    ? document.getElementById('ModalContainer')
-    : null
+  const portalContainer = typeof document === 'undefined'
+    ? null
+    : document.getElementById('ModalContainer')
 
   return (
     <div className={styles.actionMenu}>

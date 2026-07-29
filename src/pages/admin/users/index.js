@@ -580,13 +580,13 @@ function AdminUsers () {
 
   const handleFilterChange = useCallback((field, value) => {
     setFilter({ field, value })
-  }, [])
+  }, [setFilter])
 
   const handleResetFilters = useCallback(() => {
     setFilter({ type: 'reset' })
     setFilterRat(null)
     setFilterGroups([])
-  }, [])
+  }, [setFilter])
 
   const handleToggleFilters = useCallback(() => {
     setShowFilters((prev) => {

@@ -114,7 +114,7 @@ function ClientCard ({
     }
     setSaving(false)
     setEditing(false)
-  }, [dispatch, client.id, name, redirectUri])
+  }, [dispatch, client.id, name, redirectUri, isAdmin, namespaces, firstParty])
 
   if (editing) {
     return (

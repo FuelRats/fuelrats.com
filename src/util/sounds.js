@@ -31,10 +31,6 @@ function getContext () {
 }
 
 
-export function isAudioReady () {
-  return gestureReceived
-}
-
 function playTone (frequency, duration, { type = 'sine', volume = 0.3, delay = 0 } = {}) {
   const ctx = getContext()
   if (!ctx) {
@@ -52,6 +48,11 @@ function playTone (frequency, duration, { type = 'sine', volume = 0.3, delay = 0
   gain.connect(ctx.destination)
   osc.start(ctx.currentTime + delay)
   osc.stop(ctx.currentTime + delay + duration + 0.05)
+}
+
+
+export function isAudioReady () {
+  return gestureReceived
 }
 
 
