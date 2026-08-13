@@ -71,7 +71,7 @@ function ActionMenu ({ items }) {
 
   const portalContainer = typeof document === 'undefined'
     ? null
-    : document.getElementById('ModalContainer')
+    : document.getElementById('OverlayContainer')
 
   return (
     <div className={styles.actionMenu}>

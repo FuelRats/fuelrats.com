@@ -73,6 +73,8 @@ class FuelRatsWebsite extends Document {
 
           <div id="ModalContainer" />
 
+          <div id="OverlayContainer" />
+
           <div id="alert-container" />
         </body>
       </Html>
