@@ -26,7 +26,7 @@ function LocaleEditor ({ locales }) {
   const [localeData, setLocaleData] = useState({})
   const localeDataRef = useRef(localeData)
   localeDataRef.current = localeData
-  const [activeLocale, setActiveLocale] = useState(locales[0].id)
+  const [activeLocale, setActiveLocale] = useState(locales[0]?.id)
 
   const onSelectChange = useCallback((event) => {
     setActiveLocale(event.target.value)
@@ -73,11 +73,11 @@ function LocaleEditor ({ locales }) {
         </select>
       </div>
       <h6>
-        <a href={localeData[activeLocale]?.meta.github.html}>{'GitHub'}</a>
+        <a href={localeData[activeLocale]?.meta?.github?.html}>{'GitHub'}</a>
         {' | '}
-        <a href={localeData[activeLocale]?.meta.github.raw}>{'Raw'}</a>
+        <a href={localeData[activeLocale]?.meta?.github?.raw}>{'Raw'}</a>
         {' | '}
-        <a href={localeData[activeLocale]?.meta.github.meta}>{'Metadata'}</a>
+        <a href={localeData[activeLocale]?.meta?.github?.meta}>{'Metadata'}</a>
       </h6>
       <br />
       <div className="presence-container">
@@ -99,10 +99,19 @@ function LocaleEditor ({ locales }) {
 }
 
 LocaleEditor.getInitialProps = async () => {
-  const { data } = await axios.get('/api/qms/locales')
+  const isServer = typeof window === 'undefined'
+  const baseURL = isServer ? process.env.APP_URL : ''
 
-  return {
-    locales: data.data,
+  try {
+    const { data } = await axios.get(`${baseURL}/api/qms/locales`)
+
+    return {
+      locales: data.data,
+    }
+  } catch {
+    return {
+      locales: [],
+    }
   }
 }
 

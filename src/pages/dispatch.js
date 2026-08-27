@@ -120,7 +120,9 @@ function DispatchBoard ({ query }) {
 
   useEffect(() => {
     return () => {
-      navigator.clearAppBadge?.()
+      if (navigator.clearAppBadge) {
+        navigator.clearAppBadge()
+      }
     }
   }, [])
 

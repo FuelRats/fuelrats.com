@@ -77,9 +77,22 @@ function Blogs (props) {
   )
 }
 
-Blogs.getPageMeta = () => {
+Blogs.getPageMeta = ({ query }) => {
+  const page = safeParseInt(query?.page) ?? DEFAULT_PAGE
+
+  let title = 'Blog'
+  if (query?.author) {
+    title = 'Blog Posts by Author'
+  } else if (query?.category) {
+    title = 'Blog Posts by Category'
+  }
+
+  if (page > DEFAULT_PAGE) {
+    title = `${title} (Page ${page})`
+  }
+
   return {
-    title: 'Blog',
+    title,
     key: 'blog-list',
     description: 'Dive into the Fuel Rats Blog to explore thrilling tales of in-game rescues, updates, and insights from our adventurous team!',
   }

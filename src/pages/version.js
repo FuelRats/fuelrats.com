@@ -43,9 +43,15 @@ function Version () {
         </span>
         <span>
           {'Commit: '}
-          <a href={`https://github.com/FuelRats/fuelrats.com/commit/${$$BUILD.commit}`} rel="noopener noreferrer" target="_blank">
-            {$$BUILD.commit || 'N/A'}
-          </a>
+          {
+            $$BUILD.commit
+              ? (
+                <a href={`https://github.com/FuelRats/fuelrats.com/commit/${$$BUILD.commit}`} rel="noopener noreferrer" target="_blank">
+                  {$$BUILD.commit}
+                </a>
+              )
+              : 'N/A'
+          }
         </span>
       </div>
     </div>
