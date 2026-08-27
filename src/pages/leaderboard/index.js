@@ -54,6 +54,7 @@ function Leaderboard (props) {
 
   const [retrieving, setRetrieving] = useState(false)
   const [fetchError, setFetchError] = useState(false)
+  const [retryNonce, setRetryNonce] = useState(0)
   const [noResultsText, setNoResultsText] = useState('')
   const statistics = useSelector(selectLeaderboardStatistics)
   const entries = useSelector(selectLeaderboard)
@@ -81,6 +82,12 @@ function Leaderboard (props) {
     updateFilter(event.target.value)
   }
 
+  const handleRetry = useCallback(() => {
+    setRetryNonce((nonce) => {
+      return nonce + 1
+    })
+  }, [])
+
   useEffect(() => {
     const updateList = async () => {
       setRetrieving(true)
@@ -102,7 +109,7 @@ function Leaderboard (props) {
     }
 
     updateList()
-  }, [dispatch, filterRat, page, pageSize])
+  }, [dispatch, filterRat, page, pageSize, retryNonce])
 
   const handleInputKeyDown = (event) => {
     if (event.key === 'Enter') {
@@ -179,7 +186,13 @@ function Leaderboard (props) {
               Boolean(!retrieving && fetchError) && (
                 <li className={styles.noResults}>
                   <div className={styles.ratName}>
-                    {'Failed to load leaderboard. Please try again.'}
+                    {'Failed to load leaderboard. '}
+                    <button
+                      className="button link"
+                      type="button"
+                      onClick={handleRetry}>
+                      {'Try again'}
+                    </button>
                   </div>
                 </li>
               )

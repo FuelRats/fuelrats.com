@@ -25,6 +25,7 @@ function Blogs (props) {
   const dispatch = useDispatch()
   const [retrieving, setRetrieving] = useState(false)
   const [fetchError, setFetchError] = useState(false)
+  const [retryNonce, setRetryNonce] = useState(0)
   const { totalPages } = useSelector(selectBlogStatistics)
   const blogs = useSelector(selectBlogs)
 
@@ -44,7 +45,7 @@ function Blogs (props) {
     }
 
     updateList()
-  }, [author, category, dispatch, page])
+  }, [author, category, dispatch, page, retryNonce])
 
   const handleGenerateRoute = useCallback((nextParams) => {
     return makeBlogRoute({
@@ -54,9 +55,27 @@ function Blogs (props) {
     })
   }, [author, category])
 
+  const handleRetry = useCallback(() => {
+    setRetryNonce((nonce) => {
+      return nonce + 1
+    })
+  }, [])
+
   return (
     <div className="page-content">
-      {fetchError && (<p>{'Failed to load blog posts. Please try again.'}</p>)}
+      {
+        fetchError && (
+          <p>
+            {'Failed to load blog posts. '}
+            <button
+              className="button link"
+              type="button"
+              onClick={handleRetry}>
+              {'Try again'}
+            </button>
+          </p>
+        )
+      }
       <ol className="article-list loading">
         {
           Boolean(!retrieving && blogs.length) && blogs.map((blog) => {
