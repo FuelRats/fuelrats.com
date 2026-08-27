@@ -2,7 +2,7 @@ const DEFAULT_PORT = 3000
 
 const env = Object.freeze({
   appUrl: process.env.APP_URL,
-  proxied: process.env.APP_PROXIED,
+  proxied: process.env.APP_PROXIED === 'true',
   isDev: process.env.NODE_ENV !== 'production',
   port: process.env.PORT ?? DEFAULT_PORT,
   fallbackUrl: process.env.FR_FALLBACK_URL ?? 'https://fallback.fuelrats.com/',

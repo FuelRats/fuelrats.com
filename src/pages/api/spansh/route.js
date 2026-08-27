@@ -21,12 +21,23 @@ export default async function handler (req, res) {
     efficiency: String(efficiency ?? 60),
   })
 
-  const response = await fetch('https://spansh.co.uk/api/route', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body,
-  })
+  try {
+    const response = await fetch('https://spansh.co.uk/api/route', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body,
+    })
 
-  const data = await response.json()
-  res.status(response.status).json(data)
+    const contentType = response.headers.get('content-type') ?? ''
+    if (!contentType.includes('application/json')) {
+      res.status(HttpStatus.BAD_GATEWAY).json({ error: 'Unexpected response from route provider' })
+      return
+    }
+
+    const data = await response.json()
+    res.status(response.status).json(data)
+  } catch (error) {
+    console.error('[spansh] route request failed:', error)
+    res.status(HttpStatus.BAD_GATEWAY).json({ error: 'Failed to reach route provider' })
+  }
 }

@@ -186,11 +186,12 @@ export default class JsonApiContext {
       }
 
       return response
-    } catch ({ response }) {
+    } catch (error) {
+      const { response } = error ?? {}
       throw new InternalServerAPIError(null, {
         url: options.url,
-        status: response.status,
-        statusText: response.statusText,
+        status: response?.status,
+        statusText: response?.statusText,
       })
     }
   }
