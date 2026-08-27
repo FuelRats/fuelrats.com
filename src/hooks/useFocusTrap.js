@@ -32,6 +32,9 @@ function getFocusableElements (container) {
  */
 export default function useFocusTrap (containerRef, enabled = true) {
   useEffect(() => {
+    if (typeof document === 'undefined') {
+      return undefined
+    }
     const container = containerRef.current
     if (!enabled || !container) {
       return undefined
@@ -72,7 +75,9 @@ export default function useFocusTrap (containerRef, enabled = true) {
     container.addEventListener('keydown', handleKeyDown)
     return () => {
       container.removeEventListener('keydown', handleKeyDown)
-      previouslyFocused?.focus?.()
+      if (previouslyFocused && document.contains(previouslyFocused)) {
+        previouslyFocused.focus?.()
+      }
     }
   }, [enabled, containerRef])
 }

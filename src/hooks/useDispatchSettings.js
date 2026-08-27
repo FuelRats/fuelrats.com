@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 
 const STORAGE_KEY = 'fr.dispatchSettings'
@@ -28,7 +28,12 @@ function saveDispatchSettings (settings) {
 
 
 export default function useDispatchSettings () {
-  const [settings, setSettings] = useState(loadDispatchSettings)
+  const [settings, setSettings] = useState({ ...DEFAULT_SETTINGS })
+
+  // Load persisted settings after mount (avoids hydration mismatch)
+  useEffect(() => {
+    setSettings(loadDispatchSettings())
+  }, [])
 
   const update = useCallback((key, value) => {
     setSettings((prev) => {

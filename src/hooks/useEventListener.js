@@ -26,7 +26,7 @@ export default function useEventListener (type, listener, options = {}, target =
 
     return () => {
       if (listen && typeof target !== 'undefined') {
-        target.removeEventListener(type, listener, { capture, once, passive })
+        target.removeEventListener(type, listener, { capture, passive })
       }
     }
   }, [capture, listen, listener, once, passive, target, type])

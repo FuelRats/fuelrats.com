@@ -17,9 +17,11 @@ export default function useUrlFilters (initialFilters, filterReducer, basePath) 
     }
     const urlParams = new URLSearchParams(window.location.search)
     let found = false
+    const nextFilters = { ...initialFilters }
     urlParams.forEach((value, key) => {
       if (Object.hasOwn(initialFilters, key) && value !== initialFilters[key]) {
         setFilter({ field: key, value })
+        nextFilters[key] = value
         if (key !== 'sort') {
           found = true
         }
@@ -28,7 +30,7 @@ export default function useUrlFilters (initialFilters, filterReducer, basePath) 
     if (found) {
       setHasUrlFilters(true)
     }
-    lastSyncedRef.current = JSON.stringify(filters)
+    lastSyncedRef.current = JSON.stringify(nextFilters)
   }, []) // eslint-disable-line react-hooks/exhaustive-deps -- mount only
 
   const page = Number(router.query.rpage) || 1

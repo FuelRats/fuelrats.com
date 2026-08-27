@@ -8,15 +8,26 @@ export default function useSharedForwardRef (forwardRef) {
   const ref = useRef()
 
   useEffect(() => {
-    if (forwardRef) {
+    if (!forwardRef) {
+      return undefined
+    }
+
+    if (typeof forwardRef === 'function') {
+      forwardRef(ref.current)
+    } else {
+      // eslint-disable-next-line no-param-reassign
+      forwardRef.current = ref.current
+    }
+
+    return () => {
       if (typeof forwardRef === 'function') {
-        forwardRef(ref.current)
+        forwardRef(null)
       } else {
         // eslint-disable-next-line no-param-reassign
-        forwardRef.current = ref.current
+        forwardRef.current = null
       }
     }
-  })
+  }, [forwardRef])
 
   return ref
 }
