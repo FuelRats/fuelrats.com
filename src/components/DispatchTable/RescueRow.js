@@ -52,7 +52,8 @@ function RescueRow (props) {
   const rescuePermit = useRescuePermit(rescue)
 
   const { flashing, onFlashEnd } = props
-  const isNew = differenceInMinutes(Date.now(), new Date(rescue.attributes.createdAt)) < 1
+  const createdAt = rescue?.attributes?.createdAt
+  const isNew = Boolean(createdAt) && differenceInMinutes(Date.now(), new Date(createdAt)) < 1
   const [animating, setAnimating] = useState(isNew)
   const [newest, setNewest] = useState(isNew)
 
@@ -66,7 +67,7 @@ function RescueRow (props) {
     if (!newest) {
       return undefined
     }
-    const ageMs = Date.now() - new Date(rescue.attributes.createdAt).getTime()
+    const ageMs = Date.now() - new Date(createdAt).getTime()
     const NEWEST_DURATION_MS = 60000
     const remaining = NEWEST_DURATION_MS - ageMs
     if (remaining <= 0) {
@@ -79,7 +80,7 @@ function RescueRow (props) {
     return () => {
       return clearTimeout(timer)
     }
-  }, [newest, rescue.attributes.createdAt])
+  }, [newest, createdAt])
 
   const handleAnimationEnd = useCallback(() => {
     setAnimating(false)

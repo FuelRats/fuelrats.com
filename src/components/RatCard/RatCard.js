@@ -164,7 +164,7 @@ function RatCard (props) {
                 onUpdate={handleDisplayRatUpdate} />
             )
           }
-          <span className="rat-platform">{rat.attributes.platform.toUpperCase()}</span>
+          <span className="rat-platform">{rat.attributes.platform?.toUpperCase()}</span>
         </div>
       </header>
       {

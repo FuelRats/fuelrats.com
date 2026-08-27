@@ -84,7 +84,7 @@ Object.entries(tabs).map(([key, tab]) => {
         </ul>
       </nav>
 
-      <TabPanel tab={tabs[activeTab]} onPermissionError={onPermissionError} />
+      {tabs[activeTab] && <TabPanel tab={tabs[activeTab]} onPermissionError={onPermissionError} />}
     </div>
   )
 }
