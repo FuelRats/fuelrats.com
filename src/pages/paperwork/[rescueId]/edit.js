@@ -120,6 +120,7 @@ function Paperwork ({ query }) {
     } = changes
 
     if (!rescue.attributes.outcome && !remainingChanges.outcome) {
+      setSubmitting(false)
       return
     }
 
