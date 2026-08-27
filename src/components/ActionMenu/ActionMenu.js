@@ -124,6 +124,8 @@ function ActionMenu ({ items }) {
     <div className={styles.actionMenu}>
       <button
         ref={triggerRef}
+        aria-expanded={open}
+        aria-haspopup="menu"
         className={styles.trigger}
         title="Actions"
         type="button"
@@ -153,6 +155,7 @@ function ActionMenu ({ items }) {
                   <button
                     key={item.key}
                     className={clsx(styles.item, { [styles.danger]: item.danger })}
+                    role="menuitem"
                     type="button"
                     onClick={
                       () => {
