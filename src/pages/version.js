@@ -25,21 +25,39 @@ function Version () {
         </span>
         <span>
           {'Node Version: '}
-          <a href={`https://github.com/nodejs/node/releases/tag/${$$BUILD.nodeVersion}`} rel="noopener noreferrer" target="_blank">
-            {$$BUILD.nodeVersion}
-          </a>
+          {
+            $$BUILD.nodeVersion
+              ? (
+                <a href={`https://github.com/nodejs/node/releases/tag/${$$BUILD.nodeVersion}`} rel="noopener noreferrer" target="_blank">
+                  {$$BUILD.nodeVersion}
+                </a>
+              )
+              : 'N/A'
+          }
         </span>
         <span>
           {'Built On: '}
-          <a href={$$BUILD.url} rel="noopener noreferrer" target="_blank">
-            <time dateTime={$$BUILD.date}>{formatAsEliteDateTime($$BUILD.date)}</time>
-          </a>
+          {
+            $$BUILD.date
+              ? (
+                <a href={$$BUILD.url} rel="noopener noreferrer" target="_blank">
+                  <time dateTime={$$BUILD.date}>{formatAsEliteDateTime($$BUILD.date)}</time>
+                </a>
+              )
+              : 'N/A'
+          }
         </span>
         <span>
           {'Branch: '}
-          <a href={`https://github.com/FuelRats/fuelrats.com/tree/${$$BUILD.branch}`} rel="noopener noreferrer" target="_blank">
-            {$$BUILD.branch}
-          </a>
+          {
+            $$BUILD.branch
+              ? (
+                <a href={`https://github.com/FuelRats/fuelrats.com/tree/${$$BUILD.branch}`} rel="noopener noreferrer" target="_blank">
+                  {$$BUILD.branch}
+                </a>
+              )
+              : 'N/A'
+          }
         </span>
         <span>
           {'Commit: '}

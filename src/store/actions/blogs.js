@@ -41,16 +41,12 @@ export const getBlog = (id) => {
       const state = getState()
       const { authors, categories } = state.blogs
 
-      if (!authors[authorId]) {
-        await dispatch(getAuthor(authorId))
-      }
-
-      await Promise.all(categoryIds.map((categoryId) => {
-        if (!categories[categoryId]) {
-          return dispatch(getCategory(categoryId))
-        }
-        return Promise.resolve()
-      }))
+      await Promise.all([
+        authors[authorId] ? Promise.resolve() : dispatch(getAuthor(authorId)),
+        ...categoryIds.map((categoryId) => {
+          return categories[categoryId] ? Promise.resolve() : dispatch(getCategory(categoryId))
+        }),
+      ])
     }
 
     return dispatch(action)

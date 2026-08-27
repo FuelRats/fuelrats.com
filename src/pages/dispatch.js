@@ -113,7 +113,7 @@ function DispatchBoard ({ query }) {
       if (rescueIds?.length) {
         navigator.setAppBadge(rescueIds.length)
       } else {
-        navigator.clearAppBadge()
+        navigator.clearAppBadge?.()
       }
     }
   }, [rescueIds])
