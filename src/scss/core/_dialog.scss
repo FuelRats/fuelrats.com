@@ -1,6 +1,6 @@
 [role='dialog'] {
   display: flex;
-  z-index: 401;
+  z-index: $z-modal;
 
   flex-direction: column;
 
@@ -135,7 +135,7 @@
     }
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: $bp-mobile) {
     min-width: 100%;
     padding: 1rem;
 

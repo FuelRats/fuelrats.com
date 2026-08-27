@@ -1,0 +1,5 @@
+/* Shared responsive breakpoint tokens.
+   Use these instead of raw px literals for the common device breakpoints.
+   One-off breakpoints (e.g. tables) may keep their bespoke values. */
+$bp-mobile: 768px;
+$bp-tablet: 1024px;

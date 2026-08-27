@@ -1,4 +1,5 @@
 @import '../../scss/colors';
+@import '../../scss/variables/layers';
 
 
 .copyToClipboard {
@@ -15,7 +16,7 @@
     position: absolute;
     top: 3rem;
     left: 0.5rem;
-    z-index: 1000;
+    z-index: $z-dropdown;
 
     content: 'Copied!';
     padding: 0 0.8rem;
