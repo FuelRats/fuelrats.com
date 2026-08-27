@@ -142,11 +142,6 @@ function RescueDetailsContent (props) {
     })
   }, [])
 
-  // const router = useRouter()
-  // const handleCloseRescueDetails = useCallback(() => {
-  //   router.push('/dispatch')
-  // }, [router])
-
   return (
     <div className={styles.rescueDetails}>
       <div className={styles.header}>
@@ -163,16 +158,6 @@ function RescueDetailsContent (props) {
         </div>
         <div className={styles.timer}>
           <ElapsedTimer from={createdAt} />
-          {/* <button
-            readOnly
-            aria-label={`Hide detail view for rescue of ${client}`}
-            className={[styles.closeButton, 'icon']}
-            name="detail"
-            title="Close details"
-            type="button"
-            onClick={handleCloseRescueDetails}>
-            <FontAwesomeIcon fixedWidth icon="xmark" />
-          </button> */}
         </div>
 
       </div>

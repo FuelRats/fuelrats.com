@@ -129,8 +129,8 @@ function Carousel (props) {
         window.clearTimeout(timerRef.current)
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps -- only set a timeout if curSlideUrl changes
-  }, [curSlideUrl])
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- restart the timer whenever the current slide changes
+  }, [curSlideId, curSlideUrl])
 
   return (
     <div className={clsx('carousel', className)} id={id}>

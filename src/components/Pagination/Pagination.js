@@ -1,7 +1,9 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
-import React, { useCallback, useMemo, useState } from 'react'
+import React, {
+  useCallback, useEffect, useMemo, useState,
+} from 'react'
 
 import safeParseInt from '~/util/safeParseInt'
 
@@ -31,6 +33,10 @@ function Pagination (props) {
   } = props
 
   const [pageInput, setPageInput] = useState(page)
+
+  useEffect(() => {
+    setPageInput(page)
+  }, [page])
 
   const router = useRouter()
 

@@ -83,15 +83,13 @@ function NotificationPanel ({ className, open, onClose }) {
 
   // Push handlers
   const handleTogglePushFilter = useCallback((key) => {
-    setPushFilters((prev) => {
-      const next = { ...prev, [key]: !prev[key] }
-      // Re-register with new filters if already subscribed
-      if (subscribed) {
-        subscribe(next)
-      }
-      return next
-    })
-  }, [subscribed, subscribe])
+    const next = { ...pushFilters, [key]: !pushFilters[key] }
+    setPushFilters(next)
+    // Re-register with new filters if already subscribed
+    if (subscribed) {
+      subscribe(next)
+    }
+  }, [pushFilters, subscribed, subscribe])
 
   const handlePushToggle = useCallback(async () => {
     if (subscribed) {
