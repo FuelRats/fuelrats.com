@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import PropTypes from 'prop-types'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 
 
@@ -24,10 +24,11 @@ function ValidatedFormInput (props) {
   } = props
 
   const [errorMessage, setErrorMessage] = useState('')
+  const doubleValidateTimeout = useRef(null)
 
   const checkValidity = useCallback((target) => {
     let valid = true
-    let message = null
+    let message = ''
 
     if (!target.validity.valid) {
       valid = false
@@ -53,11 +54,19 @@ function ValidatedFormInput (props) {
 
     // Workaround so that we don't get invalid input states when we shouldn't.. because firefox can't update things in the correct order I guess.
     if (doubleValidate) {
-      setTimeout(() => {
+      doubleValidateTimeout.current = setTimeout(() => {
         onChange(checkValidity(target))
       }, 1)
     }
   }, [onChange, checkValidity, doubleValidate])
+
+  useEffect(() => {
+    return () => {
+      if (doubleValidateTimeout.current) {
+        clearTimeout(doubleValidateTimeout.current)
+      }
+    }
+  }, [])
 
   const inputProps = {
     ...inputPassthrough,

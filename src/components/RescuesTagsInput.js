@@ -24,7 +24,7 @@ async function searchRescues (query) {
   }
   try {
     const token = Cookies.get('access_token')
-    const response = await fetch(`/api/fr/rescues/${query}`, {
+    const response = await fetch(`/api/fr/rescues/${encodeURIComponent(query)}`, {
       headers: new Headers({ Authorization: `Bearer ${token}` }),
     })
     const json = await response.json()

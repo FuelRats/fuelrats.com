@@ -148,8 +148,11 @@ function TagsInput (props) {
     if (!allowDuplicates && findTag(tag)) {
       return false
     }
-    const nextTags = isSingle ? [tag] : [...tags, tag]
-    setTags(nextTags)
+    let nextTags = null
+    setTags((prev) => {
+      nextTags = isSingle ? [tag] : [...prev, tag]
+      return nextTags
+    })
     setOptions([])
     setSelectedOption(null)
     if (inputRef.current) {
@@ -158,7 +161,7 @@ function TagsInput (props) {
     onAdd?.(tag)
     onChange?.(nextTags)
     return true
-  }, [allowDuplicates, findTag, isSingle, tags, onAdd, onChange])
+  }, [allowDuplicates, findTag, isSingle, onAdd, onChange])
 
   const removeTag = useCallback((tag) => {
     if (isSingle) {
@@ -267,7 +270,8 @@ function TagsInput (props) {
       event.preventDefault()
       removeTag(tags[target])
       if (tags.length > 1 && selectedTag !== null) {
-        setSelectedTag(target - 1)
+        const nextLength = tags.length - 1
+        setSelectedTag(Math.min(Math.max(target - 1, 0), nextLength - 1))
       }
     }
   }, [selectedTag, tags, removeTag])
@@ -305,10 +309,10 @@ function TagsInput (props) {
     }
     event.preventDefault()
     setSelectedOption((prev) => {
-      if (!prev) {
+      if (prev === null || prev >= options.length) {
         return options.length - 1
       }
-      return prev - 1
+      return prev === 0 ? null : prev - 1
     })
   }, [options.length])
 

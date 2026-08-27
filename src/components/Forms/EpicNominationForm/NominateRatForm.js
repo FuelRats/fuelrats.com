@@ -43,7 +43,7 @@ export default function NominateRatForm ({ onSuccess, onError }) {
       attributes:
         {
           rat: '',
-          notes: undefined,
+          notes: '',
         },
     },
     onSubmit,
