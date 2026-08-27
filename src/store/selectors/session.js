@@ -10,6 +10,10 @@ export const selectSessionToken = (state) => {
   return state.session.token
 }
 
+export const selectSessionProxyHeaders = (state) => {
+  return state.session.proxyHeaders
+}
+
 export const selectPageRequiresAuth = (state) => {
   return selectSession(state).pageRequiresAuth
 }

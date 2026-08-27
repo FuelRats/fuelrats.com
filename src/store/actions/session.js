@@ -73,15 +73,22 @@ export const initUserSession = (ctx) => {
       userAgent = window.navigator.userAgent
     }
 
+    const proxyHeaders = ctx.proxyHeaders ?? {}
+
     const action = createFSA(
       actionTypes.session.initialize,
       {
         accessToken,
         userAgent,
+        proxyHeaders,
       },
     )
 
-    if (accessToken !== session.token || userAgent !== session.userAgent) {
+    if (
+      accessToken !== session.token
+      || userAgent !== session.userAgent
+      || Object.keys(proxyHeaders).length > 0
+    ) {
       dispatch(action)
     }
 
