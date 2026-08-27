@@ -369,23 +369,23 @@ function TagsInput (props) {
       {/* eslint-disable react/no-array-index-key -- tags and options have no stable unique id */}
       <ul className="tags">
         {
-tags.map((tag, index) => {
-  return (
-    <li key={index} className={clsx('tag', tagClassName, { focus: selectedTag === index })} style={tagStyle?.(tag)}>
-      {renderItem(tag)}
-      <button
-        type="button"
-        onClick={
-() => {
-  return removeTag(tag)
-}
-}>
-        {'\u00d7'}
-      </button>
-    </li>
-  )
-})
-}
+          tags.map((tag, index) => {
+            return (
+              <li key={index} className={clsx('tag', tagClassName, { focus: selectedTag === index })} style={tagStyle?.(tag)}>
+                {renderItem(tag)}
+                <button
+                  type="button"
+                  onClick={
+                    () => {
+                      return removeTag(tag)
+                    }
+                  }>
+                  {'\u00d7'}
+                </button>
+              </li>
+            )
+          })
+        }
       </ul>
 
       <input
@@ -402,51 +402,51 @@ tags.map((tag, index) => {
         onKeyDown={handleKeyDown} />
 
       {
-allowNew && (
-  <div className={clsx('return-prompt', { show: currentValue })}>
-    <span>{'Press '}<Key>{'Return'}</Key>{' to add'}</span>
-  </div>
-)
-}
+        allowNew && (
+          <div className={clsx('return-prompt', { show: currentValue })}>
+            <span>{'Press '}<Key>{'Return'}</Key>{' to add'}</span>
+          </div>
+        )
+      }
 
       {loading && <div className="loader">{renderLoader()}</div>}
 
       {
-(!loading && !newFocus && Boolean(currentValue) && !options.length) && (
-  <div className="no-results">{renderNoResults()}</div>
-)
-}
+        (!loading && !newFocus && Boolean(currentValue) && !options.length) && (
+          <div className="no-results">{renderNoResults()}</div>
+        )
+      }
 
       {
         (!loading && Boolean(options.length)) && (
           <ol className="options">
             {
-options.map((option, index) => {
-  return (
-    <li
-      key={index}
-      className={clsx('option', optionClassName, { focus: selectedOption === index })}
-      style={optionStyle?.(option)}
-      onFocus={
-() => {
-  return setSelectedOption(index)
-}
-}
-      onMouseDown={
-() => {
-  return addTag(option)
-}
-}
-      onMouseOver={
-() => {
-  return setSelectedOption(index)
-}
-}>
-      {renderItem(option)}
-    </li>
-  )
-})
-}
+              options.map((option, index) => {
+                return (
+                  <li
+                    key={index}
+                    className={clsx('option', optionClassName, { focus: selectedOption === index })}
+                    style={optionStyle?.(option)}
+                    onFocus={
+                      () => {
+                        return setSelectedOption(index)
+                      }
+                    }
+                    onMouseDown={
+                      () => {
+                        return addTag(option)
+                      }
+                    }
+                    onMouseOver={
+                      () => {
+                        return setSelectedOption(index)
+                      }
+                    }>
+                    {renderItem(option)}
+                  </li>
+                )
+              })
+            }
           </ol>
         )
       }

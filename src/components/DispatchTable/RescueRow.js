@@ -159,10 +159,10 @@ function RescueRow (props) {
         title={rescueLanguage.region ? `${rescueLanguage.long} (${rescueLanguage.region})` : rescueLanguage.long}>
         {rescueLanguage.short}
         {
-rescueLanguage.flag && (
-  <span className={styles.languageFlag}>{rescueLanguage.flag}</span>
-)
-}
+          rescueLanguage.flag && (
+            <span className={styles.languageFlag}>{rescueLanguage.flag}</span>
+          )
+        }
       </td>
       <CopyToClipboard
         doHint

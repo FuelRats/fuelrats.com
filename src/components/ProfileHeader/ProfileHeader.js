@@ -46,10 +46,10 @@ function ProfileHeader () {
   return (
     <div className="profile-header">
       {
-          !userIsVerified && (
-            <UnverifiedUserBanner />
-          )
-        }
+        !userIsVerified && (
+          <UnverifiedUserBanner />
+        )
+      }
       <ProfileUserAvatar canEdit />
       <div className="profile-basic-info">
         <div className="rat-name">
@@ -67,19 +67,19 @@ function ProfileHeader () {
       <div className="profile-user-badges">
         <ul>
           {
-              groups?.map((group) => {
-                const config = groupConfig[group.attributes.name]
-                return (
-                  <li
-                    key={group.id}
-                    className={clsx(styles.groupBadge, group.attributes.name)}
-                    style={config ? { backgroundColor: config.color } : undefined}>
-                    {config?.icon && (<FontAwesomeIcon fixedWidth icon={config.icon} />)}
-                    {group.attributes.displayName ?? group.attributes.name}
-                  </li>
-                )
-              })
-            }
+            groups?.map((group) => {
+              const config = groupConfig[group.attributes.name]
+              return (
+                <li
+                  key={group.id}
+                  className={clsx(styles.groupBadge, group.attributes.name)}
+                  style={config ? { backgroundColor: config.color } : undefined}>
+                  {config?.icon && (<FontAwesomeIcon fixedWidth icon={config.icon} />)}
+                  {group.attributes.displayName ?? group.attributes.name}
+                </li>
+              )
+            })
+          }
         </ul>
       </div>
     </div>

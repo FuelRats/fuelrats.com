@@ -103,14 +103,14 @@ function DispatchTable (props) {
         {maxClients}
         <small>{' CLIENTS'}</small>
         {
-            queueLength > 0 && (
-              <>
-                <small>{' ( '}</small>
-                {queueLength}
-                <small>{' IN QUEUE )'}</small>
-              </>
-            )
-          }
+          queueLength > 0 && (
+            <>
+              <small>{' ( '}</small>
+              {queueLength}
+              <small>{' IN QUEUE )'}</small>
+            </>
+          )
+        }
       </div>
     </section>
   )

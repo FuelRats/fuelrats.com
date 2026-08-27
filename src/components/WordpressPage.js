@@ -10,13 +10,6 @@ import { selectWordpressPageBySlug } from '~/store/selectors'
 
 
 
-
-// Component Constants
-
-
-
-
-
 function WordpressPage ({ className, slug }) {
   const page = useSelector((state) => {
     return selectWordpressPageBySlug(state, { slug })

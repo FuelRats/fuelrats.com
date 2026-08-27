@@ -51,17 +51,17 @@ function ScopeView ({ scopes, className }) {
   return (
     <div className={clsx(styles.scopeView, className)}>
       {
-          Object.entries(groupedScopes).map(
-            ([namespace, actions]) => {
-              return (
-                <NamespaceDetails
-                  key={namespace}
-                  actions={actions}
-                  namespace={namespace} />
-              )
-            },
-          )
-        }
+        Object.entries(groupedScopes).map(
+          ([namespace, actions]) => {
+            return (
+              <NamespaceDetails
+                key={namespace}
+                actions={actions}
+                namespace={namespace} />
+            )
+          },
+        )
+      }
     </div>
   )
 }

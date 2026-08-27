@@ -30,6 +30,11 @@ import styles from './RescueDetails.module.scss'
 
 
 
+const SPANSH_MIN_DISTANCE = 2000
+const MIN_COLLAPSIBLE_EVENTS = 4
+const jumpCallPattern = /(?:(\d{1,3})[jJ]\s*#\d{1,3}|#\d{1,3}\s*(\d{1,3})[jJ])/u
+
+
 const selectRenderedRatList = createSelectRenderedRatList((rat, index) => {
   return (
     <tr key={rat.id}>
@@ -85,7 +90,6 @@ function RescueDetailsContent (props) {
   const edsmUrl = useMemo(() => {
     return getEdsmSystemUrl(system)
   }, [system])
-  const SPANSH_MIN_DISTANCE = 2000
   const showSpansh = typeof landmarkDistance === 'number' && landmarkDistance >= SPANSH_MIN_DISTANCE
   const handleSpanshClick = useCallback(async () => {
     const url = await submitSpanshRoute(system)
@@ -93,8 +97,6 @@ function RescueDetailsContent (props) {
       window.open(url, '_blank', 'noreferrer')
     }
   }, [system])
-
-  const jumpCallPattern = /(?:(\d{1,3})[jJ]\s*#\d{1,3}|#\d{1,3}\s*(\d{1,3})[jJ])/u
 
   const parsedQuotes = useMemo(() => {
     return quotes.map((quote, originalIndex) => {
@@ -110,7 +112,6 @@ function RescueDetailsContent (props) {
         isJumpCall: jumpCallPattern.test(quote.message),
       }
     })
-  // eslint-disable-next-line react-hooks/exhaustive-deps -- jumpCallPattern is stable
   }, [quotes])
 
   const quoteGroups = useMemo(() => {
@@ -333,7 +334,6 @@ rescueLanguage.flag && (
                 {
                   quoteGroups.map((group, groupIdx) => {
                     const groupKey = `g-${group.items[0].originalIndex}`
-                    const MIN_COLLAPSIBLE_EVENTS = 4
                     const isCollapsible = group.isEvent && group.items.length >= MIN_COLLAPSIBLE_EVENTS
                     const isExpanded = expandedGroups.has(groupKey)
                     const hiddenCount = group.items.length - 2

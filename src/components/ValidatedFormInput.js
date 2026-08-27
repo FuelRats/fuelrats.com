@@ -52,7 +52,7 @@ function ValidatedFormInput (props) {
   const handleChange = useCallback(({ target }) => {
     onChange(checkValidity(target))
 
-    // Workaround so that we don't get invalid input states when we shouldn't.. because firefox can't update things in the correct order I guess.
+    // Re-run validation on the next tick so Firefox reports the correct validity state.
     if (doubleValidate) {
       doubleValidateTimeout.current = setTimeout(() => {
         onChange(checkValidity(target))

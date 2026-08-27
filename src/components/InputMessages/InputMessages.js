@@ -7,11 +7,6 @@ import styles from './InputMessages.module.scss'
 
 
 
-// Component Constants
-
-
-
-
 
 function MessageSet (props) {
   return props.messages.map((message) => {

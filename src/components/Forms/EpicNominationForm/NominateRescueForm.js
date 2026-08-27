@@ -57,12 +57,11 @@ export default function NominateRescueForm ({ onSuccess, onError }) {
     canSubmit,
   } = useForm({
     data: {
-      attributes:
-        {
-          rescueId: '',
-          notes: '',
-          epicType: 'RESCUE',
-        },
+      attributes: {
+        rescueId: '',
+        notes: '',
+        epicType: 'RESCUE',
+      },
     },
     onSubmit,
   })

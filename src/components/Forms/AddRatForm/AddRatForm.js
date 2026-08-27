@@ -63,14 +63,14 @@ function AddRatForm () {
           <ApiErrorBox
             error={error}
             renderError={
-(err) => {
-  return friendlyApiError(err, {
-    pointerMessages: {
-      '/data/attributes/name': { detail: err.detail ?? 'CMDR name is invalid.' },
-    },
-  })
-}
-} />
+              (err) => {
+                return friendlyApiError(err, {
+                  pointerMessages: {
+                    '/data/attributes/name': { detail: err.detail ?? 'CMDR name is invalid.' },
+                  },
+                })
+              }
+            } />
         )
       }
       {

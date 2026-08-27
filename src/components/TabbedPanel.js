@@ -69,18 +69,18 @@ function TabbedPanel ({ activeTab, tabs, onTabClick, onPermissionError }) {
       <nav className="tabs">
         <ul>
           {
-Object.entries(tabs).map(([key, tab]) => {
-  return (
-    <TabHandle
-      key={key}
-      activeTab={activeTab}
-      name={key}
-      tab={tab}
-      onClick={handleTabClick}
-      onKeyPress={handleTabClick} />
-  )
-})
-}
+            Object.entries(tabs).map(([key, tab]) => {
+              return (
+                <TabHandle
+                  key={key}
+                  activeTab={activeTab}
+                  name={key}
+                  tab={tab}
+                  onClick={handleTabClick}
+                  onKeyPress={handleTabClick} />
+              )
+            })
+          }
         </ul>
       </nav>
 

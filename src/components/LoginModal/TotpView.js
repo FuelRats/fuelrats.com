@@ -14,6 +14,10 @@ import getResponseError from '~/util/getResponseError'
 import styles from './LoginModal.module.scss'
 
 
+const RECOVERY_CODE_LENGTH = 8
+const TOTP_CODE_LENGTH = 6
+
+
 function TotpView () {
   const [{ formData: data, onClose }, setModalState] = useModalContext()
   const dispatch = useDispatch()
@@ -26,9 +30,6 @@ function TotpView () {
   useEffect(() => {
     setWebAuthnSupported(typeof window !== 'undefined' && window.PublicKeyCredential !== undefined)
   }, [])
-
-  const RECOVERY_CODE_LENGTH = 8
-  const TOTP_CODE_LENGTH = 6
 
   const codeIsValid = useRecoveryCode
     ? code.replace(/[^a-f0-9]/giu, '').length === RECOVERY_CODE_LENGTH
@@ -148,7 +149,7 @@ useRecoveryCode
                 className={styles.totpCodeInput}
                 disabled={submitting}
                 inputMode="numeric"
-                maxLength={6}
+                maxLength={TOTP_CODE_LENGTH}
                 pattern="[0-9]{6}"
                 placeholder="000000"
                 type="text"
