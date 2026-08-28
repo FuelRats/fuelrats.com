@@ -25,7 +25,7 @@ export const selectRatById = (state, { ratId }) => {
 export const selectRatsByUserId = createSelector(
   [selectUserById, selectRats],
   (user, rats) => {
-    return user?.relationships.rats.data?.map(({ id }) => {
+    return user?.relationships.rats?.data?.map(({ id }) => {
       return rats[id]
     }) ?? undefined
   },

@@ -70,6 +70,13 @@ function CopyToClipboard (props) {
     }, CLICKED_STATE_RESET_TIME)
   }, [copied, text])
 
+  const handleKeyDown = useCallback((event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault()
+      handleClick()
+    }
+  }, [handleClick])
+
   useEffect(() => {
     return () => {
       clearTimeout(timeoutRef.current)
@@ -82,7 +89,9 @@ function CopyToClipboard (props) {
       aria-label={`Click to copy: ${text}`}
       className={clsx(styles.copyToClipboard, className, { [styles.copied]: copied })}
       role="button"
-      onClick={handleClick}>
+      tabIndex={0}
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}>
       {children}
       {
         doHint && (
@@ -91,6 +100,9 @@ function CopyToClipboard (props) {
           </span>
         )
       }
+      <span aria-live="polite" className="sr-only">
+        {copied ? 'Copied to clipboard' : ''}
+      </span>
     </Component>
   )
 }

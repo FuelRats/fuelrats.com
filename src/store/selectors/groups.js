@@ -20,7 +20,7 @@ export const selectGroupsByUserId = createCachedSelector(
   [selectUserById, selectGroups],
   (user, groups) => {
     if (user) {
-      return user.relationships.groups.data
+      return (user.relationships.groups?.data ?? [])
         .map(({ id }) => {
           return groups[id]
         })

@@ -16,7 +16,7 @@ export default produce((draftState, action) => {
   switch (action.type) {
     case actionTypes.leaderboard.read:
       draftState.entries = action.payload.data
-      draftState.statistics = action.payload.meta
+      draftState.statistics = action.payload.meta ?? {}
       break
 
     default:

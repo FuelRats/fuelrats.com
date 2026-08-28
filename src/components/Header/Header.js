@@ -13,13 +13,6 @@ import SocialIcon from './SocialIcon'
 
 
 
-
-// Component constants
-
-
-
-
-
 function Header () {
   const { loggedIn } = useSelector(selectSession)
   const userCanDispatch = useSelector((state) => {

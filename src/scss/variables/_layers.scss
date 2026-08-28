@@ -1,0 +1,5 @@
+/* Shared z-index scale.
+   Centralised so stacking order is explicit and collisions are avoided.
+   Values preserve the previously hardcoded stacking order. */
+$z-dropdown: 1000;
+$z-modal: 401;

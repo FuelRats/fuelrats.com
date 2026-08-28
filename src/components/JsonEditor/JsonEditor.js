@@ -9,11 +9,6 @@ import styles from './JsonEditor.module.scss'
 
 
 
-// Component Constants
-
-
-
-
 
 function JsonEditor (props) {
   const {

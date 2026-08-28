@@ -31,8 +31,12 @@ function MessageBox (props) {
     icon = typeIcons[type] ?? 'triangle-exclamation'
   }
 
+  const isUrgent = type === 'error' || type === 'warn'
+
   return (
-    <div className={clsx(styles.message, styles[type], className)}>
+    <div
+      className={clsx(styles.message, styles[type], className)}
+      role={isUrgent ? 'alert' : 'status'}>
       <FontAwesomeIcon
         className={styles.icon}
         icon={icon}

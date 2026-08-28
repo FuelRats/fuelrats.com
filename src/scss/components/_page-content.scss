@@ -18,9 +18,17 @@
       margin-left: 2rem;
     }
   }
+
+  @media screen and (max-width: $bp-mobile) {
+    margin: 1rem;
+  }
 }
 
 
 .page-margins {
   margin: 2rem 2rem 0;
+
+  @media screen and (max-width: $bp-mobile) {
+    margin: 1rem 1rem 0;
+  }
 }

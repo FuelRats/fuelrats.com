@@ -20,7 +20,7 @@ function UserRatsPanel () {
 
   const dispatch = useDispatch()
   const ratStatistics = useSelector((state) => {
-    return selectRatStatisticsById(state, { ratId: rats?.data[0].id })
+    return selectRatStatisticsById(state, { ratId: rats?.data?.[0]?.id })
   })
 
   useEffect(() => {

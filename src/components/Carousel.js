@@ -129,52 +129,52 @@ function Carousel (props) {
         window.clearTimeout(timerRef.current)
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps -- only set a timeout if curSlideUrl changes
-  }, [curSlideUrl])
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- restart the timer whenever the current slide changes
+  }, [curSlideId, curSlideUrl])
 
   return (
     <div className={clsx('carousel', className)} id={id}>
       <AnimatePresence>
         {
-        Boolean(curSlideUrl) && (
-          <m.div
-            key={`${curSlideId}-img`}
-            {...slideMotionConfig}
-            className="carousel-slide"
-            src={curSlideUrl}
-            style={
-              {
-                backgroundImage: `url(${curSlideUrl})`,
-                backgroundPosition: curSlide.position ?? 'center',
-              }
-            } />
-        )
-      }
+          Boolean(curSlideUrl) && (
+            <m.div
+              key={`${curSlideId}-img`}
+              {...slideMotionConfig}
+              className="carousel-slide"
+              src={curSlideUrl}
+              style={
+                {
+                  backgroundImage: `url(${curSlideUrl})`,
+                  backgroundPosition: curSlide.position ?? 'center',
+                }
+              } />
+          )
+        }
         {
-        Boolean(curSlideUrl && curSlide.text) && (
-          <m.span
-            key={`${curSlideId}-text`}
-            {...slideTextMotionConfig}
-            className="carousel-slide-text">
-            {curSlide.text}
-          </m.span>
-        )
-      }
+          Boolean(curSlideUrl && curSlide.text) && (
+            <m.span
+              key={`${curSlideId}-text`}
+              {...slideTextMotionConfig}
+              className="carousel-slide-text">
+              {curSlide.text}
+            </m.span>
+          )
+        }
       </AnimatePresence>
       <div className="carousel-slide-picker">
         {
-        Object.keys(images).map((slideId) => {
-          return (
-            <button
-              key={slideId}
-              aria-label={`Image carousel slide ${slideId}`}
-              className={clsx('circle-button', { active: curSlideId === slideId })}
-              name={slideId}
-              type="button"
-              onClick={handleSlideButtonClick} />
-          )
-        })
-      }
+          Object.keys(images).map((slideId) => {
+            return (
+              <button
+                key={slideId}
+                aria-label={`Image carousel slide ${slideId}`}
+                className={clsx('circle-button', { active: curSlideId === slideId })}
+                name={slideId}
+                type="button"
+                onClick={handleSlideButtonClick} />
+            )
+          })
+        }
       </div>
     </div>
   )

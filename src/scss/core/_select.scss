@@ -18,7 +18,7 @@ select {
   transition-property: border-color, box-shadow;
 
   &:not(:valid) {
-    color: #999999;
+    color: $placeholder-grey;
   }
 
   &.required {
@@ -42,12 +42,12 @@ select {
   }
 
   option {
-    color: #000000;
+    color: $black;
 
     &[value=''] {
       display: none;
 
-      color: #999999;
+      color: $placeholder-grey;
     }
   }
 }
@@ -64,7 +64,7 @@ div.select-wrapper {
     content: '▼';
     padding: 1rem;
 
-    color: #999999;
+    color: $placeholder-grey;
 
     font-size: 1rem;
     line-height: 2;

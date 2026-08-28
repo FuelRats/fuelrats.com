@@ -40,11 +40,10 @@ export default function NominateRatForm ({ onSuccess, onError }) {
     canSubmit,
   } = useForm({
     data: {
-      attributes:
-        {
-          rat: '',
-          notes: undefined,
-        },
+      attributes: {
+        rat: '',
+        notes: '',
+      },
     },
     onSubmit,
   })

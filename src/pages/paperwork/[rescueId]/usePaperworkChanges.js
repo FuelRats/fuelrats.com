@@ -144,7 +144,7 @@ export default function usePaperworkChanges (rescue, rats, userCanEdit, dispatch
     }
 
     const extraChanges = {}
-    if (attribute === 'platform' && value !== rescue) {
+    if (attribute === 'platform' && value !== rescue.attributes.platform) {
       extraChanges.firstLimpetId = []
       extraChanges.rats = []
     }

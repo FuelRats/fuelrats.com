@@ -3,7 +3,7 @@ const initialState = {
     authors: {},
     blogs: [],
     categories: {},
-    total: null,
+    totalPages: null,
   },
 
   clients: {},
@@ -49,6 +49,7 @@ const initialState = {
     loggedIn: false,
     loggingOut: false,
     pageRequiresAuth: false,
+    proxyHeaders: {},
     token: null,
     userAgent: '',
     userId: null,

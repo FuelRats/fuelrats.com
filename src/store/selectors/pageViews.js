@@ -1,6 +1,11 @@
-import { createSelector } from 'reselect'
+import { createCachedSelector } from 're-reselect'
 
 
+
+
+const getPageViewId = (_, { pageViewId } = {}) => {
+  return pageViewId
+}
 
 
 
@@ -15,14 +20,14 @@ const selectPageViewTargetById = (state, props) => {
 }
 
 
-export const selectPageViewDataById = createSelector(
+export const selectPageViewDataById = createCachedSelector(
   [selectPageViewById, selectPageViewTargetById],
   (pageView, viewTarget) => {
     return pageView && viewTarget && pageView.data.map(((id) => {
       return viewTarget[id]
     }))
   },
-)
+)(getPageViewId)
 
 
 export const selectPageViewMetaById = (state, props) => {

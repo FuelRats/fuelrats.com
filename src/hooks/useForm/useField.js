@@ -38,6 +38,19 @@ function useField (name = isRequired('name'), opts = {}) {
     validateOpts ?? { wait: 250 },
   )
 
+  const triggerValidation = useCallback(() => {
+    if (typeof onValidate !== 'function' || !ctxRef.current?.ctx.isInit) {
+      return
+    }
+
+    if (!metaRef.current.validating) {
+      setValidatingState(true)
+      ctxRef.current?.ctx.dispatchValidity({ name, valid: false })
+    }
+
+    debouncedValidate(inputValue)
+  }, [debouncedValidate, inputValue, name, onValidate])
+
   const handleChange = useCallback((event, nextValue) => {
     let { value } = event.target
     if (event.target.type === 'checkbox') {
@@ -98,28 +111,23 @@ function useField (name = isRequired('name'), opts = {}) {
         return
       }
 
-      if (!metaRef.current.validating) {
-        setValidatingState(true)
-        ctxRef.current?.ctx.dispatchValidity({ name, valid: false })
-      }
-
-      debouncedValidate(inputValue)
+      triggerValidation()
     },
-    [debouncedValidate, inputValue, name, onValidate],
+    [triggerValidation, onValidate],
   )
 
+  // Re-validate when external validateDeps change. The dirty-validate effect
+  // above already handles the initial mount, so skip the first run here to
+  // avoid firing validation twice when inputValue and validateDeps change together.
+  const validateDepsMounted = useRef(false)
   useEffect(
     () => {
-      if (typeof onValidate !== 'function' || !ctxRef.current?.ctx.isInit) {
+      if (!validateDepsMounted.current) {
+        validateDepsMounted.current = true
         return
       }
 
-      if (!metaRef.current.validating) {
-        setValidatingState(true)
-        ctxRef.current?.ctx.dispatchValidity({ name, valid: false })
-      }
-
-      debouncedValidate(inputValue)
+      triggerValidation()
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps -- Only run this code when this deps array changes.
     Array.isArray(validateDeps) ? validateDeps : [validateDeps],

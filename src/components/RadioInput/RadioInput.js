@@ -66,7 +66,7 @@ RadioInput.propTypes = {
   onChange: PropTypes.func.isRequired,
   OptionElement: PropTypes.elementType,
   options: PropTypes.array.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 }
 
 

@@ -21,7 +21,7 @@ export default function pageRedirect (ctx, route) {
       Location: as,
     })
     ctx.res.end()
-  } else if (route.startsWith('http')) {
+  } else if (typeof as === 'string' && as.startsWith('http')) {
     if (typeof window !== 'undefined') {
       window.location.replace(as)
     }

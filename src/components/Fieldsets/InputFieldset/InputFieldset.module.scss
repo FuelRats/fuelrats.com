@@ -38,6 +38,8 @@
 }
 
 .hidden {
+  /* Fully remove from layout and the tab/pointer order, not just visually hide.
+     !important guarantees the hide wins over the element's own display rules. */
   /* stylelint-disable-next-line declaration-no-important */
-  opacity: 0 !important;
+  display: none !important;
 }
