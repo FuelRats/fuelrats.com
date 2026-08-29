@@ -25,6 +25,7 @@ const groups = {
   create: 'groups/create',
   update: 'groups/update',
   delete: 'groups/delete',
+  registeredChannels: 'groups/registeredChannels',
 }
 
 

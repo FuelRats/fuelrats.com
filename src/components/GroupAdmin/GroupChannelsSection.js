@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types'
-import { useCallback, useMemo, useState } from 'react'
+import {
+  useCallback, useEffect, useMemo, useState,
+} from 'react'
 import { useDispatch } from 'react-redux'
 
 import {
@@ -8,10 +10,11 @@ import {
   describeFlags,
   isValidFlags,
 } from '~/data/groupChannelFlags'
-import { setGroupChannel, removeGroupChannel } from '~/store/actions/groups'
+import { setGroupChannel, removeGroupChannel, getRegisteredChannels } from '~/store/actions/groups'
 import getResponseError from '~/util/getResponseError'
 
 import ConfirmActionButton from '../ConfirmActionButton'
+import TagsInput from '../TagsInput'
 import styles from './GroupAdmin.module.scss'
 
 
@@ -31,6 +34,7 @@ function ChannelFlagPicker (props) {
     initialChannel = '',
     initialFlags = '',
     isNew,
+    registeredChannels,
     onSave,
     onCancel,
   } = props
@@ -42,9 +46,28 @@ function ChannelFlagPicker (props) {
   const [error, setError] = useState(null)
   const [saving, setSaving] = useState(false)
 
-  const handleChannelChange = useCallback((event) => {
-    setChannel(event.target.value)
+  // Stable array identity so a flag toggle (parent re-render) doesn't churn TagsInput's value sync.
+  const channelValue = useMemo(() => {
+    return channel ? [channel] : []
+  }, [channel])
+
+  // TagsInput single-select: onAdd/onRemove pass the tag directly and fire
+  // reliably (onChange's array arg races React's lazy state update).
+  const handleChannelAdd = useCallback((tag) => {
+    setChannel(tag?.value ?? '')
   }, [])
+
+  const handleChannelRemove = useCallback(() => {
+    setChannel('')
+  }, [])
+
+  // Suggest registered channels, matching with or without the leading `#`.
+  const handleChannelSearch = useCallback((query) => {
+    const needle = query.replace(/^#/u, '').toLowerCase()
+    return registeredChannels.filter((name) => {
+      return name.replace(/^#/u, '').toLowerCase().includes(needle)
+    })
+  }, [registeredChannels])
 
   const handleToggle = useCallback((letter) => {
     setChecked((prev) => {
@@ -86,13 +109,29 @@ function ChannelFlagPicker (props) {
     <div className={styles.picker}>
       <label className={styles.flagCheck}>
         {'Channel'}
-        <input
-          aria-label="Channel name"
-          disabled={!isNew}
-          placeholder="#channel"
-          type="text"
-          value={channel}
-          onChange={handleChannelChange} />
+        {
+          isNew
+            ? (
+              <TagsInput
+                data-allownew
+                data-single
+                aria-label="Channel name"
+                placeholder="#channel"
+                value={channelValue}
+                valueProp="value"
+                onAdd={handleChannelAdd}
+                onRemove={handleChannelRemove}
+                onSearch={handleChannelSearch} />
+            )
+            : (
+              <input
+                disabled
+                readOnly
+                aria-label="Channel name"
+                type="text"
+                value={`#${channel.replace(/^#/u, '')}`} />
+            )
+        }
       </label>
 
       <div className={styles.flagCategories}>
@@ -155,6 +194,7 @@ ChannelFlagPicker.propTypes = {
   isNew: PropTypes.bool,
   onCancel: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
+  registeredChannels: PropTypes.arrayOf(PropTypes.string).isRequired,
 }
 
 
@@ -166,6 +206,19 @@ function GroupChannelsSection ({ group }) {
   const channels = group.attributes.channels ?? {}
   // `editing` is null (closed), '' (adding new), or a bare channel key (editing existing).
   const [editing, setEditing] = useState(null)
+  const [registeredChannels, setRegisteredChannels] = useState([])
+
+  useEffect(() => {
+    let active = true
+    dispatch(getRegisteredChannels()).then((response) => {
+      if (active && Array.isArray(response.payload?.channels)) {
+        setRegisteredChannels(response.payload.channels)
+      }
+    })
+    return () => {
+      active = false
+    }
+  }, [dispatch])
 
   const channelEntries = useMemo(() => {
     return Object.entries(group.attributes.channels ?? {}).sort(([keyA], [keyB]) => {
@@ -268,6 +321,7 @@ function GroupChannelsSection ({ group }) {
               initialChannel={editing}
               initialFlags={editing ? (channels[editing] ?? '') : ''}
               isNew={editing === ''}
+              registeredChannels={registeredChannels}
               onCancel={handleCancelEdit}
               onSave={handleSave} />
           )

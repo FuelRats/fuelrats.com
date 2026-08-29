@@ -1,13 +1,23 @@
 import createRequestBody from '~/util/jsonapi/createRequestBody'
 
 import actionTypes from '../actionTypes'
-import { frApiRequest } from './services'
+import { frApiRequest, frApiPlainRequest } from './services'
 import { deletesResource } from '../reducers/frAPIResources'
 
 
 // Channels are stored bare (no leading `#`); strip it and URL-encode for the path.
 const channelPath = (channel) => {
   return encodeURIComponent(channel.replace(/^[#&]/u, ''))
+}
+
+
+// Registered ChanServ channels (plain `{ channels: [...] }`, not a JSON:API resource) —
+// backs the channel-access autocomplete so access is granted to real channels.
+export const getRegisteredChannels = () => {
+  return frApiPlainRequest(
+    actionTypes.groups.registeredChannels,
+    { url: '/anope/channels' },
+  )
 }
 
 
