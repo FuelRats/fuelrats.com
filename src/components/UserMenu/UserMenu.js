@@ -46,6 +46,9 @@ function UserMenu () {
   const userCanAdminUsers = useSelector((state) => {
     return selectCurrentUserHasScope(state, { scope: 'users.write' })
   })
+  const userCanAdminGroups = useSelector((state) => {
+    return selectCurrentUserHasScope(state, { scope: 'groups.write' })
+  })
   const user = useSelector(withCurrentUserId(selectUserById))
 
   const dispatch = useDispatch()
@@ -115,7 +118,7 @@ function UserMenu () {
             </NavSection>
 
             {
-              (userCanAdminRescues || userCanAdminUsers) && (
+              (userCanAdminRescues || userCanAdminUsers || userCanAdminGroups) && (
                 <NavSection className={styles.navSection} title="Admin">
                   {
                     userCanAdminRescues && (
@@ -128,6 +131,13 @@ function UserMenu () {
                     userCanAdminUsers && (
                       <NavLink href="/admin/users">
                         {'User Admin'}
+                      </NavLink>
+                    )
+                  }
+                  {
+                    userCanAdminGroups && (
+                      <NavLink href="/admin/groups">
+                        {'Group Admin'}
                       </NavLink>
                     )
                   }
