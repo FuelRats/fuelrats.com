@@ -140,10 +140,10 @@ export const setDisplayNickname = (nicknameId, displayNick) => {
 }
 
 
-export const getGroups = () => {
+export const getGroups = (params) => {
   return frApiRequest(
     actionTypes.groups.search,
-    { url: '/groups' },
+    { url: '/groups', params },
   )
 }
 

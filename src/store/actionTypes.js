@@ -22,6 +22,10 @@ const epics = {
 const groups = {
   read: 'groups/read',
   search: 'groups/search',
+  create: 'groups/create',
+  update: 'groups/update',
+  delete: 'groups/delete',
+  registeredChannels: 'groups/registeredChannels',
 }
 
 
