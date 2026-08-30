@@ -20,7 +20,6 @@ export default produce((draftState, action) => {
 
   switch (type) {
     case actionTypes.wordpress.pages.read:
-    case actionTypes.wordpress.pages.search:
       if (!isError(action)) {
         payload.forEach((page) => {
           draftState.pages[page.slug] = page
@@ -31,4 +30,4 @@ export default produce((draftState, action) => {
     default:
       break
   }
-}, initialState.rescues)
+}, initialState.wordpress)

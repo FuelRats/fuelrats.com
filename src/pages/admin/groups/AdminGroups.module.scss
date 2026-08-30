@@ -1,0 +1,71 @@
+@import '../../../scss/colors';
+
+.toolbar {
+  display: flex;
+
+  justify-content: flex-end;
+
+  margin-bottom: 1rem;
+}
+
+.tableWrap {
+  overflow: auto hidden;
+}
+
+.table {
+  min-width: 600px;
+  width: 100%;
+
+  border: 1px solid $grey-dark;
+
+  border-collapse: collapse;
+  table-layout: auto;
+
+  thead tr {
+    border-bottom: 2px solid $grey-dark;
+  }
+
+  th {
+    padding: 4px 8px;
+
+    color: $grey;
+
+    font-size: 0.85rem;
+    text-align: left;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 0.5rem 0.8rem;
+
+    border-top: 1px solid $grey-dark;
+
+    line-height: 27px;
+    vertical-align: middle;
+  }
+
+  tbody tr {
+    transition: background-color 0.15s;
+
+    &:hover {
+      background-color: rgba($grey, 0.1);
+    }
+  }
+}
+
+.empty {
+  padding: 2rem;
+
+  color: $grey;
+
+  text-align: center;
+}
+
+.clickable {
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba($grey, 0.15);
+  }
+}

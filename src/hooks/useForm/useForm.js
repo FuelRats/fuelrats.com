@@ -104,11 +104,17 @@ export default function useForm (config = {}) {
   const handleSubmit = useCallback(
     async (event) => {
       event.preventDefault()
+      if (submitting) {
+        return
+      }
       setSubmit(true)
-      await parentSubmit(state, stateDelta, resetForm)
-      setSubmit(false)
+      try {
+        await parentSubmit(state, stateDelta, resetForm)
+      } finally {
+        setSubmit(false)
+      }
     },
-    [parentSubmit, resetForm, state, stateDelta],
+    [parentSubmit, resetForm, state, stateDelta, submitting],
   )
 
   const ctxRef = useRef({ ctx: {} })

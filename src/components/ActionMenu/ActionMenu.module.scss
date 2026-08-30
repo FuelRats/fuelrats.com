@@ -1,4 +1,5 @@
 @import '../../scss/colors';
+@import '../../scss/variables/layers';
 
 .actionMenu {
   display: inline-block;
@@ -26,7 +27,7 @@
 
 .dropdown {
   position: fixed;
-  z-index: 1000;
+  z-index: $z-dropdown;
 
   min-width: 180px;
 

@@ -7,6 +7,7 @@ import styles from './ActionMenu.module.scss'
 
 
 const DROPDOWN_GAP = 4
+const VIEWPORT_MARGIN = 8
 
 
 function ActionMenu ({ items }) {
@@ -24,10 +25,20 @@ function ActionMenu ({ items }) {
 
     const updatePosition = () => {
       const rect = triggerRef.current.getBoundingClientRect()
-      setPosition({
-        top: rect.bottom + DROPDOWN_GAP,
-        left: rect.right,
-      })
+      let top = rect.bottom + DROPDOWN_GAP
+      let left = rect.right
+
+      const dropdown = dropdownRef.current
+      if (dropdown) {
+        const { width, height } = dropdown.getBoundingClientRect()
+        // The dropdown is translated by -100%, so `left` is its right edge.
+        left = Math.min(left, window.innerWidth - VIEWPORT_MARGIN)
+        left = Math.max(left, width + VIEWPORT_MARGIN)
+        top = Math.min(top, window.innerHeight - height - VIEWPORT_MARGIN)
+        top = Math.max(top, VIEWPORT_MARGIN)
+      }
+
+      setPosition({ top, left })
     }
 
     updatePosition()
@@ -59,6 +70,42 @@ function ActionMenu ({ items }) {
     }
   }, [open])
 
+  useEffect(() => {
+    if (!open) {
+      return undefined
+    }
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setOpen(false)
+        setConfirming(null)
+        triggerRef.current?.focus()
+      }
+    }
+    document.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [open])
+
+  const dropdownCallbackRef = useCallback((node) => {
+    dropdownRef.current = node
+    if (node && triggerRef.current) {
+      const rect = triggerRef.current.getBoundingClientRect()
+      const { width, height } = node.getBoundingClientRect()
+      // The dropdown is translated by -100%, so `left` is its right edge.
+      const left = Math.max(
+        Math.min(rect.right, window.innerWidth - VIEWPORT_MARGIN),
+        width + VIEWPORT_MARGIN,
+      )
+      const top = Math.max(
+        Math.min(rect.bottom + DROPDOWN_GAP, window.innerHeight - height - VIEWPORT_MARGIN),
+        VIEWPORT_MARGIN,
+      )
+      setPosition({ top, left })
+      node.querySelector('button')?.focus()
+    }
+  }, [])
+
   const handleItemClick = useCallback((item) => {
     if (item.confirm && confirming !== item.key) {
       setConfirming(item.key)
@@ -77,6 +124,8 @@ function ActionMenu ({ items }) {
     <div className={styles.actionMenu}>
       <button
         ref={triggerRef}
+        aria-expanded={open}
+        aria-haspopup="menu"
         className={styles.trigger}
         title="Actions"
         type="button"
@@ -93,8 +142,9 @@ function ActionMenu ({ items }) {
       {
         open && position && portalContainer && createPortal(
           <div
-            ref={dropdownRef}
+            ref={dropdownCallbackRef}
             className={styles.dropdown}
+            role="menu"
             style={{ top: position.top, left: position.left }}>
             {
               items.map((item) => {
@@ -105,6 +155,7 @@ function ActionMenu ({ items }) {
                   <button
                     key={item.key}
                     className={clsx(styles.item, { [styles.danger]: item.danger })}
+                    role="menuitem"
                     type="button"
                     onClick={
                       () => {

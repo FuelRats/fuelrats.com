@@ -32,6 +32,9 @@ export default produce((draftState, action) => {
     case actionTypes.session.initialize:
       draftState.token = payload.accessToken
       draftState.userAgent = payload.userAgent
+      if (payload.proxyHeaders) {
+        draftState.proxyHeaders = payload.proxyHeaders
+      }
       break
 
     case actionTypes.session.read:

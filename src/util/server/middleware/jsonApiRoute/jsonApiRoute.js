@@ -39,7 +39,11 @@ export default function jsonApiRoute (...middleware) {
       return
     }
 
-    res.status(ctx.errors[0]?.code ?? res.statusCode ?? HttpStatus.OK)
+    res.status(
+      ctx.errors.length
+        ? (ctx.errors[0]?.code ?? HttpStatus.INTERNAL_SERVER_ERROR)
+        : (res.statusCode ?? HttpStatus.OK),
+    )
     res.setHeader('Content-Type', jsonApiContentType)
     res.send(JSON.stringify(ctx)) // Body must be stringified here, or Next will override Content-Type
   }

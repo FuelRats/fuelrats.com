@@ -113,14 +113,16 @@ function DispatchBoard ({ query }) {
       if (rescueIds?.length) {
         navigator.setAppBadge(rescueIds.length)
       } else {
-        navigator.clearAppBadge()
+        navigator.clearAppBadge?.()
       }
     }
   }, [rescueIds])
 
   useEffect(() => {
     return () => {
-      navigator.clearAppBadge?.()
+      if (navigator.clearAppBadge) {
+        navigator.clearAppBadge()
+      }
     }
   }, [])
 

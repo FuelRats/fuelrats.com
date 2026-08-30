@@ -1,0 +1,230 @@
+@import '../../scss/colors';
+
+.section {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+
+  border-bottom: 1px solid $grey-dark;
+
+  &:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+
+    border-bottom: none;
+  }
+}
+
+.sectionTitle {
+  margin: 0 0 0.75rem;
+
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+.sectionHint {
+  margin: -0.5rem 0 0.75rem;
+
+  color: $grey;
+
+  font-size: 0.85rem;
+}
+
+.scalarGrid {
+  display: grid;
+  gap: 0.75rem 1rem;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  label {
+    display: flex;
+
+    flex-direction: column;
+    gap: 0.25rem;
+
+    font-size: 0.9rem;
+  }
+
+  input[type='text'],
+  input[type='number'] {
+    width: 100%;
+  }
+}
+
+.switchRow {
+  display: flex;
+
+  align-items: center;
+  gap: 0.5rem;
+
+  margin-top: 0.75rem;
+}
+
+.savedNote {
+  color: $green;
+
+  font-size: 0.85rem;
+}
+
+.channelList {
+  display: flex;
+
+  flex-direction: column;
+  gap: 0.5rem;
+
+  margin-bottom: 0.75rem;
+}
+
+.channelRow {
+  display: flex;
+
+  align-items: center;
+  gap: 0.75rem;
+
+  padding: 0.4rem 0.6rem;
+
+  border: 1px solid $grey-dark;
+  border-radius: 4px;
+}
+
+.channelName {
+  min-width: 8rem;
+
+  font-weight: bold;
+  font-family: monospace;
+}
+
+.flagBadges {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  flex: 1;
+  gap: 0.25rem;
+}
+
+.flagBadge {
+  padding: 0.1rem 0.4rem;
+
+  border-radius: 3px;
+
+  background-color: rgba($grey, 0.15);
+
+  font-size: 0.8rem;
+}
+
+.rowActions {
+  display: flex;
+  gap: 0.35rem;
+
+  margin-left: auto;
+}
+
+.picker {
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+
+  border: 1px solid $grey-dark;
+  border-radius: 4px;
+
+  background-color: rgba($grey, 0.05);
+}
+
+.flagCategories {
+  display: grid;
+  gap: 1rem;
+
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+
+  margin: 0.75rem 0;
+}
+
+.flagCategory {
+  legend {
+    margin-bottom: 0.35rem;
+
+    color: $grey;
+
+    font-size: 0.8rem;
+    text-transform: uppercase;
+  }
+}
+
+.flagCheck {
+  display: flex;
+
+  align-items: baseline;
+  gap: 0.4rem;
+
+  margin-bottom: 0.25rem;
+
+  font-size: 0.85rem;
+
+  input {
+    margin-top: 0.2rem;
+  }
+}
+
+.flagCheckDesc {
+  display: block;
+
+  color: $grey;
+
+  font-size: 0.75rem;
+}
+
+.permGrid {
+  display: flex;
+
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.permRow {
+  display: flex;
+
+  align-items: center;
+  gap: 1rem;
+
+  padding: 0.35rem 0.6rem;
+
+  border: 1px solid $grey-dark;
+  border-radius: 4px;
+}
+
+.permDomain {
+  min-width: 9rem;
+
+  font-weight: bold;
+}
+
+.permChecks {
+  display: flex;
+
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.permCheck {
+  display: flex;
+
+  align-items: center;
+  gap: 0.3rem;
+
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.pickerActions {
+  display: flex;
+  gap: 0.5rem;
+
+  margin-top: 0.5rem;
+}
+
+.error {
+  margin: 0.5rem 0;
+
+  color: $red;
+
+  font-size: 0.85rem;
+}

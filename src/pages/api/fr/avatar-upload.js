@@ -1,6 +1,7 @@
 import { HttpStatus } from '@fuelrats/web-util/http'
 
 import getEnv from '~/util/server/getEnv'
+import { isValidUuidV4 } from '~/util/string/uuidValidator'
 
 
 export const config = {
@@ -17,8 +18,8 @@ export default async function handler (req, res) {
   }
 
   const { userId } = req.query
-  if (!userId) {
-    res.status(HttpStatus.BAD_REQUEST).json({ error: 'userId is required' })
+  if (!isValidUuidV4(userId)) {
+    res.status(HttpStatus.BAD_REQUEST).json({ error: 'A valid userId is required' })
     return
   }
 
@@ -54,7 +55,8 @@ export default async function handler (req, res) {
       }
     })
     res.end(data)
-  } catch {
+  } catch (error) {
+    console.error('[avatar-upload] upstream request failed:', error)
     res.status(HttpStatus.BAD_GATEWAY).json({ error: 'Failed to upload avatar' })
   }
 }

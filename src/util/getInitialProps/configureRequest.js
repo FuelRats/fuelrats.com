@@ -1,10 +1,5 @@
 import nextCookies from 'next-cookies'
 
-import frApi from '~/services/frApi'
-
-
-
-
 
 export default function configureRequest (ctx) {
   // Always setup access token
@@ -13,21 +8,27 @@ export default function configureRequest (ctx) {
     ctx.accessToken = accessToken
   }
 
-  // If we're on the server, we should set proxy headers to retain origin IP
+  // If we're on the server, collect proxy headers to retain the origin IP.
+  // These are attached per-request (via the store) rather than onto the shared
+  // axios instance, so concurrent SSR requests never leak each other's IP.
   if (ctx.isServer) {
+    const proxyHeaders = {}
+
     const realIp = ctx.req.headers['x-real-ip'] ?? ctx.req.client?.remoteAddress
     if (realIp) {
-      frApi.defaults.headers.common['x-real-ip'] = realIp
+      proxyHeaders['x-real-ip'] = realIp
     }
 
     const forwardedFor = ctx.req.headers['x-forwarded-for'] ?? ctx.req.client?.remoteAddress
     if (forwardedFor) {
-      frApi.defaults.headers.common['x-forwarded-for'] = forwardedFor
+      proxyHeaders['x-forwarded-for'] = forwardedFor
     }
 
-    const forwardedProto = ctx.req.headers['x-forwarded-proto'] ?? ctx.req.headers.host
+    const forwardedProto = ctx.req.headers['x-forwarded-proto'] ?? (ctx.req.socket?.encrypted ? 'https' : 'http')
     if (forwardedProto) {
-      frApi.defaults.headers.common['x-forwarded-proto'] = forwardedProto
+      proxyHeaders['x-forwarded-proto'] = forwardedProto
     }
+
+    ctx.proxyHeaders = proxyHeaders
   }
 }

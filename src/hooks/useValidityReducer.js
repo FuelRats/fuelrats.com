@@ -30,8 +30,8 @@ export default function useValidityReducer (initialState = {}) {
   const isValid = useMemo(() => {
     const validityValues = Object.values(state)
     return Boolean(!validityValues.length || validityValues.filter((entry) => {
-      // only "true" and "undefined" are considered valid values
-      return entry !== true || typeof entry === 'undefined'
+      // Undefined entries are removed by the reducer, so only "true" is valid.
+      return entry !== true
     }).length === 0)
   }, [state])
 

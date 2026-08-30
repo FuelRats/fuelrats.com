@@ -156,14 +156,14 @@ const useQuoteString = (rescue) => {
 
 const useRescueLanguage = (rescue) => {
   return useMemo(() => {
-    return getLanguage(rescue.attributes.clientLanguage)
-  }, [rescue.attributes.clientLanguage])
+    return getLanguage(rescue?.attributes?.clientLanguage)
+  }, [rescue?.attributes?.clientLanguage])
 }
 
 const useRescuePlatform = (rescue) => {
   return useMemo(() => {
-    return getPlatform(rescue.attributes.platform)
-  }, [rescue.attributes.platform])
+    return getPlatform(rescue?.attributes?.platform)
+  }, [rescue?.attributes?.platform])
 }
 
 

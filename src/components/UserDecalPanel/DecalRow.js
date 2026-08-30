@@ -8,6 +8,8 @@ import formatAsEliteDate from '~/util/date/formatAsEliteDate'
 import styles from './UserDecalPanel.module.scss'
 
 
+const REVEALED_CODE_START = 24
+
 
 function DecalRow ({ decal }) {
   const [visible, handleVisibility] = useReducer(reduceToggle, false)
@@ -30,7 +32,7 @@ function DecalRow ({ decal }) {
         {
           visible
             ? decal.attributes.code
-            : `•••••-•••••-•••••-•••••-${decal.attributes.code.substring(24)}`
+            : `•••••-•••••-•••••-•••••-${decal.attributes.code.substring(REVEALED_CODE_START)}`
         }
       </div>
       <div className={styles.decalClaimedAt}>

@@ -39,6 +39,9 @@ export default function NominateRescueForm ({ onSuccess, onError }) {
   }, [searchRescue, rescue])
 
   const onSubmit = (props) => {
+    if (!rats.length) {
+      return
+    }
     createEpic({
       notes: props.attributes.notes,
       rescueId: props.attributes.rescueId,
@@ -54,12 +57,11 @@ export default function NominateRescueForm ({ onSuccess, onError }) {
     canSubmit,
   } = useForm({
     data: {
-      attributes:
-        {
-          rescueId: '',
-          notes: '',
-          epicType: 'RESCUE',
-        },
+      attributes: {
+        rescueId: '',
+        notes: '',
+        epicType: 'RESCUE',
+      },
     },
     onSubmit,
   })
@@ -90,7 +92,7 @@ export default function NominateRescueForm ({ onSuccess, onError }) {
       <fieldset className={styles.submitBtn}>
         <button
           className="red"
-          disabled={submitting || isCreateLoading || !canSubmit || !rescue}
+          disabled={submitting || isCreateLoading || !canSubmit || !rescue || !rats.length}
           type="submit">
           {(submitting || isCreateLoading) ? 'Submitting...' : 'Submit'}
         </button>

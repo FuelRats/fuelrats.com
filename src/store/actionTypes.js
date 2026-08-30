@@ -22,6 +22,10 @@ const epics = {
 const groups = {
   read: 'groups/read',
   search: 'groups/search',
+  create: 'groups/create',
+  update: 'groups/update',
+  delete: 'groups/delete',
+  registeredChannels: 'groups/registeredChannels',
 }
 
 
@@ -253,19 +257,3 @@ const actionTypes = {
 
 
 export default actionTypes
-
-
-
-
-
-/* Template:
-
-const domain = {
-  create: 'domain/create',
-  delete: 'domain/delete',
-  read: 'domain/read',
-  search: 'domain/search',
-  update: 'domain/update',
-}
-
-*/

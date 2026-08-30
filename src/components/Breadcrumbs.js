@@ -14,27 +14,27 @@ function Breadcrumbs ({ items }) {
     <nav aria-label="Breadcrumb" className="breadcrumbs">
       <ol>
         {
-items.map((item, index) => {
-  return (
-    <li key={item.label}>
-      {
-                item.href
-                  ? (<Link href={item.href}>{item.label}</Link>)
-                  : (<span>{item.label}</span>)
-              }
-      {
-                index < items.length - 1 && (
-                  <FontAwesomeIcon
-                    aria-hidden
-                    fixedWidth
-                    className="breadcrumb-separator"
-                    icon="chevron-right" />
-                )
-              }
-    </li>
-  )
-})
-}
+          items.map((item, index) => {
+            return (
+              <li key={item.label}>
+                {
+                  item.href
+                    ? (<Link href={item.href}>{item.label}</Link>)
+                    : (<span>{item.label}</span>)
+                }
+                {
+                  index < items.length - 1 && (
+                    <FontAwesomeIcon
+                      aria-hidden
+                      fixedWidth
+                      className="breadcrumb-separator"
+                      icon="chevron-right" />
+                  )
+                }
+              </li>
+            )
+          })
+        }
       </ol>
     </nav>
   )

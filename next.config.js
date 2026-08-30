@@ -19,6 +19,15 @@ module.exports = () => {
 
     serverExternalPackages: ['@fortawesome/fontawesome-svg-core'],
 
+    experimental: {
+      optimizePackageImports: [
+        '@fortawesome/react-fontawesome',
+        'date-fns',
+        'lodash',
+        'motion',
+      ],
+    },
+
     // Runtime config — read from process.env at startup, not baked at build.
     // Available client-side via getConfig().publicRuntimeConfig.
     publicRuntimeConfig: {

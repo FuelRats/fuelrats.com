@@ -6,10 +6,6 @@ import MessageBox from '../MessageBox'
 import ApiErrorBox from '../MessageBox/ApiErrorBox'
 
 
-
-
-
-// Component Constants
 function getErrorText (error) {
   switch (error.status) {
     case 'unauthorized':

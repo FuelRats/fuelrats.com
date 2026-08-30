@@ -14,15 +14,15 @@ function Quote (props) {
   return (
     <blockquote className={styles.quote}>
       {
-        (props.date || props.author) && (
+        (date || author) && (
           <div className="header">
             {
-              props.date && (
+              date && (
                 <span className={styles.quoteDate}><FontAwesomeIcon fixedWidth icon="calendar-days" /> {date}</span>
               )
             }
             {
-              props.author && (
+              author && (
                 <span className={styles.quoteAuthor}>{author}</span>
               )
             }

@@ -37,7 +37,7 @@ const compareIps = (userIp) => {
 function ipFilter () {
   return async (ctx, next) => {
   // We only care about checking the file if it's actually configured
-    if (ctx.state.env?.stripe?.bansFile) {
+    if (env.stripe?.bansFile) {
     // Load on every request since we don't want to
       const bansFile = await jsonfile.readFile(env.stripe.bansFile)
       const bansList = bansFile[getIpType(ctx.req.ip)] ?? []

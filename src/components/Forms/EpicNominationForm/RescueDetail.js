@@ -43,10 +43,6 @@ export default function RescueDetail (props) {
           <td>{platform}</td>
         </tr>
         <tr>
-          <td><b>{'CMDR'}</b></td>
-          <td>{client}</td>
-        </tr>
-        <tr>
           <td><b>{'Status'}</b></td>
           <td>{status}</td>
         </tr>

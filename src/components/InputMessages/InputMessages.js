@@ -7,11 +7,6 @@ import styles from './InputMessages.module.scss'
 
 
 
-// Component Constants
-
-
-
-
 
 function MessageSet (props) {
   return props.messages.map((message) => {
@@ -34,7 +29,7 @@ function InputMessages (props) {
   } = props
 
   return (
-    <ul className={clsx(styles.inputMessages, className)}>
+    <ul aria-live="polite" className={clsx(styles.inputMessages, className)}>
       <MessageSet icon="triangle-exclamation" messages={messages.errors} type="error" />
       <MessageSet icon="circle-exclamation" messages={messages.warnings} type="warning" />
     </ul>

@@ -1,13 +1,11 @@
-import { createSelector } from 'reselect'
-
+import { createCachedSelector } from 're-reselect'
 
 
 
 
 const getBlogId = (_, props) => {
-  return props.blogId
+  return props?.blogId
 }
-
 
 
 
@@ -29,21 +27,20 @@ export const selectBlogCategories = (state) => {
 
 export const selectBlogStatistics = (state) => {
   return {
-    total: state.blogs.total,
     totalPages: state.blogs.totalPages,
   }
 }
 
-export const selectBlogById = createSelector(
+export const selectBlogById = createCachedSelector(
   [selectBlogs, getBlogId],
   (blogs, blogId) => {
     return blogs.find((blog) => {
       return (blog.id.toString() === blogId.toString()) || (blog.slug === blogId)
     })
   },
-)
+)(getBlogId)
 
-export const selectAuthorByBlogId = createSelector(
+export const selectAuthorByBlogId = createCachedSelector(
   [selectBlogById, selectBlogAuthors],
   (blog, authors) => {
     if (!blog?.author) {
@@ -54,9 +51,9 @@ export const selectAuthorByBlogId = createSelector(
       id: blog.author,
     }
   },
-)
+)(getBlogId)
 
-export const selectCategoriesByBlogId = createSelector(
+export const selectCategoriesByBlogId = createCachedSelector(
   [selectBlogById, selectBlogCategories],
   (blog, categories) => {
     if (!blog?.categories) {
@@ -69,4 +66,4 @@ export const selectCategoriesByBlogId = createSelector(
       }
     })
   },
-)
+)(getBlogId)

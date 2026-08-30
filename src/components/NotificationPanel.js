@@ -42,6 +42,14 @@ const SOUND_PREVIEWS = {
   caseClosed: playCaseClosedSound,
 }
 
+const SOUND_OPTIONS = [
+  { key: 'newCase', label: 'New case', icon: 'plus' },
+  { key: 'caseChange', label: 'Case update', icon: 'arrows-rotate' },
+  { key: 'caseClosed', label: 'Case closed', icon: 'check' },
+]
+
+const CLOSE_ANIMATION_MS = 150
+
 
 function NotificationPanel ({ className, open, onClose }) {
   const panelRef = useRef(null)
@@ -83,15 +91,13 @@ function NotificationPanel ({ className, open, onClose }) {
 
   // Push handlers
   const handleTogglePushFilter = useCallback((key) => {
-    setPushFilters((prev) => {
-      const next = { ...prev, [key]: !prev[key] }
-      // Re-register with new filters if already subscribed
-      if (subscribed) {
-        subscribe(next)
-      }
-      return next
-    })
-  }, [subscribed, subscribe])
+    const next = { ...pushFilters, [key]: !pushFilters[key] }
+    setPushFilters(next)
+    // Re-register with new filters if already subscribed
+    if (subscribed) {
+      subscribe(next)
+    }
+  }, [pushFilters, subscribed, subscribe])
 
   const handlePushToggle = useCallback(async () => {
     if (subscribed) {
@@ -125,7 +131,6 @@ function NotificationPanel ({ className, open, onClose }) {
       setClosing(false)
     } else if (visible) {
       setClosing(true)
-      const CLOSE_ANIMATION_MS = 150
       const timer = setTimeout(() => {
         setVisible(false)
         setClosing(false)
@@ -166,11 +171,7 @@ function NotificationPanel ({ className, open, onClose }) {
             <>
               <div className={styles.soundOptions}>
                 {
-[
-  { key: 'newCase', label: 'New case', icon: 'plus' },
-  { key: 'caseChange', label: 'Case update', icon: 'arrows-rotate' },
-  { key: 'caseClosed', label: 'Case closed', icon: 'check' },
-].map((item) => {
+SOUND_OPTIONS.map((item) => {
   return (
     <div key={item.key} className={styles.soundRow}>
       <button

@@ -23,7 +23,7 @@ function NamespaceDetails (props) {
 
     return Object.entries(actions).map(([actionName, action]) => {
       const accessible = action.all || action.self
-      const isSelf = action.self && (!action.all || (!action.all && action.self))
+      const isSelf = action.self && !action.all
       return (
         <li key={actionName} className={clsx(styles.permission, { [styles.inaccessible]: accessible })}>
           <span>

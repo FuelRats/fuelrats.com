@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Router from 'next/router'
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import PasswordResetForm from '~/components/Forms/PasswordResetForm'
@@ -29,6 +29,7 @@ function Verify ({ token }) {
   const [{ submitted, error }, setSubmitState] = useState({ submitted: false })
 
   const dispatch = useDispatch()
+  const redirectTimeoutRef = useRef(null)
 
   const userIsVerified = useSelector((state) => {
     return selectCurrentUserHasScope(state, { scope: 'users.verified' })
@@ -41,11 +42,19 @@ function Verify ({ token }) {
     setSubmitState({ submitted: true, error: resError })
 
     if (!resError) {
-      setTimeout(() => {
+      redirectTimeoutRef.current = setTimeout(() => {
         Router.push('/?authenticate=true')
       }, RESET_SUCCESS_REDIRECT_WAIT)
     }
   }, [dispatch, token.value])
+
+  useEffect(() => {
+    return () => {
+      if (redirectTimeoutRef.current) {
+        clearTimeout(redirectTimeoutRef.current)
+      }
+    }
+  }, [])
 
   if (!token.valid) {
     let message = 'The provided token is invalid, which probably means it has expired. Please try resetting your password again. If the problem persists,'

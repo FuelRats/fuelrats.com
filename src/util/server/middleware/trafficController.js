@@ -88,6 +88,7 @@ class TrafficControl {
    */
   reset () {
     this.unauthenticatedRequests = {}
+    clearTimeout(this.#resetTimer)
     this.#resetTimer = setTimeout(this.reset.bind(this), this.remainingTimeToNextResetDate)
   }
 }

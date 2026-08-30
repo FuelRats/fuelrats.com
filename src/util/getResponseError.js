@@ -20,7 +20,7 @@ export default function getResponseError (action) {
   }
 
   // Internal error
-  if (action.meta.error) {
+  if (action.meta?.error) {
     return action.meta.error
   }
 

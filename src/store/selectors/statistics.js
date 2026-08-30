@@ -25,7 +25,7 @@ export const selectUserStatisticsById = createCachedSelector(
   (userId, userRats, ratStatistics) => {
     // if the user doesn't exist, or there's no rat data, or there's no statistics for the first rat, return null.
     // Since the only way of getting a rat's statistics is by requesting for all rats of a user, we can assume we don't have any if we're missing one.
-    if (!userRats || !ratStatistics[userRats[0].id]) {
+    if (!userRats?.length || !ratStatistics[userRats[0].id]) {
       return undefined
     }
 
