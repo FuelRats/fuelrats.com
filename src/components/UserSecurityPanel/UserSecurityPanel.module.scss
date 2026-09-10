@@ -408,7 +408,24 @@
 }
 
 .pushToggle {
+  display: flex;
+
+  flex-wrap: wrap;
+  align-items: center;
+
+  gap: 0.5rem;
+
   margin-bottom: 1rem;
+}
+
+.testSent {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 0.35rem;
+
+  color: $green;
 }
 
 .pushSubheading {
