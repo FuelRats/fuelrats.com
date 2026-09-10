@@ -1,12 +1,14 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 import ConfirmActionButton from '~/components/ConfirmActionButton'
 import ApiErrorBox from '~/components/MessageBox/ApiErrorBox'
 import usePushNotifications from '~/hooks/usePushNotifications'
-import { listPushSubscriptions, updatePushSubscription, deletePushSubscription } from '~/store/actions/webPush'
+import {
+  listPushSubscriptions, updatePushSubscription, deletePushSubscription, sendTestPush,
+} from '~/store/actions/webPush'
 import friendlyApiError from '~/util/friendlyApiError'
 import getResponseError from '~/util/getResponseError'
 
@@ -14,6 +16,8 @@ import styles from './UserSecurityPanel.module.scss'
 
 
 
+
+const TEST_SENT_RESET_MS = 5000
 
 const FILTER_LABELS = {
   pc: 'PC',
@@ -35,6 +39,15 @@ function PushSubscriptionsPanel () {
   const [loadingList, setLoadingList] = useState(true)
   const [error, setError] = useState(null)
   const [currentEndpoint, setCurrentEndpoint] = useState(null)
+  const [sendingTest, setSendingTest] = useState(false)
+  const [testSent, setTestSent] = useState(false)
+  const testSentTimeoutRef = useRef()
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(testSentTimeoutRef.current)
+    }
+  }, [])
 
   useEffect(() => {
     if (typeof navigator !== 'undefined' && navigator.serviceWorker) {
@@ -100,6 +113,24 @@ function PushSubscriptionsPanel () {
         })
       })
     }
+  }, [dispatch])
+
+  const handleSendTest = useCallback(async () => {
+    setError(null)
+    setTestSent(false)
+    setSendingTest(true)
+    const response = await dispatch(sendTestPush())
+    const err = getResponseError(response)
+    if (err) {
+      setError(err)
+    } else {
+      setTestSent(true)
+      clearTimeout(testSentTimeoutRef.current)
+      testSentTimeoutRef.current = setTimeout(() => {
+        setTestSent(false)
+      }, TEST_SENT_RESET_MS)
+    }
+    setSendingTest(false)
   }, [dispatch])
 
   const denied = permission === 'denied'
@@ -169,6 +200,26 @@ async () => {
                   <FontAwesomeIcon fixedWidth icon={subscribed ? 'bell-slash' : 'bell'} />
                   {subscribed ? ' Disable on this device' : ' Enable on this device'}
                 </button>
+                {
+                  subscribed && (
+                    <button
+                      className="secondary"
+                      disabled={sendingTest}
+                      type="button"
+                      onClick={handleSendTest}>
+                      <FontAwesomeIcon fixedWidth icon="paper-plane" />
+                      {sendingTest ? ' Sending...' : ' Send test notification'}
+                    </button>
+                  )
+                }
+                {
+                  testSent && (
+                    <span className={styles.testSent}>
+                      <FontAwesomeIcon fixedWidth icon="circle-check" />
+                      {' Test notification sent to your subscribed devices.'}
+                    </span>
+                  )
+                }
               </div>
             </>
           )

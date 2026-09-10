@@ -144,6 +144,7 @@ const webPush = {
   list: 'webPush/list',
   update: 'webPush/update',
   remove: 'webPush/remove',
+  test: 'webPush/test',
 }
 
 
