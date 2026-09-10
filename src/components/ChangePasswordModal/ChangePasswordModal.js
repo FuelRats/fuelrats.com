@@ -3,11 +3,12 @@ import { useCallback, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import asModal, { ModalContent, ModalFooter } from '~/components/asModal'
+import LoginTokenFieldset from '~/components/Fieldsets/LoginTokenFieldset'
 import NewPasswordFieldset from '~/components/Fieldsets/NewPasswordFieldset'
 import PasswordFieldset from '~/components/Fieldsets/PasswordFieldset'
 import useForm from '~/hooks/useForm'
 import { changePassword } from '~/store/actions/authentication'
-import { selectCurrentUserId } from '~/store/selectors'
+import { selectCurrentUserId, selectUserById, withCurrentUserId } from '~/store/selectors'
 import getResponseError from '~/util/getResponseError'
 
 
@@ -54,15 +55,19 @@ function ChangePasswordModal (props) {
 
 
   const userId = useSelector(selectCurrentUserId)
+  const user = useSelector(withCurrentUserId(selectUserById))
+  const hasTotp = Boolean(user?.relationships?.authenticator?.data)
+
   const data = useMemo(() => {
     return {
       id: userId,
       attributes: {
         password: '',
         newPassword: '',
+        ...(hasTotp ? { totpCode: '' } : {}),
       },
     }
-  }, [userId])
+  }, [userId, hasTotp])
 
   const { Form, submitting, canSubmit } = useForm({ data, onSubmit })
 
@@ -95,6 +100,19 @@ function ChangePasswordModal (props) {
         id="NewPassword"
         name="attributes.newPassword"
         placeholder="New Password" />
+
+      {
+        hasTotp && (
+          <LoginTokenFieldset
+            dark
+            required
+            aria-label="Authenticator Code"
+            displayName="Authenticator code"
+            id="ChangePasswordTotp"
+            name="attributes.totpCode"
+            placeholder="6-digit authenticator code" />
+        )
+      }
 
       <ModalFooter>
         <div className="secondary" />
