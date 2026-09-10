@@ -35,6 +35,7 @@ export {
   faIdCardAlt,
   faMobileScreen,
   faMouse,
+  faPaperPlane,
   faPen,
   faPlay,
   faPlus,

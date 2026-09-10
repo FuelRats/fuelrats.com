@@ -99,9 +99,17 @@ export const updateAvatar = (data) => {
       return null
     })
 
+    // A 413 from the proxy/gateway is often not JSON, so its status would
+    // otherwise be lost and surfaced as a generic 500. Synthesize a JSON:API
+    // error carrying the status so the UI can present a "too large" message.
+    const PAYLOAD_TOO_LARGE = 413
+    const payload = (!response.ok && !result?.errors?.length && response.status === PAYLOAD_TOO_LARGE)
+      ? { errors: [{ code: PAYLOAD_TOO_LARGE, status: 'payload_too_large', title: 'Avatar Too Large' }] }
+      : result
+
     return dispatch({
       type: actionTypes.users.avatar.update,
-      payload: result,
+      payload,
       error: !response.ok,
     })
   }

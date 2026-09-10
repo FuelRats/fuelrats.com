@@ -75,3 +75,23 @@ export const deletePushSubscription = (subscriptionId) => {
     ))
   }
 }
+
+
+export const sendTestPush = () => {
+  return (dispatch, getState) => {
+    const userId = selectCurrentUserId(getState())
+    return dispatch(frApiPlainRequest(
+      actionTypes.webPush.test,
+      {
+        url: `/users/${userId}/alerts`,
+        method: 'post',
+        data: {
+          title: 'Fuel Rats',
+          body: 'Test notification — your push notifications are working! o7',
+          tag: 'fr-test-notification',
+          data: { url: '/profile/overview' },
+        },
+      },
+    ))
+  }
+}

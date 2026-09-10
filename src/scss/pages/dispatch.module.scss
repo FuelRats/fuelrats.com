@@ -34,6 +34,13 @@ $bounce-bezier: cubic-bezier(0.68, -0.55, 0.265, 1.55);
       box-shadow: 0 0 6px currentcolor;
     }
   }
+
+  // Installed as a PWA there is no browser chrome, so the fixed user-menu avatar
+  // (top-right: 2rem margin + 6.5rem wide) sits over the right-aligned controls.
+  // Reserve room for it so the notification/board-settings buttons stay clear.
+  @media (display-mode: standalone) and (max-width: 1024px) {
+    padding-right: calc(9rem + env(safe-area-inset-right));
+  }
 }
 
 .statusDot {
