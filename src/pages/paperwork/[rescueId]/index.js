@@ -12,6 +12,7 @@ import RatName from '~/components/RatName'
 import UserAvatar from '~/components/UserAvatar'
 import { deleteRescue, getRescue } from '~/store/actions/rescues'
 import {
+  selectDispatcherRatsByRescueId,
   selectRatsByRescueId,
   selectRescueById,
   selectCurrentUserCanEditRescue,
@@ -62,11 +63,8 @@ function renderQuote (quote) {
 
 
 function DispatchersList ({ rescue }) {
-  const dispatcherIds = rescue.relationships?.dispatchers?.data ?? []
   const dispatcherRats = useSelector((state) => {
-    return dispatcherIds.map(({ id }) => {
-      return selectDisplayRatByUserId(state, { userId: id })
-    }).filter(Boolean)
+    return selectDispatcherRatsByRescueId(state, { rescueId: rescue.id })
   })
   if (dispatcherRats.length === 0) {
     return <span className="content">{'-'}</span>
