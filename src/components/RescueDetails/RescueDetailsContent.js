@@ -11,7 +11,7 @@ import {
   useRescuePlatform, useRescueLanguage, useRescuePermit, useRescueLandmark, useRescueHasScoopableStar,
   useRescueMainStarDescription,
 } from '~/hooks/rescueHooks'
-import { createSelectRenderedRatList, selectDisplayRatByUserId } from '~/store/selectors'
+import { createSelectRenderedRatList, selectDispatcherRatsByRescueId } from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 import formatQuoteTime from '~/util/date/formatQuoteTime'
 import { expansionLongNameMap } from '~/util/expansion'
@@ -78,9 +78,7 @@ function RescueDetailsContent (props) {
     return selectRenderedRatList(state, { rescueId: rescue.id })
   })
   const dispatcherRats = useSelector((state) => {
-    return (rescue.relationships?.dispatchers?.data ?? []).map(({ id }) => {
-      return selectDisplayRatByUserId(state, { userId: id })
-    }).filter(Boolean)
+    return selectDispatcherRatsByRescueId(state, { rescueId: rescue.id })
   })
   const rescuePermit = useRescuePermit(rescue)
   const rescueLandmark = useRescueLandmark(rescue)

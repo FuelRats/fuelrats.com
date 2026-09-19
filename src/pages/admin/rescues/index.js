@@ -27,6 +27,7 @@ import { deleteRescue, getRescues } from '~/store/actions/rescues'
 import {
   selectPageViewDataById, selectPageViewMetaById,
   selectRatsByRescueId, selectRatById,
+  selectDispatcherRatsByRescueId,
   selectDisplayRatByUserId,
 } from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
@@ -101,9 +102,7 @@ function ExpandedRescueRow ({ rescue }) {
   })
   const firstLimpetId = rescue.relationships?.firstLimpet?.data?.id
   const dispatcherRats = useSelector((state) => {
-    return (rescue.relationships?.dispatchers?.data ?? []).map(({ id }) => {
-      return selectDisplayRatByUserId(state, { userId: id })
-    }).filter(Boolean)
+    return selectDispatcherRatsByRescueId(state, { rescueId: rescue.id })
   })
   const lastEditRat = useSelector((state) => {
     const lastEditId = rescue.relationships?.lastEditUser?.data?.id

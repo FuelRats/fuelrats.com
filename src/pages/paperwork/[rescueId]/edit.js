@@ -13,6 +13,7 @@ import ApiErrorBox from '~/components/MessageBox/ApiErrorBox'
 import useUnsavedChangesGuard from '~/hooks/useUnsavedChangesGuard'
 import { getRescue, updateRescue } from '~/store/actions/rescues'
 import {
+  selectDispatcherRatsByRescueId,
   selectRatsByRescueId,
   selectRescueById,
   selectCurrentUserCanEditRescue,
@@ -93,9 +94,7 @@ function Paperwork ({ query }) {
     return lastEditId ? selectDisplayRatByUserId(state, { userId: lastEditId }) : null
   })
   const initialDispatcherRats = useSelector((state) => {
-    return (rescue?.relationships?.dispatchers?.data ?? []).map(({ id }) => {
-      return selectDisplayRatByUserId(state, { userId: id })
-    }).filter(Boolean)
+    return selectDispatcherRatsByRescueId(state, query)
   })
 
   const [submitting, setSubmitting] = useState(false)

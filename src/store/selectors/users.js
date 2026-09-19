@@ -33,6 +33,10 @@ export const getUserIdProp = (_, props) => {
 
 
 
+export const selectUsers = (state) => {
+  return state.users
+}
+
 export const selectUserById = (state, props = {}) => {
   return state.users[props.userId] ?? undefined
 }
