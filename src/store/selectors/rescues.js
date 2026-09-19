@@ -4,9 +4,9 @@ import { createCachedSelector } from 're-reselect'
 
 
 
-import { selectRats } from './rats'
+import { getDisplayRatId, selectRats } from './rats'
 import { selectCurrentUserId } from './session'
-import { selectCurrentUserHasScope } from './users'
+import { selectCurrentUserHasScope, selectUsers } from './users'
 
 
 
@@ -40,6 +40,29 @@ const selectRescueRatRelationship = (state, props) => {
 
   return rescue.relationships.rats.data ?? EMPTY_ARRAY
 }
+
+const selectRescueDispatcherRelationship = (state, props) => {
+  const rescue = selectRescueById(state, props)
+
+  if (!rescue || !rescue.relationships?.dispatchers) {
+    return EMPTY_ARRAY
+  }
+
+  return rescue.relationships.dispatchers.data ?? EMPTY_ARRAY
+}
+
+const selectDispatcherRatsByRescueId = createCachedSelector(
+  [selectRats, selectUsers, selectRescueDispatcherRelationship],
+  (rats, users, dispatchers) => {
+    return dispatchers.reduce((acc, { id }) => {
+      const rat = rats[getDisplayRatId(users[id])]
+      if (rat) {
+        acc.push(rat)
+      }
+      return acc
+    }, [])
+  },
+)(getRescueId)
 
 const selectRatsByRescueId = createCachedSelector(
   [selectRats, selectRescueRatRelationship],
@@ -150,6 +173,7 @@ export {
   selectRescueById,
   selectRescueRatRelationship,
   selectRatsByRescueId,
+  selectDispatcherRatsByRescueId,
   selectCanEditAllRescues as selectCurrentUserCanEditAllRescues,
   selectCurrentUserCanEditRescue,
   selectRescueUnidentifiedRats,

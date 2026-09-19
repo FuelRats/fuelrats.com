@@ -188,7 +188,7 @@ function PaperworkFormFields (props) {
         <SystemTagsInput
           data-allownew
           data-single
-          aira-label="Rescue system"
+          aria-label="Rescue system"
           disabled={submitting}
           name="system"
           value={system}

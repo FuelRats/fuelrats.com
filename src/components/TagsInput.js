@@ -148,11 +148,8 @@ function TagsInput (props) {
     if (!allowDuplicates && findTag(tag)) {
       return false
     }
-    let nextTags = null
-    setTags((prev) => {
-      nextTags = isSingle ? [tag] : [...prev, tag]
-      return nextTags
-    })
+    const nextTags = isSingle ? [tag] : [...tags, tag]
+    setTags(nextTags)
     setOptions([])
     setSelectedOption(null)
     if (inputRef.current) {
@@ -161,7 +158,7 @@ function TagsInput (props) {
     onAdd?.(tag)
     onChange?.(nextTags)
     return true
-  }, [allowDuplicates, findTag, isSingle, onAdd, onChange])
+  }, [allowDuplicates, findTag, isSingle, tags, onAdd, onChange])
 
   const removeTag = useCallback((tag) => {
     if (isSingle) {

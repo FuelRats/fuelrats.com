@@ -8,6 +8,13 @@ function ifDefined (value, fallback) {
 }
 
 
+// TagsInput hands its handlers the full tag list; treat anything else as empty
+// so a misbehaving input can't drop a field's value on the floor silently.
+function asTagList (value) {
+  return Array.isArray(value) ? value : []
+}
+
+
 function getFieldValues (rescue, rats, changes, dispatcherRats) {
   const getValue = (key) => {
     return ifDefined(changes[key], rescue.attributes[key])
@@ -156,17 +163,19 @@ export default function usePaperworkChanges (rescue, rats, userCanEdit, dispatch
   }, [setChanges, rescue])
 
   const handleFirstLimpetChange = useCallback((value) => {
+    const tags = asTagList(value)
+
     // TagsInput sometimes fires onChange when nothing actually changed.
-    if (typeof changes.firstLimpetId === 'undefined' && value.length && value[0].id === rescue.relationships.firstLimpet?.data?.id) {
+    if (typeof changes.firstLimpetId === 'undefined' && tags.length && tags[0].id === rescue.relationships.firstLimpet?.data?.id) {
       return
     }
 
     let newValue = []
-    if (value.length) {
-      if (value[0].id === rescue.relationships.firstLimpet?.data?.id) {
+    if (tags.length) {
+      if (tags[0].id === rescue.relationships.firstLimpet?.data?.id) {
         newValue = undefined
       } else {
-        newValue = value
+        newValue = tags
       }
     }
 
@@ -174,17 +183,19 @@ export default function usePaperworkChanges (rescue, rats, userCanEdit, dispatch
   }, [changes, rescue, setChanges])
 
   const handleSystemChange = useCallback((value) => {
+    const tags = asTagList(value)
+
     // TagsInput sometimes fires onChange when nothing actually changed.
-    if (typeof changes.system === 'undefined' && value.length && value[0].value === rescue.attributes.system) {
+    if (typeof changes.system === 'undefined' && tags.length && tags[0].value === rescue.attributes.system) {
       return
     }
 
     let newValue = null
-    if (value.length) {
-      if (value[0].value === rescue.attributes.system) {
+    if (tags.length) {
+      if (tags[0].value === rescue.attributes.system) {
         newValue = undefined
       } else {
-        newValue = value
+        newValue = tags
       }
     }
 
@@ -192,16 +203,17 @@ export default function usePaperworkChanges (rescue, rats, userCanEdit, dispatch
   }, [changes, rescue, setChanges])
 
   const handleRatsChange = useCallback((value) => {
-    setChanges({ rats: value })
+    setChanges({ rats: asTagList(value) })
   }, [setChanges])
 
   const handleDispatchersChange = useCallback((selectedRats) => {
+    const tags = asTagList(selectedRats)
     // Store both: rats for TagsInput display, users for submission
-    const users = selectedRats.map((rat) => {
+    const users = tags.map((rat) => {
       return rat.relationships?.user?.data
     }).filter(Boolean)
     setChangesState((prev) => {
-      return { ...prev, dispatchers: users, dispatcherRats: selectedRats }
+      return { ...prev, dispatchers: users, dispatcherRats: tags }
     })
   }, [])
 

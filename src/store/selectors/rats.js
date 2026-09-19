@@ -32,17 +32,20 @@ export const selectRatsByUserId = createSelector(
 )
 
 
+export const getDisplayRatId = (user) => {
+  if (!user) {
+    return undefined
+  }
+
+  return user.relationships.displayRat?.data?.id
+    ?? user.relationships.rats?.data[0]?.id
+    ?? undefined
+}
+
+
 export const selectDisplayRatIdByUserId = createSelector(
   [selectUserById],
-  (user) => {
-    if (!user) {
-      return undefined
-    }
-
-    return user.relationships.displayRat?.data?.id
-      ?? user.relationships.rats?.data[0]?.id
-      ?? undefined
-  },
+  getDisplayRatId,
 )
 
 
