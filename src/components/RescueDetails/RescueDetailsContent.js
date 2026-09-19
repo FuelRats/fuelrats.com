@@ -371,8 +371,10 @@ rescueLanguage.flag && (
                               {item.quoteMessage}
                             </span>
 
-                            <span className={clsx(styles.quoteTime, { [styles.withVia]: item.isViaAuthor })}>
-                              <span title={formatAsEliteDateTime(item.quote.createdAt)}>{formatQuoteTime(item.quote.createdAt)}</span>
+                            <span
+                              className={clsx(styles.quoteTime, { [styles.withVia]: item.isViaAuthor })}
+                              title={formatAsEliteDateTime(item.quote.createdAt)}>
+                              <span>{formatQuoteTime(item.quote.createdAt)}</span>
                               {item.isViaAuthor && !item.isEvent && (<span className={styles.quoteAuthorVia}>{`via ${item.quote.lastAuthor ?? item.quote.author}`}</span>)}
                             </span>
 

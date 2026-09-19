@@ -399,11 +399,25 @@
   }
 
   .quoteTime {
+    // Stretch over the full height of the quote row so the exact-timestamp
+    // tooltip can be reached anywhere in the time column, not just on the
+    // handful of pixels the relative time itself occupies.
+    display: flex;
+
+    flex-direction: column;
+    justify-content: flex-start;
+
+    align-self: stretch;
+
+    padding-top: 0.8rem;
+
     line-height: 1.5;
     text-align: right;
 
     &.withVia {
-      align-self: center;
+      justify-content: center;
+
+      padding-top: 0;
     }
   }
 
