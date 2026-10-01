@@ -12,18 +12,22 @@ export default function formatQuoteTime (value) {
   const elapsedMs = Date.now() - startTime
 
   if (elapsedMs < 0 || elapsedMs >= MS_IN_DAY) {
-    return formatAsEliteDateTime(value)
+    const text = formatAsEliteDateTime(value)
+    if (elapsedMs < 0) {
+      return [text, MS_IN_SECOND - (elapsedMs % MS_IN_SECOND)]
+    }
+    return [text, null]
   }
 
   if (elapsedMs < MS_IN_MINUTE) {
-    return 'just now'
+    return ['just now', MS_IN_MINUTE - (elapsedMs % MS_IN_MINUTE)]
   }
 
   if (elapsedMs < MS_IN_HOUR) {
     const minutes = Math.floor(elapsedMs / MS_IN_MINUTE)
-    return relativeFormatter.format(-minutes, 'minute')
+    return [relativeFormatter.format(-minutes, 'minute'), MS_IN_MINUTE - (elapsedMs % MS_IN_MINUTE)]
   }
 
   const hours = Math.floor(elapsedMs / MS_IN_HOUR)
-  return relativeFormatter.format(-hours, 'hour')
+  return [relativeFormatter.format(-hours, 'hour'), MS_IN_HOUR - (elapsedMs % MS_IN_HOUR)]
 }

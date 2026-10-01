@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types'
-import { useState, useEffect } from 'react'
 
 import formatTimeElapsed from '~/util/date/formatTimeElapsed'
 
+import Refresher from './Refresher'
 
-
-
+function formatElapsedTimer (from) {
+  const [text, remainderMs] = formatTimeElapsed(from)
+  return [text, 1000 - remainderMs]
+}
 
 function ElapsedTimer (props) {
   const {
@@ -13,29 +15,13 @@ function ElapsedTimer (props) {
     className,
     from,
   } = props
-  const [timeString, setTimeString] = useState('')
-
-  useEffect(() => {
-    let timeoutId = null
-
-    function setTime () {
-      const [newTimeString, remainderMs] = formatTimeElapsed(from)
-      setTimeString(newTimeString)
-      timeoutId = setTimeout(setTime, 1000 - remainderMs)
-    }
-
-    if (typeof window !== 'undefined') {
-      setTime()
-    }
-
-    return () => {
-      clearTimeout(timeoutId)
-    }
-  }, [from])
-
 
   return (
-    <Element className={className}>{timeString}</Element>
+    <Refresher
+      as={Element}
+      className={className}
+      fmtFn={formatElapsedTimer}
+      from={from} />
   )
 }
 
@@ -44,9 +30,5 @@ ElapsedTimer.propTypes = {
   className: PropTypes.string,
   from: PropTypes.string.isRequired,
 }
-
-
-
-
 
 export default ElapsedTimer
