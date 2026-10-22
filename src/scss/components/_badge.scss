@@ -14,7 +14,7 @@ $pc-background-gradients: ();
   $texture-y: math.percentage(math.div((math.random(30) + 70), 100));
 
   // The texture size is where we'll put our final color stop
-  $texture-size: (math.random(10)) + '%';
+  $texture-size: math.random(10) * 1%;
 
   // Generate our opacity, then multiply it by a fraction to ensure it's always significantly transparent
   $texture-opacity: math.random();
