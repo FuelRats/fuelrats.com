@@ -1,4 +1,4 @@
-import apiProxy, { config } from './apiProxy'
+import apiProxy from './apiProxy'
 import getEnv from './getEnv'
 
 
@@ -19,4 +19,3 @@ export default function frApiProxy (opts = {}) {
   })
 }
 
-export { config }
