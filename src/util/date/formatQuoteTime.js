@@ -14,7 +14,8 @@ export default function formatQuoteTime (value) {
   if (elapsedMs < 0 || elapsedMs >= MS_IN_DAY) {
     const text = formatAsEliteDateTime(value)
     if (elapsedMs < 0) {
-      return [text, MS_IN_SECOND - (elapsedMs % MS_IN_SECOND)]
+      // Refresh once the timestamp is reached, capped so a far-future value can't overflow setTimeout's delay.
+      return [text, Math.min(-elapsedMs, MS_IN_DAY)]
     }
     return [text, null]
   }
