@@ -1,3 +1,8 @@
+// Global styles load before any component's CSS module, so module rules win over global rules of equal specificity.
+// eslint-disable-next-line import/no-unassigned-import -- side-effect: registers FA icon library
+import '~/util/fontawesome/init'
+import '~/scss/app.scss'
+
 import clsx from 'clsx'
 import {
   AnimatePresence, LazyMotion, MotionConfig, domAnimation, m,
@@ -20,10 +25,6 @@ import {
 } from '~/store/actions/session'
 import resolvePageMeta from '~/util/getInitialProps/resolvePageMeta'
 import withReduxStore from '~/util/withReduxStore'
-
-// eslint-disable-next-line import/no-unassigned-import -- side-effect: registers FA icon library
-import '~/util/fontawesome/init'
-import '~/scss/app.scss'
 
 import ErrorPage from './_error'
 
