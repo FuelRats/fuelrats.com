@@ -2,6 +2,7 @@ import Document, { Html, Head, Main, NextScript } from 'next/document'
 
 // eslint-disable-next-line import/no-unassigned-import -- side-effect: registers FA icon library
 import '~/util/fontawesome/init'
+import getPublicConfig, { PUBLIC_CONFIG_META_NAME } from '~/util/getPublicConfig'
 
 
 // eslint-disable-next-line no-template-curly-in-string -- intentional
@@ -62,6 +63,8 @@ class FuelRatsWebsite extends Document {
           <link href="/manifest.json" rel="manifest" />
 
           <link href="/favicon.ico" rel="shortcut icon" />
+
+          <meta content={JSON.stringify(getPublicConfig())} name={PUBLIC_CONFIG_META_NAME} />
         </Head>
 
         <body>

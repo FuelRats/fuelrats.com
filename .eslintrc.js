@@ -16,7 +16,7 @@ module.exports = {
   extends: [
     '@fuelrats/eslint-config',
     '@fuelrats/eslint-config-react',
-    'plugin:@next/next/recommended',
+    'plugin:@next/next/recommended-legacy',
   ],
   globals: {
     $$BUILD: 'readonly',

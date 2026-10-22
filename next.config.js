@@ -28,27 +28,12 @@ module.exports = () => {
       ],
     },
 
-    // Runtime config — read from process.env at startup, not baked at build.
-    // Available client-side via getConfig().publicRuntimeConfig.
-    publicRuntimeConfig: {
-      frSocketUrl: env.frapi.socket,
-      stripeApiPk: env.stripe.public,
-      ircClientUrl: env.irc.client,
-      ircRatUrl: env.irc.rat,
-      vapidPublicKey: env.vapid.publicKey,
-    },
-
     images: {
       disableStaticImages: true,
       remotePatterns: [
         { protocol: 'https', hostname: 'wordpress.fuelrats.com' },
         { protocol: 'https', hostname: 'static-cdn.jtvnw.net' },
       ],
-    },
-
-    eslint: {
-      // Ignore ESLint in builds as our CI Takes care of this for us.
-      ignoreDuringBuilds: true,
     },
 
     headers: headersConfig(env),

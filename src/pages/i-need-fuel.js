@@ -1,4 +1,3 @@
-import getConfig from 'next/config'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useMemo } from 'react'
@@ -7,16 +6,17 @@ import { UAParser } from 'ua-parser-js'
 
 import MessageBox from '~/components/MessageBox'
 import { selectSession } from '~/store/selectors'
+import getPublicConfig from '~/util/getPublicConfig'
 
 
 
 
 
-const { publicRuntimeConfig } = getConfig() ?? {}
+const publicConfig = getPublicConfig()
 
 const ircURLs = {
-  client: publicRuntimeConfig?.ircClientUrl,
-  rat: publicRuntimeConfig?.ircRatUrl,
+  client: publicConfig.ircClientUrl,
+  rat: publicConfig.ircRatUrl,
 }
 const unsupportedPlatforms = {
   Sony: {

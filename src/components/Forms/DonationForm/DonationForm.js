@@ -1,7 +1,6 @@
 import { EmbeddedCheckout, EmbeddedCheckoutProvider } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
 import clsx from 'clsx'
-import getConfig from 'next/config'
 import PropTypes from 'prop-types'
 import { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -12,6 +11,7 @@ import useForm from '~/hooks/useForm'
 import { createDonationSession } from '~/store/actions/stripe'
 import { selectUserById, withCurrentUserId } from '~/store/selectors'
 import getFingerprint from '~/util/getFingerprint'
+import getPublicConfig from '~/util/getPublicConfig'
 import getResponseError from '~/util/getResponseError'
 import getMoney from '~/util/string/getMoney'
 
@@ -22,8 +22,7 @@ import DonationErrorBox from './DonationErrorBox'
 
 
 
-const { publicRuntimeConfig } = getConfig() ?? {}
-const stripePromise = loadStripe(publicRuntimeConfig?.stripeApiPk)
+const stripePromise = loadStripe(getPublicConfig().stripeApiPk)
 
 
 // Component Constants

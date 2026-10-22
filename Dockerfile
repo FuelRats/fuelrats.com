@@ -25,7 +25,7 @@ EXPOSE 3000
 # In docker-compose.dev.yml, the host's `src/` is mounted over /app/src for HMR.
 FROM base AS dev
 ENV NODE_ENV=development
-CMD ["bun", "run", "next", "dev"]
+CMD ["bun", "run", "next", "dev", "--webpack"]
 
 
 # ---------- prod ----------
