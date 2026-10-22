@@ -1,11 +1,11 @@
-import nextCookies from 'next-cookies'
-
 import getClientIp from '~/util/server/getClientIp'
+
+import getCookie from './getCookie'
 
 
 export default function configureRequest (ctx) {
   // Always setup access token
-  const { access_token: accessToken } = nextCookies(ctx)
+  const accessToken = getCookie('access_token', ctx)
   if (accessToken) {
     ctx.accessToken = accessToken
   }

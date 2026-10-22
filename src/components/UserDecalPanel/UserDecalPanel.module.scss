@@ -1,5 +1,5 @@
-@import '../../scss/fonts';
-@import '../../scss/colors';
+@use '../../scss/fonts';
+@use '../../scss/colors' as *;
 
 .panelContent {
   padding: 0;
@@ -34,7 +34,7 @@
 
     min-width: 0;
 
-    font-family: $monospace-fonts;
+    font-family: fonts.$monospace-fonts;
     word-break: break-all;
   }
 

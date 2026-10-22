@@ -1,4 +1,4 @@
-@import '../../scss/colors';
+@use '../../scss/colors' as *;
 
 .section {
   margin-bottom: 1.5rem;

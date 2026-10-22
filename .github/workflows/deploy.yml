@@ -71,12 +71,11 @@ jobs:
 
       - name: Create Release Pull Request
         if: github.ref == 'refs/heads/develop'
-        uses: changesets/action@v1.4.10
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: changesets/action@v2.1.2
         with:
-          title: "chore: Version Changelog"
-          commit: "chore: version changelog"
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          pr-title: "chore: Version Changelog"
+          commit-message: "chore: version changelog"
 
   deploy:
     name: Deploy

@@ -7,7 +7,7 @@ import getClientIp from './getClientIp'
 // connection open indefinitely.
 const REQUEST_BODY_TIMEOUT_MS = 30000
 
-// Client IPs resolved before the proxy runs, since its `xfwd` option appends to the incoming X-Forwarded-For header.
+// Client IPs resolved before the proxy runs, since its `xfwd` option can modify the incoming X-Forwarded-For header.
 const clientIps = new WeakMap()
 
 // Replaces any client-supplied forwarding headers with the resolved client IP, so upstreams can't be given a spoofed
@@ -34,13 +34,6 @@ function enforceRequestBodyTimeout (req, res) {
   }
   req.once('end', clear)
   res.once('close', clear)
-}
-
-export const config = {
-  api: {
-    externalResolver: true,
-    bodyParser: false,
-  },
 }
 
 export default function apiProxy (options) {

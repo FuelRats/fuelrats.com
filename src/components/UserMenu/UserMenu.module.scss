@@ -1,6 +1,5 @@
 @use 'sass:math';
-
-@import '../../scss/colors';
+@use '../../scss/colors' as *;
 
 
 $avatar-size: 6.5rem;

@@ -1,6 +1,10 @@
+@use '../variables/breakpoints';
+@use '../variables/layers';
+@use '../colors' as *;
+
 [role='dialog'] {
   display: flex;
-  z-index: $z-modal;
+  z-index: layers.$z-modal;
 
   flex-direction: column;
 
@@ -135,7 +139,7 @@
     }
   }
 
-  @media screen and (max-width: $bp-mobile) {
+  @media screen and (max-width: breakpoints.$bp-mobile) {
     min-width: 100%;
     padding: 1rem;
 

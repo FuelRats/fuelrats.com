@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { NextApiRequest, NextApiResponse } from 'next'
 
 import bindMethod from '~/util/decorators/bindMethod'
 import createResource from '~/util/jsonapi/createResource'
@@ -75,8 +74,8 @@ export default class JsonApiContext {
   #resErrors = []
 
   /**
-   * @param {NextApiRequest} req
-   * @param {NextApiResponse} res
+   * @param {import('next').NextApiRequest} req
+   * @param {import('next').NextApiResponse} res
    */
   constructor (req, res) {
     this.req = modRequest(req)

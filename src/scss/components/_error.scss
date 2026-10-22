@@ -1,3 +1,5 @@
+@use '../variables/loader';
+@use '../colors' as *;
 @use 'sass:math';
 
 .error:empty {
@@ -11,10 +13,10 @@
     align-items: center;
     place-content: center center;
 
-    width: $loader-size;
-    height: $loader-size;
-    margin-top: 0 - math.div($loader-size, 2);
-    margin-left: 0 - math.div($loader-size, 2);
+    width: loader.$loader-size;
+    height: loader.$loader-size;
+    margin-top: 0 - math.div(loader.$loader-size, 2);
+    margin-left: 0 - math.div(loader.$loader-size, 2);
 
     border-width: 0.3rem;
     border-style: solid;

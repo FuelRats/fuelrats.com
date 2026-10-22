@@ -1,3 +1,7 @@
+@use 'sass:color';
+@use '../variables/breakpoints';
+@use '../colors' as *;
+
 #Burger {
   display: inline-block;
   position: absolute;
@@ -64,7 +68,7 @@
   }
 }
 
-@media only screen and (max-width: $bp-tablet) {
+@media only screen and (max-width: breakpoints.$bp-tablet) {
   #NavControl {
     &:checked {
       ~ header,
@@ -311,7 +315,7 @@
     font-weight: bold;
 
     &:hover {
-      color: lighten($gold, 15%);
+      color: color.adjust($gold, $lightness: 15%);
     }
   }
 

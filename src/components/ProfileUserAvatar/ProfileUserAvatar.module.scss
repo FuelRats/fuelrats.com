@@ -1,4 +1,5 @@
-@import '../../scss/colors';
+@use 'sass:color';
+@use '../../scss/colors' as *;
 
 .userAvatar {
   position: relative;
@@ -69,7 +70,7 @@
   cursor: pointer;
 
   &:hover {
-    background-color: darken($red, 10%);
+    background-color: color.adjust($red, $lightness: -10%);
   }
 
   &:disabled {

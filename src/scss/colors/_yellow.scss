@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 $yellow: #F0AD4E;
-$yellow-darkened: darken($yellow, 10%);
-$yellow-darker: darken($yellow, 15%);
+$yellow-darkened: color.adjust($yellow, $lightness: -10%);
+$yellow-darker: color.adjust($yellow, $lightness: -15%);

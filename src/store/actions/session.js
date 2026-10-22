@@ -96,7 +96,8 @@ export const initUserSession = (ctx) => {
       const response = await dispatch(getUserProfile())
 
       if (isError(response)) {
-        const { status } = response.meta.response
+        // Network failures have no response; keep the session and let the page render without a profile
+        const status = response.meta?.response?.status
         if (status === HttpStatus.UNAUTHORIZED || status === HttpStatus.GONE) {
           dispatch(logout(ctx))
           ctx.accessToken = null
