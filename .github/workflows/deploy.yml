@@ -101,7 +101,9 @@ jobs:
           key: ${{ secrets.FR_SSH_KEY }}
           known_hosts: ${{ secrets.FR_KNOWN_HOSTS }}
 
+      # Deploys the immutable sha-<short> tag from the metadata step. The server has no registry login, so it can't
+      # resolve a reused branch tag to its new digest, and the update would leave the old image running.
       - name: Deploy to Docker Swarm
         run: |
           ssh fuelrats@mozzarella.fuelrats.com \
-            "docker service update --image ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }} ${{ steps.service.outputs.name }}"
+            "docker service update --image ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:sha-${GITHUB_SHA::7} ${{ steps.service.outputs.name }}"
