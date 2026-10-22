@@ -1,4 +1,3 @@
-/* eslint-env node */
 const crypto = require('crypto')
 const { PHASE_DEVELOPMENT_SERVER } = require('next/constants')
 
