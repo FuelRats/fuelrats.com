@@ -1,5 +1,13 @@
 # fuelrats.com Changelog
 
+## 3.0.2
+
+### Patch Changes
+
+- [#478](https://github.com/FuelRats/fuelrats.com/pull/478) [`a6eaaa7`](https://github.com/FuelRats/fuelrats.com/commit/a6eaaa7029344cc1c3b5864d258bc40ca9693b93) Thanks [@arckoor](https://github.com/arckoor)! - ### Changed
+  
+  - On the dispatch board, quote timestamps in the case details now update automatically.
+
 ## 3.0.1
 
 ### Patch Changes
