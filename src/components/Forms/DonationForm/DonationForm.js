@@ -22,7 +22,8 @@ import DonationErrorBox from './DonationErrorBox'
 
 
 
-const stripePromise = loadStripe(getPublicConfig().stripeApiPk)
+const { stripeApiPk } = getPublicConfig()
+const stripePromise = stripeApiPk ? loadStripe(stripeApiPk) : null
 
 
 // Component Constants
