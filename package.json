@@ -116,5 +116,8 @@
   "browserslist": [
     "defaults",
     "not IE 11"
-  ]
+  ],
+  "overrides": {
+    "immer": "^11.1.21"
+  }
 }
