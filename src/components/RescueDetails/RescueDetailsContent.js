@@ -13,7 +13,6 @@ import {
 } from '~/hooks/rescueHooks'
 import { createSelectRenderedRatList, selectDispatcherRatsByRescueId } from '~/store/selectors'
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
-import formatQuoteTime from '~/util/date/formatQuoteTime'
 import { expansionLongNameMap } from '~/util/expansion'
 import makePaperworkRoute from '~/util/router/makePaperworkRoute'
 import { getEdsmSystemUrl, submitSpanshRoute } from '~/util/system/externalLinks'
@@ -23,6 +22,7 @@ import QuoteAvatar from './QuoteAvatar'
 import CopyToClipboard from '../CopyToClipboard'
 import ElapsedTimer from '../ElapsedTimer'
 import PlatformBadge from '../PlatformBadge'
+import QuoteTimer from '../QuoteTimer'
 import RatName from '../RatName'
 import styles from './RescueDetails.module.scss'
 
@@ -372,7 +372,7 @@ rescueLanguage.flag && (
                             <span
                               className={clsx(styles.quoteTime, { [styles.withVia]: item.isViaAuthor })}
                               title={formatAsEliteDateTime(item.quote.createdAt)}>
-                              <span>{formatQuoteTime(item.quote.createdAt)}</span>
+                              <QuoteTimer from={item.quote.createdAt} />
                               {item.isViaAuthor && !item.isEvent && (<span className={styles.quoteAuthorVia}>{`via ${item.quote.lastAuthor ?? item.quote.author}`}</span>)}
                             </span>
 
