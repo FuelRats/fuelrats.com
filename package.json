@@ -80,8 +80,8 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.29.7",
-    "@changesets/changelog-github": "^0.5.2",
-    "@changesets/cli": "^2.31.1",
+    "@changesets/changelog-github": "^1.0.1",
+    "@changesets/cli": "^3.0.3",
     "@fuelrats/eslint-config": "2.4.0-canary.21",
     "@fuelrats/eslint-config-react": "2.4.0-canary.19",
     "@fuelrats/eslint-plugin": "2.4.0-canary.11",
