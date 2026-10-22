@@ -53,7 +53,7 @@ module.exports = () => {
 
     headers: headersConfig(env),
     redirects: redirectsConfig(env),
-    rewrites: rewritesConfig(env),
+    rewrites: rewritesConfig(),
     webpack: webpackConfig(env),
 
     generateBuildId: () => {

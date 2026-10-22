@@ -34,8 +34,11 @@ export default function apiProxy (options) {
     xfwd: true,
     ...options,
     on: {
-      proxyReq: forwardClientIp,
       ...options?.on,
+      proxyReq: (proxyReq, req, res) => {
+        forwardClientIp(proxyReq, req)
+        options?.on?.proxyReq?.(proxyReq, req, res)
+      },
     },
   })
 

@@ -12,9 +12,6 @@ const env = Object.freeze({
     clientId: process.env.FR_API_KEY,
     clientSecret: process.env.FR_API_SECRET,
   },
-  edsm: {
-    url: process.env.FR_EDSM_API_URL ?? 'https://www.edsm.net/api-v1',
-  },
   wordpress: {
     url: process.env.FR_WORDPRESS_URL ?? 'https://wordpress.fuelrats.com',
   },

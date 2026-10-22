@@ -1,4 +1,4 @@
-module.exports = (env) => {
+module.exports = () => {
   return () => {
     return {
       beforeFiles: [
@@ -10,7 +10,7 @@ module.exports = (env) => {
         {
           // Blog content dir.
           source: '/wp-content/:path*',
-          destination: `${env.wordpress.url}/wp-content/:path*`,
+          destination: '/api/wp-content/:path*',
         },
       ],
       fallback: [
