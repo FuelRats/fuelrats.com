@@ -35,7 +35,9 @@ module.exports = (phase) => {
   return {
     distDir: 'dist',
 
-    serverExternalPackages: ['@fortawesome/fontawesome-svg-core'],
+    // Bundle server dependencies instead of loading them through Turbopack's runtime-created aliases, which Bun
+    // can't resolve in development (oven-sh/bun#25370)
+    bundlePagesRouterDependencies: true,
 
     experimental: {
       optimizePackageImports: [
