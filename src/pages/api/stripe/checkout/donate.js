@@ -104,7 +104,7 @@ export default jsonApiRoute(
 
     const session = await stripe.checkout.sessions.create({
       mode: isRecurring ? 'subscription' : 'payment',
-      ui_mode: 'embedded',
+      ui_mode: 'embedded_page',
       return_url: `${env.appUrl}/donate/success?session_id={CHECKOUT_SESSION_ID}`,
       submit_type: isRecurring ? undefined : 'donate',
       allow_promotion_codes: false,
