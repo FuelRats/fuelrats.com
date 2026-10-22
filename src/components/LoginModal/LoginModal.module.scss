@@ -1,4 +1,4 @@
-@import '../../scss/colors';
+@use '../../scss/colors' as *;
 
 .loginModal .errorBox {
   margin: 0.5rem auto;

@@ -1,4 +1,4 @@
-@import '../../../scss/colors';
+@use '../../../scss/colors' as *;
 
 .table {
   min-width: 100%;
@@ -15,7 +15,7 @@
     > tr > th {
       padding: 4px 8px;
 
-      border: 1px solid var($grey);
+      border: 1px solid $grey;
     }
   }
 

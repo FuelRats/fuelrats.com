@@ -1,4 +1,4 @@
-@import '../../scss/colors';
+@use '../../scss/colors' as *;
 
 @keyframes loader-spin {
   0% {

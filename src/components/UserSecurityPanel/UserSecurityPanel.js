@@ -262,8 +262,8 @@ function UserSecurityPanel () {
                           <td>
                             {
                               passkey.attributes.backedUp
-                                ? <FontAwesomeIcon className={styles.synced} icon="circle-check" title="Synced" />
-                                : <FontAwesomeIcon className={styles.notSynced} icon="circle-xmark" title="Not synced" />
+                                ? <FontAwesomeIcon aria-label="Synced" className={styles.synced} icon="circle-check" />
+                                : <FontAwesomeIcon aria-label="Not synced" className={styles.notSynced} icon="circle-xmark" />
                             }
                           </td>
                           <td>
@@ -275,7 +275,7 @@ function UserSecurityPanel () {
                               name={passkey.id}
                               onConfirm={handleDelete}
                               onConfirmText="">
-                              <FontAwesomeIcon fixedWidth icon="trash" title="Delete passkey" />
+                              <FontAwesomeIcon fixedWidth icon="trash" />
                             </ConfirmActionButton>
                           </td>
                         </tr>

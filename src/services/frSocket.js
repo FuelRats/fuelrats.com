@@ -1,10 +1,10 @@
 import ReduxRatSocket from '@fuelrats/web-util/redux-ratsocket'
 import Cookies from 'js-cookie'
-import getConfig from 'next/config'
 import qs from 'qs'
 import { useCallback, useEffect, useSyncExternalStore } from 'react'
 
 import { updatesResources } from '~/store/reducers/frAPIResources'
+import getPublicConfig from '~/util/getPublicConfig'
 
 
 
@@ -19,10 +19,8 @@ function setSocketStatus (status) {
   })
 }
 
-const { publicRuntimeConfig } = getConfig() ?? {}
-
 const frSocket = new ReduxRatSocket(
-  publicRuntimeConfig?.frSocketUrl,
+  getPublicConfig().frSocketUrl,
   {
     transformAction (action) {
       return {

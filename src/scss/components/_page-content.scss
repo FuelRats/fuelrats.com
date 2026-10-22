@@ -1,3 +1,5 @@
+@use '../variables/breakpoints';
+
 .page-content {
   display: flex;
 
@@ -19,7 +21,7 @@
     }
   }
 
-  @media screen and (max-width: $bp-mobile) {
+  @media screen and (max-width: breakpoints.$bp-mobile) {
     margin: 1rem;
   }
 }
@@ -28,7 +30,7 @@
 .page-margins {
   margin: 2rem 2rem 0;
 
-  @media screen and (max-width: $bp-mobile) {
+  @media screen and (max-width: breakpoints.$bp-mobile) {
     margin: 1rem 1rem 0;
   }
 }

@@ -1,4 +1,6 @@
+@use 'sass:color';
+
 $gold: #D1B000;
-$gold-dark: darken($gold, 10%);
+$gold-dark: color.adjust($gold, $lightness: -10%);
 $gold-dark2: #D4772C;
-$gold-light: lighten($gold, 10%);
+$gold-light: color.adjust($gold, $lightness: 10%);

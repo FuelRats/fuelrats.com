@@ -1,14 +1,13 @@
-import getConfig from 'next/config'
 import { useCallback, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 import { subscribePush, unsubscribePush } from '~/store/actions/webPush'
+import getPublicConfig from '~/util/getPublicConfig'
 import getResponseError from '~/util/getResponseError'
 
 
 
-const { publicRuntimeConfig } = getConfig() ?? {}
-const VAPID_PUBLIC_KEY = publicRuntimeConfig?.vapidPublicKey
+const VAPID_PUBLIC_KEY = getPublicConfig().vapidPublicKey
 
 const BASE64_PAD_MODULO = 4
 const READY_TIMEOUT_MS = 3000

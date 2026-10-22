@@ -1,4 +1,6 @@
+@use 'sass:color';
+
 $red: #D65050;
-$red-darkened: darken($red, 10%);
-$red-darker: darken($red, 25%);
-$red-lightened: lighten($red, 10%);
+$red-darkened: color.adjust($red, $lightness: -10%);
+$red-darker: color.adjust($red, $lightness: -25%);
+$red-lightened: color.adjust($red, $lightness: 10%);

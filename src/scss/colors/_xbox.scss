@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 $xbox-green: #107C10;
-$xbox-green-light: lighten($xbox-green, 10%);
-$xbox-green-light2: lighten($xbox-green, 20%);
+$xbox-green-light: color.adjust($xbox-green, $lightness: 10%);
+$xbox-green-light2: color.adjust($xbox-green, $lightness: 20%);

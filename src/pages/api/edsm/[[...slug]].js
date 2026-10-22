@@ -1,4 +1,4 @@
-import apiProxy, { config } from '~/util/server/apiProxy'
+import apiProxy from '~/util/server/apiProxy'
 import getEnv from '~/util/server/getEnv'
 
 
@@ -12,4 +12,9 @@ export default apiProxy({
   },
 })
 
-export { config }
+export const config = {
+  api: {
+    externalResolver: true,
+    bodyParser: false,
+  },
+}

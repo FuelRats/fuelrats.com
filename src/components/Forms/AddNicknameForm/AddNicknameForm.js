@@ -30,15 +30,16 @@ function AddNicknameForm (props) {
 
     if (isError(response)) {
       const { meta, payload } = response
+      const status = meta?.response?.status
       let errorMessage = 'Unknown error occured.'
 
-      if (meta.response.status === HttpStatus.UNPROCESSABLE_ENTITY) {
+      if (status === HttpStatus.UNPROCESSABLE_ENTITY) {
         errorMessage = payload?.errors?.[0]?.detail ?? 'Nickname invalid'
-      } else if (meta.response.status === HttpStatus.CONFLICT) {
+      } else if (status === HttpStatus.CONFLICT) {
         errorMessage = 'Nickname already registered'
-      } else if (HttpStatus.isClientError(meta.response.status)) {
+      } else if (HttpStatus.isClientError(status)) {
         errorMessage = payload?.errors?.[0]?.title ?? 'Client communication error'
-      } else if (HttpStatus.isServerError(meta.response.status)) {
+      } else if (HttpStatus.isServerError(status)) {
         errorMessage = 'Server communication error'
       }
 

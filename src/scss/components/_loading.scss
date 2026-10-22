@@ -1,3 +1,5 @@
+@use '../variables/loader';
+@use '../colors' as *;
 @use 'sass:math';
 
 .loading:not(.error) {
@@ -20,12 +22,12 @@
       z-index: 100;
 
       content: '';
-      width: $loader-size;
-      height: $loader-size;
-      margin-top: -(math.div($loader-size, 2) + $loader-border-width);
-      margin-left: -(math.div($loader-size, 2) + $loader-border-width);
+      width: loader.$loader-size;
+      height: loader.$loader-size;
+      margin-top: -(math.div(loader.$loader-size, 2) + loader.$loader-border-width);
+      margin-left: -(math.div(loader.$loader-size, 2) + loader.$loader-border-width);
 
-      border: $loader-border-width solid currentColor;
+      border: loader.$loader-border-width solid currentColor;
       border-radius: 100%;
 
       animation-delay:

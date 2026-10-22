@@ -1,3 +1,5 @@
+@use '../colors' as *;
+
 .rc-slider {
   &.rc-slider-disabled {
     background-color: transparent;
