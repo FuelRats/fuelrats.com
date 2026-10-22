@@ -4,6 +4,7 @@
  * it relies on Node.js-internal Module._extensions.
  */
 const fs = require('fs')
+const { isBuiltin } = require('module')
 const path = require('path')
 
 const EXTENSIONS = ['.js', '.jsx', '.mjs', '.cjs', '.json']
@@ -12,6 +13,11 @@ const ROOT = path.resolve(__dirname, '..')
 exports.interfaceVersion = 2
 
 exports.resolve = (source, file, config) => {
+  // Core modules (including `node:` prefixed ones) have no file path
+  if (isBuiltin(source)) {
+    return { found: true, path: null }
+  }
+
   const map = config?.map ?? []
 
   let resolved = source
