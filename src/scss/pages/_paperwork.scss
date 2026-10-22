@@ -1,3 +1,6 @@
+@use 'sass:color';
+@use '../colors' as *;
+
 $margin: 2rem;
 
 .page.paperwork {
@@ -188,20 +191,20 @@ $margin: 2rem;
         text-transform: uppercase;
 
         &.pc {
-          color: change-color(#985DB5, $lightness: 66%);
+          color: color.change(#985DB5, $lightness: 66%);
         }
 
         &.xb {
-          color: change-color($xbox-green, $lightness: 37%);
+          color: color.change($xbox-green, $lightness: 37%);
         }
 
         &.ps {
-          color: change-color($playstation-blue, $lightness: 65%);
+          color: color.change($playstation-blue, $lightness: 65%);
         }
       }
 
       &.code-red {
-        color: change-color($red, $lightness: 66%);
+        color: color.change($red, $lightness: 66%);
 
         text-transform: uppercase;
       }

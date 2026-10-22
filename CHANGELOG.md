@@ -1,5 +1,32 @@
 # fuelrats.com Changelog
 
+## 3.0.2
+
+### Patch Changes
+
+- [#478](https://github.com/FuelRats/fuelrats.com/pull/478) [`a6eaaa7`](https://github.com/FuelRats/fuelrats.com/commit/a6eaaa7029344cc1c3b5864d258bc40ca9693b93) Thanks [@arckoor](https://github.com/arckoor)! - ### Changed
+  
+  - On the dispatch board, quote timestamps in the case details now update automatically.
+
+## 3.0.1
+
+### Patch Changes
+
+- [#479](https://github.com/FuelRats/fuelrats.com/pull/479) [`4d927aa`](https://github.com/FuelRats/fuelrats.com/commit/4d927aacc0f2044d1687755264be6d8f4e7a2efe) Thanks [@SuperManifolds](https://github.com/SuperManifolds)! - ### Changed
+  - Updated the site's dependencies to their latest major versions, including Next.js 16, Font Awesome 7, Motion 14 and Stripe's libraries.
+  - Screen readers now announce whether a passkey is synced on the security page.
+  
+  ### Fixed
+  - The header cells of the rescue table in Epic nominations now show their grey borders.
+  - Users without an uploaded avatar get a generated one again. The previous avatar generator stopped responding, so these now use a new illustrated style.
+  - The PC platform badge now shows its starfield and sunrise texture instead of a flat purple background.
+
+- [#480](https://github.com/FuelRats/fuelrats.com/pull/480) [`f320b28`](https://github.com/FuelRats/fuelrats.com/commit/f320b28dc7cf0b7c4bfe2ac9ecd22e8bc5304378) Thanks [@SuperManifolds](https://github.com/SuperManifolds)! - ### Fixed
+  - Requests to the API are attributed to the visitor's real IP address. Client-supplied `X-Forwarded-For` headers can no longer be used to dodge rate limits or donation bans.
+  - Your Fuel Rats session is no longer sent to WordPress or the systems API when loading blog content or star system data.
+  - Donations made while signed in are always linked to your own Stripe customer record.
+  - Server errors no longer expose internal details; they include an error ID you can quote when reporting a problem.
+
 ## 3.0.0
 
 ### Major Changes

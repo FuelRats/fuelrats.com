@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 $green: #5CB85C;
-$green-darkened: darken($green, 10%);
-$green-lightened: lighten($green, 10%);
+$green-darkened: color.adjust($green, $lightness: -10%);
+$green-lightened: color.adjust($green, $lightness: 10%);

@@ -1,7 +1,6 @@
 import { EmbeddedCheckout, EmbeddedCheckoutProvider } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
 import clsx from 'clsx'
-import getConfig from 'next/config'
 import PropTypes from 'prop-types'
 import { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -12,6 +11,7 @@ import useForm from '~/hooks/useForm'
 import { createDonationSession } from '~/store/actions/stripe'
 import { selectUserById, withCurrentUserId } from '~/store/selectors'
 import getFingerprint from '~/util/getFingerprint'
+import getPublicConfig from '~/util/getPublicConfig'
 import getResponseError from '~/util/getResponseError'
 import getMoney from '~/util/string/getMoney'
 
@@ -22,8 +22,8 @@ import DonationErrorBox from './DonationErrorBox'
 
 
 
-const { publicRuntimeConfig } = getConfig() ?? {}
-const stripePromise = loadStripe(publicRuntimeConfig?.stripeApiPk)
+const { stripeApiPk } = getPublicConfig()
+const stripePromise = stripeApiPk ? loadStripe(stripeApiPk) : null
 
 
 // Component Constants
@@ -66,13 +66,7 @@ const preparePayload = async (data, user) => {
   }
 
   if (user) {
-    const { email, stripeId } = user.attributes
-
-    if (stripeId) {
-      sessionData.customer = stripeId
-    } else {
-      sessionData.email = email
-    }
+    sessionData.email = user.attributes.email
   }
 
   return sessionData

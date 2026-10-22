@@ -1,8 +1,9 @@
-@import 'fonts/open-sans';
-@import 'fonts/raleway';
+@use 'fonts/open-sans';
+@use 'fonts/raleway';
 
-$paragraph-fonts: 'Open Sans', sans-serif;
-$title-fonts: 'Raleway', sans-serif;
+open-sans.$paragraph-fonts: 'Open Sans', sans-serif;
+raleway.$title-fonts: 'Raleway', sans-serif;
+
 $monospace-fonts:
   'Operator Mono',
   'SF Mono',

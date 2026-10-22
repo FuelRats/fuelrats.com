@@ -1,3 +1,5 @@
+@use '../colors' as *;
+
 ul.messenger {
   &.messenger-theme-flat {
     background-color: $black-lightened;

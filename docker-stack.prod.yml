@@ -11,11 +11,11 @@ services:
       - APP_URL=${APP_URL:-https://fuelrats.com}
       - APP_PROXIED=true
       - FR_API_URL=${FR_API_URL:-http://fr-api:8501}
+      - FR_SSR_API_URL=${FR_SSR_API_URL:-http://api:8080}
       - FR_SOCKET_URL=${FR_SOCKET_URL:-wss://api.fuelrats.com}
       - FR_FALLBACK_URL=https://fallback.fuelrats.com/
       - FR_API_KEY=${FR_API_KEY}
       - FR_API_SECRET=${FR_API_SECRET}
-      - FR_EDSM_API_URL=https://www.edsm.net/api-v1
       - FR_WORDPRESS_URL=https://wordpress.fuelrats.com
       - FR_SAPI_URL=https://systems.api.fuelrats.com
       - FR_STRIPE_API_PK=${FR_STRIPE_API_PK}

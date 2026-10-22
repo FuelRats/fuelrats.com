@@ -6,8 +6,8 @@ const isServer = typeof window === 'undefined'
 
 // Server-side rendering hits the API directly when FR_SSR_API_URL is set, instead of
 // looping back through this app's own /api/fr proxy. The self-proxy deadlocks the Next
-// dev server (SSR blocks on a request it can't serve concurrently). Unset in production,
-// where SSR keeps proxying through APP_URL.
+// dev server (SSR blocks on a request it can't serve concurrently), and behind the reverse
+// proxy it would attribute every SSR request to this server's own IP rather than the client's.
 const serverBaseURL = process.env.FR_SSR_API_URL ?? `${process.env.APP_URL}/api/fr`
 
 const frApi = axios.create({

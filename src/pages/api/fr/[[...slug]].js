@@ -1,8 +1,13 @@
-import frApiProxy, { config } from '~/util/server/frApiProxy'
+import frApiProxy from '~/util/server/frApiProxy'
 
 
 
 
 
 export default frApiProxy()
-export { config }
+export const config = {
+  api: {
+    externalResolver: true,
+    bodyParser: false,
+  },
+}

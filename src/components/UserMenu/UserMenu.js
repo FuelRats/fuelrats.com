@@ -63,6 +63,7 @@ function UserMenu () {
 
   const handleLogout = useCallback(async () => {
     await dispatch(logout())
+    // eslint-disable-next-line @next/next/no-location-assign-relative-destination -- full reload clears in-memory session state
     window.location.href = '/'
   }, [dispatch])
 

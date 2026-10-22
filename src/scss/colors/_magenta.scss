@@ -1,5 +1,7 @@
+@use 'sass:color';
+
 $magenta: #D650D6;
-$magenta-dark: darken($magenta, 10%);
-$magenta-dark2: darken($magenta, 20%);
-$magenta-dark3: darken($magenta, 30%);
-$magenta-light: lighten($magenta, 10%);
+$magenta-dark: color.adjust($magenta, $lightness: -10%);
+$magenta-dark2: color.adjust($magenta, $lightness: -20%);
+$magenta-dark3: color.adjust($magenta, $lightness: -30%);
+$magenta-light: color.adjust($magenta, $lightness: 10%);
