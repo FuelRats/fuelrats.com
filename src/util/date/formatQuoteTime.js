@@ -7,6 +7,11 @@ const MS_IN_DAY = 24 * MS_IN_HOUR
 
 const relativeFormatter = new Intl.RelativeTimeFormat('en', { numeric: 'auto' })
 
+/**
+ * @param {string | number | Date} value Timestamp string, epoch, or date object.
+ * @returns {[string, number | null]} A tuple containing the formatted string and the milliseconds until it next changes,
+ * or `null` if it won't change.
+ */
 export default function formatQuoteTime (value) {
   const startTime = (new Date(value)).getTime()
   if (Number.isNaN(startTime)) {
