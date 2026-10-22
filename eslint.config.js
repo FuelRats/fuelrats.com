@@ -2,6 +2,7 @@ const babelParser = require('@babel/eslint-parser')
 const { default: babelPlugin } = require('@babel/eslint-plugin')
 const { fixupPluginRules } = require('@eslint/compat')
 const nextPlugin = require('@next/eslint-plugin-next')
+const stylisticPlugin = require('@stylistic/eslint-plugin')
 const importPlugin = require('eslint-plugin-import-x')
 const jsdocPlugin = require('eslint-plugin-jsdoc')
 const jsxA11yPlugin = require('eslint-plugin-jsx-a11y')
@@ -17,6 +18,7 @@ const jsxA11yRules = require('./.config/eslint/rules/jsx-a11y')
 const nextRules = require('./.config/eslint/rules/next')
 const reactRules = require('./.config/eslint/rules/react')
 const reactHooksRules = require('./.config/eslint/rules/react-hooks')
+const stylisticRules = require('./.config/eslint/rules/stylistic')
 
 
 module.exports = [
@@ -64,6 +66,7 @@ module.exports = [
     plugins: {
       '@babel': babelPlugin,
       '@next/next': nextPlugin,
+      '@stylistic': stylisticPlugin,
       import: importPlugin,
       jsdoc: jsdocPlugin,
       'jsx-a11y': fixupPluginRules(jsxA11yPlugin),
@@ -85,6 +88,7 @@ module.exports = [
     },
     rules: {
       ...coreRules,
+      ...stylisticRules,
       ...babelRules,
       ...importRules,
       ...jsdocRules,
