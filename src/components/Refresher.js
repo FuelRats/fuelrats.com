@@ -1,6 +1,9 @@
 import PropTypes from 'prop-types'
 import { useLayoutEffect, useState } from 'react'
 
+
+
+
 /**
  * Renders text that changes over time, refreshing it when the formatter says it will next change.
  * @param {object} props
@@ -50,5 +53,8 @@ Refresher.propTypes = {
   fmtFn: PropTypes.func.isRequired,
   from: PropTypes.string.isRequired,
 }
+
+
+
 
 export default Refresher
