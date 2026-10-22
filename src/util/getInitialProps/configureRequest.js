@@ -1,5 +1,7 @@
 import nextCookies from 'next-cookies'
 
+import getClientIp from '~/util/server/getClientIp'
+
 
 export default function configureRequest (ctx) {
   // Always setup access token
@@ -11,17 +13,13 @@ export default function configureRequest (ctx) {
   // If we're on the server, collect proxy headers to retain the origin IP.
   // These are attached per-request (via the store) rather than onto the shared
   // axios instance, so concurrent SSR requests never leak each other's IP.
-  if (ctx.isServer) {
+  if (ctx.req) {
     const proxyHeaders = {}
 
-    const realIp = ctx.req.headers['x-real-ip'] ?? ctx.req.client?.remoteAddress
-    if (realIp) {
-      proxyHeaders['x-real-ip'] = realIp
-    }
-
-    const forwardedFor = ctx.req.headers['x-forwarded-for'] ?? ctx.req.client?.remoteAddress
-    if (forwardedFor) {
-      proxyHeaders['x-forwarded-for'] = forwardedFor
+    const clientIp = getClientIp(ctx.req)
+    if (clientIp) {
+      proxyHeaders['x-real-ip'] = clientIp
+      proxyHeaders['x-forwarded-for'] = clientIp
     }
 
     const forwardedProto = ctx.req.headers['x-forwarded-proto'] ?? (ctx.req.socket?.encrypted ? 'https' : 'http')
