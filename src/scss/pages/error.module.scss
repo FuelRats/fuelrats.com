@@ -1,11 +1,12 @@
-@import '../fonts';
-@import '../colors';
+@use '../fonts';
+@use '../colors' as *;
+@use '../fonts/raleway';
 
 .errorPage {
   align-items: center;
   justify-content: center;
 
-  font-family: $title-fonts;
+  font-family: raleway.$title-fonts;
 
   .errorText {
     display: inline-block;

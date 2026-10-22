@@ -1,10 +1,10 @@
 /* **************************************************************************** *\
   Variables
 \* **************************************************************************** */
-@import 'fonts';
-@import 'variables';
-@import 'mixins';
-@import 'colors';
+@use 'fonts';
+@use 'variables';
+@use 'mixins';
+@use 'colors';
 
 
 
@@ -13,7 +13,7 @@
 /* **************************************************************************** *\
   Libraries
 \* **************************************************************************** */
-@import 'lib';
+@use 'lib';
 
 
 
@@ -22,10 +22,10 @@
 /* **************************************************************************** *\
   Application
 \* **************************************************************************** */
-@import 'reset';
-@import 'root';
-@import 'animations';
-@import 'helpers';
-@import 'core';
-@import 'components';
-@import 'pages';
+@use 'reset';
+@use 'root';
+@use 'animations';
+@use 'helpers';
+@use 'core';
+@use 'components';
+@use 'pages';

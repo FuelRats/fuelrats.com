@@ -1,4 +1,5 @@
-@import '../../scss/colors';
+@use '../../scss/colors';
+@use '../colors' as *;
 
 .ratLeaderboard {
   display: flex;

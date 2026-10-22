@@ -1,3 +1,6 @@
+@use '../mixins/text-outline';
+@use '../colors' as *;
+
 @mixin link-button {
   border: none;
 
@@ -112,7 +115,7 @@ input[type='button'],
     --text-color-hover: #{$white};
 
     &:hover {
-      @include text-outline($black-lightened);
+      @include text-outline.text-outline($black-lightened);
     }
   }
 

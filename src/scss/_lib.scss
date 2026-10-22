@@ -1,8 +1,11 @@
+@use 'sass:meta';
+
 /****************************************************************************** \
   FontAwesome
 \ ******************************************************************************/
 @import '@fortawesome/fontawesome-svg-core/styles.css';
-@import 'lib/fontawesome';
+
+@include meta.load-css('lib/fontawesome');
 
 
 
@@ -11,7 +14,7 @@
 /****************************************************************************** \
   kbd fun
 \  ******************************************************************************/
-@import 'lib/kbdfun';
+@include meta.load-css('lib/kbdfun');
 
 
 
@@ -21,7 +24,8 @@
   NProgress
 \ ******************************************************************************/
 @import 'nprogress/nprogress.css';
-@import 'lib/nprogress';
+
+@include meta.load-css('lib/nprogress');
 
 
 
@@ -30,7 +34,7 @@
 /****************************************************************************** \
   Stripe
 \ ******************************************************************************/
-@import 'lib/stripe';
+@include meta.load-css('lib/stripe');
 
 
 
@@ -40,7 +44,8 @@
   RC-Slider
 \ ******************************************************************************/
 @import 'rc-slider/assets/index.css';
-@import 'lib/rc-slider';
+
+@include meta.load-css('lib/rc-slider');
 
 
 
@@ -49,4 +54,4 @@
 /****************************************************************************** \
   react-easy-crop
 \ ******************************************************************************/
-@import 'lib/react-easy-crop';
+@include meta.load-css('lib/react-easy-crop');

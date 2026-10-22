@@ -1,5 +1,7 @@
-@import '../../scss/fonts';
-@import '../../scss/colors';
+@use '../../scss/fonts';
+@use '../../scss/colors' as *;
+@use '../../scss/fonts/open-sans';
+@use '../../scss/fonts/raleway';
 
 .rescueDetails {
   --table-border-color: #3C3C3C;
@@ -49,7 +51,7 @@
     align-items: center;
     gap: 1rem;
 
-    font-family: $title-fonts;
+    font-family: raleway.$title-fonts;
   }
 
   .label {
@@ -62,7 +64,7 @@
   :global(.badge) {
     margin: 0 0 0 1rem;
 
-    font-family: $paragraph-fonts;
+    font-family: open-sans.$paragraph-fonts;
     font-weight: bold;
   }
 }
@@ -239,7 +241,7 @@
         border-width: 0;
 
         font-weight: bold;
-        font-family: $title-fonts;
+        font-family: raleway.$title-fonts;
 
         &::after {
           content: ':';
@@ -367,7 +369,7 @@
 
     background-color: #555555;
 
-    font-family: $monospace-fonts;
+    font-family: fonts.$monospace-fonts;
     text-align: right;
   }
 

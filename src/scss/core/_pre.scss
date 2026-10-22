@@ -1,3 +1,6 @@
+@use '../fonts';
+@use '../colors' as *;
+
 pre {
   flex-shrink: 0;
 
@@ -8,7 +11,7 @@ pre {
 
   background-color: rgba($grey, 0.15);
 
-  font-family: $monospace-fonts;
+  font-family: fonts.$monospace-fonts;
   white-space: pre-wrap;
   box-sizing: initial;
 

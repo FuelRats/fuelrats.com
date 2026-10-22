@@ -1,3 +1,6 @@
+@use '../fonts/raleway';
+@use '../colors' as *;
+
 label.file-dropzone {
   display: block;
   position: relative;
@@ -17,7 +20,7 @@ label.file-dropzone {
 
   font-size: 1.5em;
   font-weight: 600;
-  font-family: $title-fonts;
+  font-family: raleway.$title-fonts;
   text-align: center;
 
   cursor: pointer;
