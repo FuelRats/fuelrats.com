@@ -1,5 +1,12 @@
 # fuelrats.com Changelog
 
+## 3.0.3
+
+### Patch Changes
+
+- [#485](https://github.com/FuelRats/fuelrats.com/pull/485) [`cc6d335`](https://github.com/FuelRats/fuelrats.com/commit/cc6d3358771f3a1d0734037f1eff528d0eade081) Thanks [@SuperManifolds](https://github.com/SuperManifolds)! - ### Fixed
+  - The dispatch board's dark background is back, along with other page and component styles that override the site's base styles. Since the 3.0.2 update, the base styles were loading last and overriding them.
+
 ## 3.0.2
 
 ### Patch Changes
