@@ -15,9 +15,9 @@
   },
   "scripts": {
     "add-contributor": "all-contributors add",
-    "build": "next build --webpack",
+    "build": "next build",
     "start": "next start",
-    "dev:start": "bun --inspect=15268 ./node_modules/.bin/next dev --webpack",
+    "dev:start": "bun --inspect=15268 ./node_modules/.bin/next dev",
     "dev": "bun install && bun run dev:start",
     "utoc": "doctoc $(grep --include=\\*.md --exclude-dir=node_modules -Rwl . -e 'START doctoc')",
     "lint:js": "eslint .",
@@ -94,7 +94,6 @@
     "@types/qs": "^6.15.1",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
-    "@types/webpack": "^5.28.5",
     "@types/zxcvbn": "^4.4.5",
     "doctoc": "^2.5.0",
     "eslint": "^8.57.1",
@@ -109,8 +108,7 @@
     "semver": "^7.8.5",
     "stylelint": "^15.11.0",
     "stylelint-order": "^6.0.4",
-    "stylelint-scss": "^5.3.2",
-    "webpack": "^5.112.0"
+    "stylelint-scss": "^5.3.2"
   },
   "browserslist": [
     "defaults",

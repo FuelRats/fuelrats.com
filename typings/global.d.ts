@@ -31,7 +31,7 @@ declare namespace $$BUILD {
   /**
    * Full hash of the git commit used for the CI build.
    *
-   * `null` in development.
+   * Empty string in development.
    */
   declare const commit: Readonly<string>;
 
@@ -50,7 +50,7 @@ declare namespace $$BUILD {
   /**
    * Web URL leading to build details page.
    *
-   * `null` in development.
+   * Empty string in development.
    */
   declare const url: Readonly<string>;
 
