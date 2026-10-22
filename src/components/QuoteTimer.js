@@ -4,11 +4,6 @@ import formatQuoteTime from '~/util/date/formatQuoteTime'
 
 import Refresher from './Refresher'
 
-function formatElapsedTimer (from) {
-  const [text, next] = formatQuoteTime(from)
-  return [text, next]
-}
-
 function QuoteTimer (props) {
   const {
     as: Element = 'span',
@@ -20,7 +15,7 @@ function QuoteTimer (props) {
     <Refresher
       as={Element}
       className={className}
-      fmtFn={formatElapsedTimer}
+      fmtFn={formatQuoteTime}
       from={from} />
   )
 }
