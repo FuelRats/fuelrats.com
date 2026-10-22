@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { useState, useEffect } from 'react'
+import { useLayoutEffect, useState } from 'react'
 
 function Refresher (props) {
   const {
@@ -10,7 +10,9 @@ function Refresher (props) {
   } = props
   const [text, setText] = useState('')
 
-  useEffect(() => {
+  // A layout effect sets the first text before the browser paints, so the element never shows up empty. Effects don't
+  // run during server rendering, which keeps the time-dependent text out of the hydrated markup.
+  useLayoutEffect(() => {
     let timeoutId = null
 
     function refresh () {
@@ -21,9 +23,7 @@ function Refresher (props) {
       }
     }
 
-    if (typeof window !== 'undefined') {
-      refresh()
-    }
+    refresh()
 
     return () => {
       clearTimeout(timeoutId)
