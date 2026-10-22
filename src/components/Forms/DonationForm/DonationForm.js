@@ -66,13 +66,7 @@ const preparePayload = async (data, user) => {
   }
 
   if (user) {
-    const { email, stripeId } = user.attributes
-
-    if (stripeId) {
-      sessionData.customer = stripeId
-    } else {
-      sessionData.email = email
-    }
+    sessionData.email = user.attributes.email
   }
 
   return sessionData
