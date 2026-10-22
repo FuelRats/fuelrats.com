@@ -3,6 +3,10 @@ import { createProxyMiddleware } from 'http-proxy-middleware'
 import getClientIp from './getClientIp'
 
 
+// How long a client has to finish sending its request. A client trickling a body would otherwise hold an upstream
+// connection open indefinitely.
+const REQUEST_BODY_TIMEOUT_MS = 30000
+
 // Client IPs resolved before the proxy runs, since its `xfwd` option appends to the incoming X-Forwarded-For header.
 const clientIps = new WeakMap()
 
@@ -18,6 +22,18 @@ function forwardClientIp (proxyReq, req) {
 
   proxyReq.setHeader('x-forwarded-for', clientIp)
   proxyReq.setHeader('x-real-ip', clientIp)
+}
+
+function enforceRequestBodyTimeout (req, res) {
+  const timeout = setTimeout(() => {
+    req.destroy()
+  }, REQUEST_BODY_TIMEOUT_MS)
+
+  const clear = () => {
+    clearTimeout(timeout)
+  }
+  req.once('end', clear)
+  res.once('close', clear)
 }
 
 export const config = {
@@ -44,6 +60,7 @@ export default function apiProxy (options) {
 
   return function apiProxyHandler (req, res, next) {
     clientIps.set(req, getClientIp(req))
+    enforceRequestBodyTimeout(req, res)
     return proxy(req, res, next)
   }
 }
