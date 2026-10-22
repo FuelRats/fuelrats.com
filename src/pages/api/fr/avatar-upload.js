@@ -1,5 +1,6 @@
 import { HttpStatus } from '@fuelrats/web-util/http'
 
+import getClientIp from '~/util/server/getClientIp'
 import getEnv from '~/util/server/getEnv'
 import { isValidUuidV4 } from '~/util/string/uuidValidator'
 
@@ -32,6 +33,11 @@ export default async function handler (req, res) {
   const targetUrl = `${apiUrl}/users/${userId}/image`
 
   const headers = {}
+  const clientIp = getClientIp(req)
+  if (clientIp) {
+    headers['X-Forwarded-For'] = clientIp
+    headers['X-Real-IP'] = clientIp
+  }
   if (req.headers.authorization) {
     headers.Authorization = req.headers.authorization
   }

@@ -4,6 +4,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import bindMethod from '~/util/decorators/bindMethod'
 import createResource from '~/util/jsonapi/createResource'
 import { InternalServerAPIError, APIError } from '~/util/server/errors'
+import getClientIp from '~/util/server/getClientIp'
 import getEnv from '~/util/server/getEnv'
 
 
@@ -30,7 +31,7 @@ function modRequest (req) {
 
   Reflect.defineProperty(req, 'ip', {
     get: () => {
-      return req.ips[0] ?? req.socket.remoteAddress ?? ''
+      return getClientIp(req)
     },
   })
 
