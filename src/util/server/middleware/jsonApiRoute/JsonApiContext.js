@@ -3,12 +3,21 @@ import axios from 'axios'
 import bindMethod from '~/util/decorators/bindMethod'
 import createResource from '~/util/jsonapi/createResource'
 import { InternalServerAPIError, APIError } from '~/util/server/errors'
+import getClientIp from '~/util/server/getClientIp'
 import getEnv from '~/util/server/getEnv'
 
 
 
 const env = getEnv()
 const cacheStorage = {}
+
+
+// Details of unexpected errors stay in the server log; the client only gets an ID to quote.
+function toInternalError (error) {
+  const internalError = new InternalServerAPIError()
+  console.error(`[jsonApiRoute] Unhandled error ${internalError.id}:`, error)
+  return internalError
+}
 
 
 function modRequest (req) {
@@ -29,7 +38,7 @@ function modRequest (req) {
 
   Reflect.defineProperty(req, 'ip', {
     get: () => {
-      return req.ips[0] ?? req.socket.remoteAddress ?? ''
+      return getClientIp(req)
     },
   })
 
@@ -100,12 +109,7 @@ export default class JsonApiContext {
       this.#resErrors[first ? 'unshift' : 'push'](
         error instanceof APIError
           ? error
-          : new InternalServerAPIError(null, {
-            internalError: {
-              name: error.name,
-              message: error.message,
-            },
-          }),
+          : toInternalError(error),
       )
     }
 
@@ -186,12 +190,12 @@ export default class JsonApiContext {
 
       return response
     } catch (error) {
-      const { response } = error ?? {}
-      throw new InternalServerAPIError(null, {
-        url: options.url,
-        status: response?.status,
-        statusText: response?.statusText,
-      })
+      const internalError = new InternalServerAPIError()
+      console.error(
+        `[jsonApiRoute] Upstream request failed (error ${internalError.id}): ${options.url}`,
+        error?.response?.status ?? error,
+      )
+      throw internalError
     }
   }
 

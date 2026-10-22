@@ -17,6 +17,7 @@ const stripe = new Stripe(env.stripe.secret)
 
 const SUPPORTED_CURRENCIES = ['usd', 'eur', 'gbp']
 const MIN_AMOUNT = 100
+const PROFILE_TIMEOUT_MS = 10000
 
 const getDonationItemInfo = (amount) => {
   if (amount >= 3500) {
@@ -57,11 +58,40 @@ const getDonationItemInfo = (amount) => {
 
 
 
+// Looks up the signed-in user's Stripe customer from their own profile, so a client can't attach a donation to
+// someone else's customer record.
+async function getStripeCustomer (ctx) {
+  const accessToken = ctx.req.cookies?.access_token
+  if (!accessToken) {
+    return undefined
+  }
+
+  try {
+    const { data } = await ctx.fetch({
+      url: `${env.frapi.url}/profile`,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'X-Forwarded-For': ctx.req.ip,
+        'X-Real-IP': ctx.req.ip,
+      },
+      timeout: PROFILE_TIMEOUT_MS,
+    })
+    return data?.data?.attributes?.stripeId ?? undefined
+  } catch (error) {
+    // An expired or invalid session still lets the visitor donate as a guest.
+    console.warn('[donate] Could not resolve the Stripe customer; continuing as a guest.', error.id ?? error)
+    return undefined
+  }
+}
+
+
+
+
 export default jsonApiRoute(
+  acceptMethod.POST(),
   ipFilter(),
   requireFingerprint(),
   trafficController(),
-  acceptMethod.POST(),
   async (ctx) => {
     const {
       body = {},
@@ -71,7 +101,6 @@ export default jsonApiRoute(
       amount,
       currency,
       email,
-      customer,
       recurring,
     } = body
 
@@ -79,11 +108,12 @@ export default jsonApiRoute(
       throw new BadRequestAPIError({ pointer: '/data/attributes/amount' })
     }
 
-    if (!currency || !SUPPORTED_CURRENCIES.includes(currency.toLowerCase())) {
+    if (typeof currency !== 'string' || !SUPPORTED_CURRENCIES.includes(currency.toLowerCase())) {
       throw new BadRequestAPIError({ pointer: '/data/attributes/currency' })
     }
 
-    const isRecurring = Boolean(recurring)
+    const isRecurring = recurring === true
+    const customer = await getStripeCustomer(ctx)
     const donationInfo = getDonationItemInfo(amount)
 
     const priceData = {
@@ -109,7 +139,7 @@ export default jsonApiRoute(
       submit_type: isRecurring ? undefined : 'donate',
       allow_promotion_codes: false,
       customer_email: customer ? undefined : email,
-      customer: customer || undefined,
+      customer,
       line_items: [{
         price_data: priceData,
         quantity: 1,

@@ -35,9 +35,15 @@ export default function withReduxStore (App) {
       appProps = await App.getInitialProps(wrappedAppContext)
     }
 
+    // Forwarding headers carry the visitor's IP and are only used for server-side requests, so keep them out of the page
+    const { session, ...state } = store.getState()
+
     return {
       ...appProps,
-      initialReduxState: store.getState(),
+      initialReduxState: {
+        ...state,
+        session: { ...session, proxyHeaders: {} },
+      },
     }
   }
 

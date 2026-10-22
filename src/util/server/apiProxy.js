@@ -1,11 +1,59 @@
 import { createProxyMiddleware } from 'http-proxy-middleware'
 
+import getClientIp from './getClientIp'
+
+
+// How long a client has to finish sending its request. A client trickling a body would otherwise hold an upstream
+// connection open indefinitely.
+const REQUEST_BODY_TIMEOUT_MS = 30000
+
+// Client IPs resolved before the proxy runs, since its `xfwd` option can modify the incoming X-Forwarded-For header.
+const clientIps = new WeakMap()
+
+// Replaces any client-supplied forwarding headers with the resolved client IP, so upstreams can't be given a spoofed
+// address.
+function forwardClientIp (proxyReq, req) {
+  const clientIp = clientIps.get(req)
+  if (!clientIp) {
+    proxyReq.removeHeader('x-forwarded-for')
+    proxyReq.removeHeader('x-real-ip')
+    return
+  }
+
+  proxyReq.setHeader('x-forwarded-for', clientIp)
+  proxyReq.setHeader('x-real-ip', clientIp)
+}
+
+function enforceRequestBodyTimeout (req, res) {
+  const timeout = setTimeout(() => {
+    req.destroy()
+  }, REQUEST_BODY_TIMEOUT_MS)
+
+  const clear = () => {
+    clearTimeout(timeout)
+  }
+  req.once('end', clear)
+  res.once('close', clear)
+}
 
 export default function apiProxy (options) {
-  return createProxyMiddleware({
+  const proxy = createProxyMiddleware({
     changeOrigin: true,
     secure: true,
     xfwd: true,
     ...options,
+    on: {
+      ...options?.on,
+      proxyReq: (proxyReq, req, res) => {
+        forwardClientIp(proxyReq, req)
+        options?.on?.proxyReq?.(proxyReq, req, res)
+      },
+    },
   })
+
+  return function apiProxyHandler (req, res, next) {
+    clientIps.set(req, getClientIp(req))
+    enforceRequestBodyTimeout(req, res)
+    return proxy(req, res, next)
+  }
 }

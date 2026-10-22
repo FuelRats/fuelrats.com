@@ -81,7 +81,7 @@ module.exports = (phase) => {
 
     headers: headersConfig(env),
     redirects: redirectsConfig(env),
-    rewrites: rewritesConfig(env),
+    rewrites: rewritesConfig(),
 
     generateBuildId: getBuildId,
 
