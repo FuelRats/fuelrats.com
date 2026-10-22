@@ -9,6 +9,10 @@ const relativeFormatter = new Intl.RelativeTimeFormat('en', { numeric: 'auto' })
 
 export default function formatQuoteTime (value) {
   const startTime = (new Date(value)).getTime()
+  if (Number.isNaN(startTime)) {
+    return ['', null]
+  }
+
   const elapsedMs = Date.now() - startTime
 
   if (elapsedMs < 0 || elapsedMs >= MS_IN_DAY) {
