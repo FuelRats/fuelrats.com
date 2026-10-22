@@ -17,7 +17,7 @@
 
 The Stripe Bans file restricts IP addresses from creating stripe checkout sessions.
 
-To use it, create a JSON file anywhere on your file system (that the webserver user can read), and point to it using the ENV variable `FRDC_STRIPE_BANS_FILE`.
+To use it, create a JSON file anywhere on your file system (that the webserver user can read), and point to it using the ENV variable `FR_STRIPE_BANS_FILE`.
 If the variable is not defined, the webserver will not restrict access.
 
 ## File structure & How to ban someone.
@@ -35,19 +35,29 @@ IPv4s must be full
 ```json
 {
   "ipv4": [
-    '127.0.0.1', // Ban 127.0.0.1
-    '192.168.13.37', // Ban 192.168.13.37
-    '255.255.255.0/24' // Ban all addresses that begin with "255.255.255"
-    '0.0.0.0/0' // This bans all IPv4 addresses. 😎
+    "127.0.0.1",
+    "192.168.13.37",
+    "255.255.255.0/24",
+    "0.0.0.0/0"
   ],
   "ipv6": [
-    '1234:5678:90ab:cdef:fedc:ab09:8765:4321', // ban all addresses that begin with 1234:5678:90ab:cd (notice lack of prefix length)
-    '1234:5678:90ab:cdef::/56', // ban all addresses that begin with "1234:5678:90ab:cd".
-    '1234:5678:90ab:cdef::/64', // ban all addresses that begin with "1234:5678:90ab:cdef".
-
+    "1234:5678:90ab:cdef:fedc:ab09:8765:4321",
+    "1234:5678:90ab:cdef::/56",
+    "1234:5678:90ab:cdef::/64"
   ]
 }
 ```
+
+The file must be valid JSON, so it can't contain comments. The entries above:
+
+* `127.0.0.1` and `192.168.13.37` ban those exact addresses.
+* `255.255.255.0/24` bans all addresses that begin with `255.255.255`.
+* `0.0.0.0/0` bans all IPv4 addresses. 😎
+* `1234:5678:90ab:cdef:fedc:ab09:8765:4321` bans all addresses that begin with `1234:5678:90ab:cd` (it has no prefix length, so `/56` applies).
+* `1234:5678:90ab:cdef::/56` bans all addresses that begin with `1234:5678:90ab:cd`.
+* `1234:5678:90ab:cdef::/64` bans all addresses that begin with `1234:5678:90ab:cdef`.
+
+The file is re-read whenever it changes, so edits take effect without a restart. If it is missing or isn't valid JSON, donations fail until it is fixed.
 
 **REMINDER:**
 
