@@ -12,7 +12,7 @@ const noJSMessage = 'Blocking JavaScript in ${currentYear}.... You\'re just aski
 class FuelRatsWebsite extends Document {
   static async getInitialProps (ctx) {
     const initialProps = await Document.getInitialProps(ctx)
-    const { nonce } = ctx.res
+    const nonce = ctx.req?.headers['x-nonce']
     return { ...initialProps, nonce }
   }
 

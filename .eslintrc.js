@@ -54,6 +54,7 @@ module.exports = {
       files: [
         '.config/**/*.js',
         'src/pages/api/**/*.js',
+        'src/proxy.js',
         'src/util/server/**/*.js',
       ],
       env: {
