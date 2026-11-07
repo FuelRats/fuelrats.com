@@ -12,6 +12,9 @@
 FROM oven/bun:latest AS base
 WORKDIR /app
 
+# The base image lags Debian's security updates.
+RUN apt-get update && apt-get upgrade -y && rm -rf /var/lib/apt/lists/*
+
 COPY package.json bun.lock ./
 RUN bun install --frozen-lockfile
 
