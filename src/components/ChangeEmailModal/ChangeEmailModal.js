@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import asModal, { ModalContent, ModalFooter } from '~/components/asModal'
 import EmailFieldset from '~/components/Fieldsets/EmailFieldset'
+import LoginTokenFieldset from '~/components/Fieldsets/LoginTokenFieldset'
+import PasswordFieldset from '~/components/Fieldsets/PasswordFieldset'
 import useForm from '~/hooks/useForm'
 import { logout } from '~/store/actions/session'
 import { changeEmail } from '~/store/actions/user'
@@ -31,7 +33,10 @@ function ChangeEmailModal (props) {
   } = props
 
   const [result, setResult] = useState({})
-  const { email } = useSelector(withCurrentUserId(selectUserById))?.attributes ?? {}
+  const [codeRequired, setCodeRequired] = useState(false)
+  const user = useSelector(withCurrentUserId(selectUserById))
+  const { email } = user?.attributes ?? {}
+  const hasTotp = Boolean(user?.relationships?.authenticator?.data)
 
   const dispatch = useDispatch()
   const onSubmit = useCallback(async (formData) => {
@@ -42,10 +47,15 @@ function ChangeEmailModal (props) {
 
     const error = getResponseError(response)
 
+    if (error?.status === 'authenticator_required') {
+      setCodeRequired(true)
+    }
+
     setResult({
       error,
       success: !error,
       submitted: true,
+      codeSubmitted: Boolean(formData.attributes.code),
     })
 
     if (!error) {
@@ -67,6 +77,7 @@ function ChangeEmailModal (props) {
       id: userId,
       attributes: {
         email: '',
+        password: '',
       },
     }
   }, [userId])
@@ -84,7 +95,7 @@ function ChangeEmailModal (props) {
               <span className="label">{'Current E-Mail: '}</span>
               <span>{email}</span>
             </div>
-            {'Enter the new e-mail address you would like to associate with your account below.'}
+            {'Enter the new e-mail address you would like to associate with your account, and your current password to confirm the change.'}
           </div>
         )
       }
@@ -96,6 +107,27 @@ function ChangeEmailModal (props) {
         id="NewEmailAddress"
         name="attributes.email"
         placeholder="New E-Mail Address" />
+
+      <PasswordFieldset
+        dark
+        required
+        aria-label="Current Password"
+        id="ChangeEmailCurrentPassword"
+        name="attributes.password"
+        placeholder="Current Password" />
+
+      {
+        (hasTotp || codeRequired) && (
+          <LoginTokenFieldset
+            dark
+            required
+            aria-label="Authenticator Code"
+            displayName="Authenticator code"
+            id="ChangeEmailTotp"
+            name="attributes.code"
+            placeholder="6-digit authenticator code" />
+        )
+      }
 
       <ModalFooter>
         <div className="secondary" />
