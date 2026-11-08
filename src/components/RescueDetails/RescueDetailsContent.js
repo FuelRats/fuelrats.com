@@ -15,7 +15,7 @@ import { createSelectRenderedRatList, selectDispatcherRatsByRescueId } from '~/s
 import formatAsEliteDateTime from '~/util/date/formatAsEliteDateTime'
 import { expansionLongNameMap } from '~/util/expansion'
 import makePaperworkRoute from '~/util/router/makePaperworkRoute'
-import { getEdsmSystemUrl, submitSpanshRoute } from '~/util/system/externalLinks'
+import { getEdsmSystemUrl, getInaraSystemUrl, submitSpanshRoute } from '~/util/system/externalLinks'
 
 import CarrierIcon from '../CarrierIcon'
 import QuoteAvatar from './QuoteAvatar'
@@ -55,7 +55,7 @@ const selectRenderedRatList = createSelectRenderedRatList((rat, index) => {
 
 
 function RescueDetailsContent (props) {
-  const { rescue } = props
+  const { rescue, settings } = props
   const {
     commandIdentifier,
     client,
@@ -87,6 +87,9 @@ function RescueDetailsContent (props) {
   const landmarkDistance = rescue.attributes.data?.landmark?.distance
   const edsmUrl = useMemo(() => {
     return getEdsmSystemUrl(system)
+  }, [system])
+  const inaraUrl = useMemo(() => {
+    return getInaraSystemUrl(system)
   }, [system])
   const showSpansh = typeof landmarkDistance === 'number' && landmarkDistance >= SPANSH_MIN_DISTANCE
   const handleSpanshClick = useCallback(async () => {
@@ -222,7 +225,7 @@ function RescueDetailsContent (props) {
                       )
                     }
                     {
-edsmUrl && (
+settings.showEdsm && edsmUrl && (
   <a
     className={styles.systemLink}
     href={edsmUrl}
@@ -230,6 +233,19 @@ edsmUrl && (
     target="_blank"
     title="View on EDSM">
     {'EDSM'}
+    <FontAwesomeIcon className={styles.systemLinkIcon} icon="up-right-from-square" />
+  </a>
+)
+}
+                    {
+settings.showInara && inaraUrl && (
+  <a
+    className={styles.systemLink}
+    href={inaraUrl}
+    rel="noreferrer"
+    target="_blank"
+    title="View on Inara">
+    {'Inara'}
     <FontAwesomeIcon className={styles.systemLinkIcon} icon="up-right-from-square" />
   </a>
 )
@@ -459,6 +475,7 @@ isExpanded
 
 RescueDetailsContent.propTypes = {
   rescue: PropTypes.object.isRequired,
+  settings: PropTypes.object.isRequired,
 }
 
 export default RescueDetailsContent

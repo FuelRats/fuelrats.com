@@ -5,6 +5,8 @@ const STORAGE_KEY = 'fr.dispatchSettings'
 
 const DEFAULT_SETTINGS = {
   autoOpenNewCases: false,
+  showEdsm: true,
+  showInara: true,
 }
 
 

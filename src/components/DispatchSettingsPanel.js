@@ -54,6 +54,12 @@ function DispatchSettingsPanel ({
     onUpdate(key, !settings[key])
   }, [settings, onUpdate])
 
+  const options = [
+    { key: 'autoOpenNewCases', label: 'Auto-open new cases' },
+    { key: 'showEdsm', label: 'Show EDSM Link' },
+    { key: 'showInara', label: 'Show Inara Link' },
+  ]
+
   if (!visible) {
     return null
   }
@@ -63,19 +69,29 @@ function DispatchSettingsPanel ({
       <section className={styles.section}>
         <h3 className={styles.sectionTitle}>{'Board Settings'}</h3>
 
-        <div className={styles.optionRow}>
-          <span className={styles.optionLabel}>{'Auto-open new cases'}</span>
-          <button
-            className={clsx(styles.toggle, { [styles.toggleOn]: settings.autoOpenNewCases })}
-            type="button"
-            onClick={
-              () => {
-                return handleToggle('autoOpenNewCases')
-              }
-            }>
-            {settings.autoOpenNewCases ? 'On' : 'Off'}
-          </button>
-        </div>
+        {
+options.map(({ key, label }) => {
+  return (
+    <div key={key} className={styles.optionRow}>
+      <span className={styles.optionLabel}>{label}</span>
+      <button
+        className={
+clsx(styles.toggle, {
+  [styles.toggleOn]: settings[key],
+})
+}
+        type="button"
+        onClick={
+() => {
+  return handleToggle(key)
+}
+}>
+        {settings[key] ? 'On' : 'Off'}
+      </button>
+    </div>
+  )
+})
+}
       </section>
     </div>
   )
@@ -88,6 +104,8 @@ DispatchSettingsPanel.propTypes = {
   open: PropTypes.bool.isRequired,
   settings: PropTypes.shape({
     autoOpenNewCases: PropTypes.bool,
+    showEdsm: PropTypes.bool,
+    showInara: PropTypes.bool,
   }).isRequired,
 }
 

@@ -248,7 +248,7 @@ function DispatchBoard ({ query }) {
           )
         }
         <DispatchTable className={styles.table} loading={!loaded} />
-        {loaded && (<RescueDetails className={styles.detail} rescueId={query.rId} />)}
+        {loaded && (<RescueDetails className={styles.detail} rescueId={query.rId} settings={dispatchSettings} />)}
       </div>
     </>
   )
