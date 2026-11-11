@@ -21,6 +21,7 @@ export {
   faClipboardList,
   faClock,
   faCodeBranch,
+  faComments,
   faEllipsisH,
   faExclamationTriangle,
   faExclamationCircle,
