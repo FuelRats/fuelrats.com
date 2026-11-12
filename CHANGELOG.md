@@ -1,5 +1,12 @@
 # fuelrats.com Changelog
 
+## 3.0.4
+
+### Patch Changes
+
+- [#497](https://github.com/FuelRats/fuelrats.com/pull/497) [`8df6a7c`](https://github.com/FuelRats/fuelrats.com/commit/8df6a7c5212cb1d53864724649e35b2d155fa607) Thanks [@SuperManifolds](https://github.com/SuperManifolds)! - ### Added
+  - The authorization screen describes the new IRC login permission as "Log in to IRC as you." when an app asks to log you in to IRC.
+
 ## 3.0.3
 
 ### Patch Changes
