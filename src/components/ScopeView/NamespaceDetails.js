@@ -24,15 +24,22 @@ function NamespaceDetails (props) {
     return Object.entries(actions).map(([actionName, action]) => {
       const accessible = action.all || action.self
       const isSelf = action.self && !action.all
+      const actionText = namespace.actionText[actionName]
       return (
         <li key={actionName} className={clsx(styles.permission, { [styles.inaccessible]: accessible })}>
           <span>
-            {namespace.actionText[actionName]?.[isSelf ? 'self' : 'all'] ?? 'Read'}
-            {' '}
-            {isSelf ? 'your own' : (<b>{'ALL'}</b>)}
-            {' '}
-            {namespace.text}
-            {!isSelf && namespace.selfSingular && 's'}
+            {
+              actionText?.sentence ?? (
+                <>
+                  {actionText?.[isSelf ? 'self' : 'all'] ?? 'Read'}
+                  {' '}
+                  {isSelf ? 'your own' : (<b>{'ALL'}</b>)}
+                  {' '}
+                  {namespace.text}
+                  {!isSelf && namespace.selfSingular && 's'}
+                </>
+              )
+            }
             {'.'}
           </span>
         </li>
