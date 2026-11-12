@@ -60,6 +60,15 @@ const permissionNamespaces = {
       },
     },
   },
+  irc: {
+    icon: 'comments',
+    text: 'IRC',
+    actionText: {
+      login: {
+        sentence: 'Log in to IRC as you',
+      },
+    },
+  },
 }
 
 
