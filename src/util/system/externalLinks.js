@@ -10,6 +10,13 @@ export function getEdsmSystemUrl (systemName) {
   return `https://www.edsm.net/en/system?systemName=${encodeURIComponent(systemName)}`
 }
 
+export function getInaraSystemUrl (systemName) {
+  if (!systemName) {
+    return null
+  }
+  return `https://inara.cz/elite/starsystem/?search=${encodeURIComponent(systemName)}`
+}
+
 export async function submitSpanshRoute (systemName, { from = 'Sol', range = SPANSH_DEFAULT_RANGE, efficiency = SPANSH_DEFAULT_EFFICIENCY } = {}) {
   if (!systemName) {
     return null

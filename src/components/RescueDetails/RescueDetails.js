@@ -12,6 +12,7 @@ function RescueDetails (props) {
   const {
     className,
     rescueId,
+    settings,
   } = props
 
   const rescue = useSelector((state) => {
@@ -28,7 +29,7 @@ function RescueDetails (props) {
 
   return (
     <section className={className}>
-      {rescue && <RescueDetailsContent rescue={rescue} />}
+      {rescue && <RescueDetailsContent rescue={rescue} settings={settings} />}
     </section>
   )
 }
@@ -36,6 +37,7 @@ function RescueDetails (props) {
 RescueDetails.propTypes = {
   className: PropTypes.string,
   rescueId: PropTypes.string,
+  settings: PropTypes.object.isRequired,
 }
 
 
