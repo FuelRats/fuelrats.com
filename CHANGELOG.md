@@ -1,5 +1,21 @@
 # fuelrats.com Changelog
 
+## 3.1.0
+
+### Minor Changes
+
+- [#488](https://github.com/FuelRats/fuelrats.com/pull/488) [`ab7a67f`](https://github.com/FuelRats/fuelrats.com/commit/ab7a67f7ea512bdf42ad0a9fd116ed7f1076336d) Thanks [@arckoor](https://github.com/arckoor)! - ### Added
+  
+  - On the dispatch board, the case details now show an Inara link to the rescue system in addition to the EDSM one. Both can now be turned on or off in the settings.
+
+### Patch Changes
+
+- [#494](https://github.com/FuelRats/fuelrats.com/pull/494) [`506a943`](https://github.com/FuelRats/fuelrats.com/commit/506a9439499701e6ed1e082cd7738cfd7010ab4a) Thanks [@SuperManifolds](https://github.com/SuperManifolds)! - ### Fixed
+  - Changing your e-mail address works again. The Change E-Mail dialog now asks for your current password, and for your authenticator code if you use two-factor authentication, which the API requires since it started re-checking who you are before an e-mail change. Wrong passwords, wrong or missing codes and too many attempts now show clear messages instead of "unauthorized".
+
+- [#497](https://github.com/FuelRats/fuelrats.com/pull/497) [`8df6a7c`](https://github.com/FuelRats/fuelrats.com/commit/8df6a7c5212cb1d53864724649e35b2d155fa607) Thanks [@SuperManifolds](https://github.com/SuperManifolds)! - ### Added
+  - The authorization screen describes the new IRC login permission as "Log in to IRC as you." when an app asks to log you in to IRC.
+
 ## 3.0.3
 
 ### Patch Changes
